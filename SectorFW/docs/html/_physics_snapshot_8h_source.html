@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsSnapshot.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_physics_snapshot_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">PhysicsSnapshot.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_physics_snapshot_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="entity_8h.html">../Core/ECS/entity.h</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_vector_8hpp.html">../Math/Vector.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="_quaternion_8hpp.html">../Math/Quaternion.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>{</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_physics.html">Physics</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    {</div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="};">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_pose.html">   22</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_physics_1_1_pose.html">Pose</a> {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_pose.html#ab265f4783e433d135e471db6731d0cb0">   23</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_pose.html#ab265f4783e433d135e471db6731d0cb0">e</a>;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_pose.html#a2ee00a9aba7eabd512afc1aa174e7642">   24</a></span>            <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>  <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_pose.html#a2ee00a9aba7eabd512afc1aa174e7642">pos</a>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_pose.html#a6aa99a3c1b50337b749dd7642f263e6c">   25</a></span>            <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a>  <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_pose.html#a6aa99a3c1b50337b749dd7642f263e6c">rot</a>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        };</div>
+</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span></div>
+<div class="foldopen" id="foldopen00030" data-start="{" data-end="};">
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_contact_event.html">   30</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_physics_1_1_contact_event.html">ContactEvent</a> {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2abe5bce4b309fb36b341d53a9e228b5c2">   31</a></span>            <span class="keyword">enum</span> <a class="code hl_enumeration" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2">Type</a> { <a class="code hl_enumvalue" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2abe5bce4b309fb36b341d53a9e228b5c2">Begin</a>, <a class="code hl_enumvalue" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2a7a4226df460b0a8c273f0e1db6609d9d">Persist</a>, <a class="code hl_enumvalue" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2a0574d3ab746ad2f6f4462409c5933e99">End</a> } <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#ac31de37f01e338e0475368b55aa57f52">type</a>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#a3418088e263a335453efedf625a49470">   32</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#a3418088e263a335453efedf625a49470">a</a>, <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#a203d40b37988e6c2b149c7c4083d3dc7">b</a>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#a131cae30264f95c7534df4edb53f35c9">   33</a></span>            <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>  <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#a131cae30264f95c7534df4edb53f35c9">pointWorld</a>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#a3b496e5ebec5bc27efe0b70b2be14250">   34</a></span>            <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>  <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#a3b496e5ebec5bc27efe0b70b2be14250">normalWorld</a>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#a556b414466e10722de06ef2f71eac2f2">   35</a></span>            <span class="keywordtype">float</span>  <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#a556b414466e10722de06ef2f71eac2f2">impulse</a>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        };</div>
+</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span></div>
+<div class="foldopen" id="foldopen00040" data-start="{" data-end="};">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html">   40</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html">RayCastHitEvent</a> {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#aa8c144fe615845e1ec2365794c432b41">   41</a></span>            uint32_t <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#aa8c144fe615845e1ec2365794c432b41">requestId</a>;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#a76477ab9a9071610c8ef66b7fe78f5cf">   42</a></span>            <span class="keywordtype">bool</span>     <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#a76477ab9a9071610c8ef66b7fe78f5cf">hit</a>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#a372d670389c52cc76a323fc97f360ce1">   43</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a>   <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#a372d670389c52cc76a323fc97f360ce1">hitEntity</a>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#ab90f7059c8b4196cc966e8655aabf087">   44</a></span>            <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>    <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#ab90f7059c8b4196cc966e8655aabf087">position</a>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#acb6c8181559869bb34666f77ce6775ab">   45</a></span>            <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>    <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#acb6c8181559869bb34666f77ce6775ab">normal</a>;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#a675ef4072f5b8149259384c4169def0a">   46</a></span>            <span class="keywordtype">float</span>    <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#a675ef4072f5b8149259384c4169def0a">distance</a>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        };</div>
+</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span></div>
+<div class="foldopen" id="foldopen00051" data-start="{" data-end="};">
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_physics_snapshot.html">   51</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_physics_1_1_physics_snapshot.html">PhysicsSnapshot</a> {</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_physics_snapshot.html#aadff0b345e1bd8e3ea49dec4adeb124c">   52</a></span>            std::vector&lt;ContactEvent&gt;  <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_physics_snapshot.html#aadff0b345e1bd8e3ea49dec4adeb124c">contacts</a>;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_physics_snapshot.html#a38600e0e49c7206dd9ebc64eee402574">   53</a></span>            std::vector&lt;RayCastHitEvent&gt; <a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_physics_snapshot.html#a38600e0e49c7206dd9ebc64eee402574">rayHits</a>;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        };</div>
+</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    }</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>}</div>
+<div class="ttc" id="a_quaternion_8hpp_html"><div class="ttname"><a href="_quaternion_8hpp.html">Quaternion.hpp</a></div><div class="ttdoc">クォータニオンを定義するヘッダーファイル</div></div>
+<div class="ttc" id="a_vector_8hpp_html"><div class="ttname"><a href="_vector_8hpp.html">Vector.hpp</a></div><div class="ttdoc">ベクトルを定義するヘッダーファイル</div></div>
+<div class="ttc" id="aentity_8h_html"><div class="ttname"><a href="entity_8h.html">entity.h</a></div><div class="ttdoc">エンティティIDを定義するヘッダーファイル</div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_a87dd0ac5fb73d065f0315c5be2632a60"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">SFW::Math::Quatf</a></div><div class="ttdeci">Quat&lt; float &gt; Quatf</div><div class="ttdef"><b>Definition</b> <a href="_quaternion_8hpp_source.html#l00184">Quaternion.hpp:184</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_afea45e91c6313bb6dd5c60690ff82019"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">SFW::Math::Vec3f</a></div><div class="ttdeci">Vec3&lt; float &gt; Vec3f</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00354">Vector.hpp:354</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_physics_html"><div class="ttname"><a href="namespace_s_f_w_1_1_physics.html">SFW::Physics</a></div><div class="ttdef"><b>Definition</b> <a href="gltf__to__shape_8h_source.html#l00017">gltf_to_shape.h:18</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_e_c_s_1_1_entity_i_d_html"><div class="ttname"><a href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">SFW::ECS::EntityID</a></div><div class="ttdoc">EntityのIDを表す構造体</div><div class="ttdef"><b>Definition</b> <a href="entity_8h_source.html#l00022">entity.h:22</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_contact_event_html"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_contact_event.html">SFW::Physics::ContactEvent</a></div><div class="ttdoc">接触イベントを表す構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00030">PhysicsSnapshot.h:30</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_contact_event_html_a131cae30264f95c7534df4edb53f35c9"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_contact_event.html#a131cae30264f95c7534df4edb53f35c9">SFW::Physics::ContactEvent::pointWorld</a></div><div class="ttdeci">Math::Vec3f pointWorld</div><div class="ttdef"><b>Definition</b> <a href="#l00033">PhysicsSnapshot.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_contact_event_html_a203d40b37988e6c2b149c7c4083d3dc7"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_contact_event.html#a203d40b37988e6c2b149c7c4083d3dc7">SFW::Physics::ContactEvent::b</a></div><div class="ttdeci">ECS::EntityID b</div><div class="ttdef"><b>Definition</b> <a href="#l00032">PhysicsSnapshot.h:32</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_contact_event_html_a3418088e263a335453efedf625a49470"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_contact_event.html#a3418088e263a335453efedf625a49470">SFW::Physics::ContactEvent::a</a></div><div class="ttdeci">ECS::EntityID a</div><div class="ttdef"><b>Definition</b> <a href="#l00032">PhysicsSnapshot.h:32</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_contact_event_html_a3b496e5ebec5bc27efe0b70b2be14250"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_contact_event.html#a3b496e5ebec5bc27efe0b70b2be14250">SFW::Physics::ContactEvent::normalWorld</a></div><div class="ttdeci">Math::Vec3f normalWorld</div><div class="ttdef"><b>Definition</b> <a href="#l00034">PhysicsSnapshot.h:34</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_contact_event_html_a556b414466e10722de06ef2f71eac2f2"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_contact_event.html#a556b414466e10722de06ef2f71eac2f2">SFW::Physics::ContactEvent::impulse</a></div><div class="ttdeci">float impulse</div><div class="ttdef"><b>Definition</b> <a href="#l00035">PhysicsSnapshot.h:35</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_contact_event_html_ac31de37f01e338e0475368b55aa57f52"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_contact_event.html#ac31de37f01e338e0475368b55aa57f52">SFW::Physics::ContactEvent::type</a></div><div class="ttdeci">enum SFW::Physics::ContactEvent::Type type</div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_contact_event_html_acfb633e5a5af057f96dce3eaf19580a2"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2">SFW::Physics::ContactEvent::Type</a></div><div class="ttdeci">Type</div><div class="ttdef"><b>Definition</b> <a href="#l00031">PhysicsSnapshot.h:31</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_contact_event_html_acfb633e5a5af057f96dce3eaf19580a2a0574d3ab746ad2f6f4462409c5933e99"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2a0574d3ab746ad2f6f4462409c5933e99">SFW::Physics::ContactEvent::End</a></div><div class="ttdeci">@ End</div><div class="ttdef"><b>Definition</b> <a href="#l00031">PhysicsSnapshot.h:31</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_contact_event_html_acfb633e5a5af057f96dce3eaf19580a2a7a4226df460b0a8c273f0e1db6609d9d"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2a7a4226df460b0a8c273f0e1db6609d9d">SFW::Physics::ContactEvent::Persist</a></div><div class="ttdeci">@ Persist</div><div class="ttdef"><b>Definition</b> <a href="#l00031">PhysicsSnapshot.h:31</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_contact_event_html_acfb633e5a5af057f96dce3eaf19580a2abe5bce4b309fb36b341d53a9e228b5c2"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2abe5bce4b309fb36b341d53a9e228b5c2">SFW::Physics::ContactEvent::Begin</a></div><div class="ttdeci">@ Begin</div><div class="ttdef"><b>Definition</b> <a href="#l00031">PhysicsSnapshot.h:31</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_physics_snapshot_html"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_physics_snapshot.html">SFW::Physics::PhysicsSnapshot</a></div><div class="ttdoc">物理エンジンのスナップショットデータを表す構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00051">PhysicsSnapshot.h:51</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_physics_snapshot_html_a38600e0e49c7206dd9ebc64eee402574"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_physics_snapshot.html#a38600e0e49c7206dd9ebc64eee402574">SFW::Physics::PhysicsSnapshot::rayHits</a></div><div class="ttdeci">std::vector&lt; RayCastHitEvent &gt; rayHits</div><div class="ttdef"><b>Definition</b> <a href="#l00053">PhysicsSnapshot.h:53</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_physics_snapshot_html_aadff0b345e1bd8e3ea49dec4adeb124c"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_physics_snapshot.html#aadff0b345e1bd8e3ea49dec4adeb124c">SFW::Physics::PhysicsSnapshot::contacts</a></div><div class="ttdeci">std::vector&lt; ContactEvent &gt; contacts</div><div class="ttdef"><b>Definition</b> <a href="#l00052">PhysicsSnapshot.h:52</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_pose_html"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_pose.html">SFW::Physics::Pose</a></div><div class="ttdoc">エンティティのポーズを表す構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00022">PhysicsSnapshot.h:22</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_pose_html_a2ee00a9aba7eabd512afc1aa174e7642"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_pose.html#a2ee00a9aba7eabd512afc1aa174e7642">SFW::Physics::Pose::pos</a></div><div class="ttdeci">Math::Vec3f pos</div><div class="ttdef"><b>Definition</b> <a href="#l00024">PhysicsSnapshot.h:24</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_pose_html_a6aa99a3c1b50337b749dd7642f263e6c"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_pose.html#a6aa99a3c1b50337b749dd7642f263e6c">SFW::Physics::Pose::rot</a></div><div class="ttdeci">Math::Quatf rot</div><div class="ttdef"><b>Definition</b> <a href="#l00025">PhysicsSnapshot.h:25</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_pose_html_ab265f4783e433d135e471db6731d0cb0"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_pose.html#ab265f4783e433d135e471db6731d0cb0">SFW::Physics::Pose::e</a></div><div class="ttdeci">ECS::EntityID e</div><div class="ttdef"><b>Definition</b> <a href="#l00023">PhysicsSnapshot.h:23</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_ray_cast_hit_event_html"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html">SFW::Physics::RayCastHitEvent</a></div><div class="ttdoc">レイキャストヒットイベントを表す構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00040">PhysicsSnapshot.h:40</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_ray_cast_hit_event_html_a372d670389c52cc76a323fc97f360ce1"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#a372d670389c52cc76a323fc97f360ce1">SFW::Physics::RayCastHitEvent::hitEntity</a></div><div class="ttdeci">ECS::EntityID hitEntity</div><div class="ttdef"><b>Definition</b> <a href="#l00043">PhysicsSnapshot.h:43</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_ray_cast_hit_event_html_a675ef4072f5b8149259384c4169def0a"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#a675ef4072f5b8149259384c4169def0a">SFW::Physics::RayCastHitEvent::distance</a></div><div class="ttdeci">float distance</div><div class="ttdef"><b>Definition</b> <a href="#l00046">PhysicsSnapshot.h:46</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_ray_cast_hit_event_html_a76477ab9a9071610c8ef66b7fe78f5cf"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#a76477ab9a9071610c8ef66b7fe78f5cf">SFW::Physics::RayCastHitEvent::hit</a></div><div class="ttdeci">bool hit</div><div class="ttdef"><b>Definition</b> <a href="#l00042">PhysicsSnapshot.h:42</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_ray_cast_hit_event_html_aa8c144fe615845e1ec2365794c432b41"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#aa8c144fe615845e1ec2365794c432b41">SFW::Physics::RayCastHitEvent::requestId</a></div><div class="ttdeci">uint32_t requestId</div><div class="ttdef"><b>Definition</b> <a href="#l00041">PhysicsSnapshot.h:41</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_ray_cast_hit_event_html_ab90f7059c8b4196cc966e8655aabf087"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#ab90f7059c8b4196cc966e8655aabf087">SFW::Physics::RayCastHitEvent::position</a></div><div class="ttdeci">Math::Vec3f position</div><div class="ttdef"><b>Definition</b> <a href="#l00044">PhysicsSnapshot.h:44</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_ray_cast_hit_event_html_acb6c8181559869bb34666f77ce6775ab"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event.html#acb6c8181559869bb34666f77ce6775ab">SFW::Physics::RayCastHitEvent::normal</a></div><div class="ttdeci">Math::Vec3f normal</div><div class="ttdef"><b>Definition</b> <a href="#l00045">PhysicsSnapshot.h:45</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_55575cfcdad4d99529b3cab91f15b8f2.html">Physics</a></li><li class="navelem"><a href="_physics_snapshot_8h.html">PhysicsSnapshot.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

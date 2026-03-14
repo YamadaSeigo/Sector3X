@@ -1,0 +1,1051 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::ResourceManagerBase&lt; Derived, HandleType, CreateDescType, ResourceType &gt; クラステンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_resource_manager_base.html','','class_s_f_w_1_1_resource_manager_base-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::ResourceManagerBase&lt; Derived, HandleType, CreateDescType, ResourceType &gt; クラステンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>リソースマネージャーの基底クラス。主にRenderer系で使用する。  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:LockedResource" id="r_LockedResource"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html">LockedResource</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">リソースをSLock付きで取得するためのラッパー  <a href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#details">[詳解]</a><br /></td></tr>
+<tr class="memitem:Slot" id="r_Slot"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html">Slot</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">リソースが有効かどうかをチェックする関数  <a href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html#details">[詳解]</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a04eedb5dbac041ec944a8dc0da60f7db" id="r_a04eedb5dbac041ec944a8dc0da60f7db"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a04eedb5dbac041ec944a8dc0da60f7db">Add</a> (const CreateDescType &amp;desc, HandleType &amp;out)</td></tr>
+<tr class="memdesc:a04eedb5dbac041ec944a8dc0da60f7db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add: 既存があれば再利用(+1)＆削除要求が入っていればキャンセル  <br /></td></tr>
+<tr class="memitem:ae15f0d5d2bed3eb6c9c6d7b6864d78f7" id="r_ae15f0d5d2bed3eb6c9c6d7b6864d78f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae15f0d5d2bed3eb6c9c6d7b6864d78f7">AddRef</a> (HandleType h)</td></tr>
+<tr class="memdesc:ae15f0d5d2bed3eb6c9c6d7b6864d78f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">AddRef: 参照カウント +1  <br /></td></tr>
+<tr class="memitem:a88895bdec90c2a6a1ad0981d1ea37fc5" id="r_a88895bdec90c2a6a1ad0981d1ea37fc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a88895bdec90c2a6a1ad0981d1ea37fc5">Release</a> (HandleType h, uint64_t deleteSync=0)</td></tr>
+<tr class="memdesc:a88895bdec90c2a6a1ad0981d1ea37fc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release: 0 になったら削除要求を積む（alive はここでは落とさない）  <br /></td></tr>
+<tr class="memitem:a73343b94d71c058a7d42f0df945a99ce" id="r_a73343b94d71c058a7d42f0df945a99ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73343b94d71c058a7d42f0df945a99ce">EnqueueDelete</a> (uint32_t index, uint64_t deleteSync)</td></tr>
+<tr class="memdesc:a73343b94d71c058a7d42f0df945a99ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">削除要求の登録（重複を防いで期限更新）  <br /></td></tr>
+<tr class="memitem:a0d85020d8eff2ffb1b33e7e24360a125" id="r_a0d85020d8eff2ffb1b33e7e24360a125"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0d85020d8eff2ffb1b33e7e24360a125">CancelPending</a> (uint32_t index)</td></tr>
+<tr class="memdesc:a0d85020d8eff2ffb1b33e7e24360a125"><td class="mdescLeft">&#160;</td><td class="mdescRight">削除要求のキャンセル（Add での復活時など）  <br /></td></tr>
+<tr class="memitem:a21636b46b48c6f7e1948240a84cdd137" id="r_a21636b46b48c6f7e1948240a84cdd137"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html">LockedResource</a>&lt; ResourceType, std::shared_lock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a21636b46b48c6f7e1948240a84cdd137">Get</a> (HandleType h) const</td></tr>
+<tr class="memdesc:a21636b46b48c6f7e1948240a84cdd137"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get: 有効なハンドルなら Shared Lock 付きでリソースを返す  <br /></td></tr>
+<tr class="memitem:ab7f43893189687e9557458e1561ac53b" id="r_ab7f43893189687e9557458e1561ac53b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html">LockedResource</a>&lt; ResourceType, std::unique_lock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab7f43893189687e9557458e1561ac53b">GetWrite</a> (HandleType h)</td></tr>
+<tr class="memdesc:ab7f43893189687e9557458e1561ac53b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get: 有効なハンドルなら Shared Lock 付きでリソースを返す  <br /></td></tr>
+<tr class="memitem:a58e70f715b1c75115a43136bff591499" id="r_a58e70f715b1c75115a43136bff591499"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html">LockedResource</a>&lt; ResourceType, std::shared_lock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a58e70f715b1c75115a43136bff591499">GetDirect</a> (uint32_t idx) const</td></tr>
+<tr class="memdesc:a58e70f715b1c75115a43136bff591499"><td class="mdescLeft">&#160;</td><td class="mdescRight">GetDirect: インデックス直指定で Shared Lock 付きでリソースを返す（IsValid チェックなし）  <br /></td></tr>
+<tr class="memitem:ae1be2923e2cc12d30597a2a883b4c870" id="r_ae1be2923e2cc12d30597a2a883b4c870"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html">LockedResource</a>&lt; ResourceType, std::unique_lock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1be2923e2cc12d30597a2a883b4c870">GetDirectWrite</a> (uint32_t idx)</td></tr>
+<tr class="memdesc:ae1be2923e2cc12d30597a2a883b4c870"><td class="mdescLeft">&#160;</td><td class="mdescRight">GetDirect: インデックス直指定で Shared Lock 付きでリソースを返す（IsValid チェックなし）  <br /></td></tr>
+<tr class="memitem:a093db57dc6b50c4487114228c21f43eb" id="r_a093db57dc6b50c4487114228c21f43eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a093db57dc6b50c4487114228c21f43eb">ProcessDeferredDeletes</a> (uint64_t currentFrame)</td></tr>
+<tr class="memdesc:a093db57dc6b50c4487114228c21f43eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">期限到達で最終判断：ref == 0 なら破棄、&gt;0 なら削除キャンセル  <br /></td></tr>
+<tr class="memitem:a3b45f3d62337fc9cab8535042c015c7c" id="r_a3b45f3d62337fc9cab8535042c015c7c"><td class="memItemLeft" align="right" valign="top">std::shared_lock&lt; std::shared_mutex &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3b45f3d62337fc9cab8535042c015c7c">AcquireReadLock</a> () const</td></tr>
+<tr class="memdesc:a3b45f3d62337fc9cab8535042c015c7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">読み取り用ロックを取得する関数  <br /></td></tr>
+<tr class="memitem:ae763873166f069f11652407b915cde4d" id="r_ae763873166f069f11652407b915cde4d"><td class="memItemLeft" align="right" valign="top">std::unique_lock&lt; std::shared_mutex &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae763873166f069f11652407b915cde4d">AcquireWriteLock</a> ()</td></tr>
+<tr class="memdesc:ae763873166f069f11652407b915cde4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">書き込み用ロックを取得する関数  <br /></td></tr>
+<tr class="memitem:ab962efb2490c3a8364ddee6d4d986db8" id="r_ab962efb2490c3a8364ddee6d4d986db8"><td class="memItemLeft" align="right" valign="top">const ResourceType &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab962efb2490c3a8364ddee6d4d986db8">GetNoLock</a> (HandleType h) const</td></tr>
+<tr class="memdesc:ab962efb2490c3a8364ddee6d4d986db8"><td class="mdescLeft">&#160;</td><td class="mdescRight">ロック無しでリソースを取得する関数（IsValid チェック付き）  <br /></td></tr>
+<tr class="memitem:ad0e3f3458a61ff42eae76f90fe81fda4" id="r_ad0e3f3458a61ff42eae76f90fe81fda4"><td class="memItemLeft" align="right" valign="top">ResourceType &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad0e3f3458a61ff42eae76f90fe81fda4">GetNoLockWrite</a> (HandleType h)</td></tr>
+<tr class="memdesc:ad0e3f3458a61ff42eae76f90fe81fda4"><td class="mdescLeft">&#160;</td><td class="mdescRight">ロック無しでリソースを取得する関数（IsValid チェック付き）  <br /></td></tr>
+<tr class="memitem:acd8921794ec5f4579cf8207b8fa788bb" id="r_acd8921794ec5f4579cf8207b8fa788bb"><td class="memItemLeft" align="right" valign="top">const ResourceType &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd8921794ec5f4579cf8207b8fa788bb">GetDirectNoLock</a> (uint32_t idx) const</td></tr>
+<tr class="memdesc:acd8921794ec5f4579cf8207b8fa788bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">ロック無しでリソースを取得する関数（IsValid チェックなし）  <br /></td></tr>
+<tr class="memitem:ac24562d389854f09bca4eecd53a82f6d" id="r_ac24562d389854f09bca4eecd53a82f6d"><td class="memItemLeft" align="right" valign="top">ResourceType &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac24562d389854f09bca4eecd53a82f6d">GetDirectNoLockWrite</a> (uint32_t idx)</td></tr>
+<tr class="memdesc:ac24562d389854f09bca4eecd53a82f6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ロック無しでリソースを取得する関数（IsValid チェックなし）  <br /></td></tr>
+<tr class="memitem:a27c5b607075c0da3b758542764848b9b" id="r_a27c5b607075c0da3b758542764848b9b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a27c5b607075c0da3b758542764848b9b">IsValid</a> (HandleType h) const noexcept</td></tr>
+<tr class="memdesc:a27c5b607075c0da3b758542764848b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">ハンドルが有効かどうかをチェックする関数  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+限定公開メンバ関数</h2></td></tr>
+<tr class="memitem:a4fba9ec2f754f59999f3cc890bf8d3aa" id="r_a4fba9ec2f754f59999f3cc890bf8d3aa"><td class="memItemLeft" align="right" valign="top">HandleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4fba9ec2f754f59999f3cc890bf8d3aa">AllocateHandle</a> ()</td></tr>
+<tr class="memdesc:a4fba9ec2f754f59999f3cc890bf8d3aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">ハンドルを新規確保する関数  <br /></td></tr>
+<tr class="memitem:aa9555e8b96e02a75e848d470033541dd" id="r_aa9555e8b96e02a75e848d470033541dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa9555e8b96e02a75e848d470033541dd">MarkDead</a> (uint32_t index)</td></tr>
+<tr class="memdesc:aa9555e8b96e02a75e848d470033541dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">派生が使うユーティリティ  <br /></td></tr>
+<tr class="memitem:ad8e12c82c8062899e2114e20d0bfcd5a" id="r_ad8e12c82c8062899e2114e20d0bfcd5a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8e12c82c8062899e2114e20d0bfcd5a">FreeIndex</a> (uint32_t index)</td></tr>
+<tr class="memdesc:ad8e12c82c8062899e2114e20d0bfcd5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">派生が使うユーティリティ  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+限定公開変数類</h2></td></tr>
+<tr class="memitem:ab06811456bf9d3e86d400be7459a91ca" id="r_ab06811456bf9d3e86d400be7459a91ca"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html">Slot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab06811456bf9d3e86d400be7459a91ca">slots</a></td></tr>
+<tr class="memdesc:ab06811456bf9d3e86d400be7459a91ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">スロット情報のリスト  <br /></td></tr>
+<tr class="memitem:a33a333a87b00d23717ff7e74c0e3bed2" id="r_a33a333a87b00d23717ff7e74c0e3bed2"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_s_f_w_1_1_copyable_atomic.html">CopyableAtomic</a>&lt; uint32_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a33a333a87b00d23717ff7e74c0e3bed2">refCount</a></td></tr>
+<tr class="memdesc:a33a333a87b00d23717ff7e74c0e3bed2"><td class="mdescLeft">&#160;</td><td class="mdescRight">参照カウントのリスト  <br /></td></tr>
+<tr class="memitem:af242d92113df8594cc180534243e98a8" id="r_af242d92113df8594cc180534243e98a8"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af242d92113df8594cc180534243e98a8">freeList</a></td></tr>
+<tr class="memdesc:af242d92113df8594cc180534243e98a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">空きスロットインデックスのリスト  <br /></td></tr>
+<tr class="memitem:a2a05fb3cf3b0ea6767b836876caf0793" id="r_a2a05fb3cf3b0ea6767b836876caf0793"><td class="memItemLeft" align="right" valign="top">std::shared_mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a05fb3cf3b0ea6767b836876caf0793">mapMutex</a></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt;<br />
+class SFW::ResourceManagerBase&lt; Derived, HandleType, CreateDescType, ResourceType &gt;</div><p>リソースマネージャーの基底クラス。主にRenderer系で使用する。 </p>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00023">23</a> 行目に定義があります。</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a3b45f3d62337fc9cab8535042c015c7c" name="a3b45f3d62337fc9cab8535042c015c7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b45f3d62337fc9cab8535042c015c7c">&#9670;&#160;</a></span>AcquireReadLock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_lock&lt; std::shared_mutex &gt; <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::AcquireReadLock </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>読み取り用ロックを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>std::shared_lock&lt;std::shared_mutex&gt; 取得した読み取り用ロック </dd></dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00256">256</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae763873166f069f11652407b915cde4d" name="ae763873166f069f11652407b915cde4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae763873166f069f11652407b915cde4d">&#9670;&#160;</a></span>AcquireWriteLock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_lock&lt; std::shared_mutex &gt; <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::AcquireWriteLock </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>書き込み用ロックを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>std::unique_lock&lt;std::shared_mutex&gt; 取得した書き込み用ロック </dd></dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00263">263</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a04eedb5dbac041ec944a8dc0da60f7db" name="a04eedb5dbac041ec944a8dc0da60f7db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04eedb5dbac041ec944a8dc0da60f7db">&#9670;&#160;</a></span>Add()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::Add </td>
+          <td>(</td>
+          <td class="paramtype">const CreateDescType &amp;</td>          <td class="paramname"><span class="paramname"><em>desc</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">HandleType &amp;</td>          <td class="paramname"><span class="paramname"><em>out</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add: 既存があれば再利用(+1)＆削除要求が入っていればキャンセル </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">desc</td><td>作成情報 </td></tr>
+    <tr><td class="paramname">out</td><td>取得したハンドル </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>既存を再利用した場合 true、新規作成なら false </dd></dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00105">105</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae15f0d5d2bed3eb6c9c6d7b6864d78f7" name="ae15f0d5d2bed3eb6c9c6d7b6864d78f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae15f0d5d2bed3eb6c9c6d7b6864d78f7">&#9670;&#160;</a></span>AddRef()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::AddRef </td>
+          <td>(</td>
+          <td class="paramtype">HandleType</td>          <td class="paramname"><span class="paramname"><em>h</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>AddRef: 参照カウント +1 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>有効なハンドル </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00138">138</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4fba9ec2f754f59999f3cc890bf8d3aa" name="a4fba9ec2f754f59999f3cc890bf8d3aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fba9ec2f754f59999f3cc890bf8d3aa">&#9670;&#160;</a></span>AllocateHandle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">HandleType <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::AllocateHandle </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ハンドルを新規確保する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>HandleType 新規確保したハンドル </dd></dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00316">316</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0d85020d8eff2ffb1b33e7e24360a125" name="a0d85020d8eff2ffb1b33e7e24360a125"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d85020d8eff2ffb1b33e7e24360a125">&#9670;&#160;</a></span>CancelPending()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::CancelPending </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>削除要求のキャンセル（Add での復活時など） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>スロットインデックス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00172">172</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a73343b94d71c058a7d42f0df945a99ce" name="a73343b94d71c058a7d42f0df945a99ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73343b94d71c058a7d42f0df945a99ce">&#9670;&#160;</a></span>EnqueueDelete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::EnqueueDelete </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>deleteSync</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>削除要求の登録（重複を防いで期限更新） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>スロットインデックス </td></tr>
+    <tr><td class="paramname">deleteSync</td><td>削除要求の期限（フレームカウンタなど）。0 なら即時。 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00158">158</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad8e12c82c8062899e2114e20d0bfcd5a" name="ad8e12c82c8062899e2114e20d0bfcd5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8e12c82c8062899e2114e20d0bfcd5a">&#9670;&#160;</a></span>FreeIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::FreeIndex </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>派生が使うユーティリティ </p>
+<p>指定したインデックスのスロットを即時に解放する（ProcessDeferredDeletes での最終破棄までの間に使う） </p><dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>スロットインデックス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00345">345</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a21636b46b48c6f7e1948240a84cdd137" name="a21636b46b48c6f7e1948240a84cdd137"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21636b46b48c6f7e1948240a84cdd137">&#9670;&#160;</a></span>Get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html">LockedResource</a>&lt; ResourceType, std::shared_lock &gt; <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::Get </td>
+          <td>(</td>
+          <td class="paramtype">HandleType</td>          <td class="paramname"><span class="paramname"><em>h</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get: 有効なハンドルなら Shared Lock 付きでリソースを返す </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>有効なハンドル </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>Resource リソースのラッパー </dd></dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00187">187</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a58e70f715b1c75115a43136bff591499" name="a58e70f715b1c75115a43136bff591499"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58e70f715b1c75115a43136bff591499">&#9670;&#160;</a></span>GetDirect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html">LockedResource</a>&lt; ResourceType, std::shared_lock &gt; <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::GetDirect </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>idx</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>GetDirect: インデックス直指定で Shared Lock 付きでリソースを返す（IsValid チェックなし） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idx</td><td>スロットインデックス </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>Resource リソースのラッパー </dd></dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00208">208</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="acd8921794ec5f4579cf8207b8fa788bb" name="acd8921794ec5f4579cf8207b8fa788bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd8921794ec5f4579cf8207b8fa788bb">&#9670;&#160;</a></span>GetDirectNoLock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const ResourceType &amp; <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::GetDirectNoLock </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>idx</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ロック無しでリソースを取得する関数（IsValid チェックなし） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idx</td><td>スロットインデックス </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>const ResourceType&amp; 取得したリソースの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00289">289</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac24562d389854f09bca4eecd53a82f6d" name="ac24562d389854f09bca4eecd53a82f6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac24562d389854f09bca4eecd53a82f6d">&#9670;&#160;</a></span>GetDirectNoLockWrite()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ResourceType &amp; <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::GetDirectNoLockWrite </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>idx</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ロック無しでリソースを取得する関数（IsValid チェックなし） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idx</td><td>スロットインデックス </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>ResourceType&amp; 取得したリソースの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00297">297</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae1be2923e2cc12d30597a2a883b4c870" name="ae1be2923e2cc12d30597a2a883b4c870"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1be2923e2cc12d30597a2a883b4c870">&#9670;&#160;</a></span>GetDirectWrite()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html">LockedResource</a>&lt; ResourceType, std::unique_lock &gt; <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::GetDirectWrite </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>idx</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>GetDirect: インデックス直指定で Shared Lock 付きでリソースを返す（IsValid チェックなし） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idx</td><td>スロットインデックス </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>Resource リソースのラッパー </dd></dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00217">217</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab962efb2490c3a8364ddee6d4d986db8" name="ab962efb2490c3a8364ddee6d4d986db8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab962efb2490c3a8364ddee6d4d986db8">&#9670;&#160;</a></span>GetNoLock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const ResourceType &amp; <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::GetNoLock </td>
+          <td>(</td>
+          <td class="paramtype">HandleType</td>          <td class="paramname"><span class="paramname"><em>h</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ロック無しでリソースを取得する関数（IsValid チェック付き） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>有効なハンドル </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>const ResourceType&amp; 取得したリソースの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00271">271</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad0e3f3458a61ff42eae76f90fe81fda4" name="ad0e3f3458a61ff42eae76f90fe81fda4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0e3f3458a61ff42eae76f90fe81fda4">&#9670;&#160;</a></span>GetNoLockWrite()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ResourceType &amp; <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::GetNoLockWrite </td>
+          <td>(</td>
+          <td class="paramtype">HandleType</td>          <td class="paramname"><span class="paramname"><em>h</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ロック無しでリソースを取得する関数（IsValid チェック付き） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>有効なハンドル </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>ResourceType&amp; 取得したリソースの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00280">280</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab7f43893189687e9557458e1561ac53b" name="ab7f43893189687e9557458e1561ac53b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7f43893189687e9557458e1561ac53b">&#9670;&#160;</a></span>GetWrite()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html">LockedResource</a>&lt; ResourceType, std::unique_lock &gt; <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::GetWrite </td>
+          <td>(</td>
+          <td class="paramtype">HandleType</td>          <td class="paramname"><span class="paramname"><em>h</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get: 有効なハンドルなら Shared Lock 付きでリソースを返す </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>有効なハンドル </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>Resource リソースのラッパー </dd></dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00198">198</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a27c5b607075c0da3b758542764848b9b" name="a27c5b607075c0da3b758542764848b9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27c5b607075c0da3b758542764848b9b">&#9670;&#160;</a></span>IsValid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::IsValid </td>
+          <td>(</td>
+          <td class="paramtype">HandleType</td>          <td class="paramname"><span class="paramname"><em>h</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ハンドルが有効かどうかをチェックする関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>チェックするハンドル </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>bool 有効な場合はtrue、そうでない場合はfalse </dd></dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00306">306</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa9555e8b96e02a75e848d470033541dd" name="aa9555e8b96e02a75e848d470033541dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9555e8b96e02a75e848d470033541dd">&#9670;&#160;</a></span>MarkDead()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::MarkDead </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>派生が使うユーティリティ </p>
+<p>指定したインデックスのスロットを死んでいる状態にする（ProcessDeferredDeletes での最終破棄までの間に使う） </p><dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>スロットインデックス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00336">336</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a093db57dc6b50c4487114228c21f43eb" name="a093db57dc6b50c4487114228c21f43eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a093db57dc6b50c4487114228c21f43eb">&#9670;&#160;</a></span>ProcessDeferredDeletes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::ProcessDeferredDeletes </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>currentFrame</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>期限到達で最終判断：ref == 0 なら破棄、&gt;0 なら削除キャンセル </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">currentFrame</td><td>現在のフレームカウンタなど </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00225">225</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a88895bdec90c2a6a1ad0981d1ea37fc5" name="a88895bdec90c2a6a1ad0981d1ea37fc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88895bdec90c2a6a1ad0981d1ea37fc5">&#9670;&#160;</a></span>Release()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::Release </td>
+          <td>(</td>
+          <td class="paramtype">HandleType</td>          <td class="paramname"><span class="paramname"><em>h</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>deleteSync</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Release: 0 になったら削除要求を積む（alive はここでは落とさない） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>有効なハンドル </td></tr>
+    <tr><td class="paramname">deleteSync</td><td>削除要求の期限（フレームカウンタなど）。0 なら即時。 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00147">147</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<a id="af242d92113df8594cc180534243e98a8" name="af242d92113df8594cc180534243e98a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af242d92113df8594cc180534243e98a8">&#9670;&#160;</a></span>freeList</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;uint32_t&gt; <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::freeList</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>空きスロットインデックスのリスト </p>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00360">360</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2a05fb3cf3b0ea6767b836876caf0793" name="a2a05fb3cf3b0ea6767b836876caf0793"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a05fb3cf3b0ea6767b836876caf0793">&#9670;&#160;</a></span>mapMutex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_mutex <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::mapMutex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel mutable">mutable</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00364">364</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a33a333a87b00d23717ff7e74c0e3bed2" name="a33a333a87b00d23717ff7e74c0e3bed2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33a333a87b00d23717ff7e74c0e3bed2">&#9670;&#160;</a></span>refCount</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="struct_s_f_w_1_1_copyable_atomic.html">CopyableAtomic</a>&lt;uint32_t&gt; &gt; <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::refCount</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>参照カウントのリスト </p>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00356">356</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab06811456bf9d3e86d400be7459a91ca" name="ab06811456bf9d3e86d400be7459a91ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab06811456bf9d3e86d400be7459a91ca">&#9670;&#160;</a></span>slots</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename HandleType, typename CreateDescType, typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html">Slot</a>&gt; <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a>&lt; Derived, HandleType, CreateDescType, ResourceType &gt;::slots</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>スロット情報のリスト </p>
+
+<p class="definition"> <a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a> の <a class="el" href="_resouce_manager_base_8hpp_source.html#l00352">352</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/<a class="el" href="_resouce_manager_base_8hpp_source.html">ResouceManagerBase.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="class_s_f_w_1_1_resource_manager_base.html">ResourceManagerBase</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

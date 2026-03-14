@@ -1,0 +1,193 @@
+\doxysection{build\+\_\+order.\+h}
+\hypertarget{build__order_8h_source}{}\label{build__order_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/build\_order.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/build\_order.h}}
+\mbox{\hyperlink{build__order_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00016}00016\ \textcolor{preprocessor}{\#if\ defined(\_\_AVX2\_\_)\ ||\ (defined(\_MSC\_VER)\ \&\&\ defined(\_\_AVX2\_\_))}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <immintrin.h>}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00018}00018\ \textcolor{preprocessor}{\#define\ SFW\_HAS\_AVX2\ 1}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00019}00019\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00020}\mbox{\hyperlink{build__order_8h_a44204c13832879c517fd7b4a0e8345cc}{00020}}\ \textcolor{preprocessor}{\#define\ SFW\_HAS\_AVX2\ 0}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00021}00021\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00023}00023\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_archetype_chunk_8h}{ECS/ArchetypeChunk.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00025}00025\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00026}00026\ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00027}\mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions}{00027}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions}{SoAPositions}}\ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00028}\mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions_a205f7097f5c6f7d6c33652d8de2dad41}{00028}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ \mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions_a205f7097f5c6f7d6c33652d8de2dad41}{x}};\ \textcolor{comment}{//\ [N]}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00029}\mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions_a727658fb42ddccb66649e6b84d9a0dfd}{00029}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ \mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions_a727658fb42ddccb66649e6b84d9a0dfd}{y}};\ \textcolor{comment}{//\ [N]}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00030}\mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions_af511b5c3771935f31c6e92e84395f14d}{00030}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ \mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions_af511b5c3771935f31c6e92e84395f14d}{z}};\ \textcolor{comment}{//\ [N]}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00031}\mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions_ab4486eba55f0fe751d724b1d340607cd}{00031}}\ \ \ \ \ \ \ \ \ uint32\_t\ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions_ab4486eba55f0fe751d724b1d340607cd}{N}};}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00032}00032\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00034}00034\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{int}\ B\ =\ 32>}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00035}\mbox{\hyperlink{namespace_s_f_w_a4062efd69103d94c9a6e508a995f3e05}{00035}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{namespace_s_f_w_a4062efd69103d94c9a6e508a995f3e05}{DistanceBin}}(\textcolor{keywordtype}{float}\ d2,\ \textcolor{keywordtype}{float}\ near2,\ \textcolor{keywordtype}{float}\ far2)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ t\ =\ (d2\ -\/\ near2)\ /\ (std::max)(far2\ -\/\ near2,\ 1e-\/12f);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ b\ =\ (int)(t\ *\ B);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (b\ <\ 0\ ?\ 0\ :\ (b\ >=\ B\ ?\ B\ -\/\ 1\ :\ b));}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00039}00039\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00041}00041\ \ \ \ \ \textcolor{comment}{//\ dx\string^2\ +\ dy\string^2\ +\ dz\string^2（カメラ位置からの距離\string^2）}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00042}\mbox{\hyperlink{namespace_s_f_w_a2a43150e83a5812c4a819a81f78cd0fa}{00042}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_s_f_w_a2a43150e83a5812c4a819a81f78cd0fa}{Dist2}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions}{SoAPositions}}\&\ T,\ uint32\_t\ i,}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cx,\ \textcolor{keywordtype}{float}\ cy,\ \textcolor{keywordtype}{float}\ cz)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dx\ =\ T.x[i]\ -\/\ cx;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dy\ =\ T.y[i]\ -\/\ cy;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dz\ =\ T.z[i]\ -\/\ cz;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ dx\ *\ dx\ +\ dy\ *\ dy\ +\ dz\ *\ dz;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00048}00048\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00050}00050\ \ \ \ \ \textcolor{comment}{//\ 近→遠の近似順で\ order\ を構築（安定）}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00051}00051\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{int}\ B\ =\ 32>}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00052}\mbox{\hyperlink{namespace_s_f_w_ae2d88f62b34da9b423c0ba5ee46ca2f0}{00052}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_ae2d88f62b34da9b423c0ba5ee46ca2f0}{BuildNearToFar\_Order\_Buckets}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions}{SoAPositions}}\&\ T,}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cx,\ \textcolor{keywordtype}{float}\ cy,\ \textcolor{keywordtype}{float}\ cz,}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ near2,\ \textcolor{keywordtype}{float}\ far2,}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\&\ order)}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00056}00056\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ N\ =\ T.N;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ order.resize(N);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ 各ビンの個数カウント}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ uint32\_t\ count[B]\ =\ \{\};\ \textcolor{comment}{//\ 0\ init}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ std::vector<uint8\_t>\ bins(N);\ \textcolor{comment}{//\ i番目がどのビンか}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ N;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ d2\ =\ \mbox{\hyperlink{namespace_s_f_w_a2a43150e83a5812c4a819a81f78cd0fa}{Dist2}}(T,\ i,\ cx,\ cy,\ cz);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ b\ =\ \mbox{\hyperlink{namespace_s_f_w_a4062efd69103d94c9a6e508a995f3e05}{DistanceBin<B>}}(d2,\ near2,\ far2);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ bins[i]\ =\ (uint8\_t)b;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ ++count[b];}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ prefix\ sum\ →\ 書き込み開始位置}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ uint32\_t\ offset[B];}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ uint32\_t\ sum\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ b\ =\ 0;\ b\ <\ B;\ ++b)\ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ offset[b]\ =\ sum;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ sum\ +=\ count[b];}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3)\ 安定に連結}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ N;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ b\ =\ bins[i];}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ order[offset[b]++]\ =\ i;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00084}00084\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00086}00086\ \ \ \ \ \textcolor{comment}{//\ d2\ を\ [near2,\ far2]\ →\ [0,\ 65535]\ に量子化（固定小数キー）}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00087}\mbox{\hyperlink{namespace_s_f_w_afeddd23a62f7ccc7bccdbecfec4133e1}{00087}}\ \ \ \ \ \textcolor{keyword}{inline}\ uint16\_t\ \mbox{\hyperlink{namespace_s_f_w_afeddd23a62f7ccc7bccdbecfec4133e1}{QuantizeD2}}(\textcolor{keywordtype}{float}\ d2,\ \textcolor{keywordtype}{float}\ near2,\ \textcolor{keywordtype}{float}\ far2)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ t\ =\ (d2\ -\/\ near2)\ /\ (std::max)(far2\ -\/\ near2,\ 1e-\/12f);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ v\ =\ (int)std::lrintf(t\ *\ 65535.0f);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (v\ <\ 0)\ v\ =\ 0;\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (v\ >\ 65535)\ v\ =\ 65535;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (uint16\_t)v;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00092}00092\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00094}00094\ \ \ \ \ \textcolor{comment}{//\ 16bitキーを使った安定な近→遠ソート（Radix16）。ビン分割よりも精細な順序が得られる。安定。}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00095}00095\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ BuildOrder\_FixedRadix16(\textcolor{keyword}{const}\ SoAPositions\&\ T,}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cx,\ \textcolor{keywordtype}{float}\ cy,\ \textcolor{keywordtype}{float}\ cz,}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ near2,\ \textcolor{keywordtype}{float}\ far2,}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\&\ order)}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00099}00099\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ N\ =\ T.N;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ order.resize(N);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ std::vector<uint16\_t>\ key(N);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00104}00104\ \textcolor{preprocessor}{\#if\ SFW\_HAS\_AVX2}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vxC\ =\ \_mm256\_set1\_ps(cx);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vyC\ =\ \_mm256\_set1\_ps(cy);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vzC\ =\ \_mm256\_set1\_ps(cz);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vNear2\ =\ \_mm256\_set1\_ps(near2);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vScale\ =\ \_mm256\_set1\_ps(65535.0f\ /\ (std::max)(far2\ -\/\ near2,\ 1e-\/12f));}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ uint32\_t\ i\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (;\ i\ +\ 8\ <=\ N;\ i\ +=\ 8)\ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ vx\ =\ \_mm256\_loadu\_ps(T.x\ +\ i);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ vy\ =\ \_mm256\_loadu\_ps(T.y\ +\ i);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ vz\ =\ \_mm256\_loadu\_ps(T.z\ +\ i);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ dx\ =\ \_mm256\_sub\_ps(vx,\ vxC);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ dy\ =\ \_mm256\_sub\_ps(vy,\ vyC);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ dz\ =\ \_mm256\_sub\_ps(vz,\ vzC);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ d2\ =\ \_mm256\_fmadd\_ps(dx,\ dx,}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_fmadd\_ps(dy,\ dy,\ \_mm256\_mul\_ps(dz,\ dz)));}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ t\ =\ (d2\ -\/\ near2)\ *\ scale}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ t\ =\ \_mm256\_mul\_ps(\_mm256\_sub\_ps(d2,\ vNear2),\ vScale);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ clamp\ [0,65535]}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ zero\ =\ \_mm256\_set1\_ps(0.0f);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ maxv\ =\ \_mm256\_set1\_ps(65535.0f);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ t\ =\ \_mm256\_max\_ps(zero,\ \_mm256\_min\_ps(t,\ maxv));}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 量子化（丸め）}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256i\ qi\ =\ \_mm256\_cvtps\_epi32(t);\ \textcolor{comment}{//\ 32bit\ int}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{alignas}(32)\ uint32\_t\ tmp[8];}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_store\_si256((\_\_m256i*)tmp,\ qi);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ 8;\ ++k)\ key[i\ +\ k]\ =\ (uint16\_t)tmp[k];}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (;\ i\ <\ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea8d9c307cb7f3c4a32822a51922d1ceaa}{N}};\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ key[i]\ =\ \mbox{\hyperlink{namespace_s_f_w_afeddd23a62f7ccc7bccdbecfec4133e1}{QuantizeD2}}(\mbox{\hyperlink{namespace_s_f_w_a2a43150e83a5812c4a819a81f78cd0fa}{Dist2}}(T,\ i,\ cx,\ cy,\ cz),\ near2,\ far2);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00140}00140\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00141}00141\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea8d9c307cb7f3c4a32822a51922d1ceaa}{N}};\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ key[i]\ =\ \mbox{\hyperlink{namespace_s_f_w_afeddd23a62f7ccc7bccdbecfec4133e1}{QuantizeD2}}(\mbox{\hyperlink{namespace_s_f_w_a2a43150e83a5812c4a819a81f78cd0fa}{Dist2}}(T,\ i,\ cx,\ cy,\ cz),\ near2,\ far2);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00145}00145\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00147}00147\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ 16bit\ key\ の2パス計数/Radix（安定）\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00148}00148\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ LSB\ 8bit\ →\ MSB\ 8bit}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00149}00149\ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\ tmpOrder(N);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00150}00150\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 初期順（安定性維持のため）}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00151}00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea8d9c307cb7f3c4a32822a51922d1ceaa}{N}};\ ++i)\ tmpOrder[i]\ =\ i;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ pass\ =\ [\&](\textcolor{keywordtype}{int}\ shift,\ \textcolor{keyword}{const}\ std::vector<uint32\_t>\&\ src,\ std::vector<uint32\_t>\&\ dst)\ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ cnt[256]\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea8d9c307cb7f3c4a32822a51922d1ceaa}{N}};\ ++i)\ ++cnt[(key[src[i]]\ >>\ shift)\ \&\ 0xFF];}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ ofs[256];\ uint32\_t\ sum\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ b\ =\ 0;\ b\ <\ 256;\ ++b)\ \{\ ofs[b]\ =\ sum;\ sum\ +=\ cnt[b];\ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea8d9c307cb7f3c4a32822a51922d1ceaa}{N}};\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ k\ =\ key[src[i]];}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ b\ =\ (k\ >>\ shift)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dst[ofs[b]++]\ =\ src[i];}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ pass(0,\ tmpOrder,\ order);\ \ \ \ \ \ \textcolor{comment}{//\ LSB}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00166}00166\ \ \ \ \ \ \ \ \ pass(8,\ order,\ tmpOrder);\ \ \ \ \ \ \textcolor{comment}{//\ MSB}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00167}00167\ \ \ \ \ \ \ \ \ order.swap(tmpOrder);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 最終結果を\ order\ に}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00168}00168\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00170}\mbox{\hyperlink{struct_s_f_w_1_1_key_row_a2628de705493cd01d3a8cb82f2f65166}{00170}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_key_row}{KeyRow}}\ \{\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_key_row_a2628de705493cd01d3a8cb82f2f65166}{dist2}};\ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_key_row_a779a642eaeea9bca24454884d75c02ab}{row}};\ \};}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00171}00171\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00172}00172\ \ \ \ \ \textcolor{comment}{//\ 厳密な近→遠ソート（安定）。距離\string^2をキーにして\ std::nth\_element\ +\ sort。}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00173}00173\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ BuildFrontK\_Strict(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions}{SoAPositions}}\&\ T,}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00174}00174\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cx,\ \textcolor{keywordtype}{float}\ cy,\ \textcolor{keywordtype}{float}\ cz,}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00175}00175\ \ \ \ \ \ \ \ \ uint32\_t\ K,}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\&\ order)}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00177}00177\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ N\ =\ T.N;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ order.resize(N);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00180}00180\ \ \ \ \ \ \ \ \ std::vector<KeyRow>\ keys(N);}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ N;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ keys[i]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_a2a43150e83a5812c4a819a81f78cd0fa}{Dist2}}(T,\ i,\ cx,\ cy,\ cz),\ i\ \};}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00183}00183\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (K\ >\ N)\ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eaa5f3c6a11b03839d46af9fb43c97c188}{K}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea8d9c307cb7f3c4a32822a51922d1ceaa}{N}};}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00185}00185\ \ \ \ \ \ \ \ \ std::nth\_element(keys.begin(),\ keys.begin()\ +\ K,\ keys.end(),}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ [](\textcolor{keyword}{auto}\&\ a,\ \textcolor{keyword}{auto}\&\ b)\ \{\ return\ a.dist2\ <\ b.dist2;\ \});}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ std::sort(keys.begin(),\ keys.begin()\ +\ K,}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ [](\textcolor{keyword}{auto}\&\ a,\ \textcolor{keyword}{auto}\&\ b)\ \{\ return\ a.dist2\ <\ b.dist2;\ \});}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea8d9c307cb7f3c4a32822a51922d1ceaa}{N}};\ ++i)\ order[i]\ =\ keys[i].row;}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00191}00191\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{build__order_8h_source_l00192}00192\ \}}
+
+\end{DoxyCode}

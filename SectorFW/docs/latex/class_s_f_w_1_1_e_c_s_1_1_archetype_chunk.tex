@@ -1,0 +1,195 @@
+\doxysection{SFW\+::ECS\+::Archetype\+Chunk クラス}
+\hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{}\label{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}\index{SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}}
+
+
+対象のアーキタイプのコンポーネントのデータを格納するクラス  
+
+
+
+
+{\ttfamily \#include $<$Archetype\+Chunk.\+h$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor}{Accessor}}
+\begin{DoxyCompactList}\small\item\em アーキタイプチャンクのアクセサークラス \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a22b8504419ed0ded4fac7e291066b18a}{Archetype\+Chunk}} (\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} mask)
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\std\+::optional$<$ T \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_aab9a33d52d74f38ed25da2bc7508d3ef}{Get\+Column}} () noexcept
+\begin{DoxyCompactList}\small\item\em コンポーネントの列を取得する関数 \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a9ad9e5876edd7d3fe93b7ba84b2268c9}{Add\+Entity}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id)
+\begin{DoxyCompactList}\small\item\em エンティティを追加する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a47b5de191a4fb9bacfa346bd913814cb}{Remove\+Entity\+Swap\+Pop}} (size\+\_\+t index) noexcept
+\begin{DoxyCompactList}\small\item\em エンティティを削除する関数(最後のエンティティと入れ替えて追放) \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_ad81af21258799c01aeddbc43abf9b6cf}{Get\+Entity\+Count}} () const noexcept
+\begin{DoxyCompactList}\small\item\em エンティティの数を取得する関数 \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a0b63cd7ab0e1261bfcb3b76403f35a0e}{Get\+Capacity}} () const noexcept
+\begin{DoxyCompactList}\small\item\em チャンクの容量を取得する関数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a8f9b996de36d1a844a007e669c1ae199}{Get\+Component\+Mask}} () const noexcept
+\begin{DoxyCompactList}\small\item\em コンポーネントマスクを取得する関数 \end{DoxyCompactList}\item 
+const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \& \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a05574939cc84e36af21c08212d1a2007}{Get\+Entity\+IDs}} () const noexcept
+\begin{DoxyCompactList}\small\item\em エンティティ\+IDの配列を取得する関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+対象のアーキタイプのコンポーネントのデータを格納するクラス 
+
+ \mbox{\hyperlink{_archetype_chunk_8h_source}{Archetype\+Chunk.\+h}} の \mbox{\hyperlink{_archetype_chunk_8h_source_l00040}{40}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a22b8504419ed0ded4fac7e291066b18a}\index{SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}!ArchetypeChunk@{ArchetypeChunk}}
+\index{ArchetypeChunk@{ArchetypeChunk}!SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}}
+\doxysubsubsection{\texorpdfstring{ArchetypeChunk()}{ArchetypeChunk()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a22b8504419ed0ded4fac7e291066b18a} 
+SFW\+::\+ECS\+::\+Archetype\+Chunk\+::\+Archetype\+Chunk (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}}}]{mask}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em mask} & コンポーネントマスク\\
+\hline
+\end{DoxyParams}
+maskからレイアウトを取得し、チャンクの容量を設定します。 
+
+ \mbox{\hyperlink{_archetype_chunk_8h_source}{Archetype\+Chunk.\+h}} の \mbox{\hyperlink{_archetype_chunk_8h_source_l00047}{47}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a9ad9e5876edd7d3fe93b7ba84b2268c9}\index{SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}!AddEntity@{AddEntity}}
+\index{AddEntity@{AddEntity}!SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}}
+\doxysubsubsection{\texorpdfstring{AddEntity()}{AddEntity()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a9ad9e5876edd7d3fe93b7ba84b2268c9} 
+size\+\_\+t SFW\+::\+ECS\+::\+Archetype\+Chunk\+::\+Add\+Entity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{}\end{DoxyParamCaption})}
+
+
+
+エンティティを追加する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & エンティティ\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+size\+\_\+t 追加されたエンティティのインデックス 
+\end{DoxyReturn}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a0b63cd7ab0e1261bfcb3b76403f35a0e}\index{SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}!GetCapacity@{GetCapacity}}
+\index{GetCapacity@{GetCapacity}!SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}}
+\doxysubsubsection{\texorpdfstring{GetCapacity()}{GetCapacity()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a0b63cd7ab0e1261bfcb3b76403f35a0e} 
+size\+\_\+t SFW\+::\+ECS\+::\+Archetype\+Chunk\+::\+Get\+Capacity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+チャンクの容量を取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+size\+\_\+t チャンクの容量 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_archetype_chunk_8h_source}{Archetype\+Chunk.\+h}} の \mbox{\hyperlink{_archetype_chunk_8h_source_l00092}{92}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_aab9a33d52d74f38ed25da2bc7508d3ef}\index{SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}!GetColumn@{GetColumn}}
+\index{GetColumn@{GetColumn}!SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}}
+\doxysubsubsection{\texorpdfstring{GetColumn()}{GetColumn()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_aab9a33d52d74f38ed25da2bc7508d3ef} 
+template$<$typename T$>$ \\
+std\+::optional$<$ T \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+ECS\+::\+Archetype\+Chunk\+::\+Get\+Column (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+コンポーネントの列を取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+std\+::optional$<$\+T\texorpdfstring{$\ast$}{*}$>$ コンポーネントのポインタ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_archetype_chunk_8h_source}{Archetype\+Chunk.\+h}} の \mbox{\hyperlink{_archetype_chunk_8h_source_l00057}{57}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a8f9b996de36d1a844a007e669c1ae199}\index{SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}!GetComponentMask@{GetComponentMask}}
+\index{GetComponentMask@{GetComponentMask}!SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}}
+\doxysubsubsection{\texorpdfstring{GetComponentMask()}{GetComponentMask()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a8f9b996de36d1a844a007e669c1ae199} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} SFW\+::\+ECS\+::\+Archetype\+Chunk\+::\+Get\+Component\+Mask (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+コンポーネントマスクを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask} コンポーネントマスク 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_archetype_chunk_8h_source}{Archetype\+Chunk.\+h}} の \mbox{\hyperlink{_archetype_chunk_8h_source_l00097}{97}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_ad81af21258799c01aeddbc43abf9b6cf}\index{SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}!GetEntityCount@{GetEntityCount}}
+\index{GetEntityCount@{GetEntityCount}!SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}}
+\doxysubsubsection{\texorpdfstring{GetEntityCount()}{GetEntityCount()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_ad81af21258799c01aeddbc43abf9b6cf} 
+size\+\_\+t SFW\+::\+ECS\+::\+Archetype\+Chunk\+::\+Get\+Entity\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+エンティティの数を取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+size\+\_\+t エンティティの数 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_archetype_chunk_8h_source}{Archetype\+Chunk.\+h}} の \mbox{\hyperlink{_archetype_chunk_8h_source_l00087}{87}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a05574939cc84e36af21c08212d1a2007}\index{SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}!GetEntityIDs@{GetEntityIDs}}
+\index{GetEntityIDs@{GetEntityIDs}!SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}}
+\doxysubsubsection{\texorpdfstring{GetEntityIDs()}{GetEntityIDs()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a05574939cc84e36af21c08212d1a2007} 
+const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \& SFW\+::\+ECS\+::\+Archetype\+Chunk\+::\+Get\+Entity\+IDs (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+エンティティ\+IDの配列を取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+const std\+::vector$<$\+Entity\+ID$>$\& エンティティ\+IDの配列への参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_archetype_chunk_8h_source}{Archetype\+Chunk.\+h}} の \mbox{\hyperlink{_archetype_chunk_8h_source_l00102}{102}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a47b5de191a4fb9bacfa346bd913814cb}\index{SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}!RemoveEntitySwapPop@{RemoveEntitySwapPop}}
+\index{RemoveEntitySwapPop@{RemoveEntitySwapPop}!SFW::ECS::ArchetypeChunk@{SFW::ECS::ArchetypeChunk}}
+\doxysubsubsection{\texorpdfstring{RemoveEntitySwapPop()}{RemoveEntitySwapPop()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a47b5de191a4fb9bacfa346bd913814cb} 
+void SFW\+::\+ECS\+::\+Archetype\+Chunk\+::\+Remove\+Entity\+Swap\+Pop (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{index}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+エンティティを削除する関数(最後のエンティティと入れ替えて追放) 
+
+
+\begin{DoxyParams}{引数}
+{\em index} & 削除するエンティティのインデックス \\
+\hline
+\end{DoxyParams}
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_archetype_chunk_8h}{Archetype\+Chunk.\+h}}\end{DoxyCompactItemize}

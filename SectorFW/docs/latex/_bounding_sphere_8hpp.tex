@@ -1,0 +1,71 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Math/\+Bounding\+Sphere.hpp ファイル}
+\hypertarget{_bounding_sphere_8hpp}{}\label{_bounding_sphere_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/BoundingSphere.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/BoundingSphere.hpp}}
+
+
+点集合/メッシュからの境界球（\+Bounding Sphere）計算ユーティリティ  
+
+
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$random$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+{\ttfamily \#include $<$immintrin.\+h$>$}\newline
+{\ttfamily \#include "{}Matrix.\+hpp"{}}\newline
+{\ttfamily \#include "{}Frustum.\+hpp"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{SFW\+::\+Math\+::\+Bounding\+Sphere$<$ T, Vec3 $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp}{SFW\+::\+Math\+::\+Bounding\+Sphere$<$ T, Vec3 $>$\+::\+Ndc\+Precomp}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_math}{SFW\+::\+Math}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_math_a1f43841e3f56b6fbccfa34ea9f5a1517}{SFW\+::\+Math\+::\+Bounding\+Spheref}} = \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{Bounding\+Sphere}}$<$float, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$>$ }\\auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5c287a7b34e04ade16816dae409b474e}{SFW\+::\+Math\+::v3\+\_\+add}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}} \&a, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}} \&b) noexcept
+\item 
+{\footnotesize template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}, class T$>$ }\\auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_af590f6507232be6899058237f533def2}{SFW\+::\+Math\+::v3\+\_\+adds}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}} \&a, T s) noexcept
+\item 
+{\footnotesize template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}, class T$>$ }\\auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_a418cd4b76d5104be3872e05c9ebff54d}{SFW\+::\+Math\+::v3\+\_\+muls}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}} \&a, T s) noexcept
+\item 
+{\footnotesize template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$>$ }\\auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{SFW\+::\+Math\+::v3\+\_\+sub}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}} \&a, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}} \&b) noexcept
+\item 
+{\footnotesize template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$>$ }\\auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_a62699c4e73ea0ce3498c24d987d21a1b}{SFW\+::\+Math\+::v3\+\_\+dot}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}} \&a, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}} \&b) noexcept
+\item 
+{\footnotesize template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$>$ }\\auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_a675bbe0fca4325823ec598a805667073}{SFW\+::\+Math\+::v3\+\_\+len2}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}} \&a) noexcept
+\item 
+{\footnotesize template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$>$ }\\auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3}{SFW\+::\+Math\+::v3\+\_\+len}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}} \&a) noexcept
+\item 
+{\footnotesize template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$>$ }\\auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4c4ad70492f6fb83dfdc012d0006aced}{SFW\+::\+Math\+::v3\+\_\+mid}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}} \&a, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}} \&b) noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+点集合/メッシュからの境界球（\+Bounding Sphere）計算ユーティリティ 
+
+\begin{DoxyAuthor}{著者}
+you 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+2025-\/09 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_bounding_sphere_8hpp_source}{Bounding\+Sphere.\+hpp}} に定義があります。
+

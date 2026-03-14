@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/Archetype.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_archetype_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Archetype.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_archetype_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="_archetype_chunk_8h.html">ArchetypeChunk.h</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>{</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_e_c_s.html">ECS</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    {</div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="};">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html">   22</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#abe7b719e57373d40a136b0ed156f91fc">Archetype</a> {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#abe7b719e57373d40a136b0ed156f91fc">   28</a></span>            <span class="keyword">explicit</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#abe7b719e57373d40a136b0ed156f91fc">Archetype</a>(<a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a> mask) noexcept : mask(mask) {}</div>
+<div class="foldopen" id="foldopen00033" data-start="{" data-end="}">
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#aa8c85b68e26631b775f75afc9fd82242">   33</a></span>            <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a>* <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#aa8c85b68e26631b775f75afc9fd82242">GetOrCreateChunk</a>() {</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; chunk : chunks) {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>                    <span class="keywordflow">if</span> (chunk-&gt;GetEntityCount() &lt; chunk-&gt;GetCapacity())</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                        <span class="keywordflow">return</span> chunk.get();</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                }</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                std::unique_ptr&lt;ArchetypeChunk&gt; newChunk = std::make_unique&lt;ArchetypeChunk&gt;(mask);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a>* ptr = newChunk.get();</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                chunks.emplace_back(std::move(newChunk));</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                <span class="keywordflow">return</span> ptr;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            }</div>
+</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#aa4582d501677dca8d7037f20a383880a">   48</a></span>            <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a>&amp; <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#aa4582d501677dca8d7037f20a383880a">GetMask</a>() const noexcept { <span class="keywordflow">return</span> mask; }</div>
+<div class="foldopen" id="foldopen00053" data-start="{" data-end="}">
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#af0d158aa3c978781310c523899879883">   53</a></span>            <span class="keyword">const</span> std::vector&lt;std::unique_ptr&lt;ArchetypeChunk&gt;&gt;&amp; <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#af0d158aa3c978781310c523899879883">GetChunks</a>() const noexcept {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <span class="keywordflow">return</span> chunks;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            }</div>
+</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <span class="comment">//アーキタイプのコンポーネントマスク</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a> mask;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            <span class="comment">//アーキタイプのチャンクのコンテナ</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            std::vector&lt;std::unique_ptr&lt;ArchetypeChunk&gt;&gt; chunks;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        };</div>
+</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    }</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>}</div>
+<div class="ttc" id="a_archetype_chunk_8h_html"><div class="ttname"><a href="_archetype_chunk_8h.html">ArchetypeChunk.h</a></div><div class="ttdoc">アーキタイプチャンクを定義するクラス</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_chunk_html"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">SFW::ECS::ArchetypeChunk</a></div><div class="ttdoc">対象のアーキタイプのコンポーネントのデータを格納するクラス</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00040">ArchetypeChunk.h:40</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_html_aa4582d501677dca8d7037f20a383880a"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#aa4582d501677dca8d7037f20a383880a">SFW::ECS::Archetype::GetMask</a></div><div class="ttdeci">const ComponentMask &amp; GetMask() const noexcept</div><div class="ttdoc">アーキタイプのコンポーネントマスクを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00048">Archetype.h:48</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_html_aa8c85b68e26631b775f75afc9fd82242"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#aa8c85b68e26631b775f75afc9fd82242">SFW::ECS::Archetype::GetOrCreateChunk</a></div><div class="ttdeci">ArchetypeChunk * GetOrCreateChunk()</div><div class="ttdoc">アーキタイプのチャンクを取得または作成する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00033">Archetype.h:33</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_html_abe7b719e57373d40a136b0ed156f91fc"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#abe7b719e57373d40a136b0ed156f91fc">SFW::ECS::Archetype::Archetype</a></div><div class="ttdeci">Archetype(ComponentMask mask) noexcept</div><div class="ttdoc">コンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00028">Archetype.h:28</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_html_af0d158aa3c978781310c523899879883"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#af0d158aa3c978781310c523899879883">SFW::ECS::Archetype::GetChunks</a></div><div class="ttdeci">const std::vector&lt; std::unique_ptr&lt; ArchetypeChunk &gt; &gt; &amp; GetChunks() const noexcept</div><div class="ttdoc">アーキタイプのチャンクを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00053">Archetype.h:53</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html">SFW::ECS</a></div><div class="ttdef"><b>Definition</b> <a href="_access_info_8h_source.html#l00016">AccessInfo.h:17</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html_a801a8ddbf41707287f3fc0588d25ec8d"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">SFW::ECS::ComponentMask</a></div><div class="ttdeci">std::bitset&lt; MaxComponents &gt; ComponentMask</div><div class="ttdoc">コンポーネントマスクを定義するビットセット型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00042">component.hpp:42</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_5ada393002ee7234dde4caf0d7998537.html">Core</a></li><li class="navelem"><a href="dir_424b27d9839eee089d4ee0e5359b7d45.html">ECS</a></li><li class="navelem"><a href="_archetype_8h.html">Archetype.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

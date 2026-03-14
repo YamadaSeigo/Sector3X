@@ -1,0 +1,240 @@
+\doxysection{Render\+Service.\+h}
+\hypertarget{_render_service_8h_source}{}\label{_render_service_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderService.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderService.h}}
+\mbox{\hyperlink{_render_service_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <shared\_mutex>}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}../external/MOC/MaskedOcclusionCulling.h"{}}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_service_context_8hpp}{../Core/ECS/ServiceContext.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_render_queue_8h}{RenderQueue.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_type_checker_8hpp}{../Util/TypeChecker.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_rectangle_8hpp}{../Math/Rectangle.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_occluder_toolkit_8h}{OccluderToolkit.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00023}00023\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00024}00024\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00025}00025\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{Graphics}}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00026}00026\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00027}\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aad14d2e80e921b0442903b65576ce417}{00027}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aad14d2e80e921b0442903b65576ce417}{MOC}}\ =\ MaskedOcclusionCulling;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ MOC\ 提出用の最小バッチ\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00030}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch}{00030}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch}{MocQuadBatch}}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00031}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{00031}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{SFW::Math::Vec4f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[4];\ \ \textcolor{comment}{//\ (x,\ y,\ z,\ w)\ だが\ MOC\ が使うのは\ x,y,w}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00032}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{00032}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{indices}}[6];\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 0-\/1-\/2,\ 2-\/1-\/3\ の2枚（CCW）}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00033}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a4af338a1217a70039eea045c14f46521}{00033}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a4af338a1217a70039eea045c14f46521}{numTriangles}}\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00034}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a22f72333c374873329553a7a66bb3440}{00034}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a22f72333c374873329553a7a66bb3440}{valid}}\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 近クリップ全面裏などなら\ false}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00037}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch}{00037}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch}{MocTriBatch}}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00038}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch_aa7d960c59e5cbd20d1f4219bcbdb1e8e}{00038}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch_aa7d960c59e5cbd20d1f4219bcbdb1e8e}{clipVertices}}\ =\ \textcolor{keyword}{nullptr};\ \textcolor{comment}{//\ (x,\ y,\ z,\ w)\ 配列}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00039}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch_a63c42ee92469442b440f4a1a7d132ae5}{00039}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t*\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch_a63c42ee92469442b440f4a1a7d132ae5}{indices}}\ =\ \textcolor{keyword}{nullptr};\ \ \ \textcolor{comment}{//\ インデックス配列}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00040}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch_aab628a539e7b2e36350eb0e97ba41704}{00040}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch_aab628a539e7b2e36350eb0e97ba41704}{numTriangles}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00041}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch_ad6aceea4a5699b7e98a7ee70dc1817af}{00041}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch_ad6aceea4a5699b7e98a7ee70dc1817af}{valid}}\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 近クリップ全面裏などなら\ false}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00048}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service}{00048}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_af6c1601d43f550a15cb3400921bc7732}{RenderService}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{ECS::IUpdateService}}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00050}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a134e43747ae529fc1fb5d6aa24e9aa7c}{00050}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a134e43747ae529fc1fb5d6aa24e9aa7c}{UpdateFuncType}}\ =\ void(*)(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_af6c1601d43f550a15cb3400921bc7732}{RenderService}}*);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00051}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a8846510dc9639640943191c802d029f3}{00051}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a8846510dc9639640943191c802d029f3}{PreDrawFuncType}}\ =\ void(*)(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_af6c1601d43f550a15cb3400921bc7732}{RenderService}}*,\ uint32\_t);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Backend,\ Po\textcolor{keywordtype}{int}erType\ RTV,\ Po\textcolor{keywordtype}{int}erType\ DSV,\ Po\textcolor{keywordtype}{int}erType\ SRV,\ Po\textcolor{keywordtype}{int}erType\ Buffer,\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }ViewHandle>}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00054}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a0cb85d4c3b030a6472ab372175c16d6a}{00054}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a0cb85d4c3b030a6472ab372175c16d6a}{RenderGraph}};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00058}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_af6c1601d43f550a15cb3400921bc7732}{00058}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_af6c1601d43f550a15cb3400921bc7732}{RenderService}}(\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aad14d2e80e921b0442903b65576ce417}{MOC}}*\ moc)\ :\ queueMutex(\mbox{\hyperlink{namespacestd}{std}}::make\_unique<\mbox{\hyperlink{namespacestd}{std}}::shared\_mutex>()),\ moc(moc)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00064}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a823bb7abeb54ac110aa18778cd3dcc66}{00064}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a823bb7abeb54ac110aa18778cd3dcc66}{\string~RenderService}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MOC::Destroy(moc);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ PreUpdate(\textcolor{keywordtype}{double}\ deltaTime)\ \textcolor{keyword}{override}\ \textcolor{keyword}{final}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ moc-\/>ClearBuffer();}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ produceSlot.exchange((produceSlot.load(std::memory\_order\_relaxed)\ +\ 1)\ \%\ RENDER\_BUFFER\_COUNT,\ std::memory\_order\_acq\_rel);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (updateFunc)\ updateFunc(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ CallPreDrawCustomFunc(uint32\_t\ slot)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (preDrawFunc)\ preDrawFunc(\textcolor{keyword}{this},\ slot);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00094}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a26b2035323d088abf7fda60f3079d557}{00094}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session}{RenderQueue::ProducerSession}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a26b2035323d088abf7fda60f3079d557}{GetProducerSession}}(\textcolor{keyword}{const}\ std::string\&\ groupName)}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(*queueMutex);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ queueIndex.find(groupName);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ queueIndex.end())\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}RenderQueue\ not\ found\ for\ pass\ name"{}});}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ renderQueues[it-\/>second]-\/>MakeProducer();}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00111}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a123942ffa29cc889a1b3024b3fb59eec}{00111}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{RenderQueue::ProducerSessionExternal}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a123942ffa29cc889a1b3024b3fb59eec}{GetProducerSession}}(\textcolor{keyword}{const}\ std::string\&\ groupName,}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}{RenderQueue::ProducerSessionExternal::SmallBuf}}\&\ buf)}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(*queueMutex);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ queueIndex.find(groupName);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ queueIndex.end())\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}RenderQueue\ not\ found\ for\ pass\ name"{}});}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ renderQueues[it-\/>second]-\/>MakeProducer(buf);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ ResourceType>}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00129}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_affd58a4a5d3889d5cec830b7ecccef2e}{00129}}\ \ \ \ \ \ \ \ \ \ \ \ \ ResourceType*\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_affd58a4a5d3889d5cec830b7ecccef2e}{GetResourceManager}}()\ noexcept}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ resourceManagers.find(\textcolor{keyword}{typeid}(ResourceType));}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ resourceManagers.end())\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Resource\ manager\ not\ found\ for\ type"{}});}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}ResourceType*\textcolor{keyword}{>}(it-\/>second);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00144}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a45793a31a6eb6846e9e58c5b7c0d408a}{00144}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a45793a31a6eb6846e9e58c5b7c0d408a}{IsVisibleInMOC}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{Math::NdcRectWithW}}\&\ ndc)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00145}00145\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ moc-\/>TestRect(ndc.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w_aa1035f4e7f70aa1709caa02f66cc5a30}{xmin}},\ ndc.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w_a39ea0917bbe36d3f908fe10fa868ffd9}{ymin}},\ ndc.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w_a65dca8227d12e74375a1a509f6a72a6a}{xmax}},\ ndc.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w_afa7c52ff228e5e3cd3fedfe75db74c60}{ymax}},\ ndc.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w_ab888b53cb96ab3bd2171b1e00bda6c4f}{wmin}});}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00152}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a77796753e0f5143f3caf0ebf992d5bc4}{00152}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a77796753e0f5143f3caf0ebf992d5bc4}{RenderingOccluderInMOC}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch}{MocQuadBatch}}\&\ quad)}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!quad.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a22f72333c374873329553a7a66bb3440}{valid}})\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }Clip4\ \{\ \textcolor{keywordtype}{float}\ x,\ y,\ z,\ w;\ \};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Clip4\ tmp[4];}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tmp[i]\ =\ \{\ quad.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[i].\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a3b73bc23b1366b9bb9fdd5c324eb89ca}{x}},\ quad.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[i].\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a322367280913e6d77a4941b968e1c617}{y}},\ quad.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[i].\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_ad3b5861d4dcef8be1e2b33ec630ab9da}{z}},\ quad.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[i].\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}}\ \};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ moc-\/>RenderTriangles(}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keywordtype}{float}*)tmp,}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keywordtype}{unsigned}*)\&quad.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{indices}}[0],}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ quad.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a4af338a1217a70039eea045c14f46521}{numTriangles}},}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MOC::BACKFACE\_NONE}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00173}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a66be3d5aff51ccf7b494f7e915570d29}{00173}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a66be3d5aff51ccf7b494f7e915570d29}{RenderingOccluderInMOC}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch}{MocTriBatch}}\&\ tri)}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!tri.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch_ad6aceea4a5699b7e98a7ee70dc1817af}{valid}})\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00176}00176\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ moc-\/>RenderTriangles(}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tri.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch_aa7d960c59e5cbd20d1f4219bcbdb1e8e}{clipVertices}},}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tri.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch_a63c42ee92469442b440f4a1a7d132ae5}{indices}},}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tri.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch_aab628a539e7b2e36350eb0e97ba41704}{numTriangles}},}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MOC::BACKFACE\_CCW}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00189}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a442ec70cec9e24ff9f34fd29880fbc09}{00189}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a442ec70cec9e24ff9f34fd29880fbc09}{GetNearClipPlane}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ moc-\/>GetNearClipPlane();\ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00195}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a02cb8f1a83d816727f97348d1edd1641}{00195}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a02cb8f1a83d816727f97348d1edd1641}{GetDepthBuffer}}(std::vector<float>\&\ buffer)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00196}00196\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ width,\ height;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ moc-\/>GetResolution(width,\ height);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (buffer.size()\ <\ width\ *\ height)\ buffer.resize(width\ *\ height);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00200}00200\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ moc-\/>ComputePixelDepthBuffer(buffer.data(),\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00207}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a94802bc2f43b42ba45129d71cff63e13}{00207}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a94802bc2f43b42ba45129d71cff63e13}{GetProduceSlot}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ produceSlot.load(std::memory\_order\_acquire);\ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00212}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_aa4fe229840c583ee00f1854f8177cb1c}{00212}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_aa4fe229840c583ee00f1854f8177cb1c}{SetCustomUpdateFunction}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a134e43747ae529fc1fb5d6aa24e9aa7c}{UpdateFuncType}}\ func)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ updateFunc\ =\ func;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00219}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a729137ff20e464825e067f063a46b76c}{00219}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a729137ff20e464825e067f063a46b76c}{SetCustomPreDrawFunction}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a8846510dc9639640943191c802d029f3}{PreDrawFuncType}}\ func)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ preDrawFunc\ =\ func;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00222}00222\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ ResourceType>}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RegisterResourceManager(ResourceType*\ manager)}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!manager)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Cannot\ register\ null\ resource\ manager"{}});}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (resourceManagers.contains(\textcolor{keyword}{typeid}(ResourceType)))\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Resource\ manager\ already\ registered\ for\ this\ type"{}});}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00234}00234\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ resourceManagers[\textcolor{keyword}{typeid}(ResourceType)]\ =\ manager;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00237}00237\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ size\_t>\ queueIndex;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::unique\_ptr<RenderQueue>>\ renderQueues;\ \textcolor{comment}{//\ 全てのレンダークエリを保持する}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<std::shared\_mutex>\ queueMutex;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ std::unordered\_map<std::type\_index,\ void*>\ resourceManagers;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00242}00242\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aad14d2e80e921b0442903b65576ce417}{MOC}}*\ moc\ =\ \textcolor{keyword}{nullptr};\ \textcolor{comment}{//\ Masked\ Occlusion\ Culling\ のインスタンス}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00244}00244\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ std::atomic<uint16\_t>\ produceSlot\{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00246}00246\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a134e43747ae529fc1fb5d6aa24e9aa7c}{UpdateFuncType}}\ updateFunc\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a8846510dc9639640943191c802d029f3}{PreDrawFuncType}}\ preDrawFunc\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00249}00249\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_service_context_8hpp_adbfb2947c9a06b367226fe228627154c}{STATIC\_SERVICE\_TAG}}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_service_context_8hpp_aba8d760b00a97c77ac318f63335ff1e2}{DEFINE\_UPDATESERVICE\_GROUP}}(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b}{GROUP\_GRAPHICS}})}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00252}00252\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00253}00253\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00254}00254\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ AABBFrontFaceQuad\ を\ 2トライで提出できるバッチに変換}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00255}\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a59c20dc5983617367e3313e0e03389da}{00255}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch}{MocQuadBatch}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a59c20dc5983617367e3313e0e03389da}{ConvertAABBFrontFaceQuadToMoc}}(}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Math::Vec4f}}*\ clips,}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{SFW::Math::Matrix<4,\ 4,\ float>}}\&\ viewProj,}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ nearClipW\ \textcolor{comment}{/*\ =\ moc-\/>GetNearClipPlane()\ と一致させるのが理想\ */}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00259}00259\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00260}00260\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Vec3\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{SFW::Math::Vec3f}};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Vec4\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{SFW::Math::Vec4f}};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00263}00263\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch}{MocQuadBatch}}\ out\{\};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00265}00265\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ std::memcpy(out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}},\ clips,\ \textcolor{keyword}{sizeof}(Vec4)\ *\ 4);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00267}00267\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ 近クリップ整合（全頂点が\ near\ より奥側なら無効）}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ MOC\ は\ depth\ =\ 1/w（逆深度）なので、near\ と合わせるなら\ w\ >\ near\ を可視空間とみなす。}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ countFront\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[i].\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}}\ >\ nearClipW)\ ++countFront;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (countFront\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a22f72333c374873329553a7a66bb3440}{valid}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00276}00276\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3)\ スクリーン空間の巻き方向を安定させる（CCW想定）}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ NDC\ の\ x,y\ を使って符号付き面積で\ CCW\ を判定し、CW\ なら対角を入れ替える。}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ ndcXY\_stable\ =\ [\&](\textcolor{keywordtype}{int}\ i)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CCW判定用途なので「割り算が爆発しない」ことを優先}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ w\ =\ (std::max)(out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[i].\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}},\ nearClipW);\ \textcolor{comment}{//\ near\ でクランプ}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ invw\ =\ 1.0f\ /\ w;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{SFW::Math::Vec2f}}\{\ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[i].\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a3b73bc23b1366b9bb9fdd5c324eb89ca}{x}}\ *\ invw,\ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[i].\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a322367280913e6d77a4941b968e1c617}{y}}\ *\ invw\ \};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00285}00285\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ triArea2\ =\ [](\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{SFW::Math::Vec2f}}\ p,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{SFW::Math::Vec2f}}\ q,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{SFW::Math::Vec2f}}\ r)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2倍面積（z成分）:\ (q\ -\/\ p)\ ×\ (r\ -\/\ p)}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (q.x\ -\/\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}})\ *\ (r.y\ -\/\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}})\ -\/\ (q.y\ -\/\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}})\ *\ (r.x\ -\/\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}});}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00290}00290\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ a\ =\ ndcXY\_stable(0),\ b\ =\ ndcXY\_stable(1),\ c\ =\ ndcXY\_stable(2),\ d\ =\ ndcXY\_stable(3);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ area\ =\ triArea2(a,\ b,\ c)\ +\ triArea2(a,\ c,\ d);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ ccw\ =\ (area\ >\ 0.0f);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CCW\ でなければ\ 1\ と\ 2\ を入れ替える（0,1,2\ /\ 2,1,3\ -\/>\ 0,2,1\ /\ 1,2,3）}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ccw)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[0],\ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[2]);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00298}00298\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4)\ インデックス（CCW）}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{indices}}[0]\ =\ 0;\ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{indices}}[1]\ =\ 2;\ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{indices}}[2]\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{indices}}[3]\ =\ 2;\ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{indices}}[4]\ =\ 0;\ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{indices}}[5]\ =\ 3;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00302}00302\ }
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00304}00304\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00305}00305\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00306}00306\ \}}
+
+\end{DoxyCode}

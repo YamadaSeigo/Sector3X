@@ -1,0 +1,55 @@
+\doxysection{assert\+\_\+config.\+h}
+\hypertarget{assert__config_8h_source}{}\label{assert__config_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/assert\_config.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/assert\_config.h}}
+\mbox{\hyperlink{assert__config_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <cstdio>}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <cstdlib>}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00013}\mbox{\hyperlink{namespace_s_f_w_1_1_debug}{00013}}\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_debug}{SFW::Debug}}\ \{}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00014}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ad9176b9ec7bce1195c82555b0ca97f34}{00014}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ad9176b9ec7bce1195c82555b0ca97f34}{ReportAssertFailure}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ expr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ file,\ \textcolor{keywordtype}{int}\ line,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg\ =\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00015}00015\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00016}00016\ \ \ \ \ \ \ \ \ std::fprintf(stderr,}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}[ASSERT]\ \%s\(\backslash\)n\ \ at\ \%s(\%d)\(\backslash\)n\ \ message:\ \%s\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ expr,\ file,\ line,\ msg\ ?\ msg\ :\ \textcolor{stringliteral}{"{}(none)"{}});}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ここでログファイルに書いたり、MessageBox\ 出したりも可}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00020}00020\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00022}00022\ \textcolor{preprocessor}{\#if\ defined(\_MSC\_VER)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00023}00023\ \textcolor{preprocessor}{\#define\ DEBUG\_BREAK()\ \_\_debugbreak()}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00024}00024\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00025}\mbox{\hyperlink{assert__config_8h_a0f722bf86505c5431e71505f46b5fd21}{00025}}\ \textcolor{preprocessor}{\#define\ DEBUG\_BREAK()\ std::abort()}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00026}00026\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00027}00027\ \}\ \textcolor{comment}{//\ namespace\ Debug}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00029}00029\ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00030}00030\ \textcolor{comment}{//\ デバッグ用アサート}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00031}00031\ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00032}00032\ \textcolor{preprocessor}{\#if\ defined(\_DEBUG)\ ||\ !defined(NDEBUG)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00033}\mbox{\hyperlink{assert__config_8h_a7c360e1bd29ee4fa83ec85935d37dbeb}{00033}}\ \textcolor{preprocessor}{\#define\ SFW\_ASSERT(expr)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00034}00034\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ do\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00035}00035\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ if\ (!(expr))\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00036}00036\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::SFW::Debug::ReportAssertFailure(\#expr,\ \_\_FILE\_\_,\ \_\_LINE\_\_);\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00037}00037\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_BREAK();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00038}00038\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00039}00039\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ while\ (0)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00040}00040\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00041}00041\ \ \ \ \ \textcolor{comment}{//\ Release\ では無効\ (式も評価しない)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00042}00042\ \textcolor{preprocessor}{\#define\ SFW\_ASSERT(expr)\ ((void)0)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00043}00043\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00045}00045\ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00046}00046\ \textcolor{comment}{//\ VERIFY:\ Release\ でも評価される}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00047}00047\ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00048}\mbox{\hyperlink{assert__config_8h_aed65e65b3c8cdf295f24f5dcbe7002dd}{00048}}\ \textcolor{preprocessor}{\#define\ SFW\_VERIFY(expr)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00049}00049\ \textcolor{preprocessor}{\ \ \ \ do\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00050}00050\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (!(expr))\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00051}00051\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ ::SFW::Debug::ReportAssertFailure(\#expr,\ \_\_FILE\_\_,\ \_\_LINE\_\_);\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00052}00052\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_BREAK();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00053}00053\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{assert__config_8h_source_l00054}00054\ \textcolor{preprocessor}{\ \ \ \ \}\ while\ (0)}}
+
+\end{DoxyCode}

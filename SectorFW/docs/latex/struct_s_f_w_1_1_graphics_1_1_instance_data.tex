@@ -1,0 +1,118 @@
+\doxysection{SFW\+::Graphics\+::Instance\+Data 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_instance_data}{}\label{struct_s_f_w_1_1_graphics_1_1_instance_data}\index{SFW::Graphics::InstanceData@{SFW::Graphics::InstanceData}}
+
+
+インスタンスデータ構造体  
+
+
+
+
+{\ttfamily \#include $<$Render\+Types.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data_a4d6f6b17770ee000daa7b3763017abe8}{Instance\+Data}} ()
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data_a4f0cbea6bc027ea50a55d77bedde59e1}{Instance\+Data}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \&mtx)
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data_a7abfa32a1cb9c76031f58ceb021169f1}{Has\+Data}} () const noexcept
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data_add2be76699f64996fe92c160521f1c22}{Set\+Data}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \&mtx) noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data_a14ca5865b9304b3962ba228ca4af1e02}{world\+Mtx}}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Math\+::\+Vec4f}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data_a5b6ef76d1196d0ed11079cd209e9a4fb}{color}} = \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Math\+::\+Vec4f}}(1.\+0f, 1.\+0f, 1.\+0f, 1.\+0f)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+インスタンスデータ構造体 
+
+m\mbox{[}3\mbox{]}\mbox{[}3\mbox{]}が0.0fならインスタンスデータを保持していない 
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00056}{56}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_instance_data_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_instance_data_a4d6f6b17770ee000daa7b3763017abe8}\index{SFW::Graphics::InstanceData@{SFW::Graphics::InstanceData}!InstanceData@{InstanceData}}
+\index{InstanceData@{InstanceData}!SFW::Graphics::InstanceData@{SFW::Graphics::InstanceData}}
+\doxysubsubsection{\texorpdfstring{InstanceData()}{InstanceData()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_instance_data_a4d6f6b17770ee000daa7b3763017abe8} 
+SFW\+::\+Graphics\+::\+Instance\+Data\+::\+Instance\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00061}{61}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_instance_data_a4f0cbea6bc027ea50a55d77bedde59e1}\index{SFW::Graphics::InstanceData@{SFW::Graphics::InstanceData}!InstanceData@{InstanceData}}
+\index{InstanceData@{InstanceData}!SFW::Graphics::InstanceData@{SFW::Graphics::InstanceData}}
+\doxysubsubsection{\texorpdfstring{InstanceData()}{InstanceData()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_instance_data_a4f0cbea6bc027ea50a55d77bedde59e1} 
+SFW\+::\+Graphics\+::\+Instance\+Data\+::\+Instance\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \&}]{mtx}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00064}{64}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_instance_data_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_instance_data_a7abfa32a1cb9c76031f58ceb021169f1}\index{SFW::Graphics::InstanceData@{SFW::Graphics::InstanceData}!HasData@{HasData}}
+\index{HasData@{HasData}!SFW::Graphics::InstanceData@{SFW::Graphics::InstanceData}}
+\doxysubsubsection{\texorpdfstring{HasData()}{HasData()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_instance_data_a7abfa32a1cb9c76031f58ceb021169f1} 
+bool SFW\+::\+Graphics\+::\+Instance\+Data\+::\+Has\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00068}{68}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_instance_data_add2be76699f64996fe92c160521f1c22}\index{SFW::Graphics::InstanceData@{SFW::Graphics::InstanceData}!SetData@{SetData}}
+\index{SetData@{SetData}!SFW::Graphics::InstanceData@{SFW::Graphics::InstanceData}}
+\doxysubsubsection{\texorpdfstring{SetData()}{SetData()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_instance_data_add2be76699f64996fe92c160521f1c22} 
+void SFW\+::\+Graphics\+::\+Instance\+Data\+::\+Set\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \&}]{mtx}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00069}{69}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_instance_data_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_instance_data_a5b6ef76d1196d0ed11079cd209e9a4fb}\index{SFW::Graphics::InstanceData@{SFW::Graphics::InstanceData}!color@{color}}
+\index{color@{color}!SFW::Graphics::InstanceData@{SFW::Graphics::InstanceData}}
+\doxysubsubsection{\texorpdfstring{color}{color}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_instance_data_a5b6ef76d1196d0ed11079cd209e9a4fb} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Math\+::\+Vec4f}} SFW\+::\+Graphics\+::\+Instance\+Data\+::color = \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Math\+::\+Vec4f}}(1.\+0f, 1.\+0f, 1.\+0f, 1.\+0f)}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00059}{59}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_instance_data_a14ca5865b9304b3962ba228ca4af1e02}\index{SFW::Graphics::InstanceData@{SFW::Graphics::InstanceData}!worldMtx@{worldMtx}}
+\index{worldMtx@{worldMtx}!SFW::Graphics::InstanceData@{SFW::Graphics::InstanceData}}
+\doxysubsubsection{\texorpdfstring{worldMtx}{worldMtx}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_instance_data_a14ca5865b9304b3962ba228ca4af1e02} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} SFW\+::\+Graphics\+::\+Instance\+Data\+::world\+Mtx}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00058}{58}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_render_types_8h}{Render\+Types.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,80 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Physics/\+Physics\+Device.h ファイル}
+\hypertarget{_physics_device_8h}{}\label{_physics_device_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsDevice.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsDevice.h}}
+
+
+物理デバイスのヘッダーファイル  
+
+
+{\ttfamily \#include "{}Physics\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}Physics\+Snapshot.\+h"{}}\newline
+{\ttfamily \#include "{}Physics\+Contact\+Listener.\+h"{}}\newline
+{\ttfamily \#include "{}IShape\+Resolver.\+h"{}}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$optional$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$immintrin.\+h$>$}\newline
+{\ttfamily \#include $<$cstddef$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$Jolt/\+Jolt.\+h$>$}\newline
+{\ttfamily \#include $<$Jolt/\+Register\+Types.\+h$>$}\newline
+{\ttfamily \#include $<$Jolt/\+Physics/\+Physics\+System.\+h$>$}\newline
+{\ttfamily \#include $<$Jolt/\+Physics/\+Body/\+Body\+Interface.\+h$>$}\newline
+{\ttfamily \#include $<$Jolt/\+Core/\+Job\+System\+Thread\+Pool.\+h$>$}\newline
+{\ttfamily \#include $<$Jolt/\+Core/\+Temp\+Allocator.\+h$>$}\newline
+{\ttfamily \#include $<$Jolt/\+Physics/\+Character/\+Character\+Virtual.\+h$>$}\newline
+{\ttfamily \#include "{}../\+Core/\+ECS/\+Entity\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Core/\+Registry\+Types.\+h"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_pending_ray_hit}{SFW\+::\+Physics\+::\+Pending\+Ray\+Hit}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_my_contact_listener_owner}{SFW\+::\+Physics\+::\+My\+Contact\+Listener\+Owner}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_pose_batch_view}{SFW\+::\+Physics\+::\+Pose\+Batch\+View}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_kinematic_batch_view}{SFW\+::\+Physics\+::\+Kinematic\+Batch\+View}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_character_pose}{SFW\+::\+Physics\+::\+Character\+Pose}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_device}{SFW\+::\+Physics\+::\+Physics\+Device}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_device_1_1_created_body}{SFW\+::\+Physics\+::\+Physics\+Device\+::\+Created\+Body}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_device_1_1_init_params}{SFW\+::\+Physics\+::\+Physics\+Device\+::\+Init\+Params}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_device_1_1_character_virtual_info}{SFW\+::\+Physics\+::\+Physics\+Device\+::\+Character\+Virtual\+Info}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_update_set}{SFW\+::\+Physics\+::\+Update\+Set}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_physics}{SFW\+::\+Physics}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a8e1bb1c4ec0f82048a9179c7328e70ee}{SFW\+::\+Physics\+::update\+\_\+scalar\+\_\+lerp}} (float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict dst, const float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict a, const float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict b, size\+\_\+t N, float alpha, const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_update_set}{Update\+Set}} \&upd, float sparse\+Threshold=0.\+30f)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a44fe25356103001b14f0b31992f0c301}{SFW\+::\+Physics\+::update\+\_\+quat\+\_\+nlerp\+\_\+shortest}} (float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict qx, float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict qy, float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict qz, float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict qw, const float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict ax, const float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict ay, const float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict az, const float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict aw, const float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict bx, const float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict by, const float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict bz, const float \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+restrict bw, size\+\_\+t N, float alpha, const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_update_set}{Update\+Set}} \&upd, float sparse\+Threshold=0.\+30f)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+物理デバイスのヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} に定義があります。
+

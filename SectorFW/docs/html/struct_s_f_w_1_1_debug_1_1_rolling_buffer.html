@@ -1,0 +1,439 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Debug::RollingBuffer 構造体</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('struct_s_f_w_1_1_debug_1_1_rolling_buffer.html','','struct_s_f_w_1_1_debug_1_1_rolling_buffer-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Debug::RollingBuffer 構造体</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>固定サイズのローリングバッファ  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_perf_h_u_d_8h_source.html">PerfHUD.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a93db1dac22da233d3584a61227ee5f9b" id="r_a93db1dac22da233d3584a61227ee5f9b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a93db1dac22da233d3584a61227ee5f9b">init</a> (size_t cap)</td></tr>
+<tr class="memdesc:a93db1dac22da233d3584a61227ee5f9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">バッファを初期化する  <br /></td></tr>
+<tr class="memitem:a154c19539c97700a76004b8ac28a336f" id="r_a154c19539c97700a76004b8ac28a336f"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a154c19539c97700a76004b8ac28a336f">size</a> () const</td></tr>
+<tr class="memdesc:a154c19539c97700a76004b8ac28a336f"><td class="mdescLeft">&#160;</td><td class="mdescRight">バッファのサイズを取得する  <br /></td></tr>
+<tr class="memitem:a8ceea90bd21398bab573823fa0931991" id="r_a8ceea90bd21398bab573823fa0931991"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ceea90bd21398bab573823fa0931991">empty</a> () const</td></tr>
+<tr class="memdesc:a8ceea90bd21398bab573823fa0931991"><td class="mdescLeft">&#160;</td><td class="mdescRight">バッファが空かどうかを確認する  <br /></td></tr>
+<tr class="memitem:a053d0edcfc418f93892e81805bae64f9" id="r_a053d0edcfc418f93892e81805bae64f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a053d0edcfc418f93892e81805bae64f9">push</a> (float v)</td></tr>
+<tr class="memdesc:a053d0edcfc418f93892e81805bae64f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">バッファに値を追加する  <br /></td></tr>
+<tr class="memitem:a2acd053ac499ce7df8b24c4369bf0321" id="r_a2acd053ac499ce7df8b24c4369bf0321"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2acd053ac499ce7df8b24c4369bf0321">toLinear</a> (std::vector&lt; float &gt; &amp;out) const</td></tr>
+<tr class="memdesc:a2acd053ac499ce7df8b24c4369bf0321"><td class="mdescLeft">&#160;</td><td class="mdescRight">バッファの内容を線形配列に変換する  <br /></td></tr>
+<tr class="memitem:a9f22a01939a93fe17a31f676282b3f86" id="r_a9f22a01939a93fe17a31f676282b3f86"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f22a01939a93fe17a31f676282b3f86">autoscale</a> ()</td></tr>
+<tr class="memdesc:a9f22a01939a93fe17a31f676282b3f86"><td class="mdescLeft">&#160;</td><td class="mdescRight">バッファの内容を自動的にスケーリングする  <br /></td></tr>
+<tr class="memitem:abac3880d0f4778c595f702dbefe35499" id="r_abac3880d0f4778c595f702dbefe35499"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abac3880d0f4778c595f702dbefe35499">average</a> () const</td></tr>
+<tr class="memdesc:abac3880d0f4778c595f702dbefe35499"><td class="mdescLeft">&#160;</td><td class="mdescRight">バッファの平均値を計算する  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+公開変数類</h2></td></tr>
+<tr class="memitem:a6a09809d045497c12b6700223f515585" id="r_a6a09809d045497c12b6700223f515585"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6a09809d045497c12b6700223f515585">data</a></td></tr>
+<tr class="memitem:a4aa18de47886565ada44515ed67546ca" id="r_a4aa18de47886565ada44515ed67546ca"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4aa18de47886565ada44515ed67546ca">head</a> = 0</td></tr>
+<tr class="memitem:a92e16f54393a08ac213ec8d4afc58f92" id="r_a92e16f54393a08ac213ec8d4afc58f92"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a92e16f54393a08ac213ec8d4afc58f92">lastMin</a> = 0.f</td></tr>
+<tr class="memitem:a948232c3b7f2b1023f7c7af7aa4edd0b" id="r_a948232c3b7f2b1023f7c7af7aa4edd0b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a948232c3b7f2b1023f7c7af7aa4edd0b">lastMax</a> = 1.f</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>固定サイズのローリングバッファ </p>
+
+<p class="definition"> <a class="el" href="_perf_h_u_d_8h_source.html">PerfHUD.h</a> の <a class="el" href="_perf_h_u_d_8h_source.html#l00022">22</a> 行目に定義があります。</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a9f22a01939a93fe17a31f676282b3f86" name="a9f22a01939a93fe17a31f676282b3f86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f22a01939a93fe17a31f676282b3f86">&#9670;&#160;</a></span>autoscale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Debug::RollingBuffer::autoscale </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>バッファの内容を自動的にスケーリングする </p>
+
+<p class="definition"> <a class="el" href="_perf_h_u_d_8h_source.html">PerfHUD.h</a> の <a class="el" href="_perf_h_u_d_8h_source.html#l00068">68</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="abac3880d0f4778c595f702dbefe35499" name="abac3880d0f4778c595f702dbefe35499"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abac3880d0f4778c595f702dbefe35499">&#9670;&#160;</a></span>average()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Debug::RollingBuffer::average </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>バッファの平均値を計算する </p>
+<dl class="section return"><dt>戻り値</dt><dd>float 平均値 </dd></dl>
+
+<p class="definition"> <a class="el" href="_perf_h_u_d_8h_source.html">PerfHUD.h</a> の <a class="el" href="_perf_h_u_d_8h_source.html#l00079">79</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8ceea90bd21398bab573823fa0931991" name="a8ceea90bd21398bab573823fa0931991"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ceea90bd21398bab573823fa0931991">&#9670;&#160;</a></span>empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Debug::RollingBuffer::empty </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>バッファが空かどうかを確認する </p>
+<dl class="section return"><dt>戻り値</dt><dd>bool 空の場合はtrue、そうでない場合はfalse </dd></dl>
+
+<p class="definition"> <a class="el" href="_perf_h_u_d_8h_source.html">PerfHUD.h</a> の <a class="el" href="_perf_h_u_d_8h_source.html#l00043">43</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a93db1dac22da233d3584a61227ee5f9b" name="a93db1dac22da233d3584a61227ee5f9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93db1dac22da233d3584a61227ee5f9b">&#9670;&#160;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Debug::RollingBuffer::init </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>cap</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>バッファを初期化する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cap</td><td>バッファの容量 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_perf_h_u_d_8h_source.html">PerfHUD.h</a> の <a class="el" href="_perf_h_u_d_8h_source.html#l00033">33</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a053d0edcfc418f93892e81805bae64f9" name="a053d0edcfc418f93892e81805bae64f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a053d0edcfc418f93892e81805bae64f9">&#9670;&#160;</a></span>push()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Debug::RollingBuffer::push </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>バッファに値を追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>追加する値 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_perf_h_u_d_8h_source.html">PerfHUD.h</a> の <a class="el" href="_perf_h_u_d_8h_source.html#l00048">48</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a154c19539c97700a76004b8ac28a336f" name="a154c19539c97700a76004b8ac28a336f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a154c19539c97700a76004b8ac28a336f">&#9670;&#160;</a></span>size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SFW::Debug::RollingBuffer::size </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>バッファのサイズを取得する </p>
+<dl class="section return"><dt>戻り値</dt><dd>size_t バッファのサイズ </dd></dl>
+
+<p class="definition"> <a class="el" href="_perf_h_u_d_8h_source.html">PerfHUD.h</a> の <a class="el" href="_perf_h_u_d_8h_source.html#l00038">38</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2acd053ac499ce7df8b24c4369bf0321" name="a2acd053ac499ce7df8b24c4369bf0321"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2acd053ac499ce7df8b24c4369bf0321">&#9670;&#160;</a></span>toLinear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Debug::RollingBuffer::toLinear </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; float &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>out</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>バッファの内容を線形配列に変換する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td>出力先の配列 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_perf_h_u_d_8h_source.html">PerfHUD.h</a> の <a class="el" href="_perf_h_u_d_8h_source.html#l00057">57</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<a id="a6a09809d045497c12b6700223f515585" name="a6a09809d045497c12b6700223f515585"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a09809d045497c12b6700223f515585">&#9670;&#160;</a></span>data</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;float&gt; SFW::Debug::RollingBuffer::data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_perf_h_u_d_8h_source.html">PerfHUD.h</a> の <a class="el" href="_perf_h_u_d_8h_source.html#l00024">24</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4aa18de47886565ada44515ed67546ca" name="a4aa18de47886565ada44515ed67546ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4aa18de47886565ada44515ed67546ca">&#9670;&#160;</a></span>head</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SFW::Debug::RollingBuffer::head = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_perf_h_u_d_8h_source.html">PerfHUD.h</a> の <a class="el" href="_perf_h_u_d_8h_source.html#l00026">26</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a948232c3b7f2b1023f7c7af7aa4edd0b" name="a948232c3b7f2b1023f7c7af7aa4edd0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a948232c3b7f2b1023f7c7af7aa4edd0b">&#9670;&#160;</a></span>lastMax</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Debug::RollingBuffer::lastMax = 1.f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_perf_h_u_d_8h_source.html">PerfHUD.h</a> の <a class="el" href="_perf_h_u_d_8h_source.html#l00028">28</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a92e16f54393a08ac213ec8d4afc58f92" name="a92e16f54393a08ac213ec8d4afc58f92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92e16f54393a08ac213ec8d4afc58f92">&#9670;&#160;</a></span>lastMin</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Debug::RollingBuffer::lastMin = 0.f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_perf_h_u_d_8h_source.html">PerfHUD.h</a> の <a class="el" href="_perf_h_u_d_8h_source.html#l00028">28</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>この構造体詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/<a class="el" href="_perf_h_u_d_8h_source.html">PerfHUD.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_debug.html">Debug</a></li><li class="navelem"><a href="struct_s_f_w_1_1_debug_1_1_rolling_buffer.html">RollingBuffer</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

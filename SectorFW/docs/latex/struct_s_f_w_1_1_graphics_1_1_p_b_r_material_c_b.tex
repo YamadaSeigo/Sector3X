@@ -1,0 +1,145 @@
+\doxysection{SFW\+::Graphics\+::PBRMaterial\+CB 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b}{}\label{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b}\index{SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}}
+
+
+PBRマテリアル用定数バッファ構造体  
+
+
+
+
+{\ttfamily \#include $<$Render\+Types.\+h$>$}
+
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710c}{Has\+Flags\+Bits}} \+: uint32\+\_\+t \{ \newline
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710cacf5ea4bd4a772592c4e3cbedf1d5f38c}{Has\+Base\+Color\+Tex}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0
+, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca68ddd65adec46c3a2bfa6bbf14f3c51c}{Has\+Normal\+Tex}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca03627c78638027e1e3fcfc04eb5fa140}{Has\+Metallic\+Roughness\+Tex}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2
+, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca342584f4f91e696b90215652515c1c05}{Has\+Occlusion\+Tex}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3
+, \newline
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca61038c51732d7cd31ede1ea9e41d72a1}{Has\+ORMCombined}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca407b6f47f344d74b099517ef4a4a8ab9}{Has\+Emissive\+Tex}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 5
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a04c551c27b89d7d00f712a9bd482cd93}{base\+Color\+Factor}} \mbox{[}4\mbox{]} = \{ 1,1,1,1 \}
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a7f5bfa55268a76bd1f1e021008a1dcf8}{metallic\+Factor}} = 1.\+0f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_ac6f94994efc676c536617957196e4a53}{roughness\+Factor}} = 1.\+0f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a8b7a6bde538c0ff754c821847c38e37d}{occlusion\+Factor}} = 1.\+0f
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a40b5a7076c7a8175255262e56486aba1}{has\+Flags}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+PBRマテリアル用定数バッファ構造体 
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00199}{199}} 行目に定義があります。
+
+
+
+\label{doc-enum-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_doc-enum-members}
+\doxysubsection{列挙型メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710c}\index{SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}!HasFlagsBits@{HasFlagsBits}}
+\index{HasFlagsBits@{HasFlagsBits}!SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}}
+\doxysubsubsection{\texorpdfstring{HasFlagsBits}{HasFlagsBits}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710c} 
+enum \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710c}{SFW\+::\+Graphics\+::\+PBRMaterial\+CB\+::\+Has\+Flags\+Bits}} \+: uint32\+\_\+t}
+
+\begin{DoxyEnumFields}[2]{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HasBaseColorTex@{HasBaseColorTex}!SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}}\index{SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}!HasBaseColorTex@{HasBaseColorTex}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710cacf5ea4bd4a772592c4e3cbedf1d5f38c}\label{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710cacf5ea4bd4a772592c4e3cbedf1d5f38c} 
+Has\+Base\+Color\+Tex&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HasNormalTex@{HasNormalTex}!SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}}\index{SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}!HasNormalTex@{HasNormalTex}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca68ddd65adec46c3a2bfa6bbf14f3c51c}\label{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca68ddd65adec46c3a2bfa6bbf14f3c51c} 
+Has\+Normal\+Tex&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HasMetallicRoughnessTex@{HasMetallicRoughnessTex}!SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}}\index{SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}!HasMetallicRoughnessTex@{HasMetallicRoughnessTex}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca03627c78638027e1e3fcfc04eb5fa140}\label{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca03627c78638027e1e3fcfc04eb5fa140} 
+Has\+Metallic\+Roughness\+Tex&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HasOcclusionTex@{HasOcclusionTex}!SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}}\index{SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}!HasOcclusionTex@{HasOcclusionTex}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca342584f4f91e696b90215652515c1c05}\label{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca342584f4f91e696b90215652515c1c05} 
+Has\+Occlusion\+Tex&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HasORMCombined@{HasORMCombined}!SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}}\index{SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}!HasORMCombined@{HasORMCombined}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca61038c51732d7cd31ede1ea9e41d72a1}\label{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca61038c51732d7cd31ede1ea9e41d72a1} 
+Has\+ORMCombined&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HasEmissiveTex@{HasEmissiveTex}!SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}}\index{SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}!HasEmissiveTex@{HasEmissiveTex}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca407b6f47f344d74b099517ef4a4a8ab9}\label{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a5dc84bffac92723c6a7a42473fa9710ca407b6f47f344d74b099517ef4a4a8ab9} 
+Has\+Emissive\+Tex&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00206}{206}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a04c551c27b89d7d00f712a9bd482cd93}\index{SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}!baseColorFactor@{baseColorFactor}}
+\index{baseColorFactor@{baseColorFactor}!SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}}
+\doxysubsubsection{\texorpdfstring{baseColorFactor}{baseColorFactor}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a04c551c27b89d7d00f712a9bd482cd93} 
+float SFW\+::\+Graphics\+::\+PBRMaterial\+CB\+::base\+Color\+Factor\mbox{[}4\mbox{]} = \{ 1,1,1,1 \}}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00200}{200}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a40b5a7076c7a8175255262e56486aba1}\index{SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}!hasFlags@{hasFlags}}
+\index{hasFlags@{hasFlags}!SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}}
+\doxysubsubsection{\texorpdfstring{hasFlags}{hasFlags}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a40b5a7076c7a8175255262e56486aba1} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+PBRMaterial\+CB\+::has\+Flags = 0}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00204}{204}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a7f5bfa55268a76bd1f1e021008a1dcf8}\index{SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}!metallicFactor@{metallicFactor}}
+\index{metallicFactor@{metallicFactor}!SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}}
+\doxysubsubsection{\texorpdfstring{metallicFactor}{metallicFactor}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a7f5bfa55268a76bd1f1e021008a1dcf8} 
+float SFW\+::\+Graphics\+::\+PBRMaterial\+CB\+::metallic\+Factor = 1.\+0f}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00201}{201}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a8b7a6bde538c0ff754c821847c38e37d}\index{SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}!occlusionFactor@{occlusionFactor}}
+\index{occlusionFactor@{occlusionFactor}!SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}}
+\doxysubsubsection{\texorpdfstring{occlusionFactor}{occlusionFactor}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_a8b7a6bde538c0ff754c821847c38e37d} 
+float SFW\+::\+Graphics\+::\+PBRMaterial\+CB\+::occlusion\+Factor = 1.\+0f}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00203}{203}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_ac6f94994efc676c536617957196e4a53}\index{SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}!roughnessFactor@{roughnessFactor}}
+\index{roughnessFactor@{roughnessFactor}!SFW::Graphics::PBRMaterialCB@{SFW::Graphics::PBRMaterialCB}}
+\doxysubsubsection{\texorpdfstring{roughnessFactor}{roughnessFactor}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b_ac6f94994efc676c536617957196e4a53} 
+float SFW\+::\+Graphics\+::\+PBRMaterial\+CB\+::roughness\+Factor = 1.\+0f}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00202}{202}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_render_types_8h}{Render\+Types.\+h}}\end{DoxyCompactItemize}

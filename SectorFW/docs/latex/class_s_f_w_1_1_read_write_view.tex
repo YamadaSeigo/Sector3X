@@ -1,0 +1,216 @@
+\doxysection{SFW\+::Read\+Write\+View\texorpdfstring{$<$}{<} Container \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_read_write_view}{}\label{class_s_f_w_1_1_read_write_view}\index{SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}}
+
+
+コンテナの読み書きビューを提供するクラス  
+
+
+
+
+{\ttfamily \#include $<$Access\+Wrapper.\+hpp$>$}
+
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_aeedf0e631d7f7f1f61a1c382bf645145}{iterator}} = typename Container\+::iterator
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a51d7fd9016df92a6e0647dcfb0aba133}{const\+\_\+iterator}} = typename Container\+::const\+\_\+iterator
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_acdd569d3faeedbc73fd3198fa61072fa}{value\+\_\+type}} = typename Container\+::value\+\_\+type
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_af161113a3ad2a1aed977992e559fc7f4}{Read\+Write\+View}} (Container \&container) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_aeedf0e631d7f7f1f61a1c382bf645145}{iterator}} \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_ad3e5ef30ec9bd29345c3a41fba278db0}{begin}} () noexcept
+\begin{DoxyCompactList}\small\item\em コンテナの先頭要素へのイテレータを取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_aeedf0e631d7f7f1f61a1c382bf645145}{iterator}} \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_aa3e88085cef47eb4aaf563e97cbb7215}{end}} () noexcept
+\begin{DoxyCompactList}\small\item\em コンテナの末尾要素の次を指すイテレータを取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a51d7fd9016df92a6e0647dcfb0aba133}{const\+\_\+iterator}} \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a7a1114a4c4bada04cba8d9773e71024f}{begin}} () const noexcept
+\begin{DoxyCompactList}\small\item\em コンテナの先頭要素へのイテレータを取得（const） \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a51d7fd9016df92a6e0647dcfb0aba133}{const\+\_\+iterator}} \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_ae622cd514a1f0934705abce40acead42}{end}} () const noexcept
+\begin{DoxyCompactList}\small\item\em コンテナの末尾要素の次を指すイテレータを取得（const） \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Key$>$ }\\auto \& \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a9cd002130e4fa35aa7b8a913d95c1cdf}{at}} (const Key \&key)
+\begin{DoxyCompactList}\small\item\em 指定したキーの要素を取得（at を持っているコンテナのみ有効） \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename Container$>$\newline
+class SFW\+::\+Read\+Write\+View$<$ Container $>$}
+コンテナの読み書きビューを提供するクラス 
+
+ \mbox{\hyperlink{_access_wrapper_8hpp_source}{Access\+Wrapper.\+hpp}} の \mbox{\hyperlink{_access_wrapper_8hpp_source_l00016}{16}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{class_s_f_w_1_1_read_write_view_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_read_write_view_a51d7fd9016df92a6e0647dcfb0aba133}\index{SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}!const\_iterator@{const\_iterator}}
+\index{const\_iterator@{const\_iterator}!SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}}
+\doxysubsubsection{\texorpdfstring{const\_iterator}{const\_iterator}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_read_write_view_a51d7fd9016df92a6e0647dcfb0aba133} 
+template$<$typename Container$>$ \\
+using \mbox{\hyperlink{class_s_f_w_1_1_read_write_view}{SFW\+::\+Read\+Write\+View}}$<$ Container $>$\+::const\+\_\+iterator = typename Container\+::const\+\_\+iterator}
+
+
+
+ \mbox{\hyperlink{_access_wrapper_8hpp_source}{Access\+Wrapper.\+hpp}} の \mbox{\hyperlink{_access_wrapper_8hpp_source_l00019}{19}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_read_write_view_aeedf0e631d7f7f1f61a1c382bf645145}\index{SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}!iterator@{iterator}}
+\index{iterator@{iterator}!SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}}
+\doxysubsubsection{\texorpdfstring{iterator}{iterator}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_read_write_view_aeedf0e631d7f7f1f61a1c382bf645145} 
+template$<$typename Container$>$ \\
+using \mbox{\hyperlink{class_s_f_w_1_1_read_write_view}{SFW\+::\+Read\+Write\+View}}$<$ Container $>$\+::iterator = typename Container\+::iterator}
+
+
+
+ \mbox{\hyperlink{_access_wrapper_8hpp_source}{Access\+Wrapper.\+hpp}} の \mbox{\hyperlink{_access_wrapper_8hpp_source_l00018}{18}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_read_write_view_acdd569d3faeedbc73fd3198fa61072fa}\index{SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}!value\_type@{value\_type}}
+\index{value\_type@{value\_type}!SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}}
+\doxysubsubsection{\texorpdfstring{value\_type}{value\_type}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_read_write_view_acdd569d3faeedbc73fd3198fa61072fa} 
+template$<$typename Container$>$ \\
+using \mbox{\hyperlink{class_s_f_w_1_1_read_write_view}{SFW\+::\+Read\+Write\+View}}$<$ Container $>$\+::value\+\_\+type = typename Container\+::value\+\_\+type}
+
+
+
+ \mbox{\hyperlink{_access_wrapper_8hpp_source}{Access\+Wrapper.\+hpp}} の \mbox{\hyperlink{_access_wrapper_8hpp_source_l00020}{20}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_read_write_view_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_read_write_view_af161113a3ad2a1aed977992e559fc7f4}\index{SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}!ReadWriteView@{ReadWriteView}}
+\index{ReadWriteView@{ReadWriteView}!SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}}
+\doxysubsubsection{\texorpdfstring{ReadWriteView()}{ReadWriteView()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_read_write_view_af161113a3ad2a1aed977992e559fc7f4} 
+template$<$typename Container$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_read_write_view}{SFW\+::\+Read\+Write\+View}}$<$ Container $>$\+::\+Read\+Write\+View (\begin{DoxyParamCaption}\item[{Container \&}]{container}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em container} & コンテナの参照 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_read_write_view}{Read\+Write\+View} コンテナの読み書きビュー 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_access_wrapper_8hpp_source}{Access\+Wrapper.\+hpp}} の \mbox{\hyperlink{_access_wrapper_8hpp_source_l00026}{26}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_read_write_view_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_read_write_view_a9cd002130e4fa35aa7b8a913d95c1cdf}\index{SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}!at@{at}}
+\index{at@{at}!SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}}
+\doxysubsubsection{\texorpdfstring{at()}{at()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_read_write_view_a9cd002130e4fa35aa7b8a913d95c1cdf} 
+template$<$typename Container$>$ \\
+template$<$typename Key$>$ \\
+auto \& \mbox{\hyperlink{class_s_f_w_1_1_read_write_view}{SFW\+::\+Read\+Write\+View}}$<$ Container $>$\+::at (\begin{DoxyParamCaption}\item[{const Key \&}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+指定したキーの要素を取得（at を持っているコンテナのみ有効） 
+
+
+\begin{DoxyParams}{引数}
+{\em key} & キー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+要素への参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_access_wrapper_8hpp_source}{Access\+Wrapper.\+hpp}} の \mbox{\hyperlink{_access_wrapper_8hpp_source_l00053}{53}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_read_write_view_a7a1114a4c4bada04cba8d9773e71024f}\index{SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}!begin@{begin}}
+\index{begin@{begin}!SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_read_write_view_a7a1114a4c4bada04cba8d9773e71024f} 
+template$<$typename Container$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a51d7fd9016df92a6e0647dcfb0aba133}{const\+\_\+iterator}} \mbox{\hyperlink{class_s_f_w_1_1_read_write_view}{SFW\+::\+Read\+Write\+View}}$<$ Container $>$\+::begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+コンテナの先頭要素へのイテレータを取得（const） 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_read_write_view_a51d7fd9016df92a6e0647dcfb0aba133}{const\+\_\+iterator} コンテナの先頭要素へのイテレータ（const） 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_access_wrapper_8hpp_source}{Access\+Wrapper.\+hpp}} の \mbox{\hyperlink{_access_wrapper_8hpp_source_l00041}{41}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_read_write_view_ad3e5ef30ec9bd29345c3a41fba278db0}\index{SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}!begin@{begin}}
+\index{begin@{begin}!SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_read_write_view_ad3e5ef30ec9bd29345c3a41fba278db0} 
+template$<$typename Container$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_aeedf0e631d7f7f1f61a1c382bf645145}{iterator}} \mbox{\hyperlink{class_s_f_w_1_1_read_write_view}{SFW\+::\+Read\+Write\+View}}$<$ Container $>$\+::begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+コンテナの先頭要素へのイテレータを取得 
+
+\begin{DoxyReturn}{戻り値}
+iterator コンテナの先頭要素へのイテレータ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_access_wrapper_8hpp_source}{Access\+Wrapper.\+hpp}} の \mbox{\hyperlink{_access_wrapper_8hpp_source_l00031}{31}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_read_write_view_ae622cd514a1f0934705abce40acead42}\index{SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}!end@{end}}
+\index{end@{end}!SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_read_write_view_ae622cd514a1f0934705abce40acead42} 
+template$<$typename Container$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a51d7fd9016df92a6e0647dcfb0aba133}{const\+\_\+iterator}} \mbox{\hyperlink{class_s_f_w_1_1_read_write_view}{SFW\+::\+Read\+Write\+View}}$<$ Container $>$\+::end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+コンテナの末尾要素の次を指すイテレータを取得（const） 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_read_write_view_a51d7fd9016df92a6e0647dcfb0aba133}{const\+\_\+iterator} コンテナの末尾要素の次を指すイテレータ（const） 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_access_wrapper_8hpp_source}{Access\+Wrapper.\+hpp}} の \mbox{\hyperlink{_access_wrapper_8hpp_source_l00046}{46}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_read_write_view_aa3e88085cef47eb4aaf563e97cbb7215}\index{SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}!end@{end}}
+\index{end@{end}!SFW::ReadWriteView$<$ Container $>$@{SFW::ReadWriteView$<$ Container $>$}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_read_write_view_aa3e88085cef47eb4aaf563e97cbb7215} 
+template$<$typename Container$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_aeedf0e631d7f7f1f61a1c382bf645145}{iterator}} \mbox{\hyperlink{class_s_f_w_1_1_read_write_view}{SFW\+::\+Read\+Write\+View}}$<$ Container $>$\+::end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+コンテナの末尾要素の次を指すイテレータを取得 
+
+\begin{DoxyReturn}{戻り値}
+iterator コンテナの末尾要素の次を指すイテレータ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_access_wrapper_8hpp_source}{Access\+Wrapper.\+hpp}} の \mbox{\hyperlink{_access_wrapper_8hpp_source_l00036}{36}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/\mbox{\hyperlink{_access_wrapper_8hpp}{Access\+Wrapper.\+hpp}}\end{DoxyCompactItemize}

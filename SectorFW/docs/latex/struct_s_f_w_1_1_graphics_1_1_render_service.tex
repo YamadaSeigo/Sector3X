@@ -1,0 +1,371 @@
+\doxysection{SFW\+::Graphics\+::Render\+Service 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service}{}\label{struct_s_f_w_1_1_graphics_1_1_render_service}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+
+
+Systemが依存するレンダーサービスを管理するクラス  
+
+
+
+
+{\ttfamily \#include $<$Render\+Service.\+h$>$}
+
+SFW\+::Graphics\+::Render\+Service の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_s_f_w_1_1_graphics_1_1_render_service}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a134e43747ae529fc1fb5d6aa24e9aa7c}{Update\+Func\+Type}} = void(\texorpdfstring{$\ast$}{*})(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service}{Render\+Service}}\texorpdfstring{$\ast$}{*})
+\item 
+using \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a8846510dc9639640943191c802d029f3}{Pre\+Draw\+Func\+Type}} = void(\texorpdfstring{$\ast$}{*})(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service}{Render\+Service}}\texorpdfstring{$\ast$}{*}, uint32\+\_\+t)
+\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7}{Phase}} \+: uint16\+\_\+t \{ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}} = 0
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7}{NORMAL}} = 1
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9}{LATE}} = 2
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907}{PHASE\+\_\+\+MAX}}
+ \}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608}{Group}} \+: uint16\+\_\+t \{ \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b}{GROUP\+\_\+\+GRAPHICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda}{GROUP\+\_\+\+PHYSICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a}{GROUP\+\_\+\+INPUT}}
+, \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e}{GROUP\+\_\+\+AUDIO}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580}{GROUP\+\_\+\+AI}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90}{GROUP\+\_\+\+MAX}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_af6c1601d43f550a15cb3400921bc7732}{Render\+Service}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aad14d2e80e921b0442903b65576ce417}{MOC}} \texorpdfstring{$\ast$}{*}moc)
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a823bb7abeb54ac110aa18778cd3dcc66}{\texorpdfstring{$\sim$}{\string~}\+Render\+Service}} ()
+\begin{DoxyCompactList}\small\item\em デストラクタ @detial MOCの解放 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session}{Render\+Queue\+::\+Producer\+Session}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a26b2035323d088abf7fda60f3079d557}{Get\+Producer\+Session}} (const std\+::string \&group\+Name)
+\begin{DoxyCompactList}\small\item\em Render\+Queueの\+Producer\+Sessionを取得する関数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Render\+Queue\+::\+Producer\+Session\+External}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a123942ffa29cc889a1b3024b3fb59eec}{Get\+Producer\+Session}} (const std\+::string \&group\+Name, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}{Render\+Queue\+::\+Producer\+Session\+External\+::\+Small\+Buf}} \&buf)
+\begin{DoxyCompactList}\small\item\em Render\+Queueの\+Producer\+Session\+Externalを取得する関数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Resource\+Type$>$ }\\Resource\+Type \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_affd58a4a5d3889d5cec830b7ecccef2e}{Get\+Resource\+Manager}} () noexcept
+\begin{DoxyCompactList}\small\item\em 指定した型の\+Resouce\+Managerを取得する関数 \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a45793a31a6eb6846e9e58c5b7c0d408a}{Is\+Visible\+In\+MOC}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{Math\+::\+Ndc\+Rect\+WithW}} \&ndc) const
+\begin{DoxyCompactList}\small\item\em MOCで可視判定を行う関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a77796753e0f5143f3caf0ebf992d5bc4}{Rendering\+Occluder\+In\+MOC}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch}{Moc\+Quad\+Batch}} \&quad)
+\begin{DoxyCompactList}\small\item\em MOCにオクルーダーを提出する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a66be3d5aff51ccf7b494f7e915570d29}{Rendering\+Occluder\+In\+MOC}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch}{Moc\+Tri\+Batch}} \&tri)
+\begin{DoxyCompactList}\small\item\em MOCにオクルーダーを提出する関数 \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a442ec70cec9e24ff9f34fd29880fbc09}{Get\+Near\+Clip\+Plane}} () const
+\begin{DoxyCompactList}\small\item\em MOCの近クリップ平面を取得する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a02cb8f1a83d816727f97348d1edd1641}{Get\+Depth\+Buffer}} (std\+::vector$<$ float $>$ \&buffer) const
+\begin{DoxyCompactList}\small\item\em MOCの深度バッファを取得する関数 @detial サイズが足りない場合はリサイズする \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a94802bc2f43b42ba45129d71cff63e13}{Get\+Produce\+Slot}} () const noexcept
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_aa4fe229840c583ee00f1854f8177cb1c}{Set\+Custom\+Update\+Function}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a134e43747ae529fc1fb5d6aa24e9aa7c}{Update\+Func\+Type}} func) noexcept
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a729137ff20e464825e067f063a46b76c}{Set\+Custom\+Pre\+Draw\+Function}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a8846510dc9639640943191c802d029f3}{Pre\+Draw\+Func\+Type}} func) noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{フレンド}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ }\\class \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a0cb85d4c3b030a6472ab372175c16d6a}{Render\+Graph}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{その他の継承メンバ}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a73744778bc5cc3113ed77db1b69e1fb1}{update\+Phase}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a9f0e8abd26ab30155b39e558f004ce42}{update\+Group}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a116ce546ab92eaf8f4282719b89a5165}{update\+Order}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Systemが依存するレンダーサービスを管理するクラス 
+
+MOCのインスタンスを管理する 
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00048}{48}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_a8846510dc9639640943191c802d029f3}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!PreDrawFuncType@{PreDrawFuncType}}
+\index{PreDrawFuncType@{PreDrawFuncType}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{PreDrawFuncType}{PreDrawFuncType}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_a8846510dc9639640943191c802d029f3} 
+using \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a8846510dc9639640943191c802d029f3}{SFW\+::\+Graphics\+::\+Render\+Service\+::\+Pre\+Draw\+Func\+Type}} = void(\texorpdfstring{$\ast$}{*})(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service}{Render\+Service}}\texorpdfstring{$\ast$}{*}, uint32\+\_\+t)}
+
+
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00051}{51}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_a134e43747ae529fc1fb5d6aa24e9aa7c}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!UpdateFuncType@{UpdateFuncType}}
+\index{UpdateFuncType@{UpdateFuncType}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{UpdateFuncType}{UpdateFuncType}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_a134e43747ae529fc1fb5d6aa24e9aa7c} 
+using \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a134e43747ae529fc1fb5d6aa24e9aa7c}{SFW\+::\+Graphics\+::\+Render\+Service\+::\+Update\+Func\+Type}} = void(\texorpdfstring{$\ast$}{*})(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service}{Render\+Service}}\texorpdfstring{$\ast$}{*})}
+
+
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00050}{50}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_af6c1601d43f550a15cb3400921bc7732}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!RenderService@{RenderService}}
+\index{RenderService@{RenderService}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{RenderService()}{RenderService()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_af6c1601d43f550a15cb3400921bc7732} 
+SFW\+::\+Graphics\+::\+Render\+Service\+::\+Render\+Service (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aad14d2e80e921b0442903b65576ce417}{MOC}} \texorpdfstring{$\ast$}{*}}]{moc}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+コンストラクタ 
+
+
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00058}{58}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_a823bb7abeb54ac110aa18778cd3dcc66}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!````~RenderService@{\texorpdfstring{$\sim$}{\string~}RenderService}}
+\index{````~RenderService@{\texorpdfstring{$\sim$}{\string~}RenderService}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}RenderService()}{\string~RenderService()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_a823bb7abeb54ac110aa18778cd3dcc66} 
+SFW\+::\+Graphics\+::\+Render\+Service\+::\texorpdfstring{$\sim$}{\string~}\+Render\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+デストラクタ @detial MOCの解放 
+
+
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00064}{64}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_a02cb8f1a83d816727f97348d1edd1641}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!GetDepthBuffer@{GetDepthBuffer}}
+\index{GetDepthBuffer@{GetDepthBuffer}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{GetDepthBuffer()}{GetDepthBuffer()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_a02cb8f1a83d816727f97348d1edd1641} 
+void SFW\+::\+Graphics\+::\+Render\+Service\+::\+Get\+Depth\+Buffer (\begin{DoxyParamCaption}\item[{std\+::vector$<$ float $>$ \&}]{buffer}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+MOCの深度バッファを取得する関数 @detial サイズが足りない場合はリサイズする 
+
+
+\begin{DoxyParams}{引数}
+{\em buffer} & 深度バッファを格納するベクター \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00195}{195}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_a442ec70cec9e24ff9f34fd29880fbc09}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!GetNearClipPlane@{GetNearClipPlane}}
+\index{GetNearClipPlane@{GetNearClipPlane}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{GetNearClipPlane()}{GetNearClipPlane()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_a442ec70cec9e24ff9f34fd29880fbc09} 
+float SFW\+::\+Graphics\+::\+Render\+Service\+::\+Get\+Near\+Clip\+Plane (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+MOCの近クリップ平面を取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+float 近クリップ平面の距離 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00189}{189}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_a26b2035323d088abf7fda60f3079d557}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!GetProducerSession@{GetProducerSession}}
+\index{GetProducerSession@{GetProducerSession}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{GetProducerSession()}{GetProducerSession()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_a26b2035323d088abf7fda60f3079d557} 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session}{Render\+Queue\+::\+Producer\+Session}} SFW\+::\+Graphics\+::\+Render\+Service\+::\+Get\+Producer\+Session (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{group\+Name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Render\+Queueの\+Producer\+Sessionを取得する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em group\+Name　グループ名} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+　\+Render\+Queue\+::\+Producer\+Session レンダークエリのプロデューサーセッション 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00094}{94}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_a123942ffa29cc889a1b3024b3fb59eec}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!GetProducerSession@{GetProducerSession}}
+\index{GetProducerSession@{GetProducerSession}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{GetProducerSession()}{GetProducerSession()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_a123942ffa29cc889a1b3024b3fb59eec} 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Render\+Queue\+::\+Producer\+Session\+External}} SFW\+::\+Graphics\+::\+Render\+Service\+::\+Get\+Producer\+Session (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{group\+Name}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}{Render\+Queue\+::\+Producer\+Session\+External\+::\+Small\+Buf}} \&}]{buf}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Render\+Queueの\+Producer\+Session\+Externalを取得する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em group\+Name　グループ名} & \\
+\hline
+{\em buf} & バッファ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+　\+Render\+Queue\+::\+Producer\+Session レンダークエリのプロデューサーセッション 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00111}{111}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_a94802bc2f43b42ba45129d71cff63e13}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!GetProduceSlot@{GetProduceSlot}}
+\index{GetProduceSlot@{GetProduceSlot}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{GetProduceSlot()}{GetProduceSlot()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_a94802bc2f43b42ba45129d71cff63e13} 
+uint16\+\_\+t SFW\+::\+Graphics\+::\+Render\+Service\+::\+Get\+Produce\+Slot (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+@ brief 現在の生産スロットを取得する @ return int 生産スロットのインデックス 
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00207}{207}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_affd58a4a5d3889d5cec830b7ecccef2e}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!GetResourceManager@{GetResourceManager}}
+\index{GetResourceManager@{GetResourceManager}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{GetResourceManager()}{GetResourceManager()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_affd58a4a5d3889d5cec830b7ecccef2e} 
+template$<$typename Resource\+Type$>$ \\
+Resource\+Type \texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+Render\+Service\+::\+Get\+Resource\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+指定した型の\+Resouce\+Managerを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+Resource\+Type\texorpdfstring{$\ast$}{*} 指定した型の\+Resouce\+Managerのポインタ(見つからない場合はnullptr) 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00129}{129}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_a45793a31a6eb6846e9e58c5b7c0d408a}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!IsVisibleInMOC@{IsVisibleInMOC}}
+\index{IsVisibleInMOC@{IsVisibleInMOC}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{IsVisibleInMOC()}{IsVisibleInMOC()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_a45793a31a6eb6846e9e58c5b7c0d408a} 
+auto SFW\+::\+Graphics\+::\+Render\+Service\+::\+Is\+Visible\+In\+MOC (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{Math\+::\+Ndc\+Rect\+WithW}} \&}]{ndc}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+MOCで可視判定を行う関数 
+
+
+\begin{DoxyParams}{引数}
+{\em ndc} & NDC空間での矩形（wmin付き） \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+bool 可視ならtrue、不可視ならfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00144}{144}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_a77796753e0f5143f3caf0ebf992d5bc4}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!RenderingOccluderInMOC@{RenderingOccluderInMOC}}
+\index{RenderingOccluderInMOC@{RenderingOccluderInMOC}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{RenderingOccluderInMOC()}{RenderingOccluderInMOC()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_a77796753e0f5143f3caf0ebf992d5bc4} 
+void SFW\+::\+Graphics\+::\+Render\+Service\+::\+Rendering\+Occluder\+In\+MOC (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch}{Moc\+Quad\+Batch}} \&}]{quad}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+MOCにオクルーダーを提出する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em quad} & オクルーダーのクアッド情報 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00152}{152}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_a66be3d5aff51ccf7b494f7e915570d29}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!RenderingOccluderInMOC@{RenderingOccluderInMOC}}
+\index{RenderingOccluderInMOC@{RenderingOccluderInMOC}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{RenderingOccluderInMOC()}{RenderingOccluderInMOC()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_a66be3d5aff51ccf7b494f7e915570d29} 
+void SFW\+::\+Graphics\+::\+Render\+Service\+::\+Rendering\+Occluder\+In\+MOC (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch}{Moc\+Tri\+Batch}} \&}]{tri}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+MOCにオクルーダーを提出する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em tri} & オクルーダーの三角形情報 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00173}{173}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_a729137ff20e464825e067f063a46b76c}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!SetCustomPreDrawFunction@{SetCustomPreDrawFunction}}
+\index{SetCustomPreDrawFunction@{SetCustomPreDrawFunction}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{SetCustomPreDrawFunction()}{SetCustomPreDrawFunction()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_a729137ff20e464825e067f063a46b76c} 
+void SFW\+::\+Graphics\+::\+Render\+Service\+::\+Set\+Custom\+Pre\+Draw\+Function (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a8846510dc9639640943191c802d029f3}{Pre\+Draw\+Func\+Type}}}]{func}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+@ brief 描画前ドローカスタム関数の設定 @ param func カスタム関数 
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00219}{219}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_aa4fe229840c583ee00f1854f8177cb1c}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!SetCustomUpdateFunction@{SetCustomUpdateFunction}}
+\index{SetCustomUpdateFunction@{SetCustomUpdateFunction}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{SetCustomUpdateFunction()}{SetCustomUpdateFunction()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_aa4fe229840c583ee00f1854f8177cb1c} 
+void SFW\+::\+Graphics\+::\+Render\+Service\+::\+Set\+Custom\+Update\+Function (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service_a134e43747ae529fc1fb5d6aa24e9aa7c}{Update\+Func\+Type}}}]{func}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+@ brief Updateカスタム関数の設定 @ param func カスタム関数 
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00212}{212}} 行目に定義があります。
+
+
+
+\label{doc-related-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_doc-related-members}
+\doxysubsection{フレンドと関連関数の詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_service_a0cb85d4c3b030a6472ab372175c16d6a}\index{SFW::Graphics::RenderService@{SFW::Graphics::RenderService}!RenderGraph@{RenderGraph}}
+\index{RenderGraph@{RenderGraph}!SFW::Graphics::RenderService@{SFW::Graphics::RenderService}}
+\doxysubsubsection{\texorpdfstring{RenderGraph}{RenderGraph}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_service_a0cb85d4c3b030a6472ab372175c16d6a} 
+template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+friend class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{Render\+Graph}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} の \mbox{\hyperlink{_render_service_8h_source_l00054}{54}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_render_service_8h}{Render\+Service.\+h}}\end{DoxyCompactItemize}

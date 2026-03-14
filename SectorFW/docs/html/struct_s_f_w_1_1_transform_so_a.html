@@ -1,0 +1,607 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::TransformSoA 構造体</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('struct_s_f_w_1_1_transform_so_a.html','','struct_s_f_w_1_1_transform_so_a-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::TransformSoA 構造体</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_transform_8hpp_source.html">Transform.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a73c284deb25ca4713eda6b1e9dc36799" id="r_a73c284deb25ca4713eda6b1e9dc36799"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73c284deb25ca4713eda6b1e9dc36799">TransformSoA</a> () noexcept</td></tr>
+<tr class="memitem:abc770ea7eeaa6d8c614b41ab89f6984d" id="r_abc770ea7eeaa6d8c614b41ab89f6984d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc770ea7eeaa6d8c614b41ab89f6984d">TransformSoA</a> (float px_, float py_, float pz_, float qx_, float qy_, float qz_, float qw_, float sx_, float sy_, float sz_) noexcept</td></tr>
+<tr class="memitem:ad2cfa4d4271c7065978e893b6b635d9b" id="r_ad2cfa4d4271c7065978e893b6b635d9b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2cfa4d4271c7065978e893b6b635d9b">TransformSoA</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;<a class="el" href="#a6d0ecd7a372576777ed421d4e7cdff44">location</a>, const <a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a> &amp;<a class="el" href="#ada20156c11dcd5a775d826391577518c">rotation</a>, const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;<a class="el" href="#a8e03ad74cfae601f42019c99175a278e">scale</a>) noexcept</td></tr>
+<tr class="memitem:a6a5addefa757ec0d167577adcc7d20e1" id="r_a6a5addefa757ec0d167577adcc7d20e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6a5addefa757ec0d167577adcc7d20e1">TransformSoA</a> (const <a class="el" href="struct_s_f_w_1_1_transform.html">Transform</a> &amp;transform) noexcept</td></tr>
+<tr class="memitem:acadc6a57b3385cc94b1671e941ed5164" id="r_acadc6a57b3385cc94b1671e941ed5164"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_transform.html">Transform</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acadc6a57b3385cc94b1671e941ed5164">ToAoS</a> () const noexcept</td></tr>
+<tr class="memitem:a4dae3045033d978e5cd7ea42598c9737" id="r_a4dae3045033d978e5cd7ea42598c9737"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_transform_so_a.html">TransformSoA</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4dae3045033d978e5cd7ea42598c9737">operator=</a> (const <a class="el" href="struct_s_f_w_1_1_transform_so_a.html">TransformSoA</a> &amp;transform) noexcept=default</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+公開変数類</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft anon">union {&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:"><td class="memItemLeft anon">&#160;&#160;&#160;struct {&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:ab280227ede003cb502f79655e1ed3da7" id="r_ab280227ede003cb502f79655e1ed3da7"><td class="memItemLeft anon">&#160;&#160;&#160;&#160;&#160;&#160;float&#160;&#160;&#160;<a class="el" href="#a0a12a36c4fc49e9d292cc3e483209b40">px</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a67b338457d94ecc0e40695782bd17c1b" id="r_a67b338457d94ecc0e40695782bd17c1b"><td class="memItemLeft anon">&#160;&#160;&#160;&#160;&#160;&#160;float&#160;&#160;&#160;<a class="el" href="#a96638685b2e7470a216ea615ef0c3ac6">py</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:ae9c8493c8fcc2b638c2e3d32e7b91fae" id="r_ae9c8493c8fcc2b638c2e3d32e7b91fae"><td class="memItemLeft anon">&#160;&#160;&#160;&#160;&#160;&#160;float&#160;&#160;&#160;<a class="el" href="#afb274a7c56f0624263138a2574acd18b">pz</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a0d715066cfa212467aea52b606bf450b" id="r_a0d715066cfa212467aea52b606bf450b"><td class="memItemLeft anon">&#160;&#160;&#160;&#160;&#160;&#160;float&#160;&#160;&#160;<a class="el" href="#a3c99457f042bf97478abbdc1516bafa7">qx</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:af1cba309a803092bb6a942f0d5efe338" id="r_af1cba309a803092bb6a942f0d5efe338"><td class="memItemLeft anon">&#160;&#160;&#160;&#160;&#160;&#160;float&#160;&#160;&#160;<a class="el" href="#aeef9d16369bfddfb01b31185ae864c20">qy</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a902933af9e814060ba23c5d23139102e" id="r_a902933af9e814060ba23c5d23139102e"><td class="memItemLeft anon">&#160;&#160;&#160;&#160;&#160;&#160;float&#160;&#160;&#160;<a class="el" href="#af0217e61460ae0287b6def18e94ba684">qz</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a64aadef3e0c7f3ecd153968fb235f662" id="r_a64aadef3e0c7f3ecd153968fb235f662"><td class="memItemLeft anon">&#160;&#160;&#160;&#160;&#160;&#160;float&#160;&#160;&#160;<a class="el" href="#a93fd38c7e3a0fcae7f6475b71a1b3639">qw</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a64f951e0b517dcd54e6fc4e8f3d269ec" id="r_a64f951e0b517dcd54e6fc4e8f3d269ec"><td class="memItemLeft anon">&#160;&#160;&#160;&#160;&#160;&#160;float&#160;&#160;&#160;<a class="el" href="#a93d2aa46a948f788cd289bc20609d7a1">sx</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a8fb993aa22cf097eb917dd0c74789247" id="r_a8fb993aa22cf097eb917dd0c74789247"><td class="memItemLeft anon">&#160;&#160;&#160;&#160;&#160;&#160;float&#160;&#160;&#160;<a class="el" href="#ac42349bd20fd48e53c9ff5702e3b3b67">sy</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a170f4584ec49586b2be3f67cb1a98a05" id="r_a170f4584ec49586b2be3f67cb1a98a05"><td class="memItemLeft anon">&#160;&#160;&#160;&#160;&#160;&#160;float&#160;&#160;&#160;<a class="el" href="#aa79419cdb0b7211e58f8a3eff23783f5">sz</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a9ba82408561cef0b5f85f24f3400deab" id="r_a9ba82408561cef0b5f85f24f3400deab"><td class="memItemLeft anonEnd" valign="top">&#160;&#160;&#160;}&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:"><td class="memItemLeft anon">&#160;&#160;&#160;struct {&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a17b5f0cd172d4817523224f0b53ddc2d" id="r_a17b5f0cd172d4817523224f0b53ddc2d"><td class="memItemLeft anon">&#160;&#160;&#160;&#160;&#160;&#160;<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;&#160;&#160;<a class="el" href="#a6d0ecd7a372576777ed421d4e7cdff44">location</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a7606873bb7775c54e9a6b8827755ae9d" id="r_a7606873bb7775c54e9a6b8827755ae9d"><td class="memItemLeft anon">&#160;&#160;&#160;&#160;&#160;&#160;<a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a>&#160;&#160;&#160;<a class="el" href="#ada20156c11dcd5a775d826391577518c">rotation</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:ad22fdb93197bda8469210483d7c3ae18" id="r_ad22fdb93197bda8469210483d7c3ae18"><td class="memItemLeft anon">&#160;&#160;&#160;&#160;&#160;&#160;<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;&#160;&#160;<a class="el" href="#a8e03ad74cfae601f42019c99175a278e">scale</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a0f15697443c5f9af51a30df5e347d67c" id="r_a0f15697443c5f9af51a30df5e347d67c"><td class="memItemLeft anonEnd" valign="top">&#160;&#160;&#160;}&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a04c6567d9f03b225ce0537cdfd30d20f" id="r_a04c6567d9f03b225ce0537cdfd30d20f"><td class="memItemLeft anon">&#160;&#160;&#160;float&#160;&#160;&#160;<a class="el" href="#a2910f31dabc83b7e4277c066b4e6292c">data</a> [10]&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a1fc93728402861f50ed78f5763ea318b" id="r_a1fc93728402861f50ed78f5763ea318b"><td class="memItemLeft anonEnd" valign="top">};&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock">
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00039">39</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="a73c284deb25ca4713eda6b1e9dc36799" name="a73c284deb25ca4713eda6b1e9dc36799"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73c284deb25ca4713eda6b1e9dc36799">&#9670;&#160;</a></span>TransformSoA() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::TransformSoA::TransformSoA </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00057">57</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="abc770ea7eeaa6d8c614b41ab89f6984d" name="abc770ea7eeaa6d8c614b41ab89f6984d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc770ea7eeaa6d8c614b41ab89f6984d">&#9670;&#160;</a></span>TransformSoA() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::TransformSoA::TransformSoA </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>px_</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>py_</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>pz_</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>qx_</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>qy_</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>qz_</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>qw_</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>sx_</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>sy_</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>sz_</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00058">58</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad2cfa4d4271c7065978e893b6b635d9b" name="ad2cfa4d4271c7065978e893b6b635d9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2cfa4d4271c7065978e893b6b635d9b">&#9670;&#160;</a></span>TransformSoA() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::TransformSoA::TransformSoA </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>location</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rotation</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>scale</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00065">65</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6a5addefa757ec0d167577adcc7d20e1" name="a6a5addefa757ec0d167577adcc7d20e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a5addefa757ec0d167577adcc7d20e1">&#9670;&#160;</a></span>TransformSoA() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::TransformSoA::TransformSoA </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_transform.html">Transform</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>transform</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00073">73</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a4dae3045033d978e5cd7ea42598c9737" name="a4dae3045033d978e5cd7ea42598c9737"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dae3045033d978e5cd7ea42598c9737">&#9670;&#160;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_transform_so_a.html">TransformSoA</a> &amp; SFW::TransformSoA::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_transform_so_a.html">TransformSoA</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>transform</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acadc6a57b3385cc94b1671e941ed5164" name="acadc6a57b3385cc94b1671e941ed5164"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acadc6a57b3385cc94b1671e941ed5164">&#9670;&#160;</a></span>ToAoS()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_transform.html">Transform</a> SFW::TransformSoA::ToAoS </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00080">80</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<a id="a1fc93728402861f50ed78f5763ea318b" name="a1fc93728402861f50ed78f5763ea318b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fc93728402861f50ed78f5763ea318b">&#9670;&#160;</a></span>[union]</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union  { ... }  <a class="el" href="struct_s_f_w_1_1_transform_so_a.html">SFW::TransformSoA</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2910f31dabc83b7e4277c066b4e6292c" name="a2910f31dabc83b7e4277c066b4e6292c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2910f31dabc83b7e4277c066b4e6292c">&#9670;&#160;</a></span>data</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TransformSoA::data[10]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00053">53</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6d0ecd7a372576777ed421d4e7cdff44" name="a6d0ecd7a372576777ed421d4e7cdff44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d0ecd7a372576777ed421d4e7cdff44">&#9670;&#160;</a></span>location</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> SFW::TransformSoA::location</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00049">49</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0a12a36c4fc49e9d292cc3e483209b40" name="a0a12a36c4fc49e9d292cc3e483209b40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a12a36c4fc49e9d292cc3e483209b40">&#9670;&#160;</a></span>px</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TransformSoA::px</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00044">44</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a96638685b2e7470a216ea615ef0c3ac6" name="a96638685b2e7470a216ea615ef0c3ac6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96638685b2e7470a216ea615ef0c3ac6">&#9670;&#160;</a></span>py</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TransformSoA::py</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00044">44</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="afb274a7c56f0624263138a2574acd18b" name="afb274a7c56f0624263138a2574acd18b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb274a7c56f0624263138a2574acd18b">&#9670;&#160;</a></span>pz</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TransformSoA::pz</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00044">44</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a93fd38c7e3a0fcae7f6475b71a1b3639" name="a93fd38c7e3a0fcae7f6475b71a1b3639"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93fd38c7e3a0fcae7f6475b71a1b3639">&#9670;&#160;</a></span>qw</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TransformSoA::qw</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00045">45</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3c99457f042bf97478abbdc1516bafa7" name="a3c99457f042bf97478abbdc1516bafa7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c99457f042bf97478abbdc1516bafa7">&#9670;&#160;</a></span>qx</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TransformSoA::qx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00045">45</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aeef9d16369bfddfb01b31185ae864c20" name="aeef9d16369bfddfb01b31185ae864c20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeef9d16369bfddfb01b31185ae864c20">&#9670;&#160;</a></span>qy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TransformSoA::qy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00045">45</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af0217e61460ae0287b6def18e94ba684" name="af0217e61460ae0287b6def18e94ba684"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0217e61460ae0287b6def18e94ba684">&#9670;&#160;</a></span>qz</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TransformSoA::qz</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00045">45</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ada20156c11dcd5a775d826391577518c" name="ada20156c11dcd5a775d826391577518c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada20156c11dcd5a775d826391577518c">&#9670;&#160;</a></span>rotation</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a> SFW::TransformSoA::rotation</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00050">50</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8e03ad74cfae601f42019c99175a278e" name="a8e03ad74cfae601f42019c99175a278e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e03ad74cfae601f42019c99175a278e">&#9670;&#160;</a></span>scale</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> SFW::TransformSoA::scale</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00051">51</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a93d2aa46a948f788cd289bc20609d7a1" name="a93d2aa46a948f788cd289bc20609d7a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93d2aa46a948f788cd289bc20609d7a1">&#9670;&#160;</a></span>sx</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TransformSoA::sx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00046">46</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac42349bd20fd48e53c9ff5702e3b3b67" name="ac42349bd20fd48e53c9ff5702e3b3b67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac42349bd20fd48e53c9ff5702e3b3b67">&#9670;&#160;</a></span>sy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TransformSoA::sy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00046">46</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa79419cdb0b7211e58f8a3eff23783f5" name="aa79419cdb0b7211e58f8a3eff23783f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa79419cdb0b7211e58f8a3eff23783f5">&#9670;&#160;</a></span>sz</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TransformSoA::sz</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_transform_8hpp_source.html">Transform.hpp</a> の <a class="el" href="_transform_8hpp_source.html#l00046">46</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>この構造体詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/<a class="el" href="_transform_8hpp_source.html">Transform.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="struct_s_f_w_1_1_transform_so_a.html">TransformSoA</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

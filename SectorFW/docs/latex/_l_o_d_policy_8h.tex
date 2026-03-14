@@ -1,0 +1,84 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+LODPolicy.h ファイル}
+\hypertarget{_l_o_d_policy_8h}{}\label{_l_o_d_policy_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/LODPolicy.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/LODPolicy.h}}
+
+
+LOD（\+Level of Detail）選択のためのポリシーとユーティリティ関数を定義するヘッダーファイル  
+
+
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include "{}../\+Math/\+Rectangle.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Math/\+AABB.\+hpp"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_lod_thresholds_px}{SFW\+::\+Graphics\+::\+Lod\+Thresholds\+Px}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_lod_asset_stats}{SFW\+::\+Graphics\+::\+Lod\+Asset\+Stats}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_lod_refine_policy}{SFW\+::\+Graphics\+::\+Lod\+Refine\+Policy}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_extents}{SFW\+::\+Graphics\+::\+Extents}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_refine_state}{SFW\+::\+Graphics\+::\+Refine\+State}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW\+::\+Graphics}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a163a28f01c939852fedcdd788adb82a5}{SFW\+::\+Graphics\+::\+Refine\+Reason}} \+: uint32\+\_\+t \{ \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a163a28f01c939852fedcdd788adb82a5a6adf97f83acf6453d4a6a4b1070f3754}{SFW\+::\+Graphics\+::\+None}} = 0
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a163a28f01c939852fedcdd788adb82a5aef9feaa7d1dfdfb2c7c4a1b4ade9d2e9}{SFW\+::\+Graphics\+::\+Mid\+Band}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a163a28f01c939852fedcdd788adb82a5a5728b1ed4aa3e6fe9df15bb6ff418e4f}{SFW\+::\+Graphics\+::\+Elongated}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a163a28f01c939852fedcdd788adb82a5a159168d14ae7d34fd98268829abc0548}{SFW\+::\+Graphics\+::\+Near\+Clip}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a163a28f01c939852fedcdd788adb82a5a6cf7205dc37f846880b6416e11cb43fc}{SFW\+::\+Graphics\+::\+Near\+Edge}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a163a28f01c939852fedcdd788adb82a5a6f0477e3084d8695069f1b5730ed05e1}{SFW\+::\+Graphics\+::\+Lod\+Boundary}} = 1 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ae93f95aca06aa7e1400b9197a48a625b}{SFW\+::\+Graphics\+::\+Coverage\+Pixels\+From\+Ndc\+Area}} (float ndc\+Area\+Frac, int renderW, int renderH)
+\item 
+float \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_abd02322282142e402c1e3346606ee147}{SFW\+::\+Graphics\+::\+Pixel\+Scale\+To\+Base}} (int renderW, int renderH, int baseW, int baseH)
+\item 
+float \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a933d133c4f5781502a265a28bdf216de}{SFW\+::\+Graphics\+::\+To\+Base\+Pixels}} (float P, int renderW, int renderH, int baseW, int baseH)
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_lod_thresholds_px}{Lod\+Thresholds\+Px}} \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af4bf156b10eebbac6cbfd059bc8dcc6d}{SFW\+::\+Graphics\+::\+Build\+Lod\+Thresholds\+Px}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_lod_asset_stats}{Lod\+Asset\+Stats}} \&a, int lod\+Count, int baseW=1920, int baseH=1080)
+\item 
+int \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af42cfad7b9a0822c7f64fc6bb2865615}{SFW\+::\+Graphics\+::\+Select\+Lod\+By\+Pixels}} (float ndc\+Area\+Frac, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_lod_thresholds_px}{Lod\+Thresholds\+Px}} \&th\+Px, int lod\+Count, int prev\+Lod, int renderW, int renderH, float global\+Bias, float \texorpdfstring{$\ast$}{*}out\+Sp=nullptr)
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_extents}{Extents}} \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_adf77e663ca0b8723890f98ba3515fc3a}{SFW\+::\+Graphics\+::\+Extents\+From\+AABB}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}} \&aabb)
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a163a28f01c939852fedcdd788adb82a5}{Refine\+Reason}} \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a99b0fc9bedf5559e0cb3c52684075379}{SFW\+::\+Graphics\+::operator\texorpdfstring{$\vert$}{|}}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a163a28f01c939852fedcdd788adb82a5}{Refine\+Reason}} a, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a163a28f01c939852fedcdd788adb82a5}{Refine\+Reason}} b)
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a163a28f01c939852fedcdd788adb82a5}{Refine\+Reason}} \& \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a0fa5030795e99593335637156ed2bc29}{SFW\+::\+Graphics\+::operator\texorpdfstring{$\vert$}{|}=}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a163a28f01c939852fedcdd788adb82a5}{Refine\+Reason}} \&a, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a163a28f01c939852fedcdd788adb82a5}{Refine\+Reason}} b)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_abf3e8da39263211501d128ae210d4a70}{SFW\+::\+Graphics\+::any}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a163a28f01c939852fedcdd788adb82a5}{Refine\+Reason}} r)
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_refine_state}{Refine\+State}} \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a407d40a23a1d9dd13559a3a25e619665}{SFW\+::\+Graphics\+::\+Evaluate\+Refine\+State}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{Math\+::\+Ndc\+Rect\+WithW}} \&sphere\+Rect, float ndc\+Area\+Frac, int renderW, int renderH, float z\+Cam, float nearZ, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_extents}{Extents}} \&aabb\+Extents, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_lod_thresholds_px}{Lod\+Thresholds\+Px}} \&lod\+Px, int lod\+Count, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_lod_refine_policy}{Lod\+Refine\+Policy}} \&policy=\{\})
+\begin{DoxyCompactList}\small\item\em LOD 用の「球→\+AABB 再投影」を行うべきか評価する \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+LOD（\+Level of Detail）選択のためのポリシーとユーティリティ関数を定義するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+lenov 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+March 2026 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_l_o_d_policy_8h_source}{LODPolicy.\+h}} に定義があります。
+

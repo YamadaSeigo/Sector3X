@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/DX11WinTerrainHelper.h ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_d_x11_win_terrain_helper_8h.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">DX11WinTerrainHelper.h ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>DirectX 11 を使用した Windows 向けの地形描画に関連するユーティリティ関数を定義するヘッダーファイル  
+<a href="#details">[詳解]</a></p>
+<div class="textblock"><code>#include &lt;d3d11.h&gt;</code><br />
+<code>#include &lt;wrl/client.h&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;cassert&gt;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;functional&gt;</code><br />
+</div>
+<p><a href="_d_x11_win_terrain_helper_8h_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:HeightCreateDesc" id="r_HeightCreateDesc"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_height_create_desc.html">HeightCreateDesc</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:aa9155130f6e8a253049743b14fda0cb8" id="r_aa9155130f6e8a253049743b14fda0cb8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa9155130f6e8a253049743b14fda0cb8">CreateTerrainGrid_33x33</a> (ID3D11Device *device, ComPtr&lt; ID3D11Buffer &gt; &amp;outVB, ComPtr&lt; ID3D11Buffer &gt; &amp;outIB, uint32_t &amp;outIndexCountPerPatch)</td></tr>
+<tr class="memitem:a73c12a4c5c96a17c92387d71a0e86878" id="r_a73c12a4c5c96a17c92387d71a0e86878"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73c12a4c5c96a17c92387d71a0e86878">CreateFloat1TextureSRV</a> (ID3D11Device *device, uint32_t width, uint32_t height, const float *pixels, uint32_t rowFloatStride, ComPtr&lt; ID3D11ShaderResourceView &gt; &amp;outSRV)</td></tr>
+<tr class="memitem:a9fe854c4d187a0845a9d4809d51f24bb" id="r_a9fe854c4d187a0845a9d4809d51f24bb"><td class="memTemplParams" colspan="2">template&lt;class HeightGenerator&gt; </td></tr>
+<tr class="memitem:a9fe854c4d187a0845a9d4809d51f24bb template"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9fe854c4d187a0845a9d4809d51f24bb">CreateOrLoadHeightSRV_Procedural</a> (ID3D11Device *device, uint32_t width, uint32_t height, HeightGenerator &amp;&amp;gen, ComPtr&lt; ID3D11ShaderResourceView &gt; &amp;outSRV)</td></tr>
+<tr class="memitem:abd90c9e3cf51dd006607882ce5e66a9e" id="r_abd90c9e3cf51dd006607882ce5e66a9e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abd90c9e3cf51dd006607882ce5e66a9e">CreateOrLoadHeightSRV</a> (ID3D11Device *device, const <a class="el" href="struct_height_create_desc.html">HeightCreateDesc</a> &amp;desc, ComPtr&lt; ID3D11ShaderResourceView &gt; &amp;outSRV)</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>DirectX 11 を使用した Windows 向けの地形描画に関連するユーティリティ関数を定義するヘッダーファイル </p>
+<dl class="section author"><dt>著者</dt><dd>seigo </dd></dl>
+<dl class="section date"><dt>日付</dt><dd>December 2025 </dd></dl>
+
+<p class="definition"> <a class="el" href="_d_x11_win_terrain_helper_8h_source.html">DX11WinTerrainHelper.h</a> に定義があります。</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a73c12a4c5c96a17c92387d71a0e86878" name="a73c12a4c5c96a17c92387d71a0e86878"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73c12a4c5c96a17c92387d71a0e86878">&#9670;&#160;</a></span>CreateFloat1TextureSRV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CreateFloat1TextureSRV </td>
+          <td>(</td>
+          <td class="paramtype">ID3D11Device *</td>          <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float *</td>          <td class="paramname"><span class="paramname"><em>pixels</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>rowFloatStride</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ComPtr&lt; ID3D11ShaderResourceView &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>outSRV</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_win_terrain_helper_8h_source.html">DX11WinTerrainHelper.h</a> の <a class="el" href="_d_x11_win_terrain_helper_8h_source.html#l00100">100</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="abd90c9e3cf51dd006607882ce5e66a9e" name="abd90c9e3cf51dd006607882ce5e66a9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd90c9e3cf51dd006607882ce5e66a9e">&#9670;&#160;</a></span>CreateOrLoadHeightSRV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CreateOrLoadHeightSRV </td>
+          <td>(</td>
+          <td class="paramtype">ID3D11Device *</td>          <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_height_create_desc.html">HeightCreateDesc</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>desc</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ComPtr&lt; ID3D11ShaderResourceView &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>outSRV</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_win_terrain_helper_8h_source.html">DX11WinTerrainHelper.h</a> の <a class="el" href="_d_x11_win_terrain_helper_8h_source.html#l00228">228</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9fe854c4d187a0845a9d4809d51f24bb" name="a9fe854c4d187a0845a9d4809d51f24bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fe854c4d187a0845a9d4809d51f24bb">&#9670;&#160;</a></span>CreateOrLoadHeightSRV_Procedural()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class HeightGenerator&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CreateOrLoadHeightSRV_Procedural </td>
+          <td>(</td>
+          <td class="paramtype">ID3D11Device *</td>          <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">HeightGenerator &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>gen</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ComPtr&lt; ID3D11ShaderResourceView &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>outSRV</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_win_terrain_helper_8h_source.html">DX11WinTerrainHelper.h</a> の <a class="el" href="_d_x11_win_terrain_helper_8h_source.html#l00195">195</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa9155130f6e8a253049743b14fda0cb8" name="aa9155130f6e8a253049743b14fda0cb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9155130f6e8a253049743b14fda0cb8">&#9670;&#160;</a></span>CreateTerrainGrid_33x33()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CreateTerrainGrid_33x33 </td>
+          <td>(</td>
+          <td class="paramtype">ID3D11Device *</td>          <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ComPtr&lt; ID3D11Buffer &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>outVB</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ComPtr&lt; ID3D11Buffer &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>outIB</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t &amp;</td>          <td class="paramname"><span class="paramname"><em>outIndexCountPerPatch</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_win_terrain_helper_8h_source.html">DX11WinTerrainHelper.h</a> の <a class="el" href="_d_x11_win_terrain_helper_8h_source.html#l00024">24</a> 行目に定義があります。</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="_d_x11_win_terrain_helper_8h.html">DX11WinTerrainHelper.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

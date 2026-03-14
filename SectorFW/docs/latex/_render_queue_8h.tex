@@ -1,0 +1,53 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+Render\+Queue.h ファイル}
+\hypertarget{_render_queue_8h}{}\label{_render_queue_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderQueue.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderQueue.h}}
+
+
+レンダリングコマンドキューを定義するクラス  
+
+
+{\ttfamily \#include "{}../external/concurrentqueue/concurrentqueue.\+h"{}}\newline
+{\ttfamily \#include $<$atomic$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$barrier$>$}\newline
+{\ttfamily \#include $<$optional$>$}\newline
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$memory\+\_\+resource$>$}\newline
+{\ttfamily \#include "{}Render\+Types.\+h"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena}{SFW\+::\+Graphics\+::\+Shared\+Instance\+Arena}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{SFW\+::\+Graphics\+::\+Shared\+Instance\+Arena\+::\+Instance\+Pool}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{SFW\+::\+Graphics\+::\+Render\+Queue}}
+\begin{DoxyCompactList}\small\item\em 描画コマンドの発行。管理、ソート、バッチングを行うクラス \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External}}
+\begin{DoxyCompactList}\small\item\em 生産者セッション-\/ユーザーに渡す用（thread\+\_\+localを使わない） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}{SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\+Small\+Buf}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session}{SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW\+::\+Graphics}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+レンダリングコマンドキューを定義するクラス 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} に定義があります。
+

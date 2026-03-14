@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsDevice_Util.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_physics_device___util_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">PhysicsDevice_Util.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_physics_device___util_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="_physics_types_8h.html">PhysicsTypes.h</a>&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;Jolt/Jolt.h&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;Jolt/Physics/Body/Body.h&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;Jolt/Math/Vec3.h&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;Jolt/Math/Quat.h&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;Jolt/Math/Mat44.h&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;limits&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>{</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_physics.html">Physics</a></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="comment">// Jolt が double precision の場合は R* 型を使う</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#if defined(JPH_DOUBLE_PRECISION) &amp;&amp; JPH_DOUBLE_PRECISION</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keyword">using </span><a class="code hl_typedef" href="namespace_s_f_w_1_1_physics.html#a56880b3e32c12621fe643007866d4c05">JMat</a> = JPH::RMat44;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keyword">using </span><a class="code hl_typedef" href="namespace_s_f_w_1_1_physics.html#add3f74b1f66a4886e84bfd044f931b41">JVec3</a> = JPH::RVec3;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_physics.html#a56880b3e32c12621fe643007866d4c05">   25</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="namespace_s_f_w_1_1_physics.html#a56880b3e32c12621fe643007866d4c05">JMat</a> = JPH::Mat44;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_physics.html#add3f74b1f66a4886e84bfd044f931b41">   26</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="namespace_s_f_w_1_1_physics.html#add3f74b1f66a4886e84bfd044f931b41">JVec3</a> = JPH::Vec3;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_physics.html#ac39bd1275c45085d4c34bd33b876afd6">   29</a></span>        <span class="keyword">inline</span> JPH::Quat <a class="code hl_function" href="namespace_s_f_w_1_1_physics.html#ac39bd1275c45085d4c34bd33b876afd6">ToJQuat</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_physics.html#a1fdfe70e25b6445560f443d0e054477d">Quatf</a>&amp; q) <span class="keyword">noexcept</span> { <span class="keywordflow">return</span> JPH::Quat(q.x, q.y, q.z, q.w); }</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_physics.html#a546733564d9fdc0b0e2303456dfa4793">   30</a></span>        <span class="keyword">inline</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_physics.html#add3f74b1f66a4886e84bfd044f931b41">JVec3</a>     <a class="code hl_function" href="namespace_s_f_w_1_1_physics.html#a546733564d9fdc0b0e2303456dfa4793">ToJVec3</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a>&amp; v) <span class="keyword">noexcept</span> { <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_physics.html#add3f74b1f66a4886e84bfd044f931b41">JVec3</a>(v.x, v.y, v.z); }</div>
+<div class="foldopen" id="foldopen00031" data-start="{" data-end="}">
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_physics.html#a8e0242d2ac6df0bcd5c598df243912ed">   31</a></span>        <span class="keyword">inline</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_physics.html#a56880b3e32c12621fe643007866d4c05">JMat</a>      <a class="code hl_function" href="namespace_s_f_w_1_1_physics.html#a8e0242d2ac6df0bcd5c598df243912ed">ToJMatRT</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_physics_1_1_mat34f.html">Mat34f</a>&amp; tm) {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            <span class="comment">// 回転＋平行移動の 3x4 → 4x4（Joltは列優先・右手前提、RTでOK）</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            <span class="keywordflow">return</span> JMat::sRotationTranslation(<a class="code hl_function" href="namespace_s_f_w_1_1_physics.html#ac39bd1275c45085d4c34bd33b876afd6">ToJQuat</a>(tm.<a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_mat34f.html#a7f57146018afa2a321dbce55bb4a4562">rot</a>), <a class="code hl_function" href="namespace_s_f_w_1_1_physics.html#a546733564d9fdc0b0e2303456dfa4793">ToJVec3</a>(tm.<a class="code hl_variable" href="struct_s_f_w_1_1_physics_1_1_mat34f.html#a51e8c1489f6aeeb37730ed8bb1bb2a9c">pos</a>));</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        }</div>
+</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_physics.html#a435afefcd8b239ece8d0b9a02f6cffe1">   36</a></span>        <span class="keyword">inline</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> <a class="code hl_function" href="namespace_s_f_w_1_1_physics.html#a435afefcd8b239ece8d0b9a02f6cffe1">FromJVec3</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_physics.html#add3f74b1f66a4886e84bfd044f931b41">JVec3</a>&amp; v) <span class="keyword">noexcept</span> { <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a>{ (float)v.GetX(), (float)v.GetY(), (float)v.GetZ() }; }</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_physics.html#ad4292ec0c9470d3848498d9b5fe7a56f">   37</a></span>        <span class="keyword">inline</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_physics.html#a1fdfe70e25b6445560f443d0e054477d">Quatf</a> <a class="code hl_function" href="namespace_s_f_w_1_1_physics.html#ad4292ec0c9470d3848498d9b5fe7a56f">FromJQuat</a>(<span class="keyword">const</span> JPH::Quat&amp; q) <span class="keyword">noexcept</span> { <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_physics.html#a1fdfe70e25b6445560f443d0e054477d">Quatf</a>{ q.GetX(), q.GetY(), q.GetZ(), q.GetW() }; }</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="comment">// BodyID を unordered_map のキーにするためのハッシュ</span></div>
+<div class="foldopen" id="foldopen00040" data-start="{" data-end="};">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_body_i_d_hash.html">   40</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_physics_1_1_body_i_d_hash.html">BodyIDHash</a> {</div>
+<div class="foldopen" id="foldopen00041" data-start="{" data-end="}">
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_body_i_d_hash.html#ae3ab5225074be40acfdc88f2cd0eb90a">   41</a></span>            <span class="keywordtype">size_t</span> <a class="code hl_function" href="struct_s_f_w_1_1_physics_1_1_body_i_d_hash.html#ae3ab5225074be40acfdc88f2cd0eb90a">operator()</a>(<span class="keyword">const</span> JPH::BodyID&amp; <span class="keywordtype">id</span>) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                <span class="keywordflow">return</span> std::hash&lt;uint32_t&gt;{}(<span class="keywordtype">id</span>.GetIndexAndSequenceNumber());</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            }</div>
+</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        };</div>
+</div>
+<div class="foldopen" id="foldopen00045" data-start="{" data-end="};">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_body_i_d_eq.html">   45</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_physics_1_1_body_i_d_eq.html">BodyIDEq</a> {</div>
+<div class="foldopen" id="foldopen00046" data-start="{" data-end="}">
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_physics_1_1_body_i_d_eq.html#a8ec3483e10a9bf309eb815d0a941c8f6">   46</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_s_f_w_1_1_physics_1_1_body_i_d_eq.html#a8ec3483e10a9bf309eb815d0a941c8f6">operator()</a>(<span class="keyword">const</span> JPH::BodyID&amp; a, <span class="keyword">const</span> JPH::BodyID&amp; b) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                <span class="keywordflow">return</span> a.GetIndexAndSequenceNumber() == b.GetIndexAndSequenceNumber();</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            }</div>
+</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        };</div>
+</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="comment">// ===== Pending 判定／生成（センチネルは 0xFFFFFFFF） =====</span></div>
+<div class="foldopen" id="foldopen00052" data-start="{" data-end="}">
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_physics.html#a304561723c795466480d439647eb02a1">   52</a></span>        <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="namespace_s_f_w_1_1_physics.html#a304561723c795466480d439647eb02a1">IsPendingBodyID</a>(<span class="keyword">const</span> JPH::BodyID&amp; <span class="keywordtype">id</span>) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <span class="keywordflow">return</span> <span class="keywordtype">id</span>.GetIndexAndSequenceNumber() == (std::numeric_limits&lt;uint32_t&gt;::max)();</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        }</div>
+</div>
+<div class="foldopen" id="foldopen00055" data-start="{" data-end="}">
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_physics.html#a322de79ec0e920093cdd40e6de451ce9">   55</a></span>        <span class="keyword">inline</span> JPH::BodyID <a class="code hl_function" href="namespace_s_f_w_1_1_physics.html#a322de79ec0e920093cdd40e6de451ce9">PendingBodyID</a>() noexcept {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="keywordflow">return</span> JPH::BodyID((std::numeric_limits&lt;uint32_t&gt;::max)());</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        }</div>
+</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    }</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>}</div>
+<div class="ttc" id="a_physics_types_8h_html"><div class="ttname"><a href="_physics_types_8h.html">PhysicsTypes.h</a></div><div class="ttdoc">PhysicsDeviceで使う型を定義するヘッダーファイル</div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_physics_html"><div class="ttname"><a href="namespace_s_f_w_1_1_physics.html">SFW::Physics</a></div><div class="ttdef"><b>Definition</b> <a href="gltf__to__shape_8h_source.html#l00017">gltf_to_shape.h:18</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_physics_html_a1fdfe70e25b6445560f443d0e054477d"><div class="ttname"><a href="namespace_s_f_w_1_1_physics.html#a1fdfe70e25b6445560f443d0e054477d">SFW::Physics::Quatf</a></div><div class="ttdeci">Math::Quatf Quatf</div><div class="ttdef"><b>Definition</b> <a href="_physics_types_8h_source.html#l00024">PhysicsTypes.h:24</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_physics_html_a304561723c795466480d439647eb02a1"><div class="ttname"><a href="namespace_s_f_w_1_1_physics.html#a304561723c795466480d439647eb02a1">SFW::Physics::IsPendingBodyID</a></div><div class="ttdeci">bool IsPendingBodyID(const JPH::BodyID &amp;id) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00052">PhysicsDevice_Util.h:52</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_physics_html_a322de79ec0e920093cdd40e6de451ce9"><div class="ttname"><a href="namespace_s_f_w_1_1_physics.html#a322de79ec0e920093cdd40e6de451ce9">SFW::Physics::PendingBodyID</a></div><div class="ttdeci">JPH::BodyID PendingBodyID() noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00055">PhysicsDevice_Util.h:55</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_physics_html_a435afefcd8b239ece8d0b9a02f6cffe1"><div class="ttname"><a href="namespace_s_f_w_1_1_physics.html#a435afefcd8b239ece8d0b9a02f6cffe1">SFW::Physics::FromJVec3</a></div><div class="ttdeci">Vec3f FromJVec3(const JVec3 &amp;v) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00036">PhysicsDevice_Util.h:36</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_physics_html_a546733564d9fdc0b0e2303456dfa4793"><div class="ttname"><a href="namespace_s_f_w_1_1_physics.html#a546733564d9fdc0b0e2303456dfa4793">SFW::Physics::ToJVec3</a></div><div class="ttdeci">JVec3 ToJVec3(const Vec3f &amp;v) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00030">PhysicsDevice_Util.h:30</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_physics_html_a56880b3e32c12621fe643007866d4c05"><div class="ttname"><a href="namespace_s_f_w_1_1_physics.html#a56880b3e32c12621fe643007866d4c05">SFW::Physics::JMat</a></div><div class="ttdeci">JPH::Mat44 JMat</div><div class="ttdef"><b>Definition</b> <a href="#l00025">PhysicsDevice_Util.h:25</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_physics_html_a8e0242d2ac6df0bcd5c598df243912ed"><div class="ttname"><a href="namespace_s_f_w_1_1_physics.html#a8e0242d2ac6df0bcd5c598df243912ed">SFW::Physics::ToJMatRT</a></div><div class="ttdeci">JMat ToJMatRT(const Mat34f &amp;tm)</div><div class="ttdef"><b>Definition</b> <a href="#l00031">PhysicsDevice_Util.h:31</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_physics_html_ac39bd1275c45085d4c34bd33b876afd6"><div class="ttname"><a href="namespace_s_f_w_1_1_physics.html#ac39bd1275c45085d4c34bd33b876afd6">SFW::Physics::ToJQuat</a></div><div class="ttdeci">JPH::Quat ToJQuat(const Quatf &amp;q) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00029">PhysicsDevice_Util.h:29</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_physics_html_ac6ddaee89a4ac099921066adde19e4c3"><div class="ttname"><a href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">SFW::Physics::Vec3f</a></div><div class="ttdeci">Math::Vec3f Vec3f</div><div class="ttdef"><b>Definition</b> <a href="_physics_types_8h_source.html#l00023">PhysicsTypes.h:23</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_physics_html_ad4292ec0c9470d3848498d9b5fe7a56f"><div class="ttname"><a href="namespace_s_f_w_1_1_physics.html#ad4292ec0c9470d3848498d9b5fe7a56f">SFW::Physics::FromJQuat</a></div><div class="ttdeci">Quatf FromJQuat(const JPH::Quat &amp;q) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00037">PhysicsDevice_Util.h:37</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_physics_html_add3f74b1f66a4886e84bfd044f931b41"><div class="ttname"><a href="namespace_s_f_w_1_1_physics.html#add3f74b1f66a4886e84bfd044f931b41">SFW::Physics::JVec3</a></div><div class="ttdeci">JPH::Vec3 JVec3</div><div class="ttdef"><b>Definition</b> <a href="#l00026">PhysicsDevice_Util.h:26</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_body_i_d_eq_html"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_body_i_d_eq.html">SFW::Physics::BodyIDEq</a></div><div class="ttdef"><b>Definition</b> <a href="#l00045">PhysicsDevice_Util.h:45</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_body_i_d_eq_html_a8ec3483e10a9bf309eb815d0a941c8f6"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_body_i_d_eq.html#a8ec3483e10a9bf309eb815d0a941c8f6">SFW::Physics::BodyIDEq::operator()</a></div><div class="ttdeci">bool operator()(const JPH::BodyID &amp;a, const JPH::BodyID &amp;b) const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00046">PhysicsDevice_Util.h:46</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_body_i_d_hash_html"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_body_i_d_hash.html">SFW::Physics::BodyIDHash</a></div><div class="ttdef"><b>Definition</b> <a href="#l00040">PhysicsDevice_Util.h:40</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_body_i_d_hash_html_ae3ab5225074be40acfdc88f2cd0eb90a"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_body_i_d_hash.html#ae3ab5225074be40acfdc88f2cd0eb90a">SFW::Physics::BodyIDHash::operator()</a></div><div class="ttdeci">size_t operator()(const JPH::BodyID &amp;id) const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00041">PhysicsDevice_Util.h:41</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_mat34f_html"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_mat34f.html">SFW::Physics::Mat34f</a></div><div class="ttdef"><b>Definition</b> <a href="_physics_types_8h_source.html#l00031">PhysicsTypes.h:31</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_mat34f_html_a51e8c1489f6aeeb37730ed8bb1bb2a9c"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_mat34f.html#a51e8c1489f6aeeb37730ed8bb1bb2a9c">SFW::Physics::Mat34f::pos</a></div><div class="ttdeci">Vec3f pos</div><div class="ttdef"><b>Definition</b> <a href="_physics_types_8h_source.html#l00032">PhysicsTypes.h:32</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_mat34f_html_a7f57146018afa2a321dbce55bb4a4562"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_mat34f.html#a7f57146018afa2a321dbce55bb4a4562">SFW::Physics::Mat34f::rot</a></div><div class="ttdeci">Quatf rot</div><div class="ttdef"><b>Definition</b> <a href="_physics_types_8h_source.html#l00032">PhysicsTypes.h:32</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_55575cfcdad4d99529b3cab91f15b8f2.html">Physics</a></li><li class="navelem"><a href="_physics_device___util_8h.html">PhysicsDevice_Util.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

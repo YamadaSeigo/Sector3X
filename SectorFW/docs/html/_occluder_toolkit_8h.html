@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/OccluderToolkit.h ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_occluder_toolkit_8h.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">OccluderToolkit.h ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;array&gt;</code><br />
+<code>#include &lt;algorithm&gt;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;immintrin.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="_vector_8hpp_source.html">../Math/Vector.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_matrix_8hpp_source.html">../Math/Matrix.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_a_a_b_b_8hpp_source.html">../Math/AABB.hpp</a>&quot;</code><br />
+</div>
+<p><a href="_occluder_toolkit_8h_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3AAABBFrontFaceQuad" id="r_SFW_3A_3AGraphics_3A_3AAABBFrontFaceQuad"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_a_a_b_b_front_face_quad.html">SFW::Graphics::AABBFrontFaceQuad</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3AOccluderViewport" id="r_SFW_3A_3AGraphics_3A_3AOccluderViewport"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_occluder_viewport.html">SFW::Graphics::OccluderViewport</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3AOccluderPolicy" id="r_SFW_3A_3AGraphics_3A_3AOccluderPolicy"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_occluder_policy.html">SFW::Graphics::OccluderPolicy</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3AQuadCandidate" id="r_SFW_3A_3AGraphics_3A_3AQuadCandidate"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_quad_candidate.html">SFW::Graphics::QuadCandidate</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ASoAPosRad" id="r_SFW_3A_3AGraphics_3A_3ASoAPosRad"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_so_a_pos_rad.html">SFW::Graphics::SoAPosRad</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3AViewProjParams" id="r_SFW_3A_3AGraphics_3A_3AViewProjParams"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_view_proj_params.html">SFW::Graphics::ViewProjParams</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+名前空間</h2></td></tr>
+<tr class="memitem:SFW" id="r_SFW"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html">SFW</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics" id="r_SFW_3A_3AGraphics"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html">SFW::Graphics</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+マクロ定義</h2></td></tr>
+<tr class="memitem:adc5d57b4a89b8c4b306ad53ad4acdc2d" id="r_adc5d57b4a89b8c4b306ad53ad4acdc2d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adc5d57b4a89b8c4b306ad53ad4acdc2d">SFW_ROWMAJOR_MAT4F_HAS_M</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
+列挙型</h2></td></tr>
+<tr class="memitem:a7d7d2581f122544952cc41c2b15c0ec1" id="r_a7d7d2581f122544952cc41c2b15c0ec1"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a7d7d2581f122544952cc41c2b15c0ec1">SFW::Graphics::MeltBuildStatus</a> : uint32_t { <a class="el" href="namespace_s_f_w_1_1_graphics.html#a7d7d2581f122544952cc41c2b15c0ec1a58c6b75f69e41e2a5c73db12ed51f315">SFW::Graphics::UsedMelt</a> = 0
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a7d7d2581f122544952cc41c2b15c0ec1ab02c91b61472e68bbe731984a42e0b2f">SFW::Graphics::FallbackWhole</a> = 1
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a7d7d2581f122544952cc41c2b15c0ec1ad7c8c85bf79bbe1b7188497c32c3b0ca">SFW::Graphics::Failed</a> = 2
+ }</td></tr>
+<tr class="memitem:a6aefff63a6d0c3d69a20a933d24de073" id="r_a6aefff63a6d0c3d69a20a933d24de073"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a6aefff63a6d0c3d69a20a933d24de073">SFW::Graphics::MeltBoxType</a> : int32_t { <br />
+&#160;&#160;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a6aefff63a6d0c3d69a20a933d24de073ab50339a10e1de285ac99d4c3990b8693">SFW::Graphics::NONE</a> = 0
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a6aefff63a6d0c3d69a20a933d24de073a8b10954fae9deffda2cfbff6d78d92a9">SFW::Graphics::DIAGONALS</a> = 1 &lt;&lt; 0
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a6aefff63a6d0c3d69a20a933d24de073a6705777b712ee811e76fb07162081d63">SFW::Graphics::TOP</a> = 1 &lt;&lt; 1
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a6aefff63a6d0c3d69a20a933d24de073a1fabf63de5c96c78e2a40805bcdeb73b">SFW::Graphics::BOTTOM</a> = 1 &lt;&lt; 2
+, <br />
+&#160;&#160;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a6aefff63a6d0c3d69a20a933d24de073a15b4ff9ac4aafd8e95e9bad83a391547">SFW::Graphics::SIDES</a> = 1 &lt;&lt; 3
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a6aefff63a6d0c3d69a20a933d24de073a820ead78f0fa32544c7ba38fe7ff53d9">SFW::Graphics::REGULAR</a> = SIDES | TOP | BOTTOM
+<br />
+ }</td></tr>
+<tr class="memitem:af5ac1be11beff93c6e6118e7c7391cda" id="r_af5ac1be11beff93c6e6118e7c7391cda"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cda">SFW::Graphics::AABBQuadAxisBit</a> : uint32_t { <br />
+&#160;&#160;<a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cdaa6adf97f83acf6453d4a6a4b1070f3754">SFW::Graphics::None</a> = 0
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cdaa02129bb861061d1a052c592e2dc6b383">SFW::Graphics::X</a> = 1 &lt;&lt; 0
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cdaa57cec4137b614c87cb4e24a3d003a3e0">SFW::Graphics::Y</a> = 1 &lt;&lt; 1
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cdaa21c2e59531c8710156d34a3c30ac81d5">SFW::Graphics::Z</a> = 1 &lt;&lt; 2
+, <br />
+&#160;&#160;<a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cdaae1f2d5134ed2543d38a0de9751cf75d9">SFW::Graphics::AUTO</a> = X | Y | Z
+<br />
+ }</td></tr>
+<tr class="memitem:a3b4878ab046ba399e3a66ee1023d1f53" id="r_a3b4878ab046ba399e3a66ee1023d1f53"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a3b4878ab046ba399e3a66ee1023d1f53">SFW::Graphics::OccluderLOD</a> { <a class="el" href="namespace_s_f_w_1_1_graphics.html#a3b4878ab046ba399e3a66ee1023d1f53aa535711d028372f87fdbce03cd43b25d">SFW::Graphics::Near</a>
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a3b4878ab046ba399e3a66ee1023d1f53a55c6b09cbca39ef0cdb728eb112a5049">SFW::Graphics::Mid</a>
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a3b4878ab046ba399e3a66ee1023d1f53acfcd41f0c1804fb7778f8f01301223f6">SFW::Graphics::Far</a>
+ }</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:ad9cac710961d1fafc7309b1882409dc1" id="r_ad9cac710961d1fafc7309b1882409dc1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a7d7d2581f122544952cc41c2b15c0ec1">MeltBuildStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#ad9cac710961d1fafc7309b1882409dc1">SFW::Graphics::GenerateOccluderAABBs_MaybeWithMelt</a> (const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; &amp;positions, const std::vector&lt; uint32_t &gt; &amp;indices, int meltResolution, float meltFillPct, std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#a2ded83bd3f26c7d6258ce43e16bdc067">Math::AABB3f</a> &gt; &amp;outAABBs, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a6aefff63a6d0c3d69a20a933d24de073">MeltBoxType</a> boxType=<a class="el" href="namespace_s_f_w_1_1_graphics.html#a6aefff63a6d0c3d69a20a933d24de073a820ead78f0fa32544c7ba38fe7ff53d9">MeltBoxType::REGULAR</a>)</td></tr>
+<tr class="memitem:a2105c193737c03f4b976d832ac0721de" id="r_a2105c193737c03f4b976d832ac0721de"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a2105c193737c03f4b976d832ac0721de">SFW::Graphics::operator==</a> (<a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cda">AABBQuadAxisBit</a> a, <a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cda">AABBQuadAxisBit</a> b)</td></tr>
+<tr class="memitem:a4dcb219eb5f58898113a8240639135ed" id="r_a4dcb219eb5f58898113a8240639135ed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a4dcb219eb5f58898113a8240639135ed">SFW::Graphics::operator&amp;</a> (<a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cda">AABBQuadAxisBit</a> a, <a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cda">AABBQuadAxisBit</a> b)</td></tr>
+<tr class="memitem:a18be55af7fd4c71003bee253c381c39f" id="r_a18be55af7fd4c71003bee253c381c39f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cda">AABBQuadAxisBit</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a18be55af7fd4c71003bee253c381c39f">SFW::Graphics::operator|</a> (<a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cda">AABBQuadAxisBit</a> a, <a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cda">AABBQuadAxisBit</a> b)</td></tr>
+<tr class="memitem:af18fd9baa7e3cf1c65acd27900bee5d5" id="r_af18fd9baa7e3cf1c65acd27900bee5d5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#af18fd9baa7e3cf1c65acd27900bee5d5">SFW::Graphics::ComputeFrontFaceQuad</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#a2ded83bd3f26c7d6258ce43e16bdc067">Math::AABB3f</a> &amp;b, const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;camPos, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_a_a_b_b_front_face_quad.html">AABBFrontFaceQuad</a> &amp;out, <a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cda">AABBQuadAxisBit</a> axisBit=<a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cdaae1f2d5134ed2543d38a0de9751cf75d9">AABBQuadAxisBit::AUTO</a>)</td></tr>
+<tr class="memitem:af8434e9b5818645d22d510f053614772" id="r_af8434e9b5818645d22d510f053614772"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#af8434e9b5818645d22d510f053614772">SFW::Graphics::QuadToTrianglesCCW</a> (uint16_t outIdx[6])</td></tr>
+<tr class="memitem:a62de84a50df1cd85f91231d97b326b8f" id="r_a62de84a50df1cd85f91231d97b326b8f"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a62de84a50df1cd85f91231d97b326b8f">SFW::Graphics::EstimateMaxScreenDiameterPx</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#a2ded83bd3f26c7d6258ce43e16bdc067">Math::AABB3f</a> &amp;b, const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;camPos, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_occluder_viewport.html">OccluderViewport</a> &amp;vp)</td></tr>
+<tr class="memitem:adc37a5ee69a0d11e84e980a6367b4b35" id="r_adc37a5ee69a0d11e84e980a6367b4b35"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#adc37a5ee69a0d11e84e980a6367b4b35">SFW::Graphics::ProjectQuadAreaPx2_SIMDOrScalar</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> quad[4], const <a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a> &amp;VP, int vpW, int vpH, float *outMinX=nullptr, float *outMinY=nullptr, float *outMaxX=nullptr, float *outMaxY=nullptr, float *outDepthMeanNDC=nullptr)</td></tr>
+<tr class="memitem:a298d6028ecd78373fed841d49506cc87" id="r_a298d6028ecd78373fed841d49506cc87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_occluder_policy.html">OccluderPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a298d6028ecd78373fed841d49506cc87">SFW::Graphics::GetPolicy</a> (<a class="el" href="namespace_s_f_w_1_1_graphics.html#a3b4878ab046ba399e3a66ee1023d1f53">OccluderLOD</a> lod)</td></tr>
+<tr class="memitem:ad8a197fa941ba88b0a3cc42853ff7548" id="r_ad8a197fa941ba88b0a3cc42853ff7548"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#ad8a197fa941ba88b0a3cc42853ff7548">SFW::Graphics::SelectOccluderQuads_SIMD</a> (const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#a2ded83bd3f26c7d6258ce43e16bdc067">Math::AABB3f</a> &gt; &amp;aabbs, const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;camPos, const <a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a> &amp;VP, int vpW, int vpH, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a3b4878ab046ba399e3a66ee1023d1f53">OccluderLOD</a> lod, std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_quad_candidate.html">QuadCandidate</a> &gt; &amp;out)</td></tr>
+<tr class="memitem:a376d5e524ddc466ae8bd757cdebaf816" id="r_a376d5e524ddc466ae8bd757cdebaf816"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a376d5e524ddc466ae8bd757cdebaf816">SFW::Graphics::SelectOccluderQuads_AVX2</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#a2ded83bd3f26c7d6258ce43e16bdc067">Math::AABB3f</a> *aabbs, const size_t aabbCount, const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;camPos, const <a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a> &amp;VP, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_occluder_viewport.html">OccluderViewport</a> &amp;vp, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a3b4878ab046ba399e3a66ee1023d1f53">OccluderLOD</a> lod, std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_quad_candidate.html">QuadCandidate</a> &gt; &amp;out, <a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cda">AABBQuadAxisBit</a> axisBit=<a class="el" href="namespace_s_f_w_1_1_graphics.html#af5ac1be11beff93c6e6118e7c7391cdaae1f2d5134ed2543d38a0de9751cf75d9">AABBQuadAxisBit::AUTO</a>)</td></tr>
+<tr class="memitem:a10c08c46e869a6a607f46d64432d424b" id="r_a10c08c46e869a6a607f46d64432d424b"><td class="memTemplParams" colspan="2">template&lt;class TTh&gt; </td></tr>
+<tr class="memitem:a10c08c46e869a6a607f46d64432d424b template"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a10c08c46e869a6a607f46d64432d424b">SFW::Graphics::SelectLodGeneric</a> (float s, const TTh &amp;th, int lodCount, int prevLod, float globalBias)</td></tr>
+<tr class="memitem:ac6243761d2b1368da6abe72e4798b0ce" id="r_ac6243761d2b1368da6abe72e4798b0ce"><td class="memTemplParams" colspan="2">template&lt;class TTh&gt; </td></tr>
+<tr class="memitem:ac6243761d2b1368da6abe72e4798b0ce template"><td class="memItemLeft" align="right" valign="top">TTh&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#ac6243761d2b1368da6abe72e4798b0ce">SFW::Graphics::MakeOccluderThresholds</a> (const TTh &amp;visTh, float scale=1.25f, float up=0.25f, float down=0.03f)</td></tr>
+<tr class="memitem:a4aab02bc7b681efc1f4ae6edbf7728fd" id="r_a4aab02bc7b681efc1f4ae6edbf7728fd"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a4aab02bc7b681efc1f4ae6edbf7728fd">SFW::Graphics::OccluderBiasFromRenderLod</a> (int visLod)</td></tr>
+<tr class="memitem:a4942c6ea4c74bd08fb7f506041b7311d" id="r_a4942c6ea4c74bd08fb7f506041b7311d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a4942c6ea4c74bd08fb7f506041b7311d">SFW::Graphics::ScreenCoverageFromRectPx</a> (float minx, float miny, float maxx, float maxy, float vpW, float vpH)</td></tr>
+<tr class="memitem:a7df80df0bac36dc9048b86adf7ff6c6e" id="r_a7df80df0bac36dc9048b86adf7ff6c6e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a7df80df0bac36dc9048b86adf7ff6c6e">SFW::Graphics::ComputeNDCAreaFrec</a> (float minx, float miny, float maxx, float maxy)</td></tr>
+<tr class="memitem:a721bebf950f0c03b9fc75a6abd29cc67" id="r_a721bebf950f0c03b9fc75a6abd29cc67"><td class="memTemplParams" colspan="2">template&lt;class TTh&gt; </td></tr>
+<tr class="memitem:a721bebf950f0c03b9fc75a6abd29cc67 template"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a3b4878ab046ba399e3a66ee1023d1f53">OccluderLOD</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a721bebf950f0c03b9fc75a6abd29cc67">SFW::Graphics::DecideOccluderLOD_FromThresholds</a> (float s_occ, const TTh &amp;visTh, int prevOccLod, int renderLod, float extraGlobalBias=0.0f)</td></tr>
+<tr class="memitem:ae9b9dc049d1562d76de6354c73979081" id="r_ae9b9dc049d1562d76de6354c73979081"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a3b4878ab046ba399e3a66ee1023d1f53">OccluderLOD</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#ae9b9dc049d1562d76de6354c73979081">SFW::Graphics::DecideOccluderLOD_FromArea</a> (float areaPx2)</td></tr>
+<tr class="memitem:aed4c28d521e5a9fa2881da93f6f587dd" id="r_aed4c28d521e5a9fa2881da93f6f587dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#aed4c28d521e5a9fa2881da93f6f587dd">SFW::Graphics::CoarseSphereVisible_AVX2</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_so_a_pos_rad.html">SoAPosRad</a> &amp;s, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_view_proj_params.html">ViewProjParams</a> &amp;vp, std::vector&lt; uint32_t &gt; &amp;outIndices)</td></tr>
+</table>
+<a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">マクロ定義詳解</h2>
+<a id="adc5d57b4a89b8c4b306ad53ad4acdc2d" name="adc5d57b4a89b8c4b306ad53ad4acdc2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc5d57b4a89b8c4b306ad53ad4acdc2d">&#9670;&#160;</a></span>SFW_ROWMAJOR_MAT4F_HAS_M</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SFW_ROWMAJOR_MAT4F_HAS_M</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_occluder_toolkit_8h_source.html">OccluderToolkit.h</a> の <a class="el" href="_occluder_toolkit_8h_source.html#l00033">33</a> 行目に定義があります。</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="_occluder_toolkit_8h.html">OccluderToolkit.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

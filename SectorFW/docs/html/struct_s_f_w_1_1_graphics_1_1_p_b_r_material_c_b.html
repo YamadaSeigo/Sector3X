@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Graphics::PBRMaterialCB 構造体</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b.html','','struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Graphics::PBRMaterialCB 構造体</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>PBRマテリアル用定数バッファ構造体  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_render_types_8h_source.html">RenderTypes.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+公開型</h2></td></tr>
+<tr class="memitem:a5dc84bffac92723c6a7a42473fa9710c" id="r_a5dc84bffac92723c6a7a42473fa9710c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5dc84bffac92723c6a7a42473fa9710c">HasFlagsBits</a> : uint32_t { <br />
+&#160;&#160;<a class="el" href="#a5dc84bffac92723c6a7a42473fa9710cacf5ea4bd4a772592c4e3cbedf1d5f38c">HasBaseColorTex</a> = 1u &lt;&lt; 0
+, <a class="el" href="#a5dc84bffac92723c6a7a42473fa9710ca68ddd65adec46c3a2bfa6bbf14f3c51c">HasNormalTex</a> = 1u &lt;&lt; 1
+, <a class="el" href="#a5dc84bffac92723c6a7a42473fa9710ca03627c78638027e1e3fcfc04eb5fa140">HasMetallicRoughnessTex</a> = 1u &lt;&lt; 2
+, <a class="el" href="#a5dc84bffac92723c6a7a42473fa9710ca342584f4f91e696b90215652515c1c05">HasOcclusionTex</a> = 1u &lt;&lt; 3
+, <br />
+&#160;&#160;<a class="el" href="#a5dc84bffac92723c6a7a42473fa9710ca61038c51732d7cd31ede1ea9e41d72a1">HasORMCombined</a> = 1u &lt;&lt; 4
+, <a class="el" href="#a5dc84bffac92723c6a7a42473fa9710ca407b6f47f344d74b099517ef4a4a8ab9">HasEmissiveTex</a> = 1u &lt;&lt; 5
+<br />
+ }</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+公開変数類</h2></td></tr>
+<tr class="memitem:a04c551c27b89d7d00f712a9bd482cd93" id="r_a04c551c27b89d7d00f712a9bd482cd93"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a04c551c27b89d7d00f712a9bd482cd93">baseColorFactor</a> [4] = { 1,1,1,1 }</td></tr>
+<tr class="memitem:a7f5bfa55268a76bd1f1e021008a1dcf8" id="r_a7f5bfa55268a76bd1f1e021008a1dcf8"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f5bfa55268a76bd1f1e021008a1dcf8">metallicFactor</a> = 1.0f</td></tr>
+<tr class="memitem:ac6f94994efc676c536617957196e4a53" id="r_ac6f94994efc676c536617957196e4a53"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6f94994efc676c536617957196e4a53">roughnessFactor</a> = 1.0f</td></tr>
+<tr class="memitem:a8b7a6bde538c0ff754c821847c38e37d" id="r_a8b7a6bde538c0ff754c821847c38e37d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b7a6bde538c0ff754c821847c38e37d">occlusionFactor</a> = 1.0f</td></tr>
+<tr class="memitem:a40b5a7076c7a8175255262e56486aba1" id="r_a40b5a7076c7a8175255262e56486aba1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40b5a7076c7a8175255262e56486aba1">hasFlags</a> = 0</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>PBRマテリアル用定数バッファ構造体 </p>
+
+<p class="definition"> <a class="el" href="_render_types_8h_source.html">RenderTypes.h</a> の <a class="el" href="_render_types_8h_source.html#l00199">199</a> 行目に定義があります。</p>
+</div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">列挙型メンバ詳解</h2>
+<a id="a5dc84bffac92723c6a7a42473fa9710c" name="a5dc84bffac92723c6a7a42473fa9710c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5dc84bffac92723c6a7a42473fa9710c">&#9670;&#160;</a></span>HasFlagsBits</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a5dc84bffac92723c6a7a42473fa9710c">SFW::Graphics::PBRMaterialCB::HasFlagsBits</a> : uint32_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">列挙値</th></tr><tr><td class="fieldname"><a id="a5dc84bffac92723c6a7a42473fa9710cacf5ea4bd4a772592c4e3cbedf1d5f38c" name="a5dc84bffac92723c6a7a42473fa9710cacf5ea4bd4a772592c4e3cbedf1d5f38c"></a>HasBaseColorTex&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a5dc84bffac92723c6a7a42473fa9710ca68ddd65adec46c3a2bfa6bbf14f3c51c" name="a5dc84bffac92723c6a7a42473fa9710ca68ddd65adec46c3a2bfa6bbf14f3c51c"></a>HasNormalTex&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a5dc84bffac92723c6a7a42473fa9710ca03627c78638027e1e3fcfc04eb5fa140" name="a5dc84bffac92723c6a7a42473fa9710ca03627c78638027e1e3fcfc04eb5fa140"></a>HasMetallicRoughnessTex&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a5dc84bffac92723c6a7a42473fa9710ca342584f4f91e696b90215652515c1c05" name="a5dc84bffac92723c6a7a42473fa9710ca342584f4f91e696b90215652515c1c05"></a>HasOcclusionTex&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a5dc84bffac92723c6a7a42473fa9710ca61038c51732d7cd31ede1ea9e41d72a1" name="a5dc84bffac92723c6a7a42473fa9710ca61038c51732d7cd31ede1ea9e41d72a1"></a>HasORMCombined&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a5dc84bffac92723c6a7a42473fa9710ca407b6f47f344d74b099517ef4a4a8ab9" name="a5dc84bffac92723c6a7a42473fa9710ca407b6f47f344d74b099517ef4a4a8ab9"></a>HasEmissiveTex&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition"> <a class="el" href="_render_types_8h_source.html">RenderTypes.h</a> の <a class="el" href="_render_types_8h_source.html#l00206">206</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<a id="a04c551c27b89d7d00f712a9bd482cd93" name="a04c551c27b89d7d00f712a9bd482cd93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04c551c27b89d7d00f712a9bd482cd93">&#9670;&#160;</a></span>baseColorFactor</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Graphics::PBRMaterialCB::baseColorFactor[4] = { 1,1,1,1 }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_types_8h_source.html">RenderTypes.h</a> の <a class="el" href="_render_types_8h_source.html#l00200">200</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a40b5a7076c7a8175255262e56486aba1" name="a40b5a7076c7a8175255262e56486aba1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40b5a7076c7a8175255262e56486aba1">&#9670;&#160;</a></span>hasFlags</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::Graphics::PBRMaterialCB::hasFlags = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_types_8h_source.html">RenderTypes.h</a> の <a class="el" href="_render_types_8h_source.html#l00204">204</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7f5bfa55268a76bd1f1e021008a1dcf8" name="a7f5bfa55268a76bd1f1e021008a1dcf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f5bfa55268a76bd1f1e021008a1dcf8">&#9670;&#160;</a></span>metallicFactor</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Graphics::PBRMaterialCB::metallicFactor = 1.0f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_types_8h_source.html">RenderTypes.h</a> の <a class="el" href="_render_types_8h_source.html#l00201">201</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8b7a6bde538c0ff754c821847c38e37d" name="a8b7a6bde538c0ff754c821847c38e37d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b7a6bde538c0ff754c821847c38e37d">&#9670;&#160;</a></span>occlusionFactor</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Graphics::PBRMaterialCB::occlusionFactor = 1.0f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_types_8h_source.html">RenderTypes.h</a> の <a class="el" href="_render_types_8h_source.html#l00203">203</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac6f94994efc676c536617957196e4a53" name="ac6f94994efc676c536617957196e4a53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6f94994efc676c536617957196e4a53">&#9670;&#160;</a></span>roughnessFactor</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Graphics::PBRMaterialCB::roughnessFactor = 1.0f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_types_8h_source.html">RenderTypes.h</a> の <a class="el" href="_render_types_8h_source.html#l00202">202</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>この構造体詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/<a class="el" href="_render_types_8h_source.html">RenderTypes.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics.html">Graphics</a></li><li class="navelem"><a href="struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b.html">PBRMaterialCB</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

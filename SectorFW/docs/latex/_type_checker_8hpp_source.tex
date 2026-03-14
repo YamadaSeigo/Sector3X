@@ -1,0 +1,56 @@
+\doxysection{Type\+Checker.\+hpp}
+\hypertarget{_type_checker_8hpp_source}{}\label{_type_checker_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/TypeChecker.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/TypeChecker.hpp}}
+\mbox{\hyperlink{_type_checker_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00013}00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00014}00014\ \{}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00015}00015\ \ \ \ \ \textcolor{comment}{//\ 任意のテンプレート引数数に対応するCRTP継承判定}}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00016}00016\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3}{T}},\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename},\ \textcolor{keyword}{typename}...>\ \textcolor{keyword}{class\ }CRTP>}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00017}\mbox{\hyperlink{struct_s_f_w_1_1is__crtp__base__of}{00017}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1is__crtp__base__of}{is\_crtp\_base\_of}}\ \{}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00018}00018\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ どんな追加引数...でもCRTP<T,\ ...>と一致すればOK}}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test(CRTP<U,\ std::decay\_t<T>\ >*)\ -\/>\ std::true\_type\ \{\}}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ U,\ \textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test(CRTP<U,\ Args...>*)\ -\/>\ std::true\_type\ \{\}}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test(...)\ -\/>\ std::false\_type\ \{\}}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00028}00028\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00029}\mbox{\hyperlink{struct_s_f_w_1_1is__crtp__base__of_ac77fbae9a6c165e8c2af84a53d242fcd}{00029}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1is__crtp__base__of_ac77fbae9a6c165e8c2af84a53d242fcd}{value}}\ =\ \textcolor{keyword}{decltype}(test<T>(std::declval<T*>()))\mbox{\hyperlink{struct_s_f_w_1_1is__crtp__base__of_ac77fbae9a6c165e8c2af84a53d242fcd}{::value}};}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00030}00030\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00032}00032\ \ \ \ \ \textcolor{comment}{//\ CRTP<T>\ に対応した1引数用判定}}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00033}00033\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }CRTP>}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00034}\mbox{\hyperlink{concept_s_f_w_1_1is__crtp__base__of__1arg}{00034}}\ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1is__crtp__base__of__1arg}{is\_crtp\_base\_of\_1arg}}\ =\ \textcolor{keyword}{requires}(T\ *\ t)\ \{}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}CRTP<T>*\textcolor{keyword}{>}(t);}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00036}00036\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00038}00038\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename},\ \textcolor{keyword}{typename}...>\ \textcolor{keyword}{class\ }CRTP>}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00039}\mbox{\hyperlink{namespace_s_f_w_ac398b6585f609c973904165eb7869bb5}{00039}}\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_ac398b6585f609c973904165eb7869bb5}{is\_crtp\_base\_of\_v}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1is__crtp__base__of_ac77fbae9a6c165e8c2af84a53d242fcd}{is\_crtp\_base\_of<T,\ CRTP>::value}};}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00041}00041\ \ \ \ \ \textcolor{comment}{//\ ユーザー拡張点：デフォルトは\ false}}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00042}\mbox{\hyperlink{struct_s_f_w_1_1user__primitive}{00042}}\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1user__primitive}{user\_primitive}}\ :\ std::false\_type\ \{\};}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00043}00043\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00044}\mbox{\hyperlink{namespace_s_f_w_a611f46c1c4fc43defe841c92c34e3e9f}{00044}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_a611f46c1c4fc43defe841c92c34e3e9f}{user\_primitive\_v}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1user__primitive}{user\_primitive<std::remove\_cv\_t<T>}}>::value;}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00049}00049\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00050}\mbox{\hyperlink{concept_s_f_w_1_1_is_primitive}{00050}}\ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_is_primitive}{IsPrimitive}}\ =\ std::is\_arithmetic\_v<T>\ ||\ std::is\_enum\_v<T>\ ||\ \mbox{\hyperlink{namespace_s_f_w_a611f46c1c4fc43defe841c92c34e3e9f}{user\_primitive\_v<T>}};}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00054}00054\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ AllowedTypes>}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00055}\mbox{\hyperlink{concept_s_f_w_1_1_one_of}{00055}}\ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_one_of}{OneOf}}\ =\ (std::is\_same\_v<T,\ AllowedTypes>\ ||\ ...);}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00059}00059\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ QueryTypes,\ \textcolor{keyword}{typename}...\ AllowedTypes>}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00060}\mbox{\hyperlink{concept_s_f_w_1_1_all_of}{00060}}\ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_all_of}{AllOf}}\ =\ (\mbox{\hyperlink{concept_s_f_w_1_1_one_of}{OneOf}}<QueryTypes,\ AllowedTypes...>\ \&\&\ ...);}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00062}00062\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00063}\mbox{\hyperlink{concept_s_f_w_1_1_pointer_type}{00063}}\ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_pointer_type}{PointerType}}\ =\ std::is\_pointer\_v<T>;}
+\DoxyCodeLine{\Hypertarget{_type_checker_8hpp_source_l00064}00064\ \}}
+
+\end{DoxyCode}

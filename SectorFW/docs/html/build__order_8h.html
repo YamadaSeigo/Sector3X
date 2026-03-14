@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/build_order.h ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('build__order_8h.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">build_order.h ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>カメラからの距離に基づいてエンティティの描画順序を構築するためのユーティリティ関数  
+<a href="#details">[詳解]</a></p>
+<div class="textblock"><code>#include &lt;algorithm&gt;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;limits&gt;</code><br />
+<code>#include &quot;<a class="el" href="_archetype_chunk_8h_source.html">ECS/ArchetypeChunk.h</a>&quot;</code><br />
+</div>
+<p><a href="build__order_8h_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:SFW_3A_3ASoAPositions" id="r_SFW_3A_3ASoAPositions"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_so_a_positions.html">SFW::SoAPositions</a></td></tr>
+<tr class="memitem:SFW_3A_3AKeyRow" id="r_SFW_3A_3AKeyRow"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_key_row.html">SFW::KeyRow</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+名前空間</h2></td></tr>
+<tr class="memitem:SFW" id="r_SFW"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html">SFW</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+マクロ定義</h2></td></tr>
+<tr class="memitem:a44204c13832879c517fd7b4a0e8345cc" id="r_a44204c13832879c517fd7b4a0e8345cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a44204c13832879c517fd7b4a0e8345cc">SFW_HAS_AVX2</a>&#160;&#160;&#160;0</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:a4062efd69103d94c9a6e508a995f3e05" id="r_a4062efd69103d94c9a6e508a995f3e05"><td class="memTemplParams" colspan="2">template&lt;int B = 32&gt; </td></tr>
+<tr class="memitem:a4062efd69103d94c9a6e508a995f3e05 template"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a4062efd69103d94c9a6e508a995f3e05">SFW::DistanceBin</a> (float d2, float near2, float far2) noexcept</td></tr>
+<tr class="memitem:a2a43150e83a5812c4a819a81f78cd0fa" id="r_a2a43150e83a5812c4a819a81f78cd0fa"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a2a43150e83a5812c4a819a81f78cd0fa">SFW::Dist2</a> (const <a class="el" href="struct_s_f_w_1_1_so_a_positions.html">SoAPositions</a> &amp;T, uint32_t i, float cx, float cy, float cz) noexcept</td></tr>
+<tr class="memitem:ae2d88f62b34da9b423c0ba5ee46ca2f0" id="r_ae2d88f62b34da9b423c0ba5ee46ca2f0"><td class="memTemplParams" colspan="2">template&lt;int B = 32&gt; </td></tr>
+<tr class="memitem:ae2d88f62b34da9b423c0ba5ee46ca2f0 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#ae2d88f62b34da9b423c0ba5ee46ca2f0">SFW::BuildNearToFar_Order_Buckets</a> (const <a class="el" href="struct_s_f_w_1_1_so_a_positions.html">SoAPositions</a> &amp;T, float cx, float cy, float cz, float near2, float far2, std::vector&lt; uint32_t &gt; &amp;order)</td></tr>
+<tr class="memitem:afeddd23a62f7ccc7bccdbecfec4133e1" id="r_afeddd23a62f7ccc7bccdbecfec4133e1"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#afeddd23a62f7ccc7bccdbecfec4133e1">SFW::QuantizeD2</a> (float d2, float near2, float far2) noexcept</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>カメラからの距離に基づいてエンティティの描画順序を構築するためのユーティリティ関数 </p>
+<dl class="section author"><dt>著者</dt><dd>lenov </dd></dl>
+<dl class="section date"><dt>日付</dt><dd>March 2025 </dd></dl>
+
+<p class="definition"> <a class="el" href="build__order_8h_source.html">build_order.h</a> に定義があります。</p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">マクロ定義詳解</h2>
+<a id="a44204c13832879c517fd7b4a0e8345cc" name="a44204c13832879c517fd7b4a0e8345cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44204c13832879c517fd7b4a0e8345cc">&#9670;&#160;</a></span>SFW_HAS_AVX2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SFW_HAS_AVX2&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="build__order_8h_source.html">build_order.h</a> の <a class="el" href="build__order_8h_source.html#l00020">20</a> 行目に定義があります。</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_5ada393002ee7234dde4caf0d7998537.html">Core</a></li><li class="navelem"><a href="build__order_8h.html">build_order.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

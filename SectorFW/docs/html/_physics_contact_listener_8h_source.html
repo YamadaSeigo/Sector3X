@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsContactListener.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_physics_contact_listener_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">PhysicsContactListener.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_physics_contact_listener_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="_physics_snapshot_8h.html">PhysicsSnapshot.h</a>&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="_physics_device___util_8h.html">PhysicsDevice_Util.h</a>&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;Jolt/Physics/Collision/ContactListener.h&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;Jolt/Physics/Character/CharacterVirtual.h&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_physics.html">Physics</a></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <span class="keyword">class </span><a class="code hl_class" href="class_s_f_w_1_1_physics_1_1_physics_device.html">PhysicsDevice</a>; <span class="comment">// 前方</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span></div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="};">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html">   22</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#a1245eaae73d3c749f37728030cf7e48c">ContactListenerImpl</a> final : <span class="keyword">public</span> JPH::ContactListener {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#a1245eaae73d3c749f37728030cf7e48c">   24</a></span>            <span class="keyword">explicit</span> <a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#a1245eaae73d3c749f37728030cf7e48c">ContactListenerImpl</a>(<a class="code hl_class" href="class_s_f_w_1_1_physics_1_1_physics_device.html">PhysicsDevice</a>* dev) : m_dev(dev) {}</div>
+<div class="foldopen" id="foldopen00025" data-start="{" data-end="}">
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#ad976993ed4940b8175f71a92e0945062">   25</a></span>            <span class="keyword">virtual</span> JPH::ValidateResult <a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#ad976993ed4940b8175f71a92e0945062">OnContactValidate</a>(<span class="keyword">const</span> JPH::Body&amp; <span class="comment">/*body1*/</span>, <span class="keyword">const</span> JPH::Body&amp; <span class="comment">/*body2*/</span>, JPH::RVec3Arg <span class="comment">/*baseOffset*/</span>, <span class="keyword">const</span> JPH::CollideShapeResult&amp; <span class="comment">/*result*/</span>)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                <span class="keywordflow">return</span> JPH::ValidateResult::AcceptAllContactsForThisBodyPair; <span class="comment">// マスク制御を入れるならここを拡張</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>            }</div>
+</div>
+<div class="foldopen" id="foldopen00028" data-start="{" data-end="}">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#a0673fe68d8e20f9407ac489cc3b42f31">   28</a></span>            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#a0673fe68d8e20f9407ac489cc3b42f31">OnContactAdded</a>(<span class="keyword">const</span> JPH::Body&amp; body1, <span class="keyword">const</span> JPH::Body&amp; body2, <span class="keyword">const</span> JPH::ContactManifold&amp; manifold, JPH::ContactSettings&amp; <span class="comment">/*settings*/</span>)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>                Push(body1, body2, manifold, <a class="code hl_enumvalue" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2abe5bce4b309fb36b341d53a9e228b5c2">ContactEvent::Begin</a>);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            }</div>
+</div>
+<div class="foldopen" id="foldopen00031" data-start="{" data-end="}">
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#a468eed2db2c0f2b844ae29279f2e5b43">   31</a></span>            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#a468eed2db2c0f2b844ae29279f2e5b43">OnContactPersisted</a>(<span class="keyword">const</span> JPH::Body&amp; body1, <span class="keyword">const</span> JPH::Body&amp; body2, <span class="keyword">const</span> JPH::ContactManifold&amp; manifold, JPH::ContactSettings&amp; <span class="comment">/*settings*/</span>)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                Push(body1, body2, manifold, <a class="code hl_enumvalue" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2a7a4226df460b0a8c273f0e1db6609d9d">ContactEvent::Persist</a>);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            }</div>
+</div>
+<div class="foldopen" id="foldopen00034" data-start="{" data-end="}">
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#abf5dcd2697b10dca5424cc8ab477ac77">   34</a></span>            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#abf5dcd2697b10dca5424cc8ab477ac77">OnContactRemoved</a>(<span class="keyword">const</span> JPH::SubShapeIDPair&amp; pair)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>                <span class="comment">// manifold無し。代表点は空でOK</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                PushRemoved(pair);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            }</div>
+</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            <span class="keywordtype">void</span> Push(<span class="keyword">const</span> JPH::Body&amp; a, <span class="keyword">const</span> JPH::Body&amp; b, <span class="keyword">const</span> JPH::ContactManifold&amp; m, <a class="code hl_enumeration" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2">ContactEvent::Type</a> type);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            <span class="keywordtype">void</span> PushRemoved(<span class="keyword">const</span> JPH::SubShapeIDPair&amp; pair);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <a class="code hl_class" href="class_s_f_w_1_1_physics_1_1_physics_device.html">PhysicsDevice</a>* m_dev;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        };</div>
+</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="comment">// CharacterVirtual 用の ContactListener</span></div>
+<div class="foldopen" id="foldopen00045" data-start="{" data-end="};">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html">   45</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#ac991ede64a9ecac013c5b00a5773f5c6">CharacterContactListenerImpl</a> final : <span class="keyword">public</span> JPH::CharacterContactListener {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#ac991ede64a9ecac013c5b00a5773f5c6">   47</a></span>            <span class="keyword">explicit</span> <a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#ac991ede64a9ecac013c5b00a5773f5c6">CharacterContactListenerImpl</a>(<a class="code hl_class" href="class_s_f_w_1_1_physics_1_1_physics_device.html">PhysicsDevice</a>* dev) : m_dev(dev) {}</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <span class="comment">// ==== Validate フェーズ ====</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="comment">// Body と当たる前のフィルタ（全部許可するなら true 固定でOK）</span></div>
+<div class="foldopen" id="foldopen00051" data-start="{" data-end="}">
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#aedfd7c16e510f8521ed015417a906d57">   51</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#aedfd7c16e510f8521ed015417a906d57">OnContactValidate</a>(<span class="keyword">const</span> JPH::CharacterVirtual* inCharacter,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                <span class="keyword">const</span> JPH::BodyID&amp; inBodyID2,</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                <span class="keyword">const</span> JPH::SubShapeID&amp; inSubShapeID2)<span class="keyword"> override</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="keyword">            </span>{</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                <span class="comment">// 必要なら BodyID からレイヤを見てフィルタ</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            }</div>
+</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            <span class="comment">// Character vs Character 版（今回はとりあえず全部許可）</span></div>
+<div class="foldopen" id="foldopen00060" data-start="{" data-end="}">
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#aaad173ff30756dbd4ac3bd50a570ecf9">   60</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#aaad173ff30756dbd4ac3bd50a570ecf9">OnCharacterContactValidate</a>(<span class="keyword">const</span> JPH::CharacterVirtual* inCharacter,</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                <span class="keyword">const</span> JPH::CharacterVirtual* inOtherCharacter,</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                <span class="keyword">const</span> JPH::SubShapeID&amp; inSubShapeID2)<span class="keyword"> override</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="keyword">            </span>{</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            }</div>
+</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <span class="comment">// ====  新規接触 ====</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="comment">// CharacterVirtual が Body にヒットした瞬間のみ（1回だけ）呼ばれる</span></div>
+<div class="foldopen" id="foldopen00069" data-start="{" data-end="}">
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#a0b851218340dbd79d07b9222278cd452">   69</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#a0b851218340dbd79d07b9222278cd452">OnContactAdded</a>(<span class="keyword">const</span> JPH::CharacterVirtual* inCharacter,</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                <span class="keyword">const</span> JPH::BodyID&amp; inBodyID2,</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                <span class="keyword">const</span> JPH::SubShapeID&amp; inSubShapeID2,</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                JPH::RVec3Arg                inContactPosition,</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>                JPH::Vec3Arg                 inContactNormal,</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                JPH::CharacterContactSettings&amp; ioSettings)<span class="keyword"> override</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="keyword">            </span>{</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                PushContact(<a class="code hl_enumvalue" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2abe5bce4b309fb36b341d53a9e228b5c2">ContactEvent::Begin</a>,</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                    inCharacter, inBodyID2,</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                    inContactPosition, inContactNormal);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            }</div>
+</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            <span class="comment">// Character vs Character の新規接触</span></div>
+<div class="foldopen" id="foldopen00082" data-start="{" data-end="}">
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#a4fe29bfefc0a4049752a5c2c010fd2d3">   82</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#a4fe29bfefc0a4049752a5c2c010fd2d3">OnCharacterContactAdded</a>(<span class="keyword">const</span> JPH::CharacterVirtual* inCharacter,</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                <span class="keyword">const</span> JPH::CharacterVirtual* inOtherCharacter,</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                <span class="keyword">const</span> JPH::SubShapeID&amp; inSubShapeID2,</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                JPH::RVec3Arg                inContactPosition,</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                JPH::Vec3Arg                 inContactNormal,</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                JPH::CharacterContactSettings&amp; ioSettings)<span class="keyword"> override</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="keyword">            </span>{</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                <span class="comment">// 必要なら ev.b を Character 側の Entity にして PushContact する</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                <span class="comment">// 今はスキップしてもOK</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            }</div>
+</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            <span class="comment">// ==== Solve フェーズ ====</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            <span class="comment">// 毎ステップ衝突解決に使われる接触。滑り禁止等をやる場合はここで ioNewCharacterVelocity を書き換える</span></div>
+<div class="foldopen" id="foldopen00095" data-start="{" data-end="}">
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#ab37067f86ec8d505271a8109df895b8f">   95</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#ab37067f86ec8d505271a8109df895b8f">OnContactSolve</a>(<span class="keyword">const</span> JPH::CharacterVirtual* inCharacter,</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                <span class="keyword">const</span> JPH::BodyID&amp; inBodyID2,</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                <span class="keyword">const</span> JPH::SubShapeID&amp; inSubShapeID2,</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                JPH::RVec3Arg                inContactPosition,</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                JPH::Vec3Arg                 inContactNormal,</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                JPH::Vec3Arg                 inContactVelocity,</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                <span class="keyword">const</span> JPH::Material* inContactMaterial,</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                JPH::Vec3Arg                 inCharacterVelocity,</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                JPH::Vec3&amp; ioNewCharacterVelocity)<span class="keyword"> override</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="keyword">            </span>{</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>                <span class="comment">// 何もしなければデフォルトの挙動</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            }</div>
+</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="foldopen" id="foldopen00108" data-start="{" data-end="}">
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#ae2b3afc282c1b27dd275460c26b3a166">  108</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#ae2b3afc282c1b27dd275460c26b3a166">OnCharacterContactSolve</a>(<span class="keyword">const</span> JPH::CharacterVirtual* inCharacter,</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                <span class="keyword">const</span> JPH::CharacterVirtual* inOtherCharacter,</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                <span class="keyword">const</span> JPH::SubShapeID&amp; inSubShapeID2,</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                JPH::RVec3Arg                inContactPosition,</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                JPH::Vec3Arg                 inContactNormal,</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>                JPH::Vec3Arg                 inContactVelocity,</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                <span class="keyword">const</span> JPH::Material* inContactMaterial,</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>                JPH::Vec3Arg                 inCharacterVelocity,</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>                JPH::Vec3&amp; ioNewCharacterVelocity)<span class="keyword"> override</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="keyword">            </span>{</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>                <span class="comment">// ここも同様に必要なければ空でOK</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            }</div>
+</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            <span class="comment">// Body 側の見かけ速度をいじりたいとき用（ベルトコンベアなど）</span></div>
+<div class="foldopen" id="foldopen00122" data-start="{" data-end="}">
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#a6d5f569ac2bafcd4aadce16c3b4621ae">  122</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#a6d5f569ac2bafcd4aadce16c3b4621ae">OnAdjustBodyVelocity</a>(<span class="keyword">const</span> JPH::CharacterVirtual* inCharacter,</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>                <span class="keyword">const</span> JPH::Body&amp; inBody2,</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>                JPH::Vec3&amp; ioLinearVelocity,</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                JPH::Vec3&amp; ioAngularVelocity)<span class="keyword"> override</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="keyword">            </span>{</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>                <span class="comment">// 何もしないなら空でOK</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>            }</div>
+</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            <span class="keywordtype">void</span> PushContact(<a class="code hl_enumeration" href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2">ContactEvent::Type</a> type,</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>                <span class="keyword">const</span> JPH::CharacterVirtual* ch,</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>                <span class="keyword">const</span> JPH::BodyID&amp; bodyID,</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>                JPH::RVec3Arg pos,</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>                JPH::Vec3Arg normal);</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            <a class="code hl_class" href="class_s_f_w_1_1_physics_1_1_physics_device.html">PhysicsDevice</a>* m_dev = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        };</div>
+</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    }</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>}</div>
+<div class="ttc" id="a_physics_device___util_8h_html"><div class="ttname"><a href="_physics_device___util_8h.html">PhysicsDevice_Util.h</a></div><div class="ttdoc">PhysicsDevice 用のユーティリティ</div></div>
+<div class="ttc" id="a_physics_snapshot_8h_html"><div class="ttname"><a href="_physics_snapshot_8h.html">PhysicsSnapshot.h</a></div><div class="ttdoc">物理エンジンのスナップショットデータを定義するヘッダーファイル</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_physics_1_1_character_contact_listener_impl_html_a0b851218340dbd79d07b9222278cd452"><div class="ttname"><a href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#a0b851218340dbd79d07b9222278cd452">SFW::Physics::CharacterContactListenerImpl::OnContactAdded</a></div><div class="ttdeci">void OnContactAdded(const JPH::CharacterVirtual *inCharacter, const JPH::BodyID &amp;inBodyID2, const JPH::SubShapeID &amp;inSubShapeID2, JPH::RVec3Arg inContactPosition, JPH::Vec3Arg inContactNormal, JPH::CharacterContactSettings &amp;ioSettings) override</div><div class="ttdef"><b>Definition</b> <a href="#l00069">PhysicsContactListener.h:69</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_physics_1_1_character_contact_listener_impl_html_a4fe29bfefc0a4049752a5c2c010fd2d3"><div class="ttname"><a href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#a4fe29bfefc0a4049752a5c2c010fd2d3">SFW::Physics::CharacterContactListenerImpl::OnCharacterContactAdded</a></div><div class="ttdeci">void OnCharacterContactAdded(const JPH::CharacterVirtual *inCharacter, const JPH::CharacterVirtual *inOtherCharacter, const JPH::SubShapeID &amp;inSubShapeID2, JPH::RVec3Arg inContactPosition, JPH::Vec3Arg inContactNormal, JPH::CharacterContactSettings &amp;ioSettings) override</div><div class="ttdef"><b>Definition</b> <a href="#l00082">PhysicsContactListener.h:82</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_physics_1_1_character_contact_listener_impl_html_a6d5f569ac2bafcd4aadce16c3b4621ae"><div class="ttname"><a href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#a6d5f569ac2bafcd4aadce16c3b4621ae">SFW::Physics::CharacterContactListenerImpl::OnAdjustBodyVelocity</a></div><div class="ttdeci">void OnAdjustBodyVelocity(const JPH::CharacterVirtual *inCharacter, const JPH::Body &amp;inBody2, JPH::Vec3 &amp;ioLinearVelocity, JPH::Vec3 &amp;ioAngularVelocity) override</div><div class="ttdef"><b>Definition</b> <a href="#l00122">PhysicsContactListener.h:122</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_physics_1_1_character_contact_listener_impl_html_aaad173ff30756dbd4ac3bd50a570ecf9"><div class="ttname"><a href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#aaad173ff30756dbd4ac3bd50a570ecf9">SFW::Physics::CharacterContactListenerImpl::OnCharacterContactValidate</a></div><div class="ttdeci">bool OnCharacterContactValidate(const JPH::CharacterVirtual *inCharacter, const JPH::CharacterVirtual *inOtherCharacter, const JPH::SubShapeID &amp;inSubShapeID2) override</div><div class="ttdef"><b>Definition</b> <a href="#l00060">PhysicsContactListener.h:60</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_physics_1_1_character_contact_listener_impl_html_ab37067f86ec8d505271a8109df895b8f"><div class="ttname"><a href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#ab37067f86ec8d505271a8109df895b8f">SFW::Physics::CharacterContactListenerImpl::OnContactSolve</a></div><div class="ttdeci">void OnContactSolve(const JPH::CharacterVirtual *inCharacter, const JPH::BodyID &amp;inBodyID2, const JPH::SubShapeID &amp;inSubShapeID2, JPH::RVec3Arg inContactPosition, JPH::Vec3Arg inContactNormal, JPH::Vec3Arg inContactVelocity, const JPH::Material *inContactMaterial, JPH::Vec3Arg inCharacterVelocity, JPH::Vec3 &amp;ioNewCharacterVelocity) override</div><div class="ttdef"><b>Definition</b> <a href="#l00095">PhysicsContactListener.h:95</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_physics_1_1_character_contact_listener_impl_html_ac991ede64a9ecac013c5b00a5773f5c6"><div class="ttname"><a href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#ac991ede64a9ecac013c5b00a5773f5c6">SFW::Physics::CharacterContactListenerImpl::CharacterContactListenerImpl</a></div><div class="ttdeci">CharacterContactListenerImpl(PhysicsDevice *dev)</div><div class="ttdef"><b>Definition</b> <a href="#l00047">PhysicsContactListener.h:47</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_physics_1_1_character_contact_listener_impl_html_ae2b3afc282c1b27dd275460c26b3a166"><div class="ttname"><a href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#ae2b3afc282c1b27dd275460c26b3a166">SFW::Physics::CharacterContactListenerImpl::OnCharacterContactSolve</a></div><div class="ttdeci">void OnCharacterContactSolve(const JPH::CharacterVirtual *inCharacter, const JPH::CharacterVirtual *inOtherCharacter, const JPH::SubShapeID &amp;inSubShapeID2, JPH::RVec3Arg inContactPosition, JPH::Vec3Arg inContactNormal, JPH::Vec3Arg inContactVelocity, const JPH::Material *inContactMaterial, JPH::Vec3Arg inCharacterVelocity, JPH::Vec3 &amp;ioNewCharacterVelocity) override</div><div class="ttdef"><b>Definition</b> <a href="#l00108">PhysicsContactListener.h:108</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_physics_1_1_character_contact_listener_impl_html_aedfd7c16e510f8521ed015417a906d57"><div class="ttname"><a href="class_s_f_w_1_1_physics_1_1_character_contact_listener_impl.html#aedfd7c16e510f8521ed015417a906d57">SFW::Physics::CharacterContactListenerImpl::OnContactValidate</a></div><div class="ttdeci">bool OnContactValidate(const JPH::CharacterVirtual *inCharacter, const JPH::BodyID &amp;inBodyID2, const JPH::SubShapeID &amp;inSubShapeID2) override</div><div class="ttdef"><b>Definition</b> <a href="#l00051">PhysicsContactListener.h:51</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_physics_1_1_contact_listener_impl_html_a0673fe68d8e20f9407ac489cc3b42f31"><div class="ttname"><a href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#a0673fe68d8e20f9407ac489cc3b42f31">SFW::Physics::ContactListenerImpl::OnContactAdded</a></div><div class="ttdeci">virtual void OnContactAdded(const JPH::Body &amp;body1, const JPH::Body &amp;body2, const JPH::ContactManifold &amp;manifold, JPH::ContactSettings &amp;) override</div><div class="ttdef"><b>Definition</b> <a href="#l00028">PhysicsContactListener.h:28</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_physics_1_1_contact_listener_impl_html_a1245eaae73d3c749f37728030cf7e48c"><div class="ttname"><a href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#a1245eaae73d3c749f37728030cf7e48c">SFW::Physics::ContactListenerImpl::ContactListenerImpl</a></div><div class="ttdeci">ContactListenerImpl(PhysicsDevice *dev)</div><div class="ttdef"><b>Definition</b> <a href="#l00024">PhysicsContactListener.h:24</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_physics_1_1_contact_listener_impl_html_a468eed2db2c0f2b844ae29279f2e5b43"><div class="ttname"><a href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#a468eed2db2c0f2b844ae29279f2e5b43">SFW::Physics::ContactListenerImpl::OnContactPersisted</a></div><div class="ttdeci">virtual void OnContactPersisted(const JPH::Body &amp;body1, const JPH::Body &amp;body2, const JPH::ContactManifold &amp;manifold, JPH::ContactSettings &amp;) override</div><div class="ttdef"><b>Definition</b> <a href="#l00031">PhysicsContactListener.h:31</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_physics_1_1_contact_listener_impl_html_abf5dcd2697b10dca5424cc8ab477ac77"><div class="ttname"><a href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#abf5dcd2697b10dca5424cc8ab477ac77">SFW::Physics::ContactListenerImpl::OnContactRemoved</a></div><div class="ttdeci">virtual void OnContactRemoved(const JPH::SubShapeIDPair &amp;pair) override</div><div class="ttdef"><b>Definition</b> <a href="#l00034">PhysicsContactListener.h:34</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_physics_1_1_contact_listener_impl_html_ad976993ed4940b8175f71a92e0945062"><div class="ttname"><a href="class_s_f_w_1_1_physics_1_1_contact_listener_impl.html#ad976993ed4940b8175f71a92e0945062">SFW::Physics::ContactListenerImpl::OnContactValidate</a></div><div class="ttdeci">virtual JPH::ValidateResult OnContactValidate(const JPH::Body &amp;, const JPH::Body &amp;, JPH::RVec3Arg, const JPH::CollideShapeResult &amp;) override</div><div class="ttdef"><b>Definition</b> <a href="#l00025">PhysicsContactListener.h:25</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_physics_1_1_physics_device_html"><div class="ttname"><a href="class_s_f_w_1_1_physics_1_1_physics_device.html">SFW::Physics::PhysicsDevice</a></div><div class="ttdef"><b>Definition</b> <a href="_physics_device_8h_source.html#l00102">PhysicsDevice.h:102</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_physics_html"><div class="ttname"><a href="namespace_s_f_w_1_1_physics.html">SFW::Physics</a></div><div class="ttdef"><b>Definition</b> <a href="gltf__to__shape_8h_source.html#l00017">gltf_to_shape.h:18</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_contact_event_html_acfb633e5a5af057f96dce3eaf19580a2"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2">SFW::Physics::ContactEvent::Type</a></div><div class="ttdeci">Type</div><div class="ttdef"><b>Definition</b> <a href="_physics_snapshot_8h_source.html#l00031">PhysicsSnapshot.h:31</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_contact_event_html_acfb633e5a5af057f96dce3eaf19580a2a7a4226df460b0a8c273f0e1db6609d9d"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2a7a4226df460b0a8c273f0e1db6609d9d">SFW::Physics::ContactEvent::Persist</a></div><div class="ttdeci">@ Persist</div><div class="ttdef"><b>Definition</b> <a href="_physics_snapshot_8h_source.html#l00031">PhysicsSnapshot.h:31</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_physics_1_1_contact_event_html_acfb633e5a5af057f96dce3eaf19580a2abe5bce4b309fb36b341d53a9e228b5c2"><div class="ttname"><a href="struct_s_f_w_1_1_physics_1_1_contact_event.html#acfb633e5a5af057f96dce3eaf19580a2abe5bce4b309fb36b341d53a9e228b5c2">SFW::Physics::ContactEvent::Begin</a></div><div class="ttdeci">@ Begin</div><div class="ttdef"><b>Definition</b> <a href="_physics_snapshot_8h_source.html#l00031">PhysicsSnapshot.h:31</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_55575cfcdad4d99529b3cab91f15b8f2.html">Physics</a></li><li class="navelem"><a href="_physics_contact_listener_8h.html">PhysicsContactListener.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11RenderBackend.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_d_x11_render_backend_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">DX11RenderBackend.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_d_x11_render_backend_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;wrl/client.h&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_render_backend_8hpp.html">../RenderBackend.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="_d_x11_mesh_manager_8h.html">DX11MeshManager.h</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="_d_x11_material_manager_8h.html">DX11MaterialManager.h</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="_d_x11_shader_manager_8h.html">DX11ShaderManager.h</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="_d_x11_p_s_o_manager_8h.html">DX11PSOManager.h</a>&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="_d_x11_texture_manager_8h.html">DX11TextureManager.h</a>&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;<a class="code" href="_d_x11_buffer_manager_8h.html">DX11BufferManager.h</a>&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;<a class="code" href="_d_x11_sampler_manager_8h.html">DX11SamplerManager.h</a>&quot;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;<a class="code" href="_d_x11_model_asset_manager_8h.html">DX11ModelAssetManager.h</a>&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &lt;cassert&gt;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>{</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">Graphics::DX11</a></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    {</div>
+<div class="foldopen" id="foldopen00034" data-start="{" data-end="}">
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a8710f0a5811fcb5a438d6b9fb10f153a">   34</a></span>        <span class="keyword">inline</span> D3D_PRIMITIVE_TOPOLOGY <a class="code hl_function" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a8710f0a5811fcb5a438d6b9fb10f153a">ToD3DTopology</a>(<a class="code hl_enumeration" href="namespace_s_f_w_1_1_graphics.html#a802b889fe73ae6c9bc7754be4cd2c0ed">PrimitiveTopology</a> t) {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="__dx11inc_8h.html#a9b5d4db15283fee37fe1800fe97d6f7d">D3DTopologyLUT</a>[<span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(t)];</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        }</div>
+</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span></div>
+<div class="foldopen" id="foldopen00040" data-start="{" data-end="};">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html">   40</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a5d4fb546e7dc91c1e9c88951983f3e8b">RenderBackend</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">RenderBackendBase</a>&lt;RenderBackend, ID3D11RenderTargetView*, ID3D11DepthStencilView*, ID3D11ShaderResourceView*, ID3D11Buffer*, ComPtr&gt; {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a008e900bda388ae98c8f955845eae180">   45</a></span>            <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">constexpr</span> uint32_t <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a008e900bda388ae98c8f955845eae180">MAX_DRAW_CALL_INSTANCES_NUM</a> = 1024 * 4;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a5d4fb546e7dc91c1e9c88951983f3e8b">   59</a></span>            <span class="keyword">explicit</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a5d4fb546e7dc91c1e9c88951983f3e8b">RenderBackend</a>(ID3D11Device* device, ID3D11DeviceContext* context,</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager.html">MeshManager</a>* meshMgr, <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager.html">MaterialManager</a>* matMgr,</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_manager.html">ShaderManager</a>* shaderMgr, <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html">PSOManager</a>* psoMgr,</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager.html">TextureManager</a>* textureMgr, <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html">BufferManager</a>* cbMgr,</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html">SamplerManager</a>* samplerMgr, <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_manager.html">ModelAssetManager</a>* modelAssetMgr);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#af2f14c85f7bbc1d0d74f65b5270ab039">   68</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#af2f14c85f7bbc1d0d74f65b5270ab039">AddResourceManagerToRenderServiceImpl</a>(</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">RenderGraph&lt;RenderBackend, ID3D11RenderTargetView*, ID3D11DepthStencilView*, ID3D11ShaderResourceView*, ID3D11Buffer*, ComPtr&gt;</a>&amp; graph);</div>
+<div class="foldopen" id="foldopen00074" data-start="{" data-end="}">
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a77c80093f1153e0feb1e3b5311a816c7">   74</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a77c80093f1153e0feb1e3b5311a816c7">SetPrimitiveTopologyImpl</a>(<a class="code hl_enumeration" href="namespace_s_f_w_1_1_graphics.html#a802b889fe73ae6c9bc7754be4cd2c0ed">PrimitiveTopology</a> topology)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                context-&gt;IASetPrimitiveTopology(<a class="code hl_function" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a8710f0a5811fcb5a438d6b9fb10f153a">ToD3DTopology</a>(topology));</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            }</div>
+</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#aca812ef0913993247c07a32912a73115">   81</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#aca812ef0913993247c07a32912a73115">SetBlendStateImpl</a>(<a class="code hl_enumeration" href="namespace_s_f_w_1_1_graphics.html#ad3b0ed4e715bafe26a5351c574c1556b">BlendStateID</a> state) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#ada98ac1a98735c5d4dc083c1711e0a79">   86</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#ada98ac1a98735c5d4dc083c1711e0a79">SetRasterizerStateImpl</a>(<a class="code hl_enumeration" href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5">RasterizerStateID</a> state) <span class="keyword">const</span>;</div>
+<div class="foldopen" id="foldopen00091" data-start="{" data-end="}">
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a602a53fc7b2187fe645f99d18a79af94">   91</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a602a53fc7b2187fe645f99d18a79af94">SetDepthStencilStateImpl</a>(<a class="code hl_enumeration" href="namespace_s_f_w_1_1_graphics.html#a8a6b5530cdc2c1eaaa1065d6ff7dfef3">DepthStencilStateID</a> state, UINT stencilRef = 0)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                context-&gt;OMSetDepthStencilState(depthStencilStates[(<span class="keywordtype">size_t</span>)state].Get(), stencilRef);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            }</div>
+</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span></div>
+<div class="foldopen" id="foldopen00099" data-start="{" data-end="}">
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a1dbccf73dea2d24db0a3044c5e02b2f1">   99</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a1dbccf73dea2d24db0a3044c5e02b2f1">SetRenderTargetsImpl</a>(<span class="keyword">const</span> std::vector&lt;ID3D11RenderTargetView*&gt;&amp; rtvs, <span class="keywordtype">void</span>* dsv)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                context-&gt;OMSetRenderTargets((UINT)rtvs.size(), rtvs.data(), (ID3D11DepthStencilView*)dsv);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            }</div>
+</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span></div>
+<div class="foldopen" id="foldopen00107" data-start="{" data-end="}">
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a88f45fee9688292534c6c3dc0beafd5d">  107</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a88f45fee9688292534c6c3dc0beafd5d">BindPSSRVsImpl</a>(<span class="keyword">const</span> std::vector&lt;ID3D11ShaderResourceView*&gt;&amp; srvs, uint32_t startSlot = 0)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                context-&gt;PSSetShaderResources(startSlot, (UINT)srvs.size(), srvs.data());</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            }</div>
+</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span></div>
+<div class="foldopen" id="foldopen00115" data-start="{" data-end="}">
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a118cba78871b621c1b0c82620b0b120e">  115</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a118cba78871b621c1b0c82620b0b120e">BindVSCBVsImpl</a>(<span class="keyword">const</span> std::vector&lt;ID3D11Buffer*&gt;&amp; cbvs, uint32_t startSlot = 0)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>                context-&gt;VSSetConstantBuffers(startSlot, (UINT)cbvs.size(), cbvs.data());</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            }</div>
+</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span></div>
+<div class="foldopen" id="foldopen00123" data-start="{" data-end="}">
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a7c6f7db6bc2ebf4c64f2be5e2fbd605c">  123</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a7c6f7db6bc2ebf4c64f2be5e2fbd605c">BindPSCBVsImpl</a>(<span class="keyword">const</span> std::vector&lt;ID3D11Buffer*&gt;&amp; cbvs, uint32_t startSlot = 0)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>                context-&gt;PSSetConstantBuffers(startSlot, (UINT)cbvs.size(), cbvs.data());</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>            }</div>
+</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span></div>
+<div class="foldopen" id="foldopen00130" data-start="{" data-end="}">
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#ad60763968788e2f6ad66b0442a6f8420">  130</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#ad60763968788e2f6ad66b0442a6f8420">BindGlobalVSCBVsImpl</a>(<span class="keyword">const</span> std::vector&lt;BindSlotBuffer&gt;&amp; cbvs)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; cb : cbvs) {</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>                    <span class="keyword">auto</span> d = cbManager-&gt;Get(cb.handle);</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>                    context-&gt;VSSetConstantBuffers(cb.slot, 1, d.ref().buffer.GetAddressOf());</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>                }</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>            }</div>
+</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="foldopen" id="foldopen00137" data-start="{" data-end="}">
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#accf862fa79e251c7aff5e45ecfb1d1db">  137</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#accf862fa79e251c7aff5e45ecfb1d1db">SetViewportImpl</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_viewport.html">Viewport</a>&amp; vp)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>                D3D11_VIEWPORT d3dvp{};</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>                d3dvp.TopLeftX = vp.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_viewport.html#a9490be4d00dd9b9c4c3bde4abd5b0fc2">topLeftX</a>;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>                d3dvp.TopLeftY = vp.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_viewport.html#a7a03e36418a251f371e5fcae7d8cae07">topLeftY</a>;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                d3dvp.Width = vp.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_viewport.html#aa9207ee31221313776fe6a2114fb3c7b">width</a>;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                d3dvp.Height = vp.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_viewport.html#a2ce7a6f601e7d8f3313108305bd322b0">height</a>;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>                d3dvp.MinDepth = vp.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_viewport.html#a8c650d0180665873466ea51d3a87a605">minDepth</a>;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>                d3dvp.MaxDepth = vp.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_viewport.html#a136d087317de49060b2667583c007058">maxDepth</a>;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>                context-&gt;RSSetViewports(1, &amp;d3dvp);</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            }</div>
+</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span></div>
+<div class="foldopen" id="foldopen00153" data-start="{" data-end="}">
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#ae52c80b211c7eab37068aa1f38997f3e">  153</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#ae52c80b211c7eab37068aa1f38997f3e">BeginFrameUploadImpl</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool.html">SharedInstanceArena::InstancePool</a>* framePool, uint32_t instCount)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="keyword">            </span>{</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                D3D11_MAPPED_SUBRESOURCE m{};</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>                context-&gt;Map(m_instanceSB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &amp;m);</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>                memcpy(m.pData, framePool, instCount * <span class="keyword">sizeof</span>(<span class="keyword">decltype</span>(*framePool)));</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>                context-&gt;Unmap(m_instanceSB.Get(), 0);</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            }</div>
+</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> VecT&gt;</div>
+<div class="foldopen" id="foldopen00166" data-start="{" data-end="}">
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#aef6d591b82036569b5d86a299ed03d23">  166</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#aef6d591b82036569b5d86a299ed03d23">ExecuteDrawIndexedInstancedImpl</a>(<span class="keyword">const</span> VecT&amp; cmds, std::optional&lt;PSOHandle&gt; psoOverride, <span class="keywordtype">bool</span> usePSORasterizer, <span class="keywordtype">bool</span> rebindPSO)</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            {</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>                <span class="keyword">struct </span>DrawBatch {</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                    uint32_t mesh;</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                    uint32_t material;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>                    uint32_t pso;</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                    uint32_t base;</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                    uint32_t instanceCount; <span class="comment">// instances[idx]</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                };</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                BeginIndexStream();</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                <span class="keywordtype">size_t</span> i = 0;</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                <span class="keywordtype">size_t</span> cmdCount = cmds.size();</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                std::vector&lt;DrawBatch&gt; batches;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                <span class="keywordflow">if</span> (psoOverride.has_value()) {</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                    <span class="comment">// PSOオーバーライドがある場合、すべて同じPSOで描画する</span></div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                    uint32_t overriddenPSO = psoOverride.value().index;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>                    <span class="keywordflow">while</span> (i &lt; cmdCount) {</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                        <span class="keyword">auto</span> currentMat = cmds[i].material;</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>                        uint32_t currentMesh = cmds[i].mesh;</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>                        uint32_t instanceCount = 0;</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                        <span class="keyword">const</span> uint32_t base = m_idxHead;        <span class="comment">// このドローの index 先頭</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>                        <span class="comment">// 1) 同PSO/Mat/Mesh を束ねつつ、index を SRV に“直接”書く</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>                        <span class="keyword">auto</span>* dst = <span class="keyword">reinterpret_cast&lt;</span>uint32_t*<span class="keyword">&gt;</span>(m_idxMapped) + m_idxHead;</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                        <span class="comment">// 同じPSO + Material + Meshをまとめる</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                        <span class="keywordflow">while</span> (i &lt; cmdCount &amp;&amp;</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>                            cmds[i].material == currentMat &amp;&amp;</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                            cmds[i].mesh == currentMesh &amp;&amp;</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>                            instanceCount &lt; <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a008e900bda388ae98c8f955845eae180">MAX_DRAW_CALL_INSTANCES_NUM</a>) {</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>                            dst[instanceCount++] = cmds[i].instanceIndex.index; <span class="comment">// ← 直接書く = instances[idx];</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>                            ++i;</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>                        }</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>                        m_idxHead += instanceCount;</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>                        batches.emplace_back(currentMesh, currentMat, overriddenPSO, base, instanceCount);</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                    }</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>                }</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>                <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>                {</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                    <span class="keywordflow">while</span> (i &lt; cmdCount) {</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>                        <span class="keyword">auto</span> currentPSO = cmds[i].pso;</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>                        <span class="keyword">auto</span> currentMat = cmds[i].material;</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                        uint32_t currentMesh = cmds[i].mesh;</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                        uint32_t instanceCount = 0;</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>                        <span class="keyword">const</span> uint32_t base = m_idxHead;        <span class="comment">// このドローの index 先頭</span></div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                        <span class="comment">// 1) 同PSO/Mat/Mesh を束ねつつ、index を SRV に“直接”書く</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>                        <span class="keyword">auto</span>* dst = <span class="keyword">reinterpret_cast&lt;</span>uint32_t*<span class="keyword">&gt;</span>(m_idxMapped) + m_idxHead;</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>                        <span class="comment">// 同じPSO + Material + Meshをまとめる</span></div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>                        <span class="keywordflow">while</span> (i &lt; cmdCount &amp;&amp;</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>                            cmds[i].pso == currentPSO &amp;&amp;</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                            cmds[i].material == currentMat &amp;&amp;</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                            cmds[i].mesh == currentMesh &amp;&amp;</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                            instanceCount &lt; <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a008e900bda388ae98c8f955845eae180">MAX_DRAW_CALL_INSTANCES_NUM</a>) {</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>                            dst[instanceCount++] = cmds[i].instanceIndex.index; <span class="comment">// ← 直接書く = instances[idx];</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>                            ++i;</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>                        }</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>                        m_idxHead += instanceCount;</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>                        batches.emplace_back(currentMesh, currentMat, currentPSO, base, instanceCount);</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>                    }</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>                }</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>                EndIndexStream();</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>                context-&gt;VSSetShaderResources(0, 1, m_instanceSRV.GetAddressOf()); <span class="comment">// InstanceData (t0)</span></div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>                context-&gt;VSSetConstantBuffers(1, 1, m_perDrawCB.GetAddressOf()); <span class="comment">// (b1)</span></div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; b : batches) {</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>                    <span class="comment">// PerDraw CB に base と count を設定</span></div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>                    <span class="keyword">struct </span>{ uint32_t base, count, pad0, pad1; }</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>                    perDraw{ b.base, b.instanceCount, 0, 0 };</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>                    D3D11_MAPPED_SUBRESOURCE m{};</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>                    context-&gt;Map(m_perDrawCB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &amp;m);</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>                    memcpy(m.pData, &amp;perDraw, <span class="keyword">sizeof</span>(perDraw));</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                    context-&gt;Unmap(m_perDrawCB.Get(), 0);</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> </div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>                    <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a8edfa4118648bf729d223af0cd6acaf6">DrawInstanced</a>(b.mesh, b.material, b.pso, b.instanceCount, usePSORasterizer, rebindPSO);</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                }</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>            }</div>
+</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span></div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> VecT&gt;</div>
+<div class="foldopen" id="foldopen00260" data-start="{" data-end="}">
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a7519456b31b70a224f5706c9e8734c38">  260</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a7519456b31b70a224f5706c9e8734c38">ExecuteDrawIndexedInstancedImpl</a>(<span class="keyword">const</span> VecT&amp; cmds, std::span&lt;const uint32_t&gt; indices, std::optional&lt;PSOHandle&gt; psoOverride, <span class="keywordtype">bool</span> usePSORasterizer, <span class="keywordtype">bool</span> rebindPSO)</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>            {</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>                <span class="keyword">struct </span>DrawBatch {</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>                    uint32_t mesh;</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>                    uint32_t material;</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                    uint32_t pso;</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                    uint32_t base;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>                    uint32_t instanceCount; <span class="comment">// instances[idx]</span></div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                };</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                BeginIndexStream();</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>                <span class="keywordtype">size_t</span> k = 0;</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                <span class="keywordtype">size_t</span> K = indices.size();</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                std::vector&lt;DrawBatch&gt; batches;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                <span class="keywordflow">if</span> (rebindPSO) {</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                    uint32_t overriddenPSO = psoOverride.value().index;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span> </div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>                    <span class="keyword">auto</span> isRebindPSO = [](uint8_t flags) -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>                        <span class="keywordflow">return</span> (flags &amp; <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(<a class="code hl_enumvalue" href="namespace_s_f_w_1_1_graphics.html#a03256a77eb0e81fa5cb7e058bdda478aa70cd1a75f7b214bb9434b440ccf549df">DrawFlags::RebindPSONeeded</a>)) != 0;</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                        };</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>                    <span class="keywordflow">while</span> (k &lt; K) {</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>                        <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">DrawCommand</a>&amp; first = cmds[indices[k]];</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>                        <span class="keyword">auto</span> currentPSO = isRebindPSO(first.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html#a291fe71aa8186b036623dbd8585de447">flags</a>) ? first.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html#a8082f0352f544054ac950d9fc3d71ae3">pso</a> : overriddenPSO;</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>                        <span class="keyword">auto</span> currentMat = first.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html#a61864b6ef9c1e0a5a2ab3a3f9f439b6d">material</a>;</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>                        <span class="keyword">auto</span> currentMesh = first.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html#a808078e051cf7852fcff020f33d68336">mesh</a>;</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>                        uint32_t instanceCount = 0;</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>                        <span class="keyword">const</span> uint32_t base = m_idxHead;</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>                        <span class="keyword">auto</span>* dst = <span class="keyword">reinterpret_cast&lt;</span>uint32_t*<span class="keyword">&gt;</span>(m_idxMapped) + m_idxHead;</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>                        <span class="keywordflow">while</span> (k &lt; K &amp;&amp;</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>                            (isRebindPSO(first.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html#a291fe71aa8186b036623dbd8585de447">flags</a>) ? cmds[indices[k]].pso : overriddenPSO) == currentPSO &amp;&amp;</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>                            cmds[indices[k]].material == currentMat &amp;&amp;</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>                            cmds[indices[k]].mesh == currentMesh &amp;&amp;</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>                            instanceCount &lt; <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a008e900bda388ae98c8f955845eae180">MAX_DRAW_CALL_INSTANCES_NUM</a>) {</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>                            dst[instanceCount++] = cmds[indices[k]].instanceIndex.index;</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>                            ++k;</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                        }</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>                        m_idxHead += instanceCount;</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>                        batches.push_back({ currentMesh, currentMat, currentPSO, base, instanceCount });</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                    }</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>                }</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (psoOverride.has_value()) {</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>                    <span class="comment">// PSOオーバーライドがある場合、すべて同じPSOで描画する</span></div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                    uint32_t overriddenPSO = psoOverride.value().index;</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>                    <span class="keywordflow">while</span> (k &lt; K) {</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>                        <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">DrawCommand</a>&amp; first = cmds[indices[k]];</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>                        <span class="keyword">auto</span> currentMat = first.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html#a61864b6ef9c1e0a5a2ab3a3f9f439b6d">material</a>;</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>                        <span class="keyword">auto</span> currentMesh = first.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html#a808078e051cf7852fcff020f33d68336">mesh</a>;</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>                        uint32_t instanceCount = 0;</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>                        <span class="keyword">const</span> uint32_t base = m_idxHead;</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>                        <span class="keyword">auto</span>* dst = <span class="keyword">reinterpret_cast&lt;</span>uint32_t*<span class="keyword">&gt;</span>(m_idxMapped) + m_idxHead;</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>                        <span class="keywordflow">while</span> (k &lt; K &amp;&amp;</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>                            cmds[indices[k]].material == currentMat &amp;&amp;</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>                            cmds[indices[k]].mesh == currentMesh &amp;&amp;</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>                            instanceCount &lt; <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a008e900bda388ae98c8f955845eae180">MAX_DRAW_CALL_INSTANCES_NUM</a>) {</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>                            dst[instanceCount++] = cmds[indices[k]].instanceIndex.index;</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>                            ++k;</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>                        }</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>                        m_idxHead += instanceCount;</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>                        batches.push_back({ currentMesh, currentMat, overriddenPSO, base, instanceCount });</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>                    }</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>                }</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>                <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>                    <span class="keywordflow">while</span> (k &lt; K) {</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>                        <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">DrawCommand</a>&amp; first = cmds[indices[k]];</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> </div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>                        <span class="keyword">auto</span> currentPSO = first.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html#a8082f0352f544054ac950d9fc3d71ae3">pso</a>;</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>                        <span class="keyword">auto</span> currentMat = first.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html#a61864b6ef9c1e0a5a2ab3a3f9f439b6d">material</a>;</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>                        <span class="keyword">auto</span> currentMesh = first.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html#a808078e051cf7852fcff020f33d68336">mesh</a>;</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>                        uint32_t instanceCount = 0;</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span> </div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>                        <span class="keyword">const</span> uint32_t base = m_idxHead;</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>                        <span class="keyword">auto</span>* dst = <span class="keyword">reinterpret_cast&lt;</span>uint32_t*<span class="keyword">&gt;</span>(m_idxMapped) + m_idxHead;</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span> </div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>                        <span class="keywordflow">while</span> (k &lt; K &amp;&amp;</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>                            cmds[indices[k]].pso == currentPSO &amp;&amp;</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>                            cmds[indices[k]].material == currentMat &amp;&amp;</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>                            cmds[indices[k]].mesh == currentMesh &amp;&amp;</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>                            instanceCount &lt; <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a008e900bda388ae98c8f955845eae180">MAX_DRAW_CALL_INSTANCES_NUM</a>) {</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>                            dst[instanceCount++] = cmds[indices[k]].instanceIndex.index;</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>                            ++k;</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>                        }</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>                        m_idxHead += instanceCount;</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span> </div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>                        batches.push_back({ currentMesh, currentMat, currentPSO, base, instanceCount });</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>                    }</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>                }</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span> </div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>                EndIndexStream();</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span> </div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>                context-&gt;VSSetShaderResources(0, 1, m_instanceSRV.GetAddressOf()); <span class="comment">// InstanceData (t0)</span></div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>                context-&gt;VSSetConstantBuffers(1, 1, m_perDrawCB.GetAddressOf()); <span class="comment">// (b1)</span></div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; b : batches) {</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>                    <span class="comment">// PerDraw CB に base と count を設定</span></div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>                    <span class="keyword">struct </span>{ uint32_t base, count, pad0, pad1; }</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>                    perDraw{ b.base, b.instanceCount, 0, 0 };</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>                    D3D11_MAPPED_SUBRESOURCE m{};</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>                    context-&gt;Map(m_perDrawCB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &amp;m);</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>                    memcpy(m.pData, &amp;perDraw, <span class="keyword">sizeof</span>(perDraw));</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>                    context-&gt;Unmap(m_perDrawCB.Get(), 0);</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span> </div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>                    <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a8edfa4118648bf729d223af0cd6acaf6">DrawInstanced</a>(b.mesh, b.material, b.pso, b.instanceCount, usePSORasterizer, rebindPSO);</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>                }</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>            }</div>
+</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span></div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#acd247748d6f96be3e969f4039f5cdd89">  370</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#acd247748d6f96be3e969f4039f5cdd89">ProcessDeferredDeletesImpl</a>(uint64_t currentFrame);</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span> </div>
+<div class="foldopen" id="foldopen00372" data-start="{" data-end="}">
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a1794c07524ef6be3948044aafb1b873d">  372</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a1794c07524ef6be3948044aafb1b873d">UpdateBufferDataImpl</a>(ID3D11Buffer* buffer, <span class="keyword">const</span> <span class="keywordtype">void</span>* data, <span class="keywordtype">size_t</span> dataSize)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>                D3D11_MAPPED_SUBRESOURCE m{};</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>                context-&gt;Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &amp;m);</div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>                memcpy(m.pData, data, dataSize);</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>                context-&gt;Unmap(buffer, 0);</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>            }</div>
+</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span></div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a8edfa4118648bf729d223af0cd6acaf6">  387</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a8edfa4118648bf729d223af0cd6acaf6">DrawInstanced</a>(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, <span class="keywordtype">bool</span> usePSORasterizer, <span class="keywordtype">bool</span> rebindPSO) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>            <span class="keywordtype">void</span> BindMeshVertexStreamsForPSO(ShaderManager::LockedResource&lt;ShaderData, std::shared_lock&gt;&amp; shader, MeshManager::LockedResource&lt;MeshData, std::shared_lock&gt;&amp; mesh) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>            <span class="keywordtype">void</span> BindMeshVertexStreamsFromOverrides(ShaderManager::LockedResource&lt;ShaderData, std::shared_lock&gt;&amp; shader, MeshManager::LockedResource&lt;MeshData, std::shared_lock&gt;&amp; mesh) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>            <span class="keywordtype">void</span> BindMeshVertexStreamsForLegacyPSO(ShaderManager::LockedResource&lt;ShaderData, std::shared_lock&gt;&amp; shader, MeshManager::LockedResource&lt;MeshData, std::shared_lock&gt;&amp; mesh) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span> </div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>            HRESULT CreateInstanceBuffer();</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>            HRESULT CreateRasterizerStates();</div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>            HRESULT CreateBlendStates();</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>            HRESULT CreateDepthStencilStates();</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span> </div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>            <span class="comment">//void UpdateInstanceBuffer(const void* pInstancesData, size_t dataSize);</span></div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span> </div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>            <span class="keywordtype">void</span> BeginIndexStream()</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>            {</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>                D3D11_MAPPED_SUBRESOURCE m{};</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>                context-&gt;Map(m_instIndexSB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &amp;m);</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>                m_idxMapped = <span class="keyword">static_cast&lt;</span>std::byte*<span class="keyword">&gt;</span>(m.pData);</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>                m_idxHead = 0;</div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>            }</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span> </div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>            <span class="keywordtype">void</span> EndIndexStream()</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>            {</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>                context-&gt;Unmap(m_instIndexSB.Get(), 0);</div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>                m_idxMapped = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span> </div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>                context-&gt;VSSetShaderResources(1, 1, m_instIndexSRV.GetAddressOf()); <span class="comment">// t1 を VS にセット</span></div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>            }</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span> </div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>            ID3D11Device* device;</div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>            ID3D11DeviceContext* context;</div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>            MeshManager* meshManager;</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>            MaterialManager* materialManager;</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>            ShaderManager* shaderManager;</div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>            PSOManager* psoManager;</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>            TextureManager* textureManager;</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>            BufferManager* cbManager;</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>            SamplerManager* samplerManager;</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>            ModelAssetManager* modelAssetManager;</div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span> </div>
+<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>            <span class="comment">// フレーム行列用 StructuredBuffer (SRV)</span></div>
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>            ComPtr&lt;ID3D11Buffer&gt;            m_instanceSB;</div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>            ComPtr&lt;ID3D11ShaderResourceView&gt; m_instanceSRV;</div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span> </div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>            <span class="comment">// インデックス列用 StructuredBuffer (SRV)  ※uint（4B/要素）</span></div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>            ComPtr&lt;ID3D11Buffer&gt;            m_instIndexSB;</div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>            ComPtr&lt;ID3D11ShaderResourceView&gt; m_instIndexSRV;</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span> </div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>            <span class="comment">// PerDraw 定数バッファ（gIndexBase, gIndexCount）</span></div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>            ComPtr&lt;ID3D11Buffer&gt;            m_perDrawCB;</div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span> </div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>            <span class="comment">// CPU書き込み用ポインタ（Mapした間だけ有効）</span></div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>            std::byte* m_idxMapped = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span>            uint32_t    m_idxHead = 0;  <span class="comment">// 書き込みカーソル</span></div>
+<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span> </div>
+<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>            ComPtr&lt;ID3D11RasterizerState&gt; rasterizerStates[(size_t)<a class="code hl_enumvalue" href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5afd4487453885e6013ddea8e02030afb0">RasterizerStateID::MAX_COUNT</a>];</div>
+<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>            ComPtr&lt;ID3D11BlendState&gt; blendStates[(size_t)<a class="code hl_enumvalue" href="namespace_s_f_w_1_1_graphics.html#ad3b0ed4e715bafe26a5351c574c1556bafd4487453885e6013ddea8e02030afb0">BlendStateID::MAX_COUNT</a>];</div>
+<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>            ComPtr&lt;ID3D11DepthStencilState&gt; depthStencilStates[(size_t)<a class="code hl_enumvalue" href="namespace_s_f_w_1_1_graphics.html#a8a6b5530cdc2c1eaaa1065d6ff7dfef3afd4487453885e6013ddea8e02030afb0">DepthStencilStateID::MAX_COUNT</a>];</div>
+<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span>        };</div>
+</div>
+<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>    }</div>
+<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span>}</div>
+<div class="ttc" id="a__dx11inc_8h_html_a9b5d4db15283fee37fe1800fe97d6f7d"><div class="ttname"><a href="__dx11inc_8h.html#a9b5d4db15283fee37fe1800fe97d6f7d">D3DTopologyLUT</a></div><div class="ttdeci">constexpr D3D_PRIMITIVE_TOPOLOGY D3DTopologyLUT[]</div><div class="ttdef"><b>Definition</b> <a href="__dx11inc_8h_source.html#l00023">_dx11inc.h:23</a></div></div>
+<div class="ttc" id="a_d_x11_buffer_manager_8h_html"><div class="ttname"><a href="_d_x11_buffer_manager_8h.html">DX11BufferManager.h</a></div><div class="ttdoc">DirectX 11のバッファマネージャークラスを定義するヘッダーファイル</div></div>
+<div class="ttc" id="a_d_x11_material_manager_8h_html"><div class="ttname"><a href="_d_x11_material_manager_8h.html">DX11MaterialManager.h</a></div><div class="ttdoc">DirectX 11用のマテリアルマネージャークラスを定義するヘッダーファイル</div></div>
+<div class="ttc" id="a_d_x11_mesh_manager_8h_html"><div class="ttname"><a href="_d_x11_mesh_manager_8h.html">DX11MeshManager.h</a></div><div class="ttdoc">DirectX 11のメッシュマネージャーを定義するヘッダーファイル</div></div>
+<div class="ttc" id="a_d_x11_model_asset_manager_8h_html"><div class="ttname"><a href="_d_x11_model_asset_manager_8h.html">DX11ModelAssetManager.h</a></div><div class="ttdoc">DirectX 11用のモデルアセットマネージャーを定義するヘッダーファイル</div></div>
+<div class="ttc" id="a_d_x11_p_s_o_manager_8h_html"><div class="ttname"><a href="_d_x11_p_s_o_manager_8h.html">DX11PSOManager.h</a></div><div class="ttdoc">DirectX 11のパイプラインステートオブジェクト（PSO）を管理するクラス</div></div>
+<div class="ttc" id="a_d_x11_sampler_manager_8h_html"><div class="ttname"><a href="_d_x11_sampler_manager_8h.html">DX11SamplerManager.h</a></div><div class="ttdoc">DirectX 11のサンプラーステートを管理するクラス</div></div>
+<div class="ttc" id="a_d_x11_shader_manager_8h_html"><div class="ttname"><a href="_d_x11_shader_manager_8h.html">DX11ShaderManager.h</a></div><div class="ttdoc">DirectX 11のシェーダーマネージャークラスを定義するヘッダーファイル</div></div>
+<div class="ttc" id="a_d_x11_texture_manager_8h_html"><div class="ttname"><a href="_d_x11_texture_manager_8h.html">DX11TextureManager.h</a></div><div class="ttdoc">DirectX 11のテクスチャマネージャークラスを定義するヘッダーファイル</div></div>
+<div class="ttc" id="a_render_backend_8hpp_html"><div class="ttname"><a href="_render_backend_8hpp.html">RenderBackend.hpp</a></div><div class="ttdoc">レンダリングバックエンドの基底クラス</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html">SFW::Graphics::DX11::BufferManager</a></div><div class="ttdoc">バッファの管理クラス。DirectX 11のバッファを作成、キャッシュ、更新する機能を提供する。</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_buffer_manager_8h_source.html#l00088">DX11BufferManager.h:90</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager.html">SFW::Graphics::DX11::MaterialManager</a></div><div class="ttdoc">DirectX 11用のマテリアルマネージャークラス.</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_material_manager_8h_source.html#l00162">DX11MaterialManager.h:162</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager.html">SFW::Graphics::DX11::MeshManager</a></div><div class="ttdoc">DirectX 11のメッシュマネージャークラス</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_mesh_manager_8h_source.html#l00073">DX11MeshManager.h:73</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_manager_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_manager.html">SFW::Graphics::DX11::ModelAssetManager</a></div><div class="ttdef"><b>Definition</b> <a href="_d_x11_model_asset_manager_8h_source.html#l00169">DX11ModelAssetManager.h:170</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html">SFW::Graphics::DX11::PSOManager</a></div><div class="ttdoc">DirectX 11のパイプラインステートオブジェクト（PSO）を管理するクラス</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_p_s_o_manager_8h_source.html#l00040">DX11PSOManager.h:40</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_a008e900bda388ae98c8f955845eae180"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a008e900bda388ae98c8f955845eae180">SFW::Graphics::DX11::RenderBackend::MAX_DRAW_CALL_INSTANCES_NUM</a></div><div class="ttdeci">static constexpr uint32_t MAX_DRAW_CALL_INSTANCES_NUM</div><div class="ttdoc">ひと描画命令当たりのインスタンスデータの最大数</div><div class="ttdef"><b>Definition</b> <a href="#l00045">DX11RenderBackend.h:45</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_a118cba78871b621c1b0c82620b0b120e"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a118cba78871b621c1b0c82620b0b120e">SFW::Graphics::DX11::RenderBackend::BindVSCBVsImpl</a></div><div class="ttdeci">void BindVSCBVsImpl(const std::vector&lt; ID3D11Buffer * &gt; &amp;cbvs, uint32_t startSlot=0) const</div><div class="ttdoc">コンスタントバッファをバインドする関数</div><div class="ttdef"><b>Definition</b> <a href="#l00115">DX11RenderBackend.h:115</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_a1794c07524ef6be3948044aafb1b873d"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a1794c07524ef6be3948044aafb1b873d">SFW::Graphics::DX11::RenderBackend::UpdateBufferDataImpl</a></div><div class="ttdeci">void UpdateBufferDataImpl(ID3D11Buffer *buffer, const void *data, size_t dataSize) const</div><div class="ttdef"><b>Definition</b> <a href="#l00372">DX11RenderBackend.h:372</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_a1dbccf73dea2d24db0a3044c5e02b2f1"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a1dbccf73dea2d24db0a3044c5e02b2f1">SFW::Graphics::DX11::RenderBackend::SetRenderTargetsImpl</a></div><div class="ttdeci">void SetRenderTargetsImpl(const std::vector&lt; ID3D11RenderTargetView * &gt; &amp;rtvs, void *dsv) const</div><div class="ttdoc">レンダーターゲットとデプスステンシルビューを設定する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00099">DX11RenderBackend.h:99</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_a5d4fb546e7dc91c1e9c88951983f3e8b"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a5d4fb546e7dc91c1e9c88951983f3e8b">SFW::Graphics::DX11::RenderBackend::RenderBackend</a></div><div class="ttdeci">RenderBackend(ID3D11Device *device, ID3D11DeviceContext *context, MeshManager *meshMgr, MaterialManager *matMgr, ShaderManager *shaderMgr, PSOManager *psoMgr, TextureManager *textureMgr, BufferManager *cbMgr, SamplerManager *samplerMgr, ModelAssetManager *modelAssetMgr)</div><div class="ttdoc">コンストラクタ</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_a602a53fc7b2187fe645f99d18a79af94"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a602a53fc7b2187fe645f99d18a79af94">SFW::Graphics::DX11::RenderBackend::SetDepthStencilStateImpl</a></div><div class="ttdeci">void SetDepthStencilStateImpl(DepthStencilStateID state, UINT stencilRef=0) const</div><div class="ttdoc">デプスステンシルステートを設定する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00091">DX11RenderBackend.h:91</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_a7519456b31b70a224f5706c9e8734c38"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a7519456b31b70a224f5706c9e8734c38">SFW::Graphics::DX11::RenderBackend::ExecuteDrawIndexedInstancedImpl</a></div><div class="ttdeci">void ExecuteDrawIndexedInstancedImpl(const VecT &amp;cmds, std::span&lt; const uint32_t &gt; indices, std::optional&lt; PSOHandle &gt; psoOverride, bool usePSORasterizer, bool rebindPSO)</div><div class="ttdoc">インスタンスドローを実行する関数の実装</div><div class="ttdef"><b>Definition</b> <a href="#l00260">DX11RenderBackend.h:260</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_a77c80093f1153e0feb1e3b5311a816c7"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a77c80093f1153e0feb1e3b5311a816c7">SFW::Graphics::DX11::RenderBackend::SetPrimitiveTopologyImpl</a></div><div class="ttdeci">void SetPrimitiveTopologyImpl(PrimitiveTopology topology) const</div><div class="ttdoc">プリミティブトポロジーを設定する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00074">DX11RenderBackend.h:74</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_a7c6f7db6bc2ebf4c64f2be5e2fbd605c"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a7c6f7db6bc2ebf4c64f2be5e2fbd605c">SFW::Graphics::DX11::RenderBackend::BindPSCBVsImpl</a></div><div class="ttdeci">void BindPSCBVsImpl(const std::vector&lt; ID3D11Buffer * &gt; &amp;cbvs, uint32_t startSlot=0) const</div><div class="ttdoc">ピクセルシェーダー用コンスタントバッファをバインドする関数</div><div class="ttdef"><b>Definition</b> <a href="#l00123">DX11RenderBackend.h:123</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_a88f45fee9688292534c6c3dc0beafd5d"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a88f45fee9688292534c6c3dc0beafd5d">SFW::Graphics::DX11::RenderBackend::BindPSSRVsImpl</a></div><div class="ttdeci">void BindPSSRVsImpl(const std::vector&lt; ID3D11ShaderResourceView * &gt; &amp;srvs, uint32_t startSlot=0) const</div><div class="ttdoc">シェーダリソースビューをバインドする関数</div><div class="ttdef"><b>Definition</b> <a href="#l00107">DX11RenderBackend.h:107</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_a8edfa4118648bf729d223af0cd6acaf6"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#a8edfa4118648bf729d223af0cd6acaf6">SFW::Graphics::DX11::RenderBackend::DrawInstanced</a></div><div class="ttdeci">void DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer, bool rebindPSO) const</div><div class="ttdoc">インスタンスドローを実行する関数</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_aca812ef0913993247c07a32912a73115"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#aca812ef0913993247c07a32912a73115">SFW::Graphics::DX11::RenderBackend::SetBlendStateImpl</a></div><div class="ttdeci">void SetBlendStateImpl(BlendStateID state) const</div><div class="ttdoc">ブレンドステートを設定する関数</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_accf862fa79e251c7aff5e45ecfb1d1db"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#accf862fa79e251c7aff5e45ecfb1d1db">SFW::Graphics::DX11::RenderBackend::SetViewportImpl</a></div><div class="ttdeci">void SetViewportImpl(const Viewport &amp;vp) const</div><div class="ttdef"><b>Definition</b> <a href="#l00137">DX11RenderBackend.h:137</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_acd247748d6f96be3e969f4039f5cdd89"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#acd247748d6f96be3e969f4039f5cdd89">SFW::Graphics::DX11::RenderBackend::ProcessDeferredDeletesImpl</a></div><div class="ttdeci">void ProcessDeferredDeletesImpl(uint64_t currentFrame)</div><div class="ttdoc">保留中の削除を処理する関数の実装</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_ad60763968788e2f6ad66b0442a6f8420"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#ad60763968788e2f6ad66b0442a6f8420">SFW::Graphics::DX11::RenderBackend::BindGlobalVSCBVsImpl</a></div><div class="ttdeci">void BindGlobalVSCBVsImpl(const std::vector&lt; BindSlotBuffer &gt; &amp;cbvs) const</div><div class="ttdoc">共通のコンスタントバッファをバインドする関数</div><div class="ttdef"><b>Definition</b> <a href="#l00130">DX11RenderBackend.h:130</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_ada98ac1a98735c5d4dc083c1711e0a79"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#ada98ac1a98735c5d4dc083c1711e0a79">SFW::Graphics::DX11::RenderBackend::SetRasterizerStateImpl</a></div><div class="ttdeci">void SetRasterizerStateImpl(RasterizerStateID state) const</div><div class="ttdoc">ラスタライザーステートを設定する関数</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_ae52c80b211c7eab37068aa1f38997f3e"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#ae52c80b211c7eab37068aa1f38997f3e">SFW::Graphics::DX11::RenderBackend::BeginFrameUploadImpl</a></div><div class="ttdeci">void BeginFrameUploadImpl(const SharedInstanceArena::InstancePool *framePool, uint32_t instCount) const</div><div class="ttdoc">インスタンスデータをフレーム前にアップロードする関数</div><div class="ttdef"><b>Definition</b> <a href="#l00153">DX11RenderBackend.h:153</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_aef6d591b82036569b5d86a299ed03d23"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#aef6d591b82036569b5d86a299ed03d23">SFW::Graphics::DX11::RenderBackend::ExecuteDrawIndexedInstancedImpl</a></div><div class="ttdeci">void ExecuteDrawIndexedInstancedImpl(const VecT &amp;cmds, std::optional&lt; PSOHandle &gt; psoOverride, bool usePSORasterizer, bool rebindPSO)</div><div class="ttdoc">インスタンスドローを実行する関数の実装</div><div class="ttdef"><b>Definition</b> <a href="#l00166">DX11RenderBackend.h:166</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html_af2f14c85f7bbc1d0d74f65b5270ab039"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html#af2f14c85f7bbc1d0d74f65b5270ab039">SFW::Graphics::DX11::RenderBackend::AddResourceManagerToRenderServiceImpl</a></div><div class="ttdeci">void AddResourceManagerToRenderServiceImpl(RenderGraph&lt; RenderBackend, ID3D11RenderTargetView *, ID3D11DepthStencilView *, ID3D11ShaderResourceView *, ID3D11Buffer *, ComPtr &gt; &amp;graph)</div><div class="ttdoc">RendderGraphにリソースマネージャーを追加する関数</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html">SFW::Graphics::DX11::SamplerManager</a></div><div class="ttdoc">DirectX 11のサンプラーステートを管理するクラス</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_sampler_manager_8h_source.html#l00052">DX11SamplerManager.h:54</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_manager_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_manager.html">SFW::Graphics::DX11::ShaderManager</a></div><div class="ttdoc">DirectX 11のシェーダーマネージャークラス</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_shader_manager_8h_source.html#l00090">DX11ShaderManager.h:90</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager.html">SFW::Graphics::DX11::TextureManager</a></div><div class="ttdoc">DirectX 11のテクスチャマネージャークラス</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_texture_manager_8h_source.html#l00132">DX11TextureManager.h:134</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_backend_base_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a></div><div class="ttdoc">レンダリングバックエンドの基底クラス。CRTPを使用して派生クラスで実装を強制する。</div><div class="ttdef"><b>Definition</b> <a href="_render_backend_8hpp_source.html#l00023">RenderBackend.hpp:23</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_graph_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_graph.html">SFW::Graphics::RenderGraph</a></div><div class="ttdoc">RenderPassごとに管理して描画を行うクラス</div><div class="ttdef"><b>Definition</b> <a href="_render_graph_8hpp_source.html#l00038">RenderGraph.hpp:38</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_1_1_d_x11_html"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">SFW::Graphics::DX11</a></div><div class="ttdef"><b>Definition</b> <a href="_d_x11_graphics_8h_source.html#l00034">DX11Graphics.h:35</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_1_1_d_x11_html_a8710f0a5811fcb5a438d6b9fb10f153a"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a8710f0a5811fcb5a438d6b9fb10f153a">SFW::Graphics::DX11::ToD3DTopology</a></div><div class="ttdeci">D3D_PRIMITIVE_TOPOLOGY ToD3DTopology(PrimitiveTopology t)</div><div class="ttdoc">DirectX 11のプリミティブトポロジー変換用ルックアップテーブル</div><div class="ttdef"><b>Definition</b> <a href="#l00034">DX11RenderBackend.h:34</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_a03256a77eb0e81fa5cb7e058bdda478aa70cd1a75f7b214bb9434b440ccf549df"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#a03256a77eb0e81fa5cb7e058bdda478aa70cd1a75f7b214bb9434b440ccf549df">SFW::Graphics::DrawFlags::RebindPSONeeded</a></div><div class="ttdeci">@ RebindPSONeeded</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00120">RenderTypes.h:120</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_a802b889fe73ae6c9bc7754be4cd2c0ed"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#a802b889fe73ae6c9bc7754be4cd2c0ed">SFW::Graphics::PrimitiveTopology</a></div><div class="ttdeci">PrimitiveTopology</div><div class="ttdoc">プリミティブトポロジ列挙型</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00136">RenderTypes.h:136</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_a8a6b5530cdc2c1eaaa1065d6ff7dfef3"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#a8a6b5530cdc2c1eaaa1065d6ff7dfef3">SFW::Graphics::DepthStencilStateID</a></div><div class="ttdeci">DepthStencilStateID</div><div class="ttdoc">深度ステンシルステートID列挙型</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00184">RenderTypes.h:184</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_a8a6b5530cdc2c1eaaa1065d6ff7dfef3afd4487453885e6013ddea8e02030afb0"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#a8a6b5530cdc2c1eaaa1065d6ff7dfef3afd4487453885e6013ddea8e02030afb0">SFW::Graphics::DepthStencilStateID::MAX_COUNT</a></div><div class="ttdeci">@ MAX_COUNT</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00194">RenderTypes.h:194</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_ad3b0ed4e715bafe26a5351c574c1556b"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#ad3b0ed4e715bafe26a5351c574c1556b">SFW::Graphics::BlendStateID</a></div><div class="ttdeci">BlendStateID</div><div class="ttdoc">ブレンドステートID列挙型</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00171">RenderTypes.h:171</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_ad3b0ed4e715bafe26a5351c574c1556bafd4487453885e6013ddea8e02030afb0"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#ad3b0ed4e715bafe26a5351c574c1556bafd4487453885e6013ddea8e02030afb0">SFW::Graphics::BlendStateID::MAX_COUNT</a></div><div class="ttdeci">@ MAX_COUNT</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00179">RenderTypes.h:179</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_af9f678d5587dcdfd0bd9b7ca4072f9f5"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5">SFW::Graphics::RasterizerStateID</a></div><div class="ttdeci">RasterizerStateID</div><div class="ttdoc">ラスタライザーステートID列挙型</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00155">RenderTypes.h:155</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_af9f678d5587dcdfd0bd9b7ca4072f9f5afd4487453885e6013ddea8e02030afb0"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5afd4487453885e6013ddea8e02030afb0">SFW::Graphics::RasterizerStateID::MAX_COUNT</a></div><div class="ttdeci">@ MAX_COUNT</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00166">RenderTypes.h:166</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_draw_command_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">SFW::Graphics::DrawCommand</a></div><div class="ttdoc">描画コマンド構造体</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00096">RenderTypes.h:96</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_draw_command_html_a291fe71aa8186b036623dbd8585de447"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_draw_command.html#a291fe71aa8186b036623dbd8585de447">SFW::Graphics::DrawCommand::flags</a></div><div class="ttdeci">uint8_t flags</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00107">RenderTypes.h:107</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_draw_command_html_a61864b6ef9c1e0a5a2ab3a3f9f439b6d"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_draw_command.html#a61864b6ef9c1e0a5a2ab3a3f9f439b6d">SFW::Graphics::DrawCommand::material</a></div><div class="ttdeci">uint32_t material</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00100">RenderTypes.h:100</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_draw_command_html_a808078e051cf7852fcff020f33d68336"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_draw_command.html#a808078e051cf7852fcff020f33d68336">SFW::Graphics::DrawCommand::mesh</a></div><div class="ttdeci">uint32_t mesh</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00099">RenderTypes.h:99</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_draw_command_html_a8082f0352f544054ac950d9fc3d71ae3"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_draw_command.html#a8082f0352f544054ac950d9fc3d71ae3">SFW::Graphics::DrawCommand::pso</a></div><div class="ttdeci">uint32_t pso</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00101">RenderTypes.h:101</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool.html">SFW::Graphics::SharedInstanceArena::InstancePool</a></div><div class="ttdef"><b>Definition</b> <a href="_render_queue_8h_source.html#l00068">RenderQueue.h:68</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_viewport_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_viewport.html">SFW::Graphics::Viewport</a></div><div class="ttdoc">ビューポート構造体</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00245">RenderTypes.h:245</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_viewport_html_a136d087317de49060b2667583c007058"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_viewport.html#a136d087317de49060b2667583c007058">SFW::Graphics::Viewport::maxDepth</a></div><div class="ttdeci">float maxDepth</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00251">RenderTypes.h:251</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_viewport_html_a2ce7a6f601e7d8f3313108305bd322b0"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_viewport.html#a2ce7a6f601e7d8f3313108305bd322b0">SFW::Graphics::Viewport::height</a></div><div class="ttdeci">float height</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00249">RenderTypes.h:249</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_viewport_html_a7a03e36418a251f371e5fcae7d8cae07"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_viewport.html#a7a03e36418a251f371e5fcae7d8cae07">SFW::Graphics::Viewport::topLeftY</a></div><div class="ttdeci">float topLeftY</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00247">RenderTypes.h:247</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_viewport_html_a8c650d0180665873466ea51d3a87a605"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_viewport.html#a8c650d0180665873466ea51d3a87a605">SFW::Graphics::Viewport::minDepth</a></div><div class="ttdeci">float minDepth</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00250">RenderTypes.h:250</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_viewport_html_a9490be4d00dd9b9c4c3bde4abd5b0fc2"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_viewport.html#a9490be4d00dd9b9c4c3bde4abd5b0fc2">SFW::Graphics::Viewport::topLeftX</a></div><div class="ttdeci">float topLeftX</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00246">RenderTypes.h:246</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_viewport_html_aa9207ee31221313776fe6a2114fb3c7b"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_viewport.html#aa9207ee31221313776fe6a2114fb3c7b">SFW::Graphics::Viewport::width</a></div><div class="ttdeci">float width</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00248">RenderTypes.h:248</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="dir_b1727ce268e62d033d50a1c50b50897f.html">DX11</a></li><li class="navelem"><a href="_d_x11_render_backend_8h.html">DX11RenderBackend.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

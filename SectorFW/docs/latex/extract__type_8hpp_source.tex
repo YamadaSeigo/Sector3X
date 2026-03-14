@@ -1,0 +1,57 @@
+\doxysection{extract\+\_\+type.\+hpp}
+\hypertarget{extract__type_8hpp_source}{}\label{extract__type_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/extract\_type.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/extract\_type.hpp}}
+\mbox{\hyperlink{extract__type_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00014}00014\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00015}00015\ \{}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00022}00022\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00023}\mbox{\hyperlink{namespace_s_f_w_af0c092b23d8fca15a0d92cc2fabe0072}{00023}}\ \ \ \ \ std::optional<T>\ \mbox{\hyperlink{namespace_s_f_w_af0c092b23d8fca15a0d92cc2fabe0072}{extract\_first\_of\_type}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00025}00025\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00033}00033\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ First,\ \textcolor{keyword}{typename}...\ Rest>}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00034}\mbox{\hyperlink{namespace_s_f_w_a065b3fe311fee1b873ee1577b26f62f0}{00034}}\ \ \ \ \ std::optional<T>\ \mbox{\hyperlink{namespace_s_f_w_af0c092b23d8fca15a0d92cc2fabe0072}{extract\_first\_of\_type}}(First\&\&\ first,\ Rest\&\&...\ rest)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<std::decay\_t<First>,\ T>)\ \{}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ T(std::forward<First>(first));}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_af0c092b23d8fca15a0d92cc2fabe0072}{extract\_first\_of\_type<T>}}(std::forward<Rest>(rest)...);}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00041}00041\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00047}00047\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00048}\mbox{\hyperlink{namespace_s_f_w_a77b156fa474ae543818624db334d5ee3}{00048}}\ \ \ \ \ std::vector<T>\ \mbox{\hyperlink{namespace_s_f_w_a77b156fa474ae543818624db334d5ee3}{extract\_all\_of\_type}}()\ \{}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00050}00050\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00058}00058\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ First,\ \textcolor{keyword}{typename}...\ Rest>}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00059}\mbox{\hyperlink{namespace_s_f_w_a130f619f179c8016732787990d1a735a}{00059}}\ \ \ \ \ std::vector<T>\ \mbox{\hyperlink{namespace_s_f_w_a77b156fa474ae543818624db334d5ee3}{extract\_all\_of\_type}}(First\&\&\ first,\ Rest\&\&...\ rest)\ \{}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ std::vector<T>\ result\ =\ \mbox{\hyperlink{namespace_s_f_w_a77b156fa474ae543818624db334d5ee3}{extract\_all\_of\_type<T>}}(std::forward<Rest>(rest)...);}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<std::decay\_t<First>,\ T>)\ \{}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ result.insert(result.begin(),\ T(std::forward<First>(first)));}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00065}00065\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00070}00070\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00071}\mbox{\hyperlink{namespace_s_f_w_a62cf1c4a0637bec15ada310fcfb15496}{00071}}\ \ \ \ \ T\ \mbox{\hyperlink{namespace_s_f_w_a62cf1c4a0637bec15ada310fcfb15496}{extract\_required\_type}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\textcolor{keyword}{sizeof}(T)\ ==\ 0,\ \textcolor{stringliteral}{"{}No\ matching\ type\ in\ arguments!"{}});}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00073}00073\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00080}00080\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ First,\ \textcolor{keyword}{typename}...\ Rest>}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00081}\mbox{\hyperlink{namespace_s_f_w_aaeee7a8f24b2f11e95357bb034514dd3}{00081}}\ \ \ \ \ T\ \mbox{\hyperlink{namespace_s_f_w_a62cf1c4a0637bec15ada310fcfb15496}{extract\_required\_type}}(First\&\&\ first,\ Rest\&\&...\ rest)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<std::decay\_t<First>,\ T>)\ \{}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ T(std::forward<First>(first));}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_a62cf1c4a0637bec15ada310fcfb15496}{extract\_required\_type<T>}}(std::forward<Rest>(rest)...);}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00088}00088\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{extract__type_8hpp_source_l00089}00089\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/DX11Graphics.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_d_x11_graphics_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">DX11Graphics.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_d_x11_graphics_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="_i_graphics_device_8hpp.html">Graphics/IGraphicsDevice.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="_render_graph_8hpp.html">Graphics/RenderGraph.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_render_types_8h.html">Graphics/RenderTypes.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="_d_x11_render_backend_8h.html">Graphics/DX11/DX11RenderBackend.h</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="_d_x113_d_camera_service_8h.html">Graphics/DX11/DX113DCameraService.h</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="_d_x112_d_camera_service_8h.html">Graphics/DX11/DX112DCameraService.h</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#ifdef _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;<a class="code" href="_process_gpu3_d_util_p_d_h_8h.html">Debug/ProcessGpu3DUtilPDH.h</a>&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;<a class="code" href="_g_p_u_timer_d3_d11_8h.html">Debug/GPUTimerD3D11.h</a>&quot;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#endif </span><span class="comment">// _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &lt;thread&gt;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &lt;atomic&gt;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &lt;mutex&gt;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &lt;condition_variable&gt;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include &lt;queue&gt;</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> <span class="comment">// メインレンダーターゲットをクリアするかどうかの定義</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="_d_x11_graphics_8h.html#aff9771f9f1ec87ee9f6d4cbeca226917">   30</a></span><span class="preprocessor">#define CLEAR_MAIN_RENDER_TARGET 0</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>{</div>
+<div class="foldopen" id="foldopen00034" data-start="{" data-end="}">
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_graphics.html">   34</a></span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">Graphics::DX11</a></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    {</div>
+<div class="foldopen" id="foldopen00040" data-start="{" data-end="};">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html">   40</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#afe68fa02385b14547b14337552a59ce7">GraphicsDevice</a> : <span class="keyword">public</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#aead7deb30ab52aef3c7e4cd7968fd58b">IGraphicsDevice</a>&lt;GraphicsDevice&gt;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        {</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#abeddbd92f0d8f4cbcbc05071d32a3cf4">   43</a></span>            <span class="keyword">using </span><a class="code hl_typedef" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#abeddbd92f0d8f4cbcbc05071d32a3cf4">RenderGraph</a> = <a class="code hl_typedef" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#abeddbd92f0d8f4cbcbc05071d32a3cf4">RenderGraph&lt;RenderBackend, ID3D11RenderTargetView*, ID3D11DepthStencilView*, ID3D11ShaderResourceView*, ID3D11Buffer*, ComPtr&gt;</a>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#afe68fa02385b14547b14337552a59ce7">   48</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#afe68fa02385b14547b14337552a59ce7">GraphicsDevice</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a0e2da158a6f17afc9f668f4baf339d8b">   52</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a0e2da158a6f17afc9f668f4baf339d8b">~GraphicsDevice</a>();</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a48728df786c6b9a19d863c1719255ae0">   54</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a48728df786c6b9a19d863c1719255ae0">GraphicsDevice</a>(<a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#afe68fa02385b14547b14337552a59ce7">GraphicsDevice</a>&amp;&amp; rhs) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#acb5af09505a59fa0604a6f158b67efc3">   55</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#afe68fa02385b14547b14337552a59ce7">GraphicsDevice</a>&amp; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#acb5af09505a59fa0604a6f158b67efc3">operator=</a>(<a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#afe68fa02385b14547b14337552a59ce7">GraphicsDevice</a>&amp;&amp; rhs) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a6fee3d3805e1c9ad5faf9caccb4edbc2">   56</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a6fee3d3805e1c9ad5faf9caccb4edbc2">GraphicsDevice</a>(<span class="keyword">const</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#afe68fa02385b14547b14337552a59ce7">GraphicsDevice</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#acb0e9e1736ee79355664bc37bd0f7ecd">   57</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#afe68fa02385b14547b14337552a59ce7">GraphicsDevice</a>&amp; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#acb0e9e1736ee79355664bc37bd0f7ecd">operator=</a>(<span class="keyword">const</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#afe68fa02385b14547b14337552a59ce7">GraphicsDevice</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a0d7345574bf7a81c90c8d30e25427a3a">   65</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a0d7345574bf7a81c90c8d30e25427a3a">InitializeImpl</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">NativeWindowHandle</a>&amp; nativeWindowHandle, uint32_t width, uint32_t height, <span class="keywordtype">double</span> fps);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#afd7529b1240416e583c06271c81595f1">   70</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#afd7529b1240416e583c06271c81595f1">ClearImpl</a>(<span class="keyword">const</span> FLOAT clearColor[4]);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a3798d3d0a59ceedbed1fdf40d3d6b4fe">   75</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a3798d3d0a59ceedbed1fdf40d3d6b4fe">DrawImpl</a>();</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a15ed685258d22d4e79ea4fc0aab091a6">   81</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a15ed685258d22d4e79ea4fc0aab091a6">PresentImpl</a>();</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a3cf4f27906aeb15493d35dbabd84447b">   83</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a3cf4f27906aeb15493d35dbabd84447b">StartRenderThread</a>();</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#abc8669a07c0f5b56c54218df11e813b0">   84</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#abc8669a07c0f5b56c54218df11e813b0">StopRenderThread</a>();</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#ad43491a04b805c3b6b0ea7aebaf10c8c">   85</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#ad43491a04b805c3b6b0ea7aebaf10c8c">SubmitFrameImpl</a>(<span class="keyword">const</span> FLOAT clearColor[4], uint64_t frameIdx);</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a90c8a484b547dabb5a320186c0bde399">   86</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a90c8a484b547dabb5a320186c0bde399">WaitSubmittedFramesImpl</a>(uint64_t uptoFrame);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#ad8ecbad717838b9324832559a9797846">   88</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#ad8ecbad717838b9324832559a9797846">SetMainRenderTargetAndDepth</a>();</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a5a6be44e999078e0fe92d72321ed586d">   89</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a5a6be44e999078e0fe92d72321ed586d">SetMainRenderTargetNoDepth</a>();</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#ae57d349537b706d2db11707db680f6af">   91</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#ae57d349537b706d2db11707db680f6af">SetBlendState</a>(<a class="code hl_enumeration" href="namespace_s_f_w_1_1_graphics.html#ad3b0ed4e715bafe26a5351c574c1556b">BlendStateID</a> state);</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#adec516e7e9fc93ff030b513b410be370">   92</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#adec516e7e9fc93ff030b513b410be370">SetDepthStencilState</a>(<a class="code hl_enumeration" href="namespace_s_f_w_1_1_graphics.html#a8a6b5530cdc2c1eaaa1065d6ff7dfef3">DepthStencilStateID</a> state, UINT stencilRef = 0);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#aaafe50d8157268ed66a6fb086af2658a">   93</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#aaafe50d8157268ed66a6fb086af2658a">SetRasterizerState</a>(<a class="code hl_enumeration" href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5">RasterizerStateID</a> state);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="foldopen" id="foldopen00095" data-start="{" data-end="}">
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a6314da2af52dad190b212f5744a0339d">   95</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_render_service.html">RenderService</a>* <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a6314da2af52dad190b212f5744a0339d">GetRenderService</a>() noexcept {</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                <span class="keywordflow">return</span> renderGraph-&gt;GetRenderService();</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            }</div>
+</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
+<div class="foldopen" id="foldopen00103" data-start="{" data-end="}">
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a69e5e12709963b2aace5084e40f48bce">  103</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a69e5e12709963b2aace5084e40f48bce">ExecuteCustomFunc</a>(F&amp;&amp; func)</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            {</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>                func(renderGraph.get(), m_renderTargetView, m_depthStencilView, m_depthStencilViewReadOnly, m_depthStencilSRV);</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            }</div>
+</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a99acd2a3093931632beea699f677cc81">  108</a></span>            ID3D11Device* <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a99acd2a3093931632beea699f677cc81">GetDevice</a>() const noexcept { <span class="keywordflow">return</span> m_device.Get(); }</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#ac7662923ed2c2e6219d937500debbd93">  109</a></span>            ID3D11DeviceContext* <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#ac7662923ed2c2e6219d937500debbd93">GetDeviceContext</a>() const noexcept { <span class="keywordflow">return</span> m_context.Get(); }</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="foldopen" id="foldopen00111" data-start="{" data-end="}">
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a918b266a21c058c06e80406ae3175fc2">  111</a></span>            <span class="keyword">const</span> <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html">RenderBackend</a>* <span class="keyword">const</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a918b266a21c058c06e80406ae3175fc2">GetBackend</a>() const noexcept {</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                <span class="keywordflow">return</span> backend.get();</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            }</div>
+</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="foldopen" id="foldopen00115" data-start="{" data-end="}">
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a31c5350fd1d092ba91668fe4fa1967d5">  115</a></span>            ComPtr&lt;ID3D11RenderTargetView&gt; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a31c5350fd1d092ba91668fe4fa1967d5">GetMainRenderTargetView</a>() const noexcept {</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>                <span class="keywordflow">return</span> m_renderTargetView;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            }</div>
+</div>
+<div class="foldopen" id="foldopen00118" data-start="{" data-end="}">
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a9e887461ee7d3f8b244e5ce559c06f8e">  118</a></span>            ComPtr&lt;ID3D11DepthStencilView&gt; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a9e887461ee7d3f8b244e5ce559c06f8e">GetMainDepthStencilView</a>() const noexcept {</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>                <span class="keywordflow">return</span> m_depthStencilView;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            }</div>
+</div>
+<div class="foldopen" id="foldopen00121" data-start="{" data-end="}">
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a17cfabda61ef6e2b1af2ad00ffa227fd">  121</a></span>            ComPtr&lt;ID3D11DepthStencilView&gt; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a17cfabda61ef6e2b1af2ad00ffa227fd">GetMainDepthStencilViewReadOnly</a>() const noexcept {</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>                <span class="keywordflow">return</span> m_depthStencilViewReadOnly;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            }</div>
+</div>
+<div class="foldopen" id="foldopen00124" data-start="{" data-end="}">
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a9226eb000359e10d86694c23e15cadec">  124</a></span>            ComPtr&lt;ID3D11ShaderResourceView&gt; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a9226eb000359e10d86694c23e15cadec">GetMainDepthStencilSRV</a>() const noexcept {</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                <span class="keywordflow">return</span> m_depthStencilSRV;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>            }</div>
+</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+<div class="foldopen" id="foldopen00128" data-start="{" data-end="}">
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a0919c51c6ffc5f05d0363d133753b6d1">  128</a></span>            <span class="keyword">const</span> D3D11_VIEWPORT&amp; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a0919c51c6ffc5f05d0363d133753b6d1">GetMainViewport</a>() const noexcept {</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>                <span class="keywordflow">return</span> m_viewport;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            }</div>
+</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            <span class="comment">// ===== レンダースレッド実装 =====</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            <span class="keyword">struct </span>RenderSubmit {</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>                FLOAT clearColor[4]{ 0,0,0,1 };</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>                uint64_t frameIdx{};</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>                <span class="keywordtype">bool</span> doClear{ <span class="keyword">true</span> };</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>            };</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            <span class="keyword">struct </span>RTState {</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                std::mutex qMtx;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                std::condition_variable qCv;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>                std::deque&lt;RenderSubmit&gt; queue;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>                std::mutex doneMtx;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>                std::condition_variable doneCv;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                std::atomic&lt;bool&gt; running{ <span class="keyword">false</span> };</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>                std::thread thread;</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                std::atomic&lt;GraphicsDevice*&gt; owner{ <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>                <span class="comment">// フレーム進捗</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>                std::atomic&lt;uint64_t&gt; lastSubmitted{ 0 };</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                std::atomic&lt;uint64_t&gt; lastCompleted{ 0 };</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>                <span class="comment">// 上限（= バッファ数）</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>                <span class="keyword">static</span> <span class="keyword">constexpr</span> uint16_t MaxInFlight = RENDER_BUFFER_COUNT;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            };</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>            <span class="keywordtype">void</span> RenderThreadMain(std::shared_ptr&lt;RTState&gt; st);</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>            <span class="comment">// デバイス</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>            ComPtr&lt;ID3D11Device&gt; m_device;</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            <span class="comment">// デバイスコンテキスト</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>            ComPtr&lt;ID3D11DeviceContext&gt; m_context;</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            <span class="comment">// スワップチェーン</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>            ComPtr&lt;IDXGISwapChain&gt; m_swapChain;</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>            <span class="comment">// デフォルトのレンダリングターゲットビュー</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>            ComPtr&lt;ID3D11RenderTargetView&gt; m_renderTargetView;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>            <span class="comment">// デフォルトの深度ステンシルバッファ</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>            ComPtr&lt;ID3D11Texture2D&gt; m_depthStencilBuffer;</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>            <span class="comment">// デフォルトの深度ステンシルビュー</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>            ComPtr&lt;ID3D11DepthStencilView&gt; m_depthStencilView;</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>            <span class="comment">// 読み取り専用深度ステンシルビュー</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>            ComPtr&lt;ID3D11DepthStencilView&gt; m_depthStencilViewReadOnly;</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>            <span class="comment">// デフォルトの深度のSRV</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>            ComPtr&lt;ID3D11ShaderResourceView&gt; m_depthStencilSRV;</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>            D3D11_VIEWPORT m_viewport{};</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>            std::unique_ptr&lt;MeshManager&gt; meshManager;</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>            std::unique_ptr&lt;ShaderManager&gt; shaderManager;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>            std::unique_ptr&lt;TextureManager&gt; textureManager;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>            std::unique_ptr&lt;BufferManager&gt; bufferManager;</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>            std::unique_ptr&lt;SamplerManager&gt; samplerManager;</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>            std::unique_ptr&lt;MaterialManager&gt; materialManager;</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>            std::unique_ptr&lt;PSOManager&gt; psoManager;</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>            std::unique_ptr&lt;ModelAssetManager&gt; modelAssetManager;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>            std::unique_ptr&lt;RenderBackend&gt; backend;</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>            std::unique_ptr&lt;RenderGraph&gt; renderGraph;</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>            std::shared_ptr&lt;RTState&gt; m_rt;</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="preprocessor">#ifdef _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            Debug::ProcessGpu3DUtilPDH m_gpuUtilPDH;</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>            DWORD m_lastSampledPID = 0;</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>            <span class="keywordtype">double</span> m_elapsedTime = 0.f;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>            Debug::GpuTimerD3D11 m_gpuTimer;</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>            <span class="keywordtype">double</span> m_gpuTimeBudget = 0.f;</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="preprocessor">#endif </span><span class="comment">// _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        };</div>
+</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    }</div>
+</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>}</div>
+<div class="ttc" id="a_d_x112_d_camera_service_8h_html"><div class="ttname"><a href="_d_x112_d_camera_service_8h.html">DX112DCameraService.h</a></div></div>
+<div class="ttc" id="a_d_x113_d_camera_service_8h_html"><div class="ttname"><a href="_d_x113_d_camera_service_8h.html">DX113DCameraService.h</a></div><div class="ttdoc">DirectX11用の3Dカメラサービス</div></div>
+<div class="ttc" id="a_d_x11_render_backend_8h_html"><div class="ttname"><a href="_d_x11_render_backend_8h.html">DX11RenderBackend.h</a></div><div class="ttdoc">DirectX 11レンダリングバックエンドの定義</div></div>
+<div class="ttc" id="a_g_p_u_timer_d3_d11_8h_html"><div class="ttname"><a href="_g_p_u_timer_d3_d11_8h.html">GPUTimerD3D11.h</a></div><div class="ttdoc">Direct3D11用のGPUタイマーを定義するヘッダーファイル</div></div>
+<div class="ttc" id="a_i_graphics_device_8hpp_html"><div class="ttname"><a href="_i_graphics_device_8hpp.html">IGraphicsDevice.hpp</a></div></div>
+<div class="ttc" id="a_process_gpu3_d_util_p_d_h_8h_html"><div class="ttname"><a href="_process_gpu3_d_util_p_d_h_8h.html">ProcessGpu3DUtilPDH.h</a></div><div class="ttdoc">PDH を使用して、プロセスごとの 3D GPU 使用率 (%) を取得する最小限のクラス</div></div>
+<div class="ttc" id="a_render_graph_8hpp_html"><div class="ttname"><a href="_render_graph_8hpp.html">RenderGraph.hpp</a></div><div class="ttdoc">レンダーグラフを定義するクラス</div></div>
+<div class="ttc" id="a_render_types_8h_html"><div class="ttname"><a href="_render_types_8h.html">RenderTypes.h</a></div><div class="ttdoc">レンダー関連の基本的な型と定数を定義するヘッダーファイル</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a0919c51c6ffc5f05d0363d133753b6d1"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a0919c51c6ffc5f05d0363d133753b6d1">SFW::Graphics::DX11::GraphicsDevice::GetMainViewport</a></div><div class="ttdeci">const D3D11_VIEWPORT &amp; GetMainViewport() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00128">DX11Graphics.h:128</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a0d7345574bf7a81c90c8d30e25427a3a"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a0d7345574bf7a81c90c8d30e25427a3a">SFW::Graphics::DX11::GraphicsDevice::InitializeImpl</a></div><div class="ttdeci">bool InitializeImpl(const NativeWindowHandle &amp;nativeWindowHandle, uint32_t width, uint32_t height, double fps)</div><div class="ttdoc">初期化関数</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a0e2da158a6f17afc9f668f4baf339d8b"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a0e2da158a6f17afc9f668f4baf339d8b">SFW::Graphics::DX11::GraphicsDevice::~GraphicsDevice</a></div><div class="ttdeci">~GraphicsDevice()</div><div class="ttdoc">デストラクタ</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a15ed685258d22d4e79ea4fc0aab091a6"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a15ed685258d22d4e79ea4fc0aab091a6">SFW::Graphics::DX11::GraphicsDevice::PresentImpl</a></div><div class="ttdeci">void PresentImpl()</div><div class="ttdoc">描画を実行する関数 @detailss RenderGraphを使用して描画を実行します。</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a17cfabda61ef6e2b1af2ad00ffa227fd"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a17cfabda61ef6e2b1af2ad00ffa227fd">SFW::Graphics::DX11::GraphicsDevice::GetMainDepthStencilViewReadOnly</a></div><div class="ttdeci">ComPtr&lt; ID3D11DepthStencilView &gt; GetMainDepthStencilViewReadOnly() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00121">DX11Graphics.h:121</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a31c5350fd1d092ba91668fe4fa1967d5"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a31c5350fd1d092ba91668fe4fa1967d5">SFW::Graphics::DX11::GraphicsDevice::GetMainRenderTargetView</a></div><div class="ttdeci">ComPtr&lt; ID3D11RenderTargetView &gt; GetMainRenderTargetView() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00115">DX11Graphics.h:115</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a3798d3d0a59ceedbed1fdf40d3d6b4fe"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a3798d3d0a59ceedbed1fdf40d3d6b4fe">SFW::Graphics::DX11::GraphicsDevice::DrawImpl</a></div><div class="ttdeci">void DrawImpl()</div><div class="ttdoc">描画を実行する関数 @detailss RenderGraphを使用して描画を実行します。</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a3cf4f27906aeb15493d35dbabd84447b"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a3cf4f27906aeb15493d35dbabd84447b">SFW::Graphics::DX11::GraphicsDevice::StartRenderThread</a></div><div class="ttdeci">void StartRenderThread()</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a48728df786c6b9a19d863c1719255ae0"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a48728df786c6b9a19d863c1719255ae0">SFW::Graphics::DX11::GraphicsDevice::GraphicsDevice</a></div><div class="ttdeci">GraphicsDevice(GraphicsDevice &amp;&amp;rhs) noexcept</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a5a6be44e999078e0fe92d72321ed586d"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a5a6be44e999078e0fe92d72321ed586d">SFW::Graphics::DX11::GraphicsDevice::SetMainRenderTargetNoDepth</a></div><div class="ttdeci">void SetMainRenderTargetNoDepth()</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a6314da2af52dad190b212f5744a0339d"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a6314da2af52dad190b212f5744a0339d">SFW::Graphics::DX11::GraphicsDevice::GetRenderService</a></div><div class="ttdeci">RenderService * GetRenderService() noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00095">DX11Graphics.h:95</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a69e5e12709963b2aace5084e40f48bce"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a69e5e12709963b2aace5084e40f48bce">SFW::Graphics::DX11::GraphicsDevice::ExecuteCustomFunc</a></div><div class="ttdeci">void ExecuteCustomFunc(F &amp;&amp;func)</div><div class="ttdoc">指定した関数オブジェクトに引数を渡して実行する</div><div class="ttdef"><b>Definition</b> <a href="#l00103">DX11Graphics.h:103</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a6fee3d3805e1c9ad5faf9caccb4edbc2"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a6fee3d3805e1c9ad5faf9caccb4edbc2">SFW::Graphics::DX11::GraphicsDevice::GraphicsDevice</a></div><div class="ttdeci">GraphicsDevice(const GraphicsDevice &amp;)=delete</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a90c8a484b547dabb5a320186c0bde399"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a90c8a484b547dabb5a320186c0bde399">SFW::Graphics::DX11::GraphicsDevice::WaitSubmittedFramesImpl</a></div><div class="ttdeci">void WaitSubmittedFramesImpl(uint64_t uptoFrame)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a918b266a21c058c06e80406ae3175fc2"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a918b266a21c058c06e80406ae3175fc2">SFW::Graphics::DX11::GraphicsDevice::GetBackend</a></div><div class="ttdeci">const RenderBackend *const GetBackend() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00111">DX11Graphics.h:111</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a9226eb000359e10d86694c23e15cadec"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a9226eb000359e10d86694c23e15cadec">SFW::Graphics::DX11::GraphicsDevice::GetMainDepthStencilSRV</a></div><div class="ttdeci">ComPtr&lt; ID3D11ShaderResourceView &gt; GetMainDepthStencilSRV() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00124">DX11Graphics.h:124</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a99acd2a3093931632beea699f677cc81"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a99acd2a3093931632beea699f677cc81">SFW::Graphics::DX11::GraphicsDevice::GetDevice</a></div><div class="ttdeci">ID3D11Device * GetDevice() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00108">DX11Graphics.h:108</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_a9e887461ee7d3f8b244e5ce559c06f8e"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a9e887461ee7d3f8b244e5ce559c06f8e">SFW::Graphics::DX11::GraphicsDevice::GetMainDepthStencilView</a></div><div class="ttdeci">ComPtr&lt; ID3D11DepthStencilView &gt; GetMainDepthStencilView() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00118">DX11Graphics.h:118</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_aaafe50d8157268ed66a6fb086af2658a"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#aaafe50d8157268ed66a6fb086af2658a">SFW::Graphics::DX11::GraphicsDevice::SetRasterizerState</a></div><div class="ttdeci">void SetRasterizerState(RasterizerStateID state)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_abc8669a07c0f5b56c54218df11e813b0"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#abc8669a07c0f5b56c54218df11e813b0">SFW::Graphics::DX11::GraphicsDevice::StopRenderThread</a></div><div class="ttdeci">void StopRenderThread()</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_abeddbd92f0d8f4cbcbc05071d32a3cf4"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#abeddbd92f0d8f4cbcbc05071d32a3cf4">SFW::Graphics::DX11::GraphicsDevice::RenderGraph</a></div><div class="ttdeci">RenderGraph&lt; RenderBackend, ID3D11RenderTargetView *, ID3D11DepthStencilView *, ID3D11ShaderResourceView *, ID3D11Buffer *, ComPtr &gt; RenderGraph</div><div class="ttdef"><b>Definition</b> <a href="#l00043">DX11Graphics.h:43</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_ac7662923ed2c2e6219d937500debbd93"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#ac7662923ed2c2e6219d937500debbd93">SFW::Graphics::DX11::GraphicsDevice::GetDeviceContext</a></div><div class="ttdeci">ID3D11DeviceContext * GetDeviceContext() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00109">DX11Graphics.h:109</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_acb0e9e1736ee79355664bc37bd0f7ecd"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#acb0e9e1736ee79355664bc37bd0f7ecd">SFW::Graphics::DX11::GraphicsDevice::operator=</a></div><div class="ttdeci">GraphicsDevice &amp; operator=(const GraphicsDevice &amp;)=delete</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_acb5af09505a59fa0604a6f158b67efc3"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#acb5af09505a59fa0604a6f158b67efc3">SFW::Graphics::DX11::GraphicsDevice::operator=</a></div><div class="ttdeci">GraphicsDevice &amp; operator=(GraphicsDevice &amp;&amp;rhs) noexcept</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_ad43491a04b805c3b6b0ea7aebaf10c8c"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#ad43491a04b805c3b6b0ea7aebaf10c8c">SFW::Graphics::DX11::GraphicsDevice::SubmitFrameImpl</a></div><div class="ttdeci">void SubmitFrameImpl(const FLOAT clearColor[4], uint64_t frameIdx)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_ad8ecbad717838b9324832559a9797846"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#ad8ecbad717838b9324832559a9797846">SFW::Graphics::DX11::GraphicsDevice::SetMainRenderTargetAndDepth</a></div><div class="ttdeci">void SetMainRenderTargetAndDepth()</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_adec516e7e9fc93ff030b513b410be370"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#adec516e7e9fc93ff030b513b410be370">SFW::Graphics::DX11::GraphicsDevice::SetDepthStencilState</a></div><div class="ttdeci">void SetDepthStencilState(DepthStencilStateID state, UINT stencilRef=0)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_ae57d349537b706d2db11707db680f6af"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#ae57d349537b706d2db11707db680f6af">SFW::Graphics::DX11::GraphicsDevice::SetBlendState</a></div><div class="ttdeci">void SetBlendState(BlendStateID state)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_afd7529b1240416e583c06271c81595f1"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#afd7529b1240416e583c06271c81595f1">SFW::Graphics::DX11::GraphicsDevice::ClearImpl</a></div><div class="ttdeci">void ClearImpl(const FLOAT clearColor[4])</div><div class="ttdoc">画面をクリアする関数</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_html_afe68fa02385b14547b14337552a59ce7"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#afe68fa02385b14547b14337552a59ce7">SFW::Graphics::DX11::GraphicsDevice::GraphicsDevice</a></div><div class="ttdeci">GraphicsDevice()=default</div><div class="ttdoc">コンストラクタ</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html">SFW::Graphics::DX11::RenderBackend</a></div><div class="ttdoc">DirectX 11レンダリングバックエンドクラス.</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_render_backend_8h_source.html#l00040">DX11RenderBackend.h:40</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_aead7deb30ab52aef3c7e4cd7968fd58b"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#aead7deb30ab52aef3c7e4cd7968fd58b">SFW::Graphics::IGraphicsDevice&lt; GraphicsDevice &gt;::IGraphicsDevice</a></div><div class="ttdeci">IGraphicsDevice()=default</div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_1_1_d_x11_html"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">SFW::Graphics::DX11</a></div><div class="ttdef"><b>Definition</b> <a href="#l00034">DX11Graphics.h:35</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_a8a6b5530cdc2c1eaaa1065d6ff7dfef3"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#a8a6b5530cdc2c1eaaa1065d6ff7dfef3">SFW::Graphics::DepthStencilStateID</a></div><div class="ttdeci">DepthStencilStateID</div><div class="ttdoc">深度ステンシルステートID列挙型</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00184">RenderTypes.h:184</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_ad3b0ed4e715bafe26a5351c574c1556b"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#ad3b0ed4e715bafe26a5351c574c1556b">SFW::Graphics::BlendStateID</a></div><div class="ttdeci">BlendStateID</div><div class="ttdoc">ブレンドステートID列挙型</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00171">RenderTypes.h:171</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_add16cad34908b03f927d070c219d2f4a"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">SFW::Graphics::NativeWindowHandle</a></div><div class="ttdeci">std::variant&lt; HWND &gt; NativeWindowHandle</div><div class="ttdef"><b>Definition</b> <a href="_i_graphics_device_8hpp_source.html#l00026">IGraphicsDevice.hpp:26</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_af9f678d5587dcdfd0bd9b7ca4072f9f5"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5">SFW::Graphics::RasterizerStateID</a></div><div class="ttdeci">RasterizerStateID</div><div class="ttdoc">ラスタライザーステートID列挙型</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00155">RenderTypes.h:155</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_service_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_service.html">SFW::Graphics::RenderService</a></div><div class="ttdoc">Systemが依存するレンダーサービスを管理するクラス</div><div class="ttdef"><b>Definition</b> <a href="_render_service_8h_source.html#l00048">RenderService.h:49</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="_d_x11_graphics_8h.html">DX11Graphics.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

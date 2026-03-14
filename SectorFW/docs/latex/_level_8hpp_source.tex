@@ -1,0 +1,494 @@
+\doxysection{Level.\+hpp}
+\hypertarget{_level_8hpp_source}{}\label{_level_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/Level.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/Level.hpp}}
+\mbox{\hyperlink{_level_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_component_type_registry_8h}{ECS/ComponentTypeRegistry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_system_scheduler_8hpp}{ECS/SystemScheduler.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{partition_8hpp}{partition.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_registry_types_8h}{RegistryTypes.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_chunk_crossing_move_8hpp}{ChunkCrossingMove.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_transform_8hpp}{../Math/Transform.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{logger_8h}{../Debug/logger.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00018}00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{extract__type_8hpp}{../Util/extract\_type.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00020}00020\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00021}00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_u_i_bus_8h}{../Debug/UIBus.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00022}00022\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00024}00024\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00025}00025\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00029}\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{00029}}\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ :\ uint32\_t\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00030}\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a6adf97f83acf6453d4a6a4b1070f3754}{00030}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a6adf97f83acf6453d4a6a4b1070f3754}{None}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00031}\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53aa02c83a7dbd96295beaefb72c2bee2de}{00031}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53aa02c83a7dbd96295beaefb72c2bee2de}{Main}}\ =\ 1u\ <<\ 0,}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00032}\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53ae80155eceb940c89e2de63ad05868db2}{00032}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53ae80155eceb940c89e2de63ad05868db2}{Sub}}\ =\ 1u\ <<\ 1,}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00033}\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a4d3d769b812b6faa6b76e1a8abaece2d}{00033}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a4d3d769b812b6faa6b76e1a8abaece2d}{Active}}\ =\ 1u\ <<\ 2,}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00034}\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a16bfbf9c462762cf1cba4134ec53c504}{00034}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a16bfbf9c462762cf1cba4134ec53c504}{Loading}}\ =\ 1u\ <<\ 3,}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00035}\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a7381d487d18845b379422325c0a768d6}{00035}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a7381d487d18845b379422325c0a768d6}{Loaded}}\ =\ 1u\ <<\ 4,}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00036}00036\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00038}\mbox{\hyperlink{namespace_s_f_w_a7ed2d08f1306b6c71786c93118c0fd74}{00038}}\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ \mbox{\hyperlink{namespace_s_f_w_a7ed2d08f1306b6c71786c93118c0fd74}{operator|}}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ a,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ b)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\textcolor{keyword}{>}(}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(a)\ |\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(b)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00042}00042\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00044}\mbox{\hyperlink{namespace_s_f_w_ac2c3f02b6824740b27ca935150d68d8b}{00044}}\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ \mbox{\hyperlink{namespace_s_f_w_ac2c3f02b6824740b27ca935150d68d8b}{operator\&}}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ a,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ b)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\textcolor{keyword}{>}(}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(a)\ \&\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(b)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00048}00048\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00050}\mbox{\hyperlink{namespace_s_f_w_a9ac195ecef1ece06f0126c3191044508}{00050}}\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ \mbox{\hyperlink{namespace_s_f_w_a9ac195ecef1ece06f0126c3191044508}{operator\string~}}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ a)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 有効ビットだけ反転したいならマスクする}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ uint32\_t\ Mask\ =}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53aa02c83a7dbd96295beaefb72c2bee2de}{ELevelState::Main}})\ |}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53ae80155eceb940c89e2de63ad05868db2}{ELevelState::Sub}})\ |}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a4d3d769b812b6faa6b76e1a8abaece2d}{ELevelState::Active}})\ |}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a16bfbf9c462762cf1cba4134ec53c504}{ELevelState::Loading}})\ |}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a7381d487d18845b379422325c0a768d6}{ELevelState::Loaded}});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\textcolor{keyword}{>}(\string~static\_cast<uint32\_t>(a)\ \&\ Mask);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00060}00060\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00062}\mbox{\hyperlink{namespace_s_f_w_a7ff8c1b3e1ceb877fcb45cf48666fd65}{00062}}\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\&\ \mbox{\hyperlink{namespace_s_f_w_a7ff8c1b3e1ceb877fcb45cf48666fd65}{operator|=}}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\&\ a,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ b)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ a\ =\ a\ |\ b;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00065}00065\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00067}\mbox{\hyperlink{namespace_s_f_w_a5848d2a287d080ae019d98b92fb364a1}{00067}}\ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\&\ \mbox{\hyperlink{namespace_s_f_w_a5848d2a287d080ae019d98b92fb364a1}{operator\&=}}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\&\ a,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ b)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00068}00068\ \ \ \ \ \ \ \ \ a\ =\ a\ \&\ b;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00070}00070\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00072}\mbox{\hyperlink{namespace_s_f_w_a82fdc34c030671aaa1a9bfd5a5051bcf}{00072}}\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_a82fdc34c030671aaa1a9bfd5a5051bcf}{HasAny}}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ v)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(v)\ !=\ 0u;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00074}00074\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00076}\mbox{\hyperlink{namespace_s_f_w_a7b3b32a24c161952206c3798fdd4706f}{00076}}\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_a82fdc34c030671aaa1a9bfd5a5051bcf}{HasAny}}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ v,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ bits)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_a82fdc34c030671aaa1a9bfd5a5051bcf}{HasAny}}(v\ \&\ bits);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00078}00078\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00080}\mbox{\hyperlink{namespace_s_f_w_a978f030946d09d7e75529945f9d3f4f1}{00080}}\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_a978f030946d09d7e75529945f9d3f4f1}{HasAll}}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ v,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ bits)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(v)\ \&\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(bits))}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ ==\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(bits);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00083}00083\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00088}00088\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Partition>}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00089}\mbox{\hyperlink{struct_s_f_w_1_1_level_context}{00089}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_level_context}{LevelContext}}\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00090}\mbox{\hyperlink{class_s_f_w_1_1_level_context_1_1_i_request_command}{00090}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_level_context_1_1_i_request_command}{IRequestCommand}}\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00092}\mbox{\hyperlink{class_s_f_w_1_1_level_context_1_1_i_request_command_a9dab7d474651de0036d298c0516c33e3}{00092}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_s_f_w_1_1_level_context_1_1_i_request_command_a9dab7d474651de0036d298c0516c33e3}{\string~IRequestCommand}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00093}\mbox{\hyperlink{class_s_f_w_1_1_level_context_1_1_i_request_command_a9fae503504e24b4ee64594f4f808963a}{00093}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_level_context_1_1_i_request_command_a9fae503504e24b4ee64594f4f808963a}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session}{Level<Partition>::Session}}\&\ pLevelSession)\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ ディファード運用}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00097}\mbox{\hyperlink{struct_s_f_w_1_1_level_context_a676ffb36196c787e56efc3d1f06acc38}{00097}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_budget_mover}{BudgetMover}}\ \mbox{\hyperlink{struct_s_f_w_1_1_level_context_a676ffb36196c787e56efc3d1f06acc38}{mover}};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00099}\mbox{\hyperlink{struct_s_f_w_1_1_level_context_ac889cc0495840c1e23a645019612cd1b}{00099}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}\ \mbox{\hyperlink{struct_s_f_w_1_1_level_context_ac889cc0495840c1e23a645019612cd1b}{GetID}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ id;\ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00100}00100\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00101}\mbox{\hyperlink{struct_s_f_w_1_1_level_context_a8cbc6cfcef0d58df154379a79f4c79ea}{00101}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}\ \textcolor{keywordtype}{id}\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_level}{Level}}<Partition>;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00104}00104\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00109}00109\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\ DefaultChunkHeight\ =\ 32;\ \textcolor{comment}{//\ デフォルトのチャンクラインサイズ}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00113}00113\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\ DefaultChunkWidth\ =\ 32;\ \textcolor{comment}{//\ デフォルトのチャンクカラムサイズ}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00115}00115\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ DefaultChunkCellSize\ =\ 128.0f;\ \textcolor{comment}{//\ デフォルトのチャンクサイズ}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00117}00117\ \ \ \ \ \textcolor{comment}{//各型のLevel間でIDを共有するためにそとに逃がす}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00118}\mbox{\hyperlink{class_s_f_w_1_1_lelve_i_d_manager}{00118}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_lelve_i_d_manager}{LelveIDManager}}\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \textcolor{comment}{//レベルの世代を生成するための静的なアトミック変数}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \textcolor{comment}{//レベルごとに一意な世代を生成するために使用されます。}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ std::atomic<LevelID>\ nextID;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<PartitionConcept\ Partition>}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00124}\mbox{\hyperlink{class_s_f_w_1_1_lelve_i_d_manager_abd29e1f161125c3b30b7be9627aa682e}{00124}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_lelve_i_d_manager_abd29e1f161125c3b30b7be9627aa682e}{Level}};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00125}00125\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00131}00131\ \ \ \ \ \textcolor{keyword}{template}<PartitionConcept\ Partition>}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00132}\mbox{\hyperlink{class_s_f_w_1_1_level}{00132}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_level_af121d6c47aa936403568199efa87de50}{Level}}\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }SchedulerType\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler}{ECS::SystemScheduler<Partition>}};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }SystemType\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{ECS::ISystem<Partition>}};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }TransformType\ =\ \mbox{\hyperlink{namespace_s_f_w_aed0ca79324fac54b9ab7b532d1bc2c6a}{CTransform}};\ \textcolor{comment}{//\ Transformコンポーネントの型}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00138}00138\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00143}\mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session}{00143}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_a8b4665fa7ec338679029e854b7e4e1c7}{Session}}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00145}\mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_a8b4665fa7ec338679029e854b7e4e1c7}{00145}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_a8b4665fa7ec338679029e854b7e4e1c7}{Session}}(\mbox{\hyperlink{class_s_f_w_1_1_level_af121d6c47aa936403568199efa87de50}{Level<Partition>}}\&\ \_level,\ std::shared\_mutex\&\ \_m)\ :\ level(\_level),\ lock(\_m)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Components>}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00153}\mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_a1497f0e7d6f5910ab9e3abac04a78884}{00153}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<ECS::EntityID>\ \mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_a1497f0e7d6f5910ab9e3abac04a78884}{AddEntity}}(\textcolor{keyword}{const}\ Components\&...\ components)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ComponentMask\ mask;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (SetMask<Components>(mask),\ ...);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Transformコンポーネントが存在するかどうかをチェック}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ComponentTypeID\ typeID\ =\ ComponentTypeRegistry::GetID<TransformType>();}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ hasTransform\ =\ mask.test(typeID);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EntityID\ \textcolor{keywordtype}{id}\ =\ EntityID::Invalid();}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Transformコンポーネントが存在する場合、パーティションからチャンクを取得}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hasTransform)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ transform\ =\ \mbox{\hyperlink{namespace_s_f_w_af0c092b23d8fca15a0d92cc2fabe0072}{extract\_first\_of\_type<TransformType>}}(components...);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (transform)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ chunk\ =\ level.partition.GetChunk(transform-\/>location,\ level.entityManagerReg,\ level.levelCtx.id,\ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOutOfBoundsPolicy::ClampToEdge}});\ \textcolor{comment}{//\ Transformの位置に基づいてチャンクを取得}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunk)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ =\ (*chunk)-\/>GetEntityManager().AddEntity<Components...>(mask,\ components...);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Transformコンポーネントが存在しない場合、グローバルエンティティマネージャーを使用}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ =\ level.partition.GetGlobalEntityManager().AddEntity<Components...>(mask,\ components...);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ エンティティIDが無効な場合はエラーをログ出力}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\textcolor{keywordtype}{id}.IsValid())\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}EntityID\ is\ not\ Valid\ :\ \%d"{}},\ \textcolor{keywordtype}{id}.index);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;\ \textcolor{comment}{//\ エンティティの追加に失敗した場合}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00190}00190\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ id;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Components>}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00201}\mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_a8b87ed219a0226e66c527535c329b6b8}{00201}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<ECS::EntityID>\ \mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_a8b87ed219a0226e66c527535c329b6b8}{AddStaticBoundsEntity}}(\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}{SpatialChunk::Bounds3f}}\ boundsWS,\ \textcolor{keyword}{const}\ Components\&...\ components)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00204}00204\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ComponentMask\ mask;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (SetMask<Components>(mask),\ ...);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Transformコンポーネントが存在するかどうかをチェック}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ComponentTypeID\ typeID\ =\ ComponentTypeRegistry::GetID<TransformType>();}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ hasTransform\ =\ mask.test(typeID);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EntityID\ \textcolor{keywordtype}{id}\ =\ EntityID::Invalid();}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00213}00213\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Transformコンポーネントが存在する場合、パーティションからチャンクを取得}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hasTransform)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ transform\ =\ \mbox{\hyperlink{namespace_s_f_w_af0c092b23d8fca15a0d92cc2fabe0072}{extract\_first\_of\_type<TransformType>}}(components...);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (transform)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ chunk\ =\ level.partition.GetChunk(transform-\/>location,\ level.entityManagerReg,\ level.levelCtx.id,\ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOutOfBoundsPolicy::ClampToEdge}});\ \textcolor{comment}{//\ Transformの位置に基づいてチャンクを取得}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunk)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ =\ (*chunk)-\/>GetEntityManager().AddEntity<Components...>(mask,\ components...);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 静的境界ボリュームを拡張}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*chunk)-\/>ExpandStaticBoundsWS(boundsWS);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Transformコンポーネントが存在しない場合、グローバルエンティティマネージャーを使用}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ =\ level.partition.GetGlobalEntityManager().AddEntity<Components...>(mask,\ components...);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00234}00234\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ エンティティIDが無効な場合はエラーをログ出力}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\textcolor{keywordtype}{id}.IsValid())\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}EntityID\ is\ not\ Valid\ :\ \%d"{}},\ \textcolor{keywordtype}{id}.index);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;\ \textcolor{comment}{//\ エンティティの追加に失敗した場合}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00240}00240\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ id;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00243}00243\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00244}00244\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Components>}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00252}\mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_ae5f0dbb27c12ac67b189a7b467630a8f}{00252}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<ECS::EntityID>\ \mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_ae5f0dbb27c12ac67b189a7b467630a8f}{AddEntityWithLocation}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ location,\ \textcolor{keyword}{const}\ Components\&...\ components)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00255}00255\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ComponentMask\ mask;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (SetMask<Components>(mask),\ ...);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00258}00258\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Transformコンポーネントが存在するかどうかをチェック}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ComponentTypeID\ typeID\ =\ ComponentTypeRegistry::GetID<TransformType>();}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ hasTransform\ =\ mask.test(typeID);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00262}00262\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EntityID\ \textcolor{keywordtype}{id}\ =\ EntityID::Invalid();}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00264}00264\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Transformコンポーネントが存在する場合、パーティションからチャンクを取得}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hasTransform)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_afde44945335adc0c0ae2986fea13438f}{LOG\_WARNING}}(\textcolor{stringliteral}{"{}AddEntityWithLocation:\ Transformの位置は無視されます!"{}});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00270}00270\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ chunk\ =\ level.partition.GetChunk(location,\ level.entityManagerReg,\ level.levelCtx.id,\ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOutOfBoundsPolicy::ClampToEdge}});\ \textcolor{comment}{//\ Transformの位置に基づいてチャンクを取得}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunk)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ =\ (*chunk)-\/>GetEntityManager().AddEntity<Components...>(mask,\ components...);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00276}00276\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ エンティティIDが無効な場合はエラーをログ出力}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\textcolor{keywordtype}{id}.IsValid())\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}EntityID\ is\ not\ Valid\ :\ \%d"{}},\ \textcolor{keywordtype}{id}.index);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;\ \textcolor{comment}{//\ エンティティの追加に失敗した場合}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00282}00282\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ id;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00285}00285\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Components>}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00292}\mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_ad260b94cdba1682550dbc752aed2e765}{00292}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<ECS::EntityID>\ \mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_ad260b94cdba1682550dbc752aed2e765}{AddGlobalEntity}}(\textcolor{keyword}{const}\ Components\&...\ components)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00295}00295\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ComponentMask\ mask;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (SetMask<Components>(mask),\ ...);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00298}00298\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EntityID\ \textcolor{keywordtype}{id}\ =\ EntityID::Invalid();}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00300}00300\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ =\ level.partition.GetGlobalEntityManager().AddEntity<Components...>(mask,\ components...);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00302}00302\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ エンティティIDが無効な場合はエラーをログ出力}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\textcolor{keywordtype}{id}.IsValid())\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}EntityID\ is\ not\ Valid\ :\ \%d"{}},\ \textcolor{keywordtype}{id}.index);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;\ \textcolor{comment}{//\ エンティティの追加に失敗した場合}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00308}00308\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ id;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00311}00311\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_level_af121d6c47aa936403568199efa87de50}{Level<Partition>}}\&\ level;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock<std::shared\_mutex>\ lock;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00314}00314\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00315}00315\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00324}\mbox{\hyperlink{class_s_f_w_1_1_level_af121d6c47aa936403568199efa87de50}{00324}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_level_af121d6c47aa936403568199efa87de50}{Level}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\&\ reg,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ \_state\ =\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53aa02c83a7dbd96295beaefb72c2bee2de}{ELevelState::Main}},}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ originWS\ =\ \{\ 0.0f,0.0f,0.0f\ \},\ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\ \_chunkWidth\ =\ DefaultChunkWidth,\ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\ \_chunkHeight\ =\ DefaultChunkHeight,}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \_chunkCellSize\ =\ DefaultChunkCellSize}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00327}00327\ \ \ \ \ \ \ \ \ )\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ :\ name(name),\ state(static\_cast<uint32\_t>(\_state)),\ entityManagerReg(reg),}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ partition(originWS,\ \_chunkWidth,\ \_chunkHeight,\ \_chunkCellSize)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Active\ を落とす（他ビットの並行更新を壊さない）}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ state.fetch\_and(\string~\textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a4d3d769b812b6faa6b76e1a8abaece2d}{ELevelState::Active}}),}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::memory\_order\_acq\_rel);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00333}00333\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ levelCtx.id\ =\ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}(LelveIDManager::nextID.fetch\_add(1,\ std::memory\_order\_relaxed));}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ partition.RegisterAllChunks(reg,\ levelCtx.id);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00336}00336\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00341}00341\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}...\ Args>}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ std::constructible\_from<Partition,\ Args...>\ \&\&}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00343}00343\ \ \ \ \ \ \ \ \ (!(std::same\_as<std::remove\_cvref\_t<Args>,\ \mbox{\hyperlink{class_s_f_w_1_1_level_af121d6c47aa936403568199efa87de50}{Level}}>\ ||\ ...))\ \textcolor{comment}{//\ 自分自身のコピー/ムーブと衝突しないようガード}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00344}\mbox{\hyperlink{class_s_f_w_1_1_level_a5f0fc5b69446cf7dca25d9d4210a0a8b}{00344}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}(\textcolor{keyword}{sizeof}...(Args)\ ==\ 1)\ \textcolor{comment}{//\ 引数1個のときだけ\ explicit、などの好み調整も可}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_level_af121d6c47aa936403568199efa87de50}{Level}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\&\ reg,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ \_state\ =\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53aa02c83a7dbd96295beaefb72c2bee2de}{ELevelState::Main}},}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Args\&\&...\ args)\ noexcept}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ :\ name(name),\ state(\textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\_state)),\ entityManagerReg(reg),}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ partition(std::forward<Args>(args)...)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Active\ を落とす（他ビットの並行更新を壊さない）}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ state.fetch\_and(\string~\textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a4d3d769b812b6faa6b76e1a8abaece2d}{ELevelState::Active}}),}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::memory\_order\_acq\_rel);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00352}00352\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ levelCtx.id\ =\ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}(LelveIDManager::nextID.fetch\_add(1,\ std::memory\_order\_relaxed));}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ partition.RegisterAllChunks(reg,\ levelCtx.id);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00355}00355\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00359}\mbox{\hyperlink{class_s_f_w_1_1_level_a515a296039f5c2a28b716d8c6d426b23}{00359}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}\ \mbox{\hyperlink{class_s_f_w_1_1_level_a515a296039f5c2a28b716d8c6d426b23}{GetID}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ levelCtx.id;\ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00360}00360\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00364}\mbox{\hyperlink{class_s_f_w_1_1_level_aa3016006d7145226409d98d2fb30da2f}{00364}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_level_aa3016006d7145226409d98d2fb30da2f}{Update}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS::ServiceLocator}}\&\ serviceLocator,\ \textcolor{keywordtype}{double}\ deltaTime,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00365}00365\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ g\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48}{Debug::BeginTreeWrite}}();\ \textcolor{comment}{//\ lock\ \&\ back\ buffer}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ frame\ =\ g.data();}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00369}00369\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 例えばプリオーダ＋depth\ 指定で平坦化したツリーを詰める}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a04b592d815dcee98bfcf032e71dc71da}{Debug::WorldTreeDepth::TREEDEPTH\_LEVEL}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{false},\ \textcolor{stringliteral}{"{}Level\ :\ "{}}\ +\ name\ \});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{Debug::WorldTreeDepth::TREEDEPTH\_LEVELNODE}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{true},\ \textcolor{stringliteral}{"{}Id\ :\ "{}}\ +\ std::to\_string(levelCtx.id)\ \});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{Debug::WorldTreeDepth::TREEDEPTH\_LEVELNODE}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{true},\ \textcolor{stringliteral}{"{}EntityCount\ :\ "{}}\ +\ std::to\_string(partition.GetEntityNum())\ \});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{Debug::WorldTreeDepth::TREEDEPTH\_LEVELNODE}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{true},\ \textcolor{stringliteral}{"{}Partition\ :\ "{}}\ +\ std::string(\textcolor{keyword}{typeid}(Partition).name()).substr(6)\ \});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{Debug::WorldTreeDepth::TREEDEPTH\_LEVELNODE}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{false},\ \textcolor{stringliteral}{"{}System"{}}\ \});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ guard\ のデストラクトで\ unlock。swap\ は\ UI\ スレッドで。}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00377}00377\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(updateEntityMutex);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00379}00379\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\mbox{\hyperlink{concept_s_f_w_1_1_has_partition_update}{HasPartitionUpdate<Partition>}})\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ partition.Update(deltaTime);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00383}00383\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ scheduler.UpdateAll(partition,\ levelCtx,\ serviceLocator,\ executor);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00385}00385\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//各スレッドでチャンクを跨いだ移動を実行}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ BudgetMover::Accessor::MoverFlush(levelCtx.mover,\ *serviceLocator.\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_a22608296cf3f91afbf7882635c58ed84}{Get}}<\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}>(),\ 2000);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00388}00388\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00393}\mbox{\hyperlink{class_s_f_w_1_1_level_a69bb3f35b3d7733bf0930e717d17f756}{00393}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_level_a69bb3f35b3d7733bf0930e717d17f756}{Clean}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS::ServiceLocator}}\&\ serviceLocator)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lock(updateEntityMutex);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00395}00395\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ scheduler.CleanSystem(partition,\ levelCtx,\ serviceLocator);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00397}00397\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//チャンクをクリア}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ partition.CleanChunk();}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00400}00400\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00401}00401\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00405}\mbox{\hyperlink{class_s_f_w_1_1_level_ab77413853ea076d61557053d71c6c6bc}{00405}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_level_ab77413853ea076d61557053d71c6c6bc}{UpdateLimited}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS::ServiceLocator}}\&\ serviceLocator,\ \textcolor{keywordtype}{double}\ deltaTime,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00406}00406\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ g\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48}{Debug::BeginTreeWrite}}();\ \textcolor{comment}{//\ lock\ \&\ back\ buffer}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ frame\ =\ g.data();}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00410}00410\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 例えばプリオーダ＋depth\ 指定で平坦化したツリーを詰める}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00412}00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a04b592d815dcee98bfcf032e71dc71da}{Debug::WorldTreeDepth::TREEDEPTH\_LEVEL}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{false},\ \textcolor{stringliteral}{"{}Limited\ Level\ :\ "{}}\ +\ name\ \});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{Debug::WorldTreeDepth::TREEDEPTH\_LEVELNODE}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{true},\ \textcolor{stringliteral}{"{}Id\ :\ "{}}\ +\ std::to\_string(levelCtx.id)\ \});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{Debug::WorldTreeDepth::TREEDEPTH\_LEVELNODE}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{true},\ \textcolor{stringliteral}{"{}EntityCount\ :\ "{}}\ +\ std::to\_string(partition.GetEntityNum())\ \});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{Debug::WorldTreeDepth::TREEDEPTH\_LEVELNODE}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{true},\ \textcolor{stringliteral}{"{}Partition\ :\ "{}}\ +\ std::string(\textcolor{keyword}{typeid}(Partition).name()).substr(6)\ \});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00416}00416\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ guard\ のデストラクトで\ unlock。swap\ は\ UI\ スレッドで。}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00417}00417\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(updateEntityMutex);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00419}00419\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 限定的なSystemだけを実行（例：位置補間やフェードアウト処理）}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00421}00421\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ sys\ :\ limitedSystems)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sys-\/>Update(partition,\ levelCtx,\ serviceLocator,\ executor);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00423}00423\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00424}00424\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00425}00425\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00430}\mbox{\hyperlink{class_s_f_w_1_1_level_a29b848cbecad925f85b9dc69b3b650e7}{00430}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_level_a29b848cbecad925f85b9dc69b3b650e7}{RegisterAllChunks}}(\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\&\ reg)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00431}00431\ \ \ \ \ \ \ \ \ \ \ \ \ partition.RegisterAllChunks(reg,\ levelCtx.id);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00432}00432\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00433}00433\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00438}\mbox{\hyperlink{class_s_f_w_1_1_level_a99c6b45fb1cc2e107d66ffde7a77ed7e}{00438}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS::EntityManager}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_level_a99c6b45fb1cc2e107d66ffde7a77ed7e}{GetGlobalEntityManager}}()\ noexcept\ \{\ \textcolor{keywordflow}{return}\ partition.GetGlobalEntityManager();\ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00443}\mbox{\hyperlink{class_s_f_w_1_1_level_a134b57117aef18aa98c5cebe8ec0bde1}{00443}}\ \ \ \ \ \ \ \ \ SchedulerType\&\ \mbox{\hyperlink{class_s_f_w_1_1_level_a134b57117aef18aa98c5cebe8ec0bde1}{GetScheduler}}()\ noexcept\ \{\ \textcolor{keywordflow}{return}\ scheduler;\ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00448}\mbox{\hyperlink{class_s_f_w_1_1_level_a4cebf531263e4cc764748a73e57acfb0}{00448}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \mbox{\hyperlink{class_s_f_w_1_1_level_a4cebf531263e4cc764748a73e57acfb0}{GetName}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ name;\ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00453}\mbox{\hyperlink{class_s_f_w_1_1_level_ae77b647f6c5302bd2e4abddaf3cd7f58}{00453}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_level_ae77b647f6c5302bd2e4abddaf3cd7f58}{ChangeState}}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ bits,\ \textcolor{keywordtype}{bool}\ set\ =\ \textcolor{keyword}{true},}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00454}00454\ \ \ \ \ \ \ \ \ \ \ \ \ std::memory\_order\ mo\ =\ std::memory\_order\_acq\_rel)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00455}00455\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (set)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state.fetch\_or(\textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(bits),\ mo);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00457}00457\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00459}00459\ \ \ \ \ \ \ \ \ \ \ \ \ state.fetch\_and(\string~\textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(bits),\ mo);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00460}00460\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00461}00461\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00467}\mbox{\hyperlink{class_s_f_w_1_1_level_aa6903a92fc54d7b8b78ba22901154aba}{00467}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_level_aa6903a92fc54d7b8b78ba22901154aba}{UpdateState}}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ setBits,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ clearBits,}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ std::memory\_order\ success\ =\ std::memory\_order\_acq\_rel,}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ std::memory\_order\ fail\ =\ std::memory\_order\_acquire)}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00470}00470\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00471}00471\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ expected\ =\ state.load(std::memory\_order\_relaxed);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00472}00472\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00473}00473\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ desired\ =\ (expected\ |\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(setBits))\ \&\ \string~\textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(clearBits);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00474}00474\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (state.compare\_exchange\_weak(expected,\ desired,\ success,\ fail))\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00475}00475\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00476}00476\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00477}00477\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 失敗時\ expected\ が最新値に更新されるのでループ継続}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00478}00478\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00479}00479\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00484}\mbox{\hyperlink{class_s_f_w_1_1_level_a029398fed9ae2f15c2a820034022c1a6}{00484}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\ \mbox{\hyperlink{class_s_f_w_1_1_level_a029398fed9ae2f15c2a820034022c1a6}{GetState}}(std::memory\_order\ mo\ =\ std::memory\_order\_acquire)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00485}00485\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\textcolor{keyword}{>}(state.load(mo));}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00486}00486\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00487}00487\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00492}\mbox{\hyperlink{class_s_f_w_1_1_level_ab655fe3a3b1d7f088e56e9449f25a68c}{00492}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_level_ab655fe3a3b1d7f088e56e9449f25a68c}{IsActive}}(std::memory\_order\ mo\ =\ std::memory\_order\_acquire)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00493}00493\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_a82fdc34c030671aaa1a9bfd5a5051bcf}{HasAny}}(\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\textcolor{keyword}{>}(state.load(mo)),\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a4d3d769b812b6faa6b76e1a8abaece2d}{ELevelState::Active}});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00494}00494\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00499}\mbox{\hyperlink{class_s_f_w_1_1_level_a5f059d268722000c42a20faf7adf2c09}{00499}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_level_a5f059d268722000c42a20faf7adf2c09}{IsLoading}}(std::memory\_order\ mo\ =\ std::memory\_order\_acquire)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00500}00500\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_a82fdc34c030671aaa1a9bfd5a5051bcf}{HasAny}}(\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevelState}}\textcolor{keyword}{>}(state.load(mo)),\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a16bfbf9c462762cf1cba4134ec53c504}{ELevelState::Loading}});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00501}00501\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00502}00502\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00507}\mbox{\hyperlink{class_s_f_w_1_1_level_a08aaadaec0651b93df14daca91e16b0b}{00507}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_level_a08aaadaec0651b93df14daca91e16b0b}{SetActive}}(\textcolor{keywordtype}{bool}\ active,}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ std::memory\_order\ mo\ =\ std::memory\_order\_acq\_rel)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00509}00509\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (active)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00510}00510\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//念のためロード済みであることを確認}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00511}00511\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(state.load(std::memory\_order\_acquire)\ \&\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a7381d487d18845b379422325c0a768d6}{ELevelState::Loaded}})\ \&\&\ \textcolor{stringliteral}{"{}Cannot\ set\ level\ active\ when\ it\ is\ not\ loaded."{}});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00512}00512\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state.fetch\_or(\textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a4d3d769b812b6faa6b76e1a8abaece2d}{ELevelState::Active}}),\ mo);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00514}00514\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00515}00515\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state.fetch\_and(\string~\textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a4d3d769b812b6faa6b76e1a8abaece2d}{ELevelState::Active}}),\ mo);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00518}00518\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00519}00519\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00524}\mbox{\hyperlink{class_s_f_w_1_1_level_ac6ad823ef201187a53b833228138ee7e}{00524}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_level_ac6ad823ef201187a53b833228138ee7e}{TryBeginLoading}}(}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ std::memory\_order\ success\ =\ std::memory\_order\_acq\_rel,}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00526}00526\ \ \ \ \ \ \ \ \ \ \ \ \ std::memory\_order\ fail\ =\ std::memory\_order\_acquire}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00527}00527\ \ \ \ \ \ \ \ \ )\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00528}00528\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ expected\ =\ state.load(std::memory\_order\_relaxed);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00529}00529\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (;;)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00531}00531\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ すでに\ Loaded\ /\ Loading\ なら開始できない}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00532}00532\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ \&\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a7381d487d18845b379422325c0a768d6}{ELevelState::Loaded}}))\ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00533}00533\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ \&\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a16bfbf9c462762cf1cba4134ec53c504}{ELevelState::Loading}}))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00534}00534\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00535}00535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ desired\ =\ expected\ |\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a16bfbf9c462762cf1cba4134ec53c504}{ELevelState::Loading}});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00536}00536\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (state.compare\_exchange\_weak(expected,\ desired,\ success,\ fail))\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \textcolor{comment}{//\ Loading\ を立てることに成功}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ compare\_exchange\_weak\ が失敗すると\ expected\ が更新されるので、そのままループ継続}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00541}00541\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00542}00542\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00543}00543\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00548}\mbox{\hyperlink{class_s_f_w_1_1_level_a14f5e74e991ff4c0641c923cad9eaf4d}{00548}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_level_a14f5e74e991ff4c0641c923cad9eaf4d}{TryBeginClean}}(}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00549}00549\ \ \ \ \ \ \ \ \ \ \ \ \ std::memory\_order\ success\ =\ std::memory\_order\_acq\_rel,}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00550}00550\ \ \ \ \ \ \ \ \ \ \ \ \ std::memory\_order\ fail\ =\ std::memory\_order\_acquire}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00551}00551\ \ \ \ \ \ \ \ \ )\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00552}00552\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ expected\ =\ state.load(std::memory\_order\_relaxed);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00553}00553\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00554}00554\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (;;)\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00555}00555\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Loadedではない\ /\ Loading\ なら開始できない}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00556}00556\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(expected\ \&\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a7381d487d18845b379422325c0a768d6}{ELevelState::Loaded}})))\ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00557}00557\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ \&\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a16bfbf9c462762cf1cba4134ec53c504}{ELevelState::Loading}}))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00558}00558\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00559}00559\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ desired\ =\ expected\ |\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a16bfbf9c462762cf1cba4134ec53c504}{ELevelState::Loading}});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00560}00560\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00561}00561\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (state.compare\_exchange\_weak(expected,\ desired,\ success,\ fail))\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00562}00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \textcolor{comment}{//\ Loading\ を立てることに成功}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00563}00563\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00564}00564\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ compare\_exchange\_weak\ が失敗すると\ expected\ が更新されるので、そのままループ継続}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00565}00565\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00566}00566\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00567}00567\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00568}\mbox{\hyperlink{class_s_f_w_1_1_level_aa11adee2de120e6e8083a5aa6e8b3ae2}{00568}}\ \ \ \ \ \ \ \ \ std::optional<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_level_aa11adee2de120e6e8083a5aa6e8b3ae2}{GetChunk}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ location,\ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOutOfBoundsPolicy}}\ policy\ =\ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOutOfBoundsPolicy::ClampToEdge}})\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00569}00569\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ partition.GetChunk(location,\ entityManagerReg,\ this-\/>levelCtx.id,\ policy);}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00570}00570\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00575}\mbox{\hyperlink{class_s_f_w_1_1_level_a1dd68e8dacc69f758fc9bb70200a0494}{00575}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session}{Session}}\ \mbox{\hyperlink{class_s_f_w_1_1_level_a1dd68e8dacc69f758fc9bb70200a0494}{GetSession}}()}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00576}00576\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00577}00577\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session}{Session}}\{\ *\textcolor{keyword}{this},\ this-\/>updateEntityMutex\ \};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00578}00578\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00579}00579\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00580}\mbox{\hyperlink{class_s_f_w_1_1_level_a5bc0fb54b56a15d7ff96e95ca963afcc}{00580}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_level_a5bc0fb54b56a15d7ff96e95ca963afcc}{ShowDebugInactiveLevelInfoUI}}()}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00581}00581\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00582}00582\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00583}00583\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00584}00584\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ g\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48}{Debug::BeginTreeWrite}}();\ \textcolor{comment}{//\ lock\ \&\ back\ buffer}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00585}00585\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ frame\ =\ g.data();}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00586}00586\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00587}00587\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 例えばプリオーダ＋depth\ 指定で平坦化したツリーを詰める}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00588}00588\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a04b592d815dcee98bfcf032e71dc71da}{Debug::WorldTreeDepth::TREEDEPTH\_LEVEL}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{false},\ \textcolor{stringliteral}{"{}Level(Inactive)\ :\ "{}}\ +\ name\ \});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00589}00589\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{Debug::WorldTreeDepth::TREEDEPTH\_LEVELNODE}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{true},\ \textcolor{stringliteral}{"{}Id\ :\ "{}}\ +\ std::to\_string(levelCtx.id)\ \});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00590}00590\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{Debug::WorldTreeDepth::TREEDEPTH\_LEVELNODE}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{true},\ \textcolor{stringliteral}{"{}Partition\ :\ "{}}\ +\ std::string(\textcolor{keyword}{typeid}(Partition).name()).substr(6)\ \});}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00591}00591\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ guard\ のデストラクトで\ unlock。swap\ は\ UI\ スレッドで。}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00592}00592\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00593}00593\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00594}00594\ }
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00595}00595\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00596}00596\ \ \ \ \ \ \ \ \ \textcolor{comment}{//レベルのコンテキスト}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00597}00597\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_level_context}{LevelContext<Partition>}}\ levelCtx;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00598}00598\ \ \ \ \ \ \ \ \ \textcolor{comment}{//レベルの名前}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00599}00599\ \ \ \ \ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00600}00600\ \ \ \ \ \ \ \ \ \textcolor{comment}{//レベルの状態(仕様上・実装上ともに最も手厚く最適化される対象のuint32\_tで持つ)}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00601}00601\ \ \ \ \ \ \ \ \ std::atomic<uint32\_t>\ state;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00602}00602\ \ \ \ \ \ \ \ \ \textcolor{comment}{//スケジューラ}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00603}00603\ \ \ \ \ \ \ \ \ SchedulerType\ scheduler;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00604}00604\ \ \ \ \ \ \ \ \ \textcolor{comment}{//限定的な場合に更新するシステムのリスト}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00605}00605\ \ \ \ \ \ \ \ \ std::vector<std::unique\_ptr<SystemType>>\ limitedSystems;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00606}00606\ \ \ \ \ \ \ \ \ \textcolor{comment}{//分割クラスのインスタンス}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00607}00607\ \ \ \ \ \ \ \ \ Partition\ partition;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00608}00608\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Entityを変更する際}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00609}00609\ \ \ \ \ \ \ \ \ std::shared\_mutex\ updateEntityMutex;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00610}00610\ \ \ \ \ \ \ \ \ \textcolor{comment}{//EntityManagerRegistryの参照}}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00611}00611\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\&\ entityManagerReg;}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00612}00612\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_level_8hpp_source_l00613}00613\ \}}
+
+\end{DoxyCode}

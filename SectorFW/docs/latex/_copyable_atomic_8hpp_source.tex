@@ -1,0 +1,41 @@
+\doxysection{Copyable\+Atomic.\+hpp}
+\hypertarget{_copyable_atomic_8hpp_source}{}\label{_copyable_atomic_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/CopyableAtomic.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/CopyableAtomic.hpp}}
+\mbox{\hyperlink{_copyable_atomic_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00012}00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00013}00013\ \{}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00017}00017\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00018}\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{00018}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a351be247334ebd719ba0d2613d833c92}{CopyableAtomic}}\ \{}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00019}\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_af4045847582f5e0c161061f32b44f060}{00019}}\ \ \ \ \ \ \ \ \ std::atomic<T>\ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_af4045847582f5e0c161061f32b44f060}{value}};}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00024}\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a351be247334ebd719ba0d2613d833c92}{00024}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a351be247334ebd719ba0d2613d833c92}{CopyableAtomic}}()\ noexcept\ =\ default;}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00029}\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a3edfb6fbf365b4017469919bca5da3f8}{00029}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a351be247334ebd719ba0d2613d833c92}{CopyableAtomic}}(T\ v)\ noexcept\ :\ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_af4045847582f5e0c161061f32b44f060}{value}}(v)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00036}\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a629b8c97b869982f2216114bf190985b}{00036}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a629b8c97b869982f2216114bf190985b}{CopyableAtomic}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a351be247334ebd719ba0d2613d833c92}{CopyableAtomic}}\&\ other)\ noexcept\ :\ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_af4045847582f5e0c161061f32b44f060}{value}}(other.load(std::memory\_order\_acquire))\ \{\}}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00037}\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a141fef1b4c5c9921c6b9025f62a7c6d4}{00037}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a351be247334ebd719ba0d2613d833c92}{CopyableAtomic}}\&\ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a141fef1b4c5c9921c6b9025f62a7c6d4}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a351be247334ebd719ba0d2613d833c92}{CopyableAtomic}}\&\ other)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_af4045847582f5e0c161061f32b44f060}{value}}.store(other.load(std::memory\_order\_acquire),\ std::memory\_order\_release);}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00047}\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_af074ab5d8afcb3fbfb655b609a78e747}{00047}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ T\ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_af074ab5d8afcb3fbfb655b609a78e747}{load}}(std::memory\_order\ order\ =\ std::memory\_order\_seq\_cst)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_af4045847582f5e0c161061f32b44f060}{value}}.load(order);}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00055}\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a50573d79a69eafaf28b63997abfd0a20}{00055}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a50573d79a69eafaf28b63997abfd0a20}{store}}(T\ v,\ std::memory\_order\ order\ =\ std::memory\_order\_seq\_cst)\ \{}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_af4045847582f5e0c161061f32b44f060}{value}}.store(v,\ order);}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00064}\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_ac542b8627e82698556ab3be9e8c9000c}{00064}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ T\ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_ac542b8627e82698556ab3be9e8c9000c}{fetch\_add}}(T\ arg,\ std::memory\_order\ order\ =\ std::memory\_order\_seq\_cst)\ \{}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_af4045847582f5e0c161061f32b44f060}{value}}.fetch\_add(arg,\ order);}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00073}\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a9056e7a3cb03985b536c342fdde8ddd1}{00073}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ T\ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a9056e7a3cb03985b536c342fdde8ddd1}{fetch\_sub}}(T\ arg,\ std::memory\_order\ order\ =\ std::memory\_order\_seq\_cst)\ \{}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_af4045847582f5e0c161061f32b44f060}{value}}.fetch\_sub(arg,\ order);}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00076}00076\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_copyable_atomic_8hpp_source_l00077}00077\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,416 @@
+\doxysection{Render\+Graph.\+hpp}
+\hypertarget{_render_graph_8hpp_source}{}\label{_render_graph_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderGraph.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderGraph.hpp}}
+\mbox{\hyperlink{_render_graph_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <span>}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <bit>}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_render_pass_8hpp}{RenderPass.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_render_queue_8h}{RenderQueue.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_render_service_8h}{RenderService.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00018}00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_im_gui_layer_8h}{../Debug/ImGuiLayer.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00019}00019\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00020}00020\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_u_i_bus_8h}{../Debug/UIBus.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00021}00021\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00023}\mbox{\hyperlink{_render_graph_8hpp_aa676f4ad480964a90f23ff3914e9eae8}{00023}}\ \textcolor{preprocessor}{\#define\ NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00025}00025\ \textcolor{preprocessor}{\#ifndef\ NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00026}00026\ \textcolor{preprocessor}{\#include\ <memory\_resource>}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00027}00027\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00028}00028\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00030}00030\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00031}00031\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00032}00032\ \ \ \ \ \textcolor{keyword}{namespace\ }Graphics}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00033}00033\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Backend,\ Po\textcolor{keywordtype}{int}erType\ RTV,\ Po\textcolor{keywordtype}{int}erType\ DSV,\ Po\textcolor{keywordtype}{int}erType\ SRV,\ Po\textcolor{keywordtype}{int}erType\ Buffer,\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }ViewHandle>}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00038}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{00038}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_aa75f37d513a78ddaae73aa803a459ca9}{RenderGraph}}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00040}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71}{00040}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71}{PassType}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{RenderPass<RTV,\ DSV,\ SRV,\ Buffer,\ ViewHandle<std::remove\_pointer\_t<RTV>}}>,\ ViewHandle<std::remove\_pointer\_t<DSV>>>;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00041}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_ad85976b25f485815738e875d35d2f9b7}{00041}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint16\_t\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_ad85976b25f485815738e875d35d2f9b7}{kFlights}}\ =\ RENDER\_BUFFER\_COUNT;\ \textcolor{comment}{//\ フレームインフライト数}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00043}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group}{00043}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group}{PassGroup}}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00044}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group_a18bf92250562ed808eb7ddcce555c073}{00044}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group_a18bf92250562ed808eb7ddcce555c073}{name}};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00045}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group_ae3cc9569d53aa96fe639b1f3623393b7}{00045}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{RenderQueue}}*\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group_ae3cc9569d53aa96fe639b1f3623393b7}{queue}}\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ グループ内共通キュー}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00046}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group_ad6e3b0ff1a6f0d38d1a1cbb468ce1264}{00046}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<PassType*>\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group_ad6e3b0ff1a6f0d38d1a1cbb468ce1264}{passes}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ このグループに属するパス}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00049}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node}{00049}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node}{PassNode}}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00050}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node_ac4a1a65245513efc81890749b9f03b20}{00050}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node_ac4a1a65245513efc81890749b9f03b20}{groupIndex}};\ \ \textcolor{comment}{//\ GroupA\ or\ GroupB\ …}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00051}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node_adc714530e293035cbfad97a653861142}{00051}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node_adc714530e293035cbfad97a653861142}{passIndex}};\ \ \ \textcolor{comment}{//\ そのグループ内の何番目のPassか}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00054}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range}{00054}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range}{PassViewRange}}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00055}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range_a494038faee2ed9b689b05535704498e7}{00055}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range_a494038faee2ed9b689b05535704498e7}{offset}};\ \textcolor{comment}{//\ indices[]\ の何番目から}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00056}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range_a7fbc3edcce343bbb42c9f87e7b98e472}{00056}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range_a7fbc3edcce343bbb42c9f87e7b98e472}{count}};\ \ \textcolor{comment}{//\ 何個分}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00059}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state}{00059}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state}{GroupState}}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00060}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state_a3dca62c722646e7c97c7306980d3b734}{00060}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<DrawCommand>\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state_a3dca62c722646e7c97c7306980d3b734}{cmds}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Submit結果}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00061}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state_aee3a7d1b25001005c39f3da99988cc85}{00061}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state_aee3a7d1b25001005c39f3da99988cc85}{indices}};\ \ \ \ \ \ \ \textcolor{comment}{//\ 全パス共通の\ index\ バッファ}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00062}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state_abd8a747e4f9f117fbf726e4db7fe1c50}{00062}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<PassViewRange>\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state_abd8a747e4f9f117fbf726e4db7fe1c50}{ranges}};\ \ \ \ \ \ \textcolor{comment}{//\ [pass]\ →\ (offset,count)}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00070}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_aa75f37d513a78ddaae73aa803a459ca9}{00070}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_aa75f37d513a78ddaae73aa803a459ca9}{RenderGraph}}(Backend\&\ backend,\ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aad14d2e80e921b0442903b65576ce417}{MOC}}*\ moc)\ :\ backend(backend),\ renderService(moc)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ レンダーバックエンドでRenderServiceにリソースマネージャーを登録}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ backend.AddResourceManagerToRenderService(*\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sharedInstanceArena\ =\ std::make\_unique<SharedInstanceArena>();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00081}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a7cc982da686fd4351bbb99f23b712a02}{00081}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a7cc982da686fd4351bbb99f23b712a02}{AddPass}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc}{RenderPassDesc<RTV,\ DSV,\ ViewHandle>}}\&\ desc)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lock(*renderService.queueMutex);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ renderService.renderQueues.emplace\_back(std::make\_unique<RenderQueue>(renderService.produceSlot,\ sharedInstanceArena.get(),\ MAX\_INSTANCES\_PER\_FRAME));}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ renderService.queueIndex[desc.name]\ =\ renderService.renderQueues.size()\ -\/\ 1;\ \textcolor{comment}{//\ レンダーサービスにキューを登録}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ passes.push\_back(std::make\_unique<PassType>(}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.name,}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_aa4da0da947db8cd9f24fbd7ef1cc8a5b}{rtvs}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_a441b5d86c1e3a1f58596297b4d7ec01b}{dsv}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ renderService.renderQueues.back().get(),}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_aa4e1ec9a73b7bc8096a42f1ea1748829}{topology}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_a08ea13d65f6dbdba538d8a251c50eb59}{rasterizerState}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_aa74bd625e609527f86ee855cf63a8fb6}{blendState}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_a5dd0fea1147b08460b0cebfa7c9fb3a1}{depthStencilState}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_a8dfeee5f449c034bb0f6291c8b2570e1}{cbvs}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_ab7e2c44d43ed97c8cd7c89bc11fb21fa}{viewport}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_a63719e578454948e3fe0faa38bb29923}{psoOverride}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_a337702aa0f574f8c0e4d581564af6edb}{customExecute}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_a5a961ec6de8feb44b4332c36b08757a4}{stencilRef}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_aa6101485c95fb4aa9883cce1b026c827}{rebindPSO}}));}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00103}00103\ \textcolor{preprocessor}{\#ifndef\ NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ パスごとのランタイムを初期化（常駐アリーナを作っておく）}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PassRuntime\ rt\{\};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rt.name\ =\ desc.name;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rt.hint\ =\ std::max<size\_t>(128\ *\ 1024,\ desc.maxInstancesPerFrame\ *\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{DrawCommand}})\ /\ 2);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_ad85976b25f485815738e875d35d2f9b7}{kFlights}};\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rt.perFlight[i].init(rt.hint);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ runtimes.emplace\_back(std::move(rt));}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00112}00112\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00115}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_ac3e2f1ccdb0f8ced9c5030006581c36c}{00115}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group}{PassGroup}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_ac3e2f1ccdb0f8ced9c5030006581c36c}{AddPassGroup}}(\textcolor{keyword}{const}\ std::string\&\ name,\ uint32\_t\ maxInstancesPerFrame\ =\ MAX\_INSTANCES\_PER\_FRAME)}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ このグループ専用の\ RenderQueue\ を1本作る}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ renderService.renderQueues.push\_back(}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::make\_unique<RenderQueue>(renderService.produceSlot,\ sharedInstanceArena.get(),\ maxInstancesPerFrame)}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ renderService.queueIndex[name]\ =\ renderService.renderQueues.size()\ -\/\ 1;\ \textcolor{comment}{//\ レンダーサービスにキューを登録}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ rq\ =\ renderService.renderQueues.back().get();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ groups.push\_back(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group}{PassGroup}}\{\ name,\ rq,\ \{\}\ \});}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ groups\ と\ groupStates\ を同じサイズに揃える}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ groupStates.resize(groups.size());}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ groups.back();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00133}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_af0c5eb2e8ea1c1d6daa8062a3b3a254f}{00133}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71}{PassType}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_af0c5eb2e8ea1c1d6daa8062a3b3a254f}{AddPassToGroup}}(}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group}{PassGroup}}\&\ group,}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc}{RenderPassDesc<RTV,\ DSV,\ ViewHandle>}}\&\ desc,}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ viewBit\ \ \ \ \ \ \ \textcolor{comment}{//\ このパス用のビット}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ )\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ passes.push\_back(std::make\_unique<PassType>(}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_aa4da0da947db8cd9f24fbd7ef1cc8a5b}{rtvs}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_a441b5d86c1e3a1f58596297b4d7ec01b}{dsv}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ group.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group_ae3cc9569d53aa96fe639b1f3623393b7}{queue}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 同じキューを共有}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_aa4e1ec9a73b7bc8096a42f1ea1748829}{topology}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_a08ea13d65f6dbdba538d8a251c50eb59}{rasterizerState}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_aa74bd625e609527f86ee855cf63a8fb6}{blendState}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_a5dd0fea1147b08460b0cebfa7c9fb3a1}{depthStencilState}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_a8dfeee5f449c034bb0f6291c8b2570e1}{cbvs}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_ab7e2c44d43ed97c8cd7c89bc11fb21fa}{viewport}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_a63719e578454948e3fe0faa38bb29923}{psoOverride}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_a337702aa0f574f8c0e4d581564af6edb}{customExecute}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_a5a961ec6de8feb44b4332c36b08757a4}{stencilRef}},}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc_aa6101485c95fb4aa9883cce1b026c827}{rebindPSO}}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ));}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ pass\ =\ passes.back().get();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pass-\/>\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a5429763c713592670fe6edf8a6c69715}{viewBit}}\ =\ viewBit;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ group.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group_ad6e3b0ff1a6f0d38d1a1cbb468ce1264}{passes}}.push\_back(pass);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *pass;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00160}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a0c56827b2149d7a62b94fadb2073446d}{00160}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a0c56827b2149d7a62b94fadb2073446d}{SetExecutionOrder}}(\textcolor{keyword}{const}\ std::vector<PassNode>\&\ order)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ executionOrder\ =\ order;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00169}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a135085aff88dbf83b333a5e741e0fc73}{00169}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71}{PassType}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a135085aff88dbf83b333a5e741e0fc73}{GetPass}}(\textcolor{keyword}{const}\ std::string\&\ name)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ p\ :\ passes)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (p-\/>name\ ==\ name)\ \textcolor{keywordflow}{return}\ p;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Pass\ not\ found"{}});}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *passes[0];}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00176}00176\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00177}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a45e05bf02408f81c03250d1fc0d7a8d2}{00177}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a45e05bf02408f81c03250d1fc0d7a8d2}{BindPassGlobalResources}}(\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71}{PassType}}*\ pass)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ パス固有の状態をセット}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ backend.SetPrimitiveTopology(pass-\/>\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a1b67fed9a132286fef9f2a24c21b95ff}{topology}});}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ useRasterizer\ =\ pass-\/>\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a20815f81fef10938bda59d02be2155fb}{rasterizerState}}.has\_value();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (useRasterizer)}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ backend.SetRasterizerState(*pass-\/>\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a20815f81fef10938bda59d02be2155fb}{rasterizerState}});}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ backend.SetBlendState(pass-\/>\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a53150a7b023c7d13c3edaf0802a5ce49}{blendState}});}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ backend.SetDepthStencilState(pass-\/>\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a87a271bd168f0a7d1663b1a56adc6da8}{depthStencilState}},\ pass-\/>\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_ace4a80b961a248703b2c3e7cc3604d13}{stencilRef}});}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ backend.SetRenderTargets(pass-\/>\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a948b36a2cd5ca54c441133e77f9f9fb8}{rtvsRaw}},\ pass-\/>\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_adccbaad3202fe5753b43921ac34949f9}{dsv}}.Get());}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pass-\/>\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a58ab7d38020c80e419ecc233cd23e02f}{cbvs}}.has\_value())}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ backend.BindGlobalVSCBVs(pass-\/>\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a58ab7d38020c80e419ecc233cd23e02f}{cbvs}}.value());}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pass-\/>\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a022e9ff65b42c9b902124236c2de27a7}{viewport}}.has\_value())}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ backend.SetViewport(pass-\/>\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a022e9ff65b42c9b902124236c2de27a7}{viewport}}.value());}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ useRasterizer;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00199}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_ac5b415af330779d96eb574721a1e58d3}{00199}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_ac5b415af330779d96eb574721a1e58d3}{Execute}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//フレームのインクリメントとリソースの破棄処理}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ backend.ProcessDeferredDeletes(++currentFrame);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00202}00202\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00203}00203\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ g\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48}{Debug::BeginTreeWrite}}();\ \textcolor{comment}{//\ lock\ \&\ back\ buffer}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ frame\ =\ g.data();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 例えばプリオーダ＋depth\ 指定で平坦化したツリーを詰める}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a51a97141f1708d6abe7f1503a50d1390}{Debug::WorldTreeDepth::TREEDEPTH\_RENDERGRAPH}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{false},\ \textcolor{stringliteral}{"{}RenderGraph"{}}\ \});}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ guard\ のデストラクトで\ unlock。swap\ は\ UI\ スレッドで。}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00211}00211\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ prevSlot\ =\ consumeSlot.exchange((consumeSlot.load(std::memory\_order\_relaxed)\ +\ 1)\ \%\ RENDER\_BUFFER\_COUNT,\ std::memory\_order\_acq\_rel);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00214}00214\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ backend.BeginFrameUpload(sharedInstanceArena-\/>Data(prevSlot),\ sharedInstanceArena-\/>Size(prevSlot));}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sharedInstanceArena-\/>ResetSlot(prevSlot);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ renderService.CallPreDrawCustomFunc(prevSlot);\ \textcolor{comment}{//\ カスタム関数の更新}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00219}00219\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ グループごとに\ Submit\ して\ cmds\ を埋める}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ gi\ =\ 0;\ gi\ <\ groups.size();\ ++gi)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ g\ =\ groups[gi];}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ gs\ =\ groupStates[gi];}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 中身だけ消す。capacity\ は保持される。}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gs.cmds.clear();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gs.indices.clear();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gs.ranges.clear();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00229}00229\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ g.queue-\/>Submit(prevSlot,\ gs.cmds);\ \ \ \textcolor{comment}{//\ ここで1回だけ取り出す}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00231}00231\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00232}00232\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ guard\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48}{Debug::BeginTreeWrite}}();\ \textcolor{comment}{//\ lock\ \&\ back\ buffer}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ frame\ =\ guard.data();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 例えばプリオーダ＋depth\ 指定で平坦化したツリーを詰める}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a4e911bdeaf47d5d831614e65d4ce4b0c}{Debug::WorldTreeDepth::TREEDEPTH\_GROUP}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{false},\ \textcolor{stringliteral}{"{}Group\ :\ "{}}\ +\ g.name\ \});}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a31d454798115b8615b2e41760c95a52a}{Debug::WorldTreeDepth::TREEDEPTH\_DRAWCOMMAND}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{true},\ \textcolor{stringliteral}{"{}DrawCommand\ :\ "{}}\ +\ std::to\_string(gs.cmds.size())\ \});}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ guard\ のデストラクトで\ unlock。swap\ は\ UI\ スレッドで。}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00241}00241\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00242}00242\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ passCount\ =\ g.passes.size();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gs.ranges.resize(passCount);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00245}00245\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (gs.cmds.empty()\ ||\ passCount\ ==\ 0)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00247}00247\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ 1st\ pass:\ 各パスがいくつ\ index\ を持つかカウント\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\ counts(passCount,\ 0);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00250}00250\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ ci\ =\ 0;\ ci\ <\ (uint32\_t)gs.cmds.size();\ ++ci)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ m\ =\ gs.cmds[ci].viewMask;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (m\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ p\ =\ std::countr\_zero(m);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00255}00255\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ \&=\ (m\ -\/\ 1);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 最下位の1ビットを落とす}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00257}00257\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//passIndex\ がそのままbitならこれでOK}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ counts[p]++;\ \ \textcolor{comment}{//\ C++20\ (MSVCなら\ \_tzcnt\_u32\ など)}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00262}00262\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ 2nd:\ prefix-\/sum\ でオフセット決定\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ total\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ p\ =\ 0;\ p\ <\ passCount;\ ++p)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gs.ranges[p].offset\ =\ total;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gs.ranges[p].count\ =\ counts[p];}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\ +=\ counts[p];}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00270}00270\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gs.indices.resize(total);\ \ \ \ \ \ \ \textcolor{comment}{//\ ここだけ\ 1回の確保}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00272}00272\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カーソル（書き込み位置）}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\ cursor(passCount);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ p\ =\ 0;\ p\ <\ passCount;\ ++p)}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cursor[p]\ =\ gs.ranges[p].offset;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00277}00277\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ 3rd:\ 実際に\ index\ を突っ込む\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ ci\ =\ 0;\ ci\ <\ (uint32\_t)gs.cmds.size();\ ++ci)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ m\ =\ gs.cmds[ci].viewMask;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (m\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ p\ =\ std::countr\_zero(m);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00283}00283\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\ \&=\ (m\ -\/\ 1);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 最下位の1ビットを落とす}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00285}00285\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gs.indices[cursor[p]++]\ =\ ci;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00290}00290\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ node\ :\ executionOrder)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ g\ =\ groups[node.groupIndex];}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ gs\ =\ groupStates[node.groupIndex];}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00294}00294\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ pass\ =\ g.passes[node.passIndex];}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ r\ =\ gs.ranges[node.passIndex];}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00297}00297\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (r.count\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!pass-\/>customExecute.empty())\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a45e05bf02408f81c03250d1fc0d7a8d2}{BindPassGlobalResources}}(pass);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00301}00301\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ func\ :\ pass-\/>customExecute)}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ func(currentFrame);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00305}00305\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00308}00308\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ useRasterizer\ =\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a45e05bf02408f81c03250d1fc0d7a8d2}{BindPassGlobalResources}}(pass);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00310}00310\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ このパス用の\ indexView}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ idxBegin\ =\ gs.indices.data()\ +\ r.offset;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ idxEnd\ =\ idxBegin\ +\ r.count;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00314}00314\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 共通cmds\ +\ このパスの\ indexビューで描画}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ backend.ExecuteDrawIndexedInstanced(gs.cmds,\ std::span<const\ uint32\_t>(idxBegin,\ idxEnd),\ pass-\/>psoOverride,\ !useRasterizer,\ pass-\/>rebindPSO);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00317}00317\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ func\ :\ pass-\/>customExecute)}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ func(currentFrame);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00326}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a8aacb6652a3489b24d565a91087de3df}{00326}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service}{RenderService}}*\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a8aacb6652a3489b24d565a91087de3df}{GetRenderService}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&renderService;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ ResourceType>}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00334}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a470b856264b8201db260826dd3e5aba2}{00334}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a470b856264b8201db260826dd3e5aba2}{RegisterResourceManager}}(ResourceType*\ manager)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ renderService.RegisterResourceManager(manager);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00337}00337\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00338}00338\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ Backend\&\ backend;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ std::atomic<uint16\_t>\ consumeSlot\{\ 1\ \};\ \textcolor{comment}{//\ produceの方のスロットが0\ +\ 1から始まるのでため1スタート}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<SharedInstanceArena>\ sharedInstanceArena;\ \textcolor{comment}{//\ フレーム共有インスタンスアリーナ}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00342}00342\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::unique\_ptr<PassType>>\ passes;\ \ \textcolor{comment}{//実体}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<PassGroup>\ groups;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ グループ}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00345}00345\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<PassNode>\ executionOrder;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00347}00347\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<GroupState>\ groupStates;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00349}00349\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ RenderService\ renderService;\ \textcolor{comment}{//\ レンダーサービスのインスタンス}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ currentFrame\ =\ 0;\ \textcolor{comment}{//\ 現在のフレーム番号\ RenderGraphの描画前に更新している}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00352}00352\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00353}00353\ \textcolor{preprocessor}{\#ifndef\ NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }PassRuntime\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }TrackingResource\ :\ std::pmr::memory\_resource\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::pmr::memory\_resource*\ upstream\{\};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ used\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ TrackingResource(std::pmr::memory\_resource*\ up\ =\ std::pmr::get\_default\_resource())\ :\ upstream(up)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ do\_allocate(\textcolor{keywordtype}{size\_t}\ bytes,\ \textcolor{keywordtype}{size\_t}\ align)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ used\ +=\ ((bytes\ +\ align\ -\/\ 1)\ /\ align)\ *\ align;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ upstream-\/>allocate(bytes,\ align);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ do\_deallocate(\textcolor{keywordtype}{void}*\ p,\ \textcolor{keywordtype}{size\_t}\ bytes,\ \textcolor{keywordtype}{size\_t}\ align)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ upstream-\/>deallocate(p,\ bytes,\ align);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ do\_is\_equal(\textcolor{keyword}{const}\ std::pmr::memory\_resource\&\ other)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \textcolor{keyword}{override}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this}\ ==\ \&other;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00371}00371\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ kStackBuf\ =\ 256\ *\ 1024;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }PerFlight\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 初期バッファ（stack\ か\ heap\ のどちらかを使用）}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{alignas}(64)\ std::byte\ stack[kStackBuf]\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<std::byte[]>\ heap\{\};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ heapSize\{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TrackingResource\ tracker\{\ std::pmr::get\_default\_resource()\ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ arena\ は「初期バッファ」を参照する。基本は再構築せず\ release()\ でリセット}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::pmr::monotonic\_buffer\_resource*\ arena\{\ \textcolor{keyword}{nullptr}\ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ cmds\ は\ arena\ 常駐の\ pmr::vector}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::pmr::vector<DrawCommand>\ cmds\{\ std::pmr::get\_default\_resource()\ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00383}00383\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ init(\textcolor{keywordtype}{size\_t}\ hint)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ initialBuf\ =\ stack;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ initialSize\ =\ kStackBuf;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hint\ >\ kStackBuf)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ heapSize\ =\ hint;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ heap\ =\ std::make\_unique<std::byte[]>(heapSize);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ initialBuf\ =\ heap.get();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00391}00391\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ initialSize\ =\ heapSize;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00392}00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ arena\ を配置new（以後は\ release\ でリセット）}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ arenaStorage\ =\ std::make\_unique<std::pmr::monotonic\_buffer\_resource>(initialBuf,\ initialSize,\ \&tracker);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ arena\ =\ arenaStorage.get();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds\ =\ std::pmr::vector<DrawCommand>\{\ arena\ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tracker.used\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00399}00399\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ release()\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tracker.used\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ arena-\/>release();\ \textcolor{comment}{//\ 実メモリは保持。次の\ allocate\ はO(1)}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds.clear();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00404}00404\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00405}00405\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00406}00406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ maybe\_grow(\textcolor{keywordtype}{size\_t}\ newHint)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (newHint\ <=\ kStackBuf\ ||\ newHint\ <=\ heapSize)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ heapSize\ =\ newHint;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ heap\ =\ std::make\_unique<std::byte[]>(heapSize);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00410}00410\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ arena\ を作り直す（成長時だけ・まれ）}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ arenaStorage\ =\ std::make\_unique<std::pmr::monotonic\_buffer\_resource>(heap.get(),\ heapSize,\ \&tracker);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00412}00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ arena\ =\ arenaStorage.get();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds\ =\ std::pmr::vector<DrawCommand>\{\ arena\ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tracker.used\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00416}00416\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<std::pmr::monotonic\_buffer\_resource>\ arenaStorage\{\};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00419}00419\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00421}00421\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ hint\{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<PerFlight>\ perFlight\ =\ std::vector<PerFlight>(kFlights);}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00423}00423\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ needs\_grow()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ kFlights;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 直近\ used\ が\ hint\ に近い\ or\ 超えたフライトがあるなら拡張候補}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00427}00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (perFlight[i].tracker.used\ >\ hint)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00430}00430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00431}00431\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00432}00432\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<PassRuntime>\ runtimes;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00434}00434\ }
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ PassRuntime*\ getRuntime(\textcolor{keyword}{const}\ std::string\&\ name)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ r\ :\ runtimes)\ \textcolor{keywordflow}{if}\ (r.name\ ==\ name)\ \textcolor{keywordflow}{return}\ \&r;}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}runtime\ not\ found"{}});}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00438}00438\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&runtimes.front();}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00440}00440\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00441}00441\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00442}00442\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_graph_8hpp_source_l00443}00443\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,242 @@
+\doxysection{SFW\+::Graphics\+::DX11\+::Block\+Reserved\+Context\+::Shadow\+Depth\+Params 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params}{}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+
+
+{\ttfamily \#include $<$DX11\+Block\+Revert\+Helper.\+h$>$}
+
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+UINT \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a8a45a17480552ada3b473d1299738f0f}{cascade\+Count}} = \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{k\+Max\+Shadow\+Cascades}}
+\item 
+UINT \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a3aef01da024f94b12ba2a6c8fcf94904}{lod\+Levels}} = 5
+\item 
+ID3\+D11\+Depth\+Stencil\+View \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a22146211d85cbc732f0671e608d2444b}{main\+DSV}} = nullptr
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a2e04d018dc51105c8a26c7a7e2028c10}{main\+View\+Proj}}
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a90a7298c84045fa565ca8088fd5c31d0}{main\+Frustum\+Planes}} \mbox{[}6\mbox{]}\mbox{[}4\mbox{]}
+\item 
+ID3\+D11\+Depth\+Stencil\+View \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_ad3c313fe7485e09558092a7b2bee2f0f}{cascade\+DSV}} \mbox{[}\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{k\+Max\+Shadow\+Cascades}}\mbox{]} = \{\}
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_abad03e07b7ddae1e4f144a9d674cbae9}{light\+View\+Proj}} \mbox{[}\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{k\+Max\+Shadow\+Cascades}}\mbox{]}\mbox{[}16\mbox{]}
+\item 
+std\+::array$<$ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}}, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{k\+Max\+Shadow\+Cascades}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a217372a1f76aa9af5372998b5679252a}{cascade\+Frustum\+Planes}}
+\item 
+UINT \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_ab904b6132540875c20031e7408a36bfa}{screenW}} = 0
+\item 
+UINT \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_acff796ad51671fda66f45cf0eb8caff5}{screenH}} = 0
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a9f7aab1d4cc05c847caf7c869f0f78fc}{lod\+T0px}} = 400.f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a91b1fbefdf6efc5547fd8174ab903b78}{lod\+T1px}} = 160.f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_aaf474a97734cfc607f3c0f13d2cb0d71}{lod\+T2px}} = 80.f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_abe56030ec36024dd6f555825c4178212}{lod\+T3px}} = 40.f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_afcb834ee6c07639f47480c5012dcc49d}{shadow\+Lod\+T0px}} = 800.f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a54746bf202c5058d0e5a5ee88e2e6d04}{shadow\+Lod\+T1px}} = 320.f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a0ca169df18cd55df4dfd6072ed4715ad}{shadow\+Lod\+T2px}} = 160.f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a7004b77ef0a52290d6f4ed334cd9aa93}{shadow\+Lod\+T3px}} = 80.f
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00511}{511}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a8a45a17480552ada3b473d1299738f0f}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!cascadeCount@{cascadeCount}}
+\index{cascadeCount@{cascadeCount}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{cascadeCount}{cascadeCount}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a8a45a17480552ada3b473d1299738f0f} 
+UINT SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::cascade\+Count = \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{k\+Max\+Shadow\+Cascades}}}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00514}{514}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_ad3c313fe7485e09558092a7b2bee2f0f}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!cascadeDSV@{cascadeDSV}}
+\index{cascadeDSV@{cascadeDSV}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{cascadeDSV}{cascadeDSV}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_ad3c313fe7485e09558092a7b2bee2f0f} 
+ID3\+D11\+Depth\+Stencil\+View\texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::cascade\+DSV\mbox{[}\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{k\+Max\+Shadow\+Cascades}}\mbox{]} = \{\}}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00523}{523}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a217372a1f76aa9af5372998b5679252a}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!cascadeFrustumPlanes@{cascadeFrustumPlanes}}
+\index{cascadeFrustumPlanes@{cascadeFrustumPlanes}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{cascadeFrustumPlanes}{cascadeFrustumPlanes}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a217372a1f76aa9af5372998b5679252a} 
+std\+::array$<$\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}}, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{k\+Max\+Shadow\+Cascades}}$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::cascade\+Frustum\+Planes}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00526}{526}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_abad03e07b7ddae1e4f144a9d674cbae9}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!lightViewProj@{lightViewProj}}
+\index{lightViewProj@{lightViewProj}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{lightViewProj}{lightViewProj}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_abad03e07b7ddae1e4f144a9d674cbae9} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::light\+View\+Proj\mbox{[}\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{k\+Max\+Shadow\+Cascades}}\mbox{]}\mbox{[}16\mbox{]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00525}{525}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a3aef01da024f94b12ba2a6c8fcf94904}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!lodLevels@{lodLevels}}
+\index{lodLevels@{lodLevels}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{lodLevels}{lodLevels}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a3aef01da024f94b12ba2a6c8fcf94904} 
+UINT SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::lod\+Levels = 5}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00515}{515}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a9f7aab1d4cc05c847caf7c869f0f78fc}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!lodT0px@{lodT0px}}
+\index{lodT0px@{lodT0px}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{lodT0px}{lodT0px}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a9f7aab1d4cc05c847caf7c869f0f78fc} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::lod\+T0px = 400.f}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00533}{533}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a91b1fbefdf6efc5547fd8174ab903b78}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!lodT1px@{lodT1px}}
+\index{lodT1px@{lodT1px}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{lodT1px}{lodT1px}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a91b1fbefdf6efc5547fd8174ab903b78} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::lod\+T1px = 160.f}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00534}{534}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_aaf474a97734cfc607f3c0f13d2cb0d71}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!lodT2px@{lodT2px}}
+\index{lodT2px@{lodT2px}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{lodT2px}{lodT2px}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_aaf474a97734cfc607f3c0f13d2cb0d71} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::lod\+T2px = 80.f}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00535}{535}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_abe56030ec36024dd6f555825c4178212}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!lodT3px@{lodT3px}}
+\index{lodT3px@{lodT3px}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{lodT3px}{lodT3px}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_abe56030ec36024dd6f555825c4178212} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::lod\+T3px = 40.f}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00536}{536}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a22146211d85cbc732f0671e608d2444b}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!mainDSV@{mainDSV}}
+\index{mainDSV@{mainDSV}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{mainDSV}{mainDSV}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a22146211d85cbc732f0671e608d2444b} 
+ID3\+D11\+Depth\+Stencil\+View\texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::main\+DSV = nullptr}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00518}{518}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a90a7298c84045fa565ca8088fd5c31d0}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!mainFrustumPlanes@{mainFrustumPlanes}}
+\index{mainFrustumPlanes@{mainFrustumPlanes}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{mainFrustumPlanes}{mainFrustumPlanes}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a90a7298c84045fa565ca8088fd5c31d0} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::main\+Frustum\+Planes\mbox{[}6\mbox{]}\mbox{[}4\mbox{]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00521}{521}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a2e04d018dc51105c8a26c7a7e2028c10}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!mainViewProj@{mainViewProj}}
+\index{mainViewProj@{mainViewProj}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{mainViewProj}{mainViewProj}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a2e04d018dc51105c8a26c7a7e2028c10} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::main\+View\+Proj}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00520}{520}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_acff796ad51671fda66f45cf0eb8caff5}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!screenH@{screenH}}
+\index{screenH@{screenH}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{screenH}{screenH}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_acff796ad51671fda66f45cf0eb8caff5} 
+UINT SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::screenH = 0}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00530}{530}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_ab904b6132540875c20031e7408a36bfa}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!screenW@{screenW}}
+\index{screenW@{screenW}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{screenW}{screenW}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_ab904b6132540875c20031e7408a36bfa} 
+UINT SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::screenW = 0}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00529}{529}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_afcb834ee6c07639f47480c5012dcc49d}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!shadowLodT0px@{shadowLodT0px}}
+\index{shadowLodT0px@{shadowLodT0px}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{shadowLodT0px}{shadowLodT0px}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_afcb834ee6c07639f47480c5012dcc49d} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::shadow\+Lod\+T0px = 800.f}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00538}{538}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a54746bf202c5058d0e5a5ee88e2e6d04}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!shadowLodT1px@{shadowLodT1px}}
+\index{shadowLodT1px@{shadowLodT1px}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{shadowLodT1px}{shadowLodT1px}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a54746bf202c5058d0e5a5ee88e2e6d04} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::shadow\+Lod\+T1px = 320.f}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00539}{539}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a0ca169df18cd55df4dfd6072ed4715ad}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!shadowLodT2px@{shadowLodT2px}}
+\index{shadowLodT2px@{shadowLodT2px}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{shadowLodT2px}{shadowLodT2px}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a0ca169df18cd55df4dfd6072ed4715ad} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::shadow\+Lod\+T2px = 160.f}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00540}{540}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a7004b77ef0a52290d6f4ed334cd9aa93}\index{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}!shadowLodT3px@{shadowLodT3px}}
+\index{shadowLodT3px@{shadowLodT3px}!SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams@{SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams}}
+\doxysubsubsection{\texorpdfstring{shadowLodT3px}{shadowLodT3px}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params_a7004b77ef0a52290d6f4ed334cd9aa93} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params\+::shadow\+Lod\+T3px = 80.f}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00541}{541}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\mbox{\hyperlink{_d_x11_block_revert_helper_8h}{DX11\+Block\+Revert\+Helper.\+h}}\end{DoxyCompactItemize}

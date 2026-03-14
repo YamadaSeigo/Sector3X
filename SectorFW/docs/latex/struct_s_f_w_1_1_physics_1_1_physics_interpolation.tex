@@ -1,0 +1,325 @@
+\doxysection{SFW\+::Physics\+::Physics\+Interpolation 構造体}
+\hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation}{}\label{struct_s_f_w_1_1_physics_1_1_physics_interpolation}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+
+
+物理補間コンポーネント  
+
+
+
+
+{\ttfamily \#include $<$Physics\+Component.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a5ca30fec75d80787bc26e55024d59eb5}{Physics\+Interpolation}} ()
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_aee09727038c2d52491cfa80d7425cabe}{Physics\+Interpolation}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} pos, \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a1fdfe70e25b6445560f443d0e054477d}{Quatf}} rot)
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_af3ba90741a7c19617ac64c4beb4b0bbd}{Physics\+Interpolation}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} ppos, \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} cpos, \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a1fdfe70e25b6445560f443d0e054477d}{Quatf}} prot, \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a1fdfe70e25b6445560f443d0e054477d}{Quatf}} crot)
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a39e54a38ce4e6be4266c3c1bf7bc7bce}{Physics\+Interpolation}} (float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a6ca08c258e0c24595fc35cb3cae4b715}{ppx}}, float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a40b3cea78d24095bc1a9e951200a8d11}{ppy}}, float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a2764f0c28926aec20ba74a34210f7540}{ppz}}, float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a0db78c16169f7f7d3126b0fa92918068}{cpx}}, float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a776ad867404b03b60f49a1343f42257e}{cpy}}, float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a75ad6d9e55e3d96379822d774c200e98}{cpz}}, float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a0e0da9aedc2371530b5501fb38ba309e}{prx}}, float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_af7d98e109d1e3b4aecc970420a5591cf}{pry}}, float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a9bc511c967c2388cbd1a664ef02a2bc3}{prz}}, float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a77740e1fe9c6f0a3e4197394a9e6e80f}{prw}}, float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a27de5a57c3c6ac92e37502697141a370}{crx}}, float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_adb1b34f16e0262a02a2b705dc134db29}{cry}}, float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a3d69db1e95a71442592fe9faac8d890f}{crz}}, float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a5aa939ad7fa1b0ac027c01e0b377ed2e}{crw}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}} \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a51efa427b34354f261c4f7172036d7ed}{prevPos}}\\
+\>\>\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}} \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_ae72f2abbd7e34c717cdccd099aaf8d25}{currPos}}\\
+\>\} \\
+\>struct \{\\
+\>\>float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a6ca08c258e0c24595fc35cb3cae4b715}{ppx}}\\
+\>\>float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a40b3cea78d24095bc1a9e951200a8d11}{ppy}}\\
+\>\>float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a2764f0c28926aec20ba74a34210f7540}{ppz}}\\
+\>\>float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a0db78c16169f7f7d3126b0fa92918068}{cpx}}\\
+\>\>float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a776ad867404b03b60f49a1343f42257e}{cpy}}\\
+\>\>float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a75ad6d9e55e3d96379822d774c200e98}{cpz}}\\
+\>\} \\
+\}; \\
+
+\end{tabbing}\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a624b7d7ee9d265e6e1999f1a498aefd8}{last\+Updated\+Frame}} = 0
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math::Quatf}} \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_ae0ef62387115f31a22def3d6a4eeb338}{prevRot}}\\
+\>\>\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math::Quatf}} \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_af0ce48e091575c8dcad5c9cc8043a51a}{currRot}}\\
+\>\} \\
+\>struct \{\\
+\>\>float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a0e0da9aedc2371530b5501fb38ba309e}{prx}}\\
+\>\>float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_af7d98e109d1e3b4aecc970420a5591cf}{pry}}\\
+\>\>float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a9bc511c967c2388cbd1a664ef02a2bc3}{prz}}\\
+\>\>float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a77740e1fe9c6f0a3e4197394a9e6e80f}{prw}}\\
+\>\>float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a27de5a57c3c6ac92e37502697141a370}{crx}}\\
+\>\>float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_adb1b34f16e0262a02a2b705dc134db29}{cry}}\\
+\>\>float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a3d69db1e95a71442592fe9faac8d890f}{crz}}\\
+\>\>float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a5aa939ad7fa1b0ac027c01e0b377ed2e}{crw}}\\
+\>\} \\
+\}; \\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+物理補間コンポーネント 
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00032}{32}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a5ca30fec75d80787bc26e55024d59eb5}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!PhysicsInterpolation@{PhysicsInterpolation}}
+\index{PhysicsInterpolation@{PhysicsInterpolation}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{PhysicsInterpolation()}{PhysicsInterpolation()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a5ca30fec75d80787bc26e55024d59eb5} 
+SFW\+::\+Physics\+::\+Physics\+Interpolation\+::\+Physics\+Interpolation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00053}{53}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_aee09727038c2d52491cfa80d7425cabe}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!PhysicsInterpolation@{PhysicsInterpolation}}
+\index{PhysicsInterpolation@{PhysicsInterpolation}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{PhysicsInterpolation()}{PhysicsInterpolation()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_aee09727038c2d52491cfa80d7425cabe} 
+SFW\+::\+Physics\+::\+Physics\+Interpolation\+::\+Physics\+Interpolation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}}]{pos}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_a1fdfe70e25b6445560f443d0e054477d}{Quatf}}}]{rot}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00057}{57}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_af3ba90741a7c19617ac64c4beb4b0bbd}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!PhysicsInterpolation@{PhysicsInterpolation}}
+\index{PhysicsInterpolation@{PhysicsInterpolation}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{PhysicsInterpolation()}{PhysicsInterpolation()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_af3ba90741a7c19617ac64c4beb4b0bbd} 
+SFW\+::\+Physics\+::\+Physics\+Interpolation\+::\+Physics\+Interpolation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}}]{ppos}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}}]{cpos}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_a1fdfe70e25b6445560f443d0e054477d}{Quatf}}}]{prot}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_a1fdfe70e25b6445560f443d0e054477d}{Quatf}}}]{crot}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00061}{61}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a39e54a38ce4e6be4266c3c1bf7bc7bce}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!PhysicsInterpolation@{PhysicsInterpolation}}
+\index{PhysicsInterpolation@{PhysicsInterpolation}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{PhysicsInterpolation()}{PhysicsInterpolation()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a39e54a38ce4e6be4266c3c1bf7bc7bce} 
+SFW\+::\+Physics\+::\+Physics\+Interpolation\+::\+Physics\+Interpolation (\begin{DoxyParamCaption}\item[{float}]{ppx}{, }\item[{float}]{ppy}{, }\item[{float}]{ppz}{, }\item[{float}]{cpx}{, }\item[{float}]{cpy}{, }\item[{float}]{cpz}{, }\item[{float}]{prx}{, }\item[{float}]{pry}{, }\item[{float}]{prz}{, }\item[{float}]{prw}{, }\item[{float}]{crx}{, }\item[{float}]{cry}{, }\item[{float}]{crz}{, }\item[{float}]{crw}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00065}{65}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_ac8d5ef85fd38053be933ddb622c6f1f0}\doxysubsubsection{\texorpdfstring{[union]}{[union]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_ac8d5ef85fd38053be933ddb622c6f1f0} 
+union  \{ ... \}  \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation}{SFW\+::\+Physics\+::\+Physics\+Interpolation}}}
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a4951cff9fcee27954a5e5fbd7fcb92f1}\doxysubsubsection{\texorpdfstring{[union]}{[union]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a4951cff9fcee27954a5e5fbd7fcb92f1} 
+union  \{ ... \}  \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation}{SFW\+::\+Physics\+::\+Physics\+Interpolation}}}
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a0db78c16169f7f7d3126b0fa92918068}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!cpx@{cpx}}
+\index{cpx@{cpx}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{cpx}{cpx}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a0db78c16169f7f7d3126b0fa92918068} 
+float SFW\+::\+Physics\+::\+Physics\+Interpolation\+::cpx}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00038}{38}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a776ad867404b03b60f49a1343f42257e}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!cpy@{cpy}}
+\index{cpy@{cpy}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{cpy}{cpy}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a776ad867404b03b60f49a1343f42257e} 
+float SFW\+::\+Physics\+::\+Physics\+Interpolation\+::cpy}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00038}{38}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a75ad6d9e55e3d96379822d774c200e98}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!cpz@{cpz}}
+\index{cpz@{cpz}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{cpz}{cpz}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a75ad6d9e55e3d96379822d774c200e98} 
+float SFW\+::\+Physics\+::\+Physics\+Interpolation\+::cpz}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00038}{38}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a5aa939ad7fa1b0ac027c01e0b377ed2e}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!crw@{crw}}
+\index{crw@{crw}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{crw}{crw}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a5aa939ad7fa1b0ac027c01e0b377ed2e} 
+float SFW\+::\+Physics\+::\+Physics\+Interpolation\+::crw}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00049}{49}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a27de5a57c3c6ac92e37502697141a370}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!crx@{crx}}
+\index{crx@{crx}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{crx}{crx}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a27de5a57c3c6ac92e37502697141a370} 
+float SFW\+::\+Physics\+::\+Physics\+Interpolation\+::crx}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00049}{49}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_adb1b34f16e0262a02a2b705dc134db29}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!cry@{cry}}
+\index{cry@{cry}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{cry}{cry}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_adb1b34f16e0262a02a2b705dc134db29} 
+float SFW\+::\+Physics\+::\+Physics\+Interpolation\+::cry}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00049}{49}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a3d69db1e95a71442592fe9faac8d890f}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!crz@{crz}}
+\index{crz@{crz}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{crz}{crz}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a3d69db1e95a71442592fe9faac8d890f} 
+float SFW\+::\+Physics\+::\+Physics\+Interpolation\+::crz}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00049}{49}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_ae72f2abbd7e34c717cdccd099aaf8d25}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!currPos@{currPos}}
+\index{currPos@{currPos}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{currPos}{currPos}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_ae72f2abbd7e34c717cdccd099aaf8d25} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} SFW\+::\+Physics\+::\+Physics\+Interpolation\+::curr\+Pos}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00035}{35}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_af0ce48e091575c8dcad5c9cc8043a51a}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!currRot@{currRot}}
+\index{currRot@{currRot}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{currRot}{currRot}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_af0ce48e091575c8dcad5c9cc8043a51a} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} SFW\+::\+Physics\+::\+Physics\+Interpolation\+::curr\+Rot}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00046}{46}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a624b7d7ee9d265e6e1999f1a498aefd8}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!lastUpdatedFrame@{lastUpdatedFrame}}
+\index{lastUpdatedFrame@{lastUpdatedFrame}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{lastUpdatedFrame}{lastUpdatedFrame}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a624b7d7ee9d265e6e1999f1a498aefd8} 
+uint32\+\_\+t SFW\+::\+Physics\+::\+Physics\+Interpolation\+::last\+Updated\+Frame = 0}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00042}{42}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a6ca08c258e0c24595fc35cb3cae4b715}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!ppx@{ppx}}
+\index{ppx@{ppx}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{ppx}{ppx}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a6ca08c258e0c24595fc35cb3cae4b715} 
+float SFW\+::\+Physics\+::\+Physics\+Interpolation\+::ppx}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00038}{38}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a40b3cea78d24095bc1a9e951200a8d11}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!ppy@{ppy}}
+\index{ppy@{ppy}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{ppy}{ppy}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a40b3cea78d24095bc1a9e951200a8d11} 
+float SFW\+::\+Physics\+::\+Physics\+Interpolation\+::ppy}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00038}{38}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a2764f0c28926aec20ba74a34210f7540}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!ppz@{ppz}}
+\index{ppz@{ppz}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{ppz}{ppz}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a2764f0c28926aec20ba74a34210f7540} 
+float SFW\+::\+Physics\+::\+Physics\+Interpolation\+::ppz}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00038}{38}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a51efa427b34354f261c4f7172036d7ed}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!prevPos@{prevPos}}
+\index{prevPos@{prevPos}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{prevPos}{prevPos}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a51efa427b34354f261c4f7172036d7ed} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} SFW\+::\+Physics\+::\+Physics\+Interpolation\+::prev\+Pos}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00035}{35}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_ae0ef62387115f31a22def3d6a4eeb338}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!prevRot@{prevRot}}
+\index{prevRot@{prevRot}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{prevRot}{prevRot}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_ae0ef62387115f31a22def3d6a4eeb338} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} SFW\+::\+Physics\+::\+Physics\+Interpolation\+::prev\+Rot}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00046}{46}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a77740e1fe9c6f0a3e4197394a9e6e80f}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!prw@{prw}}
+\index{prw@{prw}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{prw}{prw}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a77740e1fe9c6f0a3e4197394a9e6e80f} 
+float SFW\+::\+Physics\+::\+Physics\+Interpolation\+::prw}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00049}{49}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a0e0da9aedc2371530b5501fb38ba309e}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!prx@{prx}}
+\index{prx@{prx}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{prx}{prx}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a0e0da9aedc2371530b5501fb38ba309e} 
+float SFW\+::\+Physics\+::\+Physics\+Interpolation\+::prx}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00049}{49}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_af7d98e109d1e3b4aecc970420a5591cf}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!pry@{pry}}
+\index{pry@{pry}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{pry}{pry}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_af7d98e109d1e3b4aecc970420a5591cf} 
+float SFW\+::\+Physics\+::\+Physics\+Interpolation\+::pry}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00049}{49}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a9bc511c967c2388cbd1a664ef02a2bc3}\index{SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}!prz@{prz}}
+\index{prz@{prz}!SFW::Physics::PhysicsInterpolation@{SFW::Physics::PhysicsInterpolation}}
+\doxysubsubsection{\texorpdfstring{prz}{prz}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_physics_interpolation_a9bc511c967c2388cbd1a664ef02a2bc3} 
+float SFW\+::\+Physics\+::\+Physics\+Interpolation\+::prz}
+
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} の \mbox{\hyperlink{_physics_component_8h_source_l00049}{49}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Physics/\mbox{\hyperlink{_physics_component_8h}{Physics\+Component.\+h}}\end{DoxyCompactItemize}

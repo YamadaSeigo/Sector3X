@@ -1,0 +1,247 @@
+\doxysection{SFW\+::ECS\+::Service\+Locator クラス}
+\hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator}{}\label{class_s_f_w_1_1_e_c_s_1_1_service_locator}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
+
+
+Systemが依存するサービスを管理するクラス  
+
+
+
+
+{\ttfamily \#include $<$Service\+Locator.\+h$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_1_1_world_accessor}{World\+Accessor}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$Pointer\+Type... Service$>$ }\\\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_a8e26d5dd32ba8c4751444aef7b703640}{Service\+Locator}} (Service... service)
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_a9cb173949e5f540558bff261ff7e3f8e}{Service\+Locator}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&)=delete
+\begin{DoxyCompactList}\small\item\em 　コピーコンストラクタを削除 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \& \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_ad88cda0c753ff8ff452e1184e36c16e6}{operator=}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&)=delete
+\begin{DoxyCompactList}\small\item\em コピー代入演算子を削除 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_a6f0304fb0c94c620b61808e06e148428}{Service\+Locator}} (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&\&) noexcept=default
+\begin{DoxyCompactList}\small\item\em ムーブコンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \& \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_ae715375e8b550129ed739c4a52638933}{operator=}} (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&\&) noexcept=default
+\begin{DoxyCompactList}\small\item\em ムーブ代入演算子 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_a2db7df4424a952cbd2f44c33158cb04f}{\texorpdfstring{$\sim$}{\string~}\+Service\+Locator}} ()
+\begin{DoxyCompactList}\small\item\em デストラクタ \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Services$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_a5a4fe628d5673145b9cb5aa0949e7e6d}{Init\+And\+Register\+Static\+Service}} () noexcept
+\begin{DoxyCompactList}\small\item\em 初期化処理(複数回呼び出し禁止) \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... T$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_ab2d51b088755d78dae42681edcc16cda}{Register\+Dynamic\+Service}} () noexcept
+\begin{DoxyCompactList}\small\item\em 動的サービスの登録を行う \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_af677ad26dd17da8d081ae8bef7617f09}{Unregister\+Dynamic\+Service}} ()
+\begin{DoxyCompactList}\small\item\em サービスの登録を解除する(動的なサービス限定) \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_a22608296cf3f91afbf7882635c58ed84}{Get}} () const noexcept
+\begin{DoxyCompactList}\small\item\em サービスを取得する(const強制解除) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_af38db6829c13b531ab73214df0a3c0c0}{Update\+Service}} (double dt, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor)
+\begin{DoxyCompactList}\small\item\em サービスの更新を行う \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_a2d5e312fc400a34bd72d4760f3d39f0d}{Commit\+Service}} (double delta\+Time)
+\begin{DoxyCompactList}\small\item\em コミットサービスの関数呼び出し \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Systemが依存するサービスを管理するクラス 
+
+内部でshared\+\_\+mutexを使用しているのでムーブのみ許可する 
+
+ \mbox{\hyperlink{_service_locator_8h_source}{Service\+Locator.\+h}} の \mbox{\hyperlink{_service_locator_8h_source_l00034}{34}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_a8e26d5dd32ba8c4751444aef7b703640}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}!ServiceLocator@{ServiceLocator}}
+\index{ServiceLocator@{ServiceLocator}!SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
+\doxysubsubsection{\texorpdfstring{ServiceLocator()}{ServiceLocator()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_service_locator_a8e26d5dd32ba8c4751444aef7b703640} 
+template$<$Pointer\+Type... Service$>$ \\
+SFW\+::\+ECS\+::\+Service\+Locator\+::\+Service\+Locator (\begin{DoxyParamCaption}\item[{Service...}]{service}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em executor} & 更新処理の際の並列ために使用するスレッドプール\\
+\hline
+\end{DoxyParams}
+複数回生成すると実行時エラー 
+
+ \mbox{\hyperlink{_service_locator_8h_source}{Service\+Locator.\+h}} の \mbox{\hyperlink{_service_locator_8h_source_l00054}{54}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_a9cb173949e5f540558bff261ff7e3f8e}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}!ServiceLocator@{ServiceLocator}}
+\index{ServiceLocator@{ServiceLocator}!SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
+\doxysubsubsection{\texorpdfstring{ServiceLocator()}{ServiceLocator()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_service_locator_a9cb173949e5f540558bff261ff7e3f8e} 
+SFW\+::\+ECS\+::\+Service\+Locator\+::\+Service\+Locator (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+　コピーコンストラクタを削除 
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_a6f0304fb0c94c620b61808e06e148428}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}!ServiceLocator@{ServiceLocator}}
+\index{ServiceLocator@{ServiceLocator}!SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
+\doxysubsubsection{\texorpdfstring{ServiceLocator()}{ServiceLocator()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_service_locator_a6f0304fb0c94c620b61808e06e148428} 
+SFW\+::\+ECS\+::\+Service\+Locator\+::\+Service\+Locator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&\&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}, {\ttfamily [noexcept]}}
+
+
+
+ムーブコンストラクタ 
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_a2db7df4424a952cbd2f44c33158cb04f}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}!````~ServiceLocator@{\texorpdfstring{$\sim$}{\string~}ServiceLocator}}
+\index{````~ServiceLocator@{\texorpdfstring{$\sim$}{\string~}ServiceLocator}!SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ServiceLocator()}{\string~ServiceLocator()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_service_locator_a2db7df4424a952cbd2f44c33158cb04f} 
+SFW\+::\+ECS\+::\+Service\+Locator\+::\texorpdfstring{$\sim$}{\string~}\+Service\+Locator (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+デストラクタ 
+
+
+
+ \mbox{\hyperlink{_service_locator_8h_source}{Service\+Locator.\+h}} の \mbox{\hyperlink{_service_locator_8h_source_l00085}{85}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_a2d5e312fc400a34bd72d4760f3d39f0d}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}!CommitService@{CommitService}}
+\index{CommitService@{CommitService}!SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
+\doxysubsubsection{\texorpdfstring{CommitService()}{CommitService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_service_locator_a2d5e312fc400a34bd72d4760f3d39f0d} 
+void SFW\+::\+ECS\+::\+Service\+Locator\+::\+Commit\+Service (\begin{DoxyParamCaption}\item[{double}]{delta\+Time}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+コミットサービスの関数呼び出し 
+
+
+
+ \mbox{\hyperlink{_service_locator_8h_source}{Service\+Locator.\+h}} の \mbox{\hyperlink{_service_locator_8h_source_l00211}{211}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_a22608296cf3f91afbf7882635c58ed84}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}!Get@{Get}}
+\index{Get@{Get}!SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_service_locator_a22608296cf3f91afbf7882635c58ed84} 
+template$<$typename T$>$ \\
+T \texorpdfstring{$\ast$}{*} SFW\+::\+ECS\+::\+Service\+Locator\+::\+Get (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+サービスを取得する(const強制解除) 
+
+
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em T} & サービスの型 \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{戻り値}
+サービスのポインタ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_service_locator_8h_source}{Service\+Locator.\+h}} の \mbox{\hyperlink{_service_locator_8h_source_l00160}{160}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_a5a4fe628d5673145b9cb5aa0949e7e6d}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}!InitAndRegisterStaticService@{InitAndRegisterStaticService}}
+\index{InitAndRegisterStaticService@{InitAndRegisterStaticService}!SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
+\doxysubsubsection{\texorpdfstring{InitAndRegisterStaticService()}{InitAndRegisterStaticService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_service_locator_a5a4fe628d5673145b9cb5aa0949e7e6d} 
+template$<$typename... Services$>$ \\
+void SFW\+::\+ECS\+::\+Service\+Locator\+::\+Init\+And\+Register\+Static\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+初期化処理(複数回呼び出し禁止) 
+
+
+
+ \mbox{\hyperlink{_service_locator_8h_source}{Service\+Locator.\+h}} の \mbox{\hyperlink{_service_locator_8h_source_l00093}{93}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_ad88cda0c753ff8ff452e1184e36c16e6}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_service_locator_ad88cda0c753ff8ff452e1184e36c16e6} 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \& SFW\+::\+ECS\+::\+Service\+Locator\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+コピー代入演算子を削除 
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_ae715375e8b550129ed739c4a52638933}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_service_locator_ae715375e8b550129ed739c4a52638933} 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \& SFW\+::\+ECS\+::\+Service\+Locator\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&\&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}, {\ttfamily [noexcept]}}
+
+
+
+ムーブ代入演算子 
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_ab2d51b088755d78dae42681edcc16cda}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}!RegisterDynamicService@{RegisterDynamicService}}
+\index{RegisterDynamicService@{RegisterDynamicService}!SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
+\doxysubsubsection{\texorpdfstring{RegisterDynamicService()}{RegisterDynamicService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_service_locator_ab2d51b088755d78dae42681edcc16cda} 
+template$<$typename... T$>$ \\
+void SFW\+::\+ECS\+::\+Service\+Locator\+::\+Register\+Dynamic\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+動的サービスの登録を行う 
+
+
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em T} & サービスの型 \\
+\hline
+\end{DoxyTemplParams}
+
+
+ \mbox{\hyperlink{_service_locator_8h_source}{Service\+Locator.\+h}} の \mbox{\hyperlink{_service_locator_8h_source_l00104}{104}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_af677ad26dd17da8d081ae8bef7617f09}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}!UnregisterDynamicService@{UnregisterDynamicService}}
+\index{UnregisterDynamicService@{UnregisterDynamicService}!SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
+\doxysubsubsection{\texorpdfstring{UnregisterDynamicService()}{UnregisterDynamicService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_service_locator_af677ad26dd17da8d081ae8bef7617f09} 
+template$<$typename T$>$ \\
+void SFW\+::\+ECS\+::\+Service\+Locator\+::\+Unregister\+Dynamic\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+サービスの登録を解除する(動的なサービス限定) 
+
+
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em T} & サービスの型 \\
+\hline
+\end{DoxyTemplParams}
+
+
+ \mbox{\hyperlink{_service_locator_8h_source}{Service\+Locator.\+h}} の \mbox{\hyperlink{_service_locator_8h_source_l00113}{113}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_af38db6829c13b531ab73214df0a3c0c0}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}!UpdateService@{UpdateService}}
+\index{UpdateService@{UpdateService}!SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
+\doxysubsubsection{\texorpdfstring{UpdateService()}{UpdateService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_service_locator_af38db6829c13b531ab73214df0a3c0c0} 
+void SFW\+::\+ECS\+::\+Service\+Locator\+::\+Update\+Service (\begin{DoxyParamCaption}\item[{double}]{dt}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}}]{executor}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+サービスの更新を行う 
+
+
+
+ \mbox{\hyperlink{_service_locator_8h_source}{Service\+Locator.\+h}} の \mbox{\hyperlink{_service_locator_8h_source_l00175}{175}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_service_locator_8h}{Service\+Locator.\+h}}\end{DoxyCompactItemize}

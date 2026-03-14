@@ -1,0 +1,67 @@
+\doxysection{SFW\+::Debug\+::Perf\+HUD 構造体}
+\hypertarget{struct_s_f_w_1_1_debug_1_1_perf_h_u_d}{}\label{struct_s_f_w_1_1_debug_1_1_perf_h_u_d}\index{SFW::Debug::PerfHUD@{SFW::Debug::PerfHUD}}
+
+
+パフォーマンス\+HUDを表示するクラス  
+
+
+
+
+{\ttfamily \#include $<$Perf\+HUD.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_perf_h_u_d_a52b50faae7b813de3397959805aa4930}{Init}} (size\+\_\+t history\+Samples=600)
+\begin{DoxyCompactList}\small\item\em HUDを初期化する \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_perf_h_u_d_af97b4dbfc491e9d14ebff78f0b688d80}{Tick\+And\+Draw}} (float frame\+Budget\+Sec=1.\+0f/60.\+0f, bool overlay\+Top\+Right=true)
+\begin{DoxyCompactList}\small\item\em Im\+Gui\+::\+New\+Frame() 後に毎フレ呼ぶ \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+パフォーマンス\+HUDを表示するクラス 
+
+ \mbox{\hyperlink{_perf_h_u_d_8h_source}{Perf\+HUD.\+h}} の \mbox{\hyperlink{_perf_h_u_d_8h_source_l00089}{89}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_perf_h_u_d_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_perf_h_u_d_a52b50faae7b813de3397959805aa4930}\index{SFW::Debug::PerfHUD@{SFW::Debug::PerfHUD}!Init@{Init}}
+\index{Init@{Init}!SFW::Debug::PerfHUD@{SFW::Debug::PerfHUD}}
+\doxysubsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_perf_h_u_d_a52b50faae7b813de3397959805aa4930} 
+void SFW\+::\+Debug\+::\+Perf\+HUD\+::\+Init (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{history\+Samples}{ = {\ttfamily 600}}\end{DoxyParamCaption})}
+
+
+
+HUDを初期化する 
+
+
+\begin{DoxyParams}{引数}
+{\em history\+Samples} & 履歴サンプル数 \\
+\hline
+\end{DoxyParams}
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_perf_h_u_d_af97b4dbfc491e9d14ebff78f0b688d80}\index{SFW::Debug::PerfHUD@{SFW::Debug::PerfHUD}!TickAndDraw@{TickAndDraw}}
+\index{TickAndDraw@{TickAndDraw}!SFW::Debug::PerfHUD@{SFW::Debug::PerfHUD}}
+\doxysubsubsection{\texorpdfstring{TickAndDraw()}{TickAndDraw()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_perf_h_u_d_af97b4dbfc491e9d14ebff78f0b688d80} 
+void SFW\+::\+Debug\+::\+Perf\+HUD\+::\+Tick\+And\+Draw (\begin{DoxyParamCaption}\item[{float}]{frame\+Budget\+Sec}{ = {\ttfamily 1.0f/60.0f}, }\item[{bool}]{overlay\+Top\+Right}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+
+
+Im\+Gui\+::\+New\+Frame() 後に毎フレ呼ぶ 
+
+
+\begin{DoxyParams}{引数}
+{\em frame\+Budget\+Sec} & フレーム予算(秒) \\
+\hline
+{\em overlay\+Top\+Right} & 右上にオーバーレイ表示する場合true \\
+\hline
+\end{DoxyParams}
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Debug/\mbox{\hyperlink{_perf_h_u_d_8h}{Perf\+HUD.\+h}}\end{DoxyCompactItemize}

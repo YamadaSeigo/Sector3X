@@ -1,0 +1,166 @@
+\doxysection{SFW\+::Graphics\+::Coverage\+Mask2D 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d}{}\label{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d}\index{SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}}
+
+
+{\ttfamily \#include $<$Terrain\+Occluder\+Extraction.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a5af496f3d8141907218a0b156db2a025}{init}} (uint32\+\_\+t screen\+W\+\_\+, uint32\+\_\+t screen\+H\+\_\+, uint32\+\_\+t tile\+W\+\_\+=32, uint32\+\_\+t tile\+H\+\_\+=32)
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a163e126243e213e40211465bbdea6913}{idx}} (uint32\+\_\+t x, uint32\+\_\+t y) const
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_aaec0de47db714feca4004d839290c759}{count\+Uncovered\+Tiles\+And\+Update}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_face_quad}{Face\+Quad}} \&q, float depth\+Bias=0.\+0f, float \texorpdfstring{$\ast$}{*}out\+Added\+Ratio=nullptr, bool commit=true)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a64074f795abf246f928ca37c10993964}{tilesX}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_aa3e3d46023a886d8059b8756fde2d670}{tilesY}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a6d06183b3e1b42e1d8a1fb9d70696dba}{tileW}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_abe26c83890a1c366979e5cc6527c6e72}{tileH}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a44f11c4bf43d1bf4538a84e7475f4805}{screenW}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a8cfb82e515841a5ac9b9c2425c93e6db}{screenH}} = 0
+\item 
+std\+::vector$<$ uint8\+\_\+t $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a4490e2527b18be8b3ba0d793bdd8dec8}{occ}}
+\item 
+std\+::vector$<$ float $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a78058a93d9b425ddb9ab5b0101e52120}{minZ}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00359}{359}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_aaec0de47db714feca4004d839290c759}\index{SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}!countUncoveredTilesAndUpdate@{countUncoveredTilesAndUpdate}}
+\index{countUncoveredTilesAndUpdate@{countUncoveredTilesAndUpdate}!SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}}
+\doxysubsubsection{\texorpdfstring{countUncoveredTilesAndUpdate()}{countUncoveredTilesAndUpdate()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_aaec0de47db714feca4004d839290c759} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Coverage\+Mask2\+D\+::count\+Uncovered\+Tiles\+And\+Update (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_face_quad}{Face\+Quad}} \&}]{q}{, }\item[{float}]{depth\+Bias}{ = {\ttfamily 0.0f}, }\item[{float \texorpdfstring{$\ast$}{*}}]{out\+Added\+Ratio}{ = {\ttfamily nullptr}, }\item[{bool}]{commit}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00377}{377}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a163e126243e213e40211465bbdea6913}\index{SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}!idx@{idx}}
+\index{idx@{idx}!SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}}
+\doxysubsubsection{\texorpdfstring{idx()}{idx()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a163e126243e213e40211465bbdea6913} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Coverage\+Mask2\+D\+::idx (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{x}{, }\item[{uint32\+\_\+t}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00374}{374}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a5af496f3d8141907218a0b156db2a025}\index{SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}!init@{init}}
+\index{init@{init}!SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a5af496f3d8141907218a0b156db2a025} 
+void SFW\+::\+Graphics\+::\+Coverage\+Mask2\+D\+::init (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{screen\+W\+\_\+}{, }\item[{uint32\+\_\+t}]{screen\+H\+\_\+}{, }\item[{uint32\+\_\+t}]{tile\+W\+\_\+}{ = {\ttfamily 32}, }\item[{uint32\+\_\+t}]{tile\+H\+\_\+}{ = {\ttfamily 32}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00366}{366}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a78058a93d9b425ddb9ab5b0101e52120}\index{SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}!minZ@{minZ}}
+\index{minZ@{minZ}!SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}}
+\doxysubsubsection{\texorpdfstring{minZ}{minZ}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a78058a93d9b425ddb9ab5b0101e52120} 
+std\+::vector$<$float$>$ SFW\+::\+Graphics\+::\+Coverage\+Mask2\+D\+::minZ}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00364}{364}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a4490e2527b18be8b3ba0d793bdd8dec8}\index{SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}!occ@{occ}}
+\index{occ@{occ}!SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}}
+\doxysubsubsection{\texorpdfstring{occ}{occ}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a4490e2527b18be8b3ba0d793bdd8dec8} 
+std\+::vector$<$uint8\+\_\+t$>$ SFW\+::\+Graphics\+::\+Coverage\+Mask2\+D\+::occ}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00363}{363}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a8cfb82e515841a5ac9b9c2425c93e6db}\index{SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}!screenH@{screenH}}
+\index{screenH@{screenH}!SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}}
+\doxysubsubsection{\texorpdfstring{screenH}{screenH}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a8cfb82e515841a5ac9b9c2425c93e6db} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Coverage\+Mask2\+D\+::screenH = 0}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00361}{361}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a44f11c4bf43d1bf4538a84e7475f4805}\index{SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}!screenW@{screenW}}
+\index{screenW@{screenW}!SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}}
+\doxysubsubsection{\texorpdfstring{screenW}{screenW}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a44f11c4bf43d1bf4538a84e7475f4805} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Coverage\+Mask2\+D\+::screenW = 0}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00361}{361}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_abe26c83890a1c366979e5cc6527c6e72}\index{SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}!tileH@{tileH}}
+\index{tileH@{tileH}!SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}}
+\doxysubsubsection{\texorpdfstring{tileH}{tileH}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_abe26c83890a1c366979e5cc6527c6e72} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Coverage\+Mask2\+D\+::tileH = 0}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00360}{360}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a64074f795abf246f928ca37c10993964}\index{SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}!tilesX@{tilesX}}
+\index{tilesX@{tilesX}!SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}}
+\doxysubsubsection{\texorpdfstring{tilesX}{tilesX}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a64074f795abf246f928ca37c10993964} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Coverage\+Mask2\+D\+::tilesX = 0}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00360}{360}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_aa3e3d46023a886d8059b8756fde2d670}\index{SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}!tilesY@{tilesY}}
+\index{tilesY@{tilesY}!SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}}
+\doxysubsubsection{\texorpdfstring{tilesY}{tilesY}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_aa3e3d46023a886d8059b8756fde2d670} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Coverage\+Mask2\+D\+::tilesY = 0}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00360}{360}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a6d06183b3e1b42e1d8a1fb9d70696dba}\index{SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}!tileW@{tileW}}
+\index{tileW@{tileW}!SFW::Graphics::CoverageMask2D@{SFW::Graphics::CoverageMask2D}}
+\doxysubsubsection{\texorpdfstring{tileW}{tileW}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d_a6d06183b3e1b42e1d8a1fb9d70696dba} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Coverage\+Mask2\+D\+::tileW = 0}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00360}{360}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_terrain_occluder_extraction_8h}{Terrain\+Occluder\+Extraction.\+h}}\end{DoxyCompactItemize}

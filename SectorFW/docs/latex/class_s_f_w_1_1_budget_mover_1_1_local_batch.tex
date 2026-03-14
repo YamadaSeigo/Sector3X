@@ -1,0 +1,197 @@
+\doxysection{SFW\+::Budget\+Mover\+::Local\+Batch クラス}
+\hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch}{}\label{class_s_f_w_1_1_budget_mover_1_1_local_batch}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+
+
+ローカル一時バッファ（thread\+\_\+local を使わない合意的バッチ）  
+
+
+
+
+{\ttfamily \#include $<$Chunk\+Crossing\+Move.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch_a615ea228e72f5c39ca139e18703f8cde}{Local\+Batch}} (\mbox{\hyperlink{class_s_f_w_1_1_budget_mover}{Budget\+Mover}} \&owner, size\+\_\+t reserve\+\_\+n=0) noexcept
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch_a237139ff3ac084883d7b7dd026454dd4}{Local\+Batch}} (\mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{Local\+Batch}} \&\&o) noexcept
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{Local\+Batch}} \& \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch_a3315e88b9eeeacd362a1d85d31746069}{operator=}} (\mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{Local\+Batch}} \&\&o) noexcept
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch_a8a6790122165cd95c4d8838380b13c6e}{Local\+Batch}} (const \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{Local\+Batch}} \&)=delete
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{Local\+Batch}} \& \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch_a3c0bf3be1d04fbdf8e3db2b8d602fffd}{operator=}} (const \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{Local\+Batch}} \&)=delete
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch_a3a11b868c23a909dbe1f38394b8ca2e1}{\texorpdfstring{$\sim$}{\string~}\+Local\+Batch}} () noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch_a9ff5bd0348e699ceb17935dc96c2ccd9}{Add}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} id, const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&src, const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&dst)
+\item 
+{\footnotesize template$<$class Range$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch_a235b22c626e2b248a22e92e14b1b962e}{Add\+Range}} (const Range \&moves)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch_a60b1b0b1ac23cd98f8c908cc5c63cd7c}{Flush}} ()
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch_a6023c5fb9e773729b6a06a99ab9aa8e9}{Flush\+No\+Throw}} () noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch_a5ed66113d3bbcf84aa6bb0412df2f43e}{Clear\+Keep\+Capacity}} ()
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch_ab86e86769a7959e1549d6e7d94fcf6f4}{Clear\+And\+Release}} ()
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch_ab13c0c5dc65f47f21ab92bf3b79ecff3}{Cancel}} () noexcept
+\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch_a139eb0b60306ed21b51ea847641d7efb}{Size}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+ローカル一時バッファ（thread\+\_\+local を使わない合意的バッチ） 
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00231}{231}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_a615ea228e72f5c39ca139e18703f8cde}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}!LocalBatch@{LocalBatch}}
+\index{LocalBatch@{LocalBatch}!SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+\doxysubsubsection{\texorpdfstring{LocalBatch()}{LocalBatch()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_1_1_local_batch_a615ea228e72f5c39ca139e18703f8cde} 
+SFW\+::\+Budget\+Mover\+::\+Local\+Batch\+::\+Local\+Batch (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_budget_mover}{Budget\+Mover}} \&}]{owner}{, }\item[{size\+\_\+t}]{reserve\+\_\+n}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00233}{233}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_a237139ff3ac084883d7b7dd026454dd4}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}!LocalBatch@{LocalBatch}}
+\index{LocalBatch@{LocalBatch}!SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+\doxysubsubsection{\texorpdfstring{LocalBatch()}{LocalBatch()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_1_1_local_batch_a237139ff3ac084883d7b7dd026454dd4} 
+SFW\+::\+Budget\+Mover\+::\+Local\+Batch\+::\+Local\+Batch (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{Local\+Batch}} \&\&}]{o}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00239}{239}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_a8a6790122165cd95c4d8838380b13c6e}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}!LocalBatch@{LocalBatch}}
+\index{LocalBatch@{LocalBatch}!SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+\doxysubsubsection{\texorpdfstring{LocalBatch()}{LocalBatch()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_1_1_local_batch_a8a6790122165cd95c4d8838380b13c6e} 
+SFW\+::\+Budget\+Mover\+::\+Local\+Batch\+::\+Local\+Batch (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{Local\+Batch}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_a3a11b868c23a909dbe1f38394b8ca2e1}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}!````~LocalBatch@{\texorpdfstring{$\sim$}{\string~}LocalBatch}}
+\index{````~LocalBatch@{\texorpdfstring{$\sim$}{\string~}LocalBatch}!SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}LocalBatch()}{\string~LocalBatch()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_1_1_local_batch_a3a11b868c23a909dbe1f38394b8ca2e1} 
+SFW\+::\+Budget\+Mover\+::\+Local\+Batch\+::\texorpdfstring{$\sim$}{\string~}\+Local\+Batch (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00254}{254}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_a9ff5bd0348e699ceb17935dc96c2ccd9}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}!Add@{Add}}
+\index{Add@{Add}!SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+\doxysubsubsection{\texorpdfstring{Add()}{Add()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_1_1_local_batch_a9ff5bd0348e699ceb17935dc96c2ccd9} 
+void SFW\+::\+Budget\+Mover\+::\+Local\+Batch\+::\+Add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}}}]{id}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&}]{src}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&}]{dst}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00256}{256}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_a235b22c626e2b248a22e92e14b1b962e}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}!AddRange@{AddRange}}
+\index{AddRange@{AddRange}!SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+\doxysubsubsection{\texorpdfstring{AddRange()}{AddRange()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_1_1_local_batch_a235b22c626e2b248a22e92e14b1b962e} 
+template$<$class Range$>$ \\
+void SFW\+::\+Budget\+Mover\+::\+Local\+Batch\+::\+Add\+Range (\begin{DoxyParamCaption}\item[{const Range \&}]{moves}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00261}{261}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_ab13c0c5dc65f47f21ab92bf3b79ecff3}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}!Cancel@{Cancel}}
+\index{Cancel@{Cancel}!SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+\doxysubsubsection{\texorpdfstring{Cancel()}{Cancel()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_1_1_local_batch_ab13c0c5dc65f47f21ab92bf3b79ecff3} 
+void SFW\+::\+Budget\+Mover\+::\+Local\+Batch\+::\+Cancel (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00286}{286}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_ab86e86769a7959e1549d6e7d94fcf6f4}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}!ClearAndRelease@{ClearAndRelease}}
+\index{ClearAndRelease@{ClearAndRelease}!SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+\doxysubsubsection{\texorpdfstring{ClearAndRelease()}{ClearAndRelease()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_1_1_local_batch_ab86e86769a7959e1549d6e7d94fcf6f4} 
+void SFW\+::\+Budget\+Mover\+::\+Local\+Batch\+::\+Clear\+And\+Release (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00283}{283}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_a5ed66113d3bbcf84aa6bb0412df2f43e}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}!ClearKeepCapacity@{ClearKeepCapacity}}
+\index{ClearKeepCapacity@{ClearKeepCapacity}!SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+\doxysubsubsection{\texorpdfstring{ClearKeepCapacity()}{ClearKeepCapacity()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_1_1_local_batch_a5ed66113d3bbcf84aa6bb0412df2f43e} 
+void SFW\+::\+Budget\+Mover\+::\+Local\+Batch\+::\+Clear\+Keep\+Capacity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00280}{280}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_a60b1b0b1ac23cd98f8c908cc5c63cd7c}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}!Flush@{Flush}}
+\index{Flush@{Flush}!SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+\doxysubsubsection{\texorpdfstring{Flush()}{Flush()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_1_1_local_batch_a60b1b0b1ac23cd98f8c908cc5c63cd7c} 
+void SFW\+::\+Budget\+Mover\+::\+Local\+Batch\+::\+Flush (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00265}{265}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_a6023c5fb9e773729b6a06a99ab9aa8e9}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}!FlushNoThrow@{FlushNoThrow}}
+\index{FlushNoThrow@{FlushNoThrow}!SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+\doxysubsubsection{\texorpdfstring{FlushNoThrow()}{FlushNoThrow()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_1_1_local_batch_a6023c5fb9e773729b6a06a99ab9aa8e9} 
+void SFW\+::\+Budget\+Mover\+::\+Local\+Batch\+::\+Flush\+No\+Throw (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00269}{269}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_a3c0bf3be1d04fbdf8e3db2b8d602fffd}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_1_1_local_batch_a3c0bf3be1d04fbdf8e3db2b8d602fffd} 
+\mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{Local\+Batch}} \& SFW\+::\+Budget\+Mover\+::\+Local\+Batch\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{Local\+Batch}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_a3315e88b9eeeacd362a1d85d31746069}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_1_1_local_batch_a3315e88b9eeeacd362a1d85d31746069} 
+\mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{Local\+Batch}} \& SFW\+::\+Budget\+Mover\+::\+Local\+Batch\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{Local\+Batch}} \&\&}]{o}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00244}{244}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_1_1_local_batch_a139eb0b60306ed21b51ea847641d7efb}\index{SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}!Size@{Size}}
+\index{Size@{Size}!SFW::BudgetMover::LocalBatch@{SFW::BudgetMover::LocalBatch}}
+\doxysubsubsection{\texorpdfstring{Size()}{Size()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_1_1_local_batch_a139eb0b60306ed21b51ea847641d7efb} 
+size\+\_\+t SFW\+::\+Budget\+Mover\+::\+Local\+Batch\+::\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00289}{289}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_chunk_crossing_move_8hpp}{Chunk\+Crossing\+Move.\+hpp}}\end{DoxyCompactItemize}

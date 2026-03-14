@@ -1,0 +1,39 @@
+\doxysection{Component\+Layout\+Registry.\+h}
+\hypertarget{_component_layout_registry_8h_source}{}\label{_component_layout_registry_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ComponentLayoutRegistry.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ComponentLayoutRegistry.h}}
+\mbox{\hyperlink{_component_layout_registry_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{component_8hpp}{component.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_one_or_more_8hpp}{../../Util/OneOrMore.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00016}00016\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00017}00017\ \{}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00018}00018\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00019}00019\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00024}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout}{00024}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout}{ComponentLayout}}}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00026}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a88343f1ee39dfe0d56941f26292e7cdd}{00026}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::unordered\_map<ComponentTypeID,\ uint32\_t>\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a88343f1ee39dfe0d56941f26292e7cdd}{infoIdx}};}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00027}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a3d7b7770b3ccf40851c113417bd24de7}{00027}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<OneOrMore<ComponentInfo>>\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a3d7b7770b3ccf40851c113417bd24de7}{info}};}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00028}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a3d7b2c535e71a34bcf019aa55c972dda}{00028}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a3d7b2c535e71a34bcf019aa55c972dda}{capacity}}\ =\ 0;\ \textcolor{comment}{//\ チャンクの容量}}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00033}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_layout_registry}{00033}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_layout_registry}{ComponentLayoutRegistry}}}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00041}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_layout_registry_a353a31fef00921a202eb3193b5146077}{00041}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout}{ComponentLayout}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_layout_registry_a353a31fef00921a202eb3193b5146077}{GetLayout}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\&\ mask)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ AddNewComponentLayout(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\&\ mask);}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//コンポーネントレイアウトを格納するマップ}}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ std::unordered\_map<ComponentMask,\ ComponentLayout>\ componentLayout;}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//コンポーネントレイアウトのマップへのアクセスを保護するミューテックス}}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ std::mutex\ map\_mutex;}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00054}00054\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_component_layout_registry_8h_source_l00055}00055\ \}}
+
+\end{DoxyCode}

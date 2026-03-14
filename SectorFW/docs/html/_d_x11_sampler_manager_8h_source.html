@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11SamplerManager.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_d_x11_sampler_manager_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">DX11SamplerManager.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_d_x11_sampler_manager_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="__dx11inc_8h.html">_dx11inc.h</a>&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="_resouce_manager_base_8hpp.html">Util/ResouceManagerBase.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span></div>
+<div class="foldopen" id="foldopen00019" data-start="{" data-end="}">
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="_d_x11_sampler_manager_8h.html#aed9276d5bc8dd153e005c26e569d1fe2">   19</a></span><span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="_d_x11_sampler_manager_8h.html#aed9276d5bc8dd153e005c26e569d1fe2">operator==</a>(<span class="keyword">const</span> D3D11_SAMPLER_DESC&amp; a, <span class="keyword">const</span> D3D11_SAMPLER_DESC&amp; b) {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordflow">return</span> memcmp(&amp;a, &amp;b, <span class="keyword">sizeof</span>(D3D11_SAMPLER_DESC)) == 0;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>}</div>
+</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>{</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">Graphics::DX11</a></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    {</div>
+<div class="foldopen" id="foldopen00030" data-start="{" data-end="};">
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html">   30</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html">SamplerCreateDesc</a> {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html#afbbb98215bde461bc777dc3742ffafd2">   31</a></span>            std::string <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html#afbbb98215bde461bc777dc3742ffafd2">name</a>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html#a0cc10d9a4b7397a3dfe4b9c0ae96078d">   32</a></span>            D3D11_SAMPLER_DESC <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html#a0cc10d9a4b7397a3dfe4b9c0ae96078d">desc</a>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        };</div>
+</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span></div>
+<div class="foldopen" id="foldopen00037" data-start="{" data-end="};">
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html">   37</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html">SamplerData</a> {</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html#a43d7e26f3adf00c46aa702f8d21dd10e">   38</a></span>            ComPtr&lt;ID3D11SamplerState&gt; <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html#a43d7e26f3adf00c46aa702f8d21dd10e">state</a>;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html#a372eee916e75defe04d69730a605da48">   39</a></span>            std::string_view <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html#a372eee916e75defe04d69730a605da48">name</a>;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        };</div>
+</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span></div>
+<div class="foldopen" id="foldopen00044" data-start="{" data-end="};">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_desc_hash.html">   44</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_desc_hash.html">SamplerDescHash</a> {</div>
+<div class="foldopen" id="foldopen00045" data-start="{" data-end="}">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_desc_hash.html#a40f9dbd8489d4ba74430ce58411b12f6">   45</a></span>            std::size_t <a class="code hl_function" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_desc_hash.html#a40f9dbd8489d4ba74430ce58411b12f6">operator()</a>(<span class="keyword">const</span> D3D11_SAMPLER_DESC&amp; desc)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_s_f_w.html#ab8cb832ca884cf7f1a3ae8dd04491ffa">HashBufferContent</a>(&amp;desc, <span class="keyword">sizeof</span>(desc));</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            }</div>
+</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        };</div>
+</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span></div>
+<div class="foldopen" id="foldopen00052" data-start="{" data-end="};">
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html">   52</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a25e9e756bcc305b77cedf9699f65a64b">SamplerManager</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_s_f_w_1_1_resource_manager_base.html">ResourceManagerBase</a>&lt;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            SamplerManager, SamplerHandle, SamplerCreateDesc, SamplerData&gt;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a25e9e756bcc305b77cedf9699f65a64b">   60</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a25e9e756bcc305b77cedf9699f65a64b">SamplerManager</a>(ID3D11Device* device) noexcept : device(device) {}</div>
+<div class="foldopen" id="foldopen00066" data-start="{" data-end="}">
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a2dafdbef87c5b62f6ddae8a9ebfc3dc7">   66</a></span>            std::optional&lt;SamplerHandle&gt; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a2dafdbef87c5b62f6ddae8a9ebfc3dc7">FindExisting</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html">SamplerCreateDesc</a>&amp; desc) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                <span class="keywordflow">if</span> (<span class="keyword">auto</span> it = nameToHandle.find(desc.name); it != nameToHandle.end())</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                    <span class="keywordflow">return</span> it-&gt;second;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            }</div>
+</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span></div>
+<div class="foldopen" id="foldopen00076" data-start="{" data-end="}">
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a3f390e521c49bb2f2ec5f66670ad6fb1">   76</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a3f390e521c49bb2f2ec5f66670ad6fb1">RegisterKey</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html">SamplerCreateDesc</a>&amp; desc, <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_sampler_handle.html">SamplerHandle</a> h) {</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                nameToHandle.emplace(desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html#afbbb98215bde461bc777dc3742ffafd2">name</a>, h);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            }</div>
+</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span></div>
+<div class="foldopen" id="foldopen00085" data-start="{" data-end="}">
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a8f613bdfdfb16fb5bab82e38b780d79e">   85</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html">SamplerData</a> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a8f613bdfdfb16fb5bab82e38b780d79e">CreateResource</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html">SamplerCreateDesc</a>&amp; desc, <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_sampler_handle.html">SamplerHandle</a> h) {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html">SamplerData</a> data{};</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                HRESULT hr = device-&gt;CreateSamplerState(&amp;desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html#a0cc10d9a4b7397a3dfe4b9c0ae96078d">desc</a>, &amp;data.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html#a43d7e26f3adf00c46aa702f8d21dd10e">state</a>);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                <span class="keywordflow">if</span> (FAILED(hr)) {</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                    assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Failed to create sampler&quot;</span>);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                }</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                <span class="keyword">auto</span> node = nameToHandle.emplace(std::make_pair(desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html#afbbb98215bde461bc777dc3742ffafd2">name</a>, h));</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>                data.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html#a372eee916e75defe04d69730a605da48">name</a> = node.first-&gt;first;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                <span class="keywordflow">return</span> data;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            }</div>
+</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span></div>
+<div class="foldopen" id="foldopen00102" data-start="{" data-end="}">
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a3bf8d31d2c5098aa7a026e15f50a9939">  102</a></span>            <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a3bf8d31d2c5098aa7a026e15f50a9939">NormalizeDesc</a>(D3D11_SAMPLER_DESC&amp; d)</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                <span class="comment">// 既定を軽く穴埋め（必要に応じて調整）</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>                <span class="keywordflow">if</span> (d.AddressU == 0) d.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                <span class="keywordflow">if</span> (d.AddressV == 0) d.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                <span class="keywordflow">if</span> (d.AddressW == 0) d.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                <span class="comment">// 境界色未設定なら 0 で初期化</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                <span class="keywordflow">if</span> (d.AddressU == D3D11_TEXTURE_ADDRESS_BORDER ||</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                    d.AddressV == D3D11_TEXTURE_ADDRESS_BORDER ||</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                    d.AddressW == D3D11_TEXTURE_ADDRESS_BORDER) {</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>                    <span class="comment">// どれかが BORDER なら念のため全部埋める</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 4; ++i) d.BorderColor[i] = 0.0f;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>                }</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                <span class="keywordflow">if</span> (d.ComparisonFunc == D3D11_COMPARISON_NEVER &amp;&amp;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>                    (d.Filter == D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR ||</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>                        d.Filter == D3D11_FILTER_COMPARISON_MIN_MAG_MIP_POINT ||</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>                        d.Filter == D3D11_FILTER_COMPARISON_ANISOTROPIC)) {</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>                    <span class="comment">// 比較フィルタなのに ComparisonFunc が未設定っぽい場合、LESS_EQUALに</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>                    d.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>                }</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                <span class="keywordflow">if</span> ((d.Filter == D3D11_FILTER_ANISOTROPIC ||</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>                    d.Filter == D3D11_FILTER_COMPARISON_ANISOTROPIC) &amp;&amp;</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>                    d.MaxAnisotropy == 0) {</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>                    d.MaxAnisotropy = 8;</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>                }</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            }</div>
+</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span></div>
+<div class="foldopen" id="foldopen00136" data-start="{" data-end="}">
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a0ed1bfb6416fc9966875a718b2cc8a2a">  136</a></span>            <span class="keyword">static</span> std::string <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a0ed1bfb6416fc9966875a718b2cc8a2a">Hex64</a>(uint64_t v) {</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>                <span class="keywordtype">char</span> buf[17];</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>                snprintf(buf, <span class="keyword">sizeof</span>(buf), <span class="stringliteral">&quot;%016llx&quot;</span>, <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span><span class="keyword">&gt;</span>(v));</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>                <span class="keywordflow">return</span> std::string(buf);</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            }</div>
+</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span></div>
+<div class="foldopen" id="foldopen00146" data-start="{" data-end="}">
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#abd6f32fb6f569e41f33eebeb43d67021">  146</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_sampler_handle.html">SamplerHandle</a> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#abd6f32fb6f569e41f33eebeb43d67021">AddWithDesc</a>(<span class="keyword">const</span> D3D11_SAMPLER_DESC&amp; in)</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>            {</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                D3D11_SAMPLER_DESC desc = in;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>                <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a3bf8d31d2c5098aa7a026e15f50a9939">NormalizeDesc</a>(desc);</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                <span class="comment">// 1) キャッシュヒットなら再利用（+1）</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>                {</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>                    std::scoped_lock lock(cacheMutex);</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>                    <span class="keyword">auto</span> it = samplerCache.find(desc);</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                    <span class="keywordflow">if</span> (it != samplerCache.end()) {</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>                        <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#ae15f0d5d2bed3eb6c9c6d7b6864d78f7">AddRef</a>(it-&gt;second);</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>                        <span class="keywordflow">return</span> it-&gt;second;</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>                    }</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>                }</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>                <span class="comment">// 2) 新規作成（名前をハッシュから生成）</span></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>                <span class="keyword">const</span> <span class="keywordtype">size_t</span> h = <a class="code hl_function" href="namespace_s_f_w.html#ab8cb832ca884cf7f1a3ae8dd04491ffa">HashBufferContent</a>(&amp;desc, <span class="keyword">sizeof</span>(desc));</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>                std::string genName = <span class="stringliteral">&quot;samp_&quot;</span> + <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a0ed1bfb6416fc9966875a718b2cc8a2a">Hex64</a>(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(h));</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_sampler_handle.html">SamplerHandle</a> handle;</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                <a class="code hl_enumvalue" href="namespace_s_f_w.html#a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9">Add</a>({ genName, desc }, handle); <span class="comment">// Add は ref=1 を返す契約</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>                <span class="comment">// 3) キャッシュ登録（逆引きも）</span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                {</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                    std::scoped_lock lock(cacheMutex);</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>                    samplerCache.emplace(desc, handle);</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                    handleToDesc.emplace(handle.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_sampler_handle.html#a2a4a06eef339ade890e2f2cfef69f258">index</a>, desc);</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                }</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                <span class="keywordflow">return</span> handle;</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>            }</div>
+</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span></div>
+<div class="foldopen" id="foldopen00182" data-start="{" data-end="}">
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a0a1697ee7b9abf30318e221894fdd78b">  182</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_sampler_handle.html">SamplerHandle</a> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a0a1697ee7b9abf30318e221894fdd78b">FindByName</a>(<span class="keyword">const</span> std::string&amp; name)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                <span class="keyword">auto</span> it = nameToHandle.find(name);</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>                <span class="keywordflow">if</span> (it != nameToHandle.end()) <span class="keywordflow">return</span> it-&gt;second;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Sampler not found&quot;</span>);</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>                <span class="keywordflow">return</span> {};</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>            }</div>
+</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span></div>
+<div class="foldopen" id="foldopen00192" data-start="{" data-end="}">
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a6d8c7fd763179dfe9222e2895bda16f7">  192</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a6d8c7fd763179dfe9222e2895bda16f7">RemoveFromCaches</a>(uint32_t idx) {</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>                <span class="keyword">auto</span>&amp; d = <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[idx].data;</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>                <span class="keywordflow">if</span> (!std::string(d.name).empty()) nameToHandle.erase(std::string(d.name));</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                <span class="keywordflow">if</span> (<span class="keyword">auto</span> k = handleToDesc.find(idx); k != handleToDesc.end()) {</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                    samplerCache.erase(k-&gt;second);</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>                    handleToDesc.erase(k);</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                }</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>            }</div>
+</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span></div>
+<div class="foldopen" id="foldopen00205" data-start="{" data-end="}">
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a39136eb893050a7835838316c30a75a6">  205</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a39136eb893050a7835838316c30a75a6">DestroyResource</a>(uint32_t idx, uint64_t <span class="comment">/*currentFrame*/</span>) {</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[idx].data.state.Reset();</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>            }</div>
+</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>            ID3D11Device* device;</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>            std::unordered_map&lt;D3D11_SAMPLER_DESC, SamplerHandle, SamplerDescHash&gt; samplerCache;</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>            std::unordered_map&lt;uint32_t, D3D11_SAMPLER_DESC&gt; handleToDesc;</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>            std::unordered_map&lt;std::string, SamplerHandle&gt; nameToHandle;</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>            std::mutex cacheMutex; <span class="comment">// samplerCache / handleToDesc を守る</span></div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>        };</div>
+</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    }</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>}</div>
+<div class="ttc" id="a__dx11inc_8h_html"><div class="ttname"><a href="__dx11inc_8h.html">_dx11inc.h</a></div><div class="ttdoc">DirectX 11関連のインクルードとユーティリティを定義するヘッダーファイル</div></div>
+<div class="ttc" id="a_d_x11_sampler_manager_8h_html_aed9276d5bc8dd153e005c26e569d1fe2"><div class="ttname"><a href="_d_x11_sampler_manager_8h.html#aed9276d5bc8dd153e005c26e569d1fe2">operator==</a></div><div class="ttdeci">bool operator==(const D3D11_SAMPLER_DESC &amp;a, const D3D11_SAMPLER_DESC &amp;b)</div><div class="ttdoc">D3D11_SAMPLER_DESCの比較演算子</div><div class="ttdef"><b>Definition</b> <a href="#l00019">DX11SamplerManager.h:19</a></div></div>
+<div class="ttc" id="a_resouce_manager_base_8hpp_html"><div class="ttname"><a href="_resouce_manager_base_8hpp.html">ResouceManagerBase.hpp</a></div><div class="ttdoc">リソースマネージャーの基底クラス</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager_html_a0a1697ee7b9abf30318e221894fdd78b"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a0a1697ee7b9abf30318e221894fdd78b">SFW::Graphics::DX11::SamplerManager::FindByName</a></div><div class="ttdeci">SamplerHandle FindByName(const std::string &amp;name) const</div><div class="ttdoc">名前でサンプラーステートを検索する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00182">DX11SamplerManager.h:182</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager_html_a0ed1bfb6416fc9966875a718b2cc8a2a"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a0ed1bfb6416fc9966875a718b2cc8a2a">SFW::Graphics::DX11::SamplerManager::Hex64</a></div><div class="ttdeci">static std::string Hex64(uint64_t v)</div><div class="ttdoc">16進の短い文字列を作るヘルパ（任意）</div><div class="ttdef"><b>Definition</b> <a href="#l00136">DX11SamplerManager.h:136</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager_html_a25e9e756bcc305b77cedf9699f65a64b"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a25e9e756bcc305b77cedf9699f65a64b">SFW::Graphics::DX11::SamplerManager::SamplerManager</a></div><div class="ttdeci">SamplerManager(ID3D11Device *device) noexcept</div><div class="ttdoc">コンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00060">DX11SamplerManager.h:60</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager_html_a2dafdbef87c5b62f6ddae8a9ebfc3dc7"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a2dafdbef87c5b62f6ddae8a9ebfc3dc7">SFW::Graphics::DX11::SamplerManager::FindExisting</a></div><div class="ttdeci">std::optional&lt; SamplerHandle &gt; FindExisting(const SamplerCreateDesc &amp;desc) noexcept</div><div class="ttdoc">既存のサンプラーステートを名前で検索する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00066">DX11SamplerManager.h:66</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager_html_a39136eb893050a7835838316c30a75a6"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a39136eb893050a7835838316c30a75a6">SFW::Graphics::DX11::SamplerManager::DestroyResource</a></div><div class="ttdeci">void DestroyResource(uint32_t idx, uint64_t)</div><div class="ttdoc">サンプラーステートを破棄する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00205">DX11SamplerManager.h:205</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager_html_a3bf8d31d2c5098aa7a026e15f50a9939"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a3bf8d31d2c5098aa7a026e15f50a9939">SFW::Graphics::DX11::SamplerManager::NormalizeDesc</a></div><div class="ttdeci">static void NormalizeDesc(D3D11_SAMPLER_DESC &amp;d)</div><div class="ttdoc">D3D11_SAMPLER_DESCの正規化を行う関数</div><div class="ttdef"><b>Definition</b> <a href="#l00102">DX11SamplerManager.h:102</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager_html_a3f390e521c49bb2f2ec5f66670ad6fb1"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a3f390e521c49bb2f2ec5f66670ad6fb1">SFW::Graphics::DX11::SamplerManager::RegisterKey</a></div><div class="ttdeci">void RegisterKey(const SamplerCreateDesc &amp;desc, SamplerHandle h)</div><div class="ttdoc">サンプラーステートを名前で登録する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00076">DX11SamplerManager.h:76</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager_html_a6d8c7fd763179dfe9222e2895bda16f7"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a6d8c7fd763179dfe9222e2895bda16f7">SFW::Graphics::DX11::SamplerManager::RemoveFromCaches</a></div><div class="ttdeci">void RemoveFromCaches(uint32_t idx)</div><div class="ttdoc">キャッシュからサンプラーステートを削除する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00192">DX11SamplerManager.h:192</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager_html_a8f613bdfdfb16fb5bab82e38b780d79e"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a8f613bdfdfb16fb5bab82e38b780d79e">SFW::Graphics::DX11::SamplerManager::CreateResource</a></div><div class="ttdeci">SamplerData CreateResource(const SamplerCreateDesc &amp;desc, SamplerHandle h)</div><div class="ttdoc">サンプラーステートを作成する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00085">DX11SamplerManager.h:85</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager_html_abd6f32fb6f569e41f33eebeb43d67021"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#abd6f32fb6f569e41f33eebeb43d67021">SFW::Graphics::DX11::SamplerManager::AddWithDesc</a></div><div class="ttdeci">SamplerHandle AddWithDesc(const D3D11_SAMPLER_DESC &amp;in)</div><div class="ttdoc">D3D11_SAMPLER_DESCからサンプラーステートを取得または作成する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00146">DX11SamplerManager.h:146</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a></div><div class="ttdoc">リソースマネージャーの基底クラス。主にRenderer系で使用する。</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00023">ResouceManagerBase.hpp:23</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ab06811456bf9d3e86d400be7459a91ca"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">SFW::ResourceManagerBase&lt; SamplerManager, SamplerHandle, SamplerCreateDesc, SamplerData &gt;::slots</a></div><div class="ttdeci">std::vector&lt; Slot &gt; slots</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00352">ResouceManagerBase.hpp:352</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ae15f0d5d2bed3eb6c9c6d7b6864d78f7"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ae15f0d5d2bed3eb6c9c6d7b6864d78f7">SFW::ResourceManagerBase&lt; SamplerManager, SamplerHandle, SamplerCreateDesc, SamplerData &gt;::AddRef</a></div><div class="ttdeci">void AddRef(SamplerHandle h)</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00138">ResouceManagerBase.hpp:138</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_1_1_d_x11_html"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">SFW::Graphics::DX11</a></div><div class="ttdef"><b>Definition</b> <a href="_d_x11_graphics_8h_source.html#l00034">DX11Graphics.h:35</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html_a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9"><div class="ttname"><a href="namespace_s_f_w.html#a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9">SFW::EApplyLevelSystemOption::Add</a></div><div class="ttdeci">@ Add</div><div class="ttdef"><b>Definition</b> <a href="_world_8hpp_source.html#l00017">World.hpp:17</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html_ab8cb832ca884cf7f1a3ae8dd04491ffa"><div class="ttname"><a href="namespace_s_f_w.html#ab8cb832ca884cf7f1a3ae8dd04491ffa">SFW::HashBufferContent</a></div><div class="ttdeci">size_t HashBufferContent(const void *data, size_t size)</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00375">ResouceManagerBase.hpp:375</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html">SFW::Graphics::DX11::SamplerCreateDesc</a></div><div class="ttdoc">DirectX 11のサンプラーステートを管理するクラス</div><div class="ttdef"><b>Definition</b> <a href="#l00030">DX11SamplerManager.h:30</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc_html_a0cc10d9a4b7397a3dfe4b9c0ae96078d"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html#a0cc10d9a4b7397a3dfe4b9c0ae96078d">SFW::Graphics::DX11::SamplerCreateDesc::desc</a></div><div class="ttdeci">D3D11_SAMPLER_DESC desc</div><div class="ttdef"><b>Definition</b> <a href="#l00032">DX11SamplerManager.h:32</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc_html_afbbb98215bde461bc777dc3742ffafd2"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html#afbbb98215bde461bc777dc3742ffafd2">SFW::Graphics::DX11::SamplerCreateDesc::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition</b> <a href="#l00031">DX11SamplerManager.h:31</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html">SFW::Graphics::DX11::SamplerData</a></div><div class="ttdoc">DirectX 11のサンプラーステートのデータ</div><div class="ttdef"><b>Definition</b> <a href="#l00037">DX11SamplerManager.h:37</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data_html_a372eee916e75defe04d69730a605da48"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html#a372eee916e75defe04d69730a605da48">SFW::Graphics::DX11::SamplerData::name</a></div><div class="ttdeci">std::string_view name</div><div class="ttdef"><b>Definition</b> <a href="#l00039">DX11SamplerManager.h:39</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data_html_a43d7e26f3adf00c46aa702f8d21dd10e"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html#a43d7e26f3adf00c46aa702f8d21dd10e">SFW::Graphics::DX11::SamplerData::state</a></div><div class="ttdeci">ComPtr&lt; ID3D11SamplerState &gt; state</div><div class="ttdef"><b>Definition</b> <a href="#l00038">DX11SamplerManager.h:38</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_desc_hash_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_desc_hash.html">SFW::Graphics::DX11::SamplerDescHash</a></div><div class="ttdoc">D3D11_SAMPLER_DESCのハッシュ関数</div><div class="ttdef"><b>Definition</b> <a href="#l00044">DX11SamplerManager.h:44</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_desc_hash_html_a40f9dbd8489d4ba74430ce58411b12f6"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_desc_hash.html#a40f9dbd8489d4ba74430ce58411b12f6">SFW::Graphics::DX11::SamplerDescHash::operator()</a></div><div class="ttdeci">std::size_t operator()(const D3D11_SAMPLER_DESC &amp;desc) const</div><div class="ttdef"><b>Definition</b> <a href="#l00045">DX11SamplerManager.h:45</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_sampler_handle_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_sampler_handle.html">SFW::Graphics::SamplerHandle</a></div><div class="ttdoc">サンプラーハンドル構造体</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00047">RenderTypes.h:47</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_sampler_handle_html_a2a4a06eef339ade890e2f2cfef69f258"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_sampler_handle.html#a2a4a06eef339ade890e2f2cfef69f258">SFW::Graphics::SamplerHandle::index</a></div><div class="ttdeci">uint32_t index</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00047">RenderTypes.h:47</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="dir_b1727ce268e62d033d50a1c50b50897f.html">DX11</a></li><li class="navelem"><a href="_d_x11_sampler_manager_8h.html">DX11SamplerManager.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,106 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Debug/assert\+\_\+config.h ファイル}
+\hypertarget{assert__config_8h}{}\label{assert__config_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/assert\_config.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/assert\_config.h}}
+
+
+デバッグ用アサート設定ヘッダ  
+
+
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$cstdio$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_debug}{SFW\+::\+Debug}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{マクロ定義}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{assert__config_8h_a0f722bf86505c5431e71505f46b5fd21}{DEBUG\+\_\+\+BREAK}}()
+\item 
+\#define \mbox{\hyperlink{assert__config_8h_a7c360e1bd29ee4fa83ec85935d37dbeb}{SFW\+\_\+\+ASSERT}}(expr)
+\item 
+\#define \mbox{\hyperlink{assert__config_8h_aed65e65b3c8cdf295f24f5dcbe7002dd}{SFW\+\_\+\+VERIFY}}(expr)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ad9176b9ec7bce1195c82555b0ca97f34}{SFW\+::\+Debug\+::\+Report\+Assert\+Failure}} (const char \texorpdfstring{$\ast$}{*}expr, const char \texorpdfstring{$\ast$}{*}file, int line, const char \texorpdfstring{$\ast$}{*}msg=nullptr)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+デバッグ用アサート設定ヘッダ 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+December 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{assert__config_8h_source}{assert\+\_\+config.\+h}} に定義があります。
+
+
+
+\label{doc-define-members}
+\Hypertarget{assert__config_8h_doc-define-members}
+\doxysubsection{マクロ定義詳解}
+\Hypertarget{assert__config_8h_a0f722bf86505c5431e71505f46b5fd21}\index{assert\_config.h@{assert\_config.h}!DEBUG\_BREAK@{DEBUG\_BREAK}}
+\index{DEBUG\_BREAK@{DEBUG\_BREAK}!assert\_config.h@{assert\_config.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_BREAK}{DEBUG\_BREAK}}
+{\footnotesize\ttfamily \label{assert__config_8h_a0f722bf86505c5431e71505f46b5fd21} 
+\#define DEBUG\+\_\+\+BREAK(\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+{\bfseries 値\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{std::abort()}
+
+\end{DoxyCode}
+
+
+ \mbox{\hyperlink{assert__config_8h_source}{assert\+\_\+config.\+h}} の \mbox{\hyperlink{assert__config_8h_source_l00025}{25}} 行目に定義があります。
+
+\Hypertarget{assert__config_8h_a7c360e1bd29ee4fa83ec85935d37dbeb}\index{assert\_config.h@{assert\_config.h}!SFW\_ASSERT@{SFW\_ASSERT}}
+\index{SFW\_ASSERT@{SFW\_ASSERT}!assert\_config.h@{assert\_config.h}}
+\doxysubsubsection{\texorpdfstring{SFW\_ASSERT}{SFW\_ASSERT}}
+{\footnotesize\ttfamily \label{assert__config_8h_a7c360e1bd29ee4fa83ec85935d37dbeb} 
+\#define SFW\+\_\+\+ASSERT(\begin{DoxyParamCaption}\item[{}]{expr}{}\end{DoxyParamCaption})}
+
+{\bfseries 値\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ if\ (!(expr))\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ::SFW::Debug::ReportAssertFailure(\#expr,\ \_\_FILE\_\_,\ \_\_LINE\_\_);\ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_BREAK();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+
+
+ \mbox{\hyperlink{assert__config_8h_source}{assert\+\_\+config.\+h}} の \mbox{\hyperlink{assert__config_8h_source_l00033}{33}} 行目に定義があります。
+
+\Hypertarget{assert__config_8h_aed65e65b3c8cdf295f24f5dcbe7002dd}\index{assert\_config.h@{assert\_config.h}!SFW\_VERIFY@{SFW\_VERIFY}}
+\index{SFW\_VERIFY@{SFW\_VERIFY}!assert\_config.h@{assert\_config.h}}
+\doxysubsubsection{\texorpdfstring{SFW\_VERIFY}{SFW\_VERIFY}}
+{\footnotesize\ttfamily \label{assert__config_8h_aed65e65b3c8cdf295f24f5dcbe7002dd} 
+\#define SFW\+\_\+\+VERIFY(\begin{DoxyParamCaption}\item[{}]{expr}{}\end{DoxyParamCaption})}
+
+{\bfseries 値\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{do}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ (!(expr))\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ::SFW::Debug::ReportAssertFailure(\#expr,\ \_\_FILE\_\_,\ \_\_LINE\_\_);\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ DEBUG\_BREAK();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+
+
+ \mbox{\hyperlink{assert__config_8h_source}{assert\+\_\+config.\+h}} の \mbox{\hyperlink{assert__config_8h_source_l00048}{48}} 行目に定義があります。
+

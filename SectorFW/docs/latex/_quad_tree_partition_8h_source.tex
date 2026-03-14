@@ -1,0 +1,783 @@
+\doxysection{Quad\+Tree\+Partition.\+h}
+\hypertarget{_quad_tree_partition_8h_source}{}\label{_quad_tree_partition_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/QuadTreePartition.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/QuadTreePartition.h}}
+\mbox{\hyperlink{_quad_tree_partition_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{component_8hpp}{ECS/component.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{partition_8hpp}{partition.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_spatial_chunk_registry_service_8h}{SpatialChunkRegistryService.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00022}00022\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_morton_8h}{../Util/Morton.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00023}00023\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_a_a_b_b_8hpp}{../Math/AABB.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00025}00025\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00026}00026\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00030}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition}{00030}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_af76e927022bbd8022cb10cfae6f4cc80}{QuadTreePartition}}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00031}00031\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00032}00032\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00033}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{00033}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_acaea690eaef2927454b6001b882799e8}{Math::AABB2f}};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00034}\mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle_a99bfa6deb4ea736587f96fbe0f1df46d}{00034}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle}{Circle}}\ \{\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle_a99bfa6deb4ea736587f96fbe0f1df46d}{cx}},\ \mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle_a6dedb7ee5c68a9c169758743b70e8ed5}{cy}},\ \mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle_ab3da6d189b5d4fe5184c5bc1e0d822ae}{r}};\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00036}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38a601560b94fbb188919dd1d36c8ab70a4}{00036}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38}{ZPositive}}\ \{\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38a601560b94fbb188919dd1d36c8ab70a4}{North}},\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38a263d7b2cf53802c9ed127b718c0bf9fd}{South}}\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{comment}{//========================================================================}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Z+が北か南か}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00039}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a7750e1edb9d139a1963b3a80e9053bc6}{00039}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38}{ZPositive}}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a7750e1edb9d139a1963b3a80e9053bc6}{kZPositive}}\ =\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38a601560b94fbb188919dd1d36c8ab70a4}{ZPositive::North}};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \textcolor{comment}{//========================================================================}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{comment}{//統合するかチェック間隔}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00043}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a2abe4e9e406dc7fafa366139fb0a7e8f}{00043}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a2abe4e9e406dc7fafa366139fb0a7e8f}{coalesceInterval}}\ =\ 10.0;\ \textcolor{comment}{//\ 秒}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00051}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_af76e927022bbd8022cb10cfae6f4cc80}{00051}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_af76e927022bbd8022cb10cfae6f4cc80}{QuadTreePartition}}(}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ originWS,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\ worldW,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\ worldH,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ minLeafSize,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ maxEntitiesPerLeaf\ =\ 1024)\ noexcept}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ :\ levelOriginWS(originWS)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ m\_worldW(\mbox{\hyperlink{namespacestd}{std}}::max<\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}>(1,\ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}(worldW*\ minLeafSize)))}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ m\_worldH(\mbox{\hyperlink{namespacestd}{std}}::max<\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}>(1,\ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}(worldH*\ minLeafSize)))}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ m\_minLeaf(\mbox{\hyperlink{namespacestd}{std}}::max<\textcolor{keywordtype}{float}>(1.f,\ minLeafSize))}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ m\_maxPerLeafCount(\mbox{\hyperlink{namespacestd}{std}}::max<uint32\_t>(1,\ maxEntitiesPerLeaf))}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ m\_root\ =\ std::make\_unique<Node>();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ m\_root-\/>depth\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ m\_root-\/>bounds\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}(0.f,\ 0.f),\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}(\textcolor{keywordtype}{float}(m\_worldW),\ \textcolor{keywordtype}{float}(m\_worldH))\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ m\_leafCount\ =\ 1;\ \textcolor{comment}{//\ 葉としてスタート}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00072}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a3eafe2fa7358f20d2817dbaadb04ad9b}{00072}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a3eafe2fa7358f20d2817dbaadb04ad9b}{Update}}(\textcolor{keywordtype}{double}\ deltaTime)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ m\_coalesceTimer\ +=\ deltaTime;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_coalesceTimer\ >=\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a2abe4e9e406dc7fafa366139fb0a7e8f}{coalesceInterval}})\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_coalesceTimer\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ CoalesceUnderutilized();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00087}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a07a549b625d374ba201009d95f0c3ef1}{00087}}\ \ \ \ \ \ \ \ \ std::optional<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a07a549b625d374ba201009d95f0c3ef1}{GetChunk}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ wp,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\&\ reg,\ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}\ level,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOutOfBoundsPolicy}}\ policy\ =\ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOutOfBoundsPolicy::ClampToEdge}})\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ localPos\ =\ wp\ -\/\ levelOriginWS;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!inBounds(localPos.x,\ localPos.z))\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (policy\ ==\ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ead98ac12774fca5c3cbaffe276840c55f}{EOutOfBoundsPolicy::Reject}})\ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clamp\ to\ [0,\ W/H)}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ localPos.x\ =\ std::clamp(localPos.x,\ 0.f,\ \textcolor{keywordtype}{float}(m\_worldW)\ -\/\ 1e-\/6f);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ localPos.z\ =\ std::clamp(localPos.z,\ 0.f,\ \textcolor{keywordtype}{float}(m\_worldH)\ -\/\ 1e-\/6f);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ Node*\ leaf\ =\ descendToLeaf(*m\_root,\ localPos.x,\ localPos.z,\ \textcolor{comment}{/*createIfMissing=*/}\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ EnsureKeyRegisteredForLeaf(*leaf,\ reg,\ level);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&leaf-\/>chunk;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00107}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a4addc717d3493a91bc69dcdf2699a770}{00107}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS::EntityManager}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a4addc717d3493a91bc69dcdf2699a770}{GetGlobalEntityManager}}()\ noexcept\ \{\ \textcolor{keywordflow}{return}\ m\_global;\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00113}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a5d6312787b2a17d088378457e0909276}{00113}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a5d6312787b2a17d088378457e0909276}{RegisterAllChunks}}(\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\&\ reg,\ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}\ level)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ forEachLeaf([\&](Node\&\ lf)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ [ix,\ iy]\ =\ leafIndex(lf);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{SpatialChunkKey}}\ key\ =\ MakeQuadKey(level,\ lf.depth,\ ix,\ iy,\ \textcolor{comment}{/*gen=*/}lf.generation);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lf.chunk.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_abab8fbfd926eb617976eebcfe0500a55}{SetNodeKey}}(key);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reg.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_af16975058127298f906e43cb35489f8c}{RegisterOwner}}(key,\ \&lf.chunk);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00121}00121\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00126}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a3c205d857c8df14f27a9176f07f96ad4}{00126}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a3c205d857c8df14f27a9176f07f96ad4}{GetEntityNum}}()\ const\ noexcept}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00127}00127\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ n\ =\ m\_global.GetEntityCount();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ forEachLeaf([\&](\textcolor{keyword}{const}\ Node\&\ lf)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ +=\ lf.chunk.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a2562539212bdebf93dff9bdb39ff43ec}{GetEntityManager}}().\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a8df08b9c7042c6c3c05d4076591ee454}{GetEntityCount}}();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ n;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00139}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a7f37de7e6aa4254a37f1b371cc28a525}{00139}}\ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a7f37de7e6aa4254a37f1b371cc28a525}{CullChunks}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&\ fr)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00140}00140\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ out.reserve(64);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_root)\ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ cullRecursive(*m\_root,\ fr,\ -\/m\_minLeaf,\ m\_minLeaf,\ out);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00146}00146\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00148}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a0736e807c6117fbd82703308dd7578e1}{00148}}\ \ \ \ \ \ \ \ \ std::vector<const\ SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a0736e807c6117fbd82703308dd7578e1}{CullChunks}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&\ fr)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00149}00149\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<const\ SpatialChunk*>\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ out.reserve(64);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_root)\ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ cullRecursive(*m\_root,\ fr,\ -\/m\_minLeaf,\ m\_minLeaf,\ out);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00155}00155\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00157}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_afd3621e82bfb79a9816bcf0bd8db3f39}{00157}}\ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_afd3621e82bfb79a9816bcf0bd8db3f39}{CullChunks}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ center,\ \textcolor{keywordtype}{float}\ radius)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_root)\ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!std::isfinite(radius)\ ||\ radius\ <=\ 0.0f)\ radius\ =\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ r\ =\ (radius\ <\ 0.0f)\ ?\ 0.0f\ :\ radius;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ r2\ =\ r\ *\ r;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ localCenter\ =\ center\ -\/\ levelOriginWS;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ dist2\_point\_aabb\_xz\ =\ [\&](\textcolor{keyword}{const}\ Node\&\ n)\ -\/>\ \textcolor{keywordtype}{float}\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ clamp\ =\ [](\textcolor{keywordtype}{float}\ v,\ \textcolor{keywordtype}{float}\ lo,\ \textcolor{keywordtype}{float}\ hi)\ \{\ \textcolor{keywordflow}{return}\ v\ <\ lo\ ?\ lo\ :\ (v\ >\ hi\ ?\ hi\ :\ v);\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ qx\ =\ clamp(localCenter.x,\ n.bounds.lb.x,\ n.bounds.ub.x);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ qz\ =\ clamp(localCenter.z,\ n.bounds.lb.y,\ n.bounds.ub.y);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ dx\ =\ localCenter.x\ -\/\ qx,\ dz\ =\ localCenter.z\ -\/\ qz;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ dx\ *\ dx\ +\ dz\ *\ dz;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<void(\textcolor{keyword}{const}\ Node\&)>\ rec\ =\ [\&](\textcolor{keyword}{const}\ Node\&\ n)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dist2\_point\_aabb\_xz(n)\ >\ r2)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n.isLeaf())\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n.chunk.GetEntityManager().GetEntityCount()\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back(\textcolor{keyword}{const\_cast<}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\textcolor{keyword}{>}(\&n.chunk));}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (n.child[i])\ rec(*n.child[i]);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ rec(*m\_root);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00190}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_aa8eb9b49e33a173d18a95119d8937fbf}{00190}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_aa8eb9b49e33a173d18a95119d8937fbf}{Dist2PointAABB3D}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ p,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\&\ c,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\&\ e)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ clamp\ =\ [](\textcolor{keywordtype}{float}\ v,\ \textcolor{keywordtype}{float}\ lo,\ \textcolor{keywordtype}{float}\ hi)\ \{\ \textcolor{keywordflow}{return}\ v\ <\ lo\ ?\ lo\ :\ (v\ >\ hi\ ?\ hi\ :\ v);\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ qx\ =\ clamp(p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ -\/\ e.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}},\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ +\ e.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ qz\ =\ clamp(p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}},\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ -\/\ e.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}},\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ +\ e.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ dx\ =\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ -\/\ qx,\ dz\ =\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ -\/\ qz;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ dx\ *\ dx\ +\ dz\ *\ dz;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00200}00200\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00201}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ad755e1e3a1449de322a68df7225b8769}{00201}}\ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ad755e1e3a1449de322a68df7225b8769}{CullChunksNear}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&\ fr,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ camPos,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ maxCount\ =\ (std::numeric\_limits<size\_t>::max)())\ const\ noexcept}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00204}00204\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }Item\ \{\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\ sc;\ \textcolor{keywordtype}{float}\ d2;\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00206}00206\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<Item>\ items;\ items.reserve(128);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_root)\ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00209}00209\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 可視葉\ (chunk,\ bounds)\ を同時に収集する内部再帰}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<void(\textcolor{keyword}{const}\ Node\&)>\ rec\ =\ [\&](\textcolor{keyword}{const}\ Node\&\ n)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!nodeIntersectsFrustum(n,\ fr,\ -\/m\_minLeaf,\ m\_minLeaf))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n.isLeaf())\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\ c\ =\ (n.bounds.lb\ +\ n.bounds.ub)\ *\ 0.5f;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ +=\ levelOriginWS.x;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ +=\ levelOriginWS.z;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\ e\ =\ (n.bounds.ub\ -\/\ n.bounds.lb)\ *\ 0.5f;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ d2\ =\ this-\/>\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_aa8eb9b49e33a173d18a95119d8937fbf}{Dist2PointAABB3D}}(camPos,\ c,\ e);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n.chunk.GetEntityManager().GetEntityCount()\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ items.push\_back(\{\ \textcolor{keyword}{const\_cast<}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\textcolor{keyword}{>}(\&n.chunk),\ d2\ \});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (n.child[i])\ rec(*n.child[i]);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ rec(*m\_root);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00226}00226\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (items.empty())\ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ K\ =\ (std::min)(maxCount,\ items.size());}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ std::nth\_element(items.begin(),\ items.begin()\ +\ K,\ items.end(),}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [](\textcolor{keyword}{const}\ Item\&\ a,\ \textcolor{keyword}{const}\ Item\&\ b)\ \{\ return\ a.d2\ <\ b.d2;\ \});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ items.resize(K);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ std::sort(items.begin(),\ items.end(),}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [](\textcolor{keyword}{const}\ Item\&\ a,\ \textcolor{keyword}{const}\ Item\&\ b)\ \{\ return\ a.d2\ <\ b.d2;\ \});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00234}00234\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ out;\ out.reserve(K);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ it\ :\ items)\ out.push\_back(it.sc);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00238}00238\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00239}00239\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00240}00240\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ F>}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00241}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a14aff56bbeea7af3c19c7afdc2420cb8}{00241}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a14aff56bbeea7af3c19c7afdc2420cb8}{CullChunks}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&\ fr,\ \textcolor{keywordtype}{float}\ ymin,\ \textcolor{keywordtype}{float}\ ymax,\ F\&\&\ f)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00242}00242\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_root)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ cullRecursive(*m\_root,\ fr,\ ymin,\ ymax,\ std::forward<F>(f));}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00245}00245\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00246}00246\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00247}00247\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ F>}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00248}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ad969039352094b580fc794ff11c3058d}{00248}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ad969039352094b580fc794ff11c3058d}{CullChunks}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&\ fr,\ \textcolor{keywordtype}{float}\ ymin,\ \textcolor{keywordtype}{float}\ ymax,\ F\&\&\ f)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00249}00249\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_root)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ cullRecursive(*m\_root,\ fr,\ ymin,\ ymax,\ std::forward<F>(f));}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00252}00252\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00263}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a85ea5848721774fbaf9ec9424f9691cc}{00263}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a85ea5848721774fbaf9ec9424f9691cc}{CullChunkLine}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&\ fr,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ cp,\ \textcolor{keywordtype}{float}\ hy,\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug::LineVertex}}*\ outLine,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ capacity,\ uint32\_t\ displayCount)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_root\ ||\ capacity\ <\ 6\ ||\ displayCount\ ==\ 0)\ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00268}00268\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<AABB>\ boxes;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ boxes.reserve(64);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00271}00271\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ cullRecursive(*m\_root,\ fr,\ cp.y\ -\/\ hy,\ cp.y\ +\ hy,\ boxes);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00273}00273\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }Item\ \{\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}}\ box;\ \textcolor{keywordtype}{float}\ dist;\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<Item>\ items;\ items.reserve(boxes.size());}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ clampToBox\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}}\&\ b,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ p)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::clamp(p.x,\ b.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ +\ levelOriginWS.x,\ b.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329}{ub}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ +\ levelOriginWS.x),}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::clamp(p.z,\ b.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ +\ levelOriginWS.z,\ b.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329}{ub}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ +\ levelOriginWS.z)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ b\ :\ boxes)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\ q\ =\ clampToBox(b,\ cp);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\ vec\{\ q.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ -\/\ cp.x,\ q.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ -\/\ cp.z\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ d\ =\ vec.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a48c92c09338aff69cdb3d3d8730c51b3}{length}}();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ items.push\_back(\{\ b,\ d\ \});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ std::nth\_element(items.begin(),\ items.begin()\ +\ std::min<size\_t>(displayCount,\ items.size()),\ items.end(),}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [](\textcolor{keyword}{const}\ Item\&\ a,\ \textcolor{keyword}{const}\ Item\&\ b)\ \{\ return\ a.dist\ <\ b.dist;\ \});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ useN\ =\ std::min<size\_t>(displayCount,\ items.size());}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00291}00291\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3)\ 色は距離グラデ（近=白→遠=黒）}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ maxD\ =\ 0.f;\ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ useN;\ ++i)\ maxD\ =\ (std::max)(maxD,\ items[i].dist);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (maxD\ <=\ 1e-\/6f)\ maxD\ =\ 1.f;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00295}00295\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ written\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ box\ :\ boxes)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\ center\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\{\ levelOriginWS.x,\ levelOriginWS.z\ \}\ +\ box.center();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\ extent\ =\ box.size()\ *\ 0.5f;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00300}00300\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\ vec\{\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ -\/\ cp.x,\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ -\/\ cp.z\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ len\ =\ vec.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a48c92c09338aff69cdb3d3d8730c51b3}{length}}();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00303}00303\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (len\ >\ maxD)\ \textcolor{keywordflow}{continue};\ \textcolor{comment}{//\ 表示距離外}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00305}00305\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (capacity\ -\/\ written\ <\ 8)\ \textcolor{keywordflow}{break};\ \textcolor{comment}{//\ 必須：容量チェック}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00307}00307\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ rgba\ =\ Math::LerpColor(0xFFFFFFFFu,\ 0x00000000u,\ len\ /\ maxD);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00309}00309\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[written\ +\ 0]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}},\ cp.y\ -\/\ hy,\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}),\ rgba\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[written\ +\ 1]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}},\ cp.y\ +\ hy,\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}),\ rgba\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[written\ +\ 2]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}},\ cp.y\ -\/\ hy,\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}),\ rgba\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[written\ +\ 3]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}},\ cp.y\ +\ hy,\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}),\ rgba\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[written\ +\ 4]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}},\ cp.y\ -\/\ hy,\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}),\ rgba\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[written\ +\ 5]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}},\ cp.y\ +\ hy,\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}),\ rgba\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[written\ +\ 6]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}},\ cp.y\ -\/\ hy,\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}),\ rgba\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[written\ +\ 7]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}},\ cp.y\ +\ hy,\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}),\ rgba\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00318}00318\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ written\ +=\ 8;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ written;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00322}00322\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00323}00323\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00327}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_afef29579e0c9ff3ff21c069be9261488}{00327}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_afef29579e0c9ff3ff21c069be9261488}{CleanChunk}}()}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00328}00328\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ m\_global.CleanAllEntity();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00330}00330\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ forEachLeaf([\&](Node\&\ lf)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lf.chunk.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a2562539212bdebf93dff9bdb39ff43ec}{GetEntityManager}}().\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a6aab877f81d89c16c00301c2f39d4939}{CleanAllEntity}}();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00334}00334\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00335}00335\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00336}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_aee48ca1f0ff8b60feda78898bc2bec87}{00336}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_aee48ca1f0ff8b60feda78898bc2bec87}{EnsureLeafForPoint}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ p)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00337}00337\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!inBounds(p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}))\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ =\ std::clamp(p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ 0.f,\ \textcolor{keywordtype}{float}(m\_worldW)\ -\/\ 1e-\/6f);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ =\ std::clamp(p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}},\ 0.f,\ \textcolor{keywordtype}{float}(m\_worldH)\ -\/\ 1e-\/6f);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ Node*\ n\ =\ m\_root.get();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (canSplit(*n))\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n-\/>isLeaf())\ ensureChildren(*n);\ \ \ \textcolor{comment}{//\ 葉のとき子を作る}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ qi\ =\ quadrant(*n,\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}});\ \ \textcolor{comment}{//xz\ 統一}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ n-\/>child[qi].get();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&n-\/>chunk;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00349}00349\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00350}00350\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00351}00351\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 葉を条件で分割して再配置}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00352}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ac01c07e9becd154c9580e37828e10ab7}{00352}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ac01c07e9becd154c9580e37828e10ab7}{SubdivideIf}}(std::function<\textcolor{keywordtype}{bool}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}\&)>\ predicate,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS::EntityID}},\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS::EntityManager}}\&)>\ posFn)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00354}00354\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<Node*>\ targets;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ forEachLeaf([\&](Node\&\ lf)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (predicate(lf.chunk)\ \&\&\ canSplit(lf))\ targets.push\_back(\&lf);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (Node*\ leaf\ :\ targets)\ subdivideAndReassign(*leaf,\ posFn);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00360}00360\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00361}00361\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00362}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a1169d7765018285240a6d68431fca397}{00362}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a1169d7765018285240a6d68431fca397}{SubdivideIfOverCapacity}}(std::function<\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS::EntityID}},\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS::EntityManager}}\&)>\ posFn)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00363}00363\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ac01c07e9becd154c9580e37828e10ab7}{SubdivideIf}}([\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}\&\ sc)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ sc.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a2562539212bdebf93dff9bdb39ff43ec}{GetEntityManager}}().\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a8df08b9c7042c6c3c05d4076591ee454}{GetEntityCount}}()\ >\ m\_maxPerLeafCount;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},\ std::move(posFn));}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00367}00367\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00368}00368\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00369}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a40764c85e5e534dea8cb395c5c374ed9}{00369}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a40764c85e5e534dea8cb395c5c374ed9}{ReloadLeafByPoint}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ p,\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\&\ reg,\ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}\ level)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00370}00370\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ opt\ =\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a07a549b625d374ba201009d95f0c3ef1}{GetChunk}}(p,\ reg,\ level,\ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOutOfBoundsPolicy::ClampToEdge}});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!opt)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\ leafSC\ =\ *opt;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00374}00374\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ Node*\ target\ =\ findLeafByChunk(\&m\_root,\ leafSC);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!target)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00377}00377\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ reg.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_affa7c775c9a8b17fd30d58741765845b}{UnregisterOwner}}(target-\/>chunk.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a560ec8ffd2070c9d83a739bd97ec0e44}{GetNodeKey}}());}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00379}00379\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ ++target-\/>generation;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00381}00381\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ oldKey\ =\ target-\/>chunk.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a560ec8ffd2070c9d83a739bd97ec0e44}{GetNodeKey}}();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ [ix,\ iy]\ =\ leafIndex(*target);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{SpatialChunkKey}}\ newKey\ =\ MakeQuadKey(oldKey.level,\ target-\/>depth,\ ix,\ iy,\ target-\/>generation);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00385}00385\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ target-\/>chunk.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_abab8fbfd926eb617976eebcfe0500a55}{SetNodeKey}}(newKey);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00387}00387\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ reg.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_af16975058127298f906e43cb35489f8c}{RegisterOwner}}(newKey,\ \&target-\/>chunk);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00389}00389\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00390}00390\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00391}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a4c232d93692a7526024a2c8ed8fd9ddb}{00391}}\ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a4c232d93692a7526024a2c8ed8fd9ddb}{GetChunksAABB}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}}\&\ aabb)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00392}00392\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_root)\ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ queryAABB(*m\_root,\ aabb,\ out);\ \textcolor{comment}{//\ 非\ const\ 版}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00397}00397\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00398}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ab6e245ef19ceb857223e154389791776}{00398}}\ \ \ \ \ \ \ \ \ std::vector<const\ SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ab6e245ef19ceb857223e154389791776}{GetChunksAABB}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}}\&\ aabb)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00399}00399\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<const\ SpatialChunk*>\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_root)\ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ queryAABB(*m\_root,\ aabb,\ out);\ \textcolor{comment}{//\ const\ 版}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00404}00404\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00405}00405\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00406}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a4953b7073e2817b658d56cf0b5aade4e}{00406}}\ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a4953b7073e2817b658d56cf0b5aade4e}{GetChunksCircle}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle}{Circle}}\&\ c)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00407}00407\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_root)\ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00410}00410\ \ \ \ \ \ \ \ \ \ \ \ \ queryCircle(*m\_root,\ c,\ out);\ \textcolor{comment}{//\ 非\ const\ 版}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00412}00412\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00413}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a27b60188f4887ca808d213dd9a61c765}{00413}}\ \ \ \ \ \ \ \ \ std::vector<const\ SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a27b60188f4887ca808d213dd9a61c765}{GetChunksCircle}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle}{Circle}}\&\ c)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00414}00414\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<const\ SpatialChunk*>\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00416}00416\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_root)\ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ queryCircle(*m\_root,\ c,\ out);\ \textcolor{comment}{//\ const\ 版}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00419}00419\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00420}00420\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00421}00421\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ PosFn>}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00422}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a9d3ef34acdbf8a651eea0fd5e7ddb09b}{00422}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a9d3ef34acdbf8a651eea0fd5e7ddb09b}{GetChunkForInsert}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ p,\ PosFn\&\&\ posFn)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00423}00423\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\ sc\ =\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_aee48ca1f0ff8b60feda78898bc2bec87}{EnsureLeafForPoint}}(p);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ Node*\ leaf\ =\ findLeafByChunk(\&m\_root,\ sc);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!leaf)\ \textcolor{keywordflow}{return}\ sc;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00427}00427\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ em\ =\ leaf-\/>chunk.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a2562539212bdebf93dff9bdb39ff43ec}{GetEntityManager}}();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ cnt\ =\ em.\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a8df08b9c7042c6c3c05d4076591ee454}{GetEntityCount}}();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00430}00430\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00431}00431\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cnt\ >\ m\_maxPerLeafCount\ \&\&\ canSplit(*leaf))\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 分割して再割り当て（全IDを子へ）}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subdivideAndReassign(*leaf,\ std::forward<PosFn>(posFn));}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00434}00434\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ この点\ p\ の子葉を返す}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ qi\ =\ quadrant(*leaf,\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&leaf-\/>child[qi]-\/>chunk;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00438}00438\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ sc;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00440}00440\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00441}00441\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00442}00442\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 列挙ユーティリティ}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00443}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a20c9ab34cf58f03741e0324b75006c35}{00443}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ F>\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a20c9ab34cf58f03741e0324b75006c35}{ForEachLeaf}}(F\&\&\ f)\ \{\ forEachLeaf(std::forward<F>(f));\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00444}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ad45f143ae7313da1cb886d07c3ff8264}{00444}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ F>\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ad45f143ae7313da1cb886d07c3ff8264}{ForEachLeaf}}(F\&\&\ f)\textcolor{keyword}{\ const\ }\{\ forEachLeaf(std::forward<F>(f));\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00445}00445\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00446}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ad059fb3fc34a4de03ddd3fa8e9b9ab9e}{00446}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ F>\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ad059fb3fc34a4de03ddd3fa8e9b9ab9e}{ForEachLeafChunk}}(F\&\&\ f)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00447}00447\ \ \ \ \ \ \ \ \ \ \ \ \ forEachLeaf([\&](Node\&\ n)\ \{\ f(n.chunk);\ \});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00448}00448\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00449}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a6fc21c281358165acf8387a96b7623c4}{00449}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ F>\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a6fc21c281358165acf8387a96b7623c4}{ForEachLeafChunk}}(F\&\&\ f)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00450}00450\ \ \ \ \ \ \ \ \ \ \ \ \ forEachLeaf([\&](\textcolor{keyword}{const}\ Node\&\ n)\ \{\ f(n.chunk);\ \});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00451}00451\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00452}00452\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00453}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a3aec2ed7dd1c44ce6c04adf8e469f333}{00453}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ F>\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a3aec2ed7dd1c44ce6c04adf8e469f333}{ForEachLeafEM}}(F\&\&\ f)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00454}00454\ \ \ \ \ \ \ \ \ \ \ \ \ forEachLeaf([\&](Node\&\ n)\ \{\ f(n.chunk.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a2562539212bdebf93dff9bdb39ff43ec}{GetEntityManager}}());\ \});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00455}00455\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00456}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a4dfa57995d586436e20fe6571e920382}{00456}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ F>\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a4dfa57995d586436e20fe6571e920382}{ForEachLeafEM}}(F\&\&\ f)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00457}00457\ \ \ \ \ \ \ \ \ \ \ \ \ forEachLeaf([\&](\textcolor{keyword}{const}\ Node\&\ n)\ \{\ f(n.chunk.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a2562539212bdebf93dff9bdb39ff43ec}{GetEntityManager}}());\ \});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00458}00458\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00459}00459\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00460}00460\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ デバッグ用}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00461}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a08ed9d44b5a29ac93f848566beb02b86}{00461}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a08ed9d44b5a29ac93f848566beb02b86}{LeafCount}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ m\_leafCount;\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00462}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a17d2f2c6c4858f1de834a12af6d26f16}{00462}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a17d2f2c6c4858f1de834a12af6d26f16}{MinLeafSize}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ m\_minLeaf;\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00463}00463\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00464}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a5583bf5c09adf4e566ca31088255e514}{00464}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a5583bf5c09adf4e566ca31088255e514}{SetMaxPerLeafCount}}(uint32\_t\ v)\ \textcolor{keyword}{noexcept}\ \{\ m\_maxPerLeafCount\ =\ v;\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00465}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ae9aeb695d593953a8a65a09c596de581}{00465}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ae9aeb695d593953a8a65a09c596de581}{GetMaxPerLeafCount}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ m\_maxPerLeafCount;\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00466}00466\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00467}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ab6a9ef452ceff078d4c3da68722785d8}{00467}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ab6a9ef452ceff078d4c3da68722785d8}{SetMinPerLeafCount}}(uint32\_t\ v)\ \textcolor{keyword}{noexcept}\ \{\ m\_minPerLeafCount\ =\ v;\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00468}\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_afe0200eb96ded201f0674e0106e26885}{00468}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_afe0200eb96ded201f0674e0106e26885}{GetMinPerLeafCount}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ m\_minPerLeafCount;\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00469}00469\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00470}00470\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00471}00471\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }Node\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00472}00472\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}}\ bounds\{\};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00473}00473\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ generation\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00474}00474\ \ \ \ \ \ \ \ \ \ \ \ \ uint8\_t\ \ depth\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00475}00475\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<std::unique\_ptr<Node>,\ 4>\ child\{\};\ \textcolor{comment}{//\ NW,\ NE,\ SW,\ SE}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00476}00476\ \ \ \ \ \ \ \ \ \ \ \ \ SpatialChunk\ chunk;\ \textcolor{comment}{//\ 葉のみ実質使用}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00477}00477\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00478}00478\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isLeaf()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00479}00479\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !child[0]\ \&\&\ !child[1]\ \&\&\ !child[2]\ \&\&\ !child[3];}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00480}00480\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00481}00481\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00482}00482\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00483}00483\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ユーティリティ：葉のキーが未発行/未登録なら発行して登録}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00484}00484\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ EnsureKeyRegisteredForLeaf(Node\&\ leafNode,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00485}00485\ \ \ \ \ \ \ \ \ \ \ \ \ SpatialChunkRegistry\&\ reg,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00486}00486\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}\ level)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00487}00487\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00488}00488\ \ \ \ \ \ \ \ \ \ \ \ \ SpatialChunk\&\ sc\ =\ leafNode.chunk;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00489}00489\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 既に登録済みかを軽く判定：ResolveOwner\ が取れるか\ /\ code==0\ 等で簡易チェック}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00491}00491\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ SpatialChunkKey\ cur\ =\ sc.GetNodeKey();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (reg.ResolveOwner(cur)\ !=\ \textcolor{keyword}{nullptr}\ \&\&\ cur.code\ !=\ 0)\ \textcolor{keywordflow}{return};\ \textcolor{comment}{//\ 既登録}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00493}00493\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00494}00494\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ [ix,\ iy]\ =\ leafIndex(leafNode);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ SpatialChunkKey\ key\ =\ MakeQuadKey(level,\ leafNode.depth,\ ix,\ iy,\ \textcolor{comment}{/*gen*/}leafNode.generation);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ sc.SetNodeKey(key);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ reg.RegisterOwner(key,\ \&sc);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00498}00498\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00499}00499\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00500}00500\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ intersects(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}}\&\ b)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00501}00501\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !(a.ub.x\ <=\ b.lb.x\ ||\ a.lb.x\ >=\ b.ub.x\ ||\ a.ub.y\ <=\ b.lb.y\ ||\ a.lb.y\ >=\ b.ub.y);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00502}00502\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00503}00503\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ intersects(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}}\&\ b,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle}{Circle}}\&\ c)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cx\ =\ std::clamp(c.cx,\ b.lb.x,\ b.ub.x);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00505}00505\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cy\ =\ std::clamp(c.cy,\ b.lb.y,\ b.ub.y);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00506}00506\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ dx\ =\ cx\ -\/\ c.cx,\ dy\ =\ cy\ -\/\ c.cy;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00507}00507\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (dx\ *\ dx\ +\ dy\ *\ dy)\ <=\ (c.r\ *\ c.r);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00508}00508\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00509}00509\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ inBounds(\textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ z)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00510}00510\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (0.f\ <=\ x\ \&\&\ x\ <\ \textcolor{keywordtype}{float}(m\_worldW))\ \&\&\ (0.f\ <=\ z\ \&\&\ z\ <\ float(m\_worldH));}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00511}00511\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00512}00512\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ canSplit(\textcolor{keyword}{const}\ Node\&\ n)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ w\ =\ n.bounds.ub.x\ -\/\ n.bounds.lb.x;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00514}00514\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ h\ =\ n.bounds.ub.y\ -\/\ n.bounds.lb.y;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00515}00515\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (w\ >\ m\_minLeaf)\ \&\&\ (h\ >\ m\_minLeaf);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00516}00516\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00517}00517\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ quadrant(\textcolor{keyword}{const}\ Node\&\ n,\ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ z)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00518}00518\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ mx\ =\ 0.5f\ *\ (n.bounds.lb.x\ +\ n.bounds.ub.x);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ mz\ =\ 0.5f\ *\ (n.bounds.lb.y\ +\ n.bounds.ub.y);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00520}00520\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00521}00521\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ east\ =\ (x\ >=\ mx);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ north\ =\ (z\ >=\ mz);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ デフォは\ North}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a7750e1edb9d139a1963b3a80e9053bc6}{kZPositive}}\ ==\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38a263d7b2cf53802c9ed127b718c0bf9fd}{ZPositive::South}})\ north\ =\ !north;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 0:\ NW,\ 1:\ NE,\ 2:\ SW,\ 3:\ SE（X?Zでの方位）}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (north\ ?\ 0\ :\ 2)\ +\ (east\ ?\ 1\ :\ 0);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00526}00526\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00527}00527\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00528}00528\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ensureChildren(Node\&\ n)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00529}00529\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!n.isLeaf())\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00531}00531\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ mx\ =\ 0.5f\ *\ (n.bounds.lb.x\ +\ n.bounds.ub.x);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00532}00532\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ mz\ =\ 0.5f\ *\ (n.bounds.lb.y\ +\ n.bounds.ub.y);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00533}00533\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}}\ quads[4]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00534}00534\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \{\ n.bounds.lb.x,\ mz\ \},\ \{\ mx,\ \ \ \ \ \ \ \ \ \ \ \ n.bounds.ub.y\ \}\ \},\ \textcolor{comment}{//\ NW}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00535}00535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \{\ mx,\ \ \ \ \ \ \ \ \ \ \ \ mz\ \},\ \{\ n.bounds.ub.x,\ n.bounds.ub.y\ \}\ \},\ \textcolor{comment}{//\ NE}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00536}00536\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \{\ n.bounds.lb.x,\ n.bounds.lb.y\ \},\ \{\ mx,\ mz\ \}\ \},\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ SW}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \{\ mx,\ \ \ \ \ \ \ \ \ \ \ \ n.bounds.lb.y\ \},\ \{\ n.bounds.ub.x,\ mz\ \}\ \}\ \ \textcolor{comment}{//\ SE}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n.child[i]\ =\ std::make\_unique<Node>();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00541}00541\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n.child[i]-\/>bounds\ =\ quads[i];}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n.child[i]-\/>depth\ =\ uint8\_t(n.depth\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00543}00543\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n.child[i]-\/>generation\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00544}00544\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00545}00545\ \ \ \ \ \ \ \ \ \ \ \ \ m\_leafCount\ +=\ 3;\ \textcolor{comment}{//\ 旧葉1\ -\/>\ 子4\ で\ +3}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00546}00546\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00547}00547\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00548}00548\ \ \ \ \ \ \ \ \ Node*\ descendToLeaf(Node\&\ cur,\ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ z,\ \textcolor{keywordtype}{bool}\ createIfMissing)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00549}00549\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ posFn\ =\ [](ECS::EntityID\ id,\ ECS::EntityManager\&\ mgr)\ -\/>\ std::optional<Math::Vec3f>\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00550}00550\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ tf\ =\ mgr.ReadComponent<\mbox{\hyperlink{namespace_s_f_w_aed0ca79324fac54b9ab7b532d1bc2c6a}{CTransform}}>(id);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00551}00551\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!tf.has\_value())\ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00552}00552\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00553}00553\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tf-\/>\mbox{\hyperlink{struct_s_f_w_1_1_transform_so_a_a6d0ecd7a372576777ed421d4e7cdff44}{location}};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00554}00554\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00555}00555\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00556}00556\ \ \ \ \ \ \ \ \ \ \ \ \ Node*\ n\ =\ \&cur;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00557}00557\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (canSplit(*n))\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00558}00558\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n-\/>isLeaf())\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00559}00559\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!createIfMissing)\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00560}00560\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00561}00561\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n-\/>chunk.GetEntityManager().GetEntityCount()\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00562}00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 子化に伴う“再配置\ Split”を先に実行（ensureChildrenは内部でやる派）}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00563}00563\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subdivideAndReassign(*n,\ posFn);\ \ \textcolor{comment}{//\ Entity\ を子葉へ全て移す}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00564}00564\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00565}00565\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00566}00566\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ensureChildren(*n);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 中身が空なら生成だけ}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00567}00567\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00568}00568\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00569}00569\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ qi\ =\ quadrant(*n,\ x,\ z);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00570}00570\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ n-\/>child[qi].get();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00571}00571\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00572}00572\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ n;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00573}00573\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00574}00574\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00575}00575\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ queryAABB(Node\&\ n,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}}\&\ q,\ std::vector<SpatialChunk*>\&\ out)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00576}00576\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00577}00577\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!intersects(n.bounds,\ q))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00578}00578\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n.isLeaf())\ \{\ \textcolor{keywordflow}{if}\ (n.chunk.GetEntityManager().GetEntityCount()\ >\ 0)\ out.push\_back(\&n.chunk);\ \textcolor{keywordflow}{return};\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00579}00579\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (n.child[i])\ queryAABB(*n.child[i],\ q,\ out);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00580}00580\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00581}00581\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ queryAABB(\textcolor{keyword}{const}\ Node\&\ n,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}}\&\ q,\ std::vector<const\ SpatialChunk*>\&\ out)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00582}00582\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00583}00583\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!intersects(n.bounds,\ q))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00584}00584\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n.isLeaf())\ \{\ \textcolor{keywordflow}{if}\ (n.chunk.GetEntityManager().GetEntityCount()\ >\ 0)\ out.push\_back(\&n.chunk);\ \textcolor{keywordflow}{return};\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00585}00585\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (n.child[i])\ queryAABB(*n.child[i],\ q,\ out);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00586}00586\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00587}00587\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00588}00588\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ queryCircle(Node\&\ n,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle}{Circle}}\&\ c,\ std::vector<SpatialChunk*>\&\ out)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00589}00589\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00590}00590\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!intersects(n.bounds,\ c))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00591}00591\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n.isLeaf())\ \{\ \textcolor{keywordflow}{if}\ (n.chunk.GetEntityManager().GetEntityCount()\ >\ 0)\ out.push\_back(\&n.chunk);\ \textcolor{keywordflow}{return};\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00592}00592\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (n.child[i])\ queryCircle(*n.child[i],\ c,\ out);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00593}00593\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00594}00594\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ queryCircle(\textcolor{keyword}{const}\ Node\&\ n,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle}{Circle}}\&\ c,\ std::vector<const\ SpatialChunk*>\&\ out)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00595}00595\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00596}00596\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!intersects(n.bounds,\ c))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00597}00597\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n.isLeaf())\ \{\ \textcolor{keywordflow}{if}\ (n.chunk.GetEntityManager().GetEntityCount()\ >\ 0)\ out.push\_back(\&n.chunk);\ \textcolor{keywordflow}{return};\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00598}00598\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (n.child[i])\ queryCircle(*n.child[i],\ c,\ out);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00599}00599\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00600}00600\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00601}00601\ \ \ \ \ \ \ \ \ std::pair<uint32\_t,\ uint32\_t>\ leafIndex(\textcolor{keyword}{const}\ Node\&\ n)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00602}00602\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00603}00603\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ base\ =\ (std::max)(1.0f,\ m\_minLeaf);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00604}00604\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ scale\ =\ 1.0f\ /\ base;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00605}00605\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ lx\ =\ n.bounds.lb.x;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00606}00606\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ly\ =\ n.bounds.lb.y;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00607}00607\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ ix\ =\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(std::floor(lx\ *\ scale));}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00608}00608\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ iy\ =\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(std::floor(ly\ *\ scale));}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00609}00609\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ ix,\ iy\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00610}00610\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00611}00611\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00612}00612\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ SpatialChunkKey\ MakeQuadKey(\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}\ level,\ uint8\_t\ depth,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00613}00613\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ ix,\ uint32\_t\ iz,\ uint16\_t\ gen\ =\ 0)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00614}00614\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00615}00615\ \ \ \ \ \ \ \ \ \ \ \ \ SpatialChunkKey\ k\{\};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00616}00616\ \ \ \ \ \ \ \ \ \ \ \ \ k.level\ =\ level;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00617}00617\ \ \ \ \ \ \ \ \ \ \ \ \ k.scheme\ =\ \mbox{\hyperlink{namespace_s_f_w_a834dda392d6f71061e76b5b138ef43e6ae1f9acd1d65f1533d1bcc31c00e4224a}{PartitionScheme::Quadtree2D}};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00618}00618\ \ \ \ \ \ \ \ \ \ \ \ \ k.depth\ =\ depth;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00619}00619\ \ \ \ \ \ \ \ \ \ \ \ \ k.generation\ =\ gen;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00620}00620\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint64\_t\ morton\ =\ Morton2D64(uint64\_t(ix),\ uint64\_t(iz));\ \textcolor{comment}{//\ X,Z}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00621}00621\ \ \ \ \ \ \ \ \ \ \ \ \ k.code\ =\ (uint64\_t(depth)\ <<\ 56)\ |\ (morton\ \&\ 0x00FF'FFFF'FFFF'FFFFull);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00622}00622\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ k;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00623}00623\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00624}00624\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00625}00625\ \ \ \ \ \ \ \ \ Node*\ findLeafByChunk(std::unique\_ptr<Node>*\ pp,\ SpatialChunk*\ sc)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00626}00626\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00627}00627\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!pp\ ||\ !pp-\/>get())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00628}00628\ \ \ \ \ \ \ \ \ \ \ \ \ Node*\ n\ =\ pp-\/>get();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00629}00629\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n-\/>isLeaf())\ \textcolor{keywordflow}{return}\ (\&n-\/>chunk\ ==\ sc)\ ?\ n\ :\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00630}00630\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00631}00631\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (Node*\ r\ =\ findLeafByChunk(\&n-\/>child[i],\ sc))\ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00632}00632\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00633}00633\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00634}00634\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00635}00635\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00636}00636\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ nodeIntersectsFrustum(\textcolor{keyword}{const}\ Node\&\ n,\ \textcolor{keyword}{const}\ Math::Frustumf\&\ fr,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00637}00637\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ymin,\ \textcolor{keywordtype}{float}\ ymax)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00638}00638\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00639}00639\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cx\ =\ levelOriginWS.x\ +\ 0.5f\ *\ (n.bounds.lb.x\ +\ n.bounds.ub.x);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00640}00640\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cz\ =\ levelOriginWS.z\ +\ 0.5f\ *\ (n.bounds.lb.y\ +\ n.bounds.ub.y);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00641}00641\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ex\ =\ 0.5f\ *\ (n.bounds.ub.x\ -\/\ n.bounds.lb.x);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00642}00642\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ez\ =\ 0.5f\ *\ (n.bounds.ub.y\ -\/\ n.bounds.lb.y);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00643}00643\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00644}00644\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cyEff,\ eyEff;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00645}00645\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a806d47877b24616790a7fb569631f2cc}{Math::Frustumf::ComputeYOverlapAtXZ}}(fr,\ cx,\ cz,\ ymin,\ ymax,\ cyEff,\ eyEff))\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00646}00646\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ 縦に重ならない}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00647}00647\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00648}00648\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ center\{\ cx,\ \ cyEff,\ cz\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00649}00649\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ extent\{\ ex,\ \ eyEff,\ ez\ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00650}00650\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a98e76d2faa1114777992553adf902702}{IntersectsAABB}}(center,\ extent);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00651}00651\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00652}00652\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00653}00653\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ cullRecursive(Node\&\ n,\ \textcolor{keyword}{const}\ Math::Frustumf\&\ fr,\ \textcolor{keywordtype}{float}\ ymin,\ \textcolor{keywordtype}{float}\ ymax,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00654}00654\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\&\ out)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00655}00655\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00656}00656\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!nodeIntersectsFrustum(n,\ fr,\ ymin,\ ymax))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00657}00657\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n.isLeaf())\ \{\ \textcolor{keywordflow}{if}\ (n.chunk.GetEntityManager().GetEntityCount()\ >\ 0)\ out.push\_back(\&n.chunk);\ \textcolor{keywordflow}{return};\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00658}00658\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (n.child[i])\ cullRecursive(*n.child[i],\ fr,\ ymin,\ ymax,\ out);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00659}00659\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00660}00660\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00661}00661\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ cullRecursive(\textcolor{keyword}{const}\ Node\&\ n,\ \textcolor{keyword}{const}\ Math::Frustumf\&\ fr,\ \textcolor{keywordtype}{float}\ ymin,\ \textcolor{keywordtype}{float}\ ymax,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00662}00662\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<const\ SpatialChunk*>\&\ out)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00663}00663\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00664}00664\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!nodeIntersectsFrustum(n,\ fr,\ ymin,\ ymax))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00665}00665\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n.isLeaf())\ \{\ \textcolor{keywordflow}{if}\ (n.chunk.GetEntityManager().GetEntityCount()\ >\ 0)\ out.push\_back(\&n.chunk);\ \textcolor{keywordflow}{return};\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00666}00666\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (n.child[i])\ cullRecursive(*n.child[i],\ fr,\ ymin,\ ymax,\ out);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00667}00667\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00668}00668\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00669}00669\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ F>}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00670}00670\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ cullRecursive(Node\&\ n,\ \textcolor{keyword}{const}\ Math::Frustumf\&\ fr,\ \textcolor{keywordtype}{float}\ ymin,\ \textcolor{keywordtype}{float}\ ymax,\ F\&\&\ f)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00671}00671\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00672}00672\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!nodeIntersectsFrustum(n,\ fr,\ ymin,\ ymax))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00673}00673\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n.isLeaf())\ \{\ \textcolor{keywordflow}{if}\ (n.chunk.GetEntityManager().GetEntityCount()\ >\ 0)\ f(n.chunk);\ \textcolor{keywordflow}{return};\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00674}00674\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (n.child[i])\ cullRecursive(*n.child[i],\ fr,\ ymin,\ ymax,\ f);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00675}00675\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00676}00676\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00677}00677\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ F>}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00678}00678\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ cullRecursive(\textcolor{keyword}{const}\ Node\&\ n,\ \textcolor{keyword}{const}\ Math::Frustumf\&\ fr,\ \textcolor{keywordtype}{float}\ ymin,\ \textcolor{keywordtype}{float}\ ymax,\ F\&\&\ f)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00679}00679\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00680}00680\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!nodeIntersectsFrustum(n,\ fr,\ ymin,\ ymax))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00681}00681\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n.isLeaf())\ \{\ \textcolor{keywordflow}{if}\ (n.chunk.GetEntityManager().GetEntityCount()\ >\ 0)\ f(n.chunk);\ \textcolor{keywordflow}{return};\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00682}00682\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (n.child[i])\ cullRecursive(*n.child[i],\ fr,\ ymin,\ ymax,\ f);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00683}00683\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00684}00684\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00685}00685\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ cullRecursive(\textcolor{keyword}{const}\ Node\&\ n,\ \textcolor{keyword}{const}\ Math::Frustumf\&\ fr,\ \textcolor{keywordtype}{float}\ ymin,\ \textcolor{keywordtype}{float}\ ymax,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00686}00686\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<AABB>\&\ out)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00687}00687\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00688}00688\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!nodeIntersectsFrustum(n,\ fr,\ ymin,\ ymax))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00689}00689\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n.isLeaf())\ \{\ \textcolor{keywordflow}{if}\ (n.chunk.GetEntityManager().GetEntityCount()\ >\ 0)\ out.push\_back(n.bounds);\ \textcolor{keywordflow}{return};\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00690}00690\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (n.child[i])\ cullRecursive(*n.child[i],\ fr,\ ymin,\ ymax,\ out);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00691}00691\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00692}00692\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00693}00693\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ F>}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00694}00694\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ forEachLeaf(F\&\&\ f)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00695}00695\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00696}00696\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_root)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00697}00697\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<Node*>\ stack;\ stack.reserve(64);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00698}00698\ \ \ \ \ \ \ \ \ \ \ \ \ stack.push\_back(m\_root.get());}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00699}00699\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!stack.empty())\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00700}00700\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Node*\ n\ =\ stack.back();\ stack.pop\_back();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00701}00701\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n-\/>isLeaf())\ \{\ f(*n);\ \textcolor{keywordflow}{continue};\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00702}00702\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (n-\/>child[i])\ stack.push\_back(n-\/>child[i].get());}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00703}00703\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00704}00704\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00705}00705\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ F>}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00706}00706\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ forEachLeaf(F\&\&\ f)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00707}00707\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00708}00708\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_root)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00709}00709\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<const\ Node*>\ stack;\ stack.reserve(64);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00710}00710\ \ \ \ \ \ \ \ \ \ \ \ \ stack.push\_back(m\_root.get());}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00711}00711\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!stack.empty())\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00712}00712\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Node*\ n\ =\ stack.back();\ stack.pop\_back();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00713}00713\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n-\/>isLeaf())\ \{\ f(*n);\ \textcolor{keywordflow}{continue};\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00714}00714\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (n-\/>child[i])\ stack.push\_back(n-\/>child[i].get());}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00715}00715\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00716}00716\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00717}00717\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00718}00718\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ subdivideAndReassign(Node\&\ leaf,}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00719}00719\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::function<std::optional<Math::Vec3f>(ECS::EntityID,\ ECS::EntityManager\&)>\&\ posFn)}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00720}00720\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00721}00721\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!leaf.isLeaf()\ ||\ !canSplit(leaf))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00722}00722\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00723}00723\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ 子生成（葉→内部）}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00724}00724\ \ \ \ \ \ \ \ \ \ \ \ \ ensureChildren(leaf);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00725}00725\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00726}00726\ \ \ \ \ \ \ \ \ \ \ \ \ ECS::EntityManager\&\ src\ =\ leaf.chunk.GetEntityManager();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00727}00727\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00728}00728\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ ルータ:\ id\ -\/>\ 位置\ -\/>\ 子の\ EM\ を返す}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00729}00729\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ router\ =\ [\&](ECS::EntityID\ id,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ECS::ComponentMask}}\ \textcolor{comment}{/*mask*/})\ -\/>\ ECS::EntityManager*\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00730}00730\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::optional<Math::Vec3f>\ pos\ =\ posFn(\textcolor{keywordtype}{id},\ src);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 位置は\ "{}今ここ"{}\ の\ EM\ から見える}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00731}00731\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!pos)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00732}00732\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ qi\ =\ quadrant(leaf,\ pos-\/>x,\ pos-\/>z);\ \ \ \ \ \ \textcolor{comment}{//\ xz\ で子決定}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00733}00733\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&leaf.child[qi]-\/>chunk.GetEntityManager();\ \ \textcolor{comment}{//\ 宛先\ EM}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00734}00734\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00735}00735\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00736}00736\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3)\ 一括分割移送（非スパース→IDごと、スパース→バケット一括）}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00737}00737\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ SplitByAll\ は\ dst.EM\ へ\ move\ +\ src\ 側からローカル除去まで面倒見ます}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00738}00738\ \ \ \ \ \ \ \ \ \ \ \ \ (void)src.SplitByAll(router);\ \textcolor{comment}{//\ 戻り値=移送数（必要なら使用）}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00739}00739\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ -\/\ SplitByAllの仕様:\ ルータが返す\ EM\ ごとに非スパースを先行移送し、最後にスパースをまとめて移送（IDバケット）}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00740}00740\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ -\/>\ EntityManager.h\ /\ .cpp\ 参照}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00741}00741\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ （この呼び出しで親葉のデータは\ "{}空"{}\ になる想定）}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00742}00742\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ 参考:\ SplitByAll\ /\ MoveSparseIDsTo\ の存在と役割。:contentReference[oaicite:3]\{index=3\}\ :contentReference[oaicite:4]\{index=4\}}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00743}00743\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00744}00744\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4)\ 親ノード世代を更新（RegisterAllChunks\ 時にキーへ反映）}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00745}00745\ \ \ \ \ \ \ \ \ \ \ \ \ ++leaf.generation;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00746}00746\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00747}00747\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00752}00752\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ CoalesceUnderutilized()}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00753}00753\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00754}00754\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_root)\ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00755}00755\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<Node*>\ stack;\ stack.push\_back(m\_root.get());}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00756}00756\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<Node*>\ post;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00757}00757\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!stack.empty())\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00758}00758\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Node*\ n\ =\ stack.back();\ stack.pop\_back();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00759}00759\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ post.push\_back(n);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00760}00760\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ c\ :\ n-\/>child)\ \textcolor{keywordflow}{if}\ (c)\ stack.push\_back(c.get());}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00761}00761\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00762}00762\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ mergedParents\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00763}00763\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00764}00764\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 子→親の順で評価（後置）}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00765}00765\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ it\ =\ post.rbegin();\ it\ !=\ post.rend();\ ++it)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00766}00766\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Node*\ n\ =\ *it;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00767}00767\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 子が4つ揃っていて全て葉？}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00768}00768\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ allLeaf\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00769}00769\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \{\ \textcolor{keywordflow}{if}\ (!n-\/>child[i]\ ||\ !n-\/>child[i]-\/>isLeaf())\ \{\ allLeaf\ =\ \textcolor{keyword}{false};\ \textcolor{keywordflow}{break};\ \}\ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00770}00770\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!allLeaf)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00771}00771\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00772}00772\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 合計件数}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00773}00773\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ sum\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00774}00774\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ sum\ +=\ n-\/>child[i]-\/>chunk.GetEntityManager().GetEntityCount();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00775}00775\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00776}00776\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (sum\ <=\ m\_minPerLeafCount)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00777}00777\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ 子→親へ統合}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00778}00778\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ dst\ =\ n-\/>chunk.GetEntityManager();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00779}00779\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00780}00780\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ src\ =\ n-\/>child[i]-\/>chunk.GetEntityManager();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00781}00781\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (void)dst.MergeFromAll(src);\ \textcolor{comment}{//\ 全移送（非スパース＋スパース）:contentReference[oaicite:5]\{index=5\}\ :contentReference[oaicite:6]\{index=6\}}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00782}00782\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00783}00783\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ 子を破棄して葉に戻す}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00784}00784\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n-\/>child\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00785}00785\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++n-\/>generation;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00786}00786\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_leafCount\ -\/=\ 3;\ \textcolor{comment}{//\ 4-\/>1}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00787}00787\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++mergedParents;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00788}00788\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00789}00789\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00790}00790\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ mergedParents;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00791}00791\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00792}00792\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00793}00793\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00794}00794\ \ \ \ \ \ \ \ \ ECS::EntityManager\ m\_global;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00795}00795\ \ \ \ \ \ \ \ \ std::unique\_ptr<Node>\ m\_root;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00796}00796\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00797}00797\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ levelOriginWS;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00798}00798\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00799}00799\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\ m\_worldW\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00800}00800\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\ m\_worldH\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00801}00801\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_minLeaf\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00802}00802\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00803}00803\ \ \ \ \ \ \ \ \ uint32\_t\ m\_minPerLeafCount\ =\ 0;\ \textcolor{comment}{//\ 統合のトリガ（子4合計がこれ未満なら親に統合）}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00804}00804\ \ \ \ \ \ \ \ \ uint32\_t\ m\_maxPerLeafCount\ =\ 1024;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00805}00805\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00806}00806\ \ \ \ \ \ \ \ \ uint32\_t\ m\_leafCount\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00807}00807\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00808}00808\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ m\_coalesceTimer\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00809}00809\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00810}00810\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00811}00811\ \ \ \ \ \textcolor{comment}{//\ ====\ Query\ 特殊化\ ====}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00812}00812\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00813}00813\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00814}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_af8e45791fccc555cd5fefd9a179658c3}{00814}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::vector<ArchetypeChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_ab30526a91aaa023239f86e62d1fc4e71}{Query::MatchingChunks}}(\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition}{SFW::QuadTreePartition}}\&\ ctx)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00815}00815\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00816}00816\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<ArchetypeChunk*>\ result;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00817}00817\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00818}00818\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ collect\_from\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS::EntityManager}}\&\ em)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00819}00819\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ all\ =\ em.GetArchetypeManager().GetAllData();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00820}00820\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ arch\ :\ all)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00821}00821\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\&\ mask\ =\ arch-\/>GetMask();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00822}00822\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((mask\ \&\ required)\ ==\ required\ \&\&\ (mask\ \&\ excluded).none())\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00823}00823\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ chunks\ =\ arch-\/>GetChunks();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00824}00824\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result.reserve(result.size()\ +\ chunks.size());}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00825}00825\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ ch\ :\ chunks)\ result.push\_back(ch.get());}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00826}00826\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00827}00827\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00828}00828\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00829}00829\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00830}00830\ \ \ \ \ \ \ \ \ \ \ \ \ collect\_from(ctx.GetGlobalEntityManager());}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00831}00831\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00832}00832\ \ \ \ \ \ \ \ \ \ \ \ \ ctx.ForEachLeafEM([\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS::EntityManager}}\&\ em)\ \{}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00833}00833\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ collect\_from(em);}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00834}00834\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00835}00835\ }
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00836}00836\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00837}00837\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00838}00838\ \ \ \ \ \}\ \textcolor{comment}{//\ namespace\ ECS}}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00839}00839\ \}\ \textcolor{comment}{//\ namespace\ SectorFW}}
+
+\end{DoxyCode}

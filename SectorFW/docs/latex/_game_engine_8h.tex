@@ -1,0 +1,49 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+Game\+Engine.h ファイル}
+\hypertarget{_game_engine_8h}{}\label{_game_engine_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/GameEngine.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/GameEngine.h}}
+
+
+ゲームロジックを実行するクラス  
+
+
+{\ttfamily \#include "{}../\+Graphics/\+IGraphics\+Device.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Util/\+Frame\+Timer.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Util/\+Non\+Copyable.\+h"{}}\newline
+{\ttfamily \#include "{}World.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Util/\+Type\+Checker.\+hpp"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_game_engine}{SFW\+::\+Game\+Engine$<$ Graphics, Level\+Types $>$}}
+\begin{DoxyCompactList}\small\item\em ゲームエンジン \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_graphics_type}{SFW\+::\+Graphics\+Type}}
+\begin{DoxyCompactList}\small\item\em Graphics\+::\+IGraphics\+Deviceを\+CRTPで継承している型をチェックするコンセプト \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_ae9e811c976a496bb8aa50255fd4e6aad}{SFW\+::\+Initialize\+Game\+Engine}} (bool initialize)
+\begin{DoxyCompactList}\small\item\em ゲームエンジンの初期化 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_ac008063a208c749fcb6c9f45f33d6d79}{SFW\+::\+Un\+Initialize\+Game\+Engine}} ()
+\begin{DoxyCompactList}\small\item\em ゲームエンジンの終了処理 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+ゲームロジックを実行するクラス 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+May 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_game_engine_8h_source}{Game\+Engine.\+h}} に定義があります。
+

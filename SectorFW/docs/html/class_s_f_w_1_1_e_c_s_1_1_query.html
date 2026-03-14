@@ -1,0 +1,555 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::ECS::Query クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_e_c_s_1_1_query.html','','class_s_f_w_1_1_e_c_s_1_1_query-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::ECS::Query クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>指定したコンポーネントにマッチングするチャンクを取得ためのクラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_query_8h_source.html">Query.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a82286a440d7074faadabd3ae7750befb" id="r_a82286a440d7074faadabd3ae7750befb"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; <br />
+requires AllDense&lt;Ts...&gt;</td></tr>
+<tr class="memitem:a82286a440d7074faadabd3ae7750befb template"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_query.html">Query</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a82286a440d7074faadabd3ae7750befb">With</a> () noexcept</td></tr>
+<tr class="memdesc:a82286a440d7074faadabd3ae7750befb"><td class="mdescLeft">&#160;</td><td class="mdescRight">クエリに含めるコンポーネントを指定するテンプレート  <br /></td></tr>
+<tr class="memitem:a35e6e545e7ced5dbbd83498f002f7e72" id="r_a35e6e545e7ced5dbbd83498f002f7e72"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; <br />
+requires AllDense&lt;Ts...&gt;</td></tr>
+<tr class="memitem:a35e6e545e7ced5dbbd83498f002f7e72 template"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_query.html">Query</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35e6e545e7ced5dbbd83498f002f7e72">Without</a> () noexcept</td></tr>
+<tr class="memdesc:a35e6e545e7ced5dbbd83498f002f7e72"><td class="mdescLeft">&#160;</td><td class="mdescRight">クエリから除外するコンポーネントを指定するテンプレート  <br /></td></tr>
+<tr class="memitem:ab30526a91aaa023239f86e62d1fc4e71" id="r_ab30526a91aaa023239f86e62d1fc4e71"><td class="memTemplParams" colspan="2">template&lt;ReferenceOnly T&gt; </td></tr>
+<tr class="memitem:ab30526a91aaa023239f86e62d1fc4e71 template"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab30526a91aaa023239f86e62d1fc4e71">MatchingChunks</a> (T context) const noexcept</td></tr>
+<tr class="memdesc:ab30526a91aaa023239f86e62d1fc4e71"><td class="mdescLeft">&#160;</td><td class="mdescRight">クエリにマッチするアーキタイプチャンクを取得します。  <br /></td></tr>
+<tr class="memitem:ab8769a82b0d78cfb45d8af0c046f3b10" id="r_ab8769a82b0d78cfb45d8af0c046f3b10"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:ab8769a82b0d78cfb45d8af0c046f3b10 template"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab8769a82b0d78cfb45d8af0c046f3b10">MatchingChunks</a> (BVHPartition &amp;context) const noexcept</td></tr>
+<tr class="memitem:a527bcc9975d0702f5c39e0e9ad889103" id="r_a527bcc9975d0702f5c39e0e9ad889103"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a527bcc9975d0702f5c39e0e9ad889103 template"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a527bcc9975d0702f5c39e0e9ad889103">MatchingChunks</a> (<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_manager.html">ArchetypeManager</a> &amp;context) const noexcept</td></tr>
+<tr class="memdesc:a527bcc9975d0702f5c39e0e9ad889103"><td class="mdescLeft">&#160;</td><td class="mdescRight">ArchetypeManagerのクエリを表すクラス(特殊化)  <br /></td></tr>
+<tr class="memitem:a7b90b6e7b91ca9c827769c1cab9b5a56" id="r_a7b90b6e7b91ca9c827769c1cab9b5a56"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a7b90b6e7b91ca9c827769c1cab9b5a56 template"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b90b6e7b91ca9c827769c1cab9b5a56">MatchingChunks</a> (<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp;em) const noexcept</td></tr>
+<tr class="memitem:aa8511d4d90f72c61e0c602939b7d37d8" id="r_aa8511d4d90f72c61e0c602939b7d37d8"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:aa8511d4d90f72c61e0c602939b7d37d8 template"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8511d4d90f72c61e0c602939b7d37d8">MatchingChunks</a> (<a class="el" href="class_s_f_w_1_1_grid2_d_partition.html">Grid2DPartition</a> &amp;context) const noexcept</td></tr>
+<tr class="memdesc:aa8511d4d90f72c61e0c602939b7d37d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grid2DPartitionのクエリを表すクラス(特殊化)  <br /></td></tr>
+<tr class="memitem:a8d3c51e534edac768d7b1b8782ed1f93" id="r_a8d3c51e534edac768d7b1b8782ed1f93"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a8d3c51e534edac768d7b1b8782ed1f93 template"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d3c51e534edac768d7b1b8782ed1f93">MatchingChunks</a> (<a class="el" href="class_s_f_w_1_1_grid3_d_partition.html">Grid3DPartition</a> &amp;context) const noexcept</td></tr>
+<tr class="memdesc:a8d3c51e534edac768d7b1b8782ed1f93"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_s_f_w_1_1_grid3_d_partition.html" title="3Dグリッドパーティションを定義するクラス（PartitionConcept 準拠）">Grid3DPartition</a> のチャンク列挙用クエリ（特殊化）  <br /></td></tr>
+<tr class="memitem:a522877b24ce2b908a87020ca6aab23e8" id="r_a522877b24ce2b908a87020ca6aab23e8"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a522877b24ce2b908a87020ca6aab23e8 template"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a522877b24ce2b908a87020ca6aab23e8">MatchingChunks</a> (<a class="el" href="class_s_f_w_1_1_octree_partition.html">SFW::OctreePartition</a> &amp;ctx) const noexcept</td></tr>
+<tr class="memitem:af8e45791fccc555cd5fefd9a179658c3" id="r_af8e45791fccc555cd5fefd9a179658c3"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:af8e45791fccc555cd5fefd9a179658c3 template"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8e45791fccc555cd5fefd9a179658c3">MatchingChunks</a> (<a class="el" href="class_s_f_w_1_1_quad_tree_partition.html">SFW::QuadTreePartition</a> &amp;ctx) const noexcept</td></tr>
+<tr class="memitem:a490c0190881f3492718ff949ba0ad968" id="r_a490c0190881f3492718ff949ba0ad968"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a490c0190881f3492718ff949ba0ad968 template"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a490c0190881f3492718ff949ba0ad968">MatchingChunks</a> (SAPPartition &amp;context) const noexcept</td></tr>
+<tr class="memitem:a8494bb7fbce111940dc9614c0c5060f1" id="r_a8494bb7fbce111940dc9614c0c5060f1"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a8494bb7fbce111940dc9614c0c5060f1 template"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8494bb7fbce111940dc9614c0c5060f1">MatchingChunks</a> (std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SFW::SpatialChunk</a> * &gt; &amp;context) const noexcept</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>指定したコンポーネントにマッチングするチャンクを取得ためのクラス </p>
+
+<p class="definition"> <a class="el" href="_query_8h_source.html">Query.h</a> の <a class="el" href="_query_8h_source.html#l00036">36</a> 行目に定義があります。</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a527bcc9975d0702f5c39e0e9ad889103" name="a527bcc9975d0702f5c39e0e9ad889103"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a527bcc9975d0702f5c39e0e9ad889103">&#9670;&#160;</a></span>MatchingChunks() <span class="overload">[1/10]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt; SFW::ECS::Query::MatchingChunks </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_manager.html">ArchetypeManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ArchetypeManagerのクエリを表すクラス(特殊化) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>アーキタイプマネージャーのコンテキスト </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::vector&lt;ArchetypeChunk*&gt; マッチするチャンクのベクター </dd></dl>
+
+<p class="definition"> <a class="el" href="_archetype_manager_8h_source.html">ArchetypeManager.h</a> の <a class="el" href="_archetype_manager_8h_source.html#l00066">66</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab8769a82b0d78cfb45d8af0c046f3b10" name="ab8769a82b0d78cfb45d8af0c046f3b10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8769a82b0d78cfb45d8af0c046f3b10">&#9670;&#160;</a></span>MatchingChunks() <span class="overload">[2/10]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt; SFW::ECS::Query::MatchingChunks </td>
+          <td>(</td>
+          <td class="paramtype">BVHPartition &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00326">326</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7b90b6e7b91ca9c827769c1cab9b5a56" name="a7b90b6e7b91ca9c827769c1cab9b5a56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b90b6e7b91ca9c827769c1cab9b5a56">&#9670;&#160;</a></span>MatchingChunks() <span class="overload">[3/10]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt; SFW::ECS::Query::MatchingChunks </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>em</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00706">706</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa8511d4d90f72c61e0c602939b7d37d8" name="aa8511d4d90f72c61e0c602939b7d37d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8511d4d90f72c61e0c602939b7d37d8">&#9670;&#160;</a></span>MatchingChunks() <span class="overload">[4/10]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt; SFW::ECS::Query::MatchingChunks </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_grid2_d_partition.html">Grid2DPartition</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Grid2DPartitionのクエリを表すクラス(特殊化) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Grid2DPartitionのコンテキスト </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::vector&lt;ArchetypeChunk*&gt; マッチするチャンクのベクター </dd></dl>
+
+<p class="definition"> <a class="el" href="_grid2_d_partition_8h_source.html">Grid2DPartition.h</a> の <a class="el" href="_grid2_d_partition_8h_source.html#l00603">603</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8d3c51e534edac768d7b1b8782ed1f93" name="a8d3c51e534edac768d7b1b8782ed1f93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d3c51e534edac768d7b1b8782ed1f93">&#9670;&#160;</a></span>MatchingChunks() <span class="overload">[5/10]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt; SFW::ECS::Query::MatchingChunks </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_grid3_d_partition.html">Grid3DPartition</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="class_s_f_w_1_1_grid3_d_partition.html" title="3Dグリッドパーティションを定義するクラス（PartitionConcept 準拠）">Grid3DPartition</a> のチャンク列挙用クエリ（特殊化） </p>
+
+<p class="definition"> <a class="el" href="_grid3_d_partition_8h_source.html">Grid3DPartition.h</a> の <a class="el" href="_grid3_d_partition_8h_source.html#l00427">427</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a490c0190881f3492718ff949ba0ad968" name="a490c0190881f3492718ff949ba0ad968"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a490c0190881f3492718ff949ba0ad968">&#9670;&#160;</a></span>MatchingChunks() <span class="overload">[6/10]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt; SFW::ECS::Query::MatchingChunks </td>
+          <td>(</td>
+          <td class="paramtype">SAPPartition &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_s_a_p_partitionh_8h_source.html">SAPPartitionh.h</a> の <a class="el" href="_s_a_p_partitionh_8h_source.html#l00295">295</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a522877b24ce2b908a87020ca6aab23e8" name="a522877b24ce2b908a87020ca6aab23e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a522877b24ce2b908a87020ca6aab23e8">&#9670;&#160;</a></span>MatchingChunks() <span class="overload">[7/10]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt; SFW::ECS::Query::MatchingChunks </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_octree_partition.html">SFW::OctreePartition</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ctx</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_octree_partition_8h_source.html">OctreePartition.h</a> の <a class="el" href="_octree_partition_8h_source.html#l00859">859</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af8e45791fccc555cd5fefd9a179658c3" name="af8e45791fccc555cd5fefd9a179658c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8e45791fccc555cd5fefd9a179658c3">&#9670;&#160;</a></span>MatchingChunks() <span class="overload">[8/10]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt; SFW::ECS::Query::MatchingChunks </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_quad_tree_partition.html">SFW::QuadTreePartition</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ctx</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00814">814</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8494bb7fbce111940dc9614c0c5060f1" name="a8494bb7fbce111940dc9614c0c5060f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8494bb7fbce111940dc9614c0c5060f1">&#9670;&#160;</a></span>MatchingChunks() <span class="overload">[9/10]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt; SFW::ECS::Query::MatchingChunks </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SFW::SpatialChunk</a> * &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_spatial_chunk_8h_source.html">SpatialChunk.h</a> の <a class="el" href="_spatial_chunk_8h_source.html#l00087">87</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab30526a91aaa023239f86e62d1fc4e71" name="ab30526a91aaa023239f86e62d1fc4e71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab30526a91aaa023239f86e62d1fc4e71">&#9670;&#160;</a></span>MatchingChunks() <span class="overload">[10/10]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;ReferenceOnly T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> * &gt; SFW::ECS::Query::MatchingChunks </td>
+          <td>(</td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>クエリにマッチするアーキタイプチャンクを取得します。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>コンテキストを指定するテンプレート </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::vector&lt;ArchetypeChunk*&gt; マッチするチャンクのベクター </dd></dl>
+
+<p class="definition"> <a class="el" href="_query_8h_source.html">Query.h</a> の <a class="el" href="_query_8h_source.html#l00066">66</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a82286a440d7074faadabd3ae7750befb" name="a82286a440d7074faadabd3ae7750befb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82286a440d7074faadabd3ae7750befb">&#9670;&#160;</a></span>With()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Ts&gt; <br />
+requires AllDense&lt;Ts...&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_query.html">Query</a> &amp; SFW::ECS::Query::With </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>クエリに含めるコンポーネントを指定するテンプレート </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_query.html" title="指定したコンポーネントにマッチングするチャンクを取得ためのクラス">Query</a>&amp; クエリ自身の参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_query_8h_source.html">Query.h</a> の <a class="el" href="_query_8h_source.html#l00045">45</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a35e6e545e7ced5dbbd83498f002f7e72" name="a35e6e545e7ced5dbbd83498f002f7e72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35e6e545e7ced5dbbd83498f002f7e72">&#9670;&#160;</a></span>Without()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Ts&gt; <br />
+requires AllDense&lt;Ts...&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_query.html">Query</a> &amp; SFW::ECS::Query::Without </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>クエリから除外するコンポーネントを指定するテンプレート </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_query.html" title="指定したコンポーネントにマッチングするチャンクを取得ためのクラス">Query</a>&amp; クエリ自身の参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_query_8h_source.html">Query.h</a> の <a class="el" href="_query_8h_source.html#l00055">55</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/<a class="el" href="_query_8h_source.html">Query.h</a></li>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/<a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a></li>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/<a class="el" href="_archetype_manager_8h_source.html">ArchetypeManager.h</a></li>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/<a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a></li>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/<a class="el" href="_grid2_d_partition_8h_source.html">Grid2DPartition.h</a></li>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/<a class="el" href="_grid3_d_partition_8h_source.html">Grid3DPartition.h</a></li>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/<a class="el" href="_octree_partition_8h_source.html">OctreePartition.h</a></li>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/<a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a></li>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/<a class="el" href="_s_a_p_partitionh_8h_source.html">SAPPartitionh.h</a></li>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/<a class="el" href="_spatial_chunk_8h_source.html">SpatialChunk.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_e_c_s.html">ECS</a></li><li class="navelem"><a href="class_s_f_w_1_1_e_c_s_1_1_query.html">Query</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/\+Flatten.hpp ファイル}
+\hypertarget{_flatten_8hpp}{}\label{_flatten_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/Flatten.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/Flatten.hpp}}
+{\ttfamily \#include $<$tuple$>$}\newline
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_value_or_self_helper}{SFW\+::\+Value\+Or\+Self\+Helper$<$ T, typename $>$}}
+\begin{DoxyCompactList}\small\item\em タプルを再帰的に展開するためのヘルパー構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_value_or_self_helper_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1tuple__type_01_4_01_4}{SFW\+::\+Value\+Or\+Self\+Helper$<$ T, std\+::void\+\_\+t$<$ typename T\+::tuple\+\_\+type $>$ $>$}}
+\begin{DoxyCompactList}\small\item\em タプル型を持つ場合のヘルパー構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_flatten}{SFW\+::\+Flatten$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em タプルを再帰的に展開するための構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4}{SFW\+::\+Flatten$<$ std\+::tuple$<$ Ts... $>$ $>$}}
+\begin{DoxyCompactList}\small\item\em タプルを再帰的に展開するための特殊化 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T$>$ }\\using \mbox{\hyperlink{namespace_s_f_w_a8c88125b250ae05a98a9dc96630d5df4}{SFW\+::\+Value\+Or\+Self}} = typename \mbox{\hyperlink{struct_s_f_w_1_1_value_or_self_helper}{Value\+Or\+Self\+Helper}}$<$T$>$\+::type
+\begin{DoxyCompactList}\small\item\em タプルを再帰的に展開するためのエイリアス \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\using \mbox{\hyperlink{namespace_s_f_w_aff2c32dcae4e0ef3a38d3322c5777156}{SFW\+::\+FlattenT}} = typename \mbox{\hyperlink{struct_s_f_w_1_1_flatten}{Flatten}}$<$\mbox{\hyperlink{namespace_s_f_w_a8c88125b250ae05a98a9dc96630d5df4}{Value\+Or\+Self}}$<$T$>$$>$\+::type
+\begin{DoxyCompactList}\small\item\em Flatten\+Tは、与えられた型\+Tを再帰的に展開し、最終的な型を取得するためのエイリアス \end{DoxyCompactList}\end{DoxyCompactItemize}

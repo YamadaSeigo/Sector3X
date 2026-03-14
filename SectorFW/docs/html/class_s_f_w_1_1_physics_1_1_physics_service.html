@@ -1,0 +1,1892 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Physics::PhysicsService クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_physics_1_1_physics_service.html','','class_s_f_w_1_1_physics_1_1_physics_service-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Physics::PhysicsService クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>物理サービスを提供するクラス。systemから物理Deviceを操作するためのAPIを提供する  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a>&gt;</code></p>
+<div class="dynheader">
+SFW::Physics::PhysicsService の継承関係図</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_s_f_w_1_1_physics_1_1_physics_service.png" usemap="#SFW_3A_3APhysics_3A_3APhysicsService_map" alt=""/>
+  <map id="SFW_3A_3APhysics_3A_3APhysicsService_map" name="SFW_3A_3APhysics_3A_3APhysicsService_map">
+<area href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html" title="更新サービスのインターフェース(Systemよりも前に更新)" alt="SFW::ECS::IUpdateService" shape="rect" coords="0,0,183,24"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:CreatedBody" id="r_CreatedBody"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_service_1_1_created_body.html">CreatedBody</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Body 作成完了イベントの取り出し（WriteBack用）  <a href="struct_s_f_w_1_1_physics_1_1_physics_service_1_1_created_body.html#details">[詳解]</a><br /></td></tr>
+<tr class="memitem:CreateIntent" id="r_CreateIntent"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_service_1_1_create_intent.html">CreateIntent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">生成インテント：発生源で「この <a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> を作って」と積んでおく  <a href="struct_s_f_w_1_1_physics_1_1_physics_service_1_1_create_intent.html#details">[詳解]</a><br /></td></tr>
+<tr class="memitem:Material" id="r_Material"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_service_1_1_material.html">Material</a></td></tr>
+<tr class="memitem:Plan" id="r_Plan"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_service_1_1_plan.html">Plan</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a4016b934601a7192d57c6e29f5cf6daa" id="r_a4016b934601a7192d57c6e29f5cf6daa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4016b934601a7192d57c6e29f5cf6daa">PhysicsService</a> (<a class="el" href="class_s_f_w_1_1_physics_1_1_physics_device.html">PhysicsDevice</a> &amp;device, <a class="el" href="class_s_f_w_1_1_physics_1_1_physics_shape_manager.html">PhysicsShapeManager</a> &amp;shapeMgr, <a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_service_1_1_plan.html">Plan</a> plan={ 1.0f/60.0f, 1, false }, size_t queueCapacityPow2=4096)</td></tr>
+<tr class="memdesc:a4016b934601a7192d57c6e29f5cf6daa"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:a5bc68ae5001e47b8b5ae93d407e41573" id="r_a5bc68ae5001e47b8b5ae93d407e41573"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5bc68ae5001e47b8b5ae93d407e41573">MakeShape</a> (const <a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_create_desc.html">ShapeCreateDesc</a> &amp;desc)</td></tr>
+<tr class="memdesc:a5bc68ae5001e47b8b5ae93d407e41573"><td class="mdescLeft">&#160;</td><td class="mdescRight">指定した形状を生成する  <br /></td></tr>
+<tr class="memitem:a46433923c9ab77fe7892134274940026" id="r_a46433923c9ab77fe7892134274940026"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a46433923c9ab77fe7892134274940026">MakeBox</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> he, <a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_scale.html">ShapeScale</a> s={ {1, 1, 1} })</td></tr>
+<tr class="memdesc:a46433923c9ab77fe7892134274940026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Box 形状を生成する  <br /></td></tr>
+<tr class="memitem:ab11f7b7d9e04eb95553b688acc6ea3d4" id="r_ab11f7b7d9e04eb95553b688acc6ea3d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab11f7b7d9e04eb95553b688acc6ea3d4">MakeSphere</a> (float radius, <a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_scale.html">ShapeScale</a> s={ {1, 1, 1} })</td></tr>
+<tr class="memdesc:ab11f7b7d9e04eb95553b688acc6ea3d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">球形状を生成する  <br /></td></tr>
+<tr class="memitem:a0918d0eafefe67b55a974c3e3032dd34" id="r_a0918d0eafefe67b55a974c3e3032dd34"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0918d0eafefe67b55a974c3e3032dd34">MakeCapsule</a> (float halfHeight, float radius, <a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_scale.html">ShapeScale</a> s={ {1, 1, 1} })</td></tr>
+<tr class="memdesc:a0918d0eafefe67b55a974c3e3032dd34"><td class="mdescLeft">&#160;</td><td class="mdescRight">カプセル形状を生成する  <br /></td></tr>
+<tr class="memitem:af65cb7e071e1febd6c1364287d0c529e" id="r_af65cb7e071e1febd6c1364287d0c529e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af65cb7e071e1febd6c1364287d0c529e">MakeMesh</a> (const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> &gt; &amp;vertex, const std::vector&lt; uint32_t &gt; &amp;indices, bool rhFlip=false, <a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_scale.html">ShapeScale</a> s={ {1, 1, 1} })</td></tr>
+<tr class="memdesc:af65cb7e071e1febd6c1364287d0c529e"><td class="mdescLeft">&#160;</td><td class="mdescRight">メッシュ形状を生成する  <br /></td></tr>
+<tr class="memitem:a53529fe945e59e8855b26101ecb4a4d4" id="r_a53529fe945e59e8855b26101ecb4a4d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53529fe945e59e8855b26101ecb4a4d4">MakeMesh</a> (const std::string &amp;path, bool rhFlip=false, <a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_scale.html">ShapeScale</a> s={ {1, 1, 1} })</td></tr>
+<tr class="memdesc:a53529fe945e59e8855b26101ecb4a4d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">メッシュ形状を生成する（ファイル読み込み版）  <br /></td></tr>
+<tr class="memitem:aebabbbc7fcf26f8983b7b6afd403da6c" id="r_aebabbbc7fcf26f8983b7b6afd403da6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aebabbbc7fcf26f8983b7b6afd403da6c">MakeConvex</a> (const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> &gt; &amp;pts, const std::vector&lt; uint32_t &gt; &amp;idx, float r=0.05f, float tol=0.005f)</td></tr>
+<tr class="memdesc:aebabbbc7fcf26f8983b7b6afd403da6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">凸形状を生成する  <br /></td></tr>
+<tr class="memitem:ad9f0d3fd79bff442fe6ebc8f98fda052" id="r_ad9f0d3fd79bff442fe6ebc8f98fda052"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9f0d3fd79bff442fe6ebc8f98fda052">MakeConvexCompound</a> (const std::vector&lt; <a class="el" href="struct_s_f_w_1_1_physics_1_1_v_h_a_c_d_hull.html">VHACDHull</a> &gt; &amp;hulls, bool rhFlip=false, <a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_scale.html">ShapeScale</a> s={ {1, 1, 1} }, float r=0.05f, float tol=0.005f)</td></tr>
+<tr class="memdesc:ad9f0d3fd79bff442fe6ebc8f98fda052"><td class="mdescLeft">&#160;</td><td class="mdescRight">凸形状群から StaticCompoundShape を生成する  <br /></td></tr>
+<tr class="memitem:aec4d164a2b201f7626f6e91e24357686" id="r_aec4d164a2b201f7626f6e91e24357686"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec4d164a2b201f7626f6e91e24357686">MakeConvexCompound</a> (const std::string &amp;path, bool rhFlip=false, <a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_scale.html">ShapeScale</a> s={ {1, 1, 1} }, float r=0.05f, float tol=0.005f)</td></tr>
+<tr class="memdesc:aec4d164a2b201f7626f6e91e24357686"><td class="mdescLeft">&#160;</td><td class="mdescRight">VHACD バイナリファイルから凸形状群を読み込み、StaticCompoundShape を生成する  <br /></td></tr>
+<tr class="memitem:aff6de318c36e37a38fb05524f4f742c9" id="r_aff6de318c36e37a38fb05524f4f742c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff6de318c36e37a38fb05524f4f742c9">ReleaseShape</a> (<a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a> h, uint64_t sync=0)</td></tr>
+<tr class="memdesc:aff6de318c36e37a38fb05524f4f742c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">形状を解放する  <br /></td></tr>
+<tr class="memitem:acd73ffaf40fef1103ec1129bc3f87279" id="r_acd73ffaf40fef1103ec1129bc3f87279"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd73ffaf40fef1103ec1129bc3f87279">CreateBody</a> (const <a class="el" href="struct_s_f_w_1_1_physics_1_1_create_body_cmd.html">CreateBodyCmd</a> &amp;c)</td></tr>
+<tr class="memdesc:acd73ffaf40fef1103ec1129bc3f87279"><td class="mdescLeft">&#160;</td><td class="mdescRight">物理ボディを作成するコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:a716fa33012dd2db8dd787bf9d87123a3" id="r_a716fa33012dd2db8dd787bf9d87123a3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a716fa33012dd2db8dd787bf9d87123a3">DestroyBody</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e)</td></tr>
+<tr class="memdesc:a716fa33012dd2db8dd787bf9d87123a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">物理ボディを破棄するコマンドをキューに必ず追加する  <br /></td></tr>
+<tr class="memitem:a2d4edf2123e841370f0f90b716ae3b89" id="r_a2d4edf2123e841370f0f90b716ae3b89"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d4edf2123e841370f0f90b716ae3b89">Teleport</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e, const <a class="el" href="struct_s_f_w_1_1_physics_1_1_mat34f.html">Mat34f</a> &amp;tm, bool wake=true)</td></tr>
+<tr class="memdesc:a2d4edf2123e841370f0f90b716ae3b89"><td class="mdescLeft">&#160;</td><td class="mdescRight">物理ボディをテレポートするコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:a2554438f5a1b77bfd617ce53cd95d74d" id="r_a2554438f5a1b77bfd617ce53cd95d74d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2554438f5a1b77bfd617ce53cd95d74d">SetLinearVelocity</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e, <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> v)</td></tr>
+<tr class="memdesc:a2554438f5a1b77bfd617ce53cd95d74d"><td class="mdescLeft">&#160;</td><td class="mdescRight">物理ボディの線形速度を設定するコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:a05f70b826e98bca19baeb05eac0754eb" id="r_a05f70b826e98bca19baeb05eac0754eb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05f70b826e98bca19baeb05eac0754eb">SetAngularVelocity</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e, <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> w)</td></tr>
+<tr class="memdesc:a05f70b826e98bca19baeb05eac0754eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">物理ボディの角速度を設定するコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:ac8974f346515592b21a9310d317df9ac" id="r_ac8974f346515592b21a9310d317df9ac"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac8974f346515592b21a9310d317df9ac">AddForce</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e, <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> f, std::optional&lt; <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> &gt; at=std::nullopt)</td></tr>
+<tr class="memdesc:ac8974f346515592b21a9310d317df9ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">物理ボディに力を加えるコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:ae0dc44e231b7b5ba1bfb45dc1a5162c0" id="r_ae0dc44e231b7b5ba1bfb45dc1a5162c0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae0dc44e231b7b5ba1bfb45dc1a5162c0">AddImpulse</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e, <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> p, std::optional&lt; <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> &gt; at=std::nullopt)</td></tr>
+<tr class="memdesc:ae0dc44e231b7b5ba1bfb45dc1a5162c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">物理ボディにインパルスを加えるコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:aa5ebaf86506c7e4e7339731d56984ac9" id="r_aa5ebaf86506c7e4e7339731d56984ac9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5ebaf86506c7e4e7339731d56984ac9">SetKinematicTarget</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e, const <a class="el" href="struct_s_f_w_1_1_physics_1_1_mat34f.html">Mat34f</a> &amp;tm)</td></tr>
+<tr class="memdesc:aa5ebaf86506c7e4e7339731d56984ac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">物理ボディにトルクを加えるコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:ac4ee7c2435fed337172fed5a369cf8fc" id="r_ac4ee7c2435fed337172fed5a369cf8fc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac4ee7c2435fed337172fed5a369cf8fc">SetCollisionMask</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e, uint32_t mask)</td></tr>
+<tr class="memdesc:ac4ee7c2435fed337172fed5a369cf8fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">物理ボディの衝突マスクを設定するコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:ab5fa8961b1fdda172933dd596f1e0532" id="r_ab5fa8961b1fdda172933dd596f1e0532"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab5fa8961b1fdda172933dd596f1e0532">SetObjectLayer</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e, uint16_t layer, uint16_t broad)</td></tr>
+<tr class="memdesc:ab5fa8961b1fdda172933dd596f1e0532"><td class="mdescLeft">&#160;</td><td class="mdescRight">物理ボディのレイヤーを設定するコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:a48ab2e7d94dc234641d1006b5e430ef0" id="r_a48ab2e7d94dc234641d1006b5e430ef0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a48ab2e7d94dc234641d1006b5e430ef0">RayCast</a> (uint32_t reqId, <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> o, <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> dir, float maxDist)</td></tr>
+<tr class="memdesc:a48ab2e7d94dc234641d1006b5e430ef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">レイキャストを実行するコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:a26e08304af463bf0da778f9ad2a7544e" id="r_a26e08304af463bf0da778f9ad2a7544e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a26e08304af463bf0da778f9ad2a7544e">RayCast</a> (const <a class="el" href="struct_s_f_w_1_1_physics_1_1_ray_cast_cmd.html">RayCastCmd</a> &amp;c)</td></tr>
+<tr class="memdesc:a26e08304af463bf0da778f9ad2a7544e"><td class="mdescLeft">&#160;</td><td class="mdescRight">レイキャストを実行するコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:ad287a42a6dd4c4e7cb37d456eafc43f8" id="r_ad287a42a6dd4c4e7cb37d456eafc43f8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad287a42a6dd4c4e7cb37d456eafc43f8">CreateCharacter</a> (const <a class="el" href="struct_s_f_w_1_1_physics_1_1_create_character_cmd.html">CreateCharacterCmd</a> &amp;c)</td></tr>
+<tr class="memdesc:ad287a42a6dd4c4e7cb37d456eafc43f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">キャラクターを生成するコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:ad43f5aa4141eedeba2e8b63a967d5ff2" id="r_ad43f5aa4141eedeba2e8b63a967d5ff2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad43f5aa4141eedeba2e8b63a967d5ff2">SetCharacterVelocity</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e, <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> v)</td></tr>
+<tr class="memdesc:ad43f5aa4141eedeba2e8b63a967d5ff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">キャラクターの速度を設定するコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:a143a054c517fd9871ae9b574a0425ef0" id="r_a143a054c517fd9871ae9b574a0425ef0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a143a054c517fd9871ae9b574a0425ef0">SetCharacterRotation</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e, const <a class="el" href="namespace_s_f_w_1_1_physics.html#a1fdfe70e25b6445560f443d0e054477d">Quatf</a> &amp;q)</td></tr>
+<tr class="memdesc:a143a054c517fd9871ae9b574a0425ef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">キャラクターの回転を設定するコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:a15da7a510ca89d3cdd6da093e2159506" id="r_a15da7a510ca89d3cdd6da093e2159506"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a15da7a510ca89d3cdd6da093e2159506">TeleportCharacter</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e, const <a class="el" href="struct_s_f_w_1_1_physics_1_1_mat34f.html">Mat34f</a> &amp;tm)</td></tr>
+<tr class="memdesc:a15da7a510ca89d3cdd6da093e2159506"><td class="mdescLeft">&#160;</td><td class="mdescRight">キャラクターをテレポートするコマンドをキューに追加する  <br /></td></tr>
+<tr class="memitem:a19a63d25f486259e0be1977225dec59d" id="r_a19a63d25f486259e0be1977225dec59d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a19a63d25f486259e0be1977225dec59d">DestroyCharacter</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e)</td></tr>
+<tr class="memdesc:a19a63d25f486259e0be1977225dec59d"><td class="mdescLeft">&#160;</td><td class="mdescRight">キャラクターを破棄するコマンドをキューに必ず追加する  <br /></td></tr>
+<tr class="memitem:a7e929199b082432ba3b4b64e8c5f9da7" id="r_a7e929199b082432ba3b4b64e8c5f9da7"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_physics_1_1_character_pose.html">CharacterPose</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e929199b082432ba3b4b64e8c5f9da7">ReadCharacterPose</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e)</td></tr>
+<tr class="memdesc:a7e929199b082432ba3b4b64e8c5f9da7"><td class="mdescLeft">&#160;</td><td class="mdescRight">キャラクターのポーズを取得する  <br /></td></tr>
+<tr class="memitem:af319e17a0fdd2fc05472b8b7ee0b435a" id="r_af319e17a0fdd2fc05472b8b7ee0b435a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af319e17a0fdd2fc05472b8b7ee0b435a">PreUpdate</a> (double dt) override</td></tr>
+<tr class="memdesc:af319e17a0fdd2fc05472b8b7ee0b435a"><td class="mdescLeft">&#160;</td><td class="mdescRight">物理シミュレーションを更新する（IUpdateService 実装）  <br /></td></tr>
+<tr class="memitem:a5efaea4787c4abb6c2eff16b7a206ca1" id="r_a5efaea4787c4abb6c2eff16b7a206ca1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5efaea4787c4abb6c2eff16b7a206ca1">BuildPoseBatch</a> (<a class="el" href="struct_s_f_w_1_1_physics_1_1_pose_batch_view.html">PoseBatchView</a> &amp;v) const</td></tr>
+<tr class="memdesc:a5efaea4787c4abb6c2eff16b7a206ca1"><td class="mdescLeft">&#160;</td><td class="mdescRight">ポーズバッチを構築する（描画フレームで呼ぶ）  <br /></td></tr>
+<tr class="memitem:a29863f6c2de54be3ecfc7d281af58053" id="r_a29863f6c2de54be3ecfc7d281af58053"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29863f6c2de54be3ecfc7d281af58053">GetAlpha</a> () const</td></tr>
+<tr class="memdesc:a29863f6c2de54be3ecfc7d281af58053"><td class="mdescLeft">&#160;</td><td class="mdescRight">補間に使うための α を取得（描画フレームで使う）  <br /></td></tr>
+<tr class="memitem:a4f4ec8dc39eb4eba78ca6177fe1e1f83" id="r_a4f4ec8dc39eb4eba78ca6177fe1e1f83"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_snapshot.html">PhysicsSnapshot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4f4ec8dc39eb4eba78ca6177fe1e1f83">CurrentSnapshot</a> () const</td></tr>
+<tr class="memitem:a0f55b3ccced37d0fa038957ad7a8ba08" id="r_a0f55b3ccced37d0fa038957ad7a8ba08"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_snapshot.html">PhysicsSnapshot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0f55b3ccced37d0fa038957ad7a8ba08">PreviousSnapshot</a> () const</td></tr>
+<tr class="memitem:af7beb150f2482a6b210058ced950df22" id="r_af7beb150f2482a6b210058ced950df22"><td class="memItemLeft" align="right" valign="top">std::optional&lt; JPH::BodyID &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7beb150f2482a6b210058ced950df22">TryGetBodyID</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e) const noexcept</td></tr>
+<tr class="memdesc:af7beb150f2482a6b210058ced950df22"><td class="mdescLeft">&#160;</td><td class="mdescRight">生成済み BodyID の参照（差し込み用  <br /></td></tr>
+<tr class="memitem:ab48c3babc13f26c862995cd84a06d170" id="r_ab48c3babc13f26c862995cd84a06d170"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab48c3babc13f26c862995cd84a06d170">EnqueueCreateIntent</a> (<a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a> e, <a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a> h, const <a class="el" href="struct_s_f_w_1_1_spatial_chunk_key.html">SpatialChunkKey</a> &amp;owner, <a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_service_1_1_material.html">Material</a> mat={})</td></tr>
+<tr class="memdesc:ab48c3babc13f26c862995cd84a06d170"><td class="mdescLeft">&#160;</td><td class="mdescRight">生成インテントをキューに追加する（Body 作成要求用  <br /></td></tr>
+<tr class="memitem:a88b8571199da3df1ffa25d6323e6f1fd" id="r_a88b8571199da3df1ffa25d6323e6f1fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a88b8571199da3df1ffa25d6323e6f1fd">SwapCreateIntents</a> (<a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a> id, std::vector&lt; <a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_service_1_1_create_intent.html">CreateIntent</a> &gt; &amp;out)</td></tr>
+<tr class="memdesc:a88b8571199da3df1ffa25d6323e6f1fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">生成インテントを取り出す（Body 作成要求用  <br /></td></tr>
+<tr class="memitem:aee38394c0367888c820483899fd62967" id="r_aee38394c0367888c820483899fd62967"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee38394c0367888c820483899fd62967">ConsumeCreatedBodies</a> (<a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a> id, std::vector&lt; <a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_service_1_1_created_body.html">CreatedBody</a> &gt; &amp;out)</td></tr>
+<tr class="memdesc:aee38394c0367888c820483899fd62967"><td class="mdescLeft">&#160;</td><td class="mdescRight">生成済み Body イベントを取り出す  <br /></td></tr>
+<tr class="memitem:a9e70ce936fe505a22469a13d12c831b8" id="r_a9e70ce936fe505a22469a13d12c831b8"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_s_f_w_1_1_physics_1_1_physics_shape_manager.html">PhysicsShapeManager</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9e70ce936fe505a22469a13d12c831b8">GetShapeManager</a> () const noexcept</td></tr>
+<tr class="memdesc:a9e70ce936fe505a22469a13d12c831b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">形状マネージャーの参照を取得する  <br /></td></tr>
+<tr class="memitem:ac11c62e59d0fee0d072122cdcc3340b5" id="r_ac11c62e59d0fee0d072122cdcc3340b5"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_dims.html">ShapeDims</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac11c62e59d0fee0d072122cdcc3340b5">GetShapeDims</a> (<a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a> h) const</td></tr>
+<tr class="memdesc:ac11c62e59d0fee0d072122cdcc3340b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">形状の寸法を取得する  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
+その他の継承メンバ</h2></td></tr>
+<tr class="inherit_header pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">SFW::ECS::IUpdateService</a> に属する継承公開型</td></tr>
+<tr class="memitem:ae5407b8ae7f6739250af397382f3f6c7 inherit pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_ae5407b8ae7f6739250af397382f3f6c7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7">Phase</a> : uint16_t { <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec">EALRY</a> = 0
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7">NORMAL</a> = 1
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9">LATE</a> = 2
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907">PHASE_MAX</a>
+ }</td></tr>
+<tr class="memitem:a0a2e8c399f89c675d9de722b706a8608 inherit pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a0a2e8c399f89c675d9de722b706a8608"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608">Group</a> : uint16_t { <br />
+&#160;&#160;<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9">GROUP_SERIAL</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b">GROUP_GRAPHICS</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda">GROUP_PHYSICS</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a">GROUP_INPUT</a>
+, <br />
+&#160;&#160;<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e">GROUP_AUDIO</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580">GROUP_AI</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90">GROUP_MAX</a>
+<br />
+ }</td></tr>
+<tr class="inherit_header pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">SFW::ECS::IUpdateService</a> に属する継承静的公開変数類</td></tr>
+<tr class="memitem:a73744778bc5cc3113ed77db1b69e1fb1 inherit pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a73744778bc5cc3113ed77db1b69e1fb1"><td class="memItemLeft" align="right" valign="top">static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a73744778bc5cc3113ed77db1b69e1fb1">updatePhase</a> = <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec">EALRY</a></td></tr>
+<tr class="memitem:a9f0e8abd26ab30155b39e558f004ce42 inherit pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a9f0e8abd26ab30155b39e558f004ce42"><td class="memItemLeft" align="right" valign="top">static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a9f0e8abd26ab30155b39e558f004ce42">updateGroup</a> = <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9">GROUP_SERIAL</a></td></tr>
+<tr class="memitem:a116ce546ab92eaf8f4282719b89a5165 inherit pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a116ce546ab92eaf8f4282719b89a5165"><td class="memItemLeft" align="right" valign="top">static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a116ce546ab92eaf8f4282719b89a5165">updateOrder</a> = 0</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>物理サービスを提供するクラス。systemから物理Deviceを操作するためのAPIを提供する </p>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00023">23</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="a4016b934601a7192d57c6e29f5cf6daa" name="a4016b934601a7192d57c6e29f5cf6daa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4016b934601a7192d57c6e29f5cf6daa">&#9670;&#160;</a></span>PhysicsService()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Physics::PhysicsService::PhysicsService </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_physics_1_1_physics_device.html">PhysicsDevice</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_physics_1_1_physics_shape_manager.html">PhysicsShapeManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>shapeMgr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_service_1_1_plan.html">Plan</a></td>          <td class="paramname"><span class="paramname"><em>plan</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{&#160;1.0f&#160;/&#160;60.0f,&#160;1,&#160;false&#160;}</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>queueCapacityPow2</em></span><span class="paramdefsep"> = </span><span class="paramdefval">4096</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">device</td><td>物理デバイス </td></tr>
+    <tr><td class="paramname">shapeMgr</td><td>形状マネージャー </td></tr>
+    <tr><td class="paramname">plan</td><td>物理シミュレーションの計画（固定時間ステップ等） </td></tr>
+    <tr><td class="paramname">queueCapacityPow2</td><td>コマンドキューの容量（2の累乗、デフォルトは4096） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00059">59</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="ac8974f346515592b21a9310d317df9ac" name="ac8974f346515592b21a9310d317df9ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8974f346515592b21a9310d317df9ac">&#9670;&#160;</a></span>AddForce()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::AddForce </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>f</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::optional&lt; <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>at</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::nullopt</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>物理ボディに力を加えるコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>力を加えるエンティティ </td></tr>
+    <tr><td class="paramname">f</td><td>加える力（Vec3f） </td></tr>
+    <tr><td class="paramname">at</td><td>力を加える位置（ワールド座標、デフォルトはボディ中心） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00214">214</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae0dc44e231b7b5ba1bfb45dc1a5162c0" name="ae0dc44e231b7b5ba1bfb45dc1a5162c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0dc44e231b7b5ba1bfb45dc1a5162c0">&#9670;&#160;</a></span>AddImpulse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::AddImpulse </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::optional&lt; <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>at</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::nullopt</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>物理ボディにインパルスを加えるコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>インパルスを加えるエンティティ </td></tr>
+    <tr><td class="paramname">p</td><td>加えるインパルス（Vec3f） </td></tr>
+    <tr><td class="paramname">at</td><td>インパルスを加える位置（ワールド座標、デフォルトはボディ中心） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00225">225</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a5efaea4787c4abb6c2eff16b7a206ca1" name="a5efaea4787c4abb6c2eff16b7a206ca1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5efaea4787c4abb6c2eff16b7a206ca1">&#9670;&#160;</a></span>BuildPoseBatch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Physics::PhysicsService::BuildPoseBatch </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_physics_1_1_pose_batch_view.html">PoseBatchView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ポーズバッチを構築する（描画フレームで呼ぶ） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>ポーズバッチビューの参照 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00336">336</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aee38394c0367888c820483899fd62967" name="aee38394c0367888c820483899fd62967"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee38394c0367888c820483899fd62967">&#9670;&#160;</a></span>ConsumeCreatedBodies()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Physics::PhysicsService::ConsumeCreatedBodies </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_service_1_1_created_body.html">CreatedBody</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>out</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>生成済み Body イベントを取り出す </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td>取り出し先のベクター </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00396">396</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="acd73ffaf40fef1103ec1129bc3f87279" name="acd73ffaf40fef1103ec1129bc3f87279"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd73ffaf40fef1103ec1129bc3f87279">&#9670;&#160;</a></span>CreateBody()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::CreateBody </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_physics_1_1_create_body_cmd.html">CreateBodyCmd</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>物理ボディを作成するコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>作成コマンド </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00183">183</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad287a42a6dd4c4e7cb37d456eafc43f8" name="ad287a42a6dd4c4e7cb37d456eafc43f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad287a42a6dd4c4e7cb37d456eafc43f8">&#9670;&#160;</a></span>CreateCharacter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::CreateCharacter </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_physics_1_1_create_character_cmd.html">CreateCharacterCmd</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>キャラクターを生成するコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>キャラクター生成コマンド </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00270">270</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4f4ec8dc39eb4eba78ca6177fe1e1f83" name="a4f4ec8dc39eb4eba78ca6177fe1e1f83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f4ec8dc39eb4eba78ca6177fe1e1f83">&#9670;&#160;</a></span>CurrentSnapshot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_snapshot.html">PhysicsSnapshot</a> &amp; SFW::Physics::PhysicsService::CurrentSnapshot </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00348">348</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a716fa33012dd2db8dd787bf9d87123a3" name="a716fa33012dd2db8dd787bf9d87123a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a716fa33012dd2db8dd787bf9d87123a3">&#9670;&#160;</a></span>DestroyBody()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::DestroyBody </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>物理ボディを破棄するコマンドをキューに必ず追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>破棄するエンティティ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00188">188</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a19a63d25f486259e0be1977225dec59d" name="a19a63d25f486259e0be1977225dec59d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19a63d25f486259e0be1977225dec59d">&#9670;&#160;</a></span>DestroyCharacter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::DestroyCharacter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>キャラクターを破棄するコマンドをキューに必ず追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>対象のエンティティ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00301">301</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab48c3babc13f26c862995cd84a06d170" name="ab48c3babc13f26c862995cd84a06d170"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab48c3babc13f26c862995cd84a06d170">&#9670;&#160;</a></span>EnqueueCreateIntent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Physics::PhysicsService::EnqueueCreateIntent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a></td>          <td class="paramname"><span class="paramname"><em>h</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_spatial_chunk_key.html">SpatialChunkKey</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>owner</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_service_1_1_material.html">Material</a></td>          <td class="paramname"><span class="paramname"><em>mat</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>生成インテントをキューに追加する（Body 作成要求用 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>対象のエンティティ </td></tr>
+    <tr><td class="paramname">h</td><td>形状ハンドル </td></tr>
+    <tr><td class="paramname">owner</td><td>所有チャンクキー </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00365">365</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a29863f6c2de54be3ecfc7d281af58053" name="a29863f6c2de54be3ecfc7d281af58053"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29863f6c2de54be3ecfc7d281af58053">&#9670;&#160;</a></span>GetAlpha()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Physics::PhysicsService::GetAlpha </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>補間に使うための α を取得（描画フレームで使う） </p>
+<dl class="section return"><dt>戻り値</dt><dd>float 補間係数 α (0.0 〜 1.0) </dd></dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00343">343</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac11c62e59d0fee0d072122cdcc3340b5" name="ac11c62e59d0fee0d072122cdcc3340b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac11c62e59d0fee0d072122cdcc3340b5">&#9670;&#160;</a></span>GetShapeDims()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_dims.html">ShapeDims</a> &gt; SFW::Physics::PhysicsService::GetShapeDims </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a></td>          <td class="paramname"><span class="paramname"><em>h</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>形状の寸法を取得する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>形状ハンドル </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::optional&lt;ShapeDims&gt; 形状の寸法（存在しない場合は std::nullopt </dd></dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00412">412</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9e70ce936fe505a22469a13d12c831b8" name="a9e70ce936fe505a22469a13d12c831b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e70ce936fe505a22469a13d12c831b8">&#9670;&#160;</a></span>GetShapeManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_s_f_w_1_1_physics_1_1_physics_shape_manager.html">PhysicsShapeManager</a> * SFW::Physics::PhysicsService::GetShapeManager </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>形状マネージャーの参照を取得する </p>
+<dl class="section return"><dt>戻り値</dt><dd>const PhysicsShapeManager* 形状マネージャーの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00406">406</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a46433923c9ab77fe7892134274940026" name="a46433923c9ab77fe7892134274940026"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46433923c9ab77fe7892134274940026">&#9670;&#160;</a></span>MakeBox()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a> SFW::Physics::PhysicsService::MakeBox </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>he</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_scale.html">ShapeScale</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{&#160;{1,1,1}&#160;}</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Box 形状を生成する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">he</td><td>ボックスサイズの半分の長さ（Vec3f） </td></tr>
+    <tr><td class="paramname">s</td><td>スケール（デフォルトは {1,1,1}） </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html" title="形状ハンドル（ShapeHandle）">ShapeHandle</a> 生成されたボックス形状のハンドル </dd></dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00078">78</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0918d0eafefe67b55a974c3e3032dd34" name="a0918d0eafefe67b55a974c3e3032dd34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0918d0eafefe67b55a974c3e3032dd34">&#9670;&#160;</a></span>MakeCapsule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a> SFW::Physics::PhysicsService::MakeCapsule </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>halfHeight</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>radius</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_scale.html">ShapeScale</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{&#160;{1,1,1}&#160;}</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カプセル形状を生成する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">halfHeight</td><td>半分の高さ </td></tr>
+    <tr><td class="paramname">radius</td><td>球の半径 </td></tr>
+    <tr><td class="paramname">s</td><td>スケール（デフォルトは {1,1,1}） </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html" title="形状ハンドル（ShapeHandle）">ShapeHandle</a> 生成された球形状のハンドル </dd></dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00097">97</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aebabbbc7fcf26f8983b7b6afd403da6c" name="aebabbbc7fcf26f8983b7b6afd403da6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebabbbc7fcf26f8983b7b6afd403da6c">&#9670;&#160;</a></span>MakeConvex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a> SFW::Physics::PhysicsService::MakeConvex </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>pts</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; uint32_t &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>idx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>r</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.05f</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>tol</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.005f</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>凸形状を生成する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pts</td><td>凸形状を作成する頂点群 </td></tr>
+    <tr><td class="paramname">idx</td><td>頂点インデックス群 </td></tr>
+    <tr><td class="paramname">s</td><td>スケール（デフォルトは {1,1,1}） </td></tr>
+    <tr><td class="paramname">r</td><td>シュリンク半径（デフォルトは 0.05f） </td></tr>
+    <tr><td class="paramname">tol</td><td>許容誤差（デフォルトは 0.005f） </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html" title="形状ハンドル（ShapeHandle）">ShapeHandle</a> 生成されたカプセル形状のハンドル </dd></dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00133">133</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aec4d164a2b201f7626f6e91e24357686" name="aec4d164a2b201f7626f6e91e24357686"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec4d164a2b201f7626f6e91e24357686">&#9670;&#160;</a></span>MakeConvexCompound() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a> SFW::Physics::PhysicsService::MakeConvexCompound </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>rhFlip</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_scale.html">ShapeScale</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{&#160;{1,1,1}&#160;}</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>r</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.05f</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>tol</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.005f</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>VHACD バイナリファイルから凸形状群を読み込み、StaticCompoundShape を生成する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>凸形状バイナリファイルのパス </td></tr>
+    <tr><td class="paramname">rhFlip</td><td>右手系変換が必要なら true </td></tr>
+    <tr><td class="paramname">s</td><td>スケール（デフォルトは {1,1,1}） </td></tr>
+    <tr><td class="paramname">r</td><td>シュリンク半径（デフォルトは 0.05f） </td></tr>
+    <tr><td class="paramname">tol</td><td>許容誤差（デフォルトは 0.005f） </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html" title="形状ハンドル（ShapeHandle）">ShapeHandle</a> 生成された StaticCompoundShape 形状のハンドル </dd></dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00159">159</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad9f0d3fd79bff442fe6ebc8f98fda052" name="ad9f0d3fd79bff442fe6ebc8f98fda052"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9f0d3fd79bff442fe6ebc8f98fda052">&#9670;&#160;</a></span>MakeConvexCompound() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a> SFW::Physics::PhysicsService::MakeConvexCompound </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="struct_s_f_w_1_1_physics_1_1_v_h_a_c_d_hull.html">VHACDHull</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>hulls</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>rhFlip</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_scale.html">ShapeScale</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{&#160;{1,1,1}&#160;}</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>r</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.05f</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>tol</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.005f</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>凸形状群から StaticCompoundShape を生成する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hulls</td><td>凸形状群 </td></tr>
+    <tr><td class="paramname">rhFlip</td><td>右手系変換が必要なら true </td></tr>
+    <tr><td class="paramname">s</td><td>スケール（デフォルトは {1,1,1}） </td></tr>
+    <tr><td class="paramname">r</td><td>シュリンク半径（デフォルトは 0.05f） </td></tr>
+    <tr><td class="paramname">tol</td><td>許容誤差（デフォルトは 0.005f） </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html" title="形状ハンドル（ShapeHandle）">ShapeHandle</a> 生成された StaticCompoundShape 形状のハンドル </dd></dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00146">146</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a53529fe945e59e8855b26101ecb4a4d4" name="a53529fe945e59e8855b26101ecb4a4d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53529fe945e59e8855b26101ecb4a4d4">&#9670;&#160;</a></span>MakeMesh() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a> SFW::Physics::PhysicsService::MakeMesh </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>rhFlip</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_scale.html">ShapeScale</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{&#160;{1,1,1}&#160;}</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>メッシュ形状を生成する（ファイル読み込み版） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>メッシュファイルのパス </td></tr>
+    <tr><td class="paramname">rhFlip</td><td>右手系変換が必要なら true </td></tr>
+    <tr><td class="paramname">s</td><td>スケール（デフォルトは {1,1,1}） </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html" title="形状ハンドル（ShapeHandle）">ShapeHandle</a> 生成されたメッシュ形状のハンドル </dd></dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00120">120</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af65cb7e071e1febd6c1364287d0c529e" name="af65cb7e071e1febd6c1364287d0c529e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af65cb7e071e1febd6c1364287d0c529e">&#9670;&#160;</a></span>MakeMesh() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a> SFW::Physics::PhysicsService::MakeMesh </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>vertex</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; uint32_t &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>indices</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>rhFlip</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_scale.html">ShapeScale</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{&#160;{1,1,1}&#160;}</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>メッシュ形状を生成する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vertex</td><td>頂点群 </td></tr>
+    <tr><td class="paramname">indices</td><td>頂点インデックス群 </td></tr>
+    <tr><td class="paramname">s</td><td>スケール（デフォルトは {1,1,1}） </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html" title="形状ハンドル（ShapeHandle）">ShapeHandle</a> 生成されたメッシュ形状のハンドル </dd></dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00109">109</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a5bc68ae5001e47b8b5ae93d407e41573" name="a5bc68ae5001e47b8b5ae93d407e41573"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5bc68ae5001e47b8b5ae93d407e41573">&#9670;&#160;</a></span>MakeShape()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a> SFW::Physics::PhysicsService::MakeShape </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_create_desc.html">ShapeCreateDesc</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>desc</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>指定した形状を生成する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">desc</td><td>形状生成記述子 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html" title="形状ハンドル（ShapeHandle）">ShapeHandle</a> 生成された形状のハンドル </dd></dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00069">69</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab11f7b7d9e04eb95553b688acc6ea3d4" name="ab11f7b7d9e04eb95553b688acc6ea3d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab11f7b7d9e04eb95553b688acc6ea3d4">&#9670;&#160;</a></span>MakeSphere()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a> SFW::Physics::PhysicsService::MakeSphere </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>radius</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_scale.html">ShapeScale</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{&#160;{1,1,1}&#160;}</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>球形状を生成する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">radius</td><td>球の半径 </td></tr>
+    <tr><td class="paramname">s</td><td>スケール（デフォルトは {1,1,1}） </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html" title="形状ハンドル（ShapeHandle）">ShapeHandle</a> 生成された球形状のハンドル </dd></dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00087">87</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af319e17a0fdd2fc05472b8b7ee0b435a" name="af319e17a0fdd2fc05472b8b7ee0b435a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af319e17a0fdd2fc05472b8b7ee0b435a">&#9670;&#160;</a></span>PreUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Physics::PhysicsService::PreUpdate </td>
+          <td>(</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>dt</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>物理シミュレーションを更新する（IUpdateService 実装） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dt</td><td>可変フレーム時間（ゲームループから呼ぶ） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">SFW::ECS::IUpdateService</a>を実装しています。</p>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00317">317</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0f55b3ccced37d0fa038957ad7a8ba08" name="a0f55b3ccced37d0fa038957ad7a8ba08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f55b3ccced37d0fa038957ad7a8ba08">&#9670;&#160;</a></span>PreviousSnapshot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_snapshot.html">PhysicsSnapshot</a> &amp; SFW::Physics::PhysicsService::PreviousSnapshot </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00349">349</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a26e08304af463bf0da778f9ad2a7544e" name="a26e08304af463bf0da778f9ad2a7544e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26e08304af463bf0da778f9ad2a7544e">&#9670;&#160;</a></span>RayCast() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::RayCast </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_physics_1_1_ray_cast_cmd.html">RayCastCmd</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>レイキャストを実行するコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>レイキャストコマンド </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00262">262</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a48ab2e7d94dc234641d1006b5e430ef0" name="a48ab2e7d94dc234641d1006b5e430ef0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48ab2e7d94dc234641d1006b5e430ef0">&#9670;&#160;</a></span>RayCast() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::RayCast </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>reqId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>o</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>dir</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>maxDist</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>レイキャストを実行するコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reqId</td><td>リクエストID（応答時に返される） </td></tr>
+    <tr><td class="paramname">o</td><td>開始位置（Vec3f） </td></tr>
+    <tr><td class="paramname">dir</td><td>方向ベクトル（正規化されていること、Vec3f） </td></tr>
+    <tr><td class="paramname">maxDist</td><td>最大距離 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00256">256</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7e929199b082432ba3b4b64e8c5f9da7" name="a7e929199b082432ba3b4b64e8c5f9da7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e929199b082432ba3b4b64e8c5f9da7">&#9670;&#160;</a></span>ReadCharacterPose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_physics_1_1_character_pose.html">CharacterPose</a> &gt; SFW::Physics::PhysicsService::ReadCharacterPose </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>キャラクターのポーズを取得する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>対象のエンティティ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::optional&lt;CharacterPose&gt; キャラクターポーズ（存在しない場合は std::nullopt） </dd></dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00309">309</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aff6de318c36e37a38fb05524f4f742c9" name="aff6de318c36e37a38fb05524f4f742c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff6de318c36e37a38fb05524f4f742c9">&#9670;&#160;</a></span>ReleaseShape()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Physics::PhysicsService::ReleaseShape </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_physics_1_1_shape_handle.html">ShapeHandle</a></td>          <td class="paramname"><span class="paramname"><em>h</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>sync</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>形状を解放する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>解放する形状のハンドル </td></tr>
+    <tr><td class="paramname">sync</td><td>同期用のシグナル（デフォルトは0、未使用 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00176">176</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a05f70b826e98bca19baeb05eac0754eb" name="a05f70b826e98bca19baeb05eac0754eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05f70b826e98bca19baeb05eac0754eb">&#9670;&#160;</a></span>SetAngularVelocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::SetAngularVelocity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>w</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>物理ボディの角速度を設定するコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>設定するエンティティ </td></tr>
+    <tr><td class="paramname">w</td><td>設定する角速度（Vec3f） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00207">207</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a143a054c517fd9871ae9b574a0425ef0" name="a143a054c517fd9871ae9b574a0425ef0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a143a054c517fd9871ae9b574a0425ef0">&#9670;&#160;</a></span>SetCharacterRotation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::SetCharacterRotation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_physics.html#a1fdfe70e25b6445560f443d0e054477d">Quatf</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>q</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>キャラクターの回転を設定するコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>対象のエンティティ </td></tr>
+    <tr><td class="paramname">q</td><td>設定する回転（Quatf） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00286">286</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad43f5aa4141eedeba2e8b63a967d5ff2" name="ad43f5aa4141eedeba2e8b63a967d5ff2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad43f5aa4141eedeba2e8b63a967d5ff2">&#9670;&#160;</a></span>SetCharacterVelocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::SetCharacterVelocity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>v</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>キャラクターの速度を設定するコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>対象のエンティティ </td></tr>
+    <tr><td class="paramname">v</td><td>設定する速度（Vec3f） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00278">278</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac4ee7c2435fed337172fed5a369cf8fc" name="ac4ee7c2435fed337172fed5a369cf8fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4ee7c2435fed337172fed5a369cf8fc">&#9670;&#160;</a></span>SetCollisionMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::SetCollisionMask </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>mask</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>物理ボディの衝突マスクを設定するコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>設定するエンティティ </td></tr>
+    <tr><td class="paramname">mask</td><td>設定する衝突マスク </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00241">241</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa5ebaf86506c7e4e7339731d56984ac9" name="aa5ebaf86506c7e4e7339731d56984ac9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5ebaf86506c7e4e7339731d56984ac9">&#9670;&#160;</a></span>SetKinematicTarget()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::SetKinematicTarget </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_physics_1_1_mat34f.html">Mat34f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>tm</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>物理ボディにトルクを加えるコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>トルクを加えるエンティティ </td></tr>
+    <tr><td class="paramname">tm</td><td>加えるトルク（Vec3f） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00235">235</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2554438f5a1b77bfd617ce53cd95d74d" name="a2554438f5a1b77bfd617ce53cd95d74d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2554438f5a1b77bfd617ce53cd95d74d">&#9670;&#160;</a></span>SetLinearVelocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::SetLinearVelocity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ac6ddaee89a4ac099921066adde19e4c3">Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>v</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>物理ボディの線形速度を設定するコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>設定するエンティティ </td></tr>
+    <tr><td class="paramname">v</td><td>設定する線形速度（Vec3f） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00201">201</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab5fa8961b1fdda172933dd596f1e0532" name="ab5fa8961b1fdda172933dd596f1e0532"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5fa8961b1fdda172933dd596f1e0532">&#9670;&#160;</a></span>SetObjectLayer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::SetObjectLayer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>layer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>broad</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>物理ボディのレイヤーを設定するコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>設定するエンティティ </td></tr>
+    <tr><td class="paramname">layer</td><td>レイヤー </td></tr>
+    <tr><td class="paramname">broad</td><td>ブロードフェーズレイヤー </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00248">248</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a88b8571199da3df1ffa25d6323e6f1fd" name="a88b8571199da3df1ffa25d6323e6f1fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88b8571199da3df1ffa25d6323e6f1fd">&#9670;&#160;</a></span>SwapCreateIntents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Physics::PhysicsService::SwapCreateIntents </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="struct_s_f_w_1_1_physics_1_1_physics_service_1_1_create_intent.html">CreateIntent</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>out</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>生成インテントを取り出す（Body 作成要求用 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td>取り出し先のベクター </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00373">373</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2d4edf2123e841370f0f90b716ae3b89" name="a2d4edf2123e841370f0f90b716ae3b89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d4edf2123e841370f0f90b716ae3b89">&#9670;&#160;</a></span>Teleport()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::Teleport </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_physics_1_1_mat34f.html">Mat34f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>tm</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>wake</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>物理ボディをテレポートするコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>テレポートするエンティティ </td></tr>
+    <tr><td class="paramname">tm</td><td>テレポート先の変換行列 </td></tr>
+    <tr><td class="paramname">wake</td><td>テレポート後に起こすかどうか（デフォルトは true） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00195">195</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a15da7a510ca89d3cdd6da093e2159506" name="a15da7a510ca89d3cdd6da093e2159506"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15da7a510ca89d3cdd6da093e2159506">&#9670;&#160;</a></span>TeleportCharacter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Physics::PhysicsService::TeleportCharacter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_physics_1_1_mat34f.html">Mat34f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>tm</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>キャラクターをテレポートするコマンドをキューに追加する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>対象のエンティティ </td></tr>
+    <tr><td class="paramname">tm</td><td>テレポート先の変換行列 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00294">294</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af7beb150f2482a6b210058ced950df22" name="af7beb150f2482a6b210058ced950df22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7beb150f2482a6b210058ced950df22">&#9670;&#160;</a></span>TryGetBodyID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; JPH::BodyID &gt; SFW::Physics::PhysicsService::TryGetBodyID </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_physics.html#ad5278e3775644e9bfb1f1f456498e0c0">Entity</a></td>          <td class="paramname"><span class="paramname"><em>e</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>生成済み BodyID の参照（差し込み用 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>エンティティ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::optional&lt;JPH::BodyID&gt; 生成済み BodyID（存在しない場合は std::nullopt </dd></dl>
+
+<p class="definition"> <a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a> の <a class="el" href="_physics_service_8h_source.html#l00356">356</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/<a class="el" href="_physics_service_8h_source.html">PhysicsService.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_physics.html">Physics</a></li><li class="navelem"><a href="class_s_f_w_1_1_physics_1_1_physics_service.html">PhysicsService</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

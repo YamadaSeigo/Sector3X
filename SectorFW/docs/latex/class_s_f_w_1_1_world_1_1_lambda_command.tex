@@ -1,0 +1,74 @@
+\doxysection{SFW\+::World\texorpdfstring{$<$}{<} Level\+Types \texorpdfstring{$>$}{>}\+::Lambda\+Command クラス}
+\hypertarget{class_s_f_w_1_1_world_1_1_lambda_command}{}\label{class_s_f_w_1_1_world_1_1_lambda_command}\index{SFW::World$<$ LevelTypes $>$::LambdaCommand@{SFW::World$<$ LevelTypes $>$::LambdaCommand}}
+
+
+{\ttfamily \#include $<$World.\+hpp$>$}
+
+SFW\+::World\texorpdfstring{$<$}{<} Level\+Types \texorpdfstring{$>$}{>}\+::Lambda\+Command の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_f_w_1_1_world_1_1_lambda_command}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command_ad5b9df500062cd293afe9e4307423baa}{Lambda\+Command}} (std\+::function$<$ void(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}} \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*})$>$ fn)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command_a4f015ef337aeb34529ebb0e4864a774b}{Execute}} (\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}} \texorpdfstring{$\ast$}{*}s, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}ex) override
+\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{SFW\+::\+World$<$ Level\+Types $>$\+::\+IRequest\+Command}} に属する継承公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command_ad24622a74386640590145b7ec8d375db}{\texorpdfstring{$\sim$}{\string~}\+IRequest\+Command}} ()=default
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename... Level\+Types$>$\newline
+class SFW\+::\+World$<$ Level\+Types $>$\+::\+Lambda\+Command}
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00396}{396}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_world_1_1_lambda_command_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_world_1_1_lambda_command_ad5b9df500062cd293afe9e4307423baa}\index{SFW::World$<$ LevelTypes $>$::LambdaCommand@{SFW::World$<$ LevelTypes $>$::LambdaCommand}!LambdaCommand@{LambdaCommand}}
+\index{LambdaCommand@{LambdaCommand}!SFW::World$<$ LevelTypes $>$::LambdaCommand@{SFW::World$<$ LevelTypes $>$::LambdaCommand}}
+\doxysubsubsection{\texorpdfstring{LambdaCommand()}{LambdaCommand()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_lambda_command_ad5b9df500062cd293afe9e4307423baa} 
+template$<$typename... Level\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Lambda\+Command\+::\+Lambda\+Command (\begin{DoxyParamCaption}\item[{std\+::function$<$ void(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}} \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*})$>$}]{fn}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00399}{399}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_world_1_1_lambda_command_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_world_1_1_lambda_command_a4f015ef337aeb34529ebb0e4864a774b}\index{SFW::World$<$ LevelTypes $>$::LambdaCommand@{SFW::World$<$ LevelTypes $>$::LambdaCommand}!Execute@{Execute}}
+\index{Execute@{Execute}!SFW::World$<$ LevelTypes $>$::LambdaCommand@{SFW::World$<$ LevelTypes $>$::LambdaCommand}}
+\doxysubsubsection{\texorpdfstring{Execute()}{Execute()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_lambda_command_a4f015ef337aeb34529ebb0e4864a774b} 
+template$<$typename... Level\+Types$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Lambda\+Command\+::\+Execute (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}} \texorpdfstring{$\ast$}{*}}]{s}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}}]{ex}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command_a89649df2c3a18dab528bbfc7eb4d5043}{SFW\+::\+World$<$ Level\+Types $>$\+::\+IRequest\+Command}}を実装しています。
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00403}{403}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_world_8hpp}{World.\+hpp}}\end{DoxyCompactItemize}

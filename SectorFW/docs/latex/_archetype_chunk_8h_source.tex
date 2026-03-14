@@ -1,0 +1,85 @@
+\doxysection{Archetype\+Chunk.\+h}
+\hypertarget{_archetype_chunk_8h_source}{}\label{_archetype_chunk_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ArchetypeChunk.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ArchetypeChunk.h}}
+\mbox{\hyperlink{_archetype_chunk_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <bit>}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{entity_8h}{entity.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_component_type_registry_8h}{ComponentTypeRegistry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_component_layout_registry_8h}{ComponentLayoutRegistry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{alignment_8h}{Util/alignment.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{logger_8h}{Debug/logger.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{assert__config_8h}{Debug/assert\_config.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00023}00023\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00024}00024\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00025}00025\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00026}00026\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00030}\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a2e93fe0a9759446633f84df6d7867ecb}{00030}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a2e93fe0a9759446633f84df6d7867ecb}{ChunkSizeBytes}}\ =\ 32\ *\ 1024;}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \textcolor{comment}{//前方定義}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry}{ComponentTypeRegistry}};}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00036}\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1fa083af926da159fc321773dbfc28c5}{00036}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1fa083af926da159fc321773dbfc28c5}{BufferType}}\ =\ uint8\_t;}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00040}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{00040}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a22b8504419ed0ded4fac7e291066b18a}{ArchetypeChunk}}\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00047}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a22b8504419ed0ded4fac7e291066b18a}{00047}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a22b8504419ed0ded4fac7e291066b18a}{ArchetypeChunk}}(\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\ mask)\ :\ layout(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_layout_registry}{ComponentLayoutRegistry}}::GetLayout(mask)),}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ componentMask(mask)\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{assert__config_8h_a7c360e1bd29ee4fa83ec85935d37dbeb}{SFW\_ASSERT}}(layout.capacity\ >\ 0\ \&\&\ \textcolor{stringliteral}{"{}Chunk\ capacity\ must\ be\ greater\ than\ 0"{}});}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ entities.resize(layout.capacity);}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00057}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_aab9a33d52d74f38ed25da2bc7508d3ef}{00057}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<T*>\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_aab9a33d52d74f38ed25da2bc7508d3ef}{GetColumn}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{ComponentTypeID}}\ \textcolor{keywordtype}{id}\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a10187ecf92f955a8bbb8e6a5b25b8d47}{ComponentTypeRegistry::GetID<T>}}();}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ layout.infoIdx.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ layout.infoIdx.end())\ [[unlikely]]\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}コンポーネントID\{\ \%d\ \}がレイアウトに見つかりません"{}},\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;\ \textcolor{comment}{//\ or\ throw\ an\ exception}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ info\ =\ layout.info[it-\/>second].get(0);}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!info)\ [[unlikely]]\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}コンポーネントID\{\ \%d\ \}がレイアウト情報に見つかりません"{}},\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{reinterpret\_cast<}T*\textcolor{keyword}{>}(\&buffer[info.value().get().offset]);}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00077}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a9ad9e5876edd7d3fe93b7ba84b2268c9}{00077}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a9ad9e5876edd7d3fe93b7ba84b2268c9}{AddEntity}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00082}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a47b5de191a4fb9bacfa346bd913814cb}{00082}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a47b5de191a4fb9bacfa346bd913814cb}{RemoveEntitySwapPop}}(\textcolor{keywordtype}{size\_t}\ index)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00087}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_ad81af21258799c01aeddbc43abf9b6cf}{00087}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_ad81af21258799c01aeddbc43abf9b6cf}{GetEntityCount}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ entityCount;\ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00092}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a0b63cd7ab0e1261bfcb3b76403f35a0e}{00092}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a0b63cd7ab0e1261bfcb3b76403f35a0e}{GetCapacity}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ layout.capacity;\ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00097}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a8f9b996de36d1a844a007e669c1ae199}{00097}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a8f9b996de36d1a844a007e669c1ae199}{GetComponentMask}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ componentMask;\ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00102}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a05574939cc84e36af21c08212d1a2007}{00102}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<EntityID>\&\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a05574939cc84e36af21c08212d1a2007}{GetEntityIDs}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ entities;\ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//アーキタイプチャンクのバッファ}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1fa083af926da159fc321773dbfc28c5}{BufferType}}\ buffer[\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a2e93fe0a9759446633f84df6d7867ecb}{ChunkSizeBytes}}]\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//エンティティの数}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ entityCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//エンティティのIDを格納するベクター}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<EntityID>\ entities;}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//コンポーネントマスク}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\ componentMask;}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//コンポーネントレイアウト}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ ComponentLayout\&\ layout;}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00118}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor}{00118}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor}{Accessor}}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ GetBuffer(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a22b8504419ed0ded4fac7e291066b18a}{ArchetypeChunk}}*\ chunk)\ \textcolor{keyword}{noexcept}\ \{\ \textcolor{keywordflow}{return}\ chunk-\/>buffer;\ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::vector<EntityID>\&\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a05574939cc84e36af21c08212d1a2007}{GetEntityIDs}}(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a22b8504419ed0ded4fac7e291066b18a}{ArchetypeChunk}}*\ chunk)\ \textcolor{keyword}{noexcept}\ \{\ \textcolor{keywordflow}{return}\ chunk-\/>entities;\ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keyword}{decltype}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a3d7b7770b3ccf40851c113417bd24de7}{ComponentLayout::info}})\&\ GetLayoutInfo(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a22b8504419ed0ded4fac7e291066b18a}{ArchetypeChunk}}*\ chunk)\ \textcolor{keyword}{noexcept}\ \{\ \textcolor{keywordflow}{return}\ chunk-\/>layout.\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a3d7b7770b3ccf40851c113417bd24de7}{info}};\ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keyword}{decltype}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a88343f1ee39dfe0d56941f26292e7cdd}{ComponentLayout::infoIdx}})\&\ GetLayoutInfoIdx(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a22b8504419ed0ded4fac7e291066b18a}{ArchetypeChunk}}*\ chunk)\ \textcolor{keyword}{noexcept}\ \{\ \textcolor{keywordflow}{return}\ chunk-\/>layout.\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a88343f1ee39dfe0d56941f26292e7cdd}{infoIdx}};\ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00146}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor_a6f579cda6059d102e9074e11a27e0282}{00146}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor_a6f579cda6059d102e9074e11a27e0282}{EntityManager}};}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00148}00148\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00149}00149\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_chunk_8h_source_l00150}00150\ \}}
+
+\end{DoxyCode}

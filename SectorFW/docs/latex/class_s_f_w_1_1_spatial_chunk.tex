@@ -1,0 +1,203 @@
+\doxysection{SFW\+::Spatial\+Chunk クラス}
+\hypertarget{class_s_f_w_1_1_spatial_chunk}{}\label{class_s_f_w_1_1_spatial_chunk}\index{SFW::SpatialChunk@{SFW::SpatialChunk}}
+
+
+　空間で分割したチャンクを表すクラス  
+
+
+
+
+{\ttfamily \#include $<$Spatial\+Chunk.\+h$>$}
+
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a5594dba34c2b41368111b57f057d11e2}{Size\+Type}} = uint32\+\_\+t
+\begin{DoxyCompactList}\small\item\em 空間チャンクのサイズを定義する型 \end{DoxyCompactList}\item 
+using \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}{Bounds3f}} = \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a38b5cd5383a1de4fa3f62470f89625c4}{Spatial\+Chunk}} ()
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \& \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a2562539212bdebf93dff9bdb39ff43ec}{Get\+Entity\+Manager}} () noexcept
+\begin{DoxyCompactList}\small\item\em エンティティマネージャーの取得関数 \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \& \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a3cfe9bee15f89c8726a09bbcc341b457}{Get\+Entity\+Manager}} () const noexcept
+\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \& \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a560ec8ffd2070c9d83a739bd97ec0e44}{Get\+Node\+Key}} () const noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_abab8fbfd926eb617976eebcfe0500a55}{Set\+Node\+Key}} (const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&k) noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a89ac46fa43e54ec774a30690b5b06794}{Bump\+Generation}} () noexcept
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_ade6f6c918550a71866fc0d36c5639ceb}{Has\+Static\+Bounds}} () const noexcept
+\item 
+const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}{Bounds3f}} \& \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a3cb1caaeea6df05be42ca3ceb8cee2ab}{Get\+Static\+Bounds\+WS}} () const noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a4d7ef098b10aab26652b876742b5ad74}{Expand\+Static\+Bounds\+WS}} (const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}{Bounds3f}} \&aabb\+WS) noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_ac2ea0ad02933ed2c1884de7b55d78920}{Reset\+Static\+Bounds}} () noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+　空間で分割したチャンクを表すクラス 
+
+ \mbox{\hyperlink{_spatial_chunk_8h_source}{Spatial\+Chunk.\+h}} の \mbox{\hyperlink{_spatial_chunk_8h_source_l00018}{18}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}\index{SFW::SpatialChunk@{SFW::SpatialChunk}!Bounds3f@{Bounds3f}}
+\index{Bounds3f@{Bounds3f}!SFW::SpatialChunk@{SFW::SpatialChunk}}
+\doxysubsubsection{\texorpdfstring{Bounds3f}{Bounds3f}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711} 
+using \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}{SFW\+::\+Spatial\+Chunk\+::\+Bounds3f}} = \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}}}
+
+
+
+ \mbox{\hyperlink{_spatial_chunk_8h_source}{Spatial\+Chunk.\+h}} の \mbox{\hyperlink{_spatial_chunk_8h_source_l00027}{27}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_a5594dba34c2b41368111b57f057d11e2}\index{SFW::SpatialChunk@{SFW::SpatialChunk}!SizeType@{SizeType}}
+\index{SizeType@{SizeType}!SFW::SpatialChunk@{SFW::SpatialChunk}}
+\doxysubsubsection{\texorpdfstring{SizeType}{SizeType}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_a5594dba34c2b41368111b57f057d11e2} 
+using \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a5594dba34c2b41368111b57f057d11e2}{SFW\+::\+Spatial\+Chunk\+::\+Size\+Type}} = uint32\+\_\+t}
+
+
+
+空間チャンクのサイズを定義する型 
+
+32ビット符号なし整数を使用 
+
+ \mbox{\hyperlink{_spatial_chunk_8h_source}{Spatial\+Chunk.\+h}} の \mbox{\hyperlink{_spatial_chunk_8h_source_l00025}{25}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_a38b5cd5383a1de4fa3f62470f89625c4}\index{SFW::SpatialChunk@{SFW::SpatialChunk}!SpatialChunk@{SpatialChunk}}
+\index{SpatialChunk@{SpatialChunk}!SFW::SpatialChunk@{SFW::SpatialChunk}}
+\doxysubsubsection{\texorpdfstring{SpatialChunk()}{SpatialChunk()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_a38b5cd5383a1de4fa3f62470f89625c4} 
+SFW\+::\+Spatial\+Chunk\+::\+Spatial\+Chunk (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+コンストラクタ 
+
+Entity\+Managerの初期化も行っている 
+
+ \mbox{\hyperlink{_spatial_chunk_8h_source}{Spatial\+Chunk.\+h}} の \mbox{\hyperlink{_spatial_chunk_8h_source_l00033}{33}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_a89ac46fa43e54ec774a30690b5b06794}\index{SFW::SpatialChunk@{SFW::SpatialChunk}!BumpGeneration@{BumpGeneration}}
+\index{BumpGeneration@{BumpGeneration}!SFW::SpatialChunk@{SFW::SpatialChunk}}
+\doxysubsubsection{\texorpdfstring{BumpGeneration()}{BumpGeneration()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_a89ac46fa43e54ec774a30690b5b06794} 
+void SFW\+::\+Spatial\+Chunk\+::\+Bump\+Generation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_spatial_chunk_8h_source}{Spatial\+Chunk.\+h}} の \mbox{\hyperlink{_spatial_chunk_8h_source_l00044}{44}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_a4d7ef098b10aab26652b876742b5ad74}\index{SFW::SpatialChunk@{SFW::SpatialChunk}!ExpandStaticBoundsWS@{ExpandStaticBoundsWS}}
+\index{ExpandStaticBoundsWS@{ExpandStaticBoundsWS}!SFW::SpatialChunk@{SFW::SpatialChunk}}
+\doxysubsubsection{\texorpdfstring{ExpandStaticBoundsWS()}{ExpandStaticBoundsWS()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_a4d7ef098b10aab26652b876742b5ad74} 
+void SFW\+::\+Spatial\+Chunk\+::\+Expand\+Static\+Bounds\+WS (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}{Bounds3f}} \&}]{aabb\+WS}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_spatial_chunk_8h_source}{Spatial\+Chunk.\+h}} の \mbox{\hyperlink{_spatial_chunk_8h_source_l00050}{50}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_a3cfe9bee15f89c8726a09bbcc341b457}\index{SFW::SpatialChunk@{SFW::SpatialChunk}!GetEntityManager@{GetEntityManager}}
+\index{GetEntityManager@{GetEntityManager}!SFW::SpatialChunk@{SFW::SpatialChunk}}
+\doxysubsubsection{\texorpdfstring{GetEntityManager()}{GetEntityManager()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_a3cfe9bee15f89c8726a09bbcc341b457} 
+const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \& SFW\+::\+Spatial\+Chunk\+::\+Get\+Entity\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_spatial_chunk_8h_source}{Spatial\+Chunk.\+h}} の \mbox{\hyperlink{_spatial_chunk_8h_source_l00039}{39}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_a2562539212bdebf93dff9bdb39ff43ec}\index{SFW::SpatialChunk@{SFW::SpatialChunk}!GetEntityManager@{GetEntityManager}}
+\index{GetEntityManager@{GetEntityManager}!SFW::SpatialChunk@{SFW::SpatialChunk}}
+\doxysubsubsection{\texorpdfstring{GetEntityManager()}{GetEntityManager()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_a2562539212bdebf93dff9bdb39ff43ec} 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \& SFW\+::\+Spatial\+Chunk\+::\+Get\+Entity\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+エンティティマネージャーの取得関数 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}\& エンティティマネージャーへの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_spatial_chunk_8h_source}{Spatial\+Chunk.\+h}} の \mbox{\hyperlink{_spatial_chunk_8h_source_l00038}{38}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_a560ec8ffd2070c9d83a739bd97ec0e44}\index{SFW::SpatialChunk@{SFW::SpatialChunk}!GetNodeKey@{GetNodeKey}}
+\index{GetNodeKey@{GetNodeKey}!SFW::SpatialChunk@{SFW::SpatialChunk}}
+\doxysubsubsection{\texorpdfstring{GetNodeKey()}{GetNodeKey()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_a560ec8ffd2070c9d83a739bd97ec0e44} 
+const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \& SFW\+::\+Spatial\+Chunk\+::\+Get\+Node\+Key (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_spatial_chunk_8h_source}{Spatial\+Chunk.\+h}} の \mbox{\hyperlink{_spatial_chunk_8h_source_l00042}{42}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_a3cb1caaeea6df05be42ca3ceb8cee2ab}\index{SFW::SpatialChunk@{SFW::SpatialChunk}!GetStaticBoundsWS@{GetStaticBoundsWS}}
+\index{GetStaticBoundsWS@{GetStaticBoundsWS}!SFW::SpatialChunk@{SFW::SpatialChunk}}
+\doxysubsubsection{\texorpdfstring{GetStaticBoundsWS()}{GetStaticBoundsWS()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_a3cb1caaeea6df05be42ca3ceb8cee2ab} 
+const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}{Bounds3f}} \& SFW\+::\+Spatial\+Chunk\+::\+Get\+Static\+Bounds\+WS (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_spatial_chunk_8h_source}{Spatial\+Chunk.\+h}} の \mbox{\hyperlink{_spatial_chunk_8h_source_l00047}{47}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_ade6f6c918550a71866fc0d36c5639ceb}\index{SFW::SpatialChunk@{SFW::SpatialChunk}!HasStaticBounds@{HasStaticBounds}}
+\index{HasStaticBounds@{HasStaticBounds}!SFW::SpatialChunk@{SFW::SpatialChunk}}
+\doxysubsubsection{\texorpdfstring{HasStaticBounds()}{HasStaticBounds()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_ade6f6c918550a71866fc0d36c5639ceb} 
+bool SFW\+::\+Spatial\+Chunk\+::\+Has\+Static\+Bounds (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_spatial_chunk_8h_source}{Spatial\+Chunk.\+h}} の \mbox{\hyperlink{_spatial_chunk_8h_source_l00046}{46}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_ac2ea0ad02933ed2c1884de7b55d78920}\index{SFW::SpatialChunk@{SFW::SpatialChunk}!ResetStaticBounds@{ResetStaticBounds}}
+\index{ResetStaticBounds@{ResetStaticBounds}!SFW::SpatialChunk@{SFW::SpatialChunk}}
+\doxysubsubsection{\texorpdfstring{ResetStaticBounds()}{ResetStaticBounds()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_ac2ea0ad02933ed2c1884de7b55d78920} 
+void SFW\+::\+Spatial\+Chunk\+::\+Reset\+Static\+Bounds (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_spatial_chunk_8h_source}{Spatial\+Chunk.\+h}} の \mbox{\hyperlink{_spatial_chunk_8h_source_l00064}{64}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_abab8fbfd926eb617976eebcfe0500a55}\index{SFW::SpatialChunk@{SFW::SpatialChunk}!SetNodeKey@{SetNodeKey}}
+\index{SetNodeKey@{SetNodeKey}!SFW::SpatialChunk@{SFW::SpatialChunk}}
+\doxysubsubsection{\texorpdfstring{SetNodeKey()}{SetNodeKey()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_abab8fbfd926eb617976eebcfe0500a55} 
+void SFW\+::\+Spatial\+Chunk\+::\+Set\+Node\+Key (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&}]{k}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_spatial_chunk_8h_source}{Spatial\+Chunk.\+h}} の \mbox{\hyperlink{_spatial_chunk_8h_source_l00043}{43}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_spatial_chunk_8h}{Spatial\+Chunk.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,557 @@
+\doxysection{Entity\+Manager.\+h}
+\hypertarget{_entity_manager_8h_source}{}\label{_entity_manager_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/EntityManager.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/EntityManager.h}}
+\mbox{\hyperlink{_entity_manager_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <queue>}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_archetype_manager_8h}{ArchetypeManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_sparse_component_store_8hpp}{SparseComponentStore.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_accessor_8hpp}{Accessor.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_type_checker_8hpp}{../../Util/TypeChecker.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_access_wrapper_8hpp}{../../Util/AccessWrapper.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_entity_i_d_allocator_8h}{EntityIDAllocator.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00023}00023\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00024}00024\ \textcolor{preprocessor}{\#include\ <new>}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00025}00025\ \textcolor{preprocessor}{\#include\ <shared\_mutex>}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00027}00027\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00028}00028\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00029}00029\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00030}00030\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00034}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{00034}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}{EntityManager}}\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00039}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}{00039}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}{EntityManager}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Components>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00046}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_acfb84437dc645adb705daf9ac7a7c0c7}{00046}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_acfb84437dc645adb705daf9ac7a7c0c7}{AddEntity}}(\textcolor{keyword}{const}\ Components\&...\ components)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\ mask;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a446f4a52c3a534b0eb0a458956c5b04b}{SetMask<Components>}}(mask),\ ...);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id}\ =\ entityAllocator.Create();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\textcolor{keywordtype}{id}.IsValid())\ \textcolor{keywordflow}{return}\ id;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype}{Archetype}}*\ arch\ =\ archetypeManager.GetOrCreate(mask);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{ArchetypeChunk}}*\ chunk\ =\ arch-\/>\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_aa8c85b68e26631b775f75afc9fd82242}{GetOrCreateChunk}}();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ index\ =\ chunk-\/>\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a9ad9e5876edd7d3fe93b7ba84b2268c9}{AddEntity}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (...,\ StoreComponent(chunk,\ \textcolor{keywordtype}{id},\ index,\ components));}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lock(locationsMutex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ locations[id]\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location}{EntityLocation}}\{\ chunk,\ index\ \};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ id;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Components>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00074}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_aa745de0f28163065ac818f45132c52c6}{00074}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_aa745de0f28163065ac818f45132c52c6}{AddEntity}}(\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\ mask,\ \textcolor{keyword}{const}\ Components\&...\ components)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id}\ =\ entityAllocator.Create();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\textcolor{keywordtype}{id}.IsValid())\ [[unlikely]]\ \textcolor{keywordflow}{return}\ id;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype}{Archetype}}*\ arch\ =\ archetypeManager.GetOrCreate(mask);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{ArchetypeChunk}}*\ chunk\ =\ arch-\/>\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_aa8c85b68e26631b775f75afc9fd82242}{GetOrCreateChunk}}();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ index\ =\ chunk-\/>\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a9ad9e5876edd7d3fe93b7ba84b2268c9}{AddEntity}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (...,\ StoreComponent(chunk,\ \textcolor{keywordtype}{id},\ index,\ components));}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lock(locationsMutex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ locations[id]\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location}{EntityLocation}}\{\ chunk,\ index\ \};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ id;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00096}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a41a39a172c7b77331ab96fdaac3be892}{00096}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a41a39a172c7b77331ab96fdaac3be892}{DestroyEntity}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00101}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a6aab877f81d89c16c00301c2f39d4939}{00101}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a6aab877f81d89c16c00301c2f39d4939}{CleanAllEntity}}();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00108}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a413e1b9a5f4381593e0e4c66292f2609}{00108}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a413e1b9a5f4381593e0e4c66292f2609}{HasComponent}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{ComponentTypeID}}\ typeID\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a10187ecf92f955a8bbb8e6a5b25b8d47}{ComponentTypeRegistry::GetID<T>}}();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock<std::shared\_mutex>\ lock(locationsMutex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (locations.contains(\textcolor{keywordtype}{id}))\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\&\ mask\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae388a688fd1615210c7048b338e2fb43}{GetMask}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ mask.test(typeID);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a797b24dee165d8c9966a18a8e2805805}{ComponentTypeRegistry::IsSparse<T>}}())\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ GetSparseStore<T>().Has(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00131}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae228c9994a18ce223ec03982a435e4b9}{00131}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<T>\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae228c9994a18ce223ec03982a435e4b9}{ReadComponent}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a797b24dee165d8c9966a18a8e2805805}{ComponentTypeRegistry::IsSparse<T>}}())\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ ptr\ =\ GetSparseStore<T>().Get(\textcolor{keywordtype}{id}))\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *ptr;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(locationsMutex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ locations.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ locations.end())\ [[unlikely]]\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ loc\ =\ it-\/>second;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ SoA\ コンポーネント}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_is_so_a_component}{IsSoAComponent<T>}})\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor}{ComponentAccessor<Read<T>}}>\ accessor(loc.chunk);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ soaPtrOpt\ =\ accessor.\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_aaf512f8f4037db29c2806182c5254d47}{Get}}<\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_read}{Read<T>}}>();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!soaPtrOpt)\ [[unlikely]]\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base_af3183a034746d9f5ecab79b5a474daea}{ComponentAccessorBase::ConvertSoAToAoSComponent<T>}}(*soaPtrOpt,\ loc.index);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 通常\ AoS}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ col\ =\ loc.chunk-\/>GetColumn<T>();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!col)\ [[unlikely]]\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ col.value()[loc.index];}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00173}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a0bd80e350df1bbaf14b67840a44c3f0f}{00173}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a0bd80e350df1bbaf14b67840a44c3f0f}{WriteComponent}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ T\&\ value)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a797b24dee165d8c9966a18a8e2805805}{ComponentTypeRegistry::IsSparse<T>}}())\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}*\ ptr\ =\ GetSparseStore<T>().Get(\textcolor{keywordtype}{id}))\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *ptr\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00181}00181\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(locationsMutex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ locations.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ locations.end())\ [[unlikely]]\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ loc\ =\ it-\/>second;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MemorySetChunk<T>(loc.chunk,\ loc.index,\ value);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00194}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a609ef9eef1fec06c51cb36962c969ddb}{00194}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a609ef9eef1fec06c51cb36962c969ddb}{ReadWriteComponent}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id},\ std::function<T(T)>\&\&\ f)}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a797b24dee165d8c9966a18a8e2805805}{ComponentTypeRegistry::IsSparse<T>}}())\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ ptr\ =\ GetSparseStore<T>().Get(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ptr\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}EntityManager::ReadWriteComponent:\ Sparse\ component\ not\ found"{}});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00202}00202\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *ptr\ =\ f(*ptr);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ readValue\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(locationsMutex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00209}00209\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ locations.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ locations.end())\ [[unlikely]]\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}EntityManager::ReadWriteComponent:\ Entity\ not\ found"{}});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ loc\ =\ it-\/>second;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ SoA\ コンポーネント}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_is_so_a_component}{IsSoAComponent<T>}})\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor}{ComponentAccessor<Read<T>}}>\ accessor(loc.chunk);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ soaPtrOpt\ =\ accessor.\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_aaf512f8f4037db29c2806182c5254d47}{Get}}<\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_read}{Read<T>}}>();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!soaPtrOpt)\ [[unlikely]]\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}EntityManager::ReadWriteComponent:\ SoA\ component\ not\ found"{}});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ readValue\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base_af3183a034746d9f5ecab79b5a474daea}{ComponentAccessorBase::ConvertSoAToAoSComponent<T>}}(*soaPtrOpt,\ loc.index);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 通常\ AoS}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ col\ =\ loc.chunk-\/>GetColumn<T>();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!col)\ [[unlikely]]\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}EntityManager::ReadWriteComponent:\ AoS\ component\ not\ found"{}});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ readValue\ =\ col.value()[loc.index];}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ writeValue\ =\ f(std::move(readValue));}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MemorySetChunk<T>(loc.chunk,\ loc.index,\ writeValue);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00242}00242\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00250}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae0be59c244dd2340674ea89d2f7a0203}{00250}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae0be59c244dd2340674ea89d2f7a0203}{AddComponent}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ T\&\ value)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a797b24dee165d8c9966a18a8e2805805}{ComponentTypeRegistry::IsSparse<T>}}())\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GetSparseStore<T>().Add(\textcolor{keywordtype}{id},\ value);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00255}00255\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{ComponentTypeID}}\ typeID\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a10187ecf92f955a8bbb8e6a5b25b8d47}{ComponentTypeRegistry::GetID<T>}}();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\ currentMask\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae388a688fd1615210c7048b338e2fb43}{GetMask}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currentMask.set(typeID);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00259}00259\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype}{Archetype}}*\ newArch\ =\ archetypeManager.GetOrCreate(currentMask);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{ArchetypeChunk}}*\ newChunk\ =\ newArch-\/>\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_aa8c85b68e26631b775f75afc9fd82242}{GetOrCreateChunk}}();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00262}00262\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 旧ロケーションは共有ロックで取得（重い移動処理はロック外で実行）}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location}{EntityLocation}}\ oldLoc;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock<std::shared\_mutex>\ rlock(locationsMutex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ oldLoc\ =\ locations.at(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{ArchetypeChunk}}*\ oldChunk\ =\ oldLoc.\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location_a4bf9725e97b030ce6533fb5c2ab28a1b}{chunk}};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ oldIndex\ =\ oldLoc.\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location_a2b59141b4fd2a9af6d7f26de1fde9031}{index}};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00271}00271\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ newIndex\ =\ newChunk-\/>\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a9ad9e5876edd7d3fe93b7ba84b2268c9}{AddEntity}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00273}00273\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 必要なデータのみ移動}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ oldChunkLayout\ =\ ArchetypeChunk::Accessor::GetLayoutInfo(oldChunk);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ oldChunkLayoutIdx\ =\ ArchetypeChunk::Accessor::GetLayoutInfoIdx(oldChunk);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ newChunkLayout\ =\ ArchetypeChunk::Accessor::GetLayoutInfo(newChunk);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ newChunkLayoutIdx\ =\ ArchetypeChunk::Accessor::GetLayoutInfoIdx(newChunk);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [comp,\ idx]\ :\ oldChunkLayoutIdx)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ info\ =\ oldChunkLayout[idx];}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ newInfo\ =\ newChunkLayout[newChunkLayoutIdx.at(comp)];}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ index\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ i\ :\ info)}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ src\ =\ ArchetypeChunk::Accessor::GetBuffer(oldChunk)\ +\ i.offset;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ dst\ =\ ArchetypeChunk::Accessor::GetBuffer(newChunk)\ +\ newInfo.get(index).value().get().offset;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ dstElem\ =\ \textcolor{keyword}{static\_cast<}uint8\_t*\textcolor{keyword}{>}(dst)\ +\ newIndex\ *\ i.stride;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ srcElem\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const\ }uint8\_t*\textcolor{keyword}{>}(src)\ +\ oldIndex\ *\ i.stride;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ i.stride\ 単位=1要素のサイズという前提}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ メタに「列の\ element\_size\ /\ trivial\ フラグ」が持てるならそれを使う。}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{comment}{/*\ element\ is\ trivially\ copyable\ */}\ \textcolor{keyword}{true})\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::memcpy(dstElem,\ srcElem,\ i.stride);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 要素型が分からない場合は、列側に「ムーブ/コピー関数ポインタ」を持たせる設計に寄せると安全}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ new\ (dstElem)\ ElemType(*reinterpret\_cast<const\ ElemType*>(srcElem));}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ reinterpret\_cast<const\ ElemType*>(srcElem)-\/>\string~ElemType();\ //\ swap-\/pop側が破棄するなら不要}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00299}00299\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ index++;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00303}00303\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newChunk-\/>\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_aab9a33d52d74f38ed25da2bc7508d3ef}{GetColumn}}<T>()[newIndex]\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00305}00305\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ スワップ相手のロケーション更新と自分の更新は「排他ロック」下で一気に}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ lastIndexBefore\ =\ oldChunk-\/>\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_ad81af21258799c01aeddbc43abf9b6cf}{GetEntityCount}}()\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock<std::shared\_mutex>\ wlock(locationsMutex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (oldIndex\ <\ lastIndexBefore)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ swappedId\ =\ ArchetypeChunk::Accessor::GetEntityIDs(oldChunk)[lastIndexBefore];}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ locations.find(swappedId);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ locations.end())\ [[unlikely]]\ it-\/>second\ =\ \{\ oldChunk,\ oldIndex\ \};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ oldChunk-\/>\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a47b5de191a4fb9bacfa346bd913814cb}{RemoveEntitySwapPop}}(oldIndex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ locations[id]\ =\ \{\ newChunk,\ newIndex\ \};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00319}00319\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00326}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a7db41cd8a8a95648d35552f4a472eb10}{00326}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a7db41cd8a8a95648d35552f4a472eb10}{RemoveComponent}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id})\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{ComponentTypeID}}\ typeID\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a10187ecf92f955a8bbb8e6a5b25b8d47}{ComponentTypeRegistry::GetID<T>}}();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\ oldMask\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae388a688fd1615210c7048b338e2fb43}{GetMask}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!oldMask.test(typeID))\ \textcolor{keywordflow}{return};\ \textcolor{comment}{//\ 持ってないなら何もしない}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00330}00330\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\ newMask\ =\ oldMask;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newMask.reset(typeID);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00333}00333\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ComponentTypeRegistry::IsSparseMask(\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}().set(typeID)))\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GetSparseStore<T>().Remove(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00338}00338\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 旧ロケーションは共有ロックで取得}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location}{EntityLocation}}\ oldLoc;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock<std::shared\_mutex>\ rlock(locationsMutex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ oldLoc\ =\ locations.at(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{ArchetypeChunk}}*\ oldChunk\ =\ oldLoc.\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location_a4bf9725e97b030ce6533fb5c2ab28a1b}{chunk}};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ oldIndex\ =\ oldLoc.\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location_a2b59141b4fd2a9af6d7f26de1fde9031}{index}};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00347}00347\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype}{Archetype}}*\ newArch\ =\ archetypeManager.GetOrCreate(newMask);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{ArchetypeChunk}}*\ newChunk\ =\ newArch-\/>\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_aa8c85b68e26631b775f75afc9fd82242}{GetOrCreateChunk}}();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ newIndex\ =\ newChunk-\/>\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a9ad9e5876edd7d3fe93b7ba84b2268c9}{AddEntity}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00351}00351\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 必要なデータのみ移動}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ oldChunkLayout\ =\ ArchetypeChunk::Accessor::GetLayoutInfo(oldChunk);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ oldChunkLayoutIdx\ =\ ArchetypeChunk::Accessor::GetLayoutInfoIdx(oldChunk);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ newChunkLayout\ =\ ArchetypeChunk::Accessor::GetLayoutInfo(newChunk);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ newChunkLayoutIdx\ =\ ArchetypeChunk::Accessor::GetLayoutInfoIdx(newChunk);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [comp,\ idx]\ :\ oldChunkLayout)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (comp\ ==\ typeID)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00359}00359\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ info\ =\ oldChunkLayout[idx];}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ newInfo\ =\ newChunkLayout[newChunkLayoutIdx.at(comp)];}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ index\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ i\ :\ info)}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ src\ =\ ArchetypeChunk::Accessor::GetBuffer(oldChunk)\ +\ i.offset;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ dst\ =\ ArchetypeChunk::Accessor::GetBuffer(newChunk)\ +\ newInfo.get(index).value().get().offset;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::memcpy(\textcolor{keyword}{static\_cast<}uint8\_t*\textcolor{keyword}{>}(dst)\ +\ newIndex\ *\ i.stride,}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const\ }uint8\_t*\textcolor{keyword}{>}(src)\ +\ oldIndex\ *\ i.stride,}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i.stride);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00370}00370\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ index++;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00374}00374\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ lastIndexBefore\ =\ oldChunk-\/>\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_ad81af21258799c01aeddbc43abf9b6cf}{GetEntityCount}}()\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock<std::shared\_mutex>\ wlock(locationsMutex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (oldIndex\ <\ lastIndexBefore)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ swappedId\ =\ ArchetypeChunk::Accessor::GetEntityIDs(oldChunk)[lastIndexBefore];}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ locations.find(swappedId);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ locations.end())\ it-\/>second\ =\ \{\ oldChunk,\ oldIndex\ \};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ oldChunk-\/>\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_a47b5de191a4fb9bacfa346bd913814cb}{RemoveEntitySwapPop}}(oldIndex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ locations[id]\ =\ \{\ newChunk,\ newIndex\ \};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00390}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a8741afc591965b27b7ded1983ca637a1}{00390}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a8741afc591965b27b7ded1983ca637a1}{MoveAllSparseTo}}(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}{EntityManager}}\&\ dst);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00394}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a713c9102af0b1271b674ca9868836027}{00394}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a713c9102af0b1271b674ca9868836027}{MoveSparseIDsTo}}(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}{EntityManager}}\&\ dst,\ \textcolor{keyword}{const}\ std::vector<EntityID>\&\ ids);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00395}00395\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ src\ の全エンティティを\ this\ へ統合。戻り値:\ 移送件数}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 手順:\ 1)\ Sparse\ 全型を一括\ move\ \ 2)\ 非スパースをチャンク列\ memcpy\ で移送\ \ 3)\ src\ をローカル除去}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00398}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a843a38ca9d1bbc6babb8dbeb095de3c8}{00398}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a843a38ca9d1bbc6babb8dbeb095de3c8}{MergeFromAll}}(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}{EntityManager}}\&\ src);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00399}00399\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ルータ:\ router(EntityID\ id,\ const\ ComponentMask\&\ mask)\ -\/>\ EntityManager\&}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 返された宛先ごとに分割。戻り値:\ 移送件数}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Router>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00403}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a24623ec0fcad2a19030118ed26425d5a}{00403}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a24623ec0fcad2a19030118ed26425d5a}{SplitByAll}}(Router\&\&\ router)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00404}00404\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ 宛先ごとに\ ID\ をバケットしつつ、非スパースだけ先に移送}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00405}00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unordered\_map<EntityManager*,\ std::vector<EntityID>>\ buckets;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00406}00406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ ids\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a9ef664ba5532b7414726a4f6b36179d5}{GetAllEntityIDs}}();\ \textcolor{comment}{//\ スナップショット}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ moved\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id}\ :\ ids)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ locOpt\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ab40b3d768f3d483b9df69e450412d488}{TryGetLocation}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00410}00410\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!locOpt)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}{EntityManager}}*\ dst\ =\ router(\textcolor{keywordtype}{id},\ locOpt-\/>chunk-\/>GetComponentMask());}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00412}00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dst\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}Router\ returned\ nullptr\ for\ EntityID\ \{\ i:\ \%d,\ g:\ \%d\ \}"{}},\ \textcolor{keywordtype}{id}.index,\ \textcolor{keywordtype}{id}.generation);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00416}00416\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dst\ ==\ \textcolor{keyword}{this})\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a7fb5684e80545fe00492cae3fe531cb0}{InsertWithID\_ForManagerMove}}(\textcolor{keywordtype}{id},\ *\textcolor{keyword}{this},\ *dst))\ \{\ buckets[dst].push\_back(\textcolor{keywordtype}{id});\ ++moved;\ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00419}00419\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ Sparse\ は宛先ごとに\ +\ ID\ バケットを使って一括\ move}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00421}00421\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ [dst,\ idvec]\ :\ buckets)\ \{\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a713c9102af0b1271b674ca9868836027}{MoveSparseIDsTo}}(*dst,\ idvec);\ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ moved;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00423}00423\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00424}00424\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ すべてのエンティティIDを列挙（locations\ \ 全チャンクを補完）}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00426}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a9ef664ba5532b7414726a4f6b36179d5}{00426}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<EntityID>\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a9ef664ba5532b7414726a4f6b36179d5}{GetAllEntityIDs}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00427}00427\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_sparse_component}{SparseComponent<T>}}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00434}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae1a31ba953c8e4609a06f606ba03ef75}{00434}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_read_write_view}{ReadWriteView<std::unordered\_map<EntityID,\ T>}}>\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae1a31ba953c8e4609a06f606ba03ef75}{GetSparseComponents}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_read_write_view}{ReadWriteView<std::unordered\_map<EntityID,\ T>}}>\ components(GetSparseStore<T>().GetComponents());}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ components;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00443}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae388a688fd1615210c7048b338e2fb43}{00443}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae388a688fd1615210c7048b338e2fb43}{GetMask}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00448}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_addb50338b7958c516a5465725d56c972}{00448}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{ArchetypeManager}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_addb50338b7958c516a5465725d56c972}{GetArchetypeManager}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ archetypeManager;\ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00453}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a46db8df58dca07d7201c30e4d4dde6cc}{00453}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator}{EntityIDAllocator}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a46db8df58dca07d7201c30e4d4dde6cc}{GetEntityAllocator}}()\ noexcept\ \{\ \textcolor{keywordflow}{return}\ entityAllocator;\ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00457}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ab40b3d768f3d483b9df69e450412d488}{00457}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<EntityLocation>\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ab40b3d768f3d483b9df69e450412d488}{TryGetLocation}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock<std::shared\_mutex>\ rlock(locationsMutex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00459}00459\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ locations.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00460}00460\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ locations.end())\ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00461}00461\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ it-\/>second;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00462}00462\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00463}00463\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00464}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a8df08b9c7042c6c3c05d4076591ee454}{00464}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a8df08b9c7042c6c3c05d4076591ee454}{GetEntityCount}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock<std::shared\_mutex>\ rlock(locationsMutex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ locations.size();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00467}00467\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00475}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a7fb5684e80545fe00492cae3fe531cb0}{00475}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a7fb5684e80545fe00492cae3fe531cb0}{InsertWithID\_ForManagerMove}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id},\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}{EntityManager}}\&\ src,\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}{EntityManager}}\&\ dst);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00476}00476\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00483}00483\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00484}00484\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ (!\textcolor{keyword}{requires}\ \{\ \textcolor{keyword}{typename}\ T::soa\_type;\ \})}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00485}00485\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ MemorySetChunk(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{ArchetypeChunk}}*\ chunk,\ \textcolor{keywordtype}{size\_t}\ index,\ \textcolor{keyword}{const}\ T\&\ value)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00486}00486\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ column\ =\ chunk-\/>\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk_aab9a33d52d74f38ed25da2bc7508d3ef}{GetColumn}}<T>();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00487}00487\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!column)\ [[unlikely]]\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00488}00488\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}コンポーネントタイプ\{\ \%d\ \}がアーキタイプチャンクに見つかりません"{}},\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a10187ecf92f955a8bbb8e6a5b25b8d47}{ComponentTypeRegistry::GetID<T>}}());}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00489}00489\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00491}00491\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_trivially\_copyable\_v<T>)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00493}00493\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::memcpy(\&column.value()[index],\ \&value,\ \textcolor{keyword}{sizeof}(T));}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00494}00494\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_move\_constructible\_v<T>)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 既存オブジェクトがある想定なら明示破棄\ →\ プレースメントnew}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ column.value()[index].\string~T();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ (\&column.value()[index])\ T(value);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00499}00499\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00500}00500\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00501}00501\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_trivially\_copyable\_v<T>,}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00502}00502\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Non-\/trivial\ T\ must\ be\ move/copy\ constructible\ for\ in-\/place\ placement."{}});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00511}00511\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ IsSoAComponent<T>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ MemorySetChunk(ArchetypeChunk*\ chunk,\ \textcolor{keywordtype}{size\_t}\ index,\ \textcolor{keyword}{const}\ T\&\ value)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00514}00514\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ column\ =\ chunk-\/>GetColumn<\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}>();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00515}00515\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!column)\ [[unlikely]]\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}コンポーネントタイプ\{\ \%d\ \}がアーキタイプチャンクに見つかりません"{}},\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a10187ecf92f955a8bbb8e6a5b25b8d47}{ComponentTypeRegistry::GetID<T>}}());}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00518}00518\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ capacity\ =\ chunk-\/>GetCapacity();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MemorySetChunkSoA<T,\ typename\ T::soa\_type>(}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00521}00521\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ column.value(),\ index,\ value,\ capacity,}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::make\_index\_sequence<std::tuple\_size\_v<typename\ T::soa\_type>>\{\}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Variant,\ \textcolor{keyword}{typename}\ U,\ \textcolor{keywordtype}{size\_t}\ Index>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00531}00531\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ExpansionMemberImpl(std::vector<Variant>\&\ vec,\ U\&\ value)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00532}00532\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ ptr\ =\ std::get<Index>(U::member\_ptr\_tuple);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00533}00533\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_member\_object\_pointer\_v<\textcolor{keyword}{decltype}(ptr)>);\ \ \textcolor{comment}{//\ メンバーオブジェクトポインタであることを確認}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00534}00534\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ member\ =\ value.*ptr;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00535}00535\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00536}00536\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }MemberT\ =\ std::remove\_cvref\_t<\textcolor{keyword}{decltype}(member)>;\ \textcolor{comment}{//constと参照を除去した型}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00537}00537\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (IsSoAComponent<MemberT>)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ExpansionMember<Variant>(vec,\ member,\ std::make\_index\_sequence<std::tuple\_size\_v<typename\ MemberT::tuple\_type>>\{\});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00541}00541\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (IsPrimitive<MemberT>)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ vec.push\_back(member);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00543}00543\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00544}00544\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00545}00545\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_same\_v<MemberT,\ void>,\ \textcolor{stringliteral}{"{}Unsupported\ member\ type:\ must\ be\ primitive\ or\ reflectable\ (HasMemberPtr)"{}});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00546}00546\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00547}00547\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00554}00554\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Variant,\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea4c614360da93c0a041b22e537de151eb}{U}},\ \textcolor{keywordtype}{size\_t}...\ Is>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00555}00555\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ExpansionMember(std::vector<Variant>\&\ vec,\ U\&\ value,\ std::index\_sequence<Is...>)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00556}00556\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (ExpansionMemberImpl<Variant,\ U,\ Is>(vec,\ value),\ ...);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00557}00557\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00563}00563\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<IsSoAComponent\ T>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00564}00564\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ GetMember(T\&\ t)\ -\/>\ std::vector<typename\ T::variant\_type>\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00565}00565\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<typename\ T::variant\_type>\ member\_values;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00566}00566\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ExpansionMember<typename\ T::variant\_type>(member\_values,\ t,\ std::make\_index\_sequence<std::tuple\_size\_v<typename\ T::tuple\_type>>\{\});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00567}00567\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ member\_values;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00568}00568\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00577}00577\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3}{T}},\ \textcolor{keyword}{typename}\ SoATuple,\ std::size\_t...\ Is>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00578}00578\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ MemorySetChunkSoA(T*\ base,\ \textcolor{keywordtype}{size\_t}\ index,\ \textcolor{keyword}{const}\ T\&\ value,\ \textcolor{keywordtype}{size\_t}\ capacity,\ std::index\_sequence<Is...>)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00579}00579\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ charBase\ =\ \textcolor{keyword}{reinterpret\_cast<}\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1fa083af926da159fc321773dbfc28c5}{BufferType}}*\textcolor{keyword}{>}(base);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00580}00580\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ offset\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00581}00581\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ members\ =\ GetMember(value);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00582}00582\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ v\ :\ members)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00583}00583\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::visit([\&](\textcolor{keyword}{auto}\&\&\ val)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00584}00584\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }ValType\ =\ std::remove\_cvref\_t<\textcolor{keyword}{decltype}(val)>;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00585}00585\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ offset\ =\ \mbox{\hyperlink{namespace_s_f_w_a00279ddf58f514d56177048d221b6328}{AlignTo}}(offset,\ \textcolor{keyword}{alignof}(ValType));}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00586}00586\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(\textcolor{keyword}{reinterpret\_cast<}ValType*\textcolor{keyword}{>}(charBase\ +\ offset)\ +\ index)\ =\ val;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00587}00587\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ offset\ +=\ \textcolor{keyword}{sizeof}(ValType)\ *\ capacity;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00588}00588\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},\ v);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00589}00589\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00590}00590\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00599}00599\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00600}00600\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ StoreComponent(ArchetypeChunk*\ chunk,\ EntityID\ \textcolor{keywordtype}{id},\ \textcolor{keywordtype}{size\_t}\ index,\ \textcolor{keyword}{const}\ T\&\ value)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00601}00601\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a797b24dee165d8c9966a18a8e2805805}{ComponentTypeRegistry::IsSparse<T>}}())\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00602}00602\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GetSparseStore<T>().Add(\textcolor{keywordtype}{id},\ value);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00603}00603\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00604}00604\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00605}00605\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MemorySetChunk<T>(chunk,\ index,\ value);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00606}00606\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00607}00607\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00608}00608\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00614}00614\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ EraseEntityLocalNoSparse(EntityID\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00618}00618\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ CopyEntityColumns(ArchetypeChunk*\ srcChunk,\ \textcolor{keywordtype}{size\_t}\ srcIndex,}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00619}00619\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ArchetypeChunk*\ dstChunk,\ \textcolor{keywordtype}{size\_t}\ dstIndex);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00620}00620\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//エンティティIDアロケータ}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00621}00621\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ EntityIDAllocator\ entityAllocator\ =\ EntityIDAllocator(MAX\_ENTITY\_NUM);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00622}00622\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//アーキタイプマネージャー}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00623}00623\ \ \ \ \ \ \ \ \ \ \ \ \ ArchetypeManager\ archetypeManager;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00628}00628\ \ \ \ \ \ \ \ \ \ \ \ \ std::unordered\_map<EntityID,\ EntityLocation>\ locations;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00629}00629\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//locations\ の並行アクセスを守るロック（読取多数・書込少数を想定）}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00630}00630\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::shared\_mutex\ locationsMutex;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00634}00634\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }ISparseWrapper\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00635}00635\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bca1063e38cb53d94d386f21227fcd84717}{Remove}}(EntityID\ \textcolor{keywordtype}{id})\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00636}00636\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ MoveAllTo(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}{EntityManager}}\&\ dst)\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00637}00637\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ MoveManyTo(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}{EntityManager}}\&\ dst,\ \textcolor{keyword}{const}\ EntityID*\ ids,\ \textcolor{keywordtype}{size\_t}\ n)\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00638}00638\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \string~ISparseWrapper()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00639}00639\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00643}00643\ \ \ \ \ \ \ \ \ \ \ \ \ std::unordered\_map<ComponentTypeID,\ std::shared\_ptr<struct\ ISparseWrapper>>\ sparseStores;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00647}00647\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00648}00648\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }SparseWrapper\ :\ ISparseWrapper\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00649}00649\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SparseComponentStore<T>\ store;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00654}00654\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bca1063e38cb53d94d386f21227fcd84717}{Remove}}(EntityID\ \textcolor{keywordtype}{id})\textcolor{keyword}{\ override\ }\{\ store.Remove(\textcolor{keywordtype}{id});\ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00659}00659\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ MoveAllTo(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}{EntityManager}}\&\ dst)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00660}00660\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ srcMap\ =\ store.GetComponents();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00661}00661\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ dstMap\ =\ dst.GetSparseStore<\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}>().GetComponents();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00662}00662\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dstMap.reserve(dstMap.size()\ +\ srcMap.size());}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00663}00663\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ it\ =\ srcMap.begin();\ it\ !=\ srcMap.end();\ ++it)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00664}00664\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dstMap.insert\_or\_assign(it-\/>first,\ std::move(it-\/>second));}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00665}00665\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00666}00666\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ srcMap.clear();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00667}00667\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00674}00674\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ MoveManyTo(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}{EntityManager}}\&\ dst,\ \textcolor{keyword}{const}\ EntityID*\ ids,\ \textcolor{keywordtype}{size\_t}\ n)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00675}00675\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ srcMap\ =\ store.GetComponents();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00676}00676\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ dstMap\ =\ dst.GetSparseStore<\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}>().GetComponents();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00677}00677\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dstMap.reserve(dstMap.size()\ +\ n);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00678}00678\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ n;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00679}00679\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ srcMap.find(ids[i]);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00680}00680\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ srcMap.end())\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00681}00681\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dstMap.insert\_or\_assign(it-\/>first,\ std::move(it-\/>second));}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00682}00682\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ srcMap.erase(it);}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00683}00683\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00684}00684\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00685}00685\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00686}00686\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00691}00691\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00692}00692\ \ \ \ \ \ \ \ \ \ \ \ \ SparseComponentStore<T>\&\ GetSparseStore()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00693}00693\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{ComponentTypeID}}\ \textcolor{keywordtype}{id}\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a10187ecf92f955a8bbb8e6a5b25b8d47}{ComponentTypeRegistry::GetID<T>}}();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00694}00694\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!sparseStores.contains(\textcolor{keywordtype}{id}))\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00695}00695\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ wrapper\ =\ std::make\_shared<SparseWrapper<T>>();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00696}00696\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sparseStores[id]\ =\ wrapper;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00697}00697\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00698}00698\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}SparseWrapper<T>*\textcolor{keyword}{>}(sparseStores[id].get())-\/>store;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00699}00699\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00700}00700\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00701}00701\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00702}00702\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00703}00703\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00704}00704\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00705}00705\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00706}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a7b90b6e7b91ca9c827769c1cab9b5a56}{00706}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::vector<ArchetypeChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_ab30526a91aaa023239f86e62d1fc4e71}{Query::MatchingChunks}}(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS::EntityManager}}\&\ em)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00707}00707\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00708}00708\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<ArchetypeChunk*>\ result;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00709}00709\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ all\ =\ em.GetArchetypeManager().GetAllData();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00710}00710\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ arch\ :\ all)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00711}00711\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\&\ mask\ =\ arch-\/>GetMask();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00712}00712\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((mask\ \&\ required)\ ==\ required\ \&\&\ (mask\ \&\ excluded).none())\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00713}00713\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ chunks\ =\ arch-\/>GetChunks();}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00714}00714\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 先に必要分だけまとめて拡張（平均的に再確保を減らす）}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00715}00715\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result.reserve(result.size()\ +\ chunks.size());}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00716}00716\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ ch\ :\ chunks)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00717}00717\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result.push\_back(ch.get());}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00718}00718\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00719}00719\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00720}00720\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00721}00721\ }
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00722}00722\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00723}00723\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00724}00724\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_manager_8h_source_l00725}00725\ \}}
+
+\end{DoxyCode}

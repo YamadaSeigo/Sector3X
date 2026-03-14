@@ -1,0 +1,985 @@
+\doxysection{Bounding\+Sphere.\+hpp}
+\hypertarget{_bounding_sphere_8hpp_source}{}\label{_bounding_sphere_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/BoundingSphere.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/BoundingSphere.hpp}}
+\mbox{\hyperlink{_bounding_sphere_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <random>}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <immintrin.h>}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00019}00019\ \ \textcolor{comment}{//\ 行列ユーティリティを使う}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00020}00020\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_matrix_8hpp}{Matrix.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00021}00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_frustum_8hpp}{Frustum.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00023}00023\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00024}00024\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_math}{Math}}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ ベクトルユーティリティ（x,y,zを持つ型ならOK）\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Vec3>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00027}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a5c287a7b34e04ade16816dae409b474e}{00027}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5c287a7b34e04ade16816dae409b474e}{v3\_add}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ b)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\{\ a.x\ +\ b.x,\ a.y\ +\ b.y,\ a.z\ +\ b.z\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Vec3,\ \textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00031}\mbox{\hyperlink{namespace_s_f_w_1_1_math_af590f6507232be6899058237f533def2}{00031}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_af590f6507232be6899058237f533def2}{v3\_adds}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ a,\ T\ s)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\{\ a.x\ +\ s,\ a.y\ +\ s,\ a.z\ +\ s\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Vec3,\ \textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00035}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a418cd4b76d5104be3872e05c9ebff54d}{00035}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a418cd4b76d5104be3872e05c9ebff54d}{v3\_muls}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ a,\ T\ s)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\{\ a.x\ *\ s,\ a.y\ *\ s,\ a.z\ *\ s\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Vec3>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00039}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{00039}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{v3\_sub}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ b)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\{\ a.x\ -\/\ b.x,\ a.y\ -\/\ b.y,\ a.z\ -\/\ b.z\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Vec3>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00043}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a62699c4e73ea0ce3498c24d987d21a1b}{00043}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a62699c4e73ea0ce3498c24d987d21a1b}{v3\_dot}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ b)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }T\ =\ \textcolor{keyword}{decltype}(a.x\ +\ b.x);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ T(a.x\ *\ b.x\ +\ a.y\ *\ b.y\ +\ a.z\ *\ b.z);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Vec3>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00048}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a675bbe0fca4325823ec598a805667073}{00048}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a675bbe0fca4325823ec598a805667073}{v3\_len2}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ a)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a62699c4e73ea0ce3498c24d987d21a1b}{v3\_dot}}(a,\ a);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Vec3>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00052}\mbox{\hyperlink{namespace_s_f_w_1_1_math_ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3}{00052}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3}{v3\_len}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ a)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }std::sqrt;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ sqrt(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a675bbe0fca4325823ec598a805667073}{v3\_len2}}(a));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Vec3>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00057}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a4c4ad70492f6fb83dfdc012d0006aced}{00057}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4c4ad70492f6fb83dfdc012d0006aced}{v3\_mid}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ b)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a418cd4b76d5104be3872e05c9ebff54d}{v3\_muls}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a5c287a7b34e04ade16816dae409b474e}{v3\_add}}(a,\ b),\ \textcolor{keyword}{typename}\ std::remove\_reference\_t<\textcolor{keyword}{decltype}(a.x)>(0.5));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{class}\ Vec3>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00062}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{00062}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00063}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a3e0e90c0f9714e102f0b666c42750a85}{00063}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a3e0e90c0f9714e102f0b666c42750a85}{value\_type}}\ =\ T;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00064}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{00064}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}\{\};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00065}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{00065}}\ \ \ \ \ \ \ \ \ \ \ \ \ T\ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\{\ T(0)\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ 基本ユーティリティ\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00068}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ae28c89f4937018f304bb32d055b15762}{00068}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ae28c89f4937018f304bb32d055b15762}{contains}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ p,\ T\ eps\ =\ T(0))\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a675bbe0fca4325823ec598a805667073}{v3\_len2}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{v3\_sub}}(p,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}))\ <=\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ +\ eps)\ *\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ +\ eps);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00071}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a9c70f60031f32ab70a94bea18cafc610}{00071}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ T\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a9c70f60031f32ab70a94bea18cafc610}{distance2}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ p)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a675bbe0fca4325823ec598a805667073}{v3\_len2}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{v3\_sub}}(p,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00074}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ad4cb44f27c5cfc10beced98faa8bca90}{00074}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ad4cb44f27c5cfc10beced98faa8bca90}{intersects}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\&\ other,\ T\ eps\ =\ T(0))\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ rSum\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ +\ other.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ +\ eps;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a675bbe0fca4325823ec598a805667073}{v3\_len2}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{v3\_sub}}(other.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}))\ <=\ rSum\ *\ rSum;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ AABB\ から生成（厳密ではないが速い）\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00080}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ae0ff9439ca48eb8e77bf625ec55f09e1}{00080}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ae0ff9439ca48eb8e77bf625ec55f09e1}{FromAABB}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ minP,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ maxP)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ s;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4c4ad70492f6fb83dfdc012d0006aced}{v3\_mid}}(minP,\ maxP);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 半径は対角線の半分}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ =\ T(0.5)\ *\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3}{v3\_len}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{v3\_sub}}(maxP,\ minP));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ s;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ 2球の最小包含球（正確）\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00089}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_af5635111a3236726b0c416687a5d3438}{00089}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_af5635111a3236726b0c416687a5d3438}{Merge}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\&\ b)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 片方がもう片方を包含する？}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ d\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{v3\_sub}}(b.center,\ a.center);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ dist\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3}{v3\_len}}(d);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (a.radius\ >=\ b.radius\ +\ dist)\ \textcolor{keywordflow}{return}\ a;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (b.radius\ >=\ a.radius\ +\ dist)\ \textcolor{keywordflow}{return}\ b;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dist\ <=\ std::numeric\_limits<T>::epsilon())\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 同心円に近い}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ s;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}\ =\ a.center;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ =\ (std::max)(a.radius,\ b.radius);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ s;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ newR\ =\ (dist\ +\ a.radius\ +\ b.radius)\ *\ T(0.5);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ dir\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a418cd4b76d5104be3872e05c9ebff54d}{v3\_muls}}(d,\ T(1)\ /\ dist);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ newC\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5c287a7b34e04ade16816dae409b474e}{v3\_add}}(a.center,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a418cd4b76d5104be3872e05c9ebff54d}{v3\_muls}}(dir,\ newR\ -\/\ a.radius));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ newC,\ newR\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ 逐次拡張（オンライン更新向け、最小ではない）\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00109}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aeb401ae85a35730883cbec939a889217}{00109}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aeb401ae85a35730883cbec939a889217}{expandToFit}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ p)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ diff\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{v3\_sub}}(p,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}});}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ d2\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a675bbe0fca4325823ec598a805667073}{v3\_len2}}(diff);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d2\ <=\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}})\ \textcolor{keywordflow}{return};\ \textcolor{comment}{//\ 既に包含}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ d\ =\ std::sqrt(d2);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ newR\ =\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ +\ d)\ *\ T(0.5);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ センターを外側へスライド}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d\ >\ T(0))\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5c287a7b34e04ade16816dae409b474e}{v3\_add}}(\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a418cd4b76d5104be3872e05c9ebff54d}{v3\_muls}}(diff,\ (newR\ -\/\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}})\ /\ d));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ =\ newR;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00122}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a34330b071e477fd25153fffc55df6d19}{00122}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a34330b071e477fd25153fffc55df6d19}{expandToFit}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\&\ s)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_af5635111a3236726b0c416687a5d3438}{Merge}}(*\textcolor{keyword}{this},\ s);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Ritter\ 法（高速・近似、ほぼ十分に小さい）\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ points:\ AoS\ 配列。Nが小さくてもOK。O(N)。}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00128}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a02384bbb1e999b44cbf269d67e97c908}{00128}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a02384bbb1e999b44cbf269d67e97c908}{FromPointsRitter}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}*\ points,\ \textcolor{keywordtype}{size\_t}\ count)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ s\{\};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (count\ ==\ 0)\ \textcolor{keywordflow}{return}\ s;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (count\ ==\ 1)\ \{\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}\ =\ points[0];\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ =\ T(0);\ \textcolor{keywordflow}{return}\ s;\ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ まず適当な点\ p0\ を選び、そこから最も遠い点\ p1、さらに\ p1\ から最も遠い点\ p2\ を探す}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ i0\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ farthest\_from\ =\ [\&](\textcolor{keywordtype}{size\_t}\ idx)-\/>\textcolor{keywordtype}{size\_t}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ best\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ c\ =\ points[idx];}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ bestD2\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a675bbe0fca4325823ec598a805667073}{v3\_len2}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{v3\_sub}}(points[0],\ c));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 1;\ i\ <\ count;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ d2\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a675bbe0fca4325823ec598a805667073}{v3\_len2}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{v3\_sub}}(points[i],\ c));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d2\ >\ bestD2)\ \{\ bestD2\ =\ d2;\ best\ =\ i;\ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ best;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ i1\ =\ farthest\_from(i0);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ i2\ =\ farthest\_from(i1);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ p1\ と\ p2\ を直径とする球から開始}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ p1\ =\ points[i1],\ p2\ =\ points[i2];}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4c4ad70492f6fb83dfdc012d0006aced}{v3\_mid}}(p1,\ p2);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ =\ T(0.5)\ *\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3}{v3\_len}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{v3\_sub}}(p2,\ p1));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3)\ すべての点を走査し、外側の点があれば最小拡張}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ count;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aeb401ae85a35730883cbec939a889217}{expandToFit}}(points[i]);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ s;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Welzl\ 法（厳密最小球）\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 期待\ O(N)（ランダムシャッフル前提）。N\ が数千～数十万でも現実的。}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00162}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a3e9e407303037f3f14434d8cc7159dcf}{00162}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a3e9e407303037f3f14434d8cc7159dcf}{FromPointsWelzl}}(std::vector<Vec3>\ pts,\ uint64\_t\ seed\ =\ 0xC0FFEE)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ s\{\};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ n\ =\ pts.size();}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ ==\ 0)\ \textcolor{keywordflow}{return}\ s;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ ==\ 1)\ \{\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}\ =\ pts[0];\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ =\ T(0);\ \textcolor{keywordflow}{return}\ s;\ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ランダム順序に}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::mt19937\_64\ rng(seed);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shuffle(pts.begin(),\ pts.end(),\ rng);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00171}00171\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ サポート集合\ R\ は高々4点}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Vec3,\ 4>\ R\{\};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ rsz\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ ball\_from\_1\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ a)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}\ =\ a;\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ =\ T(0);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ ball\_from\_2\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ b)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4c4ad70492f6fb83dfdc012d0006aced}{v3\_mid}}(a,\ b);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ =\ T(0.5)\ *\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3}{v3\_len}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{v3\_sub}}(a,\ b));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ ball\_from\_3\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ b,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ c)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 三点を通る円（3Dでは3点共面の外接円）→\ その円の中心と半径（平面内）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3点がほぼ一直線なら2点からの球へフォールバック}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ ab\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{v3\_sub}}(b,\ a),\ ac\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{v3\_sub}}(c,\ a);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ abXac\_x\ =\ ab.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ *\ ac.z\ -\/\ ab.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ *\ ac.y;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ abXac\_y\ =\ ab.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ *\ ac.x\ -\/\ ab.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ *\ ac.z;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ abXac\_z\ =\ ab.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ *\ ac.y\ -\/\ ab.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ *\ ac.x;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ denom\ =\ T(2)\ *\ (abXac\_x\ *\ abXac\_x\ +\ abXac\_y\ *\ abXac\_y\ +\ abXac\_z\ *\ abXac\_z);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ eps\ =\ T(1e-\/12);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(denom)\ <\ eps)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 退化：2点の最大直径}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ s2;\ s2.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ =\ T(-\/1);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ try2\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ p,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ q)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ t;\ ball\_from\_2(p,\ q);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (t.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ >\ s2.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}})\ s2\ =\ t;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ try2(a,\ b);\ try2(a,\ c);\ try2(b,\ c);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ s2;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ ab2\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a675bbe0fca4325823ec598a805667073}{v3\_len2}}(ab);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ ac2\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a675bbe0fca4325823ec598a805667073}{v3\_len2}}(ac);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ num\ =\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (ab2\ *\ ac.y\ -\/\ ac2\ *\ ab.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}})\ *\ abXac\_z\ -\/\ (ab2\ *\ ac.z\ -\/\ ac2\ *\ ab.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}})\ *\ abXac\_y,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (ab2\ *\ ac.z\ -\/\ ac2\ *\ ab.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}})\ *\ abXac\_x\ -\/\ (ab2\ *\ ac.x\ -\/\ ac2\ *\ ab.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}})\ *\ abXac\_z,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (ab2\ *\ ac.x\ -\/\ ac2\ *\ ab.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}})\ *\ abXac\_y\ -\/\ (ab2\ *\ ac.y\ -\/\ ac2\ *\ ab.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}})\ *\ abXac\_x}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5c287a7b34e04ade16816dae409b474e}{v3\_add}}(a,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a418cd4b76d5104be3872e05c9ebff54d}{v3\_muls}}(num,\ T(1)\ /\ denom));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3}{v3\_len}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6639925ed61c84b1e77852bbbdb22da2}{v3\_sub}}(s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}},\ a));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ ball\_from\_4\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ p,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ q,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ r,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ t)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4点の外接球。行列式ベースで求める（数値的にはやや繊細）。}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 退化（ほぼ共面/共直線）の場合は3点/2点にフォールバック。}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ det4\ =\ [](T\ a11,\ T\ a12,\ T\ a13,\ T\ a14,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ a21,\ T\ a22,\ T\ a23,\ T\ a24,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ a31,\ T\ a32,\ T\ a33,\ T\ a34,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ a41,\ T\ a42,\ T\ a43,\ T\ a44)-\/>T\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ラプラス展開の手書き版（小規模なのでOK）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ m11\ =\ a22\ *\ (a33\ *\ a44\ -\/\ a34\ *\ a43)\ -\/\ a23\ *\ (a32\ *\ a44\ -\/\ a34\ *\ a42)\ +\ a24\ *\ (a32\ *\ a43\ -\/\ a33\ *\ a42);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ m12\ =\ a21\ *\ (a33\ *\ a44\ -\/\ a34\ *\ a43)\ -\/\ a23\ *\ (a31\ *\ a44\ -\/\ a34\ *\ a41)\ +\ a24\ *\ (a31\ *\ a43\ -\/\ a33\ *\ a41);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ m13\ =\ a21\ *\ (a32\ *\ a44\ -\/\ a34\ *\ a42)\ -\/\ a22\ *\ (a31\ *\ a44\ -\/\ a34\ *\ a41)\ +\ a24\ *\ (a31\ *\ a42\ -\/\ a32\ *\ a41);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ m14\ =\ a21\ *\ (a32\ *\ a43\ -\/\ a33\ *\ a42)\ -\/\ a22\ *\ (a31\ *\ a43\ -\/\ a33\ *\ a41)\ +\ a23\ *\ (a31\ *\ a42\ -\/\ a32\ *\ a41);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a11\ *\ m11\ -\/\ a12\ *\ m12\ +\ a13\ *\ m13\ -\/\ a14\ *\ m14;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ S\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ v)\ \{\ \textcolor{keywordflow}{return}\ v.x\ *\ v.x\ +\ v.y\ *\ v.y\ +\ v.z\ *\ v.z;\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ a\ =\ det4(p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}},\ T(1),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.x,\ q.y,\ q.z,\ T(1),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r.x,\ r.y,\ r.z,\ T(1),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t.x,\ t.y,\ t.z,\ T(1));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ eps\ =\ T(1e-\/12);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(a)\ <\ eps)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 退化：3点/2点からの最大にフォールバック}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ best;\ best.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ =\ T(-\/1);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ try3\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ A,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ B,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ C)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ tmp;\ ball\_from\_3(A,\ B,\ C);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tmp.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ >\ best.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}})\ best\ =\ tmp;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ try2\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ A,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ B)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ tmp;\ ball\_from\_2(A,\ B);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tmp.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ >\ best.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}})\ best\ =\ tmp;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ try3(p,\ q,\ r);\ try3(p,\ q,\ t);\ try3(p,\ r,\ t);\ try3(q,\ r,\ t);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ try2(p,\ q);\ try2(p,\ r);\ try2(p,\ t);\ try2(q,\ r);\ try2(q,\ t);\ try2(r,\ t);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ best;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ dx\ =\ det4(S(p),\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}},\ T(1),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S(q),\ q.y,\ q.z,\ T(1),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S(r),\ r.y,\ r.z,\ T(1),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ S(t),\ t.y,\ t.z,\ T(1));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ dy\ =\ det4(p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ S(p),\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}},\ T(1),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.x,\ S(q),\ q.z,\ T(1),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r.x,\ S(r),\ r.z,\ T(1),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t.x,\ S(t),\ t.z,\ T(1));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ dz\ =\ det4(p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ S(p),\ T(1),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.x,\ q.y,\ S(q),\ T(1),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r.x,\ r.y,\ S(r),\ T(1),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t.x,\ t.y,\ S(t),\ T(1));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ c\ =\ det4(p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}},\ S(p),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.x,\ q.y,\ q.z,\ S(q),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r.x,\ r.y,\ r.z,\ S(r),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t.x,\ t.y,\ t.z,\ S(t));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\{\ dx\ /\ (T(2)\ *\ a),\ dy\ /\ (T(2)\ *\ a),\ dz\ /\ (T(2)\ *\ a)\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ =\ std::sqrt((dx\ *\ dx\ +\ dy\ *\ dy\ +\ dz\ *\ dz)\ /\ (T(4)\ *\ a\ *\ a)\ -\/\ c\ /\ a);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00268}00268\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ make\_ball\_from\_R\ =\ [\&](\textcolor{keyword}{const}\ std::array<Vec3,\ 4>\&\ R,\ \textcolor{keywordtype}{size\_t}\ rsz)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (rsz)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:\ ball\_from\_1(R[0]);\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:\ ball\_from\_2(R[0],\ R[1]);\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:\ ball\_from\_3(R[0],\ R[1],\ R[2]);\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4:\ ball\_from\_4(R[0],\ R[1],\ R[2],\ R[3]);\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\{\ T(0),T(0),T(0)\ \};\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ =\ T(0);\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00278}00278\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 非再帰版\ Welzl：R\ を拡張しながらループ}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}\ =\ pts[0];\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ =\ T(0);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ n;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ae28c89f4937018f304bb32d055b15762}{contains}}(pts[i]))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ pts[i]\ を必ず境界に載せる最小球を作る}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R[0]\ =\ pts[i];\ rsz\ =\ 1;\ make\_ball\_from\_R(R,\ rsz);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ i;\ ++j)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ae28c89f4937018f304bb32d055b15762}{contains}}(pts[j]))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R[1]\ =\ pts[j];\ rsz\ =\ 2;\ make\_ball\_from\_R(R,\ rsz);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ k\ =\ 0;\ k\ <\ j;\ ++k)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ae28c89f4937018f304bb32d055b15762}{contains}}(pts[k]))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R[2]\ =\ pts[k];\ rsz\ =\ 3;\ make\_ball\_from\_R(R,\ rsz);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ m\ =\ 0;\ m\ <\ k;\ ++m)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ae28c89f4937018f304bb32d055b15762}{contains}}(pts[m]))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R[3]\ =\ pts[m];\ rsz\ =\ 4;\ make\_ball\_from\_R(R,\ rsz);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ s;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00300}00300\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ 汎用トランスフォーム\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 一様スケール\ +\ 並進だけなら正確。非一様スケール/回転を含む場合は}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 「線形部の最大伸長率（列ベクトル長の最大）」で半径を保守的に拡大。}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Mat4,\ \textcolor{keyword}{class}\ Vec3Like>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00305}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a7ceb459257a4a3d1f9976bf33752ebe4}{00305}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a7ceb459257a4a3d1f9976bf33752ebe4}{Transform}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\&\ s,\ \textcolor{keyword}{const}\ Mat4\&\ M,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3Like\&\ col0,\ \textcolor{keyword}{const}\ Vec3Like\&\ col1,\ \textcolor{keyword}{const}\ Vec3Like\&\ col2,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3Like\&\ translation)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ center'\ =\ R*center\ +\ t,\ \ radius'\ =\ radius\ *\ max(\ ||col0||,\ ||col1||,\ ||col2||\ )}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ newC\{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(0,0)\ *\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ +\ M(0,1)\ *\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ +\ M(0,2)\ *\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ +\ M(0,3),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(1,0)\ *\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ +\ M(1,1)\ *\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ +\ M(1,2)\ *\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ +\ M(1,3),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(2,0)\ *\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ +\ M(2,1)\ *\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ +\ M(2,2)\ *\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ +\ M(2,3)}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ len0\ =\ std::sqrt(col0.x\ *\ col0.x\ +\ col0.y\ *\ col0.y\ +\ col0.z\ *\ col0.z);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ len1\ =\ std::sqrt(col1.x\ *\ col1.x\ +\ col1.y\ *\ col1.y\ +\ col1.z\ *\ col1.z);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ len2\ =\ std::sqrt(col2.x\ *\ col2.x\ +\ col2.y\ *\ col2.y\ +\ col2.z\ *\ col2.z);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ scale\ =\ (T)(std::max)(\{\ len0,len1,len2\ \});}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ newC,\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ *\ scale\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00320}00320\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 一様スケール\ s\ と並進\ t\ のみ既知な場合}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Vec3LikeT>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00323}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a807de42c73a4b5db688886e2d1880308}{00323}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a807de42c73a4b5db688886e2d1880308}{TransformUniform}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere}}\&\ bs,\ \textcolor{keyword}{const}\ Vec3LikeT\&\ translation,\ T\ uniform\_scale)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5c287a7b34e04ade16816dae409b474e}{v3\_add}}(bs.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}},\ translation),\ bs.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ *\ std::abs(uniform\_scale)\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00326}00326\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ WVP\ (=\ proj\ *\ view\ *\ world)\ だけでの可視判定}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ・列ベクトル規約:\ clip\ =\ WVP\ *\ [x,y,z,1]\string^T}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ・LH\ ×\ ZeroToOne\ を想定（x,y\ ∈\ [-\/w,w],\ z\ ∈\ [0,w],\ w>0）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ・中心と局所軸\ ±R\ を投影して\ NDC\ 半径を近似（保守的）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ・outWmin:\ clip-\/space\ の最小W（MOC\ TestRect\ 用）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Mat4>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00335}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a6e1bb019581f970826e9e14db4ff7cc6}{00335}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a6e1bb019581f970826e9e14db4ff7cc6}{IsVisible\_WVP}}(\textcolor{keyword}{const}\ Mat4\&\ WVP,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T*\ outNdcXmin\ =\ \textcolor{keyword}{nullptr},\ T*\ outNdcYmin\ =\ \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T*\ outNdcXmax\ =\ \textcolor{keyword}{nullptr},\ T*\ outNdcYmax\ =\ \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T*\ outWmin\ =\ \textcolor{keyword}{nullptr},\ T*\ depth\ =\ \textcolor{keyword}{nullptr})\ const\ noexcept}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }::\mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{SFW::Math::MulPoint\_RowMajor\_ColVec}};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00341}00341\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ 中心を\ clip\ に}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ cx,\ cy,\ cz,\ cw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{MulPoint\_RowMajor\_ColVec}}(WVP,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.x,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.y,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.z,\ cx,\ cy,\ cz,\ cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00345}00345\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ 局所軸\ ±R\ を\ 3方向サンプリング（+X,\ +Y,\ +Z）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ proj\_pt\ =\ [\&](T\ ox,\ T\ oy,\ T\ oz,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\&\ x,\ T\&\ y,\ T\&\ z,\ T\&\ w)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{MulPoint\_RowMajor\_ColVec}}(WVP,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.x\ +\ ox,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.y\ +\ oy,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.z\ +\ oz,\ x,\ y,\ z,\ w);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00351}00351\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ pxx,\ pxy,\ pxz,\ pxw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ pyx,\ pyy,\ pyz,\ pyw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ pzx,\ pzy,\ pzz,\ pzw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ proj\_pt(+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\ 0.0f,\ 0.0f,\ pxx,\ pxy,\ pxz,\ pxw);\ \textcolor{comment}{//\ +X}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ proj\_pt(0.0f,\ +\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\ 0.0f,\ pyx,\ pyy,\ pyz,\ pyw);\ \textcolor{comment}{//\ +Y}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ proj\_pt(0.0f,\ 0.0f,\ +\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\ pzx,\ pzy,\ pzz,\ pzw);\ \textcolor{comment}{//\ +Z（z評価にも使用）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00358}00358\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3)\ NDC\ へ（同次除算）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ safe\_div\ =\ [](T\ a,\ T\ b)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ eps\ =\ 1e-\/6f;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a\ /\ ((std::fabs(b)\ <\ eps)\ ?\ (b\ <\ 0\ ?\ -\/eps\ :\ eps)\ :\ b);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00364}00364\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cx\ =\ safe\_div(cx,\ cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cy\ =\ safe\_div(cy,\ cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cz\ =\ safe\_div(cz,\ cw);\ \ \ \textcolor{comment}{//\ ZeroToOne\ なら\ [0,1]\ が可視}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00368}00368\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_pxx\ =\ safe\_div(pxx,\ pxw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_pxy\ =\ safe\_div(pxy,\ pxw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00371}00371\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_pyx\ =\ safe\_div(pyx,\ pyw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_pyy\ =\ safe\_div(pyy,\ pyw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00374}00374\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_pzz\ =\ safe\_div(pzz,\ pzw);\ \textcolor{comment}{//\ z方向の奥/手前評価に利用}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00376}00376\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4)\ 画面半径（保守的近似）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\_x\ =\ std::fabs(ndc\_pxx\ -\/\ ndc\_cx);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\_y\ =\ std::fabs(ndc\_pyy\ -\/\ ndc\_cy);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\ =\ (std::max)(r\_ndc\_x,\ r\_ndc\_y);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00381}00381\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 5)\ NDC\ 矩形}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ xmin\ =\ ndc\_cx\ -\/\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ xmax\ =\ ndc\_cx\ +\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ ymin\ =\ ndc\_cy\ -\/\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ ymax\ =\ ndc\_cy\ +\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00387}00387\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 6)\ クリップとの交差（x,y\ は\ [-\/1,1]、z\ は\ [0,1]）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ zmin\_est\ =\ (std::min)(ndc\_cz,\ ndc\_pzz);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ zmax\_est\ =\ (std::max)(ndc\_cz,\ ndc\_pzz);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00391}00391\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00392}00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ x\_overlap\ =\ !(xmax\ <\ -\/1.0f\ ||\ xmin\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ y\_overlap\ =\ !(ymax\ <\ -\/1.0f\ ||\ ymin\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ z\_overlap\ =\ !(zmax\_est\ <\ 0.0f\ ||\ zmin\_est\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00395}00395\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 出力}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outNdcXmin)\ *outNdcXmin\ =\ xmin;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outNdcXmax)\ *outNdcXmax\ =\ xmax;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outNdcYmin)\ *outNdcYmin\ =\ ymin;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outNdcYmax)\ *outNdcYmax\ =\ ymax;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (depth)\ \ \ \ \ \ *depth\ =\ cw;\ \ \textcolor{comment}{//\ 手前側の深度の代表として中心の\ W\ を返す}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00402}00402\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ wmin（clip-\/space\ 最小W）—\ 保守的に中心/+X/+Y/+Z\ の最小}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00404}00404\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outWmin)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00405}00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ raw\_minw\ =\ (std::min)((std::min)(cw,\ pxw),\ (std::min)(pyw,\ pzw));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00406}00406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ epsW\ =\ 1e-\/6f;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 数値安定用}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *outWmin\ =\ (raw\_minw\ <\ epsW)\ ?\ epsW\ :\ raw\_minw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00409}00409\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00410}00410\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x\_overlap\ \&\&\ y\_overlap\ \&\&\ z\_overlap;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00412}00412\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Mat4,\ \textcolor{keyword}{class}\ NDC>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00414}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a35004bd60d4e9e5909d2ba30b48a742c}{00414}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a35004bd60d4e9e5909d2ba30b48a742c}{IsVisible\_WVP}}(\textcolor{keyword}{const}\ Mat4\&\ WVP,\ NDC*\ outNDC,\ T*\ depth\ =\ \textcolor{keyword}{nullptr})\ const\ noexcept}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00416}00416\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }::\mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{SFW::Math::MulPoint\_RowMajor\_ColVec}};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00417}00417\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ 中心を\ clip\ に}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00419}00419\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ cx,\ cy,\ cz,\ cw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{MulPoint\_RowMajor\_ColVec}}(WVP,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.x,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.y,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.z,\ cx,\ cy,\ cz,\ cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00421}00421\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ 局所軸\ ±R\ を\ 3方向サンプリング（+X,\ +Y,\ +Z）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00423}00423\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ proj\_pt\ =\ [\&](T\ ox,\ T\ oy,\ T\ oz,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\&\ x,\ T\&\ y,\ T\&\ z,\ T\&\ w)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{MulPoint\_RowMajor\_ColVec}}(WVP,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.x\ +\ ox,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.y\ +\ oy,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.z\ +\ oz,\ x,\ y,\ z,\ w);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00427}00427\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ pxx,\ pxy,\ pxz,\ pxw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ pyx,\ pyy,\ pyz,\ pyw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00430}00430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ pzx,\ pzy,\ pzz,\ pzw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00431}00431\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ proj\_pt(+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\ 0.0f,\ 0.0f,\ pxx,\ pxy,\ pxz,\ pxw);\ \textcolor{comment}{//\ +X}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ proj\_pt(0.0f,\ +\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\ 0.0f,\ pyx,\ pyy,\ pyz,\ pyw);\ \textcolor{comment}{//\ +Y}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ proj\_pt(0.0f,\ 0.0f,\ +\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\ pzx,\ pzy,\ pzz,\ pzw);\ \textcolor{comment}{//\ +Z（z評価にも使用）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00434}00434\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3)\ NDC\ へ（同次除算）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ safe\_div\ =\ [](T\ a,\ T\ b)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ eps\ =\ 1e-\/6f;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00438}00438\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a\ /\ ((std::fabs(b)\ <\ eps)\ ?\ (b\ <\ 0\ ?\ -\/eps\ :\ eps)\ :\ b);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00440}00440\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cx\ =\ safe\_div(cx,\ cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00442}00442\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cy\ =\ safe\_div(cy,\ cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cz\ =\ safe\_div(cz,\ cw);\ \ \ \textcolor{comment}{//\ ZeroToOne\ なら\ [0,1]\ が可視}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00444}00444\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00445}00445\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_pxx\ =\ safe\_div(pxx,\ pxw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00446}00446\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_pxy\ =\ safe\_div(pxy,\ pxw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00447}00447\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_pyx\ =\ safe\_div(pyx,\ pyw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00449}00449\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_pyy\ =\ safe\_div(pyy,\ pyw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00450}00450\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00451}00451\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_pzz\ =\ safe\_div(pzz,\ pzw);\ \textcolor{comment}{//\ z方向の奥/手前評価に利用}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00452}00452\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00453}00453\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4)\ 画面半径（保守的近似）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00454}00454\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\_x\ =\ std::fabs(ndc\_pxx\ -\/\ ndc\_cx);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00455}00455\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\_y\ =\ std::fabs(ndc\_pyy\ -\/\ ndc\_cy);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\ =\ (std::max)(r\_ndc\_x,\ r\_ndc\_y);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00457}00457\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 5)\ NDC\ 矩形}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00459}00459\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ xmin\ =\ ndc\_cx\ -\/\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00460}00460\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ xmax\ =\ ndc\_cx\ +\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00461}00461\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ ymin\ =\ ndc\_cy\ -\/\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00462}00462\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ ymax\ =\ ndc\_cy\ +\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00463}00463\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00464}00464\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 6)\ クリップとの交差（x,y\ は\ [-\/1,1]、z\ は\ [0,1]）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ zmin\_est\ =\ (std::min)(ndc\_cz,\ ndc\_pzz);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ zmax\_est\ =\ (std::max)(ndc\_cz,\ ndc\_pzz);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00467}00467\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ x\_overlap\ =\ !(xmax\ <\ -\/1.0f\ ||\ xmin\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ y\_overlap\ =\ !(ymax\ <\ -\/1.0f\ ||\ ymin\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00470}00470\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ z\_overlap\ =\ !(zmax\_est\ <\ 0.0f\ ||\ zmin\_est\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00471}00471\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00472}00472\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 出力}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00473}00473\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outNDC)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00474}00474\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>xmin\ =\ xmin;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00475}00475\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>xmax\ =\ xmax;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00476}00476\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>ymin\ =\ ymin;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00477}00477\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>ymax\ =\ ymax;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00478}00478\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ raw\_minw\ =\ (std::min)((std::min)(cw,\ pxw),\ (std::min)(pyw,\ pzw));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00479}00479\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ epsW\ =\ 1e-\/6f;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 数値安定用}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00480}00480\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>wmin\ =\ (raw\_minw\ <\ epsW)\ ?\ epsW\ :\ raw\_minw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00481}00481\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00482}00482\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00483}00483\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (depth)\ \ \ \ \ \ *depth\ =\ cw;\ \ \textcolor{comment}{//\ 手前側の深度の代表として中心の\ W\ を返す}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00484}00484\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00485}00485\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x\_overlap\ \&\&\ y\_overlap\ \&\&\ z\_overlap;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00486}00486\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00487}00487\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00488}00488\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ center:\ 球中心（ワールド）/\ radius:\ 半径}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00489}00489\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ camRight,\ camUp,\ camForward:\ カメラのワールド空間基底（正規直交・単位長を想定）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00491}00491\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 可視なら\ true。outNDC\ は\ NDC\ の\ AABB（x,y\ は\ [-\/1,1]、z\ は\ [0,1]\ で交差判定）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ depth\ には「中心の\ clip.w」を返します（既存コード互換）。}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00493}00493\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Mat4,\ \textcolor{keyword}{class}\ NDC>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00494}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a6b45ceb4c72fe65d2e3f0ea56ffb87f5}{00494}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a6b45ceb4c72fe65d2e3f0ea56ffb87f5}{IsVisible\_WVP\_CamBasis}}(}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Mat4\&\ WVP,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ camRight,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ camUp,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ camForward,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ NDC*\ outNDC,\ T*\ depth\ =\ \textcolor{keyword}{nullptr})\ const\ noexcept}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00499}00499\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }::\mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{SFW::Math::MulPoint\_RowMajor\_ColVec}};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00500}00500\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00501}00501\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ safe\_div\ =\ [](T\ a,\ T\ b)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00502}00502\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ eps\ =\ 1e-\/6f;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a\ /\ ((std::fabs(b)\ <\ eps)\ ?\ (b\ <\ 0\ ?\ -\/eps\ :\ eps)\ :\ b);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00505}00505\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00506}00506\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ 中心を\ clip\ に}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00507}00507\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ cx,\ cy,\ cz,\ cw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{MulPoint\_RowMajor\_ColVec}}(WVP,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.x,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.y,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.z,\ cx,\ cy,\ cz,\ cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00509}00509\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00510}00510\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ 基底方向に\ ±radius\ だけずらした点を投影}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00511}00511\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ proj\_pt\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ p,\ T\&\ x,\ T\&\ y,\ T\&\ z,\ T\&\ w)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{MulPoint\_RowMajor\_ColVec}}(WVP,\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}},\ x,\ y,\ z,\ w);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00514}00514\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00515}00515\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ Prp\ =\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.x\ +\ camRight.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.y\ +\ camRight.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.z\ +\ camRight.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ Prm\ =\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.x\ -\/\ camRight.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.y\ -\/\ camRight.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.z\ -\/\ camRight.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ Pup\ =\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.x\ +\ camUp.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.y\ +\ camUp.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.z\ +\ camUp.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00518}00518\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ Pum\ =\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.x\ -\/\ camUp.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.y\ -\/\ camUp.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.z\ -\/\ camUp.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ Pfp\ =\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.x\ +\ camForward.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.y\ +\ camForward.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.z\ +\ camForward.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ Pfm\ =\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.x\ -\/\ camForward.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.y\ -\/\ camForward.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}},\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.z\ -\/\ camForward.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00521}00521\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ rpx,\ rpy,\ rpz,\ rpw;\ proj\_pt(Prp,\ rpx,\ rpy,\ rpz,\ rpw);\ \textcolor{comment}{//\ +Right}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ rm\_x,\ rm\_y,\ rm\_z,\ rm\_w;\ proj\_pt(Prm,\ rm\_x,\ rm\_y,\ rm\_z,\ rm\_w);\ \textcolor{comment}{//\ -\/Right}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ upx,\ upy,\ upz,\ upw;\ proj\_pt(Pup,\ upx,\ upy,\ upz,\ upw);\ \textcolor{comment}{//\ +Up}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ umx,\ umy,\ umz,\ umw;\ proj\_pt(Pum,\ umx,\ umy,\ umz,\ umw);\ \textcolor{comment}{//\ -\/Up}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00526}00526\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ fpx,\ fpy,\ fpz,\ fpw;\ proj\_pt(Pfp,\ fpx,\ fpy,\ fpz,\ fpw);\ \textcolor{comment}{//\ +Forward（奥）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00527}00527\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ fmx,\ fmy,\ fmz,\ fmw;\ proj\_pt(Pfm,\ fmx,\ fmy,\ fmz,\ fmw);\ \textcolor{comment}{//\ -\/Forward（手前）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00528}00528\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00529}00529\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3)\ NDC\ へ（同次除算）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cx\ =\ safe\_div(cx,\ cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00531}00531\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cy\ =\ safe\_div(cy,\ cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00532}00532\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cz\ =\ safe\_div(cz,\ cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00533}00533\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00534}00534\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_rp\_x\ =\ safe\_div(rpx,\ rpw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00535}00535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_rm\_x\ =\ safe\_div(rm\_x,\ rm\_w);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00536}00536\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_up\_y\ =\ safe\_div(upy,\ upw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_um\_y\ =\ safe\_div(umy,\ umw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00538}00538\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_fp\_z\ =\ safe\_div(fpz,\ fpw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_fm\_z\ =\ safe\_div(fmz,\ fmw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00541}00541\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4)\ スクリーン半径（保守的）：左右は\ Right±、上下は\ Up±\ の最大差分}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00543}00543\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\_x\ =\ (std::max)(std::fabs(ndc\_rp\_x\ -\/\ ndc\_cx),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00544}00544\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::fabs(ndc\_rm\_x\ -\/\ ndc\_cx));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00545}00545\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\_y\ =\ (std::max)(std::fabs(ndc\_up\_y\ -\/\ ndc\_cy),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00546}00546\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::fabs(ndc\_um\_y\ -\/\ ndc\_cy));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00547}00547\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\ =\ (std::max)(r\_ndc\_x,\ r\_ndc\_y);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00548}00548\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00549}00549\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 5)\ NDC\ 矩形}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00550}00550\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ xmin\ =\ ndc\_cx\ -\/\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00551}00551\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ xmax\ =\ ndc\_cx\ +\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00552}00552\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ ymin\ =\ ndc\_cy\ -\/\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00553}00553\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ ymax\ =\ ndc\_cy\ +\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00554}00554\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00555}00555\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 6)\ z\ 範囲（保守的）：中心と\ Forward±\ の\ 3\ サンプル}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00556}00556\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ zmin\_est\ =\ (std::min)((std::min)(ndc\_cz,\ ndc\_fm\_z),\ ndc\_fp\_z);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00557}00557\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ zmax\_est\ =\ (std::max)((std::max)(ndc\_cz,\ ndc\_fm\_z),\ ndc\_fp\_z);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00558}00558\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00559}00559\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 7)\ クリップとの交差（x,y\ は\ [-\/1,1]、z\ は\ [0,1]）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00560}00560\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ x\_overlap\ =\ !(xmax\ <\ -\/1.0f\ ||\ xmin\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00561}00561\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ y\_overlap\ =\ !(ymax\ <\ -\/1.0f\ ||\ ymin\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00562}00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ z\_overlap\ =\ !(zmax\_est\ <\ 0.0f\ ||\ zmin\_est\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00563}00563\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00564}00564\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 8)\ 出力}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00565}00565\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outNDC)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00566}00566\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>xmin\ =\ xmin;\ outNDC-\/>xmax\ =\ xmax;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00567}00567\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>ymin\ =\ ymin;\ outNDC-\/>ymax\ =\ ymax;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00568}00568\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00569}00569\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ raw\_minw\ =\ (std::min)(}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00570}00570\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (std::min)((std::min)(cw,\ rpw),\ (std::min)(rm\_w,\ upw)),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00571}00571\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (std::min)(umw,\ (std::min)(fpw,\ fmw)));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00572}00572\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ epsW\ =\ 1e-\/6f;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00573}00573\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>wmin\ =\ (raw\_minw\ <\ epsW)\ ?\ epsW\ :\ raw\_minw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00574}00574\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00575}00575\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (depth)\ *depth\ =\ cw;\ \textcolor{comment}{//\ 互換用}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00576}00576\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00577}00577\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x\_overlap\ \&\&\ y\_overlap\ \&\&\ z\_overlap;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00578}00578\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00579}00579\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00584}00584\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Mat4,\ \textcolor{keyword}{class}\ NDC>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00585}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa6651d5fc32ce4f66dd8e7fcab34d1dc}{00585}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa6651d5fc32ce4f66dd8e7fcab34d1dc}{IsVisible\_WVP\_CamBasis\_Fast}}(}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00586}00586\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Mat4\&\ WVP,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00587}00587\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ camRight,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ camUp,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ camForward,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00588}00588\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ NDC*\ outNDC,\ T*\ depth\ =\ \textcolor{keyword}{nullptr})\ const\ noexcept}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00589}00589\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00590}00590\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }::\mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{SFW::Math::MulPoint\_RowMajor\_ColVec}};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00591}00591\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00592}00592\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ 中心を\ clip\ に}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00593}00593\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ cx,\ cy,\ cz,\ cw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00594}00594\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{MulPoint\_RowMajor\_ColVec}}(WVP,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.x,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.y,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ab5e03a3bece1e0ee0375ec842882caa3}{center}}.z,\ cx,\ cy,\ cz,\ cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00595}00595\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00596}00596\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ WVP\ の線形部分を抽出}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00597}00597\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ m00\ =\ WVP.m00,\ m01\ =\ WVP.m01,\ m02\ =\ WVP.m02;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00598}00598\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ m10\ =\ WVP.m10,\ m11\ =\ WVP.m11,\ m12\ =\ WVP.m12;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00599}00599\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ m20\ =\ WVP.m20,\ m21\ =\ WVP.m21,\ m22\ =\ WVP.m22;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00600}00600\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ m30\ =\ WVP.m30,\ m31\ =\ WVP.m31,\ m32\ =\ WVP.m32;\ \textcolor{comment}{//\ w行成分も必要}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00601}00601\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00602}00602\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3)\ 半径方向を\ clip空間へ変換（ベクトル変換：平行移動は含まない）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00603}00603\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ to\_clip\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ v)-\/>\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00604}00604\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00605}00605\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m00\ *\ v.x\ +\ m01\ *\ v.y\ +\ m02\ *\ v.z,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00606}00606\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m10\ *\ v.x\ +\ m11\ *\ v.y\ +\ m12\ *\ v.z,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00607}00607\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m20\ *\ v.x\ +\ m21\ *\ v.y\ +\ m22\ *\ v.z}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00608}00608\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00609}00609\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00610}00610\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ to\_clip\_w\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ v)-\/>T\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00611}00611\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m30\ *\ v.x\ +\ m31\ *\ v.y\ +\ m32\ *\ v.z;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00612}00612\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00613}00613\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00614}00614\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ clipR\ =\ to\_clip(camRight);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00615}00615\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ clipU\ =\ to\_clip(camUp);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00616}00616\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\ clipF\ =\ to\_clip(camForward);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00617}00617\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ wR\ =\ to\_clip\_w(camRight);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00618}00618\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ wU\ =\ to\_clip\_w(camUp);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00619}00619\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ wF\ =\ to\_clip\_w(camForward);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00620}00620\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00621}00621\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4)\ clip\ 半径（+R,\ +U\ の大きい方）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00622}00622\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 割り算を一回で済ませるため\ invCW\ を先に計算}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00623}00623\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ invCW\ =\ 1.0f\ /\ ((std::fabs(cw)\ <\ 1e-\/6f)\ ?\ ((cw\ <\ 0)\ ?\ -\/1e-\/6f\ :\ 1e-\/6f)\ :\ cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00624}00624\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00625}00625\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cx\ =\ cx\ *\ invCW;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00626}00626\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cy\ =\ cy\ *\ invCW;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00627}00627\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cz\ =\ cz\ *\ invCW;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00628}00628\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00629}00629\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 5)\ NDC半径計算（近似：微分ベース）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00630}00630\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ d(x/w)\ ≈\ (dx*w\ -\/\ x*dw)/w²}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00631}00631\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ dxR\ =\ clipR.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ *\ cw\ -\/\ cx\ *\ wR;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00632}00632\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ dyU\ =\ clipU.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ *\ cw\ -\/\ cy\ *\ wU;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00633}00633\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ dzF\ =\ clipF.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ *\ cw\ -\/\ cz\ *\ wF;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00634}00634\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ invCW2\ =\ invCW\ *\ invCW;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00635}00635\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\_x\ =\ std::fabs(\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ *\ dxR\ *\ invCW2);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00636}00636\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\_y\ =\ std::fabs(\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ *\ dyU\ *\ invCW2);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00637}00637\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\ =\ (std::max)(r\_ndc\_x,\ r\_ndc\_y);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00638}00638\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00639}00639\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 6)\ z\ 範囲（前後\ ±radius\ *\ Forward）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00640}00640\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\_z\ =\ std::fabs(\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a64dd070f31ce07009c1280cff688d595}{radius}}\ *\ dzF\ *\ invCW2);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00641}00641\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ zmin\_est\ =\ ndc\_cz\ -\/\ r\_ndc\_z;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00642}00642\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ zmax\_est\ =\ ndc\_cz\ +\ r\_ndc\_z;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00643}00643\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00644}00644\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 7)\ 矩形・交差判定}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00645}00645\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ xmin\ =\ ndc\_cx\ -\/\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00646}00646\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ xmax\ =\ ndc\_cx\ +\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00647}00647\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ymin\ =\ ndc\_cy\ -\/\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00648}00648\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ymax\ =\ ndc\_cy\ +\ r\_ndc;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00649}00649\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00650}00650\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ x\_overlap\ =\ !(xmax\ <\ -\/1.0f\ ||\ xmin\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00651}00651\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ y\_overlap\ =\ !(ymax\ <\ -\/1.0f\ ||\ ymin\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00652}00652\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ z\_overlap\ =\ !(zmax\_est\ <\ 0.0f\ ||\ zmin\_est\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00653}00653\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00654}00654\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outNDC)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00655}00655\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>xmin\ =\ xmin;\ outNDC-\/>xmax\ =\ xmax;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00656}00656\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>ymin\ =\ ymin;\ outNDC-\/>ymax\ =\ ymax;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00657}00657\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>wmin\ =\ cw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00658}00658\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00659}00659\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (depth)\ *depth\ =\ cw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00660}00660\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00661}00661\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x\_overlap\ \&\&\ y\_overlap\ \&\&\ z\_overlap;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00662}00662\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00663}00663\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00664}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa7c4eae8343175abe9888e1cea9738d1}{00664}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa7c4eae8343175abe9888e1cea9738d1}{VisState}}\ :\ uint32\_t\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00665}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa7c4eae8343175abe9888e1cea9738d1a597700f463b47effe2a9ae80121f9438}{00665}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa7c4eae8343175abe9888e1cea9738d1a597700f463b47effe2a9ae80121f9438}{Culled}}\ =\ 0,\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 画面外（この関数のNDC/rect判定で落ちた）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00666}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa7c4eae8343175abe9888e1cea9738d1aec24d78ce33048dc73a2b6b1a0690192}{00666}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa7c4eae8343175abe9888e1cea9738d1aec24d78ce33048dc73a2b6b1a0690192}{Visible}}\ =\ 1,\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 可視（rectが画面と交差）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00667}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa7c4eae8343175abe9888e1cea9738d1a17af426fc561e1d7b96e202cdd424308}{00667}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa7c4eae8343175abe9888e1cea9738d1a17af426fc561e1d7b96e202cdd424308}{NeedFrustum}}\ =\ 2\ \ \ \ \ \ \textcolor{comment}{//\ 近すぎ/背面などでrect推定が不安定\ →\ フラスタム球判定へ}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00668}00668\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00669}00669\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00683}00683\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Mat4,\ \textcolor{keyword}{class}\ NDC>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00684}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ae70c7dce6af330f4d8bf5ce61a134299}{00684}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa7c4eae8343175abe9888e1cea9738d1}{VisState}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_ae70c7dce6af330f4d8bf5ce61a134299}{IsVisible\_LocalCenter\_WorldRadius}}(}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00685}00685\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Mat4\&\ WVP,\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =\ VP\ *\ World}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00686}00686\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Mat4\&\ VP,\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =\ Projection\ *\ View}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00687}00687\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ centerLocal,\ \ \textcolor{comment}{//\ モデルローカルの中心}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00688}00688\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ radiusWorld,\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ワールド空間の半径（スケール反映済み）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00689}00689\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ camRightWS,\ \ \ \textcolor{comment}{//\ ワールド空間のカメラ軸}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00690}00690\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ camUpWS,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00691}00691\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ camForwardWS,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00692}00692\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ NDC*\ outNDC,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00693}00693\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T*\ depth\ =\ \textcolor{keyword}{nullptr}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00694}00694\ \ \ \ \ \ \ \ \ \ \ \ \ )\ noexcept}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00695}00695\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00696}00696\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }::\mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{SFW::Math::MulPoint\_RowMajor\_ColVec}};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00697}00697\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00698}00698\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ center\ -\/>\ clip}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00699}00699\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ cx,\ cy,\ cz,\ cw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00700}00700\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{MulPoint\_RowMajor\_ColVec}}(WVP,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00701}00701\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ centerLocal.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ centerLocal.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ centerLocal.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}},}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00702}00702\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cx,\ cy,\ cz,\ cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00703}00703\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00704}00704\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ フォールバック条件（近すぎ/背面）-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00705}00705\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ここはプロジェクトに合わせて閾値調整。}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00706}00706\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 目的：cw\ が小さくて\ r\_ndc\ が爆発しやすい/背面で不安定なケースを除外}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00707}00707\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ epsW\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(1e-\/4f);\ \textcolor{comment}{//\ 1e-\/6\ より少し大きめ推奨}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00708}00708\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cw\ <=\ epsW)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00709}00709\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outNDC)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00710}00710\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>xmin\ =\ -\/1;\ outNDC-\/>xmax\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00711}00711\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>ymin\ =\ -\/1;\ outNDC-\/>ymax\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00712}00712\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>wmin\ =\ cw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00713}00713\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00714}00714\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (depth)\ \{\ *depth\ =\ cw;\ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00715}00715\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa7c4eae8343175abe9888e1cea9738d1a17af426fc561e1d7b96e202cdd424308}{VisState::NeedFrustum}};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00716}00716\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00717}00717\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00718}00718\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ invCW\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(1)\ /\ cw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00719}00719\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ invCW2\ =\ invCW\ *\ invCW;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00720}00720\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00721}00721\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cx\ =\ cx\ *\ invCW;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00722}00722\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cy\ =\ cy\ *\ invCW;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00723}00723\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ndc\_cz\ =\ cz\ *\ invCW;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00724}00724\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00725}00725\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ VP\ の行（clipX,\ clipY,\ clipZ,\ clipW\ の\ xyz\ だけ）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00726}00726\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ x0\ =\ VP.m00,\ x1\ =\ VP.m01,\ x2\ =\ VP.m02;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00727}00727\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ y0\ =\ VP.m10,\ y1\ =\ VP.m11,\ y2\ =\ VP.m12;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00728}00728\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ z0\ =\ VP.m20,\ z1\ =\ VP.m21,\ z2\ =\ VP.m22;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00729}00729\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ w0\ =\ VP.m30,\ w1\ =\ VP.m31,\ w2\ =\ VP.m32;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00730}00730\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00731}00731\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ dot(row,\ v)\ :\ v\ は\ world\ 方向（camRightWS\ 等）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00732}00732\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ dot3\ =\ [\&](T\ r0,\ T\ r1,\ T\ r2,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ v)-\/>T\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00733}00733\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ r0\ *\ v.x\ +\ r1\ *\ v.y\ +\ r2\ *\ v.z;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00734}00734\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00735}00735\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00736}00736\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ df\ =\ d(X/W)\ along\ v\ \ ≈\ (dX\ *\ W\ -\/\ X\ *\ dW)\ /\ W\string^2}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00737}00737\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ d\_ndc\_along\ =\ [\&](T\ X,\ T\ W,\ T\ dX,\ T\ dW)-\/>T\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00738}00738\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (dX\ *\ W\ -\/\ X\ *\ dW)\ *\ invCW2;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00739}00739\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00740}00740\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00741}00741\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ grad\_norm\_ndc\ =\ [\&](T\ X,\ T\ W,\ T\ row0,\ T\ row1,\ T\ row2)-\/>T}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00742}00742\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00743}00743\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ dX,\ dW\ for\ each\ camera\ basis\ direction}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00744}00744\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ dX\_R\ =\ dot3(row0,\ row1,\ row2,\ camRightWS);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00745}00745\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ dX\_U\ =\ dot3(row0,\ row1,\ row2,\ camUpWS);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00746}00746\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ dX\_F\ =\ dot3(row0,\ row1,\ row2,\ camForwardWS);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00747}00747\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00748}00748\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ dW\_R\ =\ dot3(w0,\ w1,\ w2,\ camRightWS);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00749}00749\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ dW\_U\ =\ dot3(w0,\ w1,\ w2,\ camUpWS);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00750}00750\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ dW\_F\ =\ dot3(w0,\ w1,\ w2,\ camForwardWS);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00751}00751\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00752}00752\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ a\ =\ d\_ndc\_along(X,\ W,\ dX\_R,\ dW\_R);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00753}00753\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ b\ =\ d\_ndc\_along(X,\ W,\ dX\_U,\ dW\_U);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00754}00754\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ c\ =\ d\_ndc\_along(X,\ W,\ dX\_F,\ dW\_F);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00755}00755\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00756}00756\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::sqrt(a\ *\ a\ +\ b\ *\ b\ +\ c\ *\ c);\ \textcolor{comment}{//\ ≒\ ||∇(X/W)||}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00757}00757\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00758}00758\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00759}00759\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ absR\ =\ std::fabs(radiusWorld);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00760}00760\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00761}00761\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\_x\ =\ absR\ *\ grad\_norm\_ndc(cx,\ cw,\ x0,\ x1,\ x2);\ \textcolor{comment}{//\ for\ ndc\_x}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00762}00762\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\_y\ =\ absR\ *\ grad\_norm\_ndc(cy,\ cw,\ y0,\ y1,\ y2);\ \textcolor{comment}{//\ for\ ndc\_y}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00763}00763\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ r\_ndc\_z\ =\ absR\ *\ grad\_norm\_ndc(cz,\ cw,\ z0,\ z1,\ z2);\ \textcolor{comment}{//\ for\ ndc\_z}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00764}00764\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00765}00765\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4)\ NDC矩形}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00766}00766\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ xmin\ =\ ndc\_cx\ -\/\ r\_ndc\_x;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00767}00767\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ xmax\ =\ ndc\_cx\ +\ r\_ndc\_x;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00768}00768\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ymin\ =\ ndc\_cy\ -\/\ r\_ndc\_y;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00769}00769\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ ymax\ =\ ndc\_cy\ +\ r\_ndc\_y;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00770}00770\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00771}00771\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ z範囲（深度前提に合わせる）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00772}00772\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ zmin\_est\ =\ ndc\_cz\ -\/\ r\_ndc\_z;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00773}00773\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ zmax\_est\ =\ ndc\_cz\ +\ r\_ndc\_z;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00774}00774\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00775}00775\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ x\_overlap\ =\ !(xmax\ <\ -\/1.0f\ ||\ xmin\ >\ \ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00776}00776\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ y\_overlap\ =\ !(ymax\ <\ -\/1.0f\ ||\ ymin\ >\ \ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00777}00777\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ z\_overlap\ =\ !(zmax\_est\ <\ 0.0f\ ||\ zmin\_est\ >\ 1.0f);\ \textcolor{comment}{//\ [0,1]\ 前提}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00778}00778\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00779}00779\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outNDC)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00780}00780\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>xmin\ =\ xmin;\ outNDC-\/>xmax\ =\ xmax;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00781}00781\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>ymin\ =\ ymin;\ outNDC-\/>ymax\ =\ ymax;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00782}00782\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outNDC-\/>wmin\ =\ cw;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00783}00783\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00784}00784\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (depth)\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00785}00785\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *depth\ =\ cw;\ \textcolor{comment}{//\ 用途次第で\ ndc\_cz\ にしてもOK}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00786}00786\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00787}00787\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00788}00788\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x\_overlap\ \&\&\ y\_overlap\ \&\&\ z\_overlap)\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa7c4eae8343175abe9888e1cea9738d1aec24d78ce33048dc73a2b6b1a0690192}{VisState::Visible}};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00789}00789\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa7c4eae8343175abe9888e1cea9738d1a597700f463b47effe2a9ae80121f9438}{VisState::Culled}};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00790}00790\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00791}00791\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00792}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp}{00792}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp}{NdcPrecomp}}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00793}00793\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00794}00794\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ scalar（AVX用にset1して使う）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00795}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_a70a5f0a8747ac1d2dd284a482dca0719}{00795}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_abbf919c4d356578d3dc43df26ac46f46}{clipR\_x}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_aaaa89e825cc6459bb7a58662ba0a2731}{clipU\_y}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_a70a5f0a8747ac1d2dd284a482dca0719}{clipF\_z}};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00796}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_aeaaff3d2d3663e73c1c1990530f85701}{00796}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_a76e7cb6da13707f5c41f087ddbfe003a}{wR}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_ae95c9ad2c6991d9d3a2be26ba7da8bf3}{wU}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_aeaaff3d2d3663e73c1c1990530f85701}{wF}};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00797}00797\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00798}00798\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ NDCの範囲（D3D想定:\ x,y\ [-\/1,1],\ z\ [0,1]）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00799}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_ad805e6e86bcec496c3ba4cc171faaa48}{00799}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_a04aa59d54a2624cc0e4174c0706a9c9d}{ndcMinX}}\ =\ -\/1.0f,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_ad805e6e86bcec496c3ba4cc171faaa48}{ndcMaxX}}\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00800}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_aa43812a641d04ca978dee32c7a0b3d53}{00800}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_a0aa27d3e748a8ddf854fbb7a06de62ac}{ndcMinY}}\ =\ -\/1.0f,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_aa43812a641d04ca978dee32c7a0b3d53}{ndcMaxY}}\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00801}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_aa6f11c63b61b22de0c31b63a7a30825f}{00801}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_a047ebc5c633a71682ed3eae398372e8e}{ndcMinZ}}\ =\ 0.0f,\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_aa6f11c63b61b22de0c31b63a7a30825f}{ndcMaxZ}}\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00802}00802\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00803}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_a102a21f8a3b60fb0a91540b337102c15}{00803}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_a102a21f8a3b60fb0a91540b337102c15}{cwEps}}\ =\ 1e-\/6f;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00804}00804\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00805}00805\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00806}00806\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Mat4>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00807}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a5a31197b7bf60cfdc0f6e3e33dd23018}{00807}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ NdcPrecomp\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_a5a31197b7bf60cfdc0f6e3e33dd23018}{MakeSphereNdcPrecomp}}(}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00808}00808\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Mat4\&\ VP,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00809}00809\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ camRightWS,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00810}00810\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ camUpWS,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00811}00811\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ camForwardWS}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00812}00812\ \ \ \ \ \ \ \ \ \ \ \ \ )\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00813}00813\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00814}00814\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ NdcPrecomp\ p\{\};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00815}00815\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00816}00816\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ここはあなたの元式と同じ:\ VPの\ row0/1/2\ と\ cam軸の内積（要素は\ Mat4\ の定義に合わせて）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00817}00817\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.clipR\_x\ =\ VP.m00\ *\ camRightWS.x\ +\ VP.m01\ *\ camRightWS.y\ +\ VP.m02\ *\ camRightWS.z;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00818}00818\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.clipU\_y\ =\ VP.m10\ *\ camUpWS.x\ +\ VP.m11\ *\ camUpWS.y\ +\ VP.m12\ *\ camUpWS.z;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00819}00819\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.clipF\_z\ =\ VP.m20\ *\ camForwardWS.x\ +\ VP.m21\ *\ camForwardWS.y\ +\ VP.m22\ *\ camForwardWS.z;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00820}00820\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00821}00821\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ wR,wU,wF（VP\ row3\ の\ xyz\ と\ cam軸の内積）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00822}00822\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.wR\ =\ VP.m30\ *\ camRightWS.x\ +\ VP.m31\ *\ camRightWS.y\ +\ VP.m32\ *\ camRightWS.z;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00823}00823\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.wU\ =\ VP.m30\ *\ camUpWS.x\ +\ VP.m31\ *\ camUpWS.y\ +\ VP.m32\ *\ camUpWS.z;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00824}00824\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.wF\ =\ VP.m30\ *\ camForwardWS.x\ +\ VP.m31\ *\ camForwardWS.y\ +\ VP.m32\ *\ camForwardWS.z;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00825}00825\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00826}00826\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ p;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00827}00827\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00828}00828\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00829}00829\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ AVX2で8個ずつ}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00830}00830\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 戻り値:\ i..i+7\ の可視\ lane\ をビットで返す}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00831}00831\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Mat4>}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00832}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa276be09d70e1ff5e6f216bf3b447293}{00832}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ std::uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere_aa276be09d70e1ff5e6f216bf3b447293}{IsVisibleBatch\_WorldSoA\_LocalCenterRadius\_AVX2}}(}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00833}00833\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a}{Matrix3x4fSoA}}\&\ WorldSoA,\ \ \ \ \ \textcolor{comment}{//\ Matrix.hpp}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00834}00834\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Mat4\&\ VP,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ そのまま使う（clip計算用）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00835}00835\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ NdcPrecomp\&\ pc,\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 前計算係数}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00836}00836\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}\&\ centerLocal,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00837}00837\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ radiusWorld,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00838}00838\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::size\_t\ i,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00839}00839\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ optional\ debug\ outputs（nullptrなら書かない）-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00840}00840\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ outNdcX,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00841}00841\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ outNdcY,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00842}00842\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ outNdcZ,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00843}00843\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ outDepthMin,}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00844}00844\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ outDepthMax}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00845}00845\ \ \ \ \ \ \ \ \ \ \ \ \ )\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00846}00846\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00847}00847\ \textcolor{preprocessor}{\#if\ defined(\_\_AVX2\_\_)\ ||\ (defined(\_MSC\_VER)\ \&\&\ defined(\_\_AVX2\_\_))}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00848}00848\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::size\_t\ n\ =\ WorldSoA.count;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00849}00849\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ >=\ n)\ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00850}00850\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::size\_t\ laneCount\ =\ (i\ +\ 8\ <=\ n)\ ?\ 8\ :\ (n\ -\/\ i);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00851}00851\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00852}00852\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vLocalX\ =\ \_mm256\_set1\_ps(centerLocal.x);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00853}00853\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vLocalY\ =\ \_mm256\_set1\_ps(centerLocal.y);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00854}00854\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vLocalZ\ =\ \_mm256\_set1\_ps(centerLocal.z);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00855}00855\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00856}00856\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ precomp}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00857}00857\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vClipR\_x\ =\ \_mm256\_set1\_ps(pc.clipR\_x);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00858}00858\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vClipU\_y\ =\ \_mm256\_set1\_ps(pc.clipU\_y);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00859}00859\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vClipF\_z\ =\ \_mm256\_set1\_ps(pc.clipF\_z);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00860}00860\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vWR\ =\ \_mm256\_set1\_ps(pc.wR);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00861}00861\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vWU\ =\ \_mm256\_set1\_ps(pc.wU);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00862}00862\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vWF\ =\ \_mm256\_set1\_ps(pc.wF);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00863}00863\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00864}00864\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vNegOne\ =\ \_mm256\_set1\_ps(pc.ndcMinX);\ \textcolor{comment}{//\ -\/1}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00865}00865\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vPosOne\ =\ \_mm256\_set1\_ps(pc.ndcMaxX);\ \textcolor{comment}{//\ +1}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00866}00866\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vMinZ\ =\ \_mm256\_set1\_ps(pc.ndcMinZ);\ \textcolor{comment}{//\ 0}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00867}00867\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vMaxZ\ =\ \_mm256\_set1\_ps(pc.ndcMaxZ);\ \textcolor{comment}{//\ 1}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00868}00868\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vZero\ =\ \_mm256\_set1\_ps(0.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00869}00869\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00870}00870\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vEps\ =\ \_mm256\_set1\_ps(pc.cwEps);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00871}00871\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vSignBit\ =\ \_mm256\_set1\_ps(-\/0.0f);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00872}00872\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00873}00873\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ abs256\ =\ [\&](\textcolor{keyword}{const}\ \_\_m256\&\ v)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00874}00874\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm256\_andnot\_ps(vSignBit,\ v);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00875}00875\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00876}00876\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00877}00877\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ WorldSoA\ *\ centerLocal\ =>\ worldPos\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00878}00878\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ m00w\ =\ \_mm256\_loadu\_ps(WorldSoA.m00\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00879}00879\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ m01w\ =\ \_mm256\_loadu\_ps(WorldSoA.m01\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00880}00880\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ m02w\ =\ \_mm256\_loadu\_ps(WorldSoA.m02\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00881}00881\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ tx\ =\ \_mm256\_loadu\_ps(WorldSoA.tx\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00882}00882\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00883}00883\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ m10w\ =\ \_mm256\_loadu\_ps(WorldSoA.m10\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00884}00884\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ m11w\ =\ \_mm256\_loadu\_ps(WorldSoA.m11\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00885}00885\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ m12w\ =\ \_mm256\_loadu\_ps(WorldSoA.m12\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00886}00886\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ ty\ =\ \_mm256\_loadu\_ps(WorldSoA.ty\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00887}00887\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00888}00888\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ m20w\ =\ \_mm256\_loadu\_ps(WorldSoA.m20\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00889}00889\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ m21w\ =\ \_mm256\_loadu\_ps(WorldSoA.m21\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00890}00890\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ m22w\ =\ \_mm256\_loadu\_ps(WorldSoA.m22\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00891}00891\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ tz\ =\ \_mm256\_loadu\_ps(WorldSoA.tz\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00892}00892\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00893}00893\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ wx\ =\ \_mm256\_add\_ps(\_mm256\_add\_ps(\_mm256\_mul\_ps(m00w,\ vLocalX),\ \_mm256\_mul\_ps(m01w,\ vLocalY)),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00894}00894\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_add\_ps(\_mm256\_mul\_ps(m02w,\ vLocalZ),\ tx));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00895}00895\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ wy\ =\ \_mm256\_add\_ps(\_mm256\_add\_ps(\_mm256\_mul\_ps(m10w,\ vLocalX),\ \_mm256\_mul\_ps(m11w,\ vLocalY)),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00896}00896\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_add\_ps(\_mm256\_mul\_ps(m12w,\ vLocalZ),\ ty));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00897}00897\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ wz\ =\ \_mm256\_add\_ps(\_mm256\_add\_ps(\_mm256\_mul\_ps(m20w,\ vLocalX),\ \_mm256\_mul\_ps(m21w,\ vLocalY)),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00898}00898\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_add\_ps(\_mm256\_mul\_ps(m22w,\ vLocalZ),\ tz));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00899}00899\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00900}00900\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ VP\ *\ [worldPos,1]\ =>\ clip\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00901}00901\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vp00\ =\ \_mm256\_set1\_ps(VP.m00),\ vp01\ =\ \_mm256\_set1\_ps(VP.m01),\ vp02\ =\ \_mm256\_set1\_ps(VP.m02),\ vp03\ =\ \_mm256\_set1\_ps(VP.m03);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00902}00902\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vp10\ =\ \_mm256\_set1\_ps(VP.m10),\ vp11\ =\ \_mm256\_set1\_ps(VP.m11),\ vp12\ =\ \_mm256\_set1\_ps(VP.m12),\ vp13\ =\ \_mm256\_set1\_ps(VP.m13);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00903}00903\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vp20\ =\ \_mm256\_set1\_ps(VP.m20),\ vp21\ =\ \_mm256\_set1\_ps(VP.m21),\ vp22\ =\ \_mm256\_set1\_ps(VP.m22),\ vp23\ =\ \_mm256\_set1\_ps(VP.m23);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00904}00904\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ vp30\ =\ \_mm256\_set1\_ps(VP.m30),\ vp31\ =\ \_mm256\_set1\_ps(VP.m31),\ vp32\ =\ \_mm256\_set1\_ps(VP.m32),\ vp33\ =\ \_mm256\_set1\_ps(VP.m33);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00905}00905\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00906}00906\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ cx\ =\ \_mm256\_add\_ps(\_mm256\_add\_ps(\_mm256\_mul\_ps(vp00,\ wx),\ \_mm256\_mul\_ps(vp01,\ wy)),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00907}00907\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_add\_ps(\_mm256\_mul\_ps(vp02,\ wz),\ vp03));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00908}00908\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ cy\ =\ \_mm256\_add\_ps(\_mm256\_add\_ps(\_mm256\_mul\_ps(vp10,\ wx),\ \_mm256\_mul\_ps(vp11,\ wy)),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00909}00909\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_add\_ps(\_mm256\_mul\_ps(vp12,\ wz),\ vp13));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00910}00910\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ cz\ =\ \_mm256\_add\_ps(\_mm256\_add\_ps(\_mm256\_mul\_ps(vp20,\ wx),\ \_mm256\_mul\_ps(vp21,\ wy)),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00911}00911\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_add\_ps(\_mm256\_mul\_ps(vp22,\ wz),\ vp23));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00912}00912\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ cw\ =\ \_mm256\_add\_ps(\_mm256\_add\_ps(\_mm256\_mul\_ps(vp30,\ wx),\ \_mm256\_mul\_ps(vp31,\ wy)),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00913}00913\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_add\_ps(\_mm256\_mul\_ps(vp32,\ wz),\ vp33));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00914}00914\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00915}00915\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ cwのeps保護（符号付き）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00916}00916\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ maskNeg\ =\ \_mm256\_cmp\_ps(cw,\ vZero,\ \_CMP\_LT\_OQ);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00917}00917\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aaa6ead6c3194e314cdd7156616f70892}{sign}}\ =\ \_mm256\_blendv\_ps(\_mm256\_set1\_ps(1.0f),\ \_mm256\_set1\_ps(-\/1.0f),\ maskNeg);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00918}00918\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ absCw\ =\ abs256(cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00919}00919\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ maskSmall\ =\ \_mm256\_cmp\_ps(absCw,\ vEps,\ \_CMP\_LT\_OQ);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00920}00920\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cw\ =\ \_mm256\_blendv\_ps(cw,\ \_mm256\_mul\_ps(\mbox{\hyperlink{namespace_s_f_w_1_1_math_aaa6ead6c3194e314cdd7156616f70892}{sign}},\ vEps),\ maskSmall);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00921}00921\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00922}00922\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ invCW\ =\ \_mm256\_div\_ps(\_mm256\_set1\_ps(1.0f),\ cw);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00923}00923\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ invCW2\ =\ \_mm256\_mul\_ps(invCW,\ invCW);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00924}00924\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00925}00925\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ ndcX\ =\ \_mm256\_mul\_ps(cx,\ invCW);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00926}00926\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ ndcY\ =\ \_mm256\_mul\_ps(cy,\ invCW);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00927}00927\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ ndcZ\ =\ \_mm256\_mul\_ps(cz,\ invCW);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00928}00928\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00929}00929\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ debug\ outputs（必要なら）-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00930}00930\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outNdcX)\ \_mm256\_storeu\_ps(outNdcX\ +\ i,\ ndcX);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00931}00931\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outNdcY)\ \_mm256\_storeu\_ps(outNdcY\ +\ i,\ ndcY);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00932}00932\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outNdcZ)\ \_mm256\_storeu\_ps(outNdcZ\ +\ i,\ ndcZ);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00933}00933\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00934}00934\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ rW\ =\ \_mm256\_loadu\_ps(radiusWorld\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00935}00935\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00936}00936\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ r\_ndc\ /\ r\_ndc\_z（あなたの式の形）}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00937}00937\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ dxR\ =\ \_mm256\_sub\_ps(\_mm256\_mul\_ps(vClipR\_x,\ cw),\ \_mm256\_mul\_ps(cx,\ vWR));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00938}00938\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ dyU\ =\ \_mm256\_sub\_ps(\_mm256\_mul\_ps(vClipU\_y,\ cw),\ \_mm256\_mul\_ps(cy,\ vWU));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00939}00939\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ dzF\ =\ \_mm256\_sub\_ps(\_mm256\_mul\_ps(vClipF\_z,\ cw),\ \_mm256\_mul\_ps(cz,\ vWF));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00940}00940\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00941}00941\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ r\_ndc\_x\ =\ abs256(\_mm256\_mul\_ps(\_mm256\_mul\_ps(rW,\ dxR),\ invCW2));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00942}00942\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ r\_ndc\_y\ =\ abs256(\_mm256\_mul\_ps(\_mm256\_mul\_ps(rW,\ dyU),\ invCW2));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00943}00943\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ r\_ndc\ =\ \_mm256\_max\_ps(r\_ndc\_x,\ r\_ndc\_y);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00944}00944\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00945}00945\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ r\_ndc\_z\ =\ abs256(\_mm256\_mul\_ps(\_mm256\_mul\_ps(rW,\ dzF),\ invCW2));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00946}00946\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00947}00947\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ xmin\ =\ \_mm256\_sub\_ps(ndcX,\ r\_ndc);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00948}00948\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ xmax\ =\ \_mm256\_add\_ps(ndcX,\ r\_ndc);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00949}00949\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ ymin\ =\ \_mm256\_sub\_ps(ndcY,\ r\_ndc);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00950}00950\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ ymax\ =\ \_mm256\_add\_ps(ndcY,\ r\_ndc);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00951}00951\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00952}00952\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ zmin\ =\ \_mm256\_sub\_ps(ndcZ,\ r\_ndc\_z);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00953}00953\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ zmax\ =\ \_mm256\_add\_ps(ndcZ,\ r\_ndc\_z);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00954}00954\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00955}00955\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outDepthMin)\ \_mm256\_storeu\_ps(outDepthMin\ +\ i,\ zmin);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00956}00956\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outDepthMax)\ \_mm256\_storeu\_ps(outDepthMax\ +\ i,\ zmax);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00957}00957\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00958}00958\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ overlap\ 判定\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00959}00959\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ x\_ok\ =\ \_mm256\_and\_ps(\_mm256\_cmp\_ps(xmax,\ vNegOne,\ \_CMP\_GE\_OQ),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00960}00960\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_cmp\_ps(xmin,\ vPosOne,\ \_CMP\_LE\_OQ));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00961}00961\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ y\_ok\ =\ \_mm256\_and\_ps(\_mm256\_cmp\_ps(ymax,\ vNegOne,\ \_CMP\_GE\_OQ),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00962}00962\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_cmp\_ps(ymin,\ vPosOne,\ \_CMP\_LE\_OQ));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00963}00963\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ z\_ok\ =\ \_mm256\_and\_ps(\_mm256\_cmp\_ps(zmax,\ vMinZ,\ \_CMP\_GE\_OQ),}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00964}00964\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_cmp\_ps(zmin,\ vMaxZ,\ \_CMP\_LE\_OQ));}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00965}00965\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00966}00966\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ ok\ =\ \_mm256\_and\_ps(\_mm256\_and\_ps(x\_ok,\ y\_ok),\ z\_ok);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00967}00967\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00968}00968\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ mask\ =\ \_mm256\_movemask\_ps(ok);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00969}00969\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (laneCount\ <\ 8)\ mask\ \&=\ ((1\ <<\ (int)laneCount)\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00970}00970\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (std::uint32\_t)mask;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00971}00971\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00972}00972\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (void)WorldSoA;\ (void)VP;\ (void)pc;\ (void)centerLocal;\ (void)radiusWorld;\ (void)i;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00973}00973\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (void)outNdcX;\ (void)outNdcY;\ (void)outNdcZ;\ (void)outDepthMin;\ (void)outDepthMax;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00974}00974\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00975}00975\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00976}00976\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00977}00977\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00978}00978\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00979}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a1f43841e3f56b6fbccfa34ea9f5a1517}{00979}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_s_f_w_1_1_math_a1f43841e3f56b6fbccfa34ea9f5a1517}{BoundingSpheref}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_bounding_sphere}{BoundingSphere<float,\ Vec3f>}};}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00980}00980\ \ \ \ \ \}\ \textcolor{comment}{//\ namespace\ Math}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00981}00981\ \}\ \textcolor{comment}{//\ namespace\ SectorFW}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00982}00982\ }
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00983}00983\ \textcolor{comment}{/*\ 使い方（例）:}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00984}00984\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00985}00985\ \textcolor{comment}{//\ 1)\ 近似（高速）:\ Ritter}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00986}00986\ \textcolor{comment}{auto\ sphereR\ =\ BoundingSphere<float,\ Vec3f>::FromPointsRitter(points.data(),\ points.size());}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00987}00987\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00988}00988\ \textcolor{comment}{//\ 2)\ 厳密最小球:\ Welzl}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00989}00989\ \textcolor{comment}{auto\ sphereW\ =\ BoundingSphere<float,\ Vec3f>::FromPointsWelzl(std::vector<Vec3f>(points.begin(),\ points.end()));}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00990}00990\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00991}00991\ \textcolor{comment}{//\ 3)\ AABB\ から}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00992}00992\ \textcolor{comment}{auto\ sphereAABB\ =\ BoundingSphere<float,\ Vec3f>::FromAABB(aabb.lb,\ aabb.ub);}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00993}00993\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00994}00994\ \textcolor{comment}{//\ 4)\ 2球マージ}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00995}00995\ \textcolor{comment}{auto\ merged\ =\ BoundingSphere<float,\ Vec3f>::Merge(sphereR,\ sphereW);}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00996}00996\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00997}00997\ \textcolor{comment}{//\ 5)\ 逐次拡張}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00998}00998\ \textcolor{comment}{BoundingSphere<float,\ Vec3f>\ s\{center0,\ r0\};}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l00999}00999\ \textcolor{comment}{for\ (auto\&\ p\ :\ stream)\ s.expandToFit(p);}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l01000}01000\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{_bounding_sphere_8hpp_source_l01001}01001\ \textcolor{comment}{*/}}
+
+\end{DoxyCode}

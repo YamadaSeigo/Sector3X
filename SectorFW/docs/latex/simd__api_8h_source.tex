@@ -1,0 +1,27 @@
+\doxysection{simd\+\_\+api.\+h}
+\hypertarget{simd__api_8h_source}{}\label{simd__api_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/SIMD/simd\_api.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/SIMD/simd\_api.h}}
+\mbox{\hyperlink{simd__api_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00007}00007\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <cstddef>}}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00011}00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00012}00012\ \{}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00013}\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d}{00013}}\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d}{SIMD}}}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00014}00014\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00018}\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a76c71a43b65418c603802d18bc8d22a4}{00018}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a76c71a43b65418c603802d18bc8d22a4}{UpdateScalarLerpFn}}\ =\ void(*)(\textcolor{keywordtype}{float}*\ dst,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ a,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ b,}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t*\ mask01,\ \textcolor{keywordtype}{size\_t}\ n,\ \textcolor{keywordtype}{float}\ alpha);}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00023}\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a003f6f5cc83500b45b60efb1ec2ceac4}{00023}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a003f6f5cc83500b45b60efb1ec2ceac4}{UpdateQuatNlerpShortestFn}}\ =\ void(*)(\textcolor{keywordtype}{float}*\ qx,\ \textcolor{keywordtype}{float}*\ qy,\ \textcolor{keywordtype}{float}*\ qz,\ \textcolor{keywordtype}{float}*\ qw,}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ ax,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ ay,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ az,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ aw,}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ bx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ by,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ bz,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ bw,}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t*\ mask01,\ \textcolor{keywordtype}{size\_t}\ n,\ \textcolor{keywordtype}{float}\ alpha);}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{extern}\ \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a76c71a43b65418c603802d18bc8d22a4}{UpdateScalarLerpFn}}\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a93cc363c4ebcd62c33c7c4f87d3ecf7b}{gUpdateScalarLerp}};}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{extern}\ \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a003f6f5cc83500b45b60efb1ec2ceac4}{UpdateQuatNlerpShortestFn}}\ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a7ddf8665238d2b3768cefa4da97cb25d}{gUpdateQuatNlerpShortest}};}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00039}\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_ab531b011a04e0679fe103fe6c0ac8307}{00039}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_ab531b011a04e0679fe103fe6c0ac8307}{SimdInit}}();}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00040}00040\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{simd__api_8h_source_l00041}00041\ \}}
+
+\end{DoxyCode}

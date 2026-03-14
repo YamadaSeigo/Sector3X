@@ -1,0 +1,283 @@
+\doxysection{SFW\+::Graphics\+::DX11\+::Light\+Shadow\+Resource\+Service クラス}
+\hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service}{}\label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+
+
+{\ttfamily \#include $<$DX11\+Light\+Shadow\+Resource\+Service.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_adc6825624438c28e70d5a01652f3a1de}{Light\+Shadow\+Resource\+Service}} ()=default
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_af1d0a650e6c5a2661e86d24b470b3298}{Initialize}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}device, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shadow_map_config}{Shadow\+Map\+Config}} \&cfg)
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a24da12c18eea8901a1433b8ae302719f}{Resize}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}device, std\+::uint32\+\_\+t width, std\+::uint32\+\_\+t height)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a0f8084aafefefa4e5ab55f210165997d}{Clear\+Depth\+Buffer}} (ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}context, float clear\+Value=1.\+0f)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_ad77cc999af1886629d4cf9da4025f6a4}{Bind\+Shadow\+PSShadow\+Map}} (ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}context, UINT shadow\+Map\+SRVSlot=0)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_aabd3426fa438f1715805f3479b880a0d}{Bind\+Shadow\+Resources}} (ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}context, UINT shadow\+Data\+CBSlot=0) const
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a1cd1c0384779d3b9e2d2a9f0131d7db3}{Bind\+Shadow\+Rasterizer}} (ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}context) const
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_aeacfbd85eaf48f8f2ae25584c4f607cc}{Update\+Shadow\+Cascade\+CB}} (ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}context, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_c_b_shadow_cascades_data}{CBShadow\+Cascades\+Data}} \&data)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_ad6ab1b57aa7f15934f043b54ce639ac2}{Update\+Shadow\+Cascade\+CB}} (ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}context, const \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service}{Light\+Shadow\+Service}} \&light\+Shadow\+Service)
+\item 
+Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a302bca58b501a8fbd3df6feb5287ff58}{Get\+Shadow\+Cascades\+Buffer}} () const noexcept
+\item 
+Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a7643f00d48e99464d32ef58ccc051327}{Get\+Shadow\+Map\+SRV}} () const noexcept
+\item 
+Com\+Ptr$<$ ID3\+D11\+Sampler\+State $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_af586d87761a432a5d3651186e65e2aec}{Get\+Shadow\+Sampler}} () const noexcept
+\item 
+Com\+Ptr$<$ ID3\+D11\+Rasterizer\+State $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a7e9b965f845341b6b74b93b0b135be32}{Get\+Shadow\+Rasterizer\+State}} () const noexcept
+\item 
+Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a44018e09cbaec5208b796b7356917b5a}{Get\+Shadow\+Cascades\+CB}} () const noexcept
+\item 
+std\+::uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a40252eef5e95f9ae015fe70808dcdba7}{Get\+Cascade\+Count}} () const noexcept
+\item 
+std\+::array$<$ Com\+Ptr$<$ ID3\+D11\+Depth\+Stencil\+View $>$, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{k\+Max\+Shadow\+Cascades}} $>$ \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a76f6742d0ba8a04abbccacf69b079f4d}{Get\+Cascade\+DSV}} () noexcept
+\item 
+Com\+Ptr$<$ ID3\+D11\+Depth\+Stencil\+View $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_ab036d8402c143eb44d9ebf1f3b8d683d}{Get\+Cascade\+DSV}} (std\+::uint32\+\_\+t i) const noexcept
+\item 
+const D3\+D11\+\_\+\+VIEWPORT \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a427f77c735893561ac46f6d201d50be2}{Get\+Cascade\+Viewport}} () const noexcept
+\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shadow_map_config}{Shadow\+Map\+Config}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a764548fb7545133f19924fbcbc1cd381}{Get\+Config}} () const noexcept
+\item 
+Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a65fea84852092b681dbff06c770cfccc}{Get\+Light\+Data\+CB}} () const noexcept
+\item 
+Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_ad3e27422a8410200c481ba7300648194}{Get\+Point\+Light\+Buffer}} () const noexcept
+\item 
+Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a733e8fa64617ec3be87d06afdb70cab0}{Get\+Point\+Light\+SRV}} () const noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00042}{42}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_adc6825624438c28e70d5a01652f3a1de}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!LightShadowResourceService@{LightShadowResourceService}}
+\index{LightShadowResourceService@{LightShadowResourceService}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{LightShadowResourceService()}{LightShadowResourceService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_adc6825624438c28e70d5a01652f3a1de} 
+SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Light\+Shadow\+Resource\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_ad77cc999af1886629d4cf9da4025f6a4}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!BindShadowPSShadowMap@{BindShadowPSShadowMap}}
+\index{BindShadowPSShadowMap@{BindShadowPSShadowMap}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{BindShadowPSShadowMap()}{BindShadowPSShadowMap()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_ad77cc999af1886629d4cf9da4025f6a4} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Bind\+Shadow\+PSShadow\+Map (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{context}{, }\item[{UINT}]{shadow\+Map\+SRVSlot}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00064}{64}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a1cd1c0384779d3b9e2d2a9f0131d7db3}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!BindShadowRasterizer@{BindShadowRasterizer}}
+\index{BindShadowRasterizer@{BindShadowRasterizer}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{BindShadowRasterizer()}{BindShadowRasterizer()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a1cd1c0384779d3b9e2d2a9f0131d7db3} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Bind\+Shadow\+Rasterizer (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{context}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00078}{78}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_aabd3426fa438f1715805f3479b880a0d}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!BindShadowResources@{BindShadowResources}}
+\index{BindShadowResources@{BindShadowResources}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{BindShadowResources()}{BindShadowResources()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_aabd3426fa438f1715805f3479b880a0d} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Bind\+Shadow\+Resources (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{context}{, }\item[{UINT}]{shadow\+Data\+CBSlot}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00071}{71}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a0f8084aafefefa4e5ab55f210165997d}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!ClearDepthBuffer@{ClearDepthBuffer}}
+\index{ClearDepthBuffer@{ClearDepthBuffer}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{ClearDepthBuffer()}{ClearDepthBuffer()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a0f8084aafefefa4e5ab55f210165997d} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Clear\+Depth\+Buffer (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{context}{, }\item[{float}]{clear\+Value}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00052}{52}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a40252eef5e95f9ae015fe70808dcdba7}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!GetCascadeCount@{GetCascadeCount}}
+\index{GetCascadeCount@{GetCascadeCount}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{GetCascadeCount()}{GetCascadeCount()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a40252eef5e95f9ae015fe70808dcdba7} 
+std\+::uint32\+\_\+t SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Get\+Cascade\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00140}{140}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a76f6742d0ba8a04abbccacf69b079f4d}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!GetCascadeDSV@{GetCascadeDSV}}
+\index{GetCascadeDSV@{GetCascadeDSV}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{GetCascadeDSV()}{GetCascadeDSV()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a76f6742d0ba8a04abbccacf69b079f4d} 
+std\+::array$<$ Com\+Ptr$<$ ID3\+D11\+Depth\+Stencil\+View $>$, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{k\+Max\+Shadow\+Cascades}} $>$ \& SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Get\+Cascade\+DSV (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00143}{143}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_ab036d8402c143eb44d9ebf1f3b8d683d}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!GetCascadeDSV@{GetCascadeDSV}}
+\index{GetCascadeDSV@{GetCascadeDSV}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{GetCascadeDSV()}{GetCascadeDSV()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_ab036d8402c143eb44d9ebf1f3b8d683d} 
+Com\+Ptr$<$ ID3\+D11\+Depth\+Stencil\+View $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Get\+Cascade\+DSV (\begin{DoxyParamCaption}\item[{std\+::uint32\+\_\+t}]{i}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00148}{148}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a427f77c735893561ac46f6d201d50be2}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!GetCascadeViewport@{GetCascadeViewport}}
+\index{GetCascadeViewport@{GetCascadeViewport}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{GetCascadeViewport()}{GetCascadeViewport()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a427f77c735893561ac46f6d201d50be2} 
+const D3\+D11\+\_\+\+VIEWPORT \& SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Get\+Cascade\+Viewport (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00153}{153}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a764548fb7545133f19924fbcbc1cd381}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!GetConfig@{GetConfig}}
+\index{GetConfig@{GetConfig}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{GetConfig()}{GetConfig()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a764548fb7545133f19924fbcbc1cd381} 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shadow_map_config}{Shadow\+Map\+Config}} \& SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Get\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00158}{158}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a65fea84852092b681dbff06c770cfccc}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!GetLightDataCB@{GetLightDataCB}}
+\index{GetLightDataCB@{GetLightDataCB}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{GetLightDataCB()}{GetLightDataCB()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a65fea84852092b681dbff06c770cfccc} 
+Com\+Ptr$<$ ID3\+D11\+Buffer $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Get\+Light\+Data\+CB (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00160}{160}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_ad3e27422a8410200c481ba7300648194}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!GetPointLightBuffer@{GetPointLightBuffer}}
+\index{GetPointLightBuffer@{GetPointLightBuffer}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{GetPointLightBuffer()}{GetPointLightBuffer()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_ad3e27422a8410200c481ba7300648194} 
+Com\+Ptr$<$ ID3\+D11\+Buffer $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Get\+Point\+Light\+Buffer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00165}{165}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a733e8fa64617ec3be87d06afdb70cab0}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!GetPointLightSRV@{GetPointLightSRV}}
+\index{GetPointLightSRV@{GetPointLightSRV}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{GetPointLightSRV()}{GetPointLightSRV()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a733e8fa64617ec3be87d06afdb70cab0} 
+Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Get\+Point\+Light\+SRV (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00170}{170}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a302bca58b501a8fbd3df6feb5287ff58}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!GetShadowCascadesBuffer@{GetShadowCascadesBuffer}}
+\index{GetShadowCascadesBuffer@{GetShadowCascadesBuffer}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{GetShadowCascadesBuffer()}{GetShadowCascadesBuffer()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a302bca58b501a8fbd3df6feb5287ff58} 
+Com\+Ptr$<$ ID3\+D11\+Buffer $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Get\+Shadow\+Cascades\+Buffer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00112}{112}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a44018e09cbaec5208b796b7356917b5a}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!GetShadowCascadesCB@{GetShadowCascadesCB}}
+\index{GetShadowCascadesCB@{GetShadowCascadesCB}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{GetShadowCascadesCB()}{GetShadowCascadesCB()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a44018e09cbaec5208b796b7356917b5a} 
+Com\+Ptr$<$ ID3\+D11\+Buffer $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Get\+Shadow\+Cascades\+CB (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00135}{135}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a7643f00d48e99464d32ef58ccc051327}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!GetShadowMapSRV@{GetShadowMapSRV}}
+\index{GetShadowMapSRV@{GetShadowMapSRV}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{GetShadowMapSRV()}{GetShadowMapSRV()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a7643f00d48e99464d32ef58ccc051327} 
+Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Get\+Shadow\+Map\+SRV (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00119}{119}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a7e9b965f845341b6b74b93b0b135be32}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!GetShadowRasterizerState@{GetShadowRasterizerState}}
+\index{GetShadowRasterizerState@{GetShadowRasterizerState}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{GetShadowRasterizerState()}{GetShadowRasterizerState()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a7e9b965f845341b6b74b93b0b135be32} 
+Com\+Ptr$<$ ID3\+D11\+Rasterizer\+State $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Get\+Shadow\+Rasterizer\+State (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00129}{129}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_af586d87761a432a5d3651186e65e2aec}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!GetShadowSampler@{GetShadowSampler}}
+\index{GetShadowSampler@{GetShadowSampler}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{GetShadowSampler()}{GetShadowSampler()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_af586d87761a432a5d3651186e65e2aec} 
+Com\+Ptr$<$ ID3\+D11\+Sampler\+State $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Get\+Shadow\+Sampler (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00124}{124}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_af1d0a650e6c5a2661e86d24b470b3298}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_af1d0a650e6c5a2661e86d24b470b3298} 
+bool SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Initialize (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device \texorpdfstring{$\ast$}{*}}]{device}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shadow_map_config}{Shadow\+Map\+Config}} \&}]{cfg}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a24da12c18eea8901a1433b8ae302719f}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!Resize@{Resize}}
+\index{Resize@{Resize}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{Resize()}{Resize()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_a24da12c18eea8901a1433b8ae302719f} 
+bool SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Resize (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device \texorpdfstring{$\ast$}{*}}]{device}{, }\item[{std\+::uint32\+\_\+t}]{width}{, }\item[{std\+::uint32\+\_\+t}]{height}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_aeacfbd85eaf48f8f2ae25584c4f607cc}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!UpdateShadowCascadeCB@{UpdateShadowCascadeCB}}
+\index{UpdateShadowCascadeCB@{UpdateShadowCascadeCB}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{UpdateShadowCascadeCB()}{UpdateShadowCascadeCB()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_aeacfbd85eaf48f8f2ae25584c4f607cc} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Update\+Shadow\+Cascade\+CB (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{context}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_c_b_shadow_cascades_data}{CBShadow\+Cascades\+Data}} \&}]{data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00083}{83}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_ad6ab1b57aa7f15934f043b54ce639ac2}\index{SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}!UpdateShadowCascadeCB@{UpdateShadowCascadeCB}}
+\index{UpdateShadowCascadeCB@{UpdateShadowCascadeCB}!SFW::Graphics::DX11::LightShadowResourceService@{SFW::Graphics::DX11::LightShadowResourceService}}
+\doxysubsubsection{\texorpdfstring{UpdateShadowCascadeCB()}{UpdateShadowCascadeCB()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service_ad6ab1b57aa7f15934f043b54ce639ac2} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service\+::\+Update\+Shadow\+Cascade\+CB (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{context}{, }\item[{const \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service}{Light\+Shadow\+Service}} \&}]{light\+Shadow\+Service}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source}{DX11\+Light\+Shadow\+Resource\+Service.\+h}} の \mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h_source_l00095}{95}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\mbox{\hyperlink{_d_x11_light_shadow_resource_service_8h}{DX11\+Light\+Shadow\+Resource\+Service.\+h}}\end{DoxyCompactItemize}

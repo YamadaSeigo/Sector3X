@@ -1,0 +1,164 @@
+\doxysection{SFW\+::Graphics\+::DX11\+::Mesh\+Data 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data}{}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data}\index{SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}}
+
+
+DirectX 11のメッシュデータを定義する構造体  
+
+
+
+
+{\ttfamily \#include $<$DX11\+Mesh\+Manager.\+h$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_1_1_attrib_binding}{Attrib\+Binding}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+std\+::array$<$ Com\+Ptr$<$ ID3\+D11\+Buffer $>$, 8 $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_ad978d25c4a9f1939cc64b991ccaabc75}{vbs}} \{\}
+\item 
+std\+::array$<$ UINT, 8 $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a1fdf99786b184e5825be8132da6c46ac}{strides}} \{\}
+\item 
+std\+::array$<$ UINT, 8 $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a07b5a4be80cd96ccef6c8b816c67e72c}{offsets}} \{\}
+\item 
+std\+::bitset$<$ 8 $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a9a2c8deba483d034efca64b4f87aaa3d}{used\+Slots}} \{\}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a8131b6c149201b4a5482e39b79a93e32}{stride}} = 0
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_1_1_attrib_binding}{Attrib\+Binding}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_aafcb16015e2299d91fc6ff708845a3b7}{attrib\+Map}}
+\item 
+Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a3c61959c3e92317d6a7ae8ec7fbed650}{ib}} = nullptr
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a4f99689df944719adb8a8fd4e9e6ee73}{index\+Count}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_ab860ad155fe8bd1514bb955227ef2774}{start\+Index}} = 0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{フレンド}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a23fe7b0dce869815b7f26b1a09612329}{Mesh\+Manager}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+DirectX 11のメッシュデータを定義する構造体 
+
+ \mbox{\hyperlink{_d_x11_mesh_manager_8h_source}{DX11\+Mesh\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_mesh_manager_8h_source_l00045}{45}} 行目に定義があります。
+
+
+
+\label{doc-related-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_doc-related-members}
+\doxysubsection{フレンドと関連関数の詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a23fe7b0dce869815b7f26b1a09612329}\index{SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}!MeshManager@{MeshManager}}
+\index{MeshManager@{MeshManager}!SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}}
+\doxysubsubsection{\texorpdfstring{MeshManager}{MeshManager}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a23fe7b0dce869815b7f26b1a09612329} 
+friend class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager}{Mesh\+Manager}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_mesh_manager_8h_source}{DX11\+Mesh\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_mesh_manager_8h_source_l00068}{68}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_aafcb16015e2299d91fc6ff708845a3b7}\index{SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}!attribMap@{attribMap}}
+\index{attribMap@{attribMap}!SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}}
+\doxysubsubsection{\texorpdfstring{attribMap}{attribMap}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_aafcb16015e2299d91fc6ff708845a3b7} 
+std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_1_1_attrib_binding}{Attrib\+Binding}}$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Mesh\+Data\+::attrib\+Map}
+
+
+
+ \mbox{\hyperlink{_d_x11_mesh_manager_8h_source}{DX11\+Mesh\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_mesh_manager_8h_source_l00059}{59}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a3c61959c3e92317d6a7ae8ec7fbed650}\index{SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}!ib@{ib}}
+\index{ib@{ib}!SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}}
+\doxysubsubsection{\texorpdfstring{ib}{ib}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a3c61959c3e92317d6a7ae8ec7fbed650} 
+Com\+Ptr$<$ID3\+D11\+Buffer$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Mesh\+Data\+::ib = nullptr}
+
+
+
+ \mbox{\hyperlink{_d_x11_mesh_manager_8h_source}{DX11\+Mesh\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_mesh_manager_8h_source_l00061}{61}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a4f99689df944719adb8a8fd4e9e6ee73}\index{SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}!indexCount@{indexCount}}
+\index{indexCount@{indexCount}!SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}}
+\doxysubsubsection{\texorpdfstring{indexCount}{indexCount}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a4f99689df944719adb8a8fd4e9e6ee73} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+DX11\+::\+Mesh\+Data\+::index\+Count = 0}
+
+
+
+ \mbox{\hyperlink{_d_x11_mesh_manager_8h_source}{DX11\+Mesh\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_mesh_manager_8h_source_l00062}{62}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a07b5a4be80cd96ccef6c8b816c67e72c}\index{SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}!offsets@{offsets}}
+\index{offsets@{offsets}!SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}}
+\doxysubsubsection{\texorpdfstring{offsets}{offsets}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a07b5a4be80cd96ccef6c8b816c67e72c} 
+std\+::array$<$UINT, 8$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Mesh\+Data\+::offsets \{\}}
+
+
+
+ \mbox{\hyperlink{_d_x11_mesh_manager_8h_source}{DX11\+Mesh\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_mesh_manager_8h_source_l00049}{49}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_ab860ad155fe8bd1514bb955227ef2774}\index{SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}!startIndex@{startIndex}}
+\index{startIndex@{startIndex}!SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}}
+\doxysubsubsection{\texorpdfstring{startIndex}{startIndex}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_ab860ad155fe8bd1514bb955227ef2774} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+DX11\+::\+Mesh\+Data\+::start\+Index = 0}
+
+
+
+ \mbox{\hyperlink{_d_x11_mesh_manager_8h_source}{DX11\+Mesh\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_mesh_manager_8h_source_l00063}{63}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a8131b6c149201b4a5482e39b79a93e32}\index{SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}!stride@{stride}}
+\index{stride@{stride}!SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}}
+\doxysubsubsection{\texorpdfstring{stride}{stride}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a8131b6c149201b4a5482e39b79a93e32} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+DX11\+::\+Mesh\+Data\+::stride = 0}
+
+
+
+ \mbox{\hyperlink{_d_x11_mesh_manager_8h_source}{DX11\+Mesh\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_mesh_manager_8h_source_l00051}{51}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a1fdf99786b184e5825be8132da6c46ac}\index{SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}!strides@{strides}}
+\index{strides@{strides}!SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}}
+\doxysubsubsection{\texorpdfstring{strides}{strides}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a1fdf99786b184e5825be8132da6c46ac} 
+std\+::array$<$UINT, 8$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Mesh\+Data\+::strides \{\}}
+
+
+
+ \mbox{\hyperlink{_d_x11_mesh_manager_8h_source}{DX11\+Mesh\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_mesh_manager_8h_source_l00048}{48}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a9a2c8deba483d034efca64b4f87aaa3d}\index{SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}!usedSlots@{usedSlots}}
+\index{usedSlots@{usedSlots}!SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}}
+\doxysubsubsection{\texorpdfstring{usedSlots}{usedSlots}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_a9a2c8deba483d034efca64b4f87aaa3d} 
+std\+::bitset$<$8$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Mesh\+Data\+::used\+Slots \{\}}
+
+
+
+ \mbox{\hyperlink{_d_x11_mesh_manager_8h_source}{DX11\+Mesh\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_mesh_manager_8h_source_l00050}{50}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_ad978d25c4a9f1939cc64b991ccaabc75}\index{SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}!vbs@{vbs}}
+\index{vbs@{vbs}!SFW::Graphics::DX11::MeshData@{SFW::Graphics::DX11::MeshData}}
+\doxysubsubsection{\texorpdfstring{vbs}{vbs}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_ad978d25c4a9f1939cc64b991ccaabc75} 
+std\+::array$<$Com\+Ptr$<$ID3\+D11\+Buffer$>$, 8$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Mesh\+Data\+::vbs \{\}}
+
+
+
+ \mbox{\hyperlink{_d_x11_mesh_manager_8h_source}{DX11\+Mesh\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_mesh_manager_8h_source_l00047}{47}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\mbox{\hyperlink{_d_x11_mesh_manager_8h}{DX11\+Mesh\+Manager.\+h}}\end{DoxyCompactItemize}

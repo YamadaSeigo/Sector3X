@@ -1,0 +1,25 @@
+\doxysection{SFW\+::Debug\+::Im\+Gui\+Backend\+Type Concept Reference}
+\hypertarget{concept_s_f_w_1_1_debug_1_1_im_gui_backend_type}{}\label{concept_s_f_w_1_1_debug_1_1_im_gui_backend_type}\index{SFW::Debug::ImGuiBackendType@{SFW::Debug::ImGuiBackendType}}
+
+
+IIm\+Gui\+Backendを継承しているかをチェックするコンセプト  
+
+
+
+
+{\ttfamily \#include $<$Im\+Gui\+Backend.\+h$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_debug_1_1_im_gui_backend_type}{SFW::Debug::ImGuiBackendType}}\ =\ \ std::is\_base\_of\_v<IImGuiBackend,\ T>}
+
+\end{DoxyCode}
+
+
+\doxysubsection{詳解}
+IIm\+Gui\+Backendを継承しているかをチェックするコンセプト 
+
+ \mbox{\hyperlink{_im_gui_backend_8h_source}{Im\+Gui\+Backend.\+h}} の \mbox{\hyperlink{_im_gui_backend_8h_source_l00043}{43}} 行目に定義があります。
+

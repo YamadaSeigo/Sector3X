@@ -1,0 +1,272 @@
+\doxysection{SFW\+::Graphics\+::Render\+Graph\texorpdfstring{$<$}{<} Backend, RTV, DSV, SRV, Buffer, View\+Handle \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph}{}\label{class_s_f_w_1_1_graphics_1_1_render_graph}\index{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+
+
+Render\+Passごとに管理して描画を行うクラス  
+
+
+
+
+{\ttfamily \#include $<$Render\+Graph.\+hpp$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state}{Group\+State}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group}{Pass\+Group}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node}{Pass\+Node}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range}{Pass\+View\+Range}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71}{Pass\+Type}} = \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}}$<$RTV, DSV, SRV, Buffer, View\+Handle$<$std\+::remove\+\_\+pointer\+\_\+t$<$RTV$>$$>$, View\+Handle$<$std\+::remove\+\_\+pointer\+\_\+t$<$DSV$>$$>$$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_aa75f37d513a78ddaae73aa803a459ca9}{Render\+Graph}} (Backend \&backend, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aad14d2e80e921b0442903b65576ce417}{MOC}} \texorpdfstring{$\ast$}{*}moc)
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a7cc982da686fd4351bbb99f23b712a02}{Add\+Pass}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc}{Render\+Pass\+Desc}}$<$ RTV, DSV, View\+Handle $>$ \&desc)
+\begin{DoxyCompactList}\small\item\em Render\+Passの追加 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group}{Pass\+Group}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_ac3e2f1ccdb0f8ced9c5030006581c36c}{Add\+Pass\+Group}} (const std\+::string \&name, uint32\+\_\+t max\+Instances\+Per\+Frame=MAX\+\_\+\+INSTANCES\+\_\+\+PER\+\_\+\+FRAME)
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71}{Pass\+Type}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_af0c5eb2e8ea1c1d6daa8062a3b3a254f}{Add\+Pass\+To\+Group}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group}{Pass\+Group}} \&group, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc}{Render\+Pass\+Desc}}$<$ RTV, DSV, View\+Handle $>$ \&desc, uint16\+\_\+t view\+Bit)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a0c56827b2149d7a62b94fadb2073446d}{Set\+Execution\+Order}} (const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node}{Pass\+Node}} $>$ \&order)
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71}{Pass\+Type}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a135085aff88dbf83b333a5e741e0fc73}{Get\+Pass}} (const std\+::string \&name)
+\begin{DoxyCompactList}\small\item\em パスの取得 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a45e05bf02408f81c03250d1fc0d7a8d2}{Bind\+Pass\+Global\+Resources}} (\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71}{Pass\+Type}} \texorpdfstring{$\ast$}{*}pass)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_ac5b415af330779d96eb574721a1e58d3}{Execute}} ()
+\begin{DoxyCompactList}\small\item\em 描画の実行 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service}{Render\+Service}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a8aacb6652a3489b24d565a91087de3df}{Get\+Render\+Service}} ()
+\begin{DoxyCompactList}\small\item\em レンダーサービスの取得 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Resource\+Type$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_a470b856264b8201db260826dd3e5aba2}{Register\+Resource\+Manager}} (Resource\+Type \texorpdfstring{$\ast$}{*}manager)
+\begin{DoxyCompactList}\small\item\em リソースマネージャーの登録 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_ad85976b25f485815738e875d35d2f9b7}{k\+Flights}} = RENDER\+\_\+\+BUFFER\+\_\+\+COUNT
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$\newline
+class SFW\+::\+Graphics\+::\+Render\+Graph$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$}
+Render\+Passごとに管理して描画を行うクラス 
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} の \mbox{\hyperlink{_render_graph_8hpp_source_l00038}{38}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71}\index{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}!PassType@{PassType}}
+\index{PassType@{PassType}!SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{PassType}{PassType}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71} 
+template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+using \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{SFW\+::\+Graphics\+::\+Render\+Graph}}$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Pass\+Type = \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}}$<$RTV, DSV, SRV, Buffer, View\+Handle$<$std\+::remove\+\_\+pointer\+\_\+t$<$RTV$>$$>$, View\+Handle$<$std\+::remove\+\_\+pointer\+\_\+t$<$DSV$>$$>$$>$}
+
+
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} の \mbox{\hyperlink{_render_graph_8hpp_source_l00040}{40}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_aa75f37d513a78ddaae73aa803a459ca9}\index{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}!RenderGraph@{RenderGraph}}
+\index{RenderGraph@{RenderGraph}!SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{RenderGraph()}{RenderGraph()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_graph_aa75f37d513a78ddaae73aa803a459ca9} 
+template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{SFW\+::\+Graphics\+::\+Render\+Graph}}$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Render\+Graph (\begin{DoxyParamCaption}\item[{Backend \&}]{backend}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aad14d2e80e921b0442903b65576ce417}{MOC}} \texorpdfstring{$\ast$}{*}}]{moc}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+コンストラクタ 
+
+Render\+Graphに\+Resouce\+Managerの追加を行う 
+\begin{DoxyParams}{引数}
+{\em backend} & レンダーバックエンド \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} の \mbox{\hyperlink{_render_graph_8hpp_source_l00070}{70}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_a7cc982da686fd4351bbb99f23b712a02}\index{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}!AddPass@{AddPass}}
+\index{AddPass@{AddPass}!SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{AddPass()}{AddPass()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_graph_a7cc982da686fd4351bbb99f23b712a02} 
+template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{SFW\+::\+Graphics\+::\+Render\+Graph}}$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Add\+Pass (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc}{Render\+Pass\+Desc}}$<$ RTV, DSV, View\+Handle $>$ \&}]{desc}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Render\+Passの追加 
+
+
+\begin{DoxyParams}{引数}
+{\em desc} & レンダーパスの詳細 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} の \mbox{\hyperlink{_render_graph_8hpp_source_l00081}{81}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_ac3e2f1ccdb0f8ced9c5030006581c36c}\index{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}!AddPassGroup@{AddPassGroup}}
+\index{AddPassGroup@{AddPassGroup}!SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{AddPassGroup()}{AddPassGroup()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_graph_ac3e2f1ccdb0f8ced9c5030006581c36c} 
+template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group}{Pass\+Group}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{SFW\+::\+Graphics\+::\+Render\+Graph}}$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Add\+Pass\+Group (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{uint32\+\_\+t}]{max\+Instances\+Per\+Frame}{ = {\ttfamily MAX\+\_\+INSTANCES\+\_\+PER\+\_\+FRAME}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} の \mbox{\hyperlink{_render_graph_8hpp_source_l00115}{115}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_af0c5eb2e8ea1c1d6daa8062a3b3a254f}\index{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}!AddPassToGroup@{AddPassToGroup}}
+\index{AddPassToGroup@{AddPassToGroup}!SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{AddPassToGroup()}{AddPassToGroup()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_graph_af0c5eb2e8ea1c1d6daa8062a3b3a254f} 
+template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71}{Pass\+Type}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{SFW\+::\+Graphics\+::\+Render\+Graph}}$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Add\+Pass\+To\+Group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group}{Pass\+Group}} \&}]{group}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc}{Render\+Pass\+Desc}}$<$ RTV, DSV, View\+Handle $>$ \&}]{desc}{, }\item[{uint16\+\_\+t}]{view\+Bit}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} の \mbox{\hyperlink{_render_graph_8hpp_source_l00133}{133}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_a45e05bf02408f81c03250d1fc0d7a8d2}\index{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}!BindPassGlobalResources@{BindPassGlobalResources}}
+\index{BindPassGlobalResources@{BindPassGlobalResources}!SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{BindPassGlobalResources()}{BindPassGlobalResources()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_graph_a45e05bf02408f81c03250d1fc0d7a8d2} 
+template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{SFW\+::\+Graphics\+::\+Render\+Graph}}$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Bind\+Pass\+Global\+Resources (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71}{Pass\+Type}} \texorpdfstring{$\ast$}{*}}]{pass}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} の \mbox{\hyperlink{_render_graph_8hpp_source_l00177}{177}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_ac5b415af330779d96eb574721a1e58d3}\index{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}!Execute@{Execute}}
+\index{Execute@{Execute}!SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{Execute()}{Execute()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_graph_ac5b415af330779d96eb574721a1e58d3} 
+template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{SFW\+::\+Graphics\+::\+Render\+Graph}}$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Execute (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+描画の実行 
+
+
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} の \mbox{\hyperlink{_render_graph_8hpp_source_l00199}{199}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_a135085aff88dbf83b333a5e741e0fc73}\index{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}!GetPass@{GetPass}}
+\index{GetPass@{GetPass}!SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{GetPass()}{GetPass()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_graph_a135085aff88dbf83b333a5e741e0fc73} 
+template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71}{Pass\+Type}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{SFW\+::\+Graphics\+::\+Render\+Graph}}$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Get\+Pass (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+パスの取得 
+
+
+\begin{DoxyParams}{引数}
+{\em name} & パスの名前 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_graphics_1_1_render_graph_acbe3114ec6824586da26a61b8a370b71}{Pass\+Type}\& パスの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} の \mbox{\hyperlink{_render_graph_8hpp_source_l00169}{169}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_a8aacb6652a3489b24d565a91087de3df}\index{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}!GetRenderService@{GetRenderService}}
+\index{GetRenderService@{GetRenderService}!SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{GetRenderService()}{GetRenderService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_graph_a8aacb6652a3489b24d565a91087de3df} 
+template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service}{Render\+Service}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{SFW\+::\+Graphics\+::\+Render\+Graph}}$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Get\+Render\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+レンダーサービスの取得 
+
+\begin{DoxyReturn}{戻り値}
+Render\+Service\texorpdfstring{$\ast$}{*} レンダーサービスのポインタ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} の \mbox{\hyperlink{_render_graph_8hpp_source_l00326}{326}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_a470b856264b8201db260826dd3e5aba2}\index{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}!RegisterResourceManager@{RegisterResourceManager}}
+\index{RegisterResourceManager@{RegisterResourceManager}!SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{RegisterResourceManager()}{RegisterResourceManager()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_graph_a470b856264b8201db260826dd3e5aba2} 
+template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+template$<$typename Resource\+Type$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{SFW\+::\+Graphics\+::\+Render\+Graph}}$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Register\+Resource\+Manager (\begin{DoxyParamCaption}\item[{Resource\+Type \texorpdfstring{$\ast$}{*}}]{manager}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+リソースマネージャーの登録 
+
+
+\begin{DoxyParams}{引数}
+{\em manager} & リソースマネージャーのポインタ \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} の \mbox{\hyperlink{_render_graph_8hpp_source_l00334}{334}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_a0c56827b2149d7a62b94fadb2073446d}\index{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}!SetExecutionOrder@{SetExecutionOrder}}
+\index{SetExecutionOrder@{SetExecutionOrder}!SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{SetExecutionOrder()}{SetExecutionOrder()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_graph_a0c56827b2149d7a62b94fadb2073446d} 
+template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{SFW\+::\+Graphics\+::\+Render\+Graph}}$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Set\+Execution\+Order (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node}{Pass\+Node}} $>$ \&}]{order}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} の \mbox{\hyperlink{_render_graph_8hpp_source_l00160}{160}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_graph_ad85976b25f485815738e875d35d2f9b7}\index{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}!kFlights@{kFlights}}
+\index{kFlights@{kFlights}!SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderGraph$<$ Backend, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{kFlights}{kFlights}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_graph_ad85976b25f485815738e875d35d2f9b7} 
+template$<$typename Backend, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{SFW\+::\+Graphics\+::\+Render\+Graph}}$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::k\+Flights = RENDER\+\_\+\+BUFFER\+\_\+\+COUNT\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} の \mbox{\hyperlink{_render_graph_8hpp_source_l00041}{41}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_render_graph_8hpp}{Render\+Graph.\+hpp}}\end{DoxyCompactItemize}

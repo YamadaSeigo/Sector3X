@@ -1,0 +1,98 @@
+\doxysection{SFW\+::Simple\+Thread\+Pool クラス}
+\hypertarget{class_s_f_w_1_1_simple_thread_pool}{}\label{class_s_f_w_1_1_simple_thread_pool}\index{SFW::SimpleThreadPool@{SFW::SimpleThreadPool}}
+
+
+{\ttfamily \#include $<$Thread\+Pool\+Executor.\+h$>$}
+
+SFW\+::Simple\+Thread\+Pool の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_f_w_1_1_simple_thread_pool}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_simple_thread_pool_a5c6e87c6fd0494ba24f34fda775f3006}{Simple\+Thread\+Pool}} (uint32\+\_\+t n=std\+::thread\+::hardware\+\_\+concurrency() -\/ 1)
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_simple_thread_pool_a6085f0428fc89a29d4da06742e38ae19}{\texorpdfstring{$\sim$}{\string~}\+Simple\+Thread\+Pool}} () override
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_simple_thread_pool_a38c8488a18b053d3dfbeb81bd228bd92}{Submit}} (std\+::function$<$ void()$>$ job) override
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_simple_thread_pool_a128f74a03a8e57e1e4949058ba3be265}{Concurrency}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{SFW\+::\+IThread\+Executor}} に属する継承公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor_ad366b7c46521711767046b491c078818}{\texorpdfstring{$\sim$}{\string~}\+IThread\+Executor}} ()=default
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_thread_pool_executor_8h_source}{Thread\+Pool\+Executor.\+h}} の \mbox{\hyperlink{_thread_pool_executor_8h_source_l00026}{26}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_simple_thread_pool_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_simple_thread_pool_a5c6e87c6fd0494ba24f34fda775f3006}\index{SFW::SimpleThreadPool@{SFW::SimpleThreadPool}!SimpleThreadPool@{SimpleThreadPool}}
+\index{SimpleThreadPool@{SimpleThreadPool}!SFW::SimpleThreadPool@{SFW::SimpleThreadPool}}
+\doxysubsubsection{\texorpdfstring{SimpleThreadPool()}{SimpleThreadPool()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_simple_thread_pool_a5c6e87c6fd0494ba24f34fda775f3006} 
+SFW\+::\+Simple\+Thread\+Pool\+::\+Simple\+Thread\+Pool (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{n}{ = {\ttfamily std\+:\+:thread\+:\+:hardware\+\_\+concurrency()~-\/~1}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+ \mbox{\hyperlink{_thread_pool_executor_8h_source}{Thread\+Pool\+Executor.\+h}} の \mbox{\hyperlink{_thread_pool_executor_8h_source_l00029}{29}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_simple_thread_pool_a6085f0428fc89a29d4da06742e38ae19}\index{SFW::SimpleThreadPool@{SFW::SimpleThreadPool}!````~SimpleThreadPool@{\texorpdfstring{$\sim$}{\string~}SimpleThreadPool}}
+\index{````~SimpleThreadPool@{\texorpdfstring{$\sim$}{\string~}SimpleThreadPool}!SFW::SimpleThreadPool@{SFW::SimpleThreadPool}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}SimpleThreadPool()}{\string~SimpleThreadPool()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_simple_thread_pool_a6085f0428fc89a29d4da06742e38ae19} 
+SFW\+::\+Simple\+Thread\+Pool\+::\texorpdfstring{$\sim$}{\string~}\+Simple\+Thread\+Pool (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}}
+
+
+
+ \mbox{\hyperlink{_thread_pool_executor_8h_source}{Thread\+Pool\+Executor.\+h}} の \mbox{\hyperlink{_thread_pool_executor_8h_source_l00062}{62}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_simple_thread_pool_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_simple_thread_pool_a128f74a03a8e57e1e4949058ba3be265}\index{SFW::SimpleThreadPool@{SFW::SimpleThreadPool}!Concurrency@{Concurrency}}
+\index{Concurrency@{Concurrency}!SFW::SimpleThreadPool@{SFW::SimpleThreadPool}}
+\doxysubsubsection{\texorpdfstring{Concurrency()}{Concurrency()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_simple_thread_pool_a128f74a03a8e57e1e4949058ba3be265} 
+uint32\+\_\+t SFW\+::\+Simple\+Thread\+Pool\+::\+Concurrency (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor_a422a79c1dc7caf47c269dcd9ae04b4c0}{SFW\+::\+IThread\+Executor}}を実装しています。
+
+
+
+ \mbox{\hyperlink{_thread_pool_executor_8h_source}{Thread\+Pool\+Executor.\+h}} の \mbox{\hyperlink{_thread_pool_executor_8h_source_l00093}{93}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_simple_thread_pool_a38c8488a18b053d3dfbeb81bd228bd92}\index{SFW::SimpleThreadPool@{SFW::SimpleThreadPool}!Submit@{Submit}}
+\index{Submit@{Submit}!SFW::SimpleThreadPool@{SFW::SimpleThreadPool}}
+\doxysubsubsection{\texorpdfstring{Submit()}{Submit()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_simple_thread_pool_a38c8488a18b053d3dfbeb81bd228bd92} 
+void SFW\+::\+Simple\+Thread\+Pool\+::\+Submit (\begin{DoxyParamCaption}\item[{std\+::function$<$ void()$>$}]{job}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor_a391793ace9caaab0f020a22d8806a65c}{SFW\+::\+IThread\+Executor}}を実装しています。
+
+
+
+ \mbox{\hyperlink{_thread_pool_executor_8h_source}{Thread\+Pool\+Executor.\+h}} の \mbox{\hyperlink{_thread_pool_executor_8h_source_l00073}{73}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_thread_pool_executor_8h}{Thread\+Pool\+Executor.\+h}}\end{DoxyCompactItemize}

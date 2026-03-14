@@ -1,0 +1,128 @@
+\doxysection{SFW\+::ECS\+::Entity\+ID 構造体}
+\hypertarget{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{}\label{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}\index{SFW::ECS::EntityID@{SFW::ECS::EntityID}}
+
+
+Entityの\+IDを表す構造体  
+
+
+
+
+{\ttfamily \#include $<$entity.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a48acd58cc4edd31dd9ce0750d0ee4e6d}{operator==}} (const \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} \&other) const noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a9a264970ecd0710b41ccdcbf83fb3844}{Is\+Valid}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Entity\+IDが有効かどうかを確認する \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a8989b77f347b8c20136be29535371faf}{Invalid}} () noexcept
+\begin{DoxyCompactList}\small\item\em 無効な\+Entity\+IDを取得する \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a7031930fd2acbd990d6e2feef7255035}{index}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a94ce1622fa78b03446bd2610ac20afe4}{generation}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Entityの\+IDを表す構造体 
+
+ \mbox{\hyperlink{entity_8h_source}{entity.\+h}} の \mbox{\hyperlink{entity_8h_source_l00022}{22}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a8989b77f347b8c20136be29535371faf}\index{SFW::ECS::EntityID@{SFW::ECS::EntityID}!Invalid@{Invalid}}
+\index{Invalid@{Invalid}!SFW::ECS::EntityID@{SFW::ECS::EntityID}}
+\doxysubsubsection{\texorpdfstring{Invalid()}{Invalid()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a8989b77f347b8c20136be29535371faf} 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} SFW\+::\+ECS\+::\+Entity\+ID\+::\+Invalid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+無効な\+Entity\+IDを取得する 
+
+\begin{DoxyReturn}{戻り値}
+無効な\+Entity\+ID 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{entity_8h_source}{entity.\+h}} の \mbox{\hyperlink{entity_8h_source_l00044}{44}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a9a264970ecd0710b41ccdcbf83fb3844}\index{SFW::ECS::EntityID@{SFW::ECS::EntityID}!IsValid@{IsValid}}
+\index{IsValid@{IsValid}!SFW::ECS::EntityID@{SFW::ECS::EntityID}}
+\doxysubsubsection{\texorpdfstring{IsValid()}{IsValid()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a9a264970ecd0710b41ccdcbf83fb3844} 
+bool SFW\+::\+ECS\+::\+Entity\+ID\+::\+Is\+Valid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Entity\+IDが有効かどうかを確認する 
+
+\begin{DoxyReturn}{戻り値}
+有効な場合はtrue、無効な場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{entity_8h_source}{entity.\+h}} の \mbox{\hyperlink{entity_8h_source_l00037}{37}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a48acd58cc4edd31dd9ce0750d0ee4e6d}\index{SFW::ECS::EntityID@{SFW::ECS::EntityID}!operator==@{operator==}}
+\index{operator==@{operator==}!SFW::ECS::EntityID@{SFW::ECS::EntityID}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a48acd58cc4edd31dd9ce0750d0ee4e6d} 
+bool SFW\+::\+ECS\+::\+Entity\+ID\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em other} & Entity\+IDをコピーする \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID} 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{entity_8h_source}{entity.\+h}} の \mbox{\hyperlink{entity_8h_source_l00030}{30}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a94ce1622fa78b03446bd2610ac20afe4}\index{SFW::ECS::EntityID@{SFW::ECS::EntityID}!generation@{generation}}
+\index{generation@{generation}!SFW::ECS::EntityID@{SFW::ECS::EntityID}}
+\doxysubsubsection{\texorpdfstring{generation}{generation}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a94ce1622fa78b03446bd2610ac20afe4} 
+uint32\+\_\+t SFW\+::\+ECS\+::\+Entity\+ID\+::generation = 0}
+
+
+
+ \mbox{\hyperlink{entity_8h_source}{entity.\+h}} の \mbox{\hyperlink{entity_8h_source_l00024}{24}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a7031930fd2acbd990d6e2feef7255035}\index{SFW::ECS::EntityID@{SFW::ECS::EntityID}!index@{index}}
+\index{index@{index}!SFW::ECS::EntityID@{SFW::ECS::EntityID}}
+\doxysubsubsection{\texorpdfstring{index}{index}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a7031930fd2acbd990d6e2feef7255035} 
+uint32\+\_\+t SFW\+::\+ECS\+::\+Entity\+ID\+::index = 0}
+
+
+
+ \mbox{\hyperlink{entity_8h_source}{entity.\+h}} の \mbox{\hyperlink{entity_8h_source_l00023}{23}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{entity_8h}{entity.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,272 @@
+\doxysection{SFW\+::Graphics\+::Occluder\+Extract\+Options 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options}{}\label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+
+
+{\ttfamily \#include $<$Terrain\+Occluder\+Extraction.\+h$>$}
+
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376}{Occluder\+Mode}} \+: uint8\+\_\+t \{ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376abbd47109890259c0127154db1af26c75}{Full}} = 0
+, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376a4e891fd0a3fb80f7f59fe0f768d95554}{Decimate}} = 1
+, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376acc5264d6af1a0203f73d2371a2cd5da0}{Aabb\+Faces}} = 2
+, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376a9346c33e7f1f855d41c487ef9f5b0d45}{Aabb\+Front\+Quad}} = 3
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_afb16a345dfe2b089427a0b06041ee4d7}{viewportW}} = 1920
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a6d79a3ac362ffbc9c4d6bafa774dddec}{viewportH}} = 1080
+\item 
+const float \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa00645f6d70bafdf8cf706c7a5f4e1a5}{view\+Proj}} = nullptr
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_afbf97eee5ad37af80e7f16dc7b1a6ef1}{min\+Area\+Px}} = 64.\+0f
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_abdbebda2de6a3cdd6aba109acf811761}{max\+Clusters}} = 256
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a11535da08a3f40f7505f2257bbdb6814}{camera\+Pos}} \{ 0,0,0 \}
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a14c0ab6d0b987c6db809d2d5c4f10b00}{max\+Distance}} = 0.\+0f
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a6b142801a8568631010036af12523436}{backface\+Cull}} = true
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a922cde5f75be25bf9ece342d43a12d74}{face\+Cos\+Threshold}} = 0.\+0f
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_ad16f8891cc5865aaf4a4258a2c182487}{make\+Clip\+Space}} = true
+\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_i_lod_selector}{ILod\+Selector}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a491c1fb6b18a0fc352c45483c3bbee50}{lod\+Selector}} = nullptr
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a4b6017f714642526f52c6d3e8e3d4131}{Lod\+Range\+Getter}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_adfeca4bdd96593ebe1f17f744ff3b4e9}{get\+Lod\+Range}} = nullptr
+\item 
+const void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_ad62da0721dc4b4d3d3a5f8d9a473cb41}{terrain\+For\+Getter}} = nullptr
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a1a597151c5fd7411e1aec25466b5e9cb}{lod\+Decimate}} \mbox{[}3\mbox{]} = \{ 1, 2, 4 \}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376}{Occluder\+Mode}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a7c7aa2f0014ccbb239d5558a25d65121}{mode}} = \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376a4e891fd0a3fb80f7f59fe0f768d95554}{Occluder\+Mode\+::\+Decimate}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aae0fbe40ec461993645004971060cceb}{target\+Triangles\+Per\+Cluster}} = 128
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aaf1c280cf2c8a3c67de777f80b9d99d0}{max\+Triangles\+Total}} = 5000
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00121}{121}} 行目に定義があります。
+
+
+
+\label{doc-enum-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_doc-enum-members}
+\doxysubsection{列挙型メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!OccluderMode@{OccluderMode}}
+\index{OccluderMode@{OccluderMode}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{OccluderMode}{OccluderMode}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376} 
+enum class \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376}{SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::\+Occluder\+Mode}} \+: uint8\+\_\+t\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Full@{Full}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!Full@{Full}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376abbd47109890259c0127154db1af26c75}\label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376abbd47109890259c0127154db1af26c75} 
+Full&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Decimate@{Decimate}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!Decimate@{Decimate}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376a4e891fd0a3fb80f7f59fe0f768d95554}\label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376a4e891fd0a3fb80f7f59fe0f768d95554} 
+Decimate&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AabbFaces@{AabbFaces}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!AabbFaces@{AabbFaces}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376acc5264d6af1a0203f73d2371a2cd5da0}\label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376acc5264d6af1a0203f73d2371a2cd5da0} 
+Aabb\+Faces&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AabbFrontQuad@{AabbFrontQuad}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!AabbFrontQuad@{AabbFrontQuad}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376a9346c33e7f1f855d41c487ef9f5b0d45}\label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376a9346c33e7f1f855d41c487ef9f5b0d45} 
+Aabb\+Front\+Quad&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00151}{151}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a6b142801a8568631010036af12523436}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!backfaceCull@{backfaceCull}}
+\index{backfaceCull@{backfaceCull}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{backfaceCull}{backfaceCull}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a6b142801a8568631010036af12523436} 
+bool SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::backface\+Cull = true}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00134}{134}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a11535da08a3f40f7505f2257bbdb6814}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!cameraPos@{cameraPos}}
+\index{cameraPos@{cameraPos}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{cameraPos}{cameraPos}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a11535da08a3f40f7505f2257bbdb6814} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::camera\+Pos \{ 0,0,0 \}}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00130}{130}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a922cde5f75be25bf9ece342d43a12d74}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!faceCosThreshold@{faceCosThreshold}}
+\index{faceCosThreshold@{faceCosThreshold}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{faceCosThreshold}{faceCosThreshold}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a922cde5f75be25bf9ece342d43a12d74} 
+float SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::face\+Cos\+Threshold = 0.\+0f}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00135}{135}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_adfeca4bdd96593ebe1f17f744ff3b4e9}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!getLodRange@{getLodRange}}
+\index{getLodRange@{getLodRange}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{getLodRange}{getLodRange}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_adfeca4bdd96593ebe1f17f744ff3b4e9} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a4b6017f714642526f52c6d3e8e3d4131}{Lod\+Range\+Getter}} SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::get\+Lod\+Range = nullptr}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00142}{142}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a1a597151c5fd7411e1aec25466b5e9cb}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!lodDecimate@{lodDecimate}}
+\index{lodDecimate@{lodDecimate}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{lodDecimate}{lodDecimate}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a1a597151c5fd7411e1aec25466b5e9cb} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::lod\+Decimate\mbox{[}3\mbox{]} = \{ 1, 2, 4 \}}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00148}{148}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a491c1fb6b18a0fc352c45483c3bbee50}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!lodSelector@{lodSelector}}
+\index{lodSelector@{lodSelector}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{lodSelector}{lodSelector}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a491c1fb6b18a0fc352c45483c3bbee50} 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_i_lod_selector}{ILod\+Selector}}\texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::lod\+Selector = nullptr}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00141}{141}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_ad16f8891cc5865aaf4a4258a2c182487}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!makeClipSpace@{makeClipSpace}}
+\index{makeClipSpace@{makeClipSpace}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{makeClipSpace}{makeClipSpace}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_ad16f8891cc5865aaf4a4258a2c182487} 
+bool SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::make\+Clip\+Space = true}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00138}{138}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_abdbebda2de6a3cdd6aba109acf811761}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!maxClusters@{maxClusters}}
+\index{maxClusters@{maxClusters}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{maxClusters}{maxClusters}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_abdbebda2de6a3cdd6aba109acf811761} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::max\+Clusters = 256}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00127}{127}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a14c0ab6d0b987c6db809d2d5c4f10b00}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!maxDistance@{maxDistance}}
+\index{maxDistance@{maxDistance}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{maxDistance}{maxDistance}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a14c0ab6d0b987c6db809d2d5c4f10b00} 
+float SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::max\+Distance = 0.\+0f}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00131}{131}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aaf1c280cf2c8a3c67de777f80b9d99d0}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!maxTrianglesTotal@{maxTrianglesTotal}}
+\index{maxTrianglesTotal@{maxTrianglesTotal}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{maxTrianglesTotal}{maxTrianglesTotal}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aaf1c280cf2c8a3c67de777f80b9d99d0} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::max\+Triangles\+Total = 5000}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00165}{165}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_afbf97eee5ad37af80e7f16dc7b1a6ef1}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!minAreaPx@{minAreaPx}}
+\index{minAreaPx@{minAreaPx}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{minAreaPx}{minAreaPx}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_afbf97eee5ad37af80e7f16dc7b1a6ef1} 
+float SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::min\+Area\+Px = 64.\+0f}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00126}{126}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a7c7aa2f0014ccbb239d5558a25d65121}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!mode@{mode}}
+\index{mode@{mode}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{mode}{mode}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a7c7aa2f0014ccbb239d5558a25d65121} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376}{Occluder\+Mode}} SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::mode = \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa8957a7c10ee19590a235ac782b2b376a4e891fd0a3fb80f7f59fe0f768d95554}{Occluder\+Mode\+::\+Decimate}}}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00157}{157}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aae0fbe40ec461993645004971060cceb}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!targetTrianglesPerCluster@{targetTrianglesPerCluster}}
+\index{targetTrianglesPerCluster@{targetTrianglesPerCluster}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{targetTrianglesPerCluster}{targetTrianglesPerCluster}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aae0fbe40ec461993645004971060cceb} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::target\+Triangles\+Per\+Cluster = 128}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00161}{161}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_ad62da0721dc4b4d3d3a5f8d9a473cb41}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!terrainForGetter@{terrainForGetter}}
+\index{terrainForGetter@{terrainForGetter}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{terrainForGetter}{terrainForGetter}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_ad62da0721dc4b4d3d3a5f8d9a473cb41} 
+const void\texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::terrain\+For\+Getter = nullptr}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00143}{143}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a6d79a3ac362ffbc9c4d6bafa774dddec}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!viewportH@{viewportH}}
+\index{viewportH@{viewportH}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{viewportH}{viewportH}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_a6d79a3ac362ffbc9c4d6bafa774dddec} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::viewportH = 1080}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00124}{124}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_afb16a345dfe2b089427a0b06041ee4d7}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!viewportW@{viewportW}}
+\index{viewportW@{viewportW}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{viewportW}{viewportW}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_afb16a345dfe2b089427a0b06041ee4d7} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::viewportW = 1920}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00123}{123}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa00645f6d70bafdf8cf706c7a5f4e1a5}\index{SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}!viewProj@{viewProj}}
+\index{viewProj@{viewProj}!SFW::Graphics::OccluderExtractOptions@{SFW::Graphics::OccluderExtractOptions}}
+\doxysubsubsection{\texorpdfstring{viewProj}{viewProj}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options_aa00645f6d70bafdf8cf706c7a5f4e1a5} 
+const float\texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options\+::view\+Proj = nullptr}
+
+
+
+ \mbox{\hyperlink{_terrain_occluder_extraction_8h_source}{Terrain\+Occluder\+Extraction.\+h}} の \mbox{\hyperlink{_terrain_occluder_extraction_8h_source_l00125}{125}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_terrain_occluder_extraction_8h}{Terrain\+Occluder\+Extraction.\+h}}\end{DoxyCompactItemize}

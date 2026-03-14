@@ -1,0 +1,71 @@
+\doxysection{SFW\+::Thread\+Count\+Down\+Latch クラス}
+\hypertarget{class_s_f_w_1_1_thread_count_down_latch}{}\label{class_s_f_w_1_1_thread_count_down_latch}\index{SFW::ThreadCountDownLatch@{SFW::ThreadCountDownLatch}}
+
+
+{\ttfamily \#include $<$Thread\+Pool\+Executor.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_thread_count_down_latch_a5737a1042a3ce55a5c19fc89c180ace9}{Thread\+Count\+Down\+Latch}} (uint32\+\_\+t count)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_thread_count_down_latch_a3461e5eba048860aad1d77d3572ef797}{Count\+Down}} ()
+\begin{DoxyCompactList}\small\item\em カウントを1減らし、0になったら待機しているスレッドを全て起こす @detials 基本的にワーカースレッドの処理が終わったことを通知するために使う。ワーカースレッドは処理が終わるたびに \doxylink{class_s_f_w_1_1_thread_count_down_latch_a3461e5eba048860aad1d77d3572ef797}{Count\+Down()} を呼び、メインスレッドは \doxylink{class_s_f_w_1_1_thread_count_down_latch_afc71c3da419cf1762a019a0ba785b3f7}{Wait()} で全てのワーカーが終わるのを待つ。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_thread_count_down_latch_afc71c3da419cf1762a019a0ba785b3f7}{Wait}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_thread_pool_executor_8h_source}{Thread\+Pool\+Executor.\+h}} の \mbox{\hyperlink{_thread_pool_executor_8h_source_l00113}{113}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_thread_count_down_latch_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_thread_count_down_latch_a5737a1042a3ce55a5c19fc89c180ace9}\index{SFW::ThreadCountDownLatch@{SFW::ThreadCountDownLatch}!ThreadCountDownLatch@{ThreadCountDownLatch}}
+\index{ThreadCountDownLatch@{ThreadCountDownLatch}!SFW::ThreadCountDownLatch@{SFW::ThreadCountDownLatch}}
+\doxysubsubsection{\texorpdfstring{ThreadCountDownLatch()}{ThreadCountDownLatch()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_thread_count_down_latch_a5737a1042a3ce55a5c19fc89c180ace9} 
+SFW\+::\+Thread\+Count\+Down\+Latch\+::\+Thread\+Count\+Down\+Latch (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{count}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+ \mbox{\hyperlink{_thread_pool_executor_8h_source}{Thread\+Pool\+Executor.\+h}} の \mbox{\hyperlink{_thread_pool_executor_8h_source_l00115}{115}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_thread_count_down_latch_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_thread_count_down_latch_a3461e5eba048860aad1d77d3572ef797}\index{SFW::ThreadCountDownLatch@{SFW::ThreadCountDownLatch}!CountDown@{CountDown}}
+\index{CountDown@{CountDown}!SFW::ThreadCountDownLatch@{SFW::ThreadCountDownLatch}}
+\doxysubsubsection{\texorpdfstring{CountDown()}{CountDown()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_thread_count_down_latch_a3461e5eba048860aad1d77d3572ef797} 
+void SFW\+::\+Thread\+Count\+Down\+Latch\+::\+Count\+Down (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+カウントを1減らし、0になったら待機しているスレッドを全て起こす @detials 基本的にワーカースレッドの処理が終わったことを通知するために使う。ワーカースレッドは処理が終わるたびに \doxylink{class_s_f_w_1_1_thread_count_down_latch_a3461e5eba048860aad1d77d3572ef797}{Count\+Down()} を呼び、メインスレッドは \doxylink{class_s_f_w_1_1_thread_count_down_latch_afc71c3da419cf1762a019a0ba785b3f7}{Wait()} で全てのワーカーが終わるのを待つ。 
+
+
+
+ \mbox{\hyperlink{_thread_pool_executor_8h_source}{Thread\+Pool\+Executor.\+h}} の \mbox{\hyperlink{_thread_pool_executor_8h_source_l00121}{121}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_thread_count_down_latch_afc71c3da419cf1762a019a0ba785b3f7}\index{SFW::ThreadCountDownLatch@{SFW::ThreadCountDownLatch}!Wait@{Wait}}
+\index{Wait@{Wait}!SFW::ThreadCountDownLatch@{SFW::ThreadCountDownLatch}}
+\doxysubsubsection{\texorpdfstring{Wait()}{Wait()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_thread_count_down_latch_afc71c3da419cf1762a019a0ba785b3f7} 
+void SFW\+::\+Thread\+Count\+Down\+Latch\+::\+Wait (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_thread_pool_executor_8h_source}{Thread\+Pool\+Executor.\+h}} の \mbox{\hyperlink{_thread_pool_executor_8h_source_l00126}{126}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_thread_pool_executor_8h}{Thread\+Pool\+Executor.\+h}}\end{DoxyCompactItemize}

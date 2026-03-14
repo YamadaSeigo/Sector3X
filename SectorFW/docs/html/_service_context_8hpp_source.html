@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ServiceContext.hpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_service_context_8hpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">ServiceContext.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_service_context_8hpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;typeindex&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a> {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_e_c_s.html">ECS</a> {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Services&gt;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_e_c_s.html#a8aac419d65bb75ed8784b0ad269564ae">   20</a></span>        <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="namespace_s_f_w_1_1_e_c_s.html#a8aac419d65bb75ed8784b0ad269564ae">AllStaticServices</a> = (Services::isStatic &amp;&amp; ...);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="concept_s_f_w_1_1_e_c_s_1_1_has_service_tag.html">   25</a></span>        <span class="keyword">concept </span><a class="code hl_concept" href="concept_s_f_w_1_1_e_c_s_1_1_has_service_tag.html">HasServiceTag</a> = <span class="keyword">requires</span> { T::isStatic; };</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="_service_context_8hpp.html#adbfb2947c9a06b367226fe228627154c">   31</a></span><span class="preprocessor">#define STATIC_SERVICE_TAG static constexpr bool isStatic = true;</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="_service_context_8hpp.html#a6c07cc6646a45ab51cbfe7b168e82a26">   36</a></span><span class="preprocessor">#define DYNAMIC_SERVICE_TAG static constexpr bool isStatic = false;</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Services&gt;</div>
+<div class="foldopen" id="foldopen00044" data-start="{" data-end="};">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_e_c_s_1_1_service_context.html">   44</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_service_context.html">ServiceContext</a> {</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            <span class="keyword">static_assert</span>((<a class="code hl_concept" href="concept_s_f_w_1_1_e_c_s_1_1_has_service_tag.html">HasServiceTag&lt;Services&gt;</a> &amp;&amp; ...),</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                <span class="stringliteral">&quot;ServiceContext error: One or more types lack static constexpr &#39;isStatic&#39;&quot;</span>);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_e_c_s_1_1_service_context.html#ae43d7722578b4c29c8769b0388aae5f0">   48</a></span>            <span class="keyword">using </span><a class="code hl_typedef" href="struct_s_f_w_1_1_e_c_s_1_1_service_context.html#ae43d7722578b4c29c8769b0388aae5f0">Tuple</a> = std::tuple&lt;Services*...&gt;;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        };</div>
+</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span></div>
+<div class="foldopen" id="foldopen00054" data-start="{" data-end="};">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">   54</a></span>        <span class="keyword">class </span><a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">IUpdateService</a> {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            <span class="keyword">virtual</span> <span class="keywordtype">void</span> PreUpdate(<span class="keywordtype">double</span> deltaTime) = 0;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00058" data-start="{" data-end="};">
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7">   58</a></span>            <span class="keyword">enum</span> <a class="code hl_enumeration" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7">Phase</a> : uint16_t {</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec">   59</a></span>                <a class="code hl_enumvalue" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec">EALRY</a> = 0,</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7">   60</a></span>                <a class="code hl_enumvalue" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7">NORMAL</a> = 1,</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9">   61</a></span>                <a class="code hl_enumvalue" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9">LATE</a> = 2,</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907">   62</a></span>                <a class="code hl_enumvalue" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907">PHASE_MAX</a></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            };</div>
+</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="foldopen" id="foldopen00065" data-start="{" data-end="};">
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608">   65</a></span>            <span class="keyword">enum</span> <a class="code hl_enumeration" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608">Group</a> : uint16_t {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9">   66</a></span>                <a class="code hl_enumvalue" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9">GROUP_SERIAL</a>, <span class="comment">//メインスレッドで直列実行</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b">   67</a></span>                <a class="code hl_enumvalue" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b">GROUP_GRAPHICS</a>,</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda">   68</a></span>                <a class="code hl_enumvalue" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda">GROUP_PHYSICS</a>,</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a">   69</a></span>                <a class="code hl_enumvalue" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a">GROUP_INPUT</a>,</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e">   70</a></span>                <a class="code hl_enumvalue" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e">GROUP_AUDIO</a>,</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580">   71</a></span>                <a class="code hl_enumvalue" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580">GROUP_AI</a>,</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90">   72</a></span>                <a class="code hl_enumvalue" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90">GROUP_MAX</a></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            };</div>
+</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a73744778bc5cc3113ed77db1b69e1fb1">   76</a></span>            <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">constexpr</span> uint16_t <a class="code hl_variable" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a73744778bc5cc3113ed77db1b69e1fb1">updatePhase</a> = <a class="code hl_enumvalue" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec">EALRY</a>;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a9f0e8abd26ab30155b39e558f004ce42">   77</a></span>            <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">constexpr</span> uint16_t <a class="code hl_variable" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a9f0e8abd26ab30155b39e558f004ce42">updateGroup</a> = <a class="code hl_enumvalue" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9">GROUP_SERIAL</a>;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a116ce546ab92eaf8f4282719b89a5165">   78</a></span>            <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">constexpr</span> uint16_t <a class="code hl_variable" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a116ce546ab92eaf8f4282719b89a5165">updateOrder</a> = 0;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            std::type_index typeIndex = <span class="keyword">typeid</span>(<a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">IUpdateService</a>);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            uint16_t phase = 0;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            uint16_t group = 0;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            uint16_t order = 0;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a12a6623bafbade003505c9b236b749b4">   85</a></span>            <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_friend" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a12a6623bafbade003505c9b236b749b4">ServiceLocator</a>;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        };</div>
+</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span></div>
+<div class="foldopen" id="foldopen00093" data-start="{" data-end="};">
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_commit_service.html">   93</a></span>        <span class="keyword">class </span><a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_i_commit_service.html">ICommitService</a> {</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_i_commit_service.html#aba1dcc26d1bfdb867f5c3afa81627ffc">   95</a></span>            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_i_commit_service.html#aba1dcc26d1bfdb867f5c3afa81627ffc">Commit</a>(<span class="keywordtype">double</span> deltaTime) = 0;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        };</div>
+</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> isUpdateService = std::is_base_of_v&lt;IUpdateService, T&gt;;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> isCommitService = std::is_base_of_v&lt;ICommitService, T&gt;;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="foldopen" id="foldopen00110" data-start="" data-end="">
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="_service_context_8hpp.html#a2bddacb472a636ca0aa134fe7fa73a79">  110</a></span><span class="preprocessor">#define DEFINE_UPDATESERVICE_PHASE(PhaseEnum) \</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="preprocessor">            static inline constexpr uint16_t updatePhase = PhaseEnum;</span></div>
+</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="foldopen" id="foldopen00113" data-start="" data-end="">
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="_service_context_8hpp.html#aba8d760b00a97c77ac318f63335ff1e2">  113</a></span><span class="preprocessor">#define DEFINE_UPDATESERVICE_GROUP(GroupEnum) \</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="preprocessor">            static inline constexpr uint16_t updateGroup = GroupEnum;</span></div>
+</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="foldopen" id="foldopen00116" data-start="" data-end="">
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="_service_context_8hpp.html#a016a3200051dfac8a45dfcdf917b46fd">  116</a></span><span class="preprocessor">#define DEFINE_UPDATESERVICE_ORDER(OrderValue) \</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="preprocessor">            static inline constexpr uint16_t updateOrder = OrderValue;</span></div>
+</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        <span class="comment">// マクロで更新フェーズ、グループ、オーダーを定義</span></div>
+<div class="foldopen" id="foldopen00120" data-start="" data-end="">
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="_service_context_8hpp.html#a70dae4563c328fd2eee16d7a32a67cbc">  120</a></span><span class="preprocessor">#define DEFINE_UPDATESERVICE(PhaseEnum, GroupEnum, OrderValue) \</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="preprocessor">            DEFINE_UPDATESERVICE_PHASE(PhaseEnum) \</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="preprocessor">            DEFINE_UPDATESERVICE_GROUP(GroupEnum) \</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="preprocessor">            DEFINE_UPDATESERVICE_ORDER(OrderValue)</span></div>
+</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    }</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>}</div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_commit_service_html"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_commit_service.html">SFW::ECS::ICommitService</a></div><div class="ttdoc">コミットサービスのインターフェース(Systemを更新した後に呼び出される)</div><div class="ttdef"><b>Definition</b> <a href="#l00093">ServiceContext.hpp:93</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_commit_service_html_aba1dcc26d1bfdb867f5c3afa81627ffc"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_commit_service.html#aba1dcc26d1bfdb867f5c3afa81627ffc">SFW::ECS::ICommitService::Commit</a></div><div class="ttdeci">virtual void Commit(double deltaTime)=0</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">SFW::ECS::IUpdateService</a></div><div class="ttdoc">更新サービスのインターフェース(Systemよりも前に更新)</div><div class="ttdef"><b>Definition</b> <a href="#l00054">ServiceContext.hpp:54</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_a0a2e8c399f89c675d9de722b706a8608"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608">SFW::ECS::IUpdateService::Group</a></div><div class="ttdeci">Group</div><div class="ttdef"><b>Definition</b> <a href="#l00065">ServiceContext.hpp:65</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9">SFW::ECS::IUpdateService::GROUP_SERIAL</a></div><div class="ttdeci">@ GROUP_SERIAL</div><div class="ttdef"><b>Definition</b> <a href="#l00066">ServiceContext.hpp:66</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580">SFW::ECS::IUpdateService::GROUP_AI</a></div><div class="ttdeci">@ GROUP_AI</div><div class="ttdef"><b>Definition</b> <a href="#l00071">ServiceContext.hpp:71</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b">SFW::ECS::IUpdateService::GROUP_GRAPHICS</a></div><div class="ttdeci">@ GROUP_GRAPHICS</div><div class="ttdef"><b>Definition</b> <a href="#l00067">ServiceContext.hpp:67</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a">SFW::ECS::IUpdateService::GROUP_INPUT</a></div><div class="ttdeci">@ GROUP_INPUT</div><div class="ttdef"><b>Definition</b> <a href="#l00069">ServiceContext.hpp:69</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e">SFW::ECS::IUpdateService::GROUP_AUDIO</a></div><div class="ttdeci">@ GROUP_AUDIO</div><div class="ttdef"><b>Definition</b> <a href="#l00070">ServiceContext.hpp:70</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda">SFW::ECS::IUpdateService::GROUP_PHYSICS</a></div><div class="ttdeci">@ GROUP_PHYSICS</div><div class="ttdef"><b>Definition</b> <a href="#l00068">ServiceContext.hpp:68</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90">SFW::ECS::IUpdateService::GROUP_MAX</a></div><div class="ttdeci">@ GROUP_MAX</div><div class="ttdef"><b>Definition</b> <a href="#l00072">ServiceContext.hpp:72</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_a116ce546ab92eaf8f4282719b89a5165"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a116ce546ab92eaf8f4282719b89a5165">SFW::ECS::IUpdateService::updateOrder</a></div><div class="ttdeci">static constexpr uint16_t updateOrder</div><div class="ttdef"><b>Definition</b> <a href="#l00078">ServiceContext.hpp:78</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_a12a6623bafbade003505c9b236b749b4"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a12a6623bafbade003505c9b236b749b4">SFW::ECS::IUpdateService::ServiceLocator</a></div><div class="ttdeci">friend class ServiceLocator</div><div class="ttdef"><b>Definition</b> <a href="#l00085">ServiceContext.hpp:85</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_a73744778bc5cc3113ed77db1b69e1fb1"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a73744778bc5cc3113ed77db1b69e1fb1">SFW::ECS::IUpdateService::updatePhase</a></div><div class="ttdeci">static constexpr uint16_t updatePhase</div><div class="ttdef"><b>Definition</b> <a href="#l00076">ServiceContext.hpp:76</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_a9f0e8abd26ab30155b39e558f004ce42"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a9f0e8abd26ab30155b39e558f004ce42">SFW::ECS::IUpdateService::updateGroup</a></div><div class="ttdeci">static constexpr uint16_t updateGroup</div><div class="ttdef"><b>Definition</b> <a href="#l00077">ServiceContext.hpp:77</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_ae5407b8ae7f6739250af397382f3f6c7"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7">SFW::ECS::IUpdateService::Phase</a></div><div class="ttdeci">Phase</div><div class="ttdef"><b>Definition</b> <a href="#l00058">ServiceContext.hpp:58</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907">SFW::ECS::IUpdateService::PHASE_MAX</a></div><div class="ttdeci">@ PHASE_MAX</div><div class="ttdef"><b>Definition</b> <a href="#l00062">ServiceContext.hpp:62</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9">SFW::ECS::IUpdateService::LATE</a></div><div class="ttdeci">@ LATE</div><div class="ttdef"><b>Definition</b> <a href="#l00061">ServiceContext.hpp:61</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7">SFW::ECS::IUpdateService::NORMAL</a></div><div class="ttdeci">@ NORMAL</div><div class="ttdef"><b>Definition</b> <a href="#l00060">ServiceContext.hpp:60</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec">SFW::ECS::IUpdateService::EALRY</a></div><div class="ttdeci">@ EALRY</div><div class="ttdef"><b>Definition</b> <a href="#l00059">ServiceContext.hpp:59</a></div></div>
+<div class="ttc" id="aconcept_s_f_w_1_1_e_c_s_1_1_has_service_tag_html"><div class="ttname"><a href="concept_s_f_w_1_1_e_c_s_1_1_has_service_tag.html">SFW::ECS::HasServiceTag</a></div><div class="ttdoc">サービスの型にisStaticメンバーが存在するかをチェックするコンセプト</div><div class="ttdef"><b>Definition</b> <a href="#l00025">ServiceContext.hpp:25</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html">SFW::ECS</a></div><div class="ttdef"><b>Definition</b> <a href="_access_info_8h_source.html#l00016">AccessInfo.h:17</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html_a8aac419d65bb75ed8784b0ad269564ae"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html#a8aac419d65bb75ed8784b0ad269564ae">SFW::ECS::AllStaticServices</a></div><div class="ttdeci">constexpr bool AllStaticServices</div><div class="ttdoc">サービスの静的な型を定義するテンプレート</div><div class="ttdef"><b>Definition</b> <a href="#l00020">ServiceContext.hpp:20</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_e_c_s_1_1_service_context_html"><div class="ttname"><a href="struct_s_f_w_1_1_e_c_s_1_1_service_context.html">SFW::ECS::ServiceContext</a></div><div class="ttdoc">Systemに注入されるサービスのコンテキストを定義するテンプレート</div><div class="ttdef"><b>Definition</b> <a href="#l00044">ServiceContext.hpp:44</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_e_c_s_1_1_service_context_html_ae43d7722578b4c29c8769b0388aae5f0"><div class="ttname"><a href="struct_s_f_w_1_1_e_c_s_1_1_service_context.html#ae43d7722578b4c29c8769b0388aae5f0">SFW::ECS::Tuple::Tuple</a></div><div class="ttdeci">std::tuple&lt; Services *... &gt; Tuple</div><div class="ttdef"><b>Definition</b> <a href="#l00048">ServiceContext.hpp:48</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_5ada393002ee7234dde4caf0d7998537.html">Core</a></li><li class="navelem"><a href="dir_424b27d9839eee089d4ee0e5359b7d45.html">ECS</a></li><li class="navelem"><a href="_service_context_8hpp.html">ServiceContext.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

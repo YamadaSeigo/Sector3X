@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/convert_directX.hpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('convert__direct_x_8hpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">convert_directX.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="convert__direct_x_8hpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;DirectXMath.h&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="convert_8hpp.html">Math/convert.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_matrix_8hpp.html">Math/Matrix.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
+<div class="foldopen" id="foldopen00016" data-start="{" data-end="}">
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_math.html">   16</a></span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_math.html">Math</a></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keyword">template</span>&lt;&gt;</div>
+<div class="foldopen" id="foldopen00024" data-start="{" data-end="}">
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_math.html#ab58ad5b52dbf63bd9112a990d1971661">   24</a></span>        <span class="keyword">inline</span> DirectX::XMFLOAT2 <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#ab58ad5b52dbf63bd9112a990d1971661">Convert&lt;DirectX::XMFLOAT2, Vec2f&gt;</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Vec2f</a>&amp; v) {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a93b291c9700c7a6011a999381a975578">BitCast&lt;DirectX::XMFLOAT2&gt;</a>(v);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        }</div>
+</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keyword">template</span>&lt;&gt;</div>
+<div class="foldopen" id="foldopen00033" data-start="{" data-end="}">
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_math.html#ac294994588c7ab040fcf07f6dced3027">   33</a></span>        <span class="keyword">inline</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Vec2f</a> <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#ac294994588c7ab040fcf07f6dced3027">Convert&lt;Vec2f, DirectX::XMFLOAT2&gt;</a>(<span class="keyword">const</span> DirectX::XMFLOAT2&amp; v) {</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a93b291c9700c7a6011a999381a975578">BitCast&lt;Vec2f&gt;</a>(v);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        }</div>
+</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keyword">template</span>&lt;&gt;</div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="}">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_math.html#a90d1ff78e63fd0a5db8ec375c0d0f59e">   43</a></span>        <span class="keyword">inline</span> DirectX::XMVECTOR <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a90d1ff78e63fd0a5db8ec375c0d0f59e">Convert&lt;DirectX::XMVECTOR, Vec3f&gt;</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Vec3f</a>&amp; v) {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            <span class="keywordflow">return</span> DirectX::XMVectorSet(v.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a>, v.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a50dcb824e1549ed55b4addc65c4e3240">y</a>, v.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a0d2709fc022ffd3b0be4fe2fb7914d51">z</a>, 0.0f);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        }</div>
+</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keyword">template</span>&lt;&gt;</div>
+<div class="foldopen" id="foldopen00052" data-start="{" data-end="}">
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_math.html#a10fe8542a8eb4eeca644633523f1f9a5">   52</a></span>        <span class="keyword">inline</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Vec3f</a> <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a10fe8542a8eb4eeca644633523f1f9a5">Convert&lt;Vec3f, DirectX::XMVECTOR&gt;</a>(<span class="keyword">const</span> DirectX::XMVECTOR&amp; v) {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            DirectX::XMFLOAT3 temp;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            DirectX::XMStoreFloat3(&amp;temp, v);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Vec3f</a>{ temp.x, temp.y, temp.z };</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        }</div>
+</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keyword">template</span>&lt;&gt;</div>
+<div class="foldopen" id="foldopen00064" data-start="{" data-end="}">
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_math.html#a16e99287e9769a9c4bc98320876e9c33">   64</a></span>        <span class="keyword">inline</span> DirectX::XMVECTOR <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a16e99287e9769a9c4bc98320876e9c33">Convert&lt;DirectX::XMVECTOR, Quatf&gt;</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Quatf</a>&amp; q) {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            <span class="keywordflow">return</span> DirectX::XMVectorSet(q.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#a8861a90e5ee88d31daeabb755f95d0c1">x</a>, q.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#a2ece16b5029f9d5feb91109cb2cb0a04">y</a>, q.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#a5f8d4cec0df3a46f935e01b0705c1202">z</a>, q.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#ae93b3e27320b5e09174e2ae2d5ee71a1">w</a>);</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        }</div>
+</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="keyword">template</span>&lt;&gt;</div>
+<div class="foldopen" id="foldopen00069" data-start="{" data-end="}">
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_math.html#a0484b8ca4812f7e53afa8f993cef0f3c">   69</a></span>        <span class="keyword">inline</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Quatf</a> <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a0484b8ca4812f7e53afa8f993cef0f3c">Convert&lt;Quatf, DirectX::XMVECTOR&gt;</a>(<span class="keyword">const</span> DirectX::XMVECTOR&amp; v) {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            DirectX::XMFLOAT4 temp;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            DirectX::XMStoreFloat4(&amp;temp, v);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Quatf</a>{ temp.x, temp.y, temp.z, temp.w };</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        }</div>
+</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span></div>
+<div class="foldopen" id="foldopen00079" data-start="{" data-end="}">
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_math.html#a126b326c039a9f6908edd8ac9eace7e3">   79</a></span>        <span class="keyword">template</span>&lt;&gt; <span class="keyword">inline</span> DirectX::XMMATRIX</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a126b326c039a9f6908edd8ac9eace7e3">Convert&lt;DirectX::XMMATRIX, Matrix4x4f&gt;</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Matrix4x4f</a>&amp; m) {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            <span class="keyword">using namespace </span>DirectX;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            <span class="keywordflow">return</span> XMMATRIX(</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                XMVectorSet(m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[0][0], m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[0][1], m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[0][2], m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[0][3]),</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                XMVectorSet(m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[1][0], m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[1][1], m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[1][2], m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[1][3]),</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                XMVectorSet(m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[2][0], m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[2][1], m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[2][2], m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[2][3]),</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                XMVectorSet(m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[3][0], m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[3][1], m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[3][2], m.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[3][3])</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            );</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        }</div>
+</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span></div>
+<div class="foldopen" id="foldopen00094" data-start="{" data-end="}">
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_math.html#a596ab3e2fca7a08efa4053bfd878d90f">   94</a></span>        <span class="keyword">template</span>&lt;&gt; <span class="keyword">inline</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Matrix4x4f</a></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a596ab3e2fca7a08efa4053bfd878d90f">Convert&lt;Matrix4x4f, DirectX::XMMATRIX&gt;</a>(<span class="keyword">const</span> DirectX::XMMATRIX&amp; mat) {</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            <span class="keyword">using namespace </span>DirectX;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            XMFLOAT4 r0, r1, r2, r3;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            XMStoreFloat4(&amp;r0, mat.r[0]);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            XMStoreFloat4(&amp;r1, mat.r[1]);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            XMStoreFloat4(&amp;r2, mat.r[2]);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            XMStoreFloat4(&amp;r3, mat.r[3]);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Matrix4x4f</a> out{};</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[0][0] = r0.x; out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[0][1] = r0.y; out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[0][2] = r0.z; out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[0][3] = r0.w;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[1][0] = r1.x; out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[1][1] = r1.y; out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[1][2] = r1.z; out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[1][3] = r1.w;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[2][0] = r2.x; out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[2][1] = r2.y; out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[2][2] = r2.z; out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[2][3] = r2.w;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[3][0] = r3.x; out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[3][1] = r3.y; out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[3][2] = r3.z; out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[3][3] = r3.w;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            <span class="keywordflow">return</span> out;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        }</div>
+</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    }</div>
+</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>}</div>
+<div class="ttc" id="a_matrix_8hpp_html"><div class="ttname"><a href="_matrix_8hpp.html">Matrix.hpp</a></div><div class="ttdoc">行列を定義するヘッダーファイル（列ベクトル規約に統一）</div></div>
+<div class="ttc" id="aconvert_8hpp_html"><div class="ttname"><a href="convert_8hpp.html">convert.hpp</a></div><div class="ttdoc">型変換を行うためのヘッダーファイル</div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html">SFW::Math</a></div><div class="ttdef"><b>Definition</b> <a href="#l00016">convert_directX.hpp:17</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_a0484b8ca4812f7e53afa8f993cef0f3c"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#a0484b8ca4812f7e53afa8f993cef0f3c">SFW::Math::Convert&lt; Quatf, DirectX::XMVECTOR &gt;</a></div><div class="ttdeci">Quatf Convert&lt; Quatf, DirectX::XMVECTOR &gt;(const DirectX::XMVECTOR &amp;v)</div><div class="ttdef"><b>Definition</b> <a href="#l00069">convert_directX.hpp:69</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_a10fe8542a8eb4eeca644633523f1f9a5"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#a10fe8542a8eb4eeca644633523f1f9a5">SFW::Math::Convert&lt; Vec3f, DirectX::XMVECTOR &gt;</a></div><div class="ttdeci">Vec3f Convert&lt; Vec3f, DirectX::XMVECTOR &gt;(const DirectX::XMVECTOR &amp;v)</div><div class="ttdoc">XMVECTOR → Vec3f</div><div class="ttdef"><b>Definition</b> <a href="#l00052">convert_directX.hpp:52</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_a126b326c039a9f6908edd8ac9eace7e3"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#a126b326c039a9f6908edd8ac9eace7e3">SFW::Math::Convert&lt; DirectX::XMMATRIX, Matrix4x4f &gt;</a></div><div class="ttdeci">DirectX::XMMATRIX Convert&lt; DirectX::XMMATRIX, Matrix4x4f &gt;(const Matrix4x4f &amp;m)</div><div class="ttdoc">Matrix4x4f → XMMATRIX</div><div class="ttdef"><b>Definition</b> <a href="#l00079">convert_directX.hpp:80</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_a16e99287e9769a9c4bc98320876e9c33"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#a16e99287e9769a9c4bc98320876e9c33">SFW::Math::Convert&lt; DirectX::XMVECTOR, Quatf &gt;</a></div><div class="ttdeci">DirectX::XMVECTOR Convert&lt; DirectX::XMVECTOR, Quatf &gt;(const Quatf &amp;q)</div><div class="ttdoc">Quatf → XMVECTOR</div><div class="ttdef"><b>Definition</b> <a href="#l00064">convert_directX.hpp:64</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_a3cc0985a0fb0848b404af96ae6bb83a5"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">SFW::Math::Vec2f</a></div><div class="ttdeci">Vec2&lt; float &gt; Vec2f</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00353">Vector.hpp:353</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_a596ab3e2fca7a08efa4053bfd878d90f"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#a596ab3e2fca7a08efa4053bfd878d90f">SFW::Math::Convert&lt; Matrix4x4f, DirectX::XMMATRIX &gt;</a></div><div class="ttdeci">Matrix4x4f Convert&lt; Matrix4x4f, DirectX::XMMATRIX &gt;(const DirectX::XMMATRIX &amp;mat)</div><div class="ttdoc">XMMATRIX → Matrix4x4f</div><div class="ttdef"><b>Definition</b> <a href="#l00094">convert_directX.hpp:95</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_a642b9cd5e3a97547b908d58a6c91f9b1"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">SFW::Math::Matrix4x4f</a></div><div class="ttdeci">Matrix&lt; 4, 4, float &gt; Matrix4x4f</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8hpp_source.html#l00075">Matrix.hpp:75</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_a87dd0ac5fb73d065f0315c5be2632a60"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">SFW::Math::Quatf</a></div><div class="ttdeci">Quat&lt; float &gt; Quatf</div><div class="ttdef"><b>Definition</b> <a href="_quaternion_8hpp_source.html#l00184">Quaternion.hpp:184</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_a90d1ff78e63fd0a5db8ec375c0d0f59e"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#a90d1ff78e63fd0a5db8ec375c0d0f59e">SFW::Math::Convert&lt; DirectX::XMVECTOR, Vec3f &gt;</a></div><div class="ttdeci">DirectX::XMVECTOR Convert&lt; DirectX::XMVECTOR, Vec3f &gt;(const Vec3f &amp;v)</div><div class="ttdoc">Vec3f → XMVECTOR</div><div class="ttdef"><b>Definition</b> <a href="#l00043">convert_directX.hpp:43</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_a93b291c9700c7a6011a999381a975578"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#a93b291c9700c7a6011a999381a975578">SFW::Math::BitCast</a></div><div class="ttdeci">constexpr To BitCast(const From &amp;from)</div><div class="ttdef"><b>Definition</b> <a href="convert_8hpp_source.html#l00045">convert.hpp:45</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_ab58ad5b52dbf63bd9112a990d1971661"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#ab58ad5b52dbf63bd9112a990d1971661">SFW::Math::Convert&lt; DirectX::XMFLOAT2, Vec2f &gt;</a></div><div class="ttdeci">DirectX::XMFLOAT2 Convert&lt; DirectX::XMFLOAT2, Vec2f &gt;(const Vec2f &amp;v)</div><div class="ttdoc">Vector2 → XMFLOAT2</div><div class="ttdef"><b>Definition</b> <a href="#l00024">convert_directX.hpp:24</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_ac294994588c7ab040fcf07f6dced3027"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#ac294994588c7ab040fcf07f6dced3027">SFW::Math::Convert&lt; Vec2f, DirectX::XMFLOAT2 &gt;</a></div><div class="ttdeci">Vec2f Convert&lt; Vec2f, DirectX::XMFLOAT2 &gt;(const DirectX::XMFLOAT2 &amp;v)</div><div class="ttdoc">XMFLOAT2 → Vec2f</div><div class="ttdef"><b>Definition</b> <a href="#l00033">convert_directX.hpp:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_afea45e91c6313bb6dd5c60690ff82019"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">SFW::Math::Vec3f</a></div><div class="ttdeci">Vec3&lt; float &gt; Vec3f</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00354">Vector.hpp:354</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_math_1_1_matrix_html_a1513336b5f1081c50db9ae5745943784"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">SFW::Math::Matrix::m</a></div><div class="ttdeci">std::array&lt; std::array&lt; T, Cols &gt;, Rows &gt; m</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8hpp_source.html#l00049">Matrix.hpp:49</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_math_1_1_quat_html_a2ece16b5029f9d5feb91109cb2cb0a04"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_quat.html#a2ece16b5029f9d5feb91109cb2cb0a04">SFW::Math::Quat::y</a></div><div class="ttdeci">T y</div><div class="ttdef"><b>Definition</b> <a href="_quaternion_8hpp_source.html#l00022">Quaternion.hpp:22</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_math_1_1_quat_html_a5f8d4cec0df3a46f935e01b0705c1202"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_quat.html#a5f8d4cec0df3a46f935e01b0705c1202">SFW::Math::Quat::z</a></div><div class="ttdeci">T z</div><div class="ttdef"><b>Definition</b> <a href="_quaternion_8hpp_source.html#l00022">Quaternion.hpp:22</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_math_1_1_quat_html_a8861a90e5ee88d31daeabb755f95d0c1"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_quat.html#a8861a90e5ee88d31daeabb755f95d0c1">SFW::Math::Quat::x</a></div><div class="ttdeci">T x</div><div class="ttdef"><b>Definition</b> <a href="_quaternion_8hpp_source.html#l00022">Quaternion.hpp:22</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_math_1_1_quat_html_ae93b3e27320b5e09174e2ae2d5ee71a1"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_quat.html#ae93b3e27320b5e09174e2ae2d5ee71a1">SFW::Math::Quat::w</a></div><div class="ttdeci">T w</div><div class="ttdef"><b>Definition</b> <a href="_quaternion_8hpp_source.html#l00022">Quaternion.hpp:22</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec3_html_a0d2709fc022ffd3b0be4fe2fb7914d51"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec3.html#a0d2709fc022ffd3b0be4fe2fb7914d51">SFW::Math::Vec3::z</a></div><div class="ttdeci">T z</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00091">Vector.hpp:91</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec3_html_a321ecffe7d2fc085be48e383b726d446"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">SFW::Math::Vec3::x</a></div><div class="ttdeci">T x</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00091">Vector.hpp:91</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec3_html_a50dcb824e1549ed55b4addc65c4e3240"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec3.html#a50dcb824e1549ed55b4addc65c4e3240">SFW::Math::Vec3::y</a></div><div class="ttdeci">T y</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00091">Vector.hpp:91</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="convert__direct_x_8hpp.html">convert_directX.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

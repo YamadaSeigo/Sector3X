@@ -1,0 +1,305 @@
+\doxysection{SFW\+::Input\+::Win\+Input クラス}
+\hypertarget{class_s_f_w_1_1_input_1_1_win_input}{}\label{class_s_f_w_1_1_input_1_1_win_input}\index{SFW::Input::WinInput@{SFW::Input::WinInput}}
+
+
+Windows向けの入力デバイス  
+
+
+
+
+{\ttfamily \#include $<$Win\+Input.\+h$>$}
+
+SFW\+::Input\+::Win\+Input の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_s_f_w_1_1_input_1_1_win_input}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_input_a908748053eacb6c4f79b3b6545a08598}{Win\+Input}} (\mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input}{Win\+Mouse\+Input}} \texorpdfstring{$\ast$}{*}mouse\+Input) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_input_a53f395f86aba8019b6a0c29957f7aee9}{Update\+Impl}} ()
+\begin{DoxyCompactList}\small\item\em 入力状態を更新する関数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_input_adf35533061b5eaba6df6c0e38664fc8d}{Is\+Key\+Pressed\+Impl}} (\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}} key) const noexcept
+\begin{DoxyCompactList}\small\item\em キーが押されているかを確認する関数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_input_a7e15c33c1906766943a8c99379a26d5f}{Is\+Key\+Released\+Impl}} (\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}} key) const noexcept
+\begin{DoxyCompactList}\small\item\em キーが離されたかを確認する関数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_input_a3426b4261e20625e6876bd47b648fb18}{Is\+Key\+Trigger\+Impl}} (\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}} key) const noexcept
+\begin{DoxyCompactList}\small\item\em キーがトリガーされたかを確認する関数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_input_a91cec9dfc916a3f20b28a3bcaafdff2f}{Is\+LButton\+Pressed\+Impl}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 左ボタンが押されているかを確認する関数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_input_a72ed9aa104ca235665aedb706f8d49a1}{Is\+RButton\+Pressed\+Impl}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 右ボタンが押されているかを確認する関数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_input_a5ecfb3349206036cd5890f10c06a8186}{Is\+Mouse\+Captured\+Impl}} () const noexcept
+\begin{DoxyCompactList}\small\item\em ミドルボタンが押されているかを確認する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_input_a3f781095fd59117f1f18b18633afd0cc}{Get\+Mouse\+Delta\+Impl}} (long \&out\+Dx, long \&out\+Dy) const noexcept
+\begin{DoxyCompactList}\small\item\em マウスの移動量を取得する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_input_a7ad27e5674a79be1fdc8e2ec2a26264e}{Get\+Mouse\+Wheel\+Impl}} (int \&out\+WheelV, int \&out\+WheelH) const noexcept
+\begin{DoxyCompactList}\small\item\em マウスのホイールの回転量を取得する関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device}{SFW\+::\+Input\+::\+Input\+Device$<$ Win\+Input $>$}} に属する継承公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_aaab0286e0ffb22a33355abb993325adf}{Is\+Key\+Pressed}} (\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}} key) const
+\begin{DoxyCompactList}\small\item\em キーが押されているかどうかを取得します。 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a6a6896553e3b6e70e26f82ee0f11ee1e}{Is\+Key\+Released}} (\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}} key) const
+\begin{DoxyCompactList}\small\item\em キーが離されたかどうかを取得します。 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a1bf2b646f38868c943efabdd4cffde73}{Is\+Key\+Trigger}} (\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}} key) const
+\begin{DoxyCompactList}\small\item\em キーがトリガーされたかどうかを取得します。 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a87158bf9184328f06ee94b1bbea4f5b3}{Is\+LButton\+Pressed}} () const
+\begin{DoxyCompactList}\small\item\em 左ボタンが押されているかどうかを取得します。 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_acaf4b909d9637336f71a8af9cd4a42fa}{Is\+RButton\+Pressed}} () const
+\begin{DoxyCompactList}\small\item\em 右ボタンが押されているかどうかを取得します。 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a55cf97da8f02a0b0a3d38faa2f332688}{Is\+Mouse\+Captured}} () const
+\begin{DoxyCompactList}\small\item\em マウスの入力がキャプチャされているかどうかを取得します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a0055c8f367a226a83718dbd501e3d951}{Set\+Mouse\+Captured}} (bool captured)
+\begin{DoxyCompactList}\small\item\em マウスの入力をキャプチャするかどうかを設定します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a28306432dd59fb192a148d5db236aafc}{Get\+Mouse\+Delta}} (long \&out\+Dx, long \&out\+Dy) const noexcept
+\begin{DoxyCompactList}\small\item\em マウスの位置を取得します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a488b552ad1e6c3c1aa034a50c3bacb9c}{Get\+Mouse\+Wheel}} (int \&out\+WheelV, int \&out\+WheelH) const noexcept
+\begin{DoxyCompactList}\small\item\em マウスホイールの状態を取得します。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{その他の継承メンバ}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7}{Phase}} \+: uint16\+\_\+t \{ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}} = 0
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7}{NORMAL}} = 1
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9}{LATE}} = 2
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907}{PHASE\+\_\+\+MAX}}
+ \}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608}{Group}} \+: uint16\+\_\+t \{ \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b}{GROUP\+\_\+\+GRAPHICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda}{GROUP\+\_\+\+PHYSICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a}{GROUP\+\_\+\+INPUT}}
+, \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e}{GROUP\+\_\+\+AUDIO}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580}{GROUP\+\_\+\+AI}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90}{GROUP\+\_\+\+MAX}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a73744778bc5cc3113ed77db1b69e1fb1}{update\+Phase}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a9f0e8abd26ab30155b39e558f004ce42}{update\+Group}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a116ce546ab92eaf8f4282719b89a5165}{update\+Order}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Windows向けの入力デバイス 
+
+ \mbox{\hyperlink{_win_input_8h_source}{Win\+Input.\+h}} の \mbox{\hyperlink{_win_input_8h_source_l00022}{22}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_input_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_input_a908748053eacb6c4f79b3b6545a08598}\index{SFW::Input::WinInput@{SFW::Input::WinInput}!WinInput@{WinInput}}
+\index{WinInput@{WinInput}!SFW::Input::WinInput@{SFW::Input::WinInput}}
+\doxysubsubsection{\texorpdfstring{WinInput()}{WinInput()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_input_a908748053eacb6c4f79b3b6545a08598} 
+SFW\+::\+Input\+::\+Win\+Input\+::\+Win\+Input (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input}{Win\+Mouse\+Input}} \texorpdfstring{$\ast$}{*}}]{mouse\+Input}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em mouse\+Input} & マウス入力デバイスのポインタ \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_win_input_8h_source}{Win\+Input.\+h}} の \mbox{\hyperlink{_win_input_8h_source_l00187}{187}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_input_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_input_a3f781095fd59117f1f18b18633afd0cc}\index{SFW::Input::WinInput@{SFW::Input::WinInput}!GetMouseDeltaImpl@{GetMouseDeltaImpl}}
+\index{GetMouseDeltaImpl@{GetMouseDeltaImpl}!SFW::Input::WinInput@{SFW::Input::WinInput}}
+\doxysubsubsection{\texorpdfstring{GetMouseDeltaImpl()}{GetMouseDeltaImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_input_a3f781095fd59117f1f18b18633afd0cc} 
+void SFW\+::\+Input\+::\+Win\+Input\+::\+Get\+Mouse\+Delta\+Impl (\begin{DoxyParamCaption}\item[{long \&}]{out\+Dx}{, }\item[{long \&}]{out\+Dy}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+マウスの移動量を取得する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em out\+Dx} & マウスの移動量X \\
+\hline
+{\em out\+Dy　マウスの移動量Y} & \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_win_input_8h_source}{Win\+Input.\+h}} の \mbox{\hyperlink{_win_input_8h_source_l00253}{253}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_input_a7ad27e5674a79be1fdc8e2ec2a26264e}\index{SFW::Input::WinInput@{SFW::Input::WinInput}!GetMouseWheelImpl@{GetMouseWheelImpl}}
+\index{GetMouseWheelImpl@{GetMouseWheelImpl}!SFW::Input::WinInput@{SFW::Input::WinInput}}
+\doxysubsubsection{\texorpdfstring{GetMouseWheelImpl()}{GetMouseWheelImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_input_a7ad27e5674a79be1fdc8e2ec2a26264e} 
+void SFW\+::\+Input\+::\+Win\+Input\+::\+Get\+Mouse\+Wheel\+Impl (\begin{DoxyParamCaption}\item[{int \&}]{out\+WheelV}{, }\item[{int \&}]{out\+WheelH}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+マウスのホイールの回転量を取得する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em out\+WheelV} & マウスのホイールの回転量垂直 \\
+\hline
+{\em out\+WheelH} & マウスのホイールの回転量水平 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_win_input_8h_source}{Win\+Input.\+h}} の \mbox{\hyperlink{_win_input_8h_source_l00261}{261}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_input_adf35533061b5eaba6df6c0e38664fc8d}\index{SFW::Input::WinInput@{SFW::Input::WinInput}!IsKeyPressedImpl@{IsKeyPressedImpl}}
+\index{IsKeyPressedImpl@{IsKeyPressedImpl}!SFW::Input::WinInput@{SFW::Input::WinInput}}
+\doxysubsubsection{\texorpdfstring{IsKeyPressedImpl()}{IsKeyPressedImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_input_adf35533061b5eaba6df6c0e38664fc8d} 
+bool SFW\+::\+Input\+::\+Win\+Input\+::\+Is\+Key\+Pressed\+Impl (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}}}]{key}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+キーが押されているかを確認する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em key} & 確認するキー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+bool 押されている場合はtrue、押されていない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_win_input_8h_source}{Win\+Input.\+h}} の \mbox{\hyperlink{_win_input_8h_source_l00206}{206}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_input_a7e15c33c1906766943a8c99379a26d5f}\index{SFW::Input::WinInput@{SFW::Input::WinInput}!IsKeyReleasedImpl@{IsKeyReleasedImpl}}
+\index{IsKeyReleasedImpl@{IsKeyReleasedImpl}!SFW::Input::WinInput@{SFW::Input::WinInput}}
+\doxysubsubsection{\texorpdfstring{IsKeyReleasedImpl()}{IsKeyReleasedImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_input_a7e15c33c1906766943a8c99379a26d5f} 
+bool SFW\+::\+Input\+::\+Win\+Input\+::\+Is\+Key\+Released\+Impl (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}}}]{key}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+キーが離されたかを確認する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em key} & 確認するキー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+bool 離された場合はtrue、離されていない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_win_input_8h_source}{Win\+Input.\+h}} の \mbox{\hyperlink{_win_input_8h_source_l00214}{214}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_input_a3426b4261e20625e6876bd47b648fb18}\index{SFW::Input::WinInput@{SFW::Input::WinInput}!IsKeyTriggerImpl@{IsKeyTriggerImpl}}
+\index{IsKeyTriggerImpl@{IsKeyTriggerImpl}!SFW::Input::WinInput@{SFW::Input::WinInput}}
+\doxysubsubsection{\texorpdfstring{IsKeyTriggerImpl()}{IsKeyTriggerImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_input_a3426b4261e20625e6876bd47b648fb18} 
+bool SFW\+::\+Input\+::\+Win\+Input\+::\+Is\+Key\+Trigger\+Impl (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}}}]{key}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+キーがトリガーされたかを確認する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em key} & 確認するキー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+bool トリガーされた場合はtrue、トリガーされていない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_win_input_8h_source}{Win\+Input.\+h}} の \mbox{\hyperlink{_win_input_8h_source_l00223}{223}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_input_a91cec9dfc916a3f20b28a3bcaafdff2f}\index{SFW::Input::WinInput@{SFW::Input::WinInput}!IsLButtonPressedImpl@{IsLButtonPressedImpl}}
+\index{IsLButtonPressedImpl@{IsLButtonPressedImpl}!SFW::Input::WinInput@{SFW::Input::WinInput}}
+\doxysubsubsection{\texorpdfstring{IsLButtonPressedImpl()}{IsLButtonPressedImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_input_a91cec9dfc916a3f20b28a3bcaafdff2f} 
+bool SFW\+::\+Input\+::\+Win\+Input\+::\+Is\+LButton\+Pressed\+Impl (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+左ボタンが押されているかを確認する関数 
+
+\begin{DoxyReturn}{戻り値}
+bool 押されている場合はtrue、押されていない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_win_input_8h_source}{Win\+Input.\+h}} の \mbox{\hyperlink{_win_input_8h_source_l00231}{231}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_input_a5ecfb3349206036cd5890f10c06a8186}\index{SFW::Input::WinInput@{SFW::Input::WinInput}!IsMouseCapturedImpl@{IsMouseCapturedImpl}}
+\index{IsMouseCapturedImpl@{IsMouseCapturedImpl}!SFW::Input::WinInput@{SFW::Input::WinInput}}
+\doxysubsubsection{\texorpdfstring{IsMouseCapturedImpl()}{IsMouseCapturedImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_input_a5ecfb3349206036cd5890f10c06a8186} 
+bool SFW\+::\+Input\+::\+Win\+Input\+::\+Is\+Mouse\+Captured\+Impl (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ミドルボタンが押されているかを確認する関数 
+
+\begin{DoxyReturn}{戻り値}
+bool 押されている場合はtrue、押されていない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_win_input_8h_source}{Win\+Input.\+h}} の \mbox{\hyperlink{_win_input_8h_source_l00245}{245}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_input_a72ed9aa104ca235665aedb706f8d49a1}\index{SFW::Input::WinInput@{SFW::Input::WinInput}!IsRButtonPressedImpl@{IsRButtonPressedImpl}}
+\index{IsRButtonPressedImpl@{IsRButtonPressedImpl}!SFW::Input::WinInput@{SFW::Input::WinInput}}
+\doxysubsubsection{\texorpdfstring{IsRButtonPressedImpl()}{IsRButtonPressedImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_input_a72ed9aa104ca235665aedb706f8d49a1} 
+bool SFW\+::\+Input\+::\+Win\+Input\+::\+Is\+RButton\+Pressed\+Impl (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+右ボタンが押されているかを確認する関数 
+
+\begin{DoxyReturn}{戻り値}
+bool 押されている場合はtrue、押されていない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_win_input_8h_source}{Win\+Input.\+h}} の \mbox{\hyperlink{_win_input_8h_source_l00238}{238}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_input_a53f395f86aba8019b6a0c29957f7aee9}\index{SFW::Input::WinInput@{SFW::Input::WinInput}!UpdateImpl@{UpdateImpl}}
+\index{UpdateImpl@{UpdateImpl}!SFW::Input::WinInput@{SFW::Input::WinInput}}
+\doxysubsubsection{\texorpdfstring{UpdateImpl()}{UpdateImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_input_a53f395f86aba8019b6a0c29957f7aee9} 
+void SFW\+::\+Input\+::\+Win\+Input\+::\+Update\+Impl (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+入力状態を更新する関数 
+
+
+
+ \mbox{\hyperlink{_win_input_8h_source}{Win\+Input.\+h}} の \mbox{\hyperlink{_win_input_8h_source_l00193}{193}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Input/\mbox{\hyperlink{_win_input_8h}{Win\+Input.\+h}}\end{DoxyCompactItemize}

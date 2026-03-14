@@ -1,0 +1,170 @@
+\doxysection{SFW\+::Debug\+::Im\+Gui\+Layer クラス}
+\hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_layer}{}\label{class_s_f_w_1_1_debug_1_1_im_gui_layer}\index{SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}}
+
+
+バックエンドを使用して\+Im\+Guiの描画を管理するクラス  
+
+
+
+
+{\ttfamily \#include $<$Im\+Gui\+Layer.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a4b63c5c694ee0c37d850deeb7a0702d5}{Im\+Gui\+Layer}} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend}{IIm\+Gui\+Backend}} $>$ backend)
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_abcba63143610036ed397ded8b23dfe76}{\texorpdfstring{$\sim$}{\string~}\+Im\+Gui\+Layer}} ()
+\item 
+const std\+::type\+\_\+info \& \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a33d586d946e3d8e78df25735fcea706d}{Get\+Window\+Type}} () const
+\begin{DoxyCompactList}\small\item\em ウィンドウの型情報を取得する関数 \end{DoxyCompactList}\item 
+const std\+::type\+\_\+info \& \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a763579230940049386d8484a5f78240b}{Get\+Device\+Type}} () const
+\begin{DoxyCompactList}\small\item\em デバイスの型情報を取得する関数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a03b3fb6a2f3796cc22fe4faf692141bf}{Init}} (const \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info}{Im\+Gui\+Init\+Info}} \&info)
+\begin{DoxyCompactList}\small\item\em Im\+Guiの初期化を行う関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_ac81ea621f1f9a68cb5192fe794366773}{Begin\+Frame}} ()
+\begin{DoxyCompactList}\small\item\em フレームの開始を行う関数。 Im\+Gui\+::\+New\+Frame() を含む \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a1de9389c3e2371806584d832803c4aa0}{Draw\+UI}} (float frame\+Sec)
+\begin{DoxyCompactList}\small\item\em UIの描画を行う関数.\+UIBus.\+cppで実装 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a35b6cdd027f79af2c5a17ea918c1df66}{End\+Frame}} ()
+\begin{DoxyCompactList}\small\item\em フレームの終了を行う関数。 Im\+Gui\+::\+Render() まで \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a34c1d3801ffe23e2ee12157acfee451b}{Render}} ()
+\begin{DoxyCompactList}\small\item\em 描画コマンドの発行を行う関数。 Im\+Gui\+::\+Render() の後に呼ぶ \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+バックエンドを使用して\+Im\+Guiの描画を管理するクラス 
+
+ \mbox{\hyperlink{_im_gui_layer_8h_source}{Im\+Gui\+Layer.\+h}} の \mbox{\hyperlink{_im_gui_layer_8h_source_l00026}{26}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_layer_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_layer_a4b63c5c694ee0c37d850deeb7a0702d5}\index{SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}!ImGuiLayer@{ImGuiLayer}}
+\index{ImGuiLayer@{ImGuiLayer}!SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}}
+\doxysubsubsection{\texorpdfstring{ImGuiLayer()}{ImGuiLayer()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_layer_a4b63c5c694ee0c37d850deeb7a0702d5} 
+SFW\+::\+Debug\+::\+Im\+Gui\+Layer\+::\+Im\+Gui\+Layer (\begin{DoxyParamCaption}\item[{std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend}{IIm\+Gui\+Backend}} $>$}]{backend}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+コンストラクタ 
+
+UIBus.\+cppで実装 
+\begin{DoxyParams}{引数}
+{\em backend} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+
+\end{DoxyReturn}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_layer_abcba63143610036ed397ded8b23dfe76}\index{SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}!````~ImGuiLayer@{\texorpdfstring{$\sim$}{\string~}ImGuiLayer}}
+\index{````~ImGuiLayer@{\texorpdfstring{$\sim$}{\string~}ImGuiLayer}!SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ImGuiLayer()}{\string~ImGuiLayer()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_layer_abcba63143610036ed397ded8b23dfe76} 
+SFW\+::\+Debug\+::\+Im\+Gui\+Layer\+::\texorpdfstring{$\sim$}{\string~}\+Im\+Gui\+Layer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_layer_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_layer_ac81ea621f1f9a68cb5192fe794366773}\index{SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}!BeginFrame@{BeginFrame}}
+\index{BeginFrame@{BeginFrame}!SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}}
+\doxysubsubsection{\texorpdfstring{BeginFrame()}{BeginFrame()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_layer_ac81ea621f1f9a68cb5192fe794366773} 
+void SFW\+::\+Debug\+::\+Im\+Gui\+Layer\+::\+Begin\+Frame (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+フレームの開始を行う関数。 Im\+Gui\+::\+New\+Frame() を含む 
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_layer_a1de9389c3e2371806584d832803c4aa0}\index{SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}!DrawUI@{DrawUI}}
+\index{DrawUI@{DrawUI}!SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}}
+\doxysubsubsection{\texorpdfstring{DrawUI()}{DrawUI()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_layer_a1de9389c3e2371806584d832803c4aa0} 
+void SFW\+::\+Debug\+::\+Im\+Gui\+Layer\+::\+Draw\+UI (\begin{DoxyParamCaption}\item[{float}]{frame\+Sec}{}\end{DoxyParamCaption})}
+
+
+
+UIの描画を行う関数.\+UIBus.\+cppで実装 
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_layer_a35b6cdd027f79af2c5a17ea918c1df66}\index{SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}!EndFrame@{EndFrame}}
+\index{EndFrame@{EndFrame}!SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}}
+\doxysubsubsection{\texorpdfstring{EndFrame()}{EndFrame()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_layer_a35b6cdd027f79af2c5a17ea918c1df66} 
+void SFW\+::\+Debug\+::\+Im\+Gui\+Layer\+::\+End\+Frame (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+フレームの終了を行う関数。 Im\+Gui\+::\+Render() まで 
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_layer_a763579230940049386d8484a5f78240b}\index{SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}!GetDeviceType@{GetDeviceType}}
+\index{GetDeviceType@{GetDeviceType}!SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}}
+\doxysubsubsection{\texorpdfstring{GetDeviceType()}{GetDeviceType()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_layer_a763579230940049386d8484a5f78240b} 
+const std\+::type\+\_\+info \& SFW\+::\+Debug\+::\+Im\+Gui\+Layer\+::\+Get\+Device\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+デバイスの型情報を取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+const std\+::type\+\_\+info\& 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_im_gui_layer_8h_source}{Im\+Gui\+Layer.\+h}} の \mbox{\hyperlink{_im_gui_layer_8h_source_l00047}{47}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_layer_a33d586d946e3d8e78df25735fcea706d}\index{SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}!GetWindowType@{GetWindowType}}
+\index{GetWindowType@{GetWindowType}!SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}}
+\doxysubsubsection{\texorpdfstring{GetWindowType()}{GetWindowType()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_layer_a33d586d946e3d8e78df25735fcea706d} 
+const std\+::type\+\_\+info \& SFW\+::\+Debug\+::\+Im\+Gui\+Layer\+::\+Get\+Window\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ウィンドウの型情報を取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+const std\+::type\+\_\+info\& 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_im_gui_layer_8h_source}{Im\+Gui\+Layer.\+h}} の \mbox{\hyperlink{_im_gui_layer_8h_source_l00040}{40}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_layer_a03b3fb6a2f3796cc22fe4faf692141bf}\index{SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}!Init@{Init}}
+\index{Init@{Init}!SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}}
+\doxysubsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_layer_a03b3fb6a2f3796cc22fe4faf692141bf} 
+bool SFW\+::\+Debug\+::\+Im\+Gui\+Layer\+::\+Init (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info}{Im\+Gui\+Init\+Info}} \&}]{info}{}\end{DoxyParamCaption})}
+
+
+
+Im\+Guiの初期化を行う関数 
+
+
+\begin{DoxyParams}{引数}
+{\em info} & 初期化情報 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+bool 初期化に成功した場合はtrue、失敗した場合はfalse 
+\end{DoxyReturn}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_layer_a34c1d3801ffe23e2ee12157acfee451b}\index{SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}!Render@{Render}}
+\index{Render@{Render}!SFW::Debug::ImGuiLayer@{SFW::Debug::ImGuiLayer}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_layer_a34c1d3801ffe23e2ee12157acfee451b} 
+void SFW\+::\+Debug\+::\+Im\+Gui\+Layer\+::\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+描画コマンドの発行を行う関数。 Im\+Gui\+::\+Render() の後に呼ぶ 
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Debug/\mbox{\hyperlink{_im_gui_layer_8h}{Im\+Gui\+Layer.\+h}}\end{DoxyCompactItemize}

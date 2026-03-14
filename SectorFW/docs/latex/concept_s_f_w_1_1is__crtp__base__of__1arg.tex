@@ -1,0 +1,22 @@
+\doxysection{SFW\+::is\+\_\+crtp\+\_\+base\+\_\+of\+\_\+1arg Concept Reference}
+\hypertarget{concept_s_f_w_1_1is__crtp__base__of__1arg}{}\label{concept_s_f_w_1_1is__crtp__base__of__1arg}\index{SFW::is\_crtp\_base\_of\_1arg@{SFW::is\_crtp\_base\_of\_1arg}}
+
+
+{\ttfamily \#include $<$Type\+Checker.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{template}<\ \textcolor{keyword}{typename}\ >\ \textcolor{keyword}{class\ }CRTP>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1is__crtp__base__of__1arg}{SFW::is\_crtp\_base\_of\_1arg}}\ =\ \ \textcolor{keyword}{requires}(T\ *\ t)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}CRTP<T>*\textcolor{keyword}{>}(t);}
+\DoxyCodeLine{\ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_type_checker_8hpp_source}{Type\+Checker.\+hpp}} の \mbox{\hyperlink{_type_checker_8hpp_source_l00034}{34}} 行目に定義があります。
+

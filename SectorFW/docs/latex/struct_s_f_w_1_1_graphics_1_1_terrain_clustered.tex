@@ -1,0 +1,265 @@
+\doxysection{SFW\+::Graphics\+::Terrain\+Clustered 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{}\label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+
+
+{\ttfamily \#include $<$Terrain\+Clustered.\+h$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range}{Cluster\+Range}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_splat_meta}{Cluster\+Splat\+Meta}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_height_field}{Height\+Field}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_rigid_pose}{Rigid\+Pose}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_splat_layer_meta}{Splat\+Layer\+Meta}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a4174af5b72260a92cab361276e391d72}{Splat\+Generator}} = std\+::function$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_splat_meta}{Cluster\+Splat\+Meta}}(uint32\+\_\+t cid, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range}{Cluster\+Range}}\& c)$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a974567c2c00d6026a9dfdfc9fc7d6de5}{Init\+Splat\+Default}} (uint32\+\_\+t common\+Splat\+Tex\+Id, const uint32\+\_\+t material\+Ids\mbox{[}4\mbox{]}, const float tiling\+UV\mbox{[}4\mbox{]}\mbox{[}2\mbox{]})
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_aff9d2cc63daef0cdbca846789449b8f8}{Init\+Splat\+With\+Generator}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a4174af5b72260a92cab361276e391d72}{Splat\+Generator}} \&gen)
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_adda55f5bb8daec71709e0445a1e31827}{Sample\+Height\+Normal\+Bilinear}} (float x, float z, float \&outH, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \texorpdfstring{$\ast$}{*}outN=nullptr) const
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_rigid_pose}{Rigid\+Pose}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a16e15821d00342b1581d0c20180b28ff}{Solve\+Placement\+By\+Anchors}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&base\+Pos\+WS, float yaw\+Rad, float scale, const std\+::vector$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} $>$ \&anchors\+Local\+XZ, float max\+Tilt\+Deg=15.\+0f, float up\+Bias=0.\+5f, float base\+Bias=0.\+01f) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_aff17d8fd9d5f193d45fd6258309a9df3}{Build}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_build_params}{Terrain\+Build\+Params}} \&p, std\+::vector$<$ float $>$ \texorpdfstring{$\ast$}{*}out\+Map=nullptr)
+\item 
+static \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_aeec62b72e388ff4ba59cab6abd24cf3c}{Build\+From\+Height\+Map}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_height_field}{Height\+Field}} \&hf, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_build_params}{Terrain\+Build\+Params}} \&p)
+\item 
+static void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a9c0e34e6fe072c7bc6f5d0083d3eaf38}{Weld\+Vertices\+Along\+Borders}} (std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_vertex}{SFW\+::\+Graphics\+::\+Terrain\+Vertex}} $>$ \&\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a81e2a3501350a1ab4c0eb51c48935a40}{vertices}}, std\+::vector$<$ uint32\+\_\+t $>$ \&\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_ad0baba5370fee36108e1069c79009ff0}{index\+Pool}}, float cell\+Size)
+\item 
+static bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_ab0ec00a9398d28536ddde1faad44e549}{Check\+Cluster\+Border\+Equality}} (const std\+::vector$<$ uint32\+\_\+t $>$ \&\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_ad0baba5370fee36108e1069c79009ff0}{index\+Pool}}, const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range}{Terrain\+Clustered\+::\+Cluster\+Range}} $>$ \&\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_af09600d5163afada4b8422ba34ff3a0a}{clusters}}, uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a35fb502d0b2947603202088cca0981e0}{clustersX}}, uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a9cfbbcb4f5b8dadc66628dfee4aff15f}{clustersZ}})
+\item 
+static void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a7f720724c0f034185e843086b9e6e880}{Add\+Skirts\+To\+Clusters}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{SFW\+::\+Graphics\+::\+Terrain\+Clustered}} \&t, float skirt\+Depth)
+\item 
+static uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a355a3be68b5ea17390305cb5bc7f9eba}{VIdx}} (uint32\+\_\+t x, uint32\+\_\+t z, uint32\+\_\+t vx)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_vertex}{Terrain\+Vertex}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a81e2a3501350a1ab4c0eb51c48935a40}{vertices}}
+\item 
+std\+::vector$<$ uint32\+\_\+t $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_ad0baba5370fee36108e1069c79009ff0}{index\+Pool}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a35fb502d0b2947603202088cca0981e0}{clustersX}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a9cfbbcb4f5b8dadc66628dfee4aff15f}{clustersZ}} = 0
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range}{Cluster\+Range}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_af09600d5163afada4b8422ba34ff3a0a}{clusters}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_ac72123777e7a71565c15c7cbc78a0907}{vertsX}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a29d4e1aae0d20baf708eb23d952198c1}{vertsZ}} = 0
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_splat_meta}{Cluster\+Splat\+Meta}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a1296a4ad075520d5cd91b076a83428fc}{splat}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a9c2b3932d618504d28c15d25659b8ad0}{k\+Splat\+Max\+Layers}} = 4
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_terrain_clustered_8h_source}{Terrain\+Clustered.\+h}} の \mbox{\hyperlink{_terrain_clustered_8h_source_l00089}{89}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a4174af5b72260a92cab361276e391d72}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!SplatGenerator@{SplatGenerator}}
+\index{SplatGenerator@{SplatGenerator}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{SplatGenerator}{SplatGenerator}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a4174af5b72260a92cab361276e391d72} 
+using \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a4174af5b72260a92cab361276e391d72}{SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::\+Splat\+Generator}} = std\+::function$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_splat_meta}{Cluster\+Splat\+Meta}}(uint32\+\_\+t cid, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range}{Cluster\+Range}}\& c)$>$}
+
+
+
+ \mbox{\hyperlink{_terrain_clustered_8h_source}{Terrain\+Clustered.\+h}} の \mbox{\hyperlink{_terrain_clustered_8h_source_l00158}{158}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a7f720724c0f034185e843086b9e6e880}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!AddSkirtsToClusters@{AddSkirtsToClusters}}
+\index{AddSkirtsToClusters@{AddSkirtsToClusters}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{AddSkirtsToClusters()}{AddSkirtsToClusters()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a7f720724c0f034185e843086b9e6e880} 
+void SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::\+Add\+Skirts\+To\+Clusters (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{SFW\+::\+Graphics\+::\+Terrain\+Clustered}} \&}]{t}{, }\item[{float}]{skirt\+Depth}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_aff17d8fd9d5f193d45fd6258309a9df3}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!Build@{Build}}
+\index{Build@{Build}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{Build()}{Build()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_aff17d8fd9d5f193d45fd6258309a9df3} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::\+Build (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_build_params}{Terrain\+Build\+Params}} \&}]{p}{, }\item[{std\+::vector$<$ float $>$ \texorpdfstring{$\ast$}{*}}]{out\+Map}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_aeec62b72e388ff4ba59cab6abd24cf3c}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!BuildFromHeightMap@{BuildFromHeightMap}}
+\index{BuildFromHeightMap@{BuildFromHeightMap}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{BuildFromHeightMap()}{BuildFromHeightMap()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_aeec62b72e388ff4ba59cab6abd24cf3c} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::\+Build\+From\+Height\+Map (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_height_field}{Height\+Field}} \&}]{hf}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_build_params}{Terrain\+Build\+Params}} \&}]{p}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_ab0ec00a9398d28536ddde1faad44e549}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!CheckClusterBorderEquality@{CheckClusterBorderEquality}}
+\index{CheckClusterBorderEquality@{CheckClusterBorderEquality}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{CheckClusterBorderEquality()}{CheckClusterBorderEquality()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_ab0ec00a9398d28536ddde1faad44e549} 
+bool SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::\+Check\+Cluster\+Border\+Equality (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ uint32\+\_\+t $>$ \&}]{index\+Pool}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range}{Terrain\+Clustered\+::\+Cluster\+Range}} $>$ \&}]{clusters}{, }\item[{uint32\+\_\+t}]{clustersX}{, }\item[{uint32\+\_\+t}]{clustersZ}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a974567c2c00d6026a9dfdfc9fc7d6de5}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!InitSplatDefault@{InitSplatDefault}}
+\index{InitSplatDefault@{InitSplatDefault}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{InitSplatDefault()}{InitSplatDefault()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a974567c2c00d6026a9dfdfc9fc7d6de5} 
+void SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::\+Init\+Splat\+Default (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{common\+Splat\+Tex\+Id}{, }\item[{const uint32\+\_\+t}]{material\+Ids}{\mbox{[}4\mbox{]}, }\item[{const float}]{tiling\+UV}{\mbox{[}4\mbox{]}\mbox{[}2\mbox{]}}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_aff9d2cc63daef0cdbca846789449b8f8}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!InitSplatWithGenerator@{InitSplatWithGenerator}}
+\index{InitSplatWithGenerator@{InitSplatWithGenerator}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{InitSplatWithGenerator()}{InitSplatWithGenerator()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_aff9d2cc63daef0cdbca846789449b8f8} 
+void SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::\+Init\+Splat\+With\+Generator (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a4174af5b72260a92cab361276e391d72}{Splat\+Generator}} \&}]{gen}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_adda55f5bb8daec71709e0445a1e31827}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!SampleHeightNormalBilinear@{SampleHeightNormalBilinear}}
+\index{SampleHeightNormalBilinear@{SampleHeightNormalBilinear}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{SampleHeightNormalBilinear()}{SampleHeightNormalBilinear()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_adda55f5bb8daec71709e0445a1e31827} 
+bool SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::\+Sample\+Height\+Normal\+Bilinear (\begin{DoxyParamCaption}\item[{float}]{x}{, }\item[{float}]{z}{, }\item[{float \&}]{outH}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \texorpdfstring{$\ast$}{*}}]{outN}{ = {\ttfamily nullptr}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a16e15821d00342b1581d0c20180b28ff}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!SolvePlacementByAnchors@{SolvePlacementByAnchors}}
+\index{SolvePlacementByAnchors@{SolvePlacementByAnchors}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{SolvePlacementByAnchors()}{SolvePlacementByAnchors()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a16e15821d00342b1581d0c20180b28ff} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_rigid_pose}{Rigid\+Pose}} SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::\+Solve\+Placement\+By\+Anchors (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{base\+Pos\+WS}{, }\item[{float}]{yaw\+Rad}{, }\item[{float}]{scale}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} $>$ \&}]{anchors\+Local\+XZ}{, }\item[{float}]{max\+Tilt\+Deg}{ = {\ttfamily 15.0f}, }\item[{float}]{up\+Bias}{ = {\ttfamily 0.5f}, }\item[{float}]{base\+Bias}{ = {\ttfamily 0.01f}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a355a3be68b5ea17390305cb5bc7f9eba}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!VIdx@{VIdx}}
+\index{VIdx@{VIdx}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{VIdx()}{VIdx()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a355a3be68b5ea17390305cb5bc7f9eba} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::\+VIdx (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{x}{, }\item[{uint32\+\_\+t}]{z}{, }\item[{uint32\+\_\+t}]{vx}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+ \mbox{\hyperlink{_terrain_clustered_8h_source}{Terrain\+Clustered.\+h}} の \mbox{\hyperlink{_terrain_clustered_8h_source_l00161}{161}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a9c0e34e6fe072c7bc6f5d0083d3eaf38}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!WeldVerticesAlongBorders@{WeldVerticesAlongBorders}}
+\index{WeldVerticesAlongBorders@{WeldVerticesAlongBorders}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{WeldVerticesAlongBorders()}{WeldVerticesAlongBorders()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a9c0e34e6fe072c7bc6f5d0083d3eaf38} 
+void SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::\+Weld\+Vertices\+Along\+Borders (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_vertex}{SFW\+::\+Graphics\+::\+Terrain\+Vertex}} $>$ \&}]{vertices}{, }\item[{std\+::vector$<$ uint32\+\_\+t $>$ \&}]{index\+Pool}{, }\item[{float}]{cell\+Size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_af09600d5163afada4b8422ba34ff3a0a}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!clusters@{clusters}}
+\index{clusters@{clusters}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{clusters}{clusters}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_af09600d5163afada4b8422ba34ff3a0a} 
+std\+::vector$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range}{Cluster\+Range}}$>$ SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::clusters}
+
+
+
+ \mbox{\hyperlink{_terrain_clustered_8h_source}{Terrain\+Clustered.\+h}} の \mbox{\hyperlink{_terrain_clustered_8h_source_l00111}{111}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a35fb502d0b2947603202088cca0981e0}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!clustersX@{clustersX}}
+\index{clustersX@{clustersX}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{clustersX}{clustersX}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a35fb502d0b2947603202088cca0981e0} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::clustersX = 0}
+
+
+
+ \mbox{\hyperlink{_terrain_clustered_8h_source}{Terrain\+Clustered.\+h}} の \mbox{\hyperlink{_terrain_clustered_8h_source_l00109}{109}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a9cfbbcb4f5b8dadc66628dfee4aff15f}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!clustersZ@{clustersZ}}
+\index{clustersZ@{clustersZ}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{clustersZ}{clustersZ}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a9cfbbcb4f5b8dadc66628dfee4aff15f} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::clustersZ = 0}
+
+
+
+ \mbox{\hyperlink{_terrain_clustered_8h_source}{Terrain\+Clustered.\+h}} の \mbox{\hyperlink{_terrain_clustered_8h_source_l00110}{110}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_ad0baba5370fee36108e1069c79009ff0}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!indexPool@{indexPool}}
+\index{indexPool@{indexPool}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{indexPool}{indexPool}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_ad0baba5370fee36108e1069c79009ff0} 
+std\+::vector$<$uint32\+\_\+t$>$ SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::index\+Pool}
+
+
+
+ \mbox{\hyperlink{_terrain_clustered_8h_source}{Terrain\+Clustered.\+h}} の \mbox{\hyperlink{_terrain_clustered_8h_source_l00106}{106}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a9c2b3932d618504d28c15d25659b8ad0}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!kSplatMaxLayers@{kSplatMaxLayers}}
+\index{kSplatMaxLayers@{kSplatMaxLayers}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{kSplatMaxLayers}{kSplatMaxLayers}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a9c2b3932d618504d28c15d25659b8ad0} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::k\+Splat\+Max\+Layers = 4\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+ \mbox{\hyperlink{_terrain_clustered_8h_source}{Terrain\+Clustered.\+h}} の \mbox{\hyperlink{_terrain_clustered_8h_source_l00101}{101}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a1296a4ad075520d5cd91b076a83428fc}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!splat@{splat}}
+\index{splat@{splat}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{splat}{splat}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a1296a4ad075520d5cd91b076a83428fc} 
+std\+::vector$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_splat_meta}{Cluster\+Splat\+Meta}}$>$ SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::splat}
+
+
+
+ \mbox{\hyperlink{_terrain_clustered_8h_source}{Terrain\+Clustered.\+h}} の \mbox{\hyperlink{_terrain_clustered_8h_source_l00151}{151}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a81e2a3501350a1ab4c0eb51c48935a40}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!vertices@{vertices}}
+\index{vertices@{vertices}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{vertices}{vertices}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a81e2a3501350a1ab4c0eb51c48935a40} 
+std\+::vector$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_vertex}{Terrain\+Vertex}}$>$ SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::vertices}
+
+
+
+ \mbox{\hyperlink{_terrain_clustered_8h_source}{Terrain\+Clustered.\+h}} の \mbox{\hyperlink{_terrain_clustered_8h_source_l00104}{104}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_ac72123777e7a71565c15c7cbc78a0907}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!vertsX@{vertsX}}
+\index{vertsX@{vertsX}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{vertsX}{vertsX}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_ac72123777e7a71565c15c7cbc78a0907} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::vertsX = 0}
+
+
+
+ \mbox{\hyperlink{_terrain_clustered_8h_source}{Terrain\+Clustered.\+h}} の \mbox{\hyperlink{_terrain_clustered_8h_source_l00114}{114}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a29d4e1aae0d20baf708eb23d952198c1}\index{SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}!vertsZ@{vertsZ}}
+\index{vertsZ@{vertsZ}!SFW::Graphics::TerrainClustered@{SFW::Graphics::TerrainClustered}}
+\doxysubsubsection{\texorpdfstring{vertsZ}{vertsZ}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_a29d4e1aae0d20baf708eb23d952198c1} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Terrain\+Clustered\+::vertsZ = 0}
+
+
+
+ \mbox{\hyperlink{_terrain_clustered_8h_source}{Terrain\+Clustered.\+h}} の \mbox{\hyperlink{_terrain_clustered_8h_source_l00115}{115}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_terrain_clustered_8h}{Terrain\+Clustered.\+h}}\end{DoxyCompactItemize}

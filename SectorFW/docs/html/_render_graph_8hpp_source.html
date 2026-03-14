@@ -1,0 +1,611 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderGraph.hpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_render_graph_8hpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">RenderGraph.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_render_graph_8hpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;optional&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;span&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;bit&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="_render_pass_8hpp.html">RenderPass.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="_render_queue_8h.html">RenderQueue.h</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="_render_service_8h.html">RenderService.h</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="_im_gui_layer_8h.html">../Debug/ImGuiLayer.h</a>&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#ifdef _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;<a class="code" href="_u_i_bus_8h.html">../Debug/UIBus.h</a>&quot;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="_render_graph_8hpp.html#aa676f4ad480964a90f23ff3914e9eae8">   23</a></span><span class="preprocessor">#define NO_USE_PMR_RENDER_QUEUE</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#ifndef NO_USE_PMR_RENDER_QUEUE</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &lt;memory_resource&gt;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>{</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">namespace </span>Graphics</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Backend, Po<span class="keywordtype">int</span>erType RTV, Po<span class="keywordtype">int</span>erType DSV, Po<span class="keywordtype">int</span>erType SRV, Po<span class="keywordtype">int</span>erType Buffer, <span class="keyword">template</span> &lt;<span class="keyword">typename</span>&gt; <span class="keyword">class </span>ViewHandle&gt;</div>
+<div class="foldopen" id="foldopen00038" data-start="{" data-end="};">
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">   38</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#aa75f37d513a78ddaae73aa803a459ca9">RenderGraph</a> {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#acbe3114ec6824586da26a61b8a370b71">   40</a></span>            <span class="keyword">using </span><a class="code hl_typedef" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#acbe3114ec6824586da26a61b8a370b71">PassType</a> = <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html">RenderPass&lt;RTV, DSV, SRV, Buffer, ViewHandle&lt;std::remove_pointer_t&lt;RTV&gt;</a>&gt;, ViewHandle&lt;std::remove_pointer_t&lt;DSV&gt;&gt;&gt;;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#ad85976b25f485815738e875d35d2f9b7">   41</a></span>            <span class="keyword">static</span> <span class="keyword">constexpr</span> uint16_t <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#ad85976b25f485815738e875d35d2f9b7">kFlights</a> = RENDER_BUFFER_COUNT; <span class="comment">// フレームインフライト数</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="};">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html">   43</a></span>            <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html">PassGroup</a> {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html#a18bf92250562ed808eb7ddcce555c073">   44</a></span>                std::string <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html#a18bf92250562ed808eb7ddcce555c073">name</a>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html#ae3cc9569d53aa96fe639b1f3623393b7">   45</a></span>                <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_render_queue.html">RenderQueue</a>* <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html#ae3cc9569d53aa96fe639b1f3623393b7">queue</a> = <span class="keyword">nullptr</span>;          <span class="comment">// グループ内共通キュー</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html#ad6e3b0ff1a6f0d38d1a1cbb468ce1264">   46</a></span>                std::vector&lt;PassType*&gt; <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html#ad6e3b0ff1a6f0d38d1a1cbb468ce1264">passes</a>;         <span class="comment">// このグループに属するパス</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            };</div>
+</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="foldopen" id="foldopen00049" data-start="{" data-end="};">
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node.html">   49</a></span>            <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node.html">PassNode</a> {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node.html#ac4a1a65245513efc81890749b9f03b20">   50</a></span>                uint32_t <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node.html#ac4a1a65245513efc81890749b9f03b20">groupIndex</a>;  <span class="comment">// GroupA or GroupB …</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node.html#adc714530e293035cbfad97a653861142">   51</a></span>                uint32_t <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node.html#adc714530e293035cbfad97a653861142">passIndex</a>;   <span class="comment">// そのグループ内の何番目のPassか</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            };</div>
+</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="foldopen" id="foldopen00054" data-start="{" data-end="};">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range.html">   54</a></span>            <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range.html">PassViewRange</a> {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range.html#a494038faee2ed9b689b05535704498e7">   55</a></span>                uint32_t <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range.html#a494038faee2ed9b689b05535704498e7">offset</a>; <span class="comment">// indices[] の何番目から</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range.html#a7fbc3edcce343bbb42c9f87e7b98e472">   56</a></span>                uint32_t <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range.html#a7fbc3edcce343bbb42c9f87e7b98e472">count</a>;  <span class="comment">// 何個分</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            };</div>
+</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="foldopen" id="foldopen00059" data-start="{" data-end="};">
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state.html">   59</a></span>            <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state.html">GroupState</a> {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state.html#a3dca62c722646e7c97c7306980d3b734">   60</a></span>                std::vector&lt;DrawCommand&gt; <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state.html#a3dca62c722646e7c97c7306980d3b734">cmds</a>;          <span class="comment">// Submit結果</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state.html#aee3a7d1b25001005c39f3da99988cc85">   61</a></span>                std::vector&lt;uint32_t&gt;    <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state.html#aee3a7d1b25001005c39f3da99988cc85">indices</a>;       <span class="comment">// 全パス共通の index バッファ</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state.html#abd8a747e4f9f117fbf726e4db7fe1c50">   62</a></span>                std::vector&lt;PassViewRange&gt; <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state.html#abd8a747e4f9f117fbf726e4db7fe1c50">ranges</a>;      <span class="comment">// [pass] → (offset,count)</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            };</div>
+</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span></div>
+<div class="foldopen" id="foldopen00070" data-start="{" data-end="}">
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#aa75f37d513a78ddaae73aa803a459ca9">   70</a></span>            <span class="keyword">explicit</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#aa75f37d513a78ddaae73aa803a459ca9">RenderGraph</a>(Backend&amp; backend, <a class="code hl_typedef" href="namespace_s_f_w_1_1_graphics.html#aad14d2e80e921b0442903b65576ce417">MOC</a>* moc) : backend(backend), renderService(moc) {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                <span class="comment">// レンダーバックエンドでRenderServiceにリソースマネージャーを登録</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                backend.AddResourceManagerToRenderService(*<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                sharedInstanceArena = std::make_unique&lt;SharedInstanceArena&gt;();</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            }</div>
+</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span></div>
+<div class="foldopen" id="foldopen00081" data-start="{" data-end="}">
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a7cc982da686fd4351bbb99f23b712a02">   81</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a7cc982da686fd4351bbb99f23b712a02">AddPass</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html">RenderPassDesc&lt;RTV, DSV, ViewHandle&gt;</a>&amp; desc) {</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                std::unique_lock lock(*renderService.queueMutex);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                renderService.renderQueues.emplace_back(std::make_unique&lt;RenderQueue&gt;(renderService.produceSlot, sharedInstanceArena.get(), MAX_INSTANCES_PER_FRAME));</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                renderService.queueIndex[desc.name] = renderService.renderQueues.size() - 1; <span class="comment">// レンダーサービスにキューを登録</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                passes.push_back(std::make_unique&lt;PassType&gt;(</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                    desc.name,</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#aa4da0da947db8cd9f24fbd7ef1cc8a5b">rtvs</a>,</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a441b5d86c1e3a1f58596297b4d7ec01b">dsv</a>,</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                    renderService.renderQueues.back().get(),</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#aa4e1ec9a73b7bc8096a42f1ea1748829">topology</a>,</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a08ea13d65f6dbdba538d8a251c50eb59">rasterizerState</a>,</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#aa74bd625e609527f86ee855cf63a8fb6">blendState</a>,</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a5dd0fea1147b08460b0cebfa7c9fb3a1">depthStencilState</a>,</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a8dfeee5f449c034bb0f6291c8b2570e1">cbvs</a>,</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#ab7e2c44d43ed97c8cd7c89bc11fb21fa">viewport</a>,</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a63719e578454948e3fe0faa38bb29923">psoOverride</a>,</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a337702aa0f574f8c0e4d581564af6edb">customExecute</a>,</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a5a961ec6de8feb44b4332c36b08757a4">stencilRef</a>,</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#aa6101485c95fb4aa9883cce1b026c827">rebindPSO</a>));</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="preprocessor">#ifndef NO_USE_PMR_RENDER_QUEUE</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                <span class="comment">// パスごとのランタイムを初期化（常駐アリーナを作っておく）</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>                PassRuntime rt{};</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                rt.name = desc.name;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                rt.hint = std::max&lt;size_t&gt;(128 * 1024, desc.maxInstancesPerFrame * <span class="keyword">sizeof</span>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">DrawCommand</a>) / 2);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#ad85976b25f485815738e875d35d2f9b7">kFlights</a>; ++i) {</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                    rt.perFlight[i].init(rt.hint);</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                }</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                runtimes.emplace_back(std::move(rt));</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="preprocessor">#endif </span><span class="comment">//NO_USE_PMR_RENDER_QUEUE</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            }</div>
+</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="foldopen" id="foldopen00115" data-start="{" data-end="}">
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#ac3e2f1ccdb0f8ced9c5030006581c36c">  115</a></span>            [[nodiscard]] <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html">PassGroup</a>&amp; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#ac3e2f1ccdb0f8ced9c5030006581c36c">AddPassGroup</a>(<span class="keyword">const</span> std::string&amp; name, uint32_t maxInstancesPerFrame = MAX_INSTANCES_PER_FRAME)</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            {</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                <span class="comment">// このグループ専用の RenderQueue を1本作る</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>                renderService.renderQueues.push_back(</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>                    std::make_unique&lt;RenderQueue&gt;(renderService.produceSlot, sharedInstanceArena.get(), maxInstancesPerFrame)</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>                );</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>                renderService.queueIndex[name] = renderService.renderQueues.size() - 1; <span class="comment">// レンダーサービスにキューを登録</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>                <span class="keyword">auto</span>* rq = renderService.renderQueues.back().get();</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                groups.push_back(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html">PassGroup</a>{ name, rq, {} });</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>                <span class="comment">// groups と groupStates を同じサイズに揃える</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>                groupStates.resize(groups.size());</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>                <span class="keywordflow">return</span> groups.back();</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            }</div>
+</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
+<div class="foldopen" id="foldopen00133" data-start="{" data-end="}">
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#af0c5eb2e8ea1c1d6daa8062a3b3a254f">  133</a></span>            <a class="code hl_typedef" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#acbe3114ec6824586da26a61b8a370b71">PassType</a>&amp; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#af0c5eb2e8ea1c1d6daa8062a3b3a254f">AddPassToGroup</a>(</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html">PassGroup</a>&amp; group,</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>                <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html">RenderPassDesc&lt;RTV, DSV, ViewHandle&gt;</a>&amp; desc,</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>                uint16_t viewBit       <span class="comment">// このパス用のビット</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            ) {</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>                passes.push_back(std::make_unique&lt;PassType&gt;(</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#aa4da0da947db8cd9f24fbd7ef1cc8a5b">rtvs</a>,</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a441b5d86c1e3a1f58596297b4d7ec01b">dsv</a>,</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                    group.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html#ae3cc9569d53aa96fe639b1f3623393b7">queue</a>,              <span class="comment">// 同じキューを共有</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#aa4e1ec9a73b7bc8096a42f1ea1748829">topology</a>,</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a08ea13d65f6dbdba538d8a251c50eb59">rasterizerState</a>,</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#aa74bd625e609527f86ee855cf63a8fb6">blendState</a>,</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a5dd0fea1147b08460b0cebfa7c9fb3a1">depthStencilState</a>,</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a8dfeee5f449c034bb0f6291c8b2570e1">cbvs</a>,</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#ab7e2c44d43ed97c8cd7c89bc11fb21fa">viewport</a>,</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a63719e578454948e3fe0faa38bb29923">psoOverride</a>,</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a337702aa0f574f8c0e4d581564af6edb">customExecute</a>,</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a5a961ec6de8feb44b4332c36b08757a4">stencilRef</a>,</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                    desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#aa6101485c95fb4aa9883cce1b026c827">rebindPSO</a></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>                ));</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>                <span class="keyword">auto</span>* pass = passes.back().get();</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                pass-&gt;<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a5429763c713592670fe6edf8a6c69715">viewBit</a> = viewBit;</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>                group.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html#ad6e3b0ff1a6f0d38d1a1cbb468ce1264">passes</a>.push_back(pass);</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>                <span class="keywordflow">return</span> *pass;</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            }</div>
+</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="foldopen" id="foldopen00160" data-start="{" data-end="}">
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a0c56827b2149d7a62b94fadb2073446d">  160</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a0c56827b2149d7a62b94fadb2073446d">SetExecutionOrder</a>(<span class="keyword">const</span> std::vector&lt;PassNode&gt;&amp; order) {</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>                executionOrder = order;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            }</div>
+</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span></div>
+<div class="foldopen" id="foldopen00169" data-start="{" data-end="}">
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a135085aff88dbf83b333a5e741e0fc73">  169</a></span>            <a class="code hl_typedef" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#acbe3114ec6824586da26a61b8a370b71">PassType</a>&amp; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a135085aff88dbf83b333a5e741e0fc73">GetPass</a>(<span class="keyword">const</span> std::string&amp; name) {</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; p : passes) {</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>                    <span class="keywordflow">if</span> (p-&gt;name == name) <span class="keywordflow">return</span> p;</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                }</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Pass not found&quot;</span>);</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                <span class="keywordflow">return</span> *passes[0];</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>            }</div>
+</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
+<div class="foldopen" id="foldopen00177" data-start="{" data-end="}">
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a45e05bf02408f81c03250d1fc0d7a8d2">  177</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a45e05bf02408f81c03250d1fc0d7a8d2">BindPassGlobalResources</a>(<a class="code hl_typedef" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#acbe3114ec6824586da26a61b8a370b71">PassType</a>* pass) {</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                <span class="comment">// パス固有の状態をセット</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                backend.SetPrimitiveTopology(pass-&gt;<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a1b67fed9a132286fef9f2a24c21b95ff">topology</a>);</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                <span class="keywordtype">bool</span> useRasterizer = pass-&gt;<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a20815f81fef10938bda59d02be2155fb">rasterizerState</a>.has_value();</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                <span class="keywordflow">if</span> (useRasterizer)</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                    backend.SetRasterizerState(*pass-&gt;<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a20815f81fef10938bda59d02be2155fb">rasterizerState</a>);</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                backend.SetBlendState(pass-&gt;<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a53150a7b023c7d13c3edaf0802a5ce49">blendState</a>);</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>                backend.SetDepthStencilState(pass-&gt;<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a87a271bd168f0a7d1663b1a56adc6da8">depthStencilState</a>, pass-&gt;<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#ace4a80b961a248703b2c3e7cc3604d13">stencilRef</a>);</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                backend.SetRenderTargets(pass-&gt;<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a948b36a2cd5ca54c441133e77f9f9fb8">rtvsRaw</a>, pass-&gt;<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#adccbaad3202fe5753b43921ac34949f9">dsv</a>.Get());</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>                <span class="keywordflow">if</span> (pass-&gt;<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a58ab7d38020c80e419ecc233cd23e02f">cbvs</a>.has_value())</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>                    backend.BindGlobalVSCBVs(pass-&gt;<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a58ab7d38020c80e419ecc233cd23e02f">cbvs</a>.value());</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                <span class="keywordflow">if</span> (pass-&gt;<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a022e9ff65b42c9b902124236c2de27a7">viewport</a>.has_value())</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>                    backend.SetViewport(pass-&gt;<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a022e9ff65b42c9b902124236c2de27a7">viewport</a>.value());</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>                <span class="keywordflow">return</span> useRasterizer;</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>            }</div>
+</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span></div>
+<div class="foldopen" id="foldopen00199" data-start="{" data-end="}">
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#ac5b415af330779d96eb574721a1e58d3">  199</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#ac5b415af330779d96eb574721a1e58d3">Execute</a>() {</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>                <span class="comment">//フレームのインクリメントとリソースの破棄処理</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>                backend.ProcessDeferredDeletes(++currentFrame);</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="preprocessor">#ifdef _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>                {</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>                    <span class="keyword">auto</span> g = <a class="code hl_function" href="namespace_s_f_w_1_1_debug.html#a0d68d584ecad44ee41f06416ebc5eb48">Debug::BeginTreeWrite</a>(); <span class="comment">// lock &amp; back buffer</span></div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                    <span class="keyword">auto</span>&amp; frame = g.data();</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> </div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>                    <span class="comment">// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>                    frame.items.push_back({ <span class="comment">/*id=*/</span>frame.items.size(), <span class="comment">/*depth=*/</span><a class="code hl_enumvalue" href="namespace_s_f_w_1_1_debug.html#ae98da678cf36fa05f95e25bb0cd2a4c7a51a97141f1708d6abe7f1503a50d1390">Debug::WorldTreeDepth::TREEDEPTH_RENDERGRAPH</a>, <span class="comment">/*leaf=*/</span><span class="keyword">false</span>, <span class="stringliteral">&quot;RenderGraph&quot;</span> });</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                } <span class="comment">// guard のデストラクトで unlock。swap は UI スレッドで。</span></div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span><span class="preprocessor">#endif </span><span class="comment">// _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                uint16_t prevSlot = consumeSlot.exchange((consumeSlot.load(std::memory_order_relaxed) + 1) % RENDER_BUFFER_COUNT, std::memory_order_acq_rel);</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                backend.BeginFrameUpload(sharedInstanceArena-&gt;Data(prevSlot), sharedInstanceArena-&gt;Size(prevSlot));</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>                sharedInstanceArena-&gt;ResetSlot(prevSlot);</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>                renderService.CallPreDrawCustomFunc(prevSlot); <span class="comment">// カスタム関数の更新</span></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>                <span class="comment">// グループごとに Submit して cmds を埋める</span></div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> gi = 0; gi &lt; groups.size(); ++gi) {</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>                    <span class="keyword">auto</span>&amp; g = groups[gi];</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>                    <span class="keyword">auto</span>&amp; gs = groupStates[gi];</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> </div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                    <span class="comment">// 中身だけ消す。capacity は保持される。</span></div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                    gs.cmds.clear();</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                    gs.indices.clear();</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>                    gs.ranges.clear();</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>                    g.queue-&gt;Submit(prevSlot, gs.cmds);   <span class="comment">// ここで1回だけ取り出す</span></div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span><span class="preprocessor">#ifdef _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>                    {</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>                        <span class="keyword">auto</span> guard = <a class="code hl_function" href="namespace_s_f_w_1_1_debug.html#a0d68d584ecad44ee41f06416ebc5eb48">Debug::BeginTreeWrite</a>(); <span class="comment">// lock &amp; back buffer</span></div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>                        <span class="keyword">auto</span>&amp; frame = guard.data();</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>                        <span class="comment">// 例えばプリオーダ＋depth 指定で平坦化したツリーを詰める</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>                        frame.items.push_back({ <span class="comment">/*id=*/</span>frame.items.size(), <span class="comment">/*depth=*/</span><a class="code hl_enumvalue" href="namespace_s_f_w_1_1_debug.html#ae98da678cf36fa05f95e25bb0cd2a4c7a4e911bdeaf47d5d831614e65d4ce4b0c">Debug::WorldTreeDepth::TREEDEPTH_GROUP</a>, <span class="comment">/*leaf=*/</span><span class="keyword">false</span>, <span class="stringliteral">&quot;Group : &quot;</span> + g.name });</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>                        frame.items.push_back({ <span class="comment">/*id=*/</span>frame.items.size(), <span class="comment">/*depth=*/</span><a class="code hl_enumvalue" href="namespace_s_f_w_1_1_debug.html#ae98da678cf36fa05f95e25bb0cd2a4c7a31d454798115b8615b2e41760c95a52a">Debug::WorldTreeDepth::TREEDEPTH_DRAWCOMMAND</a>, <span class="comment">/*leaf=*/</span><span class="keyword">true</span>, <span class="stringliteral">&quot;DrawCommand : &quot;</span> + std::to_string(gs.cmds.size()) });</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>                    } <span class="comment">// guard のデストラクトで unlock。swap は UI スレッドで。</span></div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span><span class="preprocessor">#endif </span><span class="comment">// _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>                    <span class="keyword">const</span> <span class="keywordtype">size_t</span> passCount = g.passes.size();</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>                    gs.ranges.resize(passCount);</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> </div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>                    <span class="keywordflow">if</span> (gs.cmds.empty() || passCount == 0) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                    <span class="comment">// --- 1st pass: 各パスがいくつ index を持つかカウント ---</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>                    std::vector&lt;uint32_t&gt; counts(passCount, 0);</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                    <span class="keywordflow">for</span> (uint32_t ci = 0; ci &lt; (uint32_t)gs.cmds.size(); ++ci) {</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                        uint16_t m = gs.cmds[ci].viewMask;</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>                        <span class="keywordflow">while</span> (m &gt; 0) {</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>                            uint16_t p = std::countr_zero(m);</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> </div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>                            m &amp;= (m - 1);                        <span class="comment">// 最下位の1ビットを落とす</span></div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> </div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>                            <span class="comment">//passIndex がそのままbitならこれでOK</span></div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>                            counts[p]++;  <span class="comment">// C++20 (MSVCなら _tzcnt_u32 など)</span></div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>                        }</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>                    }</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span> </div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>                    <span class="comment">// --- 2nd: prefix-sum でオフセット決定 ---</span></div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>                    uint32_t total = 0;</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> p = 0; p &lt; passCount; ++p) {</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                        gs.ranges[p].offset = total;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>                        gs.ranges[p].count = counts[p];</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                        total += counts[p];</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>                    }</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span> </div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>                    gs.indices.resize(total);       <span class="comment">// ここだけ 1回の確保</span></div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> </div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                    <span class="comment">// カーソル（書き込み位置）</span></div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                    std::vector&lt;uint32_t&gt; cursor(passCount);</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> p = 0; p &lt; passCount; ++p)</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                        cursor[p] = gs.ranges[p].offset;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span> </div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>                    <span class="comment">// --- 3rd: 実際に index を突っ込む ---</span></div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>                    <span class="keywordflow">for</span> (uint32_t ci = 0; ci &lt; (uint32_t)gs.cmds.size(); ++ci) {</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                        uint16_t m = gs.cmds[ci].viewMask;</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>                        <span class="keywordflow">while</span> (m &gt; 0) {</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>                            uint16_t p = std::countr_zero(m);</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> </div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>                            m &amp;= (m - 1);                        <span class="comment">// 最下位の1ビットを落とす</span></div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> </div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>                            gs.indices[cursor[p]++] = ci;</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>                        }</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>                    }</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>                }</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> </div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; node : executionOrder) {</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>                    <span class="keyword">auto</span>&amp; g = groups[node.groupIndex];</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>                    <span class="keyword">auto</span>&amp; gs = groupStates[node.groupIndex];</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span> </div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>                    <span class="keyword">auto</span>* pass = g.passes[node.passIndex];</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>                    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; r = gs.ranges[node.passIndex];</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> </div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>                    <span class="keywordflow">if</span> (r.count == 0) {</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>                        <span class="keywordflow">if</span> (!pass-&gt;customExecute.empty()) {</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                            <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a45e05bf02408f81c03250d1fc0d7a8d2">BindPassGlobalResources</a>(pass);</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span> </div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>                            <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; func : pass-&gt;customExecute)</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>                                func(currentFrame);</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                        }</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>                        <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>                    }</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span> </div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>                    <span class="keywordtype">bool</span> useRasterizer = <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a45e05bf02408f81c03250d1fc0d7a8d2">BindPassGlobalResources</a>(pass);</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>                    <span class="comment">// このパス用の indexView</span></div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>                    <span class="keyword">auto</span>* idxBegin = gs.indices.data() + r.offset;</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>                    <span class="keyword">auto</span>* idxEnd = idxBegin + r.count;</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span> </div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>                    <span class="comment">// 共通cmds + このパスの indexビューで描画</span></div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>                    backend.ExecuteDrawIndexedInstanced(gs.cmds, std::span&lt;const uint32_t&gt;(idxBegin, idxEnd), pass-&gt;psoOverride, !useRasterizer, pass-&gt;rebindPSO);</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span> </div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>                    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; func : pass-&gt;customExecute)</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>                        func(currentFrame);</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>                }</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>            }</div>
+</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span></div>
+<div class="foldopen" id="foldopen00326" data-start="{" data-end="}">
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a8aacb6652a3489b24d565a91087de3df">  326</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_render_service.html">RenderService</a>* <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a8aacb6652a3489b24d565a91087de3df">GetRenderService</a>() {</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>                <span class="keywordflow">return</span> &amp;renderService;</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>            }</div>
+</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span></div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ResourceType&gt;</div>
+<div class="foldopen" id="foldopen00334" data-start="{" data-end="}">
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a470b856264b8201db260826dd3e5aba2">  334</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a470b856264b8201db260826dd3e5aba2">RegisterResourceManager</a>(ResourceType* manager) {</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>                renderService.RegisterResourceManager(manager);</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>            }</div>
+</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span> </div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>            Backend&amp; backend;</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>            std::atomic&lt;uint16_t&gt; consumeSlot{ 1 }; <span class="comment">// produceの方のスロットが0 + 1から始まるのでため1スタート</span></div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>            std::unique_ptr&lt;SharedInstanceArena&gt; sharedInstanceArena; <span class="comment">// フレーム共有インスタンスアリーナ</span></div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span> </div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>            std::vector&lt;std::unique_ptr&lt;PassType&gt;&gt; passes;  <span class="comment">//実体</span></div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>            std::vector&lt;PassGroup&gt; groups;                 <span class="comment">// グループ</span></div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span> </div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>            std::vector&lt;PassNode&gt; executionOrder;</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span> </div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>            std::vector&lt;GroupState&gt; groupStates;</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span> </div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>            RenderService renderService; <span class="comment">// レンダーサービスのインスタンス</span></div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>            uint64_t currentFrame = 0; <span class="comment">// 現在のフレーム番号 RenderGraphの描画前に更新している</span></div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span> </div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span><span class="preprocessor">#ifndef NO_USE_PMR_RENDER_QUEUE</span></div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>            <span class="keyword">struct </span>PassRuntime {</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>                <span class="keyword">struct </span>TrackingResource : std::pmr::memory_resource {</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>                    std::pmr::memory_resource* upstream{};</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>                    <span class="keywordtype">size_t</span> used = 0;</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>                    <span class="keyword">explicit</span> TrackingResource(std::pmr::memory_resource* up = std::pmr::get_default_resource()) : upstream(up) {}</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>                <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>                    <span class="keywordtype">void</span>* do_allocate(<span class="keywordtype">size_t</span> bytes, <span class="keywordtype">size_t</span> align)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>                        used += ((bytes + align - 1) / align) * align;</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>                        <span class="keywordflow">return</span> upstream-&gt;allocate(bytes, align);</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>                    }</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>                    <span class="keywordtype">void</span> do_deallocate(<span class="keywordtype">void</span>* p, <span class="keywordtype">size_t</span> bytes, <span class="keywordtype">size_t</span> align)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>                        upstream-&gt;deallocate(p, bytes, align);</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>                    }</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>                    <span class="keywordtype">bool</span> do_is_equal(<span class="keyword">const</span> std::pmr::memory_resource&amp; other) <span class="keyword">const</span> <span class="keyword">noexcept</span> <span class="keyword">override</span> {</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>                        <span class="keywordflow">return</span> <span class="keyword">this</span> == &amp;other;</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>                    }</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>                };</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span> </div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>                <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> kStackBuf = 256 * 1024;</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>                <span class="keyword">struct </span>PerFlight {</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>                    <span class="comment">// 初期バッファ（stack か heap のどちらかを使用）</span></div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>                    <span class="keyword">alignas</span>(64) std::byte stack[kStackBuf] = {};</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>                    std::unique_ptr&lt;std::byte[]&gt; heap{};</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>                    <span class="keywordtype">size_t</span> heapSize{ 0 };</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>                    TrackingResource tracker{ std::pmr::get_default_resource() };</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>                    <span class="comment">// arena は「初期バッファ」を参照する。基本は再構築せず release() でリセット</span></div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>                    std::pmr::monotonic_buffer_resource* arena{ <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>                    <span class="comment">// cmds は arena 常駐の pmr::vector</span></div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>                    std::pmr::vector&lt;DrawCommand&gt; cmds{ std::pmr::get_default_resource() };</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span> </div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>                    <span class="keywordtype">void</span> init(<span class="keywordtype">size_t</span> hint) {</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>                        <span class="keywordtype">void</span>* initialBuf = stack;</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>                        <span class="keywordtype">size_t</span> initialSize = kStackBuf;</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>                        <span class="keywordflow">if</span> (hint &gt; kStackBuf) {</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>                            heapSize = hint;</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>                            heap = std::make_unique&lt;std::byte[]&gt;(heapSize);</div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>                            initialBuf = heap.get();</div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>                            initialSize = heapSize;</div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>                        }</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>                        <span class="comment">// arena を配置new（以後は release でリセット）</span></div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>                        arenaStorage = std::make_unique&lt;std::pmr::monotonic_buffer_resource&gt;(initialBuf, initialSize, &amp;tracker);</div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>                        arena = arenaStorage.get();</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>                        cmds = std::pmr::vector&lt;DrawCommand&gt;{ arena };</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>                        tracker.used = 0;</div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>                    }</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span> </div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>                    <span class="keywordtype">void</span> release() {</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>                        tracker.used = 0;</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>                        arena-&gt;release(); <span class="comment">// 実メモリは保持。次の allocate はO(1)</span></div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>                        cmds.clear();</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>                    }</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span> </div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>                    <span class="keywordtype">void</span> maybe_grow(<span class="keywordtype">size_t</span> newHint) {</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>                        <span class="keywordflow">if</span> (newHint &lt;= kStackBuf || newHint &lt;= heapSize) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>                        heapSize = newHint;</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>                        heap = std::make_unique&lt;std::byte[]&gt;(heapSize);</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>                        <span class="comment">// arena を作り直す（成長時だけ・まれ）</span></div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>                        arenaStorage = std::make_unique&lt;std::pmr::monotonic_buffer_resource&gt;(heap.get(), heapSize, &amp;tracker);</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>                        arena = arenaStorage.get();</div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>                        cmds = std::pmr::vector&lt;DrawCommand&gt;{ arena };</div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>                        tracker.used = 0;</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>                    }</div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>                <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>                    std::unique_ptr&lt;std::pmr::monotonic_buffer_resource&gt; arenaStorage{};</div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>                };</div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span> </div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>                std::string name;</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>                <span class="keywordtype">size_t</span> hint{ 0 };</div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>                std::vector&lt;PerFlight&gt; perFlight = std::vector&lt;PerFlight&gt;(kFlights);</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span> </div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>                <span class="keywordtype">bool</span> needs_grow()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>                    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; kFlights; ++i) {</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>                        <span class="comment">// 直近 used が hint に近い or 超えたフライトがあるなら拡張候補</span></div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>                        <span class="keywordflow">if</span> (perFlight[i].tracker.used &gt; hint) <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>                    }</div>
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>                }</div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>            };</div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span> </div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>            std::vector&lt;PassRuntime&gt; runtimes;</div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span> </div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>            PassRuntime* getRuntime(<span class="keyword">const</span> std::string&amp; name) {</div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; r : runtimes) <span class="keywordflow">if</span> (r.name == name) <span class="keywordflow">return</span> &amp;r;</div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>                assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;runtime not found&quot;</span>);</div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>                <span class="keywordflow">return</span> &amp;runtimes.front();</div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>            }</div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span><span class="preprocessor">#endif </span><span class="comment">//NO_USE_PMR_RENDER_QUEUE</span></div>
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span>        };</div>
+</div>
+<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>    }</div>
+<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>}</div>
+<div class="ttc" id="a_im_gui_layer_8h_html"><div class="ttname"><a href="_im_gui_layer_8h.html">ImGuiLayer.h</a></div><div class="ttdoc">ImGuiの描画を管理するクラス</div></div>
+<div class="ttc" id="a_render_pass_8hpp_html"><div class="ttname"><a href="_render_pass_8hpp.html">RenderPass.hpp</a></div><div class="ttdoc">レンダーパスを定義する構造体</div></div>
+<div class="ttc" id="a_render_queue_8h_html"><div class="ttname"><a href="_render_queue_8h.html">RenderQueue.h</a></div><div class="ttdoc">レンダリングコマンドキューを定義するクラス</div></div>
+<div class="ttc" id="a_render_service_8h_html"><div class="ttname"><a href="_render_service_8h.html">RenderService.h</a></div><div class="ttdoc">描画関連を提供するサービスクラス</div></div>
+<div class="ttc" id="a_u_i_bus_8h_html"><div class="ttname"><a href="_u_i_bus_8h.html">UIBus.h</a></div><div class="ttdoc">UIバスの定義</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_graph_html_a0c56827b2149d7a62b94fadb2073446d"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a0c56827b2149d7a62b94fadb2073446d">SFW::Graphics::RenderGraph::SetExecutionOrder</a></div><div class="ttdeci">void SetExecutionOrder(const std::vector&lt; PassNode &gt; &amp;order)</div><div class="ttdef"><b>Definition</b> <a href="#l00160">RenderGraph.hpp:160</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_graph_html_a135085aff88dbf83b333a5e741e0fc73"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a135085aff88dbf83b333a5e741e0fc73">SFW::Graphics::RenderGraph::GetPass</a></div><div class="ttdeci">PassType &amp; GetPass(const std::string &amp;name)</div><div class="ttdoc">パスの取得</div><div class="ttdef"><b>Definition</b> <a href="#l00169">RenderGraph.hpp:169</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_graph_html_a45e05bf02408f81c03250d1fc0d7a8d2"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a45e05bf02408f81c03250d1fc0d7a8d2">SFW::Graphics::RenderGraph::BindPassGlobalResources</a></div><div class="ttdeci">bool BindPassGlobalResources(PassType *pass)</div><div class="ttdef"><b>Definition</b> <a href="#l00177">RenderGraph.hpp:177</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_graph_html_a470b856264b8201db260826dd3e5aba2"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a470b856264b8201db260826dd3e5aba2">SFW::Graphics::RenderGraph::RegisterResourceManager</a></div><div class="ttdeci">void RegisterResourceManager(ResourceType *manager)</div><div class="ttdoc">リソースマネージャーの登録</div><div class="ttdef"><b>Definition</b> <a href="#l00334">RenderGraph.hpp:334</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_graph_html_a7cc982da686fd4351bbb99f23b712a02"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a7cc982da686fd4351bbb99f23b712a02">SFW::Graphics::RenderGraph::AddPass</a></div><div class="ttdeci">void AddPass(RenderPassDesc&lt; RTV, DSV, ViewHandle &gt; &amp;desc)</div><div class="ttdoc">RenderPassの追加</div><div class="ttdef"><b>Definition</b> <a href="#l00081">RenderGraph.hpp:81</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_graph_html_a8aacb6652a3489b24d565a91087de3df"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_graph.html#a8aacb6652a3489b24d565a91087de3df">SFW::Graphics::RenderGraph::GetRenderService</a></div><div class="ttdeci">RenderService * GetRenderService()</div><div class="ttdoc">レンダーサービスの取得</div><div class="ttdef"><b>Definition</b> <a href="#l00326">RenderGraph.hpp:326</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_graph_html_aa75f37d513a78ddaae73aa803a459ca9"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_graph.html#aa75f37d513a78ddaae73aa803a459ca9">SFW::Graphics::RenderGraph::RenderGraph</a></div><div class="ttdeci">RenderGraph(Backend &amp;backend, MOC *moc)</div><div class="ttdoc">コンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00070">RenderGraph.hpp:70</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_graph_html_ac3e2f1ccdb0f8ced9c5030006581c36c"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_graph.html#ac3e2f1ccdb0f8ced9c5030006581c36c">SFW::Graphics::RenderGraph::AddPassGroup</a></div><div class="ttdeci">PassGroup &amp; AddPassGroup(const std::string &amp;name, uint32_t maxInstancesPerFrame=MAX_INSTANCES_PER_FRAME)</div><div class="ttdef"><b>Definition</b> <a href="#l00115">RenderGraph.hpp:115</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_graph_html_ac5b415af330779d96eb574721a1e58d3"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_graph.html#ac5b415af330779d96eb574721a1e58d3">SFW::Graphics::RenderGraph::Execute</a></div><div class="ttdeci">void Execute()</div><div class="ttdoc">描画の実行</div><div class="ttdef"><b>Definition</b> <a href="#l00199">RenderGraph.hpp:199</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_graph_html_acbe3114ec6824586da26a61b8a370b71"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_graph.html#acbe3114ec6824586da26a61b8a370b71">SFW::Graphics::RenderGraph::PassType</a></div><div class="ttdeci">RenderPass&lt; RTV, DSV, SRV, Buffer, ViewHandle&lt; std::remove_pointer_t&lt; RTV &gt; &gt;, ViewHandle&lt; std::remove_pointer_t&lt; DSV &gt; &gt; &gt; PassType</div><div class="ttdef"><b>Definition</b> <a href="#l00040">RenderGraph.hpp:40</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_graph_html_ad85976b25f485815738e875d35d2f9b7"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_graph.html#ad85976b25f485815738e875d35d2f9b7">SFW::Graphics::RenderGraph::kFlights</a></div><div class="ttdeci">static constexpr uint16_t kFlights</div><div class="ttdef"><b>Definition</b> <a href="#l00041">RenderGraph.hpp:41</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_graph_html_af0c5eb2e8ea1c1d6daa8062a3b3a254f"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_graph.html#af0c5eb2e8ea1c1d6daa8062a3b3a254f">SFW::Graphics::RenderGraph::AddPassToGroup</a></div><div class="ttdeci">PassType &amp; AddPassToGroup(PassGroup &amp;group, const RenderPassDesc&lt; RTV, DSV, ViewHandle &gt; &amp;desc, uint16_t viewBit)</div><div class="ttdef"><b>Definition</b> <a href="#l00133">RenderGraph.hpp:133</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html">SFW::Graphics::RenderQueue</a></div><div class="ttdoc">描画コマンドの発行。管理、ソート、バッチングを行うクラス</div><div class="ttdef"><b>Definition</b> <a href="_render_queue_8h_source.html#l00105">RenderQueue.h:105</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_debug_html_a0d68d584ecad44ee41f06416ebc5eb48"><div class="ttname"><a href="namespace_s_f_w_1_1_debug.html#a0d68d584ecad44ee41f06416ebc5eb48">SFW::Debug::BeginTreeWrite</a></div><div class="ttdeci">UiTreeSnapshot::WriteGuard BeginTreeWrite()</div><div class="ttdoc">ツリー書き込み開始（RAIIでロック/アンロック）</div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_debug_html_ae98da678cf36fa05f95e25bb0cd2a4c7a31d454798115b8615b2e41760c95a52a"><div class="ttname"><a href="namespace_s_f_w_1_1_debug.html#ae98da678cf36fa05f95e25bb0cd2a4c7a31d454798115b8615b2e41760c95a52a">SFW::Debug::WorldTreeDepth::TREEDEPTH_DRAWCOMMAND</a></div><div class="ttdeci">@ TREEDEPTH_DRAWCOMMAND</div><div class="ttdef"><b>Definition</b> <a href="_u_i_bus_8h_source.html#l00121">UIBus.h:121</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_debug_html_ae98da678cf36fa05f95e25bb0cd2a4c7a4e911bdeaf47d5d831614e65d4ce4b0c"><div class="ttname"><a href="namespace_s_f_w_1_1_debug.html#ae98da678cf36fa05f95e25bb0cd2a4c7a4e911bdeaf47d5d831614e65d4ce4b0c">SFW::Debug::WorldTreeDepth::TREEDEPTH_GROUP</a></div><div class="ttdeci">@ TREEDEPTH_GROUP</div><div class="ttdef"><b>Definition</b> <a href="_u_i_bus_8h_source.html#l00120">UIBus.h:120</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_debug_html_ae98da678cf36fa05f95e25bb0cd2a4c7a51a97141f1708d6abe7f1503a50d1390"><div class="ttname"><a href="namespace_s_f_w_1_1_debug.html#ae98da678cf36fa05f95e25bb0cd2a4c7a51a97141f1708d6abe7f1503a50d1390">SFW::Debug::WorldTreeDepth::TREEDEPTH_RENDERGRAPH</a></div><div class="ttdeci">@ TREEDEPTH_RENDERGRAPH</div><div class="ttdef"><b>Definition</b> <a href="_u_i_bus_8h_source.html#l00119">UIBus.h:119</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_aad14d2e80e921b0442903b65576ce417"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#aad14d2e80e921b0442903b65576ce417">SFW::Graphics::MOC</a></div><div class="ttdeci">MaskedOcclusionCulling MOC</div><div class="ttdef"><b>Definition</b> <a href="_render_service_8h_source.html#l00027">RenderService.h:27</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_draw_command_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">SFW::Graphics::DrawCommand</a></div><div class="ttdoc">描画コマンド構造体</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00096">RenderTypes.h:96</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state.html">SFW::Graphics::RenderGraph::GroupState</a></div><div class="ttdef"><b>Definition</b> <a href="#l00059">RenderGraph.hpp:59</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state_html_a3dca62c722646e7c97c7306980d3b734"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state.html#a3dca62c722646e7c97c7306980d3b734">SFW::Graphics::RenderGraph::GroupState::cmds</a></div><div class="ttdeci">std::vector&lt; DrawCommand &gt; cmds</div><div class="ttdef"><b>Definition</b> <a href="#l00060">RenderGraph.hpp:60</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state_html_abd8a747e4f9f117fbf726e4db7fe1c50"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state.html#abd8a747e4f9f117fbf726e4db7fe1c50">SFW::Graphics::RenderGraph::GroupState::ranges</a></div><div class="ttdeci">std::vector&lt; PassViewRange &gt; ranges</div><div class="ttdef"><b>Definition</b> <a href="#l00062">RenderGraph.hpp:62</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state_html_aee3a7d1b25001005c39f3da99988cc85"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state.html#aee3a7d1b25001005c39f3da99988cc85">SFW::Graphics::RenderGraph::GroupState::indices</a></div><div class="ttdeci">std::vector&lt; uint32_t &gt; indices</div><div class="ttdef"><b>Definition</b> <a href="#l00061">RenderGraph.hpp:61</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html">SFW::Graphics::RenderGraph::PassGroup</a></div><div class="ttdef"><b>Definition</b> <a href="#l00043">RenderGraph.hpp:43</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group_html_a18bf92250562ed808eb7ddcce555c073"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html#a18bf92250562ed808eb7ddcce555c073">SFW::Graphics::RenderGraph::PassGroup::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition</b> <a href="#l00044">RenderGraph.hpp:44</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group_html_ad6e3b0ff1a6f0d38d1a1cbb468ce1264"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html#ad6e3b0ff1a6f0d38d1a1cbb468ce1264">SFW::Graphics::RenderGraph::PassGroup::passes</a></div><div class="ttdeci">std::vector&lt; PassType * &gt; passes</div><div class="ttdef"><b>Definition</b> <a href="#l00046">RenderGraph.hpp:46</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group_html_ae3cc9569d53aa96fe639b1f3623393b7"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html#ae3cc9569d53aa96fe639b1f3623393b7">SFW::Graphics::RenderGraph::PassGroup::queue</a></div><div class="ttdeci">RenderQueue * queue</div><div class="ttdef"><b>Definition</b> <a href="#l00045">RenderGraph.hpp:45</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node.html">SFW::Graphics::RenderGraph::PassNode</a></div><div class="ttdef"><b>Definition</b> <a href="#l00049">RenderGraph.hpp:49</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node_html_ac4a1a65245513efc81890749b9f03b20"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node.html#ac4a1a65245513efc81890749b9f03b20">SFW::Graphics::RenderGraph::PassNode::groupIndex</a></div><div class="ttdeci">uint32_t groupIndex</div><div class="ttdef"><b>Definition</b> <a href="#l00050">RenderGraph.hpp:50</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node_html_adc714530e293035cbfad97a653861142"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node.html#adc714530e293035cbfad97a653861142">SFW::Graphics::RenderGraph::PassNode::passIndex</a></div><div class="ttdeci">uint32_t passIndex</div><div class="ttdef"><b>Definition</b> <a href="#l00051">RenderGraph.hpp:51</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range.html">SFW::Graphics::RenderGraph::PassViewRange</a></div><div class="ttdef"><b>Definition</b> <a href="#l00054">RenderGraph.hpp:54</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range_html_a494038faee2ed9b689b05535704498e7"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range.html#a494038faee2ed9b689b05535704498e7">SFW::Graphics::RenderGraph::PassViewRange::offset</a></div><div class="ttdeci">uint32_t offset</div><div class="ttdef"><b>Definition</b> <a href="#l00055">RenderGraph.hpp:55</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range_html_a7fbc3edcce343bbb42c9f87e7b98e472"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range.html#a7fbc3edcce343bbb42c9f87e7b98e472">SFW::Graphics::RenderGraph::PassViewRange::count</a></div><div class="ttdeci">uint32_t count</div><div class="ttdef"><b>Definition</b> <a href="#l00056">RenderGraph.hpp:56</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_desc_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html">SFW::Graphics::RenderPassDesc</a></div><div class="ttdoc">レンダーパスの設定を定義する構造体 @detial ラスタライズを指定しない場合PSOで指定したラスタライズを使用する</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00171">RenderPass.hpp:171</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_desc_html_a08ea13d65f6dbdba538d8a251c50eb59"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a08ea13d65f6dbdba538d8a251c50eb59">SFW::Graphics::RenderPassDesc::rasterizerState</a></div><div class="ttdeci">std::optional&lt; RasterizerStateID &gt; rasterizerState</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00182">RenderPass.hpp:182</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_desc_html_a337702aa0f574f8c0e4d581564af6edb"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a337702aa0f574f8c0e4d581564af6edb">SFW::Graphics::RenderPassDesc::customExecute</a></div><div class="ttdeci">std::vector&lt; PassCustomFuncType &gt; customExecute</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00188">RenderPass.hpp:188</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_desc_html_a441b5d86c1e3a1f58596297b4d7ec01b"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a441b5d86c1e3a1f58596297b4d7ec01b">SFW::Graphics::RenderPassDesc::dsv</a></div><div class="ttdeci">DSVHandleT dsv</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00180">RenderPass.hpp:180</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_desc_html_a5a961ec6de8feb44b4332c36b08757a4"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a5a961ec6de8feb44b4332c36b08757a4">SFW::Graphics::RenderPassDesc::stencilRef</a></div><div class="ttdeci">uint32_t stencilRef</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00189">RenderPass.hpp:189</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_desc_html_a5dd0fea1147b08460b0cebfa7c9fb3a1"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a5dd0fea1147b08460b0cebfa7c9fb3a1">SFW::Graphics::RenderPassDesc::depthStencilState</a></div><div class="ttdeci">DepthStencilStateID depthStencilState</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00184">RenderPass.hpp:184</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_desc_html_a63719e578454948e3fe0faa38bb29923"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a63719e578454948e3fe0faa38bb29923">SFW::Graphics::RenderPassDesc::psoOverride</a></div><div class="ttdeci">std::optional&lt; PSOHandle &gt; psoOverride</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00187">RenderPass.hpp:187</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_desc_html_a8dfeee5f449c034bb0f6291c8b2570e1"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#a8dfeee5f449c034bb0f6291c8b2570e1">SFW::Graphics::RenderPassDesc::cbvs</a></div><div class="ttdeci">std::optional&lt; std::vector&lt; BindSlotBuffer &gt; &gt; cbvs</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00185">RenderPass.hpp:185</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_desc_html_aa4da0da947db8cd9f24fbd7ef1cc8a5b"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#aa4da0da947db8cd9f24fbd7ef1cc8a5b">SFW::Graphics::RenderPassDesc::rtvs</a></div><div class="ttdeci">std::vector&lt; RTVHandleT &gt; rtvs</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00179">RenderPass.hpp:179</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_desc_html_aa4e1ec9a73b7bc8096a42f1ea1748829"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#aa4e1ec9a73b7bc8096a42f1ea1748829">SFW::Graphics::RenderPassDesc::topology</a></div><div class="ttdeci">PrimitiveTopology topology</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00181">RenderPass.hpp:181</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_desc_html_aa6101485c95fb4aa9883cce1b026c827"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#aa6101485c95fb4aa9883cce1b026c827">SFW::Graphics::RenderPassDesc::rebindPSO</a></div><div class="ttdeci">bool rebindPSO</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00190">RenderPass.hpp:190</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_desc_html_aa74bd625e609527f86ee855cf63a8fb6"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#aa74bd625e609527f86ee855cf63a8fb6">SFW::Graphics::RenderPassDesc::blendState</a></div><div class="ttdeci">BlendStateID blendState</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00183">RenderPass.hpp:183</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_desc_html_ab7e2c44d43ed97c8cd7c89bc11fb21fa"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html#ab7e2c44d43ed97c8cd7c89bc11fb21fa">SFW::Graphics::RenderPassDesc::viewport</a></div><div class="ttdeci">std::optional&lt; Viewport &gt; viewport</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00186">RenderPass.hpp:186</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass.html">SFW::Graphics::RenderPass</a></div><div class="ttdoc">描画するパスごとの設定を定義する構造体</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00026">RenderPass.hpp:26</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_html_a022e9ff65b42c9b902124236c2de27a7"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a022e9ff65b42c9b902124236c2de27a7">SFW::Graphics::RenderPass::viewport</a></div><div class="ttdeci">std::optional&lt; Viewport &gt; viewport</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00043">RenderPass.hpp:43</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_html_a1b67fed9a132286fef9f2a24c21b95ff"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a1b67fed9a132286fef9f2a24c21b95ff">SFW::Graphics::RenderPass::topology</a></div><div class="ttdeci">PrimitiveTopology topology</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00038">RenderPass.hpp:38</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_html_a20815f81fef10938bda59d02be2155fb"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a20815f81fef10938bda59d02be2155fb">SFW::Graphics::RenderPass::rasterizerState</a></div><div class="ttdeci">std::optional&lt; RasterizerStateID &gt; rasterizerState</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00039">RenderPass.hpp:39</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_html_a53150a7b023c7d13c3edaf0802a5ce49"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a53150a7b023c7d13c3edaf0802a5ce49">SFW::Graphics::RenderPass::blendState</a></div><div class="ttdeci">BlendStateID blendState</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00040">RenderPass.hpp:40</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_html_a5429763c713592670fe6edf8a6c69715"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a5429763c713592670fe6edf8a6c69715">SFW::Graphics::RenderPass::viewBit</a></div><div class="ttdeci">uint16_t viewBit</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00050">RenderPass.hpp:50</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_html_a58ab7d38020c80e419ecc233cd23e02f"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a58ab7d38020c80e419ecc233cd23e02f">SFW::Graphics::RenderPass::cbvs</a></div><div class="ttdeci">std::optional&lt; std::vector&lt; BindSlotBuffer &gt; &gt; cbvs</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00042">RenderPass.hpp:42</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_html_a87a271bd168f0a7d1663b1a56adc6da8"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a87a271bd168f0a7d1663b1a56adc6da8">SFW::Graphics::RenderPass::depthStencilState</a></div><div class="ttdeci">DepthStencilStateID depthStencilState</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00041">RenderPass.hpp:41</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_html_a948b36a2cd5ca54c441133e77f9f9fb8"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#a948b36a2cd5ca54c441133e77f9f9fb8">SFW::Graphics::RenderPass::rtvsRaw</a></div><div class="ttdeci">std::vector&lt; RTV &gt; rtvsRaw</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00035">RenderPass.hpp:35</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_html_ace4a80b961a248703b2c3e7cc3604d13"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#ace4a80b961a248703b2c3e7cc3604d13">SFW::Graphics::RenderPass::stencilRef</a></div><div class="ttdeci">uint32_t stencilRef</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00047">RenderPass.hpp:47</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_pass_html_adccbaad3202fe5753b43921ac34949f9"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_pass.html#adccbaad3202fe5753b43921ac34949f9">SFW::Graphics::RenderPass::dsv</a></div><div class="ttdeci">DSVHandleT dsv</div><div class="ttdef"><b>Definition</b> <a href="_render_pass_8hpp_source.html#l00036">RenderPass.hpp:36</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_render_service_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_render_service.html">SFW::Graphics::RenderService</a></div><div class="ttdoc">Systemが依存するレンダーサービスを管理するクラス</div><div class="ttdef"><b>Definition</b> <a href="_render_service_8h_source.html#l00048">RenderService.h:49</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="_render_graph_8hpp.html">RenderGraph.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

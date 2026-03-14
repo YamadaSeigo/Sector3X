@@ -1,0 +1,1067 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Math::BoundingSphere&lt; T, Vec3 &gt; 構造体テンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('struct_s_f_w_1_1_math_1_1_bounding_sphere.html','','struct_s_f_w_1_1_math_1_1_bounding_sphere-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Math::BoundingSphere&lt; T, Vec3 &gt; 構造体テンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:NdcPrecomp" id="r_NdcPrecomp"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp.html">NdcPrecomp</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+公開型</h2></td></tr>
+<tr class="memitem:aa7c4eae8343175abe9888e1cea9738d1" id="r_aa7c4eae8343175abe9888e1cea9738d1"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa7c4eae8343175abe9888e1cea9738d1">VisState</a> : uint32_t { <a class="el" href="#aa7c4eae8343175abe9888e1cea9738d1a597700f463b47effe2a9ae80121f9438">Culled</a> = 0
+, <a class="el" href="#aa7c4eae8343175abe9888e1cea9738d1aec24d78ce33048dc73a2b6b1a0690192">Visible</a> = 1
+, <a class="el" href="#aa7c4eae8343175abe9888e1cea9738d1a17af426fc561e1d7b96e202cdd424308">NeedFrustum</a> = 2
+ }</td></tr>
+<tr class="memitem:a3e0e90c0f9714e102f0b666c42750a85" id="r_a3e0e90c0f9714e102f0b666c42750a85"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e0e90c0f9714e102f0b666c42750a85">value_type</a> = T</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:ae28c89f4937018f304bb32d055b15762" id="r_ae28c89f4937018f304bb32d055b15762"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae28c89f4937018f304bb32d055b15762">contains</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;p, T eps=T(0)) const noexcept</td></tr>
+<tr class="memitem:a9c70f60031f32ab70a94bea18cafc610" id="r_a9c70f60031f32ab70a94bea18cafc610"><td class="memItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9c70f60031f32ab70a94bea18cafc610">distance2</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;p) const noexcept</td></tr>
+<tr class="memitem:ad4cb44f27c5cfc10beced98faa8bca90" id="r_ad4cb44f27c5cfc10beced98faa8bca90"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4cb44f27c5cfc10beced98faa8bca90">intersects</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> &amp;other, T eps=T(0)) const noexcept</td></tr>
+<tr class="memitem:aeb401ae85a35730883cbec939a889217" id="r_aeb401ae85a35730883cbec939a889217"><td class="memItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeb401ae85a35730883cbec939a889217">expandToFit</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;p) noexcept</td></tr>
+<tr class="memitem:a34330b071e477fd25153fffc55df6d19" id="r_a34330b071e477fd25153fffc55df6d19"><td class="memItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a34330b071e477fd25153fffc55df6d19">expandToFit</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> &amp;s) noexcept</td></tr>
+<tr class="memitem:a6e1bb019581f970826e9e14db4ff7cc6" id="r_a6e1bb019581f970826e9e14db4ff7cc6"><td class="memTemplParams" colspan="2">template&lt;class Mat4&gt; </td></tr>
+<tr class="memitem:a6e1bb019581f970826e9e14db4ff7cc6 template"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e1bb019581f970826e9e14db4ff7cc6">IsVisible_WVP</a> (const Mat4 &amp;WVP, T *outNdcXmin=nullptr, T *outNdcYmin=nullptr, T *outNdcXmax=nullptr, T *outNdcYmax=nullptr, T *outWmin=nullptr, T *depth=nullptr) const noexcept</td></tr>
+<tr class="memitem:a35004bd60d4e9e5909d2ba30b48a742c" id="r_a35004bd60d4e9e5909d2ba30b48a742c"><td class="memTemplParams" colspan="2">template&lt;class Mat4, class NDC&gt; </td></tr>
+<tr class="memitem:a35004bd60d4e9e5909d2ba30b48a742c template"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35004bd60d4e9e5909d2ba30b48a742c">IsVisible_WVP</a> (const Mat4 &amp;WVP, NDC *outNDC, T *depth=nullptr) const noexcept</td></tr>
+<tr class="memitem:a6b45ceb4c72fe65d2e3f0ea56ffb87f5" id="r_a6b45ceb4c72fe65d2e3f0ea56ffb87f5"><td class="memTemplParams" colspan="2">template&lt;class Mat4, class NDC&gt; </td></tr>
+<tr class="memitem:a6b45ceb4c72fe65d2e3f0ea56ffb87f5 template"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6b45ceb4c72fe65d2e3f0ea56ffb87f5">IsVisible_WVP_CamBasis</a> (const Mat4 &amp;WVP, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;camRight, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;camUp, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;camForward, NDC *outNDC, T *depth=nullptr) const noexcept</td></tr>
+<tr class="memitem:aa6651d5fc32ce4f66dd8e7fcab34d1dc" id="r_aa6651d5fc32ce4f66dd8e7fcab34d1dc"><td class="memTemplParams" colspan="2">template&lt;class Mat4, class NDC&gt; </td></tr>
+<tr class="memitem:aa6651d5fc32ce4f66dd8e7fcab34d1dc template"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6651d5fc32ce4f66dd8e7fcab34d1dc">IsVisible_WVP_CamBasis_Fast</a> (const Mat4 &amp;WVP, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;camRight, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;camUp, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;camForward, NDC *outNDC, T *depth=nullptr) const noexcept</td></tr>
+<tr class="memdesc:aa6651d5fc32ce4f66dd8e7fcab34d1dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラ基底を使った高速な可視判定  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:ae0ff9439ca48eb8e77bf625ec55f09e1" id="r_ae0ff9439ca48eb8e77bf625ec55f09e1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae0ff9439ca48eb8e77bf625ec55f09e1">FromAABB</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;minP, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;maxP) noexcept</td></tr>
+<tr class="memitem:af5635111a3236726b0c416687a5d3438" id="r_af5635111a3236726b0c416687a5d3438"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af5635111a3236726b0c416687a5d3438">Merge</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> &amp;a, const <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> &amp;b) noexcept</td></tr>
+<tr class="memitem:a02384bbb1e999b44cbf269d67e97c908" id="r_a02384bbb1e999b44cbf269d67e97c908"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02384bbb1e999b44cbf269d67e97c908">FromPointsRitter</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> *points, size_t count)</td></tr>
+<tr class="memitem:a3e9e407303037f3f14434d8cc7159dcf" id="r_a3e9e407303037f3f14434d8cc7159dcf"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e9e407303037f3f14434d8cc7159dcf">FromPointsWelzl</a> (std::vector&lt; <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt; pts, uint64_t seed=0xC0FFEE)</td></tr>
+<tr class="memitem:a7ceb459257a4a3d1f9976bf33752ebe4" id="r_a7ceb459257a4a3d1f9976bf33752ebe4"><td class="memTemplParams" colspan="2">template&lt;class Mat4, class Vec3Like&gt; </td></tr>
+<tr class="memitem:a7ceb459257a4a3d1f9976bf33752ebe4 template"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7ceb459257a4a3d1f9976bf33752ebe4">Transform</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> &amp;s, const Mat4 &amp;M, const Vec3Like &amp;col0, const Vec3Like &amp;col1, const Vec3Like &amp;col2, const Vec3Like &amp;translation)</td></tr>
+<tr class="memitem:a807de42c73a4b5db688886e2d1880308" id="r_a807de42c73a4b5db688886e2d1880308"><td class="memTemplParams" colspan="2">template&lt;class Vec3LikeT&gt; </td></tr>
+<tr class="memitem:a807de42c73a4b5db688886e2d1880308 template"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a807de42c73a4b5db688886e2d1880308">TransformUniform</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> &amp;bs, const Vec3LikeT &amp;translation, T uniform_scale)</td></tr>
+<tr class="memitem:ae70c7dce6af330f4d8bf5ce61a134299" id="r_ae70c7dce6af330f4d8bf5ce61a134299"><td class="memTemplParams" colspan="2">template&lt;class Mat4, class NDC&gt; </td></tr>
+<tr class="memitem:ae70c7dce6af330f4d8bf5ce61a134299 template"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#aa7c4eae8343175abe9888e1cea9738d1">VisState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae70c7dce6af330f4d8bf5ce61a134299">IsVisible_LocalCenter_WorldRadius</a> (const Mat4 &amp;WVP, const Mat4 &amp;VP, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;centerLocal, T radiusWorld, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;camRightWS, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;camUpWS, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;camForwardWS, NDC *outNDC, T *depth=nullptr) noexcept</td></tr>
+<tr class="memdesc:ae70c7dce6af330f4d8bf5ce61a134299"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラ基底を使った高速な可視判定  <br /></td></tr>
+<tr class="memitem:a5a31197b7bf60cfdc0f6e3e33dd23018" id="r_a5a31197b7bf60cfdc0f6e3e33dd23018"><td class="memTemplParams" colspan="2">template&lt;typename Mat4&gt; </td></tr>
+<tr class="memitem:a5a31197b7bf60cfdc0f6e3e33dd23018 template"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp.html">NdcPrecomp</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5a31197b7bf60cfdc0f6e3e33dd23018">MakeSphereNdcPrecomp</a> (const Mat4 &amp;VP, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;camRightWS, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;camUpWS, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;camForwardWS) noexcept</td></tr>
+<tr class="memitem:aa276be09d70e1ff5e6f216bf3b447293" id="r_aa276be09d70e1ff5e6f216bf3b447293"><td class="memTemplParams" colspan="2">template&lt;typename Mat4&gt; </td></tr>
+<tr class="memitem:aa276be09d70e1ff5e6f216bf3b447293 template"><td class="memItemLeft" align="right" valign="top">static std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa276be09d70e1ff5e6f216bf3b447293">IsVisibleBatch_WorldSoA_LocalCenterRadius_AVX2</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a.html">Matrix3x4fSoA</a> &amp;WorldSoA, const Mat4 &amp;VP, const <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp.html">NdcPrecomp</a> &amp;pc, const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;centerLocal, const float *radiusWorld, std::size_t i, float *outNdcX, float *outNdcY, float *outNdcZ, float *outDepthMin, float *outDepthMax) noexcept</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+公開変数類</h2></td></tr>
+<tr class="memitem:ab5e03a3bece1e0ee0375ec842882caa3" id="r_ab5e03a3bece1e0ee0375ec842882caa3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab5e03a3bece1e0ee0375ec842882caa3">center</a> {}</td></tr>
+<tr class="memitem:a64dd070f31ce07009c1280cff688d595" id="r_a64dd070f31ce07009c1280cff688d595"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a64dd070f31ce07009c1280cff688d595">radius</a> { T(0) }</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt;<br />
+struct SFW::Math::BoundingSphere&lt; T, Vec3 &gt;</div>
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00062">62</a> 行目に定義があります。</p>
+</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">型定義メンバ詳解</h2>
+<a id="a3e0e90c0f9714e102f0b666c42750a85" name="a3e0e90c0f9714e102f0b666c42750a85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e0e90c0f9714e102f0b666c42750a85">&#9670;&#160;</a></span>value_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::value_type = T</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00063">63</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">列挙型メンバ詳解</h2>
+<a id="aa7c4eae8343175abe9888e1cea9738d1" name="aa7c4eae8343175abe9888e1cea9738d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7c4eae8343175abe9888e1cea9738d1">&#9670;&#160;</a></span>VisState</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#aa7c4eae8343175abe9888e1cea9738d1">SFW::Math::BoundingSphere::VisState</a> : uint32_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel strong">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">列挙値</th></tr><tr><td class="fieldname"><a id="aa7c4eae8343175abe9888e1cea9738d1a597700f463b47effe2a9ae80121f9438" name="aa7c4eae8343175abe9888e1cea9738d1a597700f463b47effe2a9ae80121f9438"></a>Culled&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aa7c4eae8343175abe9888e1cea9738d1aec24d78ce33048dc73a2b6b1a0690192" name="aa7c4eae8343175abe9888e1cea9738d1aec24d78ce33048dc73a2b6b1a0690192"></a>Visible&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aa7c4eae8343175abe9888e1cea9738d1a17af426fc561e1d7b96e202cdd424308" name="aa7c4eae8343175abe9888e1cea9738d1a17af426fc561e1d7b96e202cdd424308"></a>NeedFrustum&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00664">664</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="ae28c89f4937018f304bb32d055b15762" name="ae28c89f4937018f304bb32d055b15762"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae28c89f4937018f304bb32d055b15762">&#9670;&#160;</a></span>contains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::contains </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>eps</em></span><span class="paramdefsep"> = </span><span class="paramdefval">T(0)</span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00068">68</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9c70f60031f32ab70a94bea18cafc610" name="a9c70f60031f32ab70a94bea18cafc610"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c70f60031f32ab70a94bea18cafc610">&#9670;&#160;</a></span>distance2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::distance2 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00071">71</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a34330b071e477fd25153fffc55df6d19" name="a34330b071e477fd25153fffc55df6d19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34330b071e477fd25153fffc55df6d19">&#9670;&#160;</a></span>expandToFit() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::expandToFit </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>s</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00122">122</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aeb401ae85a35730883cbec939a889217" name="aeb401ae85a35730883cbec939a889217"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb401ae85a35730883cbec939a889217">&#9670;&#160;</a></span>expandToFit() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::expandToFit </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00109">109</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae0ff9439ca48eb8e77bf625ec55f09e1" name="ae0ff9439ca48eb8e77bf625ec55f09e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0ff9439ca48eb8e77bf625ec55f09e1">&#9670;&#160;</a></span>FromAABB()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::FromAABB </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>minP</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>maxP</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00080">80</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a02384bbb1e999b44cbf269d67e97c908" name="a02384bbb1e999b44cbf269d67e97c908"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02384bbb1e999b44cbf269d67e97c908">&#9670;&#160;</a></span>FromPointsRitter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::FromPointsRitter </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> *</td>          <td class="paramname"><span class="paramname"><em>points</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>count</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00128">128</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3e9e407303037f3f14434d8cc7159dcf" name="a3e9e407303037f3f14434d8cc7159dcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e9e407303037f3f14434d8cc7159dcf">&#9670;&#160;</a></span>FromPointsWelzl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::FromPointsWelzl </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>pts</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>seed</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0xC0FFEE</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00162">162</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad4cb44f27c5cfc10beced98faa8bca90" name="ad4cb44f27c5cfc10beced98faa8bca90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4cb44f27c5cfc10beced98faa8bca90">&#9670;&#160;</a></span>intersects()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::intersects </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>eps</em></span><span class="paramdefsep"> = </span><span class="paramdefval">T(0)</span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00074">74</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae70c7dce6af330f4d8bf5ce61a134299" name="ae70c7dce6af330f4d8bf5ce61a134299"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae70c7dce6af330f4d8bf5ce61a134299">&#9670;&#160;</a></span>IsVisible_LocalCenter_WorldRadius()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<div class="memtemplate">
+template&lt;class Mat4, class NDC&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#aa7c4eae8343175abe9888e1cea9738d1">VisState</a> <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::IsVisible_LocalCenter_WorldRadius </td>
+          <td>(</td>
+          <td class="paramtype">const Mat4 &amp;</td>          <td class="paramname"><span class="paramname"><em>WVP</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Mat4 &amp;</td>          <td class="paramname"><span class="paramname"><em>VP</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>centerLocal</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>radiusWorld</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camRightWS</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camUpWS</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camForwardWS</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NDC *</td>          <td class="paramname"><span class="paramname"><em>outNDC</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>depth</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラ基底を使った高速な可視判定 </p>
+<p>centerはWVPで変換、radiusは元からワールド空間にする、カメラ軸はワールド空間なのでVPだけ使う </p><dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">WVP</td><td>= VP * <a class="el" href="class_s_f_w_1_1_world.html" title="各レベルを管理し、更新するクラス。サービスロケーターを保持する。">World</a> </td></tr>
+    <tr><td class="paramname">VP</td><td>= Projection * View </td></tr>
+    <tr><td class="paramname">centerLocal</td><td>モデルローカルの中心 </td></tr>
+    <tr><td class="paramname">radiusWorld</td><td>ワールド空間の半径（スケール反映済み） </td></tr>
+    <tr><td class="paramname">camRightWS</td><td>ワールド空間のカメラ軸 </td></tr>
+    <tr><td class="paramname">camUpWS</td><td>ワールド空間のカメラ軸 </td></tr>
+    <tr><td class="paramname">camForwardWS</td><td>ワールド空間のカメラ軸 </td></tr>
+    <tr><td class="paramname">outNDC</td><td>出力NDC矩形 </td></tr>
+    <tr><td class="paramname">depth</td><td>中心の clip.w </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00684">684</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a35004bd60d4e9e5909d2ba30b48a742c" name="a35004bd60d4e9e5909d2ba30b48a742c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35004bd60d4e9e5909d2ba30b48a742c">&#9670;&#160;</a></span>IsVisible_WVP() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<div class="memtemplate">
+template&lt;class Mat4, class NDC&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::IsVisible_WVP </td>
+          <td>(</td>
+          <td class="paramtype">const Mat4 &amp;</td>          <td class="paramname"><span class="paramname"><em>WVP</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NDC *</td>          <td class="paramname"><span class="paramname"><em>outNDC</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>depth</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00414">414</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6e1bb019581f970826e9e14db4ff7cc6" name="a6e1bb019581f970826e9e14db4ff7cc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e1bb019581f970826e9e14db4ff7cc6">&#9670;&#160;</a></span>IsVisible_WVP() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<div class="memtemplate">
+template&lt;class Mat4&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::IsVisible_WVP </td>
+          <td>(</td>
+          <td class="paramtype">const Mat4 &amp;</td>          <td class="paramname"><span class="paramname"><em>WVP</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>outNdcXmin</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>outNdcYmin</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>outNdcXmax</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>outNdcYmax</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>outWmin</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>depth</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00335">335</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6b45ceb4c72fe65d2e3f0ea56ffb87f5" name="a6b45ceb4c72fe65d2e3f0ea56ffb87f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b45ceb4c72fe65d2e3f0ea56ffb87f5">&#9670;&#160;</a></span>IsVisible_WVP_CamBasis()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<div class="memtemplate">
+template&lt;class Mat4, class NDC&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::IsVisible_WVP_CamBasis </td>
+          <td>(</td>
+          <td class="paramtype">const Mat4 &amp;</td>          <td class="paramname"><span class="paramname"><em>WVP</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camRight</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camUp</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camForward</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NDC *</td>          <td class="paramname"><span class="paramname"><em>outNDC</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>depth</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00494">494</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa6651d5fc32ce4f66dd8e7fcab34d1dc" name="aa6651d5fc32ce4f66dd8e7fcab34d1dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6651d5fc32ce4f66dd8e7fcab34d1dc">&#9670;&#160;</a></span>IsVisible_WVP_CamBasis_Fast()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<div class="memtemplate">
+template&lt;class Mat4, class NDC&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::IsVisible_WVP_CamBasis_Fast </td>
+          <td>(</td>
+          <td class="paramtype">const Mat4 &amp;</td>          <td class="paramname"><span class="paramname"><em>WVP</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camRight</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camUp</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camForward</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NDC *</td>          <td class="paramname"><span class="paramname"><em>outNDC</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>depth</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラ基底を使った高速な可視判定 </p>
+<p>WVPに回転が入っているとカメラの軸も回転するの誤判定になる </p>
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00585">585</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa276be09d70e1ff5e6f216bf3b447293" name="aa276be09d70e1ff5e6f216bf3b447293"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa276be09d70e1ff5e6f216bf3b447293">&#9670;&#160;</a></span>IsVisibleBatch_WorldSoA_LocalCenterRadius_AVX2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<div class="memtemplate">
+template&lt;typename Mat4&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uint32_t <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::IsVisibleBatch_WorldSoA_LocalCenterRadius_AVX2 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a.html">Matrix3x4fSoA</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>WorldSoA</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Mat4 &amp;</td>          <td class="paramname"><span class="paramname"><em>VP</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp.html">NdcPrecomp</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>pc</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>centerLocal</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float *</td>          <td class="paramname"><span class="paramname"><em>radiusWorld</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t</td>          <td class="paramname"><span class="paramname"><em>i</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *</td>          <td class="paramname"><span class="paramname"><em>outNdcX</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *</td>          <td class="paramname"><span class="paramname"><em>outNdcY</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *</td>          <td class="paramname"><span class="paramname"><em>outNdcZ</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *</td>          <td class="paramname"><span class="paramname"><em>outDepthMin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *</td>          <td class="paramname"><span class="paramname"><em>outDepthMax</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00832">832</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a5a31197b7bf60cfdc0f6e3e33dd23018" name="a5a31197b7bf60cfdc0f6e3e33dd23018"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a31197b7bf60cfdc0f6e3e33dd23018">&#9670;&#160;</a></span>MakeSphereNdcPrecomp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<div class="memtemplate">
+template&lt;typename Mat4&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp.html">NdcPrecomp</a> <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::MakeSphereNdcPrecomp </td>
+          <td>(</td>
+          <td class="paramtype">const Mat4 &amp;</td>          <td class="paramname"><span class="paramname"><em>VP</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camRightWS</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camUpWS</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camForwardWS</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00807">807</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af5635111a3236726b0c416687a5d3438" name="af5635111a3236726b0c416687a5d3438"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5635111a3236726b0c416687a5d3438">&#9670;&#160;</a></span>Merge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::Merge </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>a</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>b</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00089">89</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7ceb459257a4a3d1f9976bf33752ebe4" name="a7ceb459257a4a3d1f9976bf33752ebe4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ceb459257a4a3d1f9976bf33752ebe4">&#9670;&#160;</a></span>Transform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<div class="memtemplate">
+template&lt;class Mat4, class Vec3Like&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::Transform </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>s</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Mat4 &amp;</td>          <td class="paramname"><span class="paramname"><em>M</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Vec3Like &amp;</td>          <td class="paramname"><span class="paramname"><em>col0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Vec3Like &amp;</td>          <td class="paramname"><span class="paramname"><em>col1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Vec3Like &amp;</td>          <td class="paramname"><span class="paramname"><em>col2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Vec3Like &amp;</td>          <td class="paramname"><span class="paramname"><em>translation</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00305">305</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a807de42c73a4b5db688886e2d1880308" name="a807de42c73a4b5db688886e2d1880308"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a807de42c73a4b5db688886e2d1880308">&#9670;&#160;</a></span>TransformUniform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+<div class="memtemplate">
+template&lt;class Vec3LikeT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::TransformUniform </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>bs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Vec3LikeT &amp;</td>          <td class="paramname"><span class="paramname"><em>translation</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>uniform_scale</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00323">323</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<a id="ab5e03a3bece1e0ee0375ec842882caa3" name="ab5e03a3bece1e0ee0375ec842882caa3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5e03a3bece1e0ee0375ec842882caa3">&#9670;&#160;</a></span>center</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::center {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00064">64</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a64dd070f31ce07009c1280cff688d595" name="a64dd070f31ce07009c1280cff688d595"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64dd070f31ce07009c1280cff688d595">&#9670;&#160;</a></span>radius</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">SFW::Math::BoundingSphere</a>&lt; T, <a class="el" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> &gt;::radius { T(0) }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a> の <a class="el" href="_bounding_sphere_8hpp_source.html#l00065">65</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>この構造体詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/<a class="el" href="_bounding_sphere_8hpp_source.html">BoundingSphere.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_math.html">Math</a></li><li class="navelem"><a href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

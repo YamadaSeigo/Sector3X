@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Audio/AudioType.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_audio_type_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">AudioType.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_audio_type_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_audio.html">SFW::Audio</a></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="comment">// サウンドを識別するためのハンドル。内部的にはIDを保持し、0は無効なハンドルを表す。</span></div>
+<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_sound_handle.html">   13</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_audio_1_1_sound_handle.html">SoundHandle</a></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_sound_handle.html#a835f3bd37e371ff20ce50519e0767cf8">   15</a></span>        uint32_t <span class="keywordtype">id</span> = 0;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_sound_handle.html#a466dce3f8f1bcc3fdb5a17aaa782e35e">   16</a></span>        <span class="keyword">explicit</span> <span class="keyword">operator</span> bool() const noexcept { <span class="keywordflow">return</span> <span class="keywordtype">id</span> != 0; }</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    };</div>
+</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="comment">// SoLoudのボイスハンドルを表す型。0は無効なボイスIDを表します。</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_audio.html#a1f464382ff42e09924127ad9f960c79f">   20</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_s_f_w_1_1_audio.html#a1f464382ff42e09924127ad9f960c79f">VoiceID</a> = uint64_t; <span class="comment">// store SoLoud::handle; 0 = invalid</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="comment">// オーディオ再生のチケットID。再生要求を発行するときに割り当てられ、後でボイスIDに解決される可能性があります。</span></div>
+<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html">   23</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html">AudioTicketID</a></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#a6bc73fcf3a3793918802be7093c4a182">   25</a></span>        uint32_t <a class="code hl_variable" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#a6bc73fcf3a3793918802be7093c4a182">index</a> = UINT32_MAX;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#aa54730699062f65909f115de9caa9860">   26</a></span>        uint32_t <a class="code hl_variable" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#aa54730699062f65909f115de9caa9860">generation</a> = 0;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="comment">// チケットが有効かどうかを確認するためのユーティリティ関数</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#a7969befe248c807e62f9a2abc05e41c5">   29</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#a7969befe248c807e62f9a2abc05e41c5">IsValid</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#a6bc73fcf3a3793918802be7093c4a182">index</a> != UINT32_MAX; }</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="comment">// 無効なチケットIDを返すための静的関数</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#a3565aa7c3dcd4714de8eeb2bf19a074f">   31</a></span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <a class="code hl_struct" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html">AudioTicketID</a> <a class="code hl_function" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#a3565aa7c3dcd4714de8eeb2bf19a074f">Invalid</a>() noexcept { <span class="keywordflow">return</span> <a class="code hl_struct" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html">AudioTicketID</a>{ UINT32_MAX, 0 }; }</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="foldopen" id="foldopen00033" data-start="{" data-end="}">
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#aceceb949222bfede64ecc5bc7339ef8c">   33</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#aceceb949222bfede64ecc5bc7339ef8c">operator==</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html">AudioTicketID</a>&amp; o) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#a6bc73fcf3a3793918802be7093c4a182">index</a> == o.index &amp;&amp; <a class="code hl_variable" href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#aa54730699062f65909f115de9caa9860">generation</a> == o.generation;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        }</div>
+</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    };</div>
+</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="comment">// サウンド再生のパラメータをまとめた構造体。音量、パン、ピッチ、ループ設定などを含みます。</span></div>
+<div class="foldopen" id="foldopen00039" data-start="{" data-end="};">
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html">   39</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html">AudioPlayParams</a></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a0f8c607b9b84d4fda186656d88f62cc2">   41</a></span>        <span class="keywordtype">float</span> <a class="code hl_variable" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a0f8c607b9b84d4fda186656d88f62cc2">volume</a> = 1.0f; <span class="comment">// 0=無音、1=デフォルト、2=2倍など</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a8d11d084f4f9ab3aaa01141bb815ccce">   42</a></span>        <span class="keywordtype">float</span> <a class="code hl_variable" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a8d11d084f4f9ab3aaa01141bb815ccce">pan</a> = 0.0f; <span class="comment">// -1=左、0=中央、1=右</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#ad456f424f2d296ef79e31ac62d9aed80">   43</a></span>        <span class="keywordtype">float</span> <a class="code hl_variable" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#ad456f424f2d296ef79e31ac62d9aed80">pitch</a> = 1.0f; <span class="comment">// 1=デフォルト、0.5=半分、2=2倍など</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a6f9409f93b4d711235e94720c66e25dc">   44</a></span>        <span class="keywordtype">bool</span>  <a class="code hl_variable" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a6f9409f93b4d711235e94720c66e25dc">loop</a> = <span class="keyword">false</span>; <span class="comment">// ループ再生するかどうか</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a425d74d506dc377a6e8a647bb96ec8e8">   45</a></span>        <span class="keywordtype">bool</span>  <a class="code hl_variable" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a425d74d506dc377a6e8a647bb96ec8e8">paused</a> = <span class="keyword">false</span>; <span class="comment">// 再生開始時に一時停止するかどうか</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="comment">// 3D optional</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#ae063fe67207fcb65f5f448c9f4da0c3b">   48</a></span>        <span class="keywordtype">bool</span>  <a class="code hl_variable" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#ae063fe67207fcb65f5f448c9f4da0c3b">is3D</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a00e329739d1b10fc6389edb6ed823fb0">   49</a></span>        <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="code hl_variable" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a00e329739d1b10fc6389edb6ed823fb0">pos</a>;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#ab5c46dd61568c0680f00be18ea9f6ef9">   50</a></span>        <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="code hl_variable" href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#ab5c46dd61568c0680f00be18ea9f6ef9">vec</a>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    };</div>
+</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}</div>
+<div class="ttc" id="anamespace_s_f_w_1_1_audio_html"><div class="ttname"><a href="namespace_s_f_w_1_1_audio.html">SFW::Audio</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_audio_html_a1f464382ff42e09924127ad9f960c79f"><div class="ttname"><a href="namespace_s_f_w_1_1_audio.html#a1f464382ff42e09924127ad9f960c79f">SFW::Audio::VoiceID</a></div><div class="ttdeci">uint64_t VoiceID</div><div class="ttdef"><b>Definition</b> <a href="#l00020">AudioType.h:20</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_afea45e91c6313bb6dd5c60690ff82019"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">SFW::Math::Vec3f</a></div><div class="ttdeci">Vec3&lt; float &gt; Vec3f</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00354">Vector.hpp:354</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_play_params_html"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html">SFW::Audio::AudioPlayParams</a></div><div class="ttdef"><b>Definition</b> <a href="#l00039">AudioType.h:40</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_play_params_html_a00e329739d1b10fc6389edb6ed823fb0"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a00e329739d1b10fc6389edb6ed823fb0">SFW::Audio::AudioPlayParams::pos</a></div><div class="ttdeci">Math::Vec3f pos</div><div class="ttdef"><b>Definition</b> <a href="#l00049">AudioType.h:49</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_play_params_html_a0f8c607b9b84d4fda186656d88f62cc2"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a0f8c607b9b84d4fda186656d88f62cc2">SFW::Audio::AudioPlayParams::volume</a></div><div class="ttdeci">float volume</div><div class="ttdef"><b>Definition</b> <a href="#l00041">AudioType.h:41</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_play_params_html_a425d74d506dc377a6e8a647bb96ec8e8"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a425d74d506dc377a6e8a647bb96ec8e8">SFW::Audio::AudioPlayParams::paused</a></div><div class="ttdeci">bool paused</div><div class="ttdef"><b>Definition</b> <a href="#l00045">AudioType.h:45</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_play_params_html_a6f9409f93b4d711235e94720c66e25dc"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a6f9409f93b4d711235e94720c66e25dc">SFW::Audio::AudioPlayParams::loop</a></div><div class="ttdeci">bool loop</div><div class="ttdef"><b>Definition</b> <a href="#l00044">AudioType.h:44</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_play_params_html_a8d11d084f4f9ab3aaa01141bb815ccce"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#a8d11d084f4f9ab3aaa01141bb815ccce">SFW::Audio::AudioPlayParams::pan</a></div><div class="ttdeci">float pan</div><div class="ttdef"><b>Definition</b> <a href="#l00042">AudioType.h:42</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_play_params_html_ab5c46dd61568c0680f00be18ea9f6ef9"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#ab5c46dd61568c0680f00be18ea9f6ef9">SFW::Audio::AudioPlayParams::vec</a></div><div class="ttdeci">Math::Vec3f vec</div><div class="ttdef"><b>Definition</b> <a href="#l00050">AudioType.h:50</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_play_params_html_ad456f424f2d296ef79e31ac62d9aed80"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#ad456f424f2d296ef79e31ac62d9aed80">SFW::Audio::AudioPlayParams::pitch</a></div><div class="ttdeci">float pitch</div><div class="ttdef"><b>Definition</b> <a href="#l00043">AudioType.h:43</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_play_params_html_ae063fe67207fcb65f5f448c9f4da0c3b"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_play_params.html#ae063fe67207fcb65f5f448c9f4da0c3b">SFW::Audio::AudioPlayParams::is3D</a></div><div class="ttdeci">bool is3D</div><div class="ttdef"><b>Definition</b> <a href="#l00048">AudioType.h:48</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_html"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html">SFW::Audio::AudioTicketID</a></div><div class="ttdef"><b>Definition</b> <a href="#l00023">AudioType.h:24</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_html_a3565aa7c3dcd4714de8eeb2bf19a074f"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#a3565aa7c3dcd4714de8eeb2bf19a074f">SFW::Audio::AudioTicketID::Invalid</a></div><div class="ttdeci">static constexpr AudioTicketID Invalid() noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00031">AudioType.h:31</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_html_a6bc73fcf3a3793918802be7093c4a182"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#a6bc73fcf3a3793918802be7093c4a182">SFW::Audio::AudioTicketID::index</a></div><div class="ttdeci">uint32_t index</div><div class="ttdef"><b>Definition</b> <a href="#l00025">AudioType.h:25</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_html_a7969befe248c807e62f9a2abc05e41c5"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#a7969befe248c807e62f9a2abc05e41c5">SFW::Audio::AudioTicketID::IsValid</a></div><div class="ttdeci">bool IsValid() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00029">AudioType.h:29</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_html_aa54730699062f65909f115de9caa9860"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#aa54730699062f65909f115de9caa9860">SFW::Audio::AudioTicketID::generation</a></div><div class="ttdeci">uint32_t generation</div><div class="ttdef"><b>Definition</b> <a href="#l00026">AudioType.h:26</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_html_aceceb949222bfede64ecc5bc7339ef8c"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d.html#aceceb949222bfede64ecc5bc7339ef8c">SFW::Audio::AudioTicketID::operator==</a></div><div class="ttdeci">bool operator==(const AudioTicketID &amp;o) const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00033">AudioType.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_audio_1_1_sound_handle_html"><div class="ttname"><a href="struct_s_f_w_1_1_audio_1_1_sound_handle.html">SFW::Audio::SoundHandle</a></div><div class="ttdef"><b>Definition</b> <a href="#l00013">AudioType.h:14</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_1d79bcd7ca572624ec509bf433c4c89b.html">Audio</a></li><li class="navelem"><a href="_audio_type_8h.html">AudioType.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

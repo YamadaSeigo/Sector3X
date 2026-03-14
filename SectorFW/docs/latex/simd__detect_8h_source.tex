@@ -1,0 +1,37 @@
+\doxysection{simd\+\_\+detect.\+h}
+\hypertarget{simd__detect_8h_source}{}\label{simd__detect_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/SIMD/simd\_detect.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/SIMD/simd\_detect.h}}
+\mbox{\hyperlink{simd__detect_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00007}00007\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <intrin.h>}}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00011}00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00012}00012\ \{}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00013}00013\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d}{SIMD}}}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00014}00014\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00019}\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a3ee4f230283e6345d5c8d4b282d0f7df}{00019}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a3ee4f230283e6345d5c8d4b282d0f7df}{cpu\_has\_avx\_os\_support}}()\ \{}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ info[4]\{\};}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_cpuid(info,\ 1);}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ osxsave\ =\ (info[2]\ \&\ (1\ <<\ 27))\ !=\ 0;\ \textcolor{comment}{//\ ECX.OSXSAVE}}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ avx\ =\ (info[2]\ \&\ (1\ <<\ 28))\ !=\ 0;\ \textcolor{comment}{//\ ECX.AVX}}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(osxsave\ \&\&\ avx))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ XCR0:\ XMM(bit1)\ と\ YMM(bit2)\ が\ OS\ により有効か}}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ xcr0\ =\ \_xgetbv(0);}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ xmm\_ok\ =\ (xcr0\ \&\ 0x2)\ !=\ 0;}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ ymm\_ok\ =\ (xcr0\ \&\ 0x4)\ !=\ 0;}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ xmm\_ok\ \&\&\ ymm\_ok;}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00036}\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_af9e3f2eb660d563830289d0b83136d83}{00036}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_af9e3f2eb660d563830289d0b83136d83}{cpu\_has\_avx2}}()\ \{}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a3ee4f230283e6345d5c8d4b282d0f7df}{cpu\_has\_avx\_os\_support}}())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ info7[4]\{\};}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_cpuidex(info7,\ 7,\ 0);}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ avx2\ =\ (info7[1]\ \&\ (1\ <<\ 5))\ !=\ 0;\ \textcolor{comment}{//\ EBX.AVX2}}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ avx2;}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00043}00043\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{simd__detect_8h_source_l00044}00044\ \}}
+
+\end{DoxyCode}

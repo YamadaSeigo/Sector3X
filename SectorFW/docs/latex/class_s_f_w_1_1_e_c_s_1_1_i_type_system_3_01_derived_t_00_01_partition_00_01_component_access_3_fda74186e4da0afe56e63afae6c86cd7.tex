@@ -1,0 +1,637 @@
+\doxysection{SFW\+::ECS\+::IType\+System\texorpdfstring{$<$}{<} DerivedT, Partition, Component\+Access\texorpdfstring{$<$}{<} Access\+Types... \texorpdfstring{$>$}{>}, Service\+Context\texorpdfstring{$<$}{<} Services... \texorpdfstring{$>$}{>}, Parallel\+Update \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7}{}\label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+
+
+ECSシステムのインターフェース  
+
+
+
+
+{\ttfamily \#include $<$IType\+System.\+hpp$>$}
+
+SFW\+::ECS\+::IType\+System\texorpdfstring{$<$}{<} DerivedT, Partition, Component\+Access\texorpdfstring{$<$}{<} Access\+Types... \texorpdfstring{$>$}{>}, Service\+Context\texorpdfstring{$<$}{<} Services... \texorpdfstring{$>$}{>}, Parallel\+Update \texorpdfstring{$>$}{>} の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.428571cm]{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ae62dbc14a3f838860e2a77d654aedd00}{Set\+Context}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator) noexcept
+\begin{DoxyCompactList}\small\item\em コンテキストを設定する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a9fd621bf93d585a90216d574253ef08a}{Start}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator) override final
+\begin{DoxyCompactList}\small\item\em システムの開始関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a402516d639ff2d27497ea37464a6e721}{Update}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor) override
+\begin{DoxyCompactList}\small\item\em システムの更新関数(Worldからグローバルに呼び出す) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_afd127401fe7bea74a0b068912cd9ed27}{Update}} (Partition \&partition, \mbox{\hyperlink{struct_s_f_w_1_1_level_context}{Level\+Context}}$<$ Partition $>$ \&level\+Ctx, const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor) override final
+\begin{DoxyCompactList}\small\item\em システムの更新関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ae2953bafb1379b2e521e1af9250109fb}{End}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator) override
+\begin{DoxyCompactList}\small\item\em システムのグローバル終了関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a416ce32deebe63dda832c04a62fa413e}{End}} (Partition \&partition, \mbox{\hyperlink{struct_s_f_w_1_1_level_context}{Level\+Context}}$<$ Partition $>$ \&level\+Ctx, const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator) override final
+\begin{DoxyCompactList}\small\item\em システムの終了関数 \end{DoxyCompactList}\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_access_info}{Access\+Info}} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ae8bfc6d7db07bc1809c7b80838b62912}{Get\+Access\+Info}} () const noexcept override final
+\begin{DoxyCompactList}\small\item\em システムのアクセス情報を取得する関数 \end{DoxyCompactList}\item 
+constexpr bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ab99476ab645f18f166b058a1beca74cd}{Is\+Parallel\+Update}} () const noexcept override final
+\begin{DoxyCompactList}\small\item\em システムの並列更新可能かを取得する関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{SFW\+::\+ECS\+::\+ISystem$<$ Partition $>$}} に属する継承公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a76f29426ffe8ff891839f83617b5558e}{\texorpdfstring{$\sim$}{\string~}\+ISystem}} ()=default
+\begin{DoxyCompactList}\small\item\em デストラクタ \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a1eca9e4de1c253fc1d2d3230dfeee491}{derived\+\_\+name}} () const
+\begin{DoxyCompactList}\small\item\em 継承先のクラス名を取得する \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a2c8882bdf68e063a547b7b9ed9db23bc}{Is\+Updateable}} () noexcept
+\begin{DoxyCompactList}\small\item\em Update\+Impl関数を保持しているか？ \end{DoxyCompactList}\item 
+static constexpr bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ac899484869e4bb46cc05b4fcf3bdd8e9}{Is\+End\+System}} () noexcept
+\begin{DoxyCompactList}\small\item\em Update\+Impl関数を保持しているか？ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{SFW\+::\+ECS\+::\+ISystem$<$ Partition $>$}} に属する継承静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a8ac687dfb43be42484e0593cb1350f80}{Is\+Updateable}} () noexcept
+\begin{DoxyCompactList}\small\item\em Update\+Impl関数を保持しているか？ \end{DoxyCompactList}\item 
+static constexpr bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_ae54ce64cf5dbe496412128c4cd542106}{Is\+End\+System}} () noexcept
+\begin{DoxyCompactList}\small\item\em End\+Impl関数を保持しているか？ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{限定公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_afb800ce774d8f311994675b004c9f92f}{Derived}} = DerivedT$<$Partition$>$
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a76b10ff61539f4edb972abd5d889da01}{Accessor\+Tuple}} = \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$Access\+Types...$>$\+::\+Tuple
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ad0842ea35ea2067c243625556d0efc36}{Context\+Tuple}} = \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$Services...$>$\+::\+Tuple
+\end{DoxyCompactItemize}
+\doxysubsubsection*{限定公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a35a6d9fcf5b0960018692ce10e5fca54}{For\+Each\+Chunk\+With\+Accessor}} (F \&\&func, Partition \&partition, Call\+Args \&\&... args)
+\begin{DoxyCompactList}\small\item\em 指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Access\+Spec, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ }\\requires \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6}{access\+\_\+spec\+\_\+normalize\+\_\+t}}$<$ Access\+Spec $>$, Access\+Types... $>$ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a68b85c59d626e7b951cc21f88ff39d28}{For\+Each\+Chunk\+With\+Accessor}} (F \&\&func, Partition \&partition, Call\+Args \&\&... args)
+\item 
+{\footnotesize template$<$typename... Override, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \newline
+requires (sizeof...(Override) $>$ 0) \&\& \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$Override...$>$, Access\+Types...$>$}\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ab23effe7611015a2adf6eb899d9d7fa0}{For\+Each\+Chunk\+With\+Accessor}} (F \&\&func, Partition \&partition, Call\+Args \&\&... args)
+\item 
+{\footnotesize template$<$Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ae8d4500f46edff914269f1fa04ac1455}{For\+Each\+Frustum\+Chunk\+With\+Accessor}} (F \&\&func, Partition \&partition, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fru, Call\+Args \&\&... args)
+\begin{DoxyCompactList}\small\item\em 指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する(フラスタムカリング付き) \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Access\+Spec, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ }\\requires \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6}{access\+\_\+spec\+\_\+normalize\+\_\+t}}$<$ Access\+Spec $>$, Access\+Types... $>$ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a68951befa186fc525b25c24af3cd657d}{For\+Each\+Frustum\+Chunk\+With\+Accessor}} (F \&\&func, Partition \&partition, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fru, Call\+Args \&\&... args)
+\item 
+{\footnotesize template$<$typename... Override, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \newline
+requires (sizeof...(Override) $>$ 0) \&\& \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$Override...$>$, Access\+Types...$>$}\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a8b04660515e35e65a24df81449f39b08}{For\+Each\+Frustum\+Chunk\+With\+Accessor}} (F \&\&func, Partition \&partition, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&fru, Call\+Args \&\&... args)
+\item 
+{\footnotesize template$<$Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a1e53c30251d46ff6c13852cffc64c9ef}{For\+Each\+Sphere\+Chunk\+With\+Accessor}} (F \&\&func, Partition \&partition, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&center, float radius, Call\+Args \&\&... args)
+\item 
+{\footnotesize template$<$typename Access\+Spec, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ }\\requires \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6}{access\+\_\+spec\+\_\+normalize\+\_\+t}}$<$ Access\+Spec $>$, Access\+Types... $>$ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a0881510085e0deecb446834f35ac1dd9}{For\+Each\+Sphere\+Chunk\+With\+Accessor}} (F \&\&func, Partition \&partition, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&center, float radius, Call\+Args \&\&... args)
+\item 
+{\footnotesize template$<$typename... Override, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \newline
+requires (sizeof...(Override) $>$ 0) \&\& \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$Override...$>$, Access\+Types...$>$}\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ab5e3d5df3bc5e5bc2f423fd9830b2998}{For\+Each\+Sphere\+Chunk\+With\+Accessor}} (F \&\&func, Partition \&partition, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&center, float radius, Call\+Args \&\&... args)
+\item 
+{\footnotesize template$<$Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a74d0bc51bdabba87347dd5517a7e5d03}{For\+Each\+Frustum\+Near\+Chunk\+With\+Accessor}} (F \&\&func, Partition \&partition, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fru, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} cp, Call\+Args \&\&... args)
+\begin{DoxyCompactList}\small\item\em 指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する(フラスタムカリング近い順番付き) \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Access\+Spec, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ }\\requires \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6}{access\+\_\+spec\+\_\+normalize\+\_\+t}}$<$ Access\+Spec $>$, Access\+Types... $>$ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_aec0d5e9b9e986f72986fb34540ef5396}{For\+Each\+Frustum\+Near\+Chunk\+With\+Accessor}} (F \&\&func, Partition \&partition, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fru, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} cp, Call\+Args \&\&... args)
+\item 
+{\footnotesize template$<$typename... Override, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \newline
+requires (sizeof...(Override) $>$ 0) \&\& \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$Override...$>$, Access\+Types...$>$}\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a4c149d10bd9b03009ceebeb30e8256e1}{For\+Each\+Frustum\+Near\+Chunk\+With\+Accessor}} (F \&\&func, Partition \&partition, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fru, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} cp, Call\+Args \&\&... args)
+\item 
+{\footnotesize template$<$Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a967825f2a6c4374a313af6dfe6042aa7}{For\+Each\+Chunk\+With\+Accessor\+And\+Entity\+IDs}} (F \&\&func, Partition \&partition, Call\+Args \&\&... args)
+\begin{DoxyCompactList}\small\item\em 指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する(エンティティ\+ID付き) \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Access\+Spec, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ }\\requires \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6}{access\+\_\+spec\+\_\+normalize\+\_\+t}}$<$ Access\+Spec $>$, Access\+Types... $>$ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a8c42d2bd4aa39a043d0fb984e4c9785a}{For\+Each\+Chunk\+With\+Accessor\+And\+Entity\+IDs}} (F \&\&func, Partition \&partition, Call\+Args \&\&... args)
+\item 
+{\footnotesize template$<$typename... Override, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \newline
+requires (sizeof...(Override) $>$ 0) \&\& \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$Override...$>$, Access\+Types...$>$}\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a88334cebc99b466de873fc8fb4b57cfa}{For\+Each\+Chunk\+With\+Accessor\+And\+Entity\+IDs}} (F \&\&func, Partition \&partition, Call\+Args \&\&... args)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$\newline
+class SFW\+::\+ECS\+::\+IType\+System$<$ Derived\+T, Partition, Component\+Access$<$ Access\+Types... $>$, Service\+Context$<$ Services... $>$, Parallel\+Update $>$}
+ECSシステムのインターフェース 
+
+
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em \doxylink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_afb800ce774d8f311994675b004c9f92f}{Derived}} & CRTPで継承する派生クラス \\
+\hline
+{\em Partition} & パーティションの型 \\
+\hline
+{\em Access\+Types} & アクセスするコンポーネントの型 \\
+\hline
+{\em Services} & サービスの型 \\
+\hline
+\end{DoxyTemplParams}
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00304}{304}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a76b10ff61539f4edb972abd5d889da01}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!AccessorTuple@{AccessorTuple}}
+\index{AccessorTuple@{AccessorTuple}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{AccessorTuple}{AccessorTuple}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a76b10ff61539f4edb972abd5d889da01} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+using \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+Accessor\+Tuple = \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$Access\+Types...$>$\+::\+Tuple\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00308}{308}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ad0842ea35ea2067c243625556d0efc36}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ContextTuple@{ContextTuple}}
+\index{ContextTuple@{ContextTuple}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ContextTuple}{ContextTuple}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ad0842ea35ea2067c243625556d0efc36} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+using \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+Context\+Tuple = \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$Services...$>$\+::\+Tuple\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00309}{309}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_afb800ce774d8f311994675b004c9f92f}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!Derived@{Derived}}
+\index{Derived@{Derived}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{Derived}{Derived}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_afb800ce774d8f311994675b004c9f92f} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+using \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+Derived = DerivedT$<$Partition$>$\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00306}{306}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ae2953bafb1379b2e521e1af9250109fb}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!End@{End}}
+\index{End@{End}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{End()}{End()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ae2953bafb1379b2e521e1af9250109fb} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+End (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&}]{service\+Locator}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+システムのグローバル終了関数 
+
+
+\begin{DoxyParams}{引数}
+{\em service\+Locator} & サービスロケーターの参照\\
+\hline
+\end{DoxyParams}
+自身のコンテキストを使用して、\+End\+Implを呼び出す 
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a9e162dcdc9cf183444cf359f93d2b1de}{SFW\+::\+ECS\+::\+ISystem$<$ Partition $>$}}を再実装しています。
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00711}{711}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a416ce32deebe63dda832c04a62fa413e}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!End@{End}}
+\index{End@{End}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{End()}{End()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a416ce32deebe63dda832c04a62fa413e} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+End (\begin{DoxyParamCaption}\item[{Partition \&}]{partition}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_level_context}{Level\+Context}}$<$ Partition $>$ \&}]{level\+Ctx}{, }\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&}]{service\+Locator}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+システムの終了関数 
+
+
+\begin{DoxyParams}{引数}
+{\em partition} & パーティションの参照\\
+\hline
+\end{DoxyParams}
+自身のコンテキストを使用して、\+End\+Implを呼び出す 
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a2a396811178b789ca9874590a4c773da}{SFW\+::\+ECS\+::\+ISystem$<$ Partition $>$}}を再実装しています。
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00739}{739}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a35a6d9fcf5b0960018692ce10e5fca54}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachChunkWithAccessor@{ForEachChunkWithAccessor}}
+\index{ForEachChunkWithAccessor@{ForEachChunkWithAccessor}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachChunkWithAccessor()}{ForEachChunkWithAccessor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a35a6d9fcf5b0960018692ce10e5fca54} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Chunk\+With\+Accessor (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する 
+
+
+\begin{DoxyParams}{引数}
+{\em func} & 関数オブジェクトまたはラムダ式 \\
+\hline
+{\em partition} & 対象のパーティション \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00317}{317}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a68b85c59d626e7b951cc21f88ff39d28}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachChunkWithAccessor@{ForEachChunkWithAccessor}}
+\index{ForEachChunkWithAccessor@{ForEachChunkWithAccessor}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachChunkWithAccessor()}{ForEachChunkWithAccessor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a68b85c59d626e7b951cc21f88ff39d28} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$typename Access\+Spec, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \\
+requires \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6}{access\+\_\+spec\+\_\+normalize\+\_\+t}}$<$ Access\+Spec $>$, Access\+Types... $>$ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Chunk\+With\+Accessor (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00326}{326}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ab23effe7611015a2adf6eb899d9d7fa0}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachChunkWithAccessor@{ForEachChunkWithAccessor}}
+\index{ForEachChunkWithAccessor@{ForEachChunkWithAccessor}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachChunkWithAccessor()}{ForEachChunkWithAccessor()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ab23effe7611015a2adf6eb899d9d7fa0} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$typename... Override, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \newline
+requires (sizeof...(Override) $>$ 0) \&\& \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$Override...$>$, Access\+Types...$>$\\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Chunk\+With\+Accessor (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00337}{337}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a967825f2a6c4374a313af6dfe6042aa7}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachChunkWithAccessorAndEntityIDs@{ForEachChunkWithAccessorAndEntityIDs}}
+\index{ForEachChunkWithAccessorAndEntityIDs@{ForEachChunkWithAccessorAndEntityIDs}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachChunkWithAccessorAndEntityIDs()}{ForEachChunkWithAccessorAndEntityIDs()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a967825f2a6c4374a313af6dfe6042aa7} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Chunk\+With\+Accessor\+And\+Entity\+IDs (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する(エンティティ\+ID付き) 
+
+
+\begin{DoxyParams}{引数}
+{\em func} & 関数オブジェクトまたはラムダ式 \\
+\hline
+{\em partition} & 対象のパーティション \\
+\hline
+{\em ...\+args} & 追加の引数 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00510}{510}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a8c42d2bd4aa39a043d0fb984e4c9785a}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachChunkWithAccessorAndEntityIDs@{ForEachChunkWithAccessorAndEntityIDs}}
+\index{ForEachChunkWithAccessorAndEntityIDs@{ForEachChunkWithAccessorAndEntityIDs}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachChunkWithAccessorAndEntityIDs()}{ForEachChunkWithAccessorAndEntityIDs()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a8c42d2bd4aa39a043d0fb984e4c9785a} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$typename Access\+Spec, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \\
+requires \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6}{access\+\_\+spec\+\_\+normalize\+\_\+t}}$<$ Access\+Spec $>$, Access\+Types... $>$ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Chunk\+With\+Accessor\+And\+Entity\+IDs (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00519}{519}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a88334cebc99b466de873fc8fb4b57cfa}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachChunkWithAccessorAndEntityIDs@{ForEachChunkWithAccessorAndEntityIDs}}
+\index{ForEachChunkWithAccessorAndEntityIDs@{ForEachChunkWithAccessorAndEntityIDs}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachChunkWithAccessorAndEntityIDs()}{ForEachChunkWithAccessorAndEntityIDs()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a88334cebc99b466de873fc8fb4b57cfa} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$typename... Override, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \newline
+requires (sizeof...(Override) $>$ 0) \&\& \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$Override...$>$, Access\+Types...$>$\\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Chunk\+With\+Accessor\+And\+Entity\+IDs (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00530}{530}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ae8d4500f46edff914269f1fa04ac1455}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachFrustumChunkWithAccessor@{ForEachFrustumChunkWithAccessor}}
+\index{ForEachFrustumChunkWithAccessor@{ForEachFrustumChunkWithAccessor}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachFrustumChunkWithAccessor()}{ForEachFrustumChunkWithAccessor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ae8d4500f46edff914269f1fa04ac1455} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Frustum\+Chunk\+With\+Accessor (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fru}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する(フラスタムカリング付き) 
+
+
+\begin{DoxyParams}{引数}
+{\em func} & 関数オブジェクトまたはラムダ式 \\
+\hline
+{\em partition} & 対象のパーティション \\
+\hline
+{\em fru} & フラスタム \\
+\hline
+{\em ...\+args} & 追加の引数 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00353}{353}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a68951befa186fc525b25c24af3cd657d}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachFrustumChunkWithAccessor@{ForEachFrustumChunkWithAccessor}}
+\index{ForEachFrustumChunkWithAccessor@{ForEachFrustumChunkWithAccessor}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachFrustumChunkWithAccessor()}{ForEachFrustumChunkWithAccessor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a68951befa186fc525b25c24af3cd657d} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$typename Access\+Spec, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \\
+requires \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6}{access\+\_\+spec\+\_\+normalize\+\_\+t}}$<$ Access\+Spec $>$, Access\+Types... $>$ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Frustum\+Chunk\+With\+Accessor (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fru}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00370}{370}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a8b04660515e35e65a24df81449f39b08}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachFrustumChunkWithAccessor@{ForEachFrustumChunkWithAccessor}}
+\index{ForEachFrustumChunkWithAccessor@{ForEachFrustumChunkWithAccessor}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachFrustumChunkWithAccessor()}{ForEachFrustumChunkWithAccessor()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a8b04660515e35e65a24df81449f39b08} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$typename... Override, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \newline
+requires (sizeof...(Override) $>$ 0) \&\& \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$Override...$>$, Access\+Types...$>$\\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Frustum\+Chunk\+With\+Accessor (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{fru}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00387}{387}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a74d0bc51bdabba87347dd5517a7e5d03}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachFrustumNearChunkWithAccessor@{ForEachFrustumNearChunkWithAccessor}}
+\index{ForEachFrustumNearChunkWithAccessor@{ForEachFrustumNearChunkWithAccessor}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachFrustumNearChunkWithAccessor()}{ForEachFrustumNearChunkWithAccessor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a74d0bc51bdabba87347dd5517a7e5d03} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Frustum\+Near\+Chunk\+With\+Accessor (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fru}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{cp}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+指定したアクセス型のコンポーネントを持つチャンクに対して、関数を適用する(フラスタムカリング近い順番付き) 
+
+
+\begin{DoxyParams}{引数}
+{\em func} & 関数オブジェクトまたはラムダ式 \\
+\hline
+{\em partition} & 対象のパーティション \\
+\hline
+{\em fru} & フラスタム \\
+\hline
+{\em cp} & カメラの位置 \\
+\hline
+{\em ...\+args} & 追加の引数 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00456}{456}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_aec0d5e9b9e986f72986fb34540ef5396}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachFrustumNearChunkWithAccessor@{ForEachFrustumNearChunkWithAccessor}}
+\index{ForEachFrustumNearChunkWithAccessor@{ForEachFrustumNearChunkWithAccessor}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachFrustumNearChunkWithAccessor()}{ForEachFrustumNearChunkWithAccessor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_aec0d5e9b9e986f72986fb34540ef5396} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$typename Access\+Spec, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \\
+requires \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6}{access\+\_\+spec\+\_\+normalize\+\_\+t}}$<$ Access\+Spec $>$, Access\+Types... $>$ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Frustum\+Near\+Chunk\+With\+Accessor (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fru}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{cp}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00474}{474}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a4c149d10bd9b03009ceebeb30e8256e1}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachFrustumNearChunkWithAccessor@{ForEachFrustumNearChunkWithAccessor}}
+\index{ForEachFrustumNearChunkWithAccessor@{ForEachFrustumNearChunkWithAccessor}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachFrustumNearChunkWithAccessor()}{ForEachFrustumNearChunkWithAccessor()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a4c149d10bd9b03009ceebeb30e8256e1} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$typename... Override, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \newline
+requires (sizeof...(Override) $>$ 0) \&\& \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$Override...$>$, Access\+Types...$>$\\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Frustum\+Near\+Chunk\+With\+Accessor (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fru}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{cp}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00492}{492}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a1e53c30251d46ff6c13852cffc64c9ef}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachSphereChunkWithAccessor@{ForEachSphereChunkWithAccessor}}
+\index{ForEachSphereChunkWithAccessor@{ForEachSphereChunkWithAccessor}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachSphereChunkWithAccessor()}{ForEachSphereChunkWithAccessor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a1e53c30251d46ff6c13852cffc64c9ef} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Sphere\+Chunk\+With\+Accessor (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{center}{, }\item[{float}]{radius}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00399}{399}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a0881510085e0deecb446834f35ac1dd9}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachSphereChunkWithAccessor@{ForEachSphereChunkWithAccessor}}
+\index{ForEachSphereChunkWithAccessor@{ForEachSphereChunkWithAccessor}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachSphereChunkWithAccessor()}{ForEachSphereChunkWithAccessor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a0881510085e0deecb446834f35ac1dd9} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$typename Access\+Spec, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \\
+requires \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6}{access\+\_\+spec\+\_\+normalize\+\_\+t}}$<$ Access\+Spec $>$, Access\+Types... $>$ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Sphere\+Chunk\+With\+Accessor (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{center}{, }\item[{float}]{radius}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00417}{417}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ab5e3d5df3bc5e5bc2f423fd9830b2998}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!ForEachSphereChunkWithAccessor@{ForEachSphereChunkWithAccessor}}
+\index{ForEachSphereChunkWithAccessor@{ForEachSphereChunkWithAccessor}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{ForEachSphereChunkWithAccessor()}{ForEachSphereChunkWithAccessor()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ab5e3d5df3bc5e5bc2f423fd9830b2998} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+template$<$typename... Override, Is\+Parallel Type = Is\+Parallel\{ false \}, typename F, typename... Call\+Args$>$ \newline
+requires (sizeof...(Override) $>$ 0) \&\& \+::\+SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of$<$\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$Override...$>$, Access\+Types...$>$\\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+For\+Each\+Sphere\+Chunk\+With\+Accessor (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{, }\item[{Partition \&}]{partition}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{center}{, }\item[{float}]{radius}{, }\item[{Call\+Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00435}{435}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ae8bfc6d7db07bc1809c7b80838b62912}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!GetAccessInfo@{GetAccessInfo}}
+\index{GetAccessInfo@{GetAccessInfo}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{GetAccessInfo()}{GetAccessInfo()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ae8bfc6d7db07bc1809c7b80838b62912} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_access_info}{Access\+Info}} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+Get\+Access\+Info (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [final]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+システムのアクセス情報を取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_e_c_s_1_1_access_info}{Access\+Info} アクセス情報 
+\end{DoxyReturn}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_aaac60600ab1f862d7d6e303a57ad14b3}{SFW\+::\+ECS\+::\+ISystem$<$ Partition $>$}}を実装しています。
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00785}{785}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ac899484869e4bb46cc05b4fcf3bdd8e9}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!IsEndSystem@{IsEndSystem}}
+\index{IsEndSystem@{IsEndSystem}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{IsEndSystem()}{IsEndSystem()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ac899484869e4bb46cc05b4fcf3bdd8e9} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+constexpr bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+Is\+End\+System (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Update\+Impl関数を保持しているか？ 
+
+\begin{DoxyReturn}{戻り値}
+保持している場合はtrue
+\end{DoxyReturn}
+ISystemの\+Is\+Updateable関数を隠蔽 
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00552}{552}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ab99476ab645f18f166b058a1beca74cd}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!IsParallelUpdate@{IsParallelUpdate}}
+\index{IsParallelUpdate@{IsParallelUpdate}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{IsParallelUpdate()}{IsParallelUpdate()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ab99476ab645f18f166b058a1beca74cd} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+Is\+Parallel\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [final]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+システムの並列更新可能かを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+bool 並列更新可能な場合はtrue 
+\end{DoxyReturn}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_ac662d810121106aa5ade779e3eafba54}{SFW\+::\+ECS\+::\+ISystem$<$ Partition $>$}}を再実装しています。
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00792}{792}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a2c8882bdf68e063a547b7b9ed9db23bc}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!IsUpdateable@{IsUpdateable}}
+\index{IsUpdateable@{IsUpdateable}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{IsUpdateable()}{IsUpdateable()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a2c8882bdf68e063a547b7b9ed9db23bc} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+constexpr bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+Is\+Updateable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Update\+Impl関数を保持しているか？ 
+
+\begin{DoxyReturn}{戻り値}
+保持している場合はtrue
+\end{DoxyReturn}
+ISystemの\+Is\+Updateable関数を隠蔽 
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00543}{543}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ae62dbc14a3f838860e2a77d654aedd00}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!SetContext@{SetContext}}
+\index{SetContext@{SetContext}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{SetContext()}{SetContext()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ae62dbc14a3f838860e2a77d654aedd00} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+Set\+Context (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&}]{service\+Locator}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+コンテキストを設定する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em ctx} & コンテキストのタプル \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00560}{560}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a9fd621bf93d585a90216d574253ef08a}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!Start@{Start}}
+\index{Start@{Start}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{Start()}{Start()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a9fd621bf93d585a90216d574253ef08a} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+Start (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&}]{service\+Locator}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+システムの開始関数 
+
+
+\begin{DoxyParams}{引数}
+{\em partition} & パーティションの参照\\
+\hline
+\end{DoxyParams}
+自身のコンテキストを使用して、\+Start\+Implを呼び出す 
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_ae436de05af9efae1edabb1d69ed1d392}{SFW\+::\+ECS\+::\+ISystem$<$ Partition $>$}}を再実装しています。
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00570}{570}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a402516d639ff2d27497ea37464a6e721}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!Update@{Update}}
+\index{Update@{Update}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a402516d639ff2d27497ea37464a6e721} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+Update (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&}]{service\+Locator}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}}]{executor}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+システムの更新関数(Worldからグローバルに呼び出す) 
+
+
+\begin{DoxyParams}{引数}
+{\em service\+Locator} & サービスロケーター \\
+\hline
+{\em executor} & スレッド実行クラス \\
+\hline
+\end{DoxyParams}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a2885c052870d2b09df346267c3a8837b}{SFW\+::\+ECS\+::\+ISystem$<$ Partition $>$}}を再実装しています。
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00593}{593}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_afd127401fe7bea74a0b068912cd9ed27}\index{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}!Update@{Update}}
+\index{Update@{Update}!SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$@{SFW::ECS::ITypeSystem$<$ DerivedT, Partition, ComponentAccess$<$ AccessTypes... $>$, ServiceContext$<$ Services... $>$, ParallelUpdate $>$}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_afd127401fe7bea74a0b068912cd9ed27} 
+template$<$template$<$ typename $>$ class DerivedT, typename Partition, typename... Access\+Types, typename... Services, Is\+Parallel Parallel\+Update$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{SFW\+::\+ECS\+::\+IType\+System}}$<$ DerivedT, Partition, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}$<$ Access\+Types... $>$, \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}$<$ Services... $>$, Parallel\+Update $>$\+::\+Update (\begin{DoxyParamCaption}\item[{Partition \&}]{partition}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_level_context}{Level\+Context}}$<$ Partition $>$ \&}]{level\+Ctx}{, }\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&}]{service\+Locator}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}}]{executor}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [final]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+システムの更新関数 
+
+
+\begin{DoxyParams}{引数}
+{\em partition} & パーティションの参照\\
+\hline
+\end{DoxyParams}
+自身のシステムのコンテキストを使用して、\+Update\+Implを呼び出す 
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a4fe27ee820e1dcd4e0baf10dde970dea}{SFW\+::\+ECS\+::\+ISystem$<$ Partition $>$}}を実装しています。
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00632}{632}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_i_type_system_8hpp}{IType\+System.\+hpp}}\end{DoxyCompactItemize}

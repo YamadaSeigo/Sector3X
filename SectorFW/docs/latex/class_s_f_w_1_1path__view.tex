@@ -1,0 +1,293 @@
+\doxysection{SFW\+::path\+\_\+view クラス}
+\hypertarget{class_s_f_w_1_1path__view}{}\label{class_s_f_w_1_1path__view}\index{SFW::path\_view@{SFW::path\_view}}
+
+
+std\+::filesystem\+::pathのゼロコピービューを提供するクラス  
+
+
+
+
+{\ttfamily \#include $<$Path\+View.\+hpp$>$}
+
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1path__view_af6ba232b4aaf90414666732285ad3263}{path\+\_\+type}} = std\+::filesystem\+::path
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1path__view_a1ce179325e78bfcd449c766a689f2d60}{value\+\_\+type}} = typename path\+\_\+type\+::value\+\_\+type
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1path__view_ad430455fc0ab64facd3a89db96c787bd}{string\+\_\+type}} = typename path\+\_\+type\+::string\+\_\+type
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1path__view_a710c04cb7cf46d6e70dfe0ae427958ab}{view\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em 基になる文字列ビューの型 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1path__view_a7c6cb41fb353c7e270e872259fdb57bb}{path\+\_\+view}} ()=default
+\begin{DoxyCompactList}\small\item\em デフォルトコンストラクタ (空のビューを作成) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1path__view_a7ba5a2140e65596a6898ec617f81bded}{path\+\_\+view}} (const \mbox{\hyperlink{class_s_f_w_1_1path__view_af6ba232b4aaf90414666732285ad3263}{path\+\_\+type}} \&path)
+\begin{DoxyCompactList}\small\item\em std\+::filesystem\+::pathから構築 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1path__view_a5219a8b2f221cd4bad4a07f1d36784ce}{path\+\_\+view}} (const \mbox{\hyperlink{class_s_f_w_1_1path__view_ad430455fc0ab64facd3a89db96c787bd}{string\+\_\+type}} \&str)
+\begin{DoxyCompactList}\small\item\em 文字列から構築 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1path__view_ab3107f86edd5392a1de6b7b6f51cdc77}{path\+\_\+view}} (const \mbox{\hyperlink{class_s_f_w_1_1path__view_a1ce179325e78bfcd449c766a689f2d60}{value\+\_\+type}} \texorpdfstring{$\ast$}{*}ptr, size\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em ポインタと長さから構築 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1path__view_a710c04cb7cf46d6e70dfe0ae427958ab}{view\+\_\+type}} \mbox{\hyperlink{class_s_f_w_1_1path__view_ac3cc1c602e26e9d5bc55c5ca96b0c12a}{view}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 基になる文字列ビューを取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1path__view_a615eb9764794c83770912b67f34d86eb}{operator view\+\_\+type}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 基になる文字列ビューへの暗黙的変換 \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{class_s_f_w_1_1path__view_a1ce179325e78bfcd449c766a689f2d60}{value\+\_\+type}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1path__view_a412cdea59d18ebeae68909ebe9ddd098}{data}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 基になる文字列データへのポインタを取得 \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1path__view_a9a3415ee4c942d1370e35394be8a1095}{size}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 基になる文字列の長さを取得 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1path__view_afcdf0f0026eba0a75e5293e8ba87314b}{empty}} () const noexcept
+\begin{DoxyCompactList}\small\item\em ビューが空かどうかを判定 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1path__view_af6ba232b4aaf90414666732285ad3263}{path\+\_\+type}} \mbox{\hyperlink{class_s_f_w_1_1path__view_afaf205b17ad9ea9f82707935b6c2e505}{to\+\_\+path}} () const
+\begin{DoxyCompactList}\small\item\em std\+::filesystem\+::pathに変換 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+std\+::filesystem\+::pathのゼロコピービューを提供するクラス 
+
+ \mbox{\hyperlink{_path_view_8hpp_source}{Path\+View.\+hpp}} の \mbox{\hyperlink{_path_view_8hpp_source_l00018}{18}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{class_s_f_w_1_1path__view_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{class_s_f_w_1_1path__view_af6ba232b4aaf90414666732285ad3263}\index{SFW::path\_view@{SFW::path\_view}!path\_type@{path\_type}}
+\index{path\_type@{path\_type}!SFW::path\_view@{SFW::path\_view}}
+\doxysubsubsection{\texorpdfstring{path\_type}{path\_type}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1path__view_af6ba232b4aaf90414666732285ad3263} 
+using \mbox{\hyperlink{class_s_f_w_1_1path__view_af6ba232b4aaf90414666732285ad3263}{SFW\+::path\+\_\+view\+::path\+\_\+type}} = std\+::filesystem\+::path}
+
+
+
+ \mbox{\hyperlink{_path_view_8hpp_source}{Path\+View.\+hpp}} の \mbox{\hyperlink{_path_view_8hpp_source_l00020}{20}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1path__view_ad430455fc0ab64facd3a89db96c787bd}\index{SFW::path\_view@{SFW::path\_view}!string\_type@{string\_type}}
+\index{string\_type@{string\_type}!SFW::path\_view@{SFW::path\_view}}
+\doxysubsubsection{\texorpdfstring{string\_type}{string\_type}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1path__view_ad430455fc0ab64facd3a89db96c787bd} 
+using \mbox{\hyperlink{class_s_f_w_1_1path__view_ad430455fc0ab64facd3a89db96c787bd}{SFW\+::path\+\_\+view\+::string\+\_\+type}} = typename path\+\_\+type\+::string\+\_\+type}
+
+
+
+ \mbox{\hyperlink{_path_view_8hpp_source}{Path\+View.\+hpp}} の \mbox{\hyperlink{_path_view_8hpp_source_l00022}{22}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1path__view_a1ce179325e78bfcd449c766a689f2d60}\index{SFW::path\_view@{SFW::path\_view}!value\_type@{value\_type}}
+\index{value\_type@{value\_type}!SFW::path\_view@{SFW::path\_view}}
+\doxysubsubsection{\texorpdfstring{value\_type}{value\_type}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1path__view_a1ce179325e78bfcd449c766a689f2d60} 
+using \mbox{\hyperlink{class_s_f_w_1_1path__view_a1ce179325e78bfcd449c766a689f2d60}{SFW\+::path\+\_\+view\+::value\+\_\+type}} = typename path\+\_\+type\+::value\+\_\+type}
+
+
+
+ \mbox{\hyperlink{_path_view_8hpp_source}{Path\+View.\+hpp}} の \mbox{\hyperlink{_path_view_8hpp_source_l00021}{21}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1path__view_a710c04cb7cf46d6e70dfe0ae427958ab}\index{SFW::path\_view@{SFW::path\_view}!view\_type@{view\_type}}
+\index{view\_type@{view\_type}!SFW::path\_view@{SFW::path\_view}}
+\doxysubsubsection{\texorpdfstring{view\_type}{view\_type}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1path__view_a710c04cb7cf46d6e70dfe0ae427958ab} 
+using \mbox{\hyperlink{class_s_f_w_1_1path__view_a710c04cb7cf46d6e70dfe0ae427958ab}{SFW\+::path\+\_\+view\+::view\+\_\+type}}}
+
+{\bfseries 初期値\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ std::conditional\_t<}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ std::is\_same\_v<value\_type,\ char>,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ std::string\_view,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ std::wstring\_view}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ >}
+
+\end{DoxyCode}
+
+
+基になる文字列ビューの型 
+
+
+
+ \mbox{\hyperlink{_path_view_8hpp_source}{Path\+View.\+hpp}} の \mbox{\hyperlink{_path_view_8hpp_source_l00027}{27}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1path__view_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1path__view_a7c6cb41fb353c7e270e872259fdb57bb}\index{SFW::path\_view@{SFW::path\_view}!path\_view@{path\_view}}
+\index{path\_view@{path\_view}!SFW::path\_view@{SFW::path\_view}}
+\doxysubsubsection{\texorpdfstring{path\_view()}{path\_view()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1path__view_a7c6cb41fb353c7e270e872259fdb57bb} 
+SFW\+::path\+\_\+view\+::path\+\_\+view (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+デフォルトコンストラクタ (空のビューを作成) 
+
+\Hypertarget{class_s_f_w_1_1path__view_a7ba5a2140e65596a6898ec617f81bded}\index{SFW::path\_view@{SFW::path\_view}!path\_view@{path\_view}}
+\index{path\_view@{path\_view}!SFW::path\_view@{SFW::path\_view}}
+\doxysubsubsection{\texorpdfstring{path\_view()}{path\_view()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1path__view_a7ba5a2140e65596a6898ec617f81bded} 
+SFW\+::path\+\_\+view\+::path\+\_\+view (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1path__view_af6ba232b4aaf90414666732285ad3263}{path\+\_\+type}} \&}]{path}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+std\+::filesystem\+::pathから構築 
+
+
+\begin{DoxyParams}{引数}
+{\em path} & 元となるパス \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_path_view_8hpp_source}{Path\+View.\+hpp}} の \mbox{\hyperlink{_path_view_8hpp_source_l00041}{41}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1path__view_a5219a8b2f221cd4bad4a07f1d36784ce}\index{SFW::path\_view@{SFW::path\_view}!path\_view@{path\_view}}
+\index{path\_view@{path\_view}!SFW::path\_view@{SFW::path\_view}}
+\doxysubsubsection{\texorpdfstring{path\_view()}{path\_view()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1path__view_a5219a8b2f221cd4bad4a07f1d36784ce} 
+SFW\+::path\+\_\+view\+::path\+\_\+view (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1path__view_ad430455fc0ab64facd3a89db96c787bd}{string\+\_\+type}} \&}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+文字列から構築 
+
+
+\begin{DoxyParams}{引数}
+{\em str} & 元となる文字列 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_path_view_8hpp_source}{Path\+View.\+hpp}} の \mbox{\hyperlink{_path_view_8hpp_source_l00048}{48}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1path__view_ab3107f86edd5392a1de6b7b6f51cdc77}\index{SFW::path\_view@{SFW::path\_view}!path\_view@{path\_view}}
+\index{path\_view@{path\_view}!SFW::path\_view@{SFW::path\_view}}
+\doxysubsubsection{\texorpdfstring{path\_view()}{path\_view()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1path__view_ab3107f86edd5392a1de6b7b6f51cdc77} 
+SFW\+::path\+\_\+view\+::path\+\_\+view (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1path__view_a1ce179325e78bfcd449c766a689f2d60}{value\+\_\+type}} \texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{size\+\_\+t}]{len}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ポインタと長さから構築 
+
+
+\begin{DoxyParams}{引数}
+{\em ptr} & 元となる文字列のポインタ \\
+\hline
+{\em len} & 文字列の長さ \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_path_view_8hpp_source}{Path\+View.\+hpp}} の \mbox{\hyperlink{_path_view_8hpp_source_l00056}{56}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1path__view_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1path__view_a412cdea59d18ebeae68909ebe9ddd098}\index{SFW::path\_view@{SFW::path\_view}!data@{data}}
+\index{data@{data}!SFW::path\_view@{SFW::path\_view}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1path__view_a412cdea59d18ebeae68909ebe9ddd098} 
+const \mbox{\hyperlink{class_s_f_w_1_1path__view_a1ce179325e78bfcd449c766a689f2d60}{value\+\_\+type}} \texorpdfstring{$\ast$}{*} SFW\+::path\+\_\+view\+::data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+基になる文字列データへのポインタを取得 
+
+\begin{DoxyReturn}{戻り値}
+const value\+\_\+type\texorpdfstring{$\ast$}{*} 文字列データへのポインタ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_path_view_8hpp_source}{Path\+View.\+hpp}} の \mbox{\hyperlink{_path_view_8hpp_source_l00072}{72}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1path__view_afcdf0f0026eba0a75e5293e8ba87314b}\index{SFW::path\_view@{SFW::path\_view}!empty@{empty}}
+\index{empty@{empty}!SFW::path\_view@{SFW::path\_view}}
+\doxysubsubsection{\texorpdfstring{empty()}{empty()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1path__view_afcdf0f0026eba0a75e5293e8ba87314b} 
+bool SFW\+::path\+\_\+view\+::empty (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ビューが空かどうかを判定 
+
+\begin{DoxyReturn}{戻り値}
+bool 空ならtrue、そうでなければfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_path_view_8hpp_source}{Path\+View.\+hpp}} の \mbox{\hyperlink{_path_view_8hpp_source_l00082}{82}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1path__view_a615eb9764794c83770912b67f34d86eb}\index{SFW::path\_view@{SFW::path\_view}!operator view\_type@{operator view\_type}}
+\index{operator view\_type@{operator view\_type}!SFW::path\_view@{SFW::path\_view}}
+\doxysubsubsection{\texorpdfstring{operator view\_type()}{operator view\_type()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1path__view_a615eb9764794c83770912b67f34d86eb} 
+SFW\+::path\+\_\+view\+::operator \mbox{\hyperlink{class_s_f_w_1_1path__view_a710c04cb7cf46d6e70dfe0ae427958ab}{view\+\_\+type}} (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+基になる文字列ビューへの暗黙的変換 
+
+
+
+ \mbox{\hyperlink{_path_view_8hpp_source}{Path\+View.\+hpp}} の \mbox{\hyperlink{_path_view_8hpp_source_l00067}{67}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1path__view_a9a3415ee4c942d1370e35394be8a1095}\index{SFW::path\_view@{SFW::path\_view}!size@{size}}
+\index{size@{size}!SFW::path\_view@{SFW::path\_view}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1path__view_a9a3415ee4c942d1370e35394be8a1095} 
+size\+\_\+t SFW\+::path\+\_\+view\+::size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+基になる文字列の長さを取得 
+
+\begin{DoxyReturn}{戻り値}
+size\+\_\+t 文字列の長さ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_path_view_8hpp_source}{Path\+View.\+hpp}} の \mbox{\hyperlink{_path_view_8hpp_source_l00077}{77}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1path__view_afaf205b17ad9ea9f82707935b6c2e505}\index{SFW::path\_view@{SFW::path\_view}!to\_path@{to\_path}}
+\index{to\_path@{to\_path}!SFW::path\_view@{SFW::path\_view}}
+\doxysubsubsection{\texorpdfstring{to\_path()}{to\_path()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1path__view_afaf205b17ad9ea9f82707935b6c2e505} 
+\mbox{\hyperlink{class_s_f_w_1_1path__view_af6ba232b4aaf90414666732285ad3263}{path\+\_\+type}} SFW\+::path\+\_\+view\+::to\+\_\+path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+std\+::filesystem\+::pathに変換 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1path__view_af6ba232b4aaf90414666732285ad3263}{path\+\_\+type} std\+::filesystem\+::pathオブジェクト 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_path_view_8hpp_source}{Path\+View.\+hpp}} の \mbox{\hyperlink{_path_view_8hpp_source_l00087}{87}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1path__view_ac3cc1c602e26e9d5bc55c5ca96b0c12a}\index{SFW::path\_view@{SFW::path\_view}!view@{view}}
+\index{view@{view}!SFW::path\_view@{SFW::path\_view}}
+\doxysubsubsection{\texorpdfstring{view()}{view()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1path__view_ac3cc1c602e26e9d5bc55c5ca96b0c12a} 
+\mbox{\hyperlink{class_s_f_w_1_1path__view_a710c04cb7cf46d6e70dfe0ae427958ab}{view\+\_\+type}} SFW\+::path\+\_\+view\+::view (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+基になる文字列ビューを取得 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1path__view_a710c04cb7cf46d6e70dfe0ae427958ab}{view\+\_\+type} 基になる文字列ビュー 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_path_view_8hpp_source}{Path\+View.\+hpp}} の \mbox{\hyperlink{_path_view_8hpp_source_l00063}{63}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/\mbox{\hyperlink{_path_view_8hpp}{Path\+View.\+hpp}}\end{DoxyCompactItemize}

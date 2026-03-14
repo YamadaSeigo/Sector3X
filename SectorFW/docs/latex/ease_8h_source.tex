@@ -1,0 +1,56 @@
+\doxysection{ease.\+h}
+\hypertarget{ease_8h_source}{}\label{ease_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/ease.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/ease.h}}
+\mbox{\hyperlink{ease_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00010}00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_math}{SFW::Math}}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00011}00011\ \{}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00012}00012\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00013}00013\ \textcolor{comment}{\ \ \ *\ @brief\ 滑らかなイージング関数}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00014}00014\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00015}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a42dc06aebef00f4217aa75293085447d}{00015}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a42dc06aebef00f4217aa75293085447d}{EaseSmooth}}(\textcolor{keywordtype}{float}\ t)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00016}00016\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00017}00017\ \ \ \ \ \ \ \ \ t\ =\ std::clamp(t,\ 0.0f,\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00018}00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ t\ *\ t\ *\ (3.0f\ -\/\ 2.0f\ *\ t);}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00019}00019\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00020}00020\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00021}00021\ \textcolor{comment}{\ \ \ \ *\ @brief\ より滑らかなイージング関数}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00022}00022\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00023}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a9d9964e7eb0c013d01568be7e846d9b6}{00023}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a9d9964e7eb0c013d01568be7e846d9b6}{EaseSmoother}}(\textcolor{keywordtype}{float}\ t)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00024}00024\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ t\ =\ std::clamp(t,\ 0.0f,\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ t\ *\ t\ *\ t\ *\ (t\ *\ (6.0f\ *\ t\ -\/\ 15.0f)\ +\ 10.0f);}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00027}00027\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00029}00029\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00030}00030\ \textcolor{comment}{\ \ \ \ *\ @brief\ 二次イージング関数(下にたわむ)}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00031}00031\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00032}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a5d13d4180b6fa32de7ac30c3878386ef}{00032}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5d13d4180b6fa32de7ac30c3878386ef}{EaseInQuad}}(\textcolor{keywordtype}{float}\ t)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00033}00033\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ t\ *\ t;}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00035}00035\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00037}00037\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00038}00038\ \textcolor{comment}{\ \ \ \ *\ @brief\ 二次イージング関数(上にたわむ)}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00039}00039\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00040}\mbox{\hyperlink{namespace_s_f_w_1_1_math_ad71f47e811b4580aa7f6d8fe2c3cc2bd}{00040}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ad71f47e811b4580aa7f6d8fe2c3cc2bd}{EaseOutQuad}}(\textcolor{keywordtype}{float}\ t)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00041}00041\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1.0f\ -\/\ (1.0f\ -\/\ t)\ *\ (1.0f\ -\/\ t);}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00043}00043\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00045}00045\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00046}00046\ \textcolor{comment}{\ \ \ \ *\ @brief\ 二次イージング関数(両端たわむ)}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00047}00047\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00048}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a54e9e15696416734bf8f47ed82b281d5}{00048}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a54e9e15696416734bf8f47ed82b281d5}{EaseInOutQuad}}(\textcolor{keywordtype}{float}\ t)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00049}00049\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (t\ <\ 0.5f)}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ ?\ 2.0f\ *\ t\ *\ t}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ :\ 1.0f\ -\/\ std::pow(-\/2.0f\ *\ t\ +\ 2.0f,\ 2.0f)\ *\ 0.5f;}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00053}00053\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{ease_8h_source_l00055}00055\ \}}
+
+\end{DoxyCode}

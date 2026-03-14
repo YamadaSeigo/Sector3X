@@ -1,0 +1,318 @@
+\doxysection{SFW\+::Grid2\+DPartition クラス}
+\hypertarget{class_s_f_w_1_1_grid2_d_partition}{}\label{class_s_f_w_1_1_grid2_d_partition}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+
+
+2D(x-\/z)グリッドパーティションを表すクラス  
+
+
+
+
+{\ttfamily \#include $<$Grid2\+DPartition.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a41cedf2996e9a9d950f6f9f0c18eda43}{Grid2\+DPartition}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} origin\+WS, \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}} chunk\+Width, \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}} chunk\+Height, float chunk\+Size) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+std\+::optional$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a400c0c6dadd1cddeef51e71d1598a0fd}{Get\+Chunk}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} wp, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg, \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} level, \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOut\+Of\+Bounds\+Policy}} policy=\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOut\+Of\+Bounds\+Policy\+::\+Clamp\+To\+Edge}}) noexcept
+\begin{DoxyCompactList}\small\item\em 指定した位置に基づいてチャンクを取得します。 \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{class_s_f_w_1_1_grid2_d}{Grid2D}}$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}}, \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}} $>$ \& \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_addb1842c8dd8f97efc2a966ca61ea428}{Get\+Grid}} () const noexcept
+\begin{DoxyCompactList}\small\item\em グリッドを取得します。 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \& \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_abfce9f5a7087f1b9a727a8e1e2a2b604}{Get\+Global\+Entity\+Manager}} () noexcept
+\begin{DoxyCompactList}\small\item\em グローバルエンティティマネージャーを取得します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_af4399f2dcebf7ef69eff608cf69c350f}{Register\+All\+Chunks}} (\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg, \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} level)
+\begin{DoxyCompactList}\small\item\em 初期登録：全セルを Registry に登録し、\+Node\+Key を埋める \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_adde6f5cf632e3bf1596a23393ceaec29}{Get\+Entity\+Num}} ()
+\begin{DoxyCompactList}\small\item\em 全エンティティ数を取得します。 \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_ad7fabf56ddbe300184454e3d088a4cd9}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr) const noexcept
+\begin{DoxyCompactList}\small\item\em フラスタムカリングを行い、可視なチャンクのリストを取得します。 \end{DoxyCompactList}\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a6f253ac1498ab288e37bf6af01893ed4}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, float ymin, float ymax, F \&\&f) const noexcept
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a5be91eedcb64f96fdffb5219eea8da08}{Cull\+Chunks}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&center, float radius) const noexcept
+\begin{DoxyCompactList}\small\item\em 位置(center)と半径(radius)でチャンクをカリングする（\+XZ の Circle vs chunk AABB） \doxylink{class_s_f_w_1_1_grid2_d}{Grid2D} は「地面」扱い（Y は無視）として、\+XZ のみで判定します。 \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a600ef2d842196a7d5e8e403d5713bcc6}{Cull\+Chunks\+Near}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&cam\+Pos, size\+\_\+t max\+Count=(std\+::numeric\+\_\+limits$<$ size\+\_\+t $>$\+::max)()) const noexcept
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_add87c9aa5f4efe1ad798c1133194234c}{Cull\+Chunk\+Line}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} cp, float hy, \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug\+::\+Line\+Vertex}} \texorpdfstring{$\ast$}{*}out\+Line, uint32\+\_\+t capacity, uint32\+\_\+t display\+Count) const noexcept
+\begin{DoxyCompactList}\small\item\em フラスタムカリングを行い、可視なチャンクのワイヤーフレームラインを取得します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a33a886c140705f1e714b3616bac7bcad}{Reload\+Cell}} (uint32\+\_\+t cx, uint32\+\_\+t cy, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg)
+\begin{DoxyCompactList}\small\item\em セルの再ロード時：旧登録を外し、generationで再登録 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a26103f46086ec27835aaa5a8d7311e4b}{Clean\+Chunk}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+static float \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a5dce8bf836a1d4aab2f8f234e38a1c33}{Dist2\+Point\+AABB3D}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&p, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&c, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&e)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+2D(x-\/z)グリッドパーティションを表すクラス 
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00028}{28}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_a41cedf2996e9a9d950f6f9f0c18eda43}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}!Grid2DPartition@{Grid2DPartition}}
+\index{Grid2DPartition@{Grid2DPartition}!SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+\doxysubsubsection{\texorpdfstring{Grid2DPartition()}{Grid2DPartition()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_partition_a41cedf2996e9a9d950f6f9f0c18eda43} 
+SFW\+::\+Grid2\+DPartition\+::\+Grid2\+DPartition (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{origin\+WS}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}}}]{chunk\+Width}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}}}]{chunk\+Height}{, }\item[{float}]{chunk\+Size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em chunk\+Width} & チャンクの幅 \\
+\hline
+{\em chunk\+Height} & チャンクの高さ \\
+\hline
+{\em chunk\+Size} & チャンクのサイズ \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00037}{37}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_a26103f46086ec27835aaa5a8d7311e4b}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}!CleanChunk@{CleanChunk}}
+\index{CleanChunk@{CleanChunk}!SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+\doxysubsubsection{\texorpdfstring{CleanChunk()}{CleanChunk()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_partition_a26103f46086ec27835aaa5a8d7311e4b} 
+void SFW\+::\+Grid2\+DPartition\+::\+Clean\+Chunk (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00552}{552}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_add87c9aa5f4efe1ad798c1133194234c}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}!CullChunkLine@{CullChunkLine}}
+\index{CullChunkLine@{CullChunkLine}!SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunkLine()}{CullChunkLine()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_partition_add87c9aa5f4efe1ad798c1133194234c} 
+uint32\+\_\+t SFW\+::\+Grid2\+DPartition\+::\+Cull\+Chunk\+Line (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{cp}{, }\item[{float}]{hy}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug\+::\+Line\+Vertex}} \texorpdfstring{$\ast$}{*}}]{out\+Line}{, }\item[{uint32\+\_\+t}]{capacity}{, }\item[{uint32\+\_\+t}]{display\+Count}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+フラスタムカリングを行い、可視なチャンクのワイヤーフレームラインを取得します。 
+
+
+\begin{DoxyParams}{引数}
+{\em fr} & フラスタム \\
+\hline
+{\em cp} & カメラ位置 \\
+\hline
+{\em hy} & チャンクの高さの半分 \\
+\hline
+{\em out\+Line} & 出力先のラインバッファ \\
+\hline
+{\em capacity} & ラインバッファの容量（頂点数） \\
+\hline
+{\em display\+Count} & 表示距離（チャンク数） \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+uint32\+\_\+t 有効なライン頂点数 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00464}{464}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_ad7fabf56ddbe300184454e3d088a4cd9}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_partition_ad7fabf56ddbe300184454e3d088a4cd9} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Grid2\+DPartition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+フラスタムカリングを行い、可視なチャンクのリストを取得します。 
+
+
+\begin{DoxyParams}{引数}
+{\em fr} & フラスタム \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+std\+::vector$<$\+Spatial\+Chunk\texorpdfstring{$\ast$}{*}$>$ 可視なチャンクのリスト 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00124}{124}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_a6f253ac1498ab288e37bf6af01893ed4}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_partition_a6f253ac1498ab288e37bf6af01893ed4} 
+template$<$class F$>$ \\
+void SFW\+::\+Grid2\+DPartition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{float}]{ymin}{, }\item[{float}]{ymax}{, }\item[{F \&\&}]{f}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00202}{202}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_a5be91eedcb64f96fdffb5219eea8da08}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_partition_a5be91eedcb64f96fdffb5219eea8da08} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Grid2\+DPartition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{center}{, }\item[{float}]{radius}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+位置(center)と半径(radius)でチャンクをカリングする（\+XZ の Circle vs chunk AABB） \doxylink{class_s_f_w_1_1_grid2_d}{Grid2D} は「地面」扱い（Y は無視）として、\+XZ のみで判定します。 
+
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00277}{277}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_a600ef2d842196a7d5e8e403d5713bcc6}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}!CullChunksNear@{CullChunksNear}}
+\index{CullChunksNear@{CullChunksNear}!SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunksNear()}{CullChunksNear()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_partition_a600ef2d842196a7d5e8e403d5713bcc6} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Grid2\+DPartition\+::\+Cull\+Chunks\+Near (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{cam\+Pos}{, }\item[{size\+\_\+t}]{max\+Count}{ = {\ttfamily (std\+:\+:numeric\+\_\+limits$<$size\+\_\+t$>$\+:\+:max)()}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00351}{351}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_a5dce8bf836a1d4aab2f8f234e38a1c33}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}!Dist2PointAABB3D@{Dist2PointAABB3D}}
+\index{Dist2PointAABB3D@{Dist2PointAABB3D}!SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+\doxysubsubsection{\texorpdfstring{Dist2PointAABB3D()}{Dist2PointAABB3D()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_partition_a5dce8bf836a1d4aab2f8f234e38a1c33} 
+float SFW\+::\+Grid2\+DPartition\+::\+Dist2\+Point\+AABB3D (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{p}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{c}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{e}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00338}{338}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_a400c0c6dadd1cddeef51e71d1598a0fd}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}!GetChunk@{GetChunk}}
+\index{GetChunk@{GetChunk}!SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+\doxysubsubsection{\texorpdfstring{GetChunk()}{GetChunk()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_partition_a400c0c6dadd1cddeef51e71d1598a0fd} 
+std\+::optional$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Grid2\+DPartition\+::\+Get\+Chunk (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{wp}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&}]{reg}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}}}]{level}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOut\+Of\+Bounds\+Policy}}}]{policy}{ = {\ttfamily \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOut\+Of\+Bounds\+Policy\+::\+Clamp\+To\+Edge}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+指定した位置に基づいてチャンクを取得します。 
+
+
+\begin{DoxyParams}{引数}
+{\em wp} & 位置（ワールド座標） \\
+\hline
+{\em policy} & アウトオブバウンズポリシー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+std\+::optional$<$\+Spatial\+Chunk\texorpdfstring{$\ast$}{*}$>$ チャンクへのポインタ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00046}{46}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_adde6f5cf632e3bf1596a23393ceaec29}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}!GetEntityNum@{GetEntityNum}}
+\index{GetEntityNum@{GetEntityNum}!SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+\doxysubsubsection{\texorpdfstring{GetEntityNum()}{GetEntityNum()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_partition_adde6f5cf632e3bf1596a23393ceaec29} 
+size\+\_\+t SFW\+::\+Grid2\+DPartition\+::\+Get\+Entity\+Num (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+全エンティティ数を取得します。 
+
+\begin{DoxyReturn}{戻り値}
+size\+\_\+t 全エンティティ数 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00106}{106}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_abfce9f5a7087f1b9a727a8e1e2a2b604}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}!GetGlobalEntityManager@{GetGlobalEntityManager}}
+\index{GetGlobalEntityManager@{GetGlobalEntityManager}!SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+\doxysubsubsection{\texorpdfstring{GetGlobalEntityManager()}{GetGlobalEntityManager()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_partition_abfce9f5a7087f1b9a727a8e1e2a2b604} 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \& SFW\+::\+Grid2\+DPartition\+::\+Get\+Global\+Entity\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+グローバルエンティティマネージャーを取得します。 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}\& グローバルエンティティマネージャーへの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00078}{78}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_addb1842c8dd8f97efc2a966ca61ea428}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}!GetGrid@{GetGrid}}
+\index{GetGrid@{GetGrid}!SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+\doxysubsubsection{\texorpdfstring{GetGrid()}{GetGrid()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_partition_addb1842c8dd8f97efc2a966ca61ea428} 
+const \mbox{\hyperlink{class_s_f_w_1_1_grid2_d}{Grid2D}}$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}}, \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}} $>$ \& SFW\+::\+Grid2\+DPartition\+::\+Get\+Grid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+グリッドを取得します。 
+
+\begin{DoxyReturn}{戻り値}
+const \doxylink{class_s_f_w_1_1_grid2_d}{Grid2\+D$<$\+Spatial\+Chunk, Chunk\+Size\+Type$>$}\& グリッドへの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00071}{71}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_af4399f2dcebf7ef69eff608cf69c350f}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}!RegisterAllChunks@{RegisterAllChunks}}
+\index{RegisterAllChunks@{RegisterAllChunks}!SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+\doxysubsubsection{\texorpdfstring{RegisterAllChunks()}{RegisterAllChunks()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_partition_af4399f2dcebf7ef69eff608cf69c350f} 
+void SFW\+::\+Grid2\+DPartition\+::\+Register\+All\+Chunks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&}]{reg}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}}}]{level}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+初期登録：全セルを Registry に登録し、\+Node\+Key を埋める 
+
+
+\begin{DoxyParams}{引数}
+{\em reg} & 登録先のレジストリ \\
+\hline
+{\em level} & レベル\+ID \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00087}{87}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_partition_a33a886c140705f1e714b3616bac7bcad}\index{SFW::Grid2DPartition@{SFW::Grid2DPartition}!ReloadCell@{ReloadCell}}
+\index{ReloadCell@{ReloadCell}!SFW::Grid2DPartition@{SFW::Grid2DPartition}}
+\doxysubsubsection{\texorpdfstring{ReloadCell()}{ReloadCell()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_partition_a33a886c140705f1e714b3616bac7bcad} 
+void SFW\+::\+Grid2\+DPartition\+::\+Reload\+Cell (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{cx}{, }\item[{uint32\+\_\+t}]{cy}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&}]{reg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+セルの再ロード時：旧登録を外し、generationで再登録 
+
+
+\begin{DoxyParams}{引数}
+{\em cx} & Xセル座標 \\
+\hline
+{\em cy} & Zセル座標 \\
+\hline
+{\em reg} & 登録先のレジストリ \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00539}{539}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_grid2_d_partition_8h}{Grid2\+DPartition.\+h}}\end{DoxyCompactItemize}

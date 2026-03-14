@@ -1,0 +1,40 @@
+\doxysection{\+\_\+dx11inc.\+h}
+\hypertarget{__dx11inc_8h_source}{}\label{__dx11inc_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/\_dx11inc.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/\_dx11inc.h}}
+\mbox{\hyperlink{__dx11inc_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00010}00010\ \textcolor{preprocessor}{\#ifndef\ DIRECTX11\_H}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00011}\mbox{\hyperlink{__dx11inc_8h_afaf82d0c90ab0e922b356b9f0bf95274}{00011}}\ \textcolor{preprocessor}{\#define\ DIRECTX11\_H}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <d3d11.h>}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00014}00014\ \textcolor{preprocessor}{\#pragma\ comment(lib,"{}d3d11.lib"{})}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <d3dcompiler.h>}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00017}00017\ \textcolor{preprocessor}{\#pragma\ comment(lib,"{}d3dcompiler.lib"{})}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <wrl/client.h>}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00021}00021\ \textcolor{keyword}{using\ }Microsoft::WRL::ComPtr;}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00023}\mbox{\hyperlink{__dx11inc_8h_a9b5d4db15283fee37fe1800fe97d6f7d}{00023}}\ \textcolor{keyword}{constexpr}\ D3D\_PRIMITIVE\_TOPOLOGY\ \mbox{\hyperlink{__dx11inc_8h_a9b5d4db15283fee37fe1800fe97d6f7d}{D3DTopologyLUT}}[]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00024}00024\ \ \ \ \ D3D\_PRIMITIVE\_TOPOLOGY\_UNDEFINED,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 0:\ Undefined}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00025}00025\ \ \ \ \ D3D\_PRIMITIVE\_TOPOLOGY\_POINTLIST,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1:\ PointList}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00026}00026\ \ \ \ \ D3D\_PRIMITIVE\_TOPOLOGY\_LINELIST,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2:\ LineList}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00027}00027\ \ \ \ \ D3D\_PRIMITIVE\_TOPOLOGY\_LINESTRIP,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3:\ LineStrip}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00028}00028\ \ \ \ \ D3D\_PRIMITIVE\_TOPOLOGY\_TRIANGLELIST,\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4:\ TriangleList}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00029}00029\ \ \ \ \ D3D\_PRIMITIVE\_TOPOLOGY\_TRIANGLESTRIP,\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 5:\ TriangleStrip}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00030}00030\ \ \ \ \ D3D\_PRIMITIVE\_TOPOLOGY\_LINELIST\_ADJ,\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 6:\ LineListAdj}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00031}00031\ \ \ \ \ D3D\_PRIMITIVE\_TOPOLOGY\_LINESTRIP\_ADJ,\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 7:\ LineStripAdj}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00032}00032\ \ \ \ \ D3D\_PRIMITIVE\_TOPOLOGY\_TRIANGLELIST\_ADJ,\ \ \ \ \ \ \textcolor{comment}{//\ 8:\ TriangleListAdj}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00033}00033\ \ \ \ \ D3D\_PRIMITIVE\_TOPOLOGY\_TRIANGLESTRIP\_ADJ,\ \ \ \ \ \textcolor{comment}{//\ 9:\ TriangleStripAdj}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00034}00034\ \ \ \ \ D3D\_PRIMITIVE\_TOPOLOGY\_1\_CONTROL\_POINT\_PATCHLIST,\ \ \textcolor{comment}{//\ 10:\ Patch1}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00035}00035\ \ \ \ \ D3D\_PRIMITIVE\_TOPOLOGY\_2\_CONTROL\_POINT\_PATCHLIST,\ \ \textcolor{comment}{//\ 11:\ Patch2}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00036}00036\ \ \ \ \ \textcolor{comment}{//\ ...}}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00037}00037\ \};}
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{__dx11inc_8h_source_l00039}00039\ \textcolor{preprocessor}{\#endif\ }}
+
+\end{DoxyCode}

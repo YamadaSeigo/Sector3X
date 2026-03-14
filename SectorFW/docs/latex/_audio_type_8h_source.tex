@@ -1,0 +1,53 @@
+\doxysection{Audio\+Type.\+h}
+\hypertarget{_audio_type_8h_source}{}\label{_audio_type_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Audio/AudioType.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Audio/AudioType.h}}
+\mbox{\hyperlink{_audio_type_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00010}00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_audio}{SFW::Audio}}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00011}00011\ \{}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00012}00012\ \ \ \ \ \textcolor{comment}{//\ サウンドを識別するためのハンドル。内部的にはIDを保持し、0は無効なハンドルを表す。}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00013}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{00013}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{SoundHandle}}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00014}00014\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00015}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle_a835f3bd37e371ff20ce50519e0767cf8}{00015}}\ \ \ \ \ \ \ \ \ uint32\_t\ \textcolor{keywordtype}{id}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00016}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle_a466dce3f8f1bcc3fdb5a17aaa782e35e}{00016}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \textcolor{keyword}{operator}\ bool()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{id}\ !=\ 0;\ \}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00017}00017\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00019}00019\ \ \ \ \ \textcolor{comment}{//\ SoLoudのボイスハンドルを表す型。0は無効なボイスIDを表します。}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00020}\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{00020}}\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ =\ uint64\_t;\ \textcolor{comment}{//\ store\ SoLoud::handle;\ 0\ =\ invalid}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00022}00022\ \ \ \ \ \textcolor{comment}{//\ オーディオ再生のチケットID。再生要求を発行するときに割り当てられ、後でボイスIDに解決される可能性があります。}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00023}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{00023}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{AudioTicketID}}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00024}00024\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00025}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_a6bc73fcf3a3793918802be7093c4a182}{00025}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_a6bc73fcf3a3793918802be7093c4a182}{index}}\ =\ UINT32\_MAX;}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00026}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_aa54730699062f65909f115de9caa9860}{00026}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_aa54730699062f65909f115de9caa9860}{generation}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ チケットが有効かどうかを確認するためのユーティリティ関数}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00029}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_a7969befe248c807e62f9a2abc05e41c5}{00029}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_a7969befe248c807e62f9a2abc05e41c5}{IsValid}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_a6bc73fcf3a3793918802be7093c4a182}{index}}\ !=\ UINT32\_MAX;\ \}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 無効なチケットIDを返すための静的関数}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00031}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_a3565aa7c3dcd4714de8eeb2bf19a074f}{00031}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{AudioTicketID}}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_a3565aa7c3dcd4714de8eeb2bf19a074f}{Invalid}}()\ noexcept\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{AudioTicketID}}\{\ UINT32\_MAX,\ 0\ \};\ \}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00033}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_aceceb949222bfede64ecc5bc7339ef8c}{00033}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_aceceb949222bfede64ecc5bc7339ef8c}{operator==}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{AudioTicketID}}\&\ o)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_a6bc73fcf3a3793918802be7093c4a182}{index}}\ ==\ o.index\ \&\&\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_aa54730699062f65909f115de9caa9860}{generation}}\ ==\ o.generation;}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00036}00036\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00038}00038\ \ \ \ \ \textcolor{comment}{//\ サウンド再生のパラメータをまとめた構造体。音量、パン、ピッチ、ループ設定などを含みます。}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00039}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params}{00039}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params}{AudioPlayParams}}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00040}00040\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00041}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_a0f8c607b9b84d4fda186656d88f62cc2}{00041}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_a0f8c607b9b84d4fda186656d88f62cc2}{volume}}\ =\ 1.0f;\ \textcolor{comment}{//\ 0=無音、1=デフォルト、2=2倍など}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00042}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_a8d11d084f4f9ab3aaa01141bb815ccce}{00042}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_a8d11d084f4f9ab3aaa01141bb815ccce}{pan}}\ =\ 0.0f;\ \textcolor{comment}{//\ -\/1=左、0=中央、1=右}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00043}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_ad456f424f2d296ef79e31ac62d9aed80}{00043}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_ad456f424f2d296ef79e31ac62d9aed80}{pitch}}\ =\ 1.0f;\ \textcolor{comment}{//\ 1=デフォルト、0.5=半分、2=2倍など}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00044}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_a6f9409f93b4d711235e94720c66e25dc}{00044}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_a6f9409f93b4d711235e94720c66e25dc}{loop}}\ =\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ ループ再生するかどうか}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00045}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_a425d74d506dc377a6e8a647bb96ec8e8}{00045}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_a425d74d506dc377a6e8a647bb96ec8e8}{paused}}\ =\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ 再生開始時に一時停止するかどうか}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3D\ optional}}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00048}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_ae063fe67207fcb65f5f448c9f4da0c3b}{00048}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_ae063fe67207fcb65f5f448c9f4da0c3b}{is3D}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00049}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_a00e329739d1b10fc6389edb6ed823fb0}{00049}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_a00e329739d1b10fc6389edb6ed823fb0}{pos}};}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00050}\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_ab5c46dd61568c0680f00be18ea9f6ef9}{00050}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params_ab5c46dd61568c0680f00be18ea9f6ef9}{vec}};}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00051}00051\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_audio_type_8h_source_l00052}00052\ \}}
+
+\end{DoxyCode}

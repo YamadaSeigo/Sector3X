@@ -1,0 +1,81 @@
+\doxysection{ISystem.\+hpp}
+\hypertarget{_i_system_8hpp_source}{}\label{_i_system_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ISystem.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ISystem.hpp}}
+\mbox{\hyperlink{_i_system_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#ifdef\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <windows.h>}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <dbghelp.h>}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00013}00013\ \textcolor{preprocessor}{\#pragma\ comment(lib,\ "{}Dbghelp.lib"{})}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00014}00014\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <typeinfo>}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00019}00019\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_accessor_8hpp}{Accessor.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00020}00020\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_service_locator_8h}{ServiceLocator.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00021}00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_grid_8hpp}{../../Util/Grid.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00023}00023\ \textcolor{preprocessor}{\#ifdef\ \_WIN32}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00029}00029\ \textcolor{keyword}{inline}\ std::string\ demangle\_msvc(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ decorated)\ \{}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00030}00030\ \ \ \ \ \textcolor{keywordtype}{char}\ buf[1024];}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00031}00031\ \ \ \ \ \textcolor{keywordflow}{if}\ (UnDecorateSymbolName(decorated,\ buf,\ \textcolor{keyword}{sizeof}(buf),}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00032}00032\ \ \ \ \ \ \ \ \ UNDNAME\_NAME\_ONLY\ |\ UNDNAME\_NO\_ARGUMENTS\ |\ UNDNAME\_NO\_MS\_KEYWORDS))\ \{}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ buf;}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00034}00034\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{return}\ decorated;\ \textcolor{comment}{//\ 失敗時はそのまま}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00036}00036\ \}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00037}00037\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00039}00039\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00040}00040\ \{}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00041}00041\ \ \ \ \ \textcolor{comment}{//前方定義}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00042}00042\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Partition>}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00043}00043\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_level_context}{LevelContext}};}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00045}00045\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00046}00046\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{comment}{//前方定義}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{EntityManager}};}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }SpatialChunk;}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Partition>}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00057}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{00057}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{ISystem}}\ \{}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00063}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a8ac687dfb43be42484e0593cb1350f80}{00063}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a8ac687dfb43be42484e0593cb1350f80}{IsUpdateable}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00070}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_ae54ce64cf5dbe496412128c4cd542106}{00070}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_ae54ce64cf5dbe496412128c4cd542106}{IsEndSystem}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00078}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_ae436de05af9efae1edabb1d69ed1d392}{00078}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_ae436de05af9efae1edabb1d69ed1d392}{Start}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ServiceLocator}}\&\ serviceLocator)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00085}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a2885c052870d2b09df346267c3a8837b}{00085}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a2885c052870d2b09df346267c3a8837b}{Update}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ServiceLocator}}\&\ serviceLocator,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00092}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a4fe27ee820e1dcd4e0baf10dde970dea}{00092}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a4fe27ee820e1dcd4e0baf10dde970dea}{Update}}(Partition\&\ partition,\ \mbox{\hyperlink{struct_s_f_w_1_1_level_context}{LevelContext<Partition>}}\&\ levelCtx,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ServiceLocator}}\&\ serviceLocator,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00098}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a9e162dcdc9cf183444cf359f93d2b1de}{00098}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a9e162dcdc9cf183444cf359f93d2b1de}{End}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ServiceLocator}}\&\ serviceLocator)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00105}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a2a396811178b789ca9874590a4c773da}{00105}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a2a396811178b789ca9874590a4c773da}{End}}(Partition\&\ partition,\ \mbox{\hyperlink{struct_s_f_w_1_1_level_context}{LevelContext<Partition>}}\&\ levelCtx,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ServiceLocator}}\&\ serviceLocator)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00110}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_aaac60600ab1f862d7d6e303a57ad14b3}{00110}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_access_info}{AccessInfo}}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_aaac60600ab1f862d7d6e303a57ad14b3}{GetAccessInfo}}()\ const\ noexcept\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00116}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_ac662d810121106aa5ade779e3eafba54}{00116}}\ \ \ \ \ \ \ \ \ \ \ \ \ virtual\ constexpr\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_ac662d810121106aa5ade779e3eafba54}{IsParallelUpdate}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00123}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a76f29426ffe8ff891839f83617b5558e}{00123}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a76f29426ffe8ff891839f83617b5558e}{\string~ISystem}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00128}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a1eca9e4de1c253fc1d2d3230dfeee491}{00128}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a1eca9e4de1c253fc1d2d3230dfeee491}{derived\_name}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00129}00129\ \textcolor{preprocessor}{\#ifdef\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ demangle\_msvc(\textcolor{keyword}{typeid}(*this).name());}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00131}00131\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{typeid}(*this).name();}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00133}00133\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00136}00136\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_system_8hpp_source_l00137}00137\ \}}
+
+\end{DoxyCode}

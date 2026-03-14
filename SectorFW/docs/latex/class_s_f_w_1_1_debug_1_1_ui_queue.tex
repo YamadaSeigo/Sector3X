@@ -1,0 +1,59 @@
+\doxysection{SFW\+::Debug\+::Ui\+Queue\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_debug_1_1_ui_queue}{}\label{class_s_f_w_1_1_debug_1_1_ui_queue}\index{SFW::Debug::UiQueue$<$ T $>$@{SFW::Debug::UiQueue$<$ T $>$}}
+
+
+小さな MPMC 風キュー（\+UI側で毎フレ drain するだけなのでロックで\+OK）  
+
+
+
+
+{\ttfamily \#include $<$UIBus.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue_a34de98be850de42f0753fb3360bb20f8}{push}} (T x)
+\item 
+std\+::vector$<$ T $>$ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue_af7b010997b62a418232b2d283d7fb5c9}{drain}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$class T$>$\newline
+class SFW\+::\+Debug\+::\+Ui\+Queue$<$ T $>$}
+小さな MPMC 風キュー（\+UI側で毎フレ drain するだけなのでロックで\+OK） 
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00044}{44}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_queue_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_queue_af7b010997b62a418232b2d283d7fb5c9}\index{SFW::Debug::UiQueue$<$ T $>$@{SFW::Debug::UiQueue$<$ T $>$}!drain@{drain}}
+\index{drain@{drain}!SFW::Debug::UiQueue$<$ T $>$@{SFW::Debug::UiQueue$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{drain()}{drain()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_ui_queue_af7b010997b62a418232b2d283d7fb5c9} 
+template$<$class T$>$ \\
+std\+::vector$<$ T $>$ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue}{SFW\+::\+Debug\+::\+Ui\+Queue}}$<$ T $>$\+::drain (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00047}{47}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_queue_a34de98be850de42f0753fb3360bb20f8}\index{SFW::Debug::UiQueue$<$ T $>$@{SFW::Debug::UiQueue$<$ T $>$}!push@{push}}
+\index{push@{push}!SFW::Debug::UiQueue$<$ T $>$@{SFW::Debug::UiQueue$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{push()}{push()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_ui_queue_a34de98be850de42f0753fb3360bb20f8} 
+template$<$class T$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue}{SFW\+::\+Debug\+::\+Ui\+Queue}}$<$ T $>$\+::push (\begin{DoxyParamCaption}\item[{T}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00046}{46}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Debug/\mbox{\hyperlink{_u_i_bus_8h}{UIBus.\+h}}\end{DoxyCompactItemize}

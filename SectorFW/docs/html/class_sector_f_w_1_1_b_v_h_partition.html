@@ -1,0 +1,590 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SectorFW::BVHPartition クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_sector_f_w_1_1_b_v_h_partition.html','','class_sector_f_w_1_1_b_v_h_partition-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SectorFW::BVHPartition クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:Leaf" id="r_Leaf"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1_b_v_h_partition_1_1_leaf.html">Leaf</a></td></tr>
+<tr class="memitem:Node" id="r_Node"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sector_f_w_1_1_b_v_h_partition_1_1_node.html">Node</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+公開型</h2></td></tr>
+<tr class="memitem:aab13fbf31509efc1cc46fd45275d43eb" id="r_aab13fbf31509efc1cc46fd45275d43eb"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab13fbf31509efc1cc46fd45275d43eb">AABB</a> = Math::AABB3f</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a3895d20ae8038392dbc932fd40b4adc0" id="r_a3895d20ae8038392dbc932fd40b4adc0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3895d20ae8038392dbc932fd40b4adc0">BVHPartition</a> () noexcept=default</td></tr>
+<tr class="memitem:a54e58a400f05e66a6098780ab85609f9" id="r_a54e58a400f05e66a6098780ab85609f9"><td class="memItemLeft" align="right" valign="top">SpatialChunk *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54e58a400f05e66a6098780ab85609f9">CreateLeaf</a> (const <a class="el" href="#aab13fbf31509efc1cc46fd45275d43eb">AABB</a> &amp;box) noexcept</td></tr>
+<tr class="memdesc:a54e58a400f05e66a6098780ab85609f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">葉ノード(SpatialChunk)を追加し、その参照を返す  <br /></td></tr>
+<tr class="memitem:a504bc051aa7a5f230b500b4fb21e5984" id="r_a504bc051aa7a5f230b500b4fb21e5984"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a504bc051aa7a5f230b500b4fb21e5984">UpdateLeafBounds</a> (uint32_t leafIndex, const <a class="el" href="#aab13fbf31509efc1cc46fd45275d43eb">AABB</a> &amp;newBox) noexcept</td></tr>
+<tr class="memdesc:a504bc051aa7a5f230b500b4fb21e5984"><td class="mdescLeft">&#160;</td><td class="mdescRight">葉のAABBを更新（Refitは Build/Refit 時に行う）  <br /></td></tr>
+<tr class="memitem:aa242e06dfdaf09dea741c0f11d2ec819" id="r_aa242e06dfdaf09dea741c0f11d2ec819"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa242e06dfdaf09dea741c0f11d2ec819">Build</a> () noexcept</td></tr>
+<tr class="memdesc:aa242e06dfdaf09dea741c0f11d2ec819"><td class="mdescLeft">&#160;</td><td class="mdescRight">すべての葉からBVHを再構築（トップダウン・中央値分割の簡易SAH）  <br /></td></tr>
+<tr class="memitem:ade47ac7a0b8d64fb57c980092d7f508f" id="r_ade47ac7a0b8d64fb57c980092d7f508f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade47ac7a0b8d64fb57c980092d7f508f">Refit</a> () noexcept</td></tr>
+<tr class="memdesc:ade47ac7a0b8d64fb57c980092d7f508f"><td class="mdescLeft">&#160;</td><td class="mdescRight">葉が増減していない前提でAABBを親方向に再計算（軽い）  <br /></td></tr>
+<tr class="memitem:a0d5a42799997ca395a6c831d5b759443" id="r_a0d5a42799997ca395a6c831d5b759443"><td class="memItemLeft" align="right" valign="top">std::optional&lt; SpatialChunk * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0d5a42799997ca395a6c831d5b759443">GetChunk</a> (Math::Vec3f p, EOutOfBoundsPolicy=EOutOfBoundsPolicy::ClampToEdge) noexcept</td></tr>
+<tr class="memdesc:a0d5a42799997ca395a6c831d5b759443"><td class="mdescLeft">&#160;</td><td class="mdescRight">位置（点）を含む葉(SpatialChunk)を返す  <br /></td></tr>
+<tr class="memitem:a3aea880d4a9a11b6c0596616c0772b7b" id="r_a3aea880d4a9a11b6c0596616c0772b7b"><td class="memItemLeft" align="right" valign="top">ECS::EntityManager &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3aea880d4a9a11b6c0596616c0772b7b">GetGlobalEntityManager</a> () noexcept</td></tr>
+<tr class="memdesc:a3aea880d4a9a11b6c0596616c0772b7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">グローバルEM（BVH外の共通レイヤ）  <br /></td></tr>
+<tr class="memitem:a439d0da46396ad9db607db54cdb22970" id="r_a439d0da46396ad9db607db54cdb22970"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a439d0da46396ad9db607db54cdb22970">GetEntityNum</a> ()</td></tr>
+<tr class="memdesc:a439d0da46396ad9db607db54cdb22970"><td class="mdescLeft">&#160;</td><td class="mdescRight">全エンティティ数（グローバル＋各葉）  <br /></td></tr>
+<tr class="memitem:a83a3000c6587b6635adbfcfe1220ba9f" id="r_a83a3000c6587b6635adbfcfe1220ba9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a83a3000c6587b6635adbfcfe1220ba9f">RegisterAllChunks</a> (EntityManagerRegistry &amp;reg, LevelID level)</td></tr>
+<tr class="memdesc:a83a3000c6587b6635adbfcfe1220ba9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registry登録（各葉に PartitionScheme::BVH のキーを付与）  <br /></td></tr>
+<tr class="memitem:ac7a4635735031996917689ac6fc5b313" id="r_ac7a4635735031996917689ac6fc5b313"><td class="memItemLeft" align="right" valign="top">std::vector&lt; SpatialChunk * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7a4635735031996917689ac6fc5b313">CullChunks</a> (const Math::Frustumf &amp;fr) const noexcept</td></tr>
+<tr class="memdesc:ac7a4635735031996917689ac6fc5b313"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frustumカリング：交差する葉(SpatialChunk)を列挙  <br /></td></tr>
+<tr class="memitem:a6daef3ed6e6cb62f7fe37c49cd0d473b" id="r_a6daef3ed6e6cb62f7fe37c49cd0d473b"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
+<tr class="memitem:a6daef3ed6e6cb62f7fe37c49cd0d473b template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6daef3ed6e6cb62f7fe37c49cd0d473b">CullChunks</a> (const Math::Frustumf &amp;fr, F &amp;&amp;f) const noexcept</td></tr>
+<tr class="memitem:a6f9f2e9e9665e936eea976866ab4f744" id="r_a6f9f2e9e9665e936eea976866ab4f744"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f9f2e9e9665e936eea976866ab4f744">CullChunkLine</a> (const Math::Frustumf &amp;fr, Math::Vec3f cp, Debug::LineVertex *outLine, uint32_t capacity, uint32_t displayCount) const noexcept</td></tr>
+<tr class="memdesc:a6f9f2e9e9665e936eea976866ab4f744"><td class="mdescLeft">&#160;</td><td class="mdescRight">デバッグ用：葉AABBのワイヤーフレーム（12辺 x 2頂点）を出力  <br /></td></tr>
+<tr class="memitem:ae10da1cc19b7c4b6bf206d8f8e21f4ba" id="r_ae10da1cc19b7c4b6bf206d8f8e21f4ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae10da1cc19b7c4b6bf206d8f8e21f4ba">ReloadLeaf</a> (uint32_t leafIndex, EntityManagerRegistry &amp;reg)</td></tr>
+<tr class="memdesc:ae10da1cc19b7c4b6bf206d8f8e21f4ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">葉の再ロード（世代進行 → 再登録）  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock">
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00029">29</a> 行目に定義があります。</p>
+</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">型定義メンバ詳解</h2>
+<a id="aab13fbf31509efc1cc46fd45275d43eb" name="aab13fbf31509efc1cc46fd45275d43eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab13fbf31509efc1cc46fd45275d43eb">&#9670;&#160;</a></span>AABB</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#aab13fbf31509efc1cc46fd45275d43eb">SectorFW::BVHPartition::AABB</a> = Math::AABB3f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00032">32</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="a3895d20ae8038392dbc932fd40b4adc0" name="a3895d20ae8038392dbc932fd40b4adc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3895d20ae8038392dbc932fd40b4adc0">&#9670;&#160;</a></span>BVHPartition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SectorFW::BVHPartition::BVHPartition </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="aa242e06dfdaf09dea741c0f11d2ec819" name="aa242e06dfdaf09dea741c0f11d2ec819"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa242e06dfdaf09dea741c0f11d2ec819">&#9670;&#160;</a></span>Build()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::BVHPartition::Build </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>すべての葉からBVHを再構築（トップダウン・中央値分割の簡易SAH） </p>
+
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00079">79</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a54e58a400f05e66a6098780ab85609f9" name="a54e58a400f05e66a6098780ab85609f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54e58a400f05e66a6098780ab85609f9">&#9670;&#160;</a></span>CreateLeaf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SpatialChunk * SectorFW::BVHPartition::CreateLeaf </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#aab13fbf31509efc1cc46fd45275d43eb">AABB</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>box</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>葉ノード(SpatialChunk)を追加し、その参照を返す </p>
+<p>追加後は <a class="el" href="#aa242e06dfdaf09dea741c0f11d2ec819" title="すべての葉からBVHを再構築（トップダウン・中央値分割の簡易SAH）">Build()</a> または IncrementalInsert() を呼んで木に反映 </p>
+
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00057">57</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6f9f2e9e9665e936eea976866ab4f744" name="a6f9f2e9e9665e936eea976866ab4f744"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f9f2e9e9665e936eea976866ab4f744">&#9670;&#160;</a></span>CullChunkLine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SectorFW::BVHPartition::CullChunkLine </td>
+          <td>(</td>
+          <td class="paramtype">const Math::Frustumf &amp;</td>          <td class="paramname"><span class="paramname"><em>fr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Math::Vec3f</td>          <td class="paramname"><span class="paramname"><em>cp</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Debug::LineVertex *</td>          <td class="paramname"><span class="paramname"><em>outLine</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>displayCount</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>デバッグ用：葉AABBのワイヤーフレーム（12辺 x 2頂点）を出力 </p>
+
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00176">176</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac7a4635735031996917689ac6fc5b313" name="ac7a4635735031996917689ac6fc5b313"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7a4635735031996917689ac6fc5b313">&#9670;&#160;</a></span>CullChunks() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; SpatialChunk * &gt; SectorFW::BVHPartition::CullChunks </td>
+          <td>(</td>
+          <td class="paramtype">const Math::Frustumf &amp;</td>          <td class="paramname"><span class="paramname"><em>fr</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Frustumカリング：交差する葉(SpatialChunk)を列挙 </p>
+
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00158">158</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6daef3ed6e6cb62f7fe37c49cd0d473b" name="a6daef3ed6e6cb62f7fe37c49cd0d473b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6daef3ed6e6cb62f7fe37c49cd0d473b">&#9670;&#160;</a></span>CullChunks() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class F&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::BVHPartition::CullChunks </td>
+          <td>(</td>
+          <td class="paramtype">const Math::Frustumf &amp;</td>          <td class="paramname"><span class="paramname"><em>fr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">F &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>f</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00167">167</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0d5a42799997ca395a6c831d5b759443" name="a0d5a42799997ca395a6c831d5b759443"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d5a42799997ca395a6c831d5b759443">&#9670;&#160;</a></span>GetChunk()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; SpatialChunk * &gt; SectorFW::BVHPartition::GetChunk </td>
+          <td>(</td>
+          <td class="paramtype">Math::Vec3f</td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">EOutOfBoundsPolicy</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">EOutOfBoundsPolicy::ClampToEdge</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>位置（点）を含む葉(SpatialChunk)を返す </p>
+
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00105">105</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a439d0da46396ad9db607db54cdb22970" name="a439d0da46396ad9db607db54cdb22970"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a439d0da46396ad9db607db54cdb22970">&#9670;&#160;</a></span>GetEntityNum()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SectorFW::BVHPartition::GetEntityNum </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>全エンティティ数（グローバル＋各葉） </p>
+
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00130">130</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3aea880d4a9a11b6c0596616c0772b7b" name="a3aea880d4a9a11b6c0596616c0772b7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aea880d4a9a11b6c0596616c0772b7b">&#9670;&#160;</a></span>GetGlobalEntityManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ECS::EntityManager &amp; SectorFW::BVHPartition::GetGlobalEntityManager </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>グローバルEM（BVH外の共通レイヤ） </p>
+
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00127">127</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ade47ac7a0b8d64fb57c980092d7f508f" name="ade47ac7a0b8d64fb57c980092d7f508f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade47ac7a0b8d64fb57c980092d7f508f">&#9670;&#160;</a></span>Refit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::BVHPartition::Refit </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>葉が増減していない前提でAABBを親方向に再計算（軽い） </p>
+
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00095">95</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a83a3000c6587b6635adbfcfe1220ba9f" name="a83a3000c6587b6635adbfcfe1220ba9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83a3000c6587b6635adbfcfe1220ba9f">&#9670;&#160;</a></span>RegisterAllChunks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::BVHPartition::RegisterAllChunks </td>
+          <td>(</td>
+          <td class="paramtype">EntityManagerRegistry &amp;</td>          <td class="paramname"><span class="paramname"><em>reg</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LevelID</td>          <td class="paramname"><span class="paramname"><em>level</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Registry登録（各葉に PartitionScheme::BVH のキーを付与） </p>
+
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00140">140</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae10da1cc19b7c4b6bf206d8f8e21f4ba" name="ae10da1cc19b7c4b6bf206d8f8e21f4ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae10da1cc19b7c4b6bf206d8f8e21f4ba">&#9670;&#160;</a></span>ReloadLeaf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::BVHPartition::ReloadLeaf </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>leafIndex</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">EntityManagerRegistry &amp;</td>          <td class="paramname"><span class="paramname"><em>reg</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>葉の再ロード（世代進行 → 再登録） </p>
+
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00234">234</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a504bc051aa7a5f230b500b4fb21e5984" name="a504bc051aa7a5f230b500b4fb21e5984"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a504bc051aa7a5f230b500b4fb21e5984">&#9670;&#160;</a></span>UpdateLeafBounds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SectorFW::BVHPartition::UpdateLeafBounds </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>leafIndex</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#aab13fbf31509efc1cc46fd45275d43eb">AABB</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>newBox</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>葉のAABBを更新（Refitは Build/Refit 時に行う） </p>
+
+<p class="definition"> <a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a> の <a class="el" href="_b_v_h_partition_8h_source.html#l00070">70</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/<a class="el" href="_b_v_h_partition_8h_source.html">BVHPartition.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_sector_f_w.html">SectorFW</a></li><li class="navelem"><a href="class_sector_f_w_1_1_b_v_h_partition.html">BVHPartition</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

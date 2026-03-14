@@ -1,0 +1,228 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Debug/\+UIBus.h ファイル}
+\hypertarget{_u_i_bus_8h}{}\label{_u_i_bus_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/UIBus.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/UIBus.h}}
+
+
+UIバスの定義  
+
+
+{\ttfamily \#include $<$atomic$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$deque$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{SFW\+::\+Debug\+::\+Latest$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em 軽量 \doxylink{struct_s_f_w_1_1_debug_1_1_latest}{Latest} 値（trivially copyable 用） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_3_01std_1_1string_01_4}{SFW\+::\+Debug\+::\+Latest$<$ std\+::string $>$}}
+\begin{DoxyCompactList}\small\item\em 文字列など非trivialはロックで \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue}{SFW\+::\+Debug\+::\+Ui\+Queue$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em 小さな MPMC 風キュー（\+UI側で毎フレ drain するだけなのでロックで\+OK） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry}{SFW\+::\+Debug\+::\+Telemetry}}
+\begin{DoxyCompactList}\small\item\em 必要ならスナップショット（二重バッファ） \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{SFW\+::\+Debug\+::\+Ui\+Snapshot}}
+\begin{DoxyCompactList}\small\item\em \doxylink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{Ui\+Snapshot}\+: RAII 版 \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{SFW\+::\+Debug\+::\+Ui\+Snapshot\+::\+Write\+Guard}}
+\begin{DoxyCompactList}\small\item\em 書き込みガード（\+RAII でロック/アンロック） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item}{SFW\+::\+Debug\+::\+Tree\+Item}}
+\begin{DoxyCompactList}\small\item\em Tree snapshot types(\doxylink{_u_i_bus_8h}{UIBus.\+h}) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_frame}{SFW\+::\+Debug\+::\+Tree\+Frame}}
+\begin{DoxyCompactList}\small\item\em ツリーフレーム（前順＋depth 付きアイテム群） \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot}{SFW\+::\+Debug\+::\+Ui\+Tree\+Snapshot}}
+\begin{DoxyCompactList}\small\item\em 既存 \doxylink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{Ui\+Snapshot} をそのまま流用して \doxylink{struct_s_f_w_1_1_debug_1_1_tree_frame}{Tree\+Frame} 用を追加 \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard}{SFW\+::\+Debug\+::\+Ui\+Tree\+Snapshot\+::\+Write\+Guard}}
+\begin{DoxyCompactList}\small\item\em 書き込みガード（\+RAII でロック/アンロック） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control}{SFW\+::\+Debug\+::\+Debug\+Control}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus}{SFW\+::\+Debug\+::\+UIBus}}
+\begin{DoxyCompactList}\small\item\em バス本体（ここだけをグローバルにする） \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_debug}{SFW\+::\+Debug}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{マクロ定義}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_u_i_bus_8h_ac6407c7259a34d037a2ce58d3f141129}{REGISTER\+\_\+\+DEBUG\+\_\+\+SLIDER\+\_\+\+FLOAT}}(category,  label,  initial\+Value,  min\+Value,  max\+Value,  speed,  on\+Change)
+\begin{DoxyCompactList}\small\item\em \+\_\+\+ENABLE\+\_\+\+IMGUI \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_u_i_bus_8h_a019566125f0979d439115272105f02aa}{REGISTER\+\_\+\+DEBUG\+\_\+\+BOUND\+\_\+\+SLIDER\+\_\+\+FLOAT}}(category,  label,  initial\+Value,  min\+Value,  max\+Value,  speed,  on\+Change,  bound)
+\item 
+\#define \mbox{\hyperlink{_u_i_bus_8h_a41a82dc527c10ee03c545f5685a60f3b}{BIND\+\_\+\+DEBUG\+\_\+\+SLIDER\+\_\+\+FLOAT}}(category,  label,  target,  min\+Value,  max\+Value,  speed)
+\item 
+\#define \mbox{\hyperlink{_u_i_bus_8h_aa6e43d3d7b1ae94b0f671428aab429f0}{REGISTER\+\_\+\+DEBUG\+\_\+\+CHECKBOX}}(category,  label,  initial\+Value,  on\+Change)
+\item 
+\#define \mbox{\hyperlink{_u_i_bus_8h_a12e37285283b97e1ffa79055445e42c7}{BIND\+\_\+\+DEBUG\+\_\+\+CHECKBOX}}(category,  label,  target)
+\item 
+\#define \mbox{\hyperlink{_u_i_bus_8h_aa4ceab994694d395a3fce3e8b9b59294}{REGISTER\+\_\+\+DEBUG\+\_\+\+BUTTON}}(category,  label,  on\+Change)
+\item 
+\#define \mbox{\hyperlink{_u_i_bus_8h_a27008ebc4145b0faff8852b9b9dcbfbc}{BIND\+\_\+\+DEBUG\+\_\+\+TEXT}}(category,  label,  target)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7}{SFW\+::\+Debug\+::\+World\+Tree\+Depth}} \+: uint32\+\_\+t \{ \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a2b45a029635465d690236b2cc1cbad60}{SFW\+::\+Debug\+::\+TREEDEPTH\+\_\+\+WORLD}} = 0
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a04b592d815dcee98bfcf032e71dc71da}{SFW\+::\+Debug\+::\+TREEDEPTH\+\_\+\+LEVEL}} = 1
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{SFW\+::\+Debug\+::\+TREEDEPTH\+\_\+\+LEVELNODE}} = 2
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7ab0b6eb4ee39bfc02a41160ee04491bf3}{SFW\+::\+Debug\+::\+TREEDEPTH\+\_\+\+SYSTEM}} = 3
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a51a97141f1708d6abe7f1503a50d1390}{SFW\+::\+Debug\+::\+TREEDEPTH\+\_\+\+RENDERGRAPH}} = 0
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a4e911bdeaf47d5d831614e65d4ce4b0c}{SFW\+::\+Debug\+::\+TREEDEPTH\+\_\+\+GROUP}} = 1
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a31d454798115b8615b2e41760c95a52a}{SFW\+::\+Debug\+::\+TREEDEPTH\+\_\+\+DRAWCOMMAND}} = 2
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a50745519cbf5e21c2aac8cb11f4fc3fb}{SFW\+::\+Debug\+::\+TREEDEPTH\+\_\+\+MAX}}
+ \}
+\begin{DoxyCompactList}\small\item\em ワールドのデバッグツリーの深さ \end{DoxyCompactList}\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6e}{SFW\+::\+Debug\+::\+Debug\+Control\+Kind}} \{ \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea17a2005227b5091b43b18b95f1a0d878}{SFW\+::\+Debug\+::\+DC\+\_\+\+SLIDERFLOAT}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6eac2113140649de9a385e390d6e9702dbb}{SFW\+::\+Debug\+::\+DC\+\_\+\+SLIDERINT}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ead2c909ffc1aeb322b9c749f17e5a0aa1}{SFW\+::\+Debug\+::\+DC\+\_\+\+CHECKBOX}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea06f85ad35ec8764cf3b1f69b2b3050c5}{SFW\+::\+Debug\+::\+DC\+\_\+\+BUTTON}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea9dcd4833f6f2f107094ae561b9aad64f}{SFW\+::\+Debug\+::\+DC\+\_\+\+STRING}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea59cf1d5848281d090de6ca134575e7ea}{SFW\+::\+Debug\+::\+DC\+\_\+\+MAX}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus}{UIBus}} \& \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d0bba14e83fddcf055f0f5882ef1d20}{SFW\+::\+Debug\+::\+Get\+UIBus}} ()
+\begin{DoxyCompactList}\small\item\em グローバル\+UIバスの取得 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3a2550c44f664296d2cb5964d84b8371}{SFW\+::\+Debug\+::\+Register\+Debug\+Slider\+Float}} (const std\+::string \&category, const std\+::string \&label, float initial\+Value, float min\+Value, float max\+Value, float speed, std\+::function$<$ void(float)$>$ on\+Change, float \texorpdfstring{$\ast$}{*}bound=nullptr)
+\begin{DoxyCompactList}\small\item\em Im\+Gui の Slider\+Float + コールバック. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_aab4c10e135d3458cd168dd0cd6d67ceb}{SFW\+::\+Debug\+::\+Bind\+Debug\+Slider\+Float}} (const std\+::string \&category, const std\+::string \&label, float \texorpdfstring{$\ast$}{*}target, float min\+Value, float max\+Value, float speed=0.\+1f)
+\begin{DoxyCompactList}\small\item\em 変数ポインタを直接バインドする簡易版. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a5fa99aa82d281e8132a3425db5bc380c}{SFW\+::\+Debug\+::\+Register\+Debug\+Slider\+Int}} (const std\+::string \&category, const std\+::string \&label, int initial\+Value, int min\+Value, int max\+Value, std\+::function$<$ void(int)$>$ on\+Change, int \texorpdfstring{$\ast$}{*}bound=nullptr)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a943a25648edcc118fbdde28001b97e71}{SFW\+::\+Debug\+::\+Bind\+Debug\+Slider\+Int}} (const std\+::string \&category, const std\+::string \&label, int \texorpdfstring{$\ast$}{*}target, int min\+Value, int max\+Value)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a01a7201fbf0ff09ad1cb9aec2bb776cc}{SFW\+::\+Debug\+::\+Register\+Debug\+Check\+Box}} (const std\+::string \&category, const std\+::string \&label, bool initial\+Value, std\+::function$<$ void(bool)$>$ on\+Change, bool \texorpdfstring{$\ast$}{*}bound=nullptr)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ab0d1c9a03e298b6aa90e3ba7c9015cef}{SFW\+::\+Debug\+::\+Bind\+Debug\+Check\+Box}} (const std\+::string \&category, const std\+::string \&label, bool \texorpdfstring{$\ast$}{*}target)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_aedcb688663a956ee879675fbb6aeb92b}{SFW\+::\+Debug\+::\+Register\+Debug\+Button}} (const std\+::string \&category, const std\+::string \&label, std\+::function$<$ void(bool)$>$ on\+Change)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a2c8e0a8d4e63206d4cae287d01ee46e6}{SFW\+::\+Debug\+::\+Register\+Debug\+Text}} (const std\+::string \&category, const std\+::string \&label, const std\+::string \&initial, std\+::function$<$ void(std\+::string)$>$ on\+Change)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ad07e49b18e66359e5a6b7eff8f478fbf}{SFW\+::\+Debug\+::\+Bind\+Debug\+Text}} (const std\+::string \&category, const std\+::string \&label, std\+::string \texorpdfstring{$\ast$}{*}target)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a52ff234b5d6e40bcef2b394ae7999cc8}{SFW\+::\+Debug\+::\+Start\+UIBus}} ()
+\begin{DoxyCompactList}\small\item\em ライフサイクル（起動時 / 終了時に呼ぶ） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae2759b232b15cacfdc131ee5c9ec0585}{SFW\+::\+Debug\+::\+Stop\+UIBus}} ()
+\begin{DoxyCompactList}\small\item\em ライフサイクル（起動時 / 終了時に呼ぶ） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae62b8d5feb3160cf83ad7102867c899e}{SFW\+::\+Debug\+::\+Publish\+Cpu}} (float v)
+\begin{DoxyCompactList}\small\item\em CPUの計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_adad758e341c01e05d1143fbaa3fed49d}{SFW\+::\+Debug\+::\+Publish\+Gpu}} (float v)
+\begin{DoxyCompactList}\small\item\em GPUの計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_aa600d63fbaac812f9054d99e9771d555}{SFW\+::\+Debug\+::\+Publish\+Logic\+Ms}} (float ms)
+\begin{DoxyCompactList}\small\item\em ロジックの計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a414fa917af9d755a3555b5209873c24e}{SFW\+::\+Debug\+::\+Publish\+Render\+Ms}} (float ms)
+\begin{DoxyCompactList}\small\item\em 描画の\+CPU部分の計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a9e1a99f1084579cbeab606452559bafe}{SFW\+::\+Debug\+::\+Publish\+Gpu\+Frame\+Ms}} (float ms)
+\begin{DoxyCompactList}\small\item\em GPUフレーム時間の計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a4f848186328195747e7e0164bdf74d87}{SFW\+::\+Debug\+::\+Publish\+Status}} (std\+::string s)
+\begin{DoxyCompactList}\small\item\em ステータス文字列を発行。公開\+API（どこからでも呼べる“関数”だけを露出） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_aedec323da1ec660d4b9776b7f93a8b6b}{SFW\+::\+Debug\+::\+Push\+Log}} (std\+::string s)
+\begin{DoxyCompactList}\small\item\em ログ文字列を発行。公開\+API（どこからでも呼べる“関数”だけを露出） \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Ui\+Snapshot\+::\+Write\+Guard}} \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a8f49bf39cb26ca3db5ed6a01fb989e56}{SFW\+::\+Debug\+::\+Begin\+Telemetry\+Write}} ()
+\begin{DoxyCompactList}\small\item\em テレメトリ書き込み開始（\+RAIIでロック/アンロック） \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard}{Ui\+Tree\+Snapshot\+::\+Write\+Guard}} \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48}{SFW\+::\+Debug\+::\+Begin\+Tree\+Write}} ()
+\begin{DoxyCompactList}\small\item\em ツリー書き込み開始（\+RAIIでロック/アンロック） \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+UIバスの定義 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} に定義があります。
+
+
+
+\label{doc-define-members}
+\Hypertarget{_u_i_bus_8h_doc-define-members}
+\doxysubsection{マクロ定義詳解}
+\Hypertarget{_u_i_bus_8h_a12e37285283b97e1ffa79055445e42c7}\index{UIBus.h@{UIBus.h}!BIND\_DEBUG\_CHECKBOX@{BIND\_DEBUG\_CHECKBOX}}
+\index{BIND\_DEBUG\_CHECKBOX@{BIND\_DEBUG\_CHECKBOX}!UIBus.h@{UIBus.h}}
+\doxysubsubsection{\texorpdfstring{BIND\_DEBUG\_CHECKBOX}{BIND\_DEBUG\_CHECKBOX}}
+{\footnotesize\ttfamily \label{_u_i_bus_8h_a12e37285283b97e1ffa79055445e42c7} 
+\#define BIND\+\_\+\+DEBUG\+\_\+\+CHECKBOX(\begin{DoxyParamCaption}\item[{}]{category}{, }\item[{}]{label}{, }\item[{}]{target}{}\end{DoxyParamCaption})}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00455}{455}} 行目に定義があります。
+
+\Hypertarget{_u_i_bus_8h_a41a82dc527c10ee03c545f5685a60f3b}\index{UIBus.h@{UIBus.h}!BIND\_DEBUG\_SLIDER\_FLOAT@{BIND\_DEBUG\_SLIDER\_FLOAT}}
+\index{BIND\_DEBUG\_SLIDER\_FLOAT@{BIND\_DEBUG\_SLIDER\_FLOAT}!UIBus.h@{UIBus.h}}
+\doxysubsubsection{\texorpdfstring{BIND\_DEBUG\_SLIDER\_FLOAT}{BIND\_DEBUG\_SLIDER\_FLOAT}}
+{\footnotesize\ttfamily \label{_u_i_bus_8h_a41a82dc527c10ee03c545f5685a60f3b} 
+\#define BIND\+\_\+\+DEBUG\+\_\+\+SLIDER\+\_\+\+FLOAT(\begin{DoxyParamCaption}\item[{}]{category}{, }\item[{}]{label}{, }\item[{}]{target}{, }\item[{}]{min\+Value}{, }\item[{}]{max\+Value}{, }\item[{}]{speed}{}\end{DoxyParamCaption})}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00453}{453}} 行目に定義があります。
+
+\Hypertarget{_u_i_bus_8h_a27008ebc4145b0faff8852b9b9dcbfbc}\index{UIBus.h@{UIBus.h}!BIND\_DEBUG\_TEXT@{BIND\_DEBUG\_TEXT}}
+\index{BIND\_DEBUG\_TEXT@{BIND\_DEBUG\_TEXT}!UIBus.h@{UIBus.h}}
+\doxysubsubsection{\texorpdfstring{BIND\_DEBUG\_TEXT}{BIND\_DEBUG\_TEXT}}
+{\footnotesize\ttfamily \label{_u_i_bus_8h_a27008ebc4145b0faff8852b9b9dcbfbc} 
+\#define BIND\+\_\+\+DEBUG\+\_\+\+TEXT(\begin{DoxyParamCaption}\item[{}]{category}{, }\item[{}]{label}{, }\item[{}]{target}{}\end{DoxyParamCaption})}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00457}{457}} 行目に定義があります。
+
+\Hypertarget{_u_i_bus_8h_a019566125f0979d439115272105f02aa}\index{UIBus.h@{UIBus.h}!REGISTER\_DEBUG\_BOUND\_SLIDER\_FLOAT@{REGISTER\_DEBUG\_BOUND\_SLIDER\_FLOAT}}
+\index{REGISTER\_DEBUG\_BOUND\_SLIDER\_FLOAT@{REGISTER\_DEBUG\_BOUND\_SLIDER\_FLOAT}!UIBus.h@{UIBus.h}}
+\doxysubsubsection{\texorpdfstring{REGISTER\_DEBUG\_BOUND\_SLIDER\_FLOAT}{REGISTER\_DEBUG\_BOUND\_SLIDER\_FLOAT}}
+{\footnotesize\ttfamily \label{_u_i_bus_8h_a019566125f0979d439115272105f02aa} 
+\#define REGISTER\+\_\+\+DEBUG\+\_\+\+BOUND\+\_\+\+SLIDER\+\_\+\+FLOAT(\begin{DoxyParamCaption}\item[{}]{category}{, }\item[{}]{label}{, }\item[{}]{initial\+Value}{, }\item[{}]{min\+Value}{, }\item[{}]{max\+Value}{, }\item[{}]{speed}{, }\item[{}]{on\+Change}{, }\item[{}]{bound}{}\end{DoxyParamCaption})}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00452}{452}} 行目に定義があります。
+
+\Hypertarget{_u_i_bus_8h_aa4ceab994694d395a3fce3e8b9b59294}\index{UIBus.h@{UIBus.h}!REGISTER\_DEBUG\_BUTTON@{REGISTER\_DEBUG\_BUTTON}}
+\index{REGISTER\_DEBUG\_BUTTON@{REGISTER\_DEBUG\_BUTTON}!UIBus.h@{UIBus.h}}
+\doxysubsubsection{\texorpdfstring{REGISTER\_DEBUG\_BUTTON}{REGISTER\_DEBUG\_BUTTON}}
+{\footnotesize\ttfamily \label{_u_i_bus_8h_aa4ceab994694d395a3fce3e8b9b59294} 
+\#define REGISTER\+\_\+\+DEBUG\+\_\+\+BUTTON(\begin{DoxyParamCaption}\item[{}]{category}{, }\item[{}]{label}{, }\item[{}]{on\+Change}{}\end{DoxyParamCaption})}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00456}{456}} 行目に定義があります。
+
+\Hypertarget{_u_i_bus_8h_aa6e43d3d7b1ae94b0f671428aab429f0}\index{UIBus.h@{UIBus.h}!REGISTER\_DEBUG\_CHECKBOX@{REGISTER\_DEBUG\_CHECKBOX}}
+\index{REGISTER\_DEBUG\_CHECKBOX@{REGISTER\_DEBUG\_CHECKBOX}!UIBus.h@{UIBus.h}}
+\doxysubsubsection{\texorpdfstring{REGISTER\_DEBUG\_CHECKBOX}{REGISTER\_DEBUG\_CHECKBOX}}
+{\footnotesize\ttfamily \label{_u_i_bus_8h_aa6e43d3d7b1ae94b0f671428aab429f0} 
+\#define REGISTER\+\_\+\+DEBUG\+\_\+\+CHECKBOX(\begin{DoxyParamCaption}\item[{}]{category}{, }\item[{}]{label}{, }\item[{}]{initial\+Value}{, }\item[{}]{on\+Change}{}\end{DoxyParamCaption})}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00454}{454}} 行目に定義があります。
+
+\Hypertarget{_u_i_bus_8h_ac6407c7259a34d037a2ce58d3f141129}\index{UIBus.h@{UIBus.h}!REGISTER\_DEBUG\_SLIDER\_FLOAT@{REGISTER\_DEBUG\_SLIDER\_FLOAT}}
+\index{REGISTER\_DEBUG\_SLIDER\_FLOAT@{REGISTER\_DEBUG\_SLIDER\_FLOAT}!UIBus.h@{UIBus.h}}
+\doxysubsubsection{\texorpdfstring{REGISTER\_DEBUG\_SLIDER\_FLOAT}{REGISTER\_DEBUG\_SLIDER\_FLOAT}}
+{\footnotesize\ttfamily \label{_u_i_bus_8h_ac6407c7259a34d037a2ce58d3f141129} 
+\#define REGISTER\+\_\+\+DEBUG\+\_\+\+SLIDER\+\_\+\+FLOAT(\begin{DoxyParamCaption}\item[{}]{category}{, }\item[{}]{label}{, }\item[{}]{initial\+Value}{, }\item[{}]{min\+Value}{, }\item[{}]{max\+Value}{, }\item[{}]{speed}{, }\item[{}]{on\+Change}{}\end{DoxyParamCaption})}
+
+
+
+\+\_\+\+ENABLE\+\_\+\+IMGUI 
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00451}{451}} 行目に定義があります。
+

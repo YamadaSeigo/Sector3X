@@ -1,0 +1,385 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Graphics::DX11::OrtCamera3DService クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_graphics_1_1_d_x11_1_1_ort_camera3_d_service.html','','class_s_f_w_1_1_graphics_1_1_d_x11_1_1_ort_camera3_d_service-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Graphics::DX11::OrtCamera3DService クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>DirectX11用の3Dカメラサービス。カメラの定数バッファを管理し、更新する。  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_d_x113_d_camera_service_8h_source.html">DX113DCameraService.h</a>&gt;</code></p>
+<div class="dynheader">
+SFW::Graphics::DX11::OrtCamera3DService の継承関係図</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_ort_camera3_d_service.png" usemap="#SFW_3A_3AGraphics_3A_3ADX11_3A_3AOrtCamera3DService_map" alt=""/>
+  <map id="SFW_3A_3AGraphics_3A_3ADX11_3A_3AOrtCamera3DService_map" name="SFW_3A_3AGraphics_3A_3ADX11_3A_3AOrtCamera3DService_map">
+<area href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html" alt="SFW::Graphics::I3DCameraService&lt; ProjectionType::Orthographic &gt;" shape="rect" coords="0,56,399,80"/>
+<area href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html" title="更新サービスのインターフェース(Systemよりも前に更新)" alt="SFW::ECS::IUpdateService" shape="rect" coords="0,0,399,24"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:ad780a37b075b9d59e51dac37efff70e0" id="r_ad780a37b075b9d59e51dac37efff70e0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad780a37b075b9d59e51dac37efff70e0">OrtCamera3DService</a> (<a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html">BufferManager</a> *bufferMgr, const uint32_t width, const uint32_t height)</td></tr>
+<tr class="memdesc:ad780a37b075b9d59e51dac37efff70e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:abf47a06e921aead1a26ee1347ce3a92f" id="r_abf47a06e921aead1a26ee1347ce3a92f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abf47a06e921aead1a26ee1347ce3a92f">PreUpdate</a> (double deltaTime) override</td></tr>
+<tr class="memdesc:abf47a06e921aead1a26ee1347ce3a92f"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの更新関数  <br /></td></tr>
+<tr class="inherit_header pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService&lt; ProjectionType::Orthographic &gt;</a> に属する継承公開メンバ関数</td></tr>
+<tr class="memitem:afff2d1916859053e25eff9c3c9d5172b inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_afff2d1916859053e25eff9c3c9d5172b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#afff2d1916859053e25eff9c3c9d5172b">I3DCameraService</a> (<a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> bufferHandle) noexcept</td></tr>
+<tr class="memdesc:afff2d1916859053e25eff9c3c9d5172b inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:a7c6ed09db460b4922d8493783e54961c inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a7c6ed09db460b4922d8493783e54961c"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a7c6ed09db460b4922d8493783e54961c">~I3DCameraService</a> ()=default</td></tr>
+<tr class="memdesc:a7c6ed09db460b4922d8493783e54961c inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">デストラクタ  <br /></td></tr>
+<tr class="memitem:a86f06f07d76d4d189a28e34fe783aa34 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a86f06f07d76d4d189a28e34fe783aa34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a86f06f07d76d4d189a28e34fe783aa34">Move</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;vec) noexcept</td></tr>
+<tr class="memdesc:a86f06f07d76d4d189a28e34fe783aa34 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの移動  <br /></td></tr>
+<tr class="memitem:ae6f70c90d8f7b723579230dcc139d258 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_ae6f70c90d8f7b723579230dcc139d258"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ae6f70c90d8f7b723579230dcc139d258">Rotate</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a> &amp;q) noexcept</td></tr>
+<tr class="memdesc:ae6f70c90d8f7b723579230dcc139d258 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの回転  <br /></td></tr>
+<tr class="memitem:ac3ba109be35b9efed618314a6ecff889 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_ac3ba109be35b9efed618314a6ecff889"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ac3ba109be35b9efed618314a6ecff889">SetRotation</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a> &amp;q) noexcept</td></tr>
+<tr class="memitem:a72b3b57efa69e1ec48476debcbe476f4 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a72b3b57efa69e1ec48476debcbe476f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a72b3b57efa69e1ec48476debcbe476f4">SetEyePos</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;eyePos) noexcept</td></tr>
+<tr class="memdesc:a72b3b57efa69e1ec48476debcbe476f4 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの位置を設定  <br /></td></tr>
+<tr class="memitem:a94dfcedac8f1f117baad2593b9749ae9 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a94dfcedac8f1f117baad2593b9749ae9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a94dfcedac8f1f117baad2593b9749ae9">SetTarget</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;targetPos) noexcept</td></tr>
+<tr class="memdesc:a94dfcedac8f1f117baad2593b9749ae9 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの注視点を設定  <br /></td></tr>
+<tr class="memitem:a7b428777038fc0ea7fcff57ed0c577e9 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a7b428777038fc0ea7fcff57ed0c577e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a7b428777038fc0ea7fcff57ed0c577e9">SetFOV</a> (float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a9b7a807da1f7fa2ee1e2de14ac4451dc">fovRad</a>) noexcept</td></tr>
+<tr class="memdesc:a7b428777038fc0ea7fcff57ed0c577e9 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの視野角を設定  <br /></td></tr>
+<tr class="memitem:a1823fcf7edba094167e5df74c4350e3c inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a1823fcf7edba094167e5df74c4350e3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a1823fcf7edba094167e5df74c4350e3c">SetAspectRatio</a> (float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a21b73d3f0e9d42a4b4951cbaa5c96b39">aspectRatio</a>) noexcept</td></tr>
+<tr class="memdesc:a1823fcf7edba094167e5df74c4350e3c inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラのアスペクト比を設定  <br /></td></tr>
+<tr class="memitem:a4907465ca6e7ce04138f9af3fb1f84f3 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a4907465ca6e7ce04138f9af3fb1f84f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a4907465ca6e7ce04138f9af3fb1f84f3">SetNearClip</a> (float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#af8640ab289a3ff476e40dc0a44f9e926">nearClip</a>) noexcept</td></tr>
+<tr class="memdesc:a4907465ca6e7ce04138f9af3fb1f84f3 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラのニアクリップ距離を設定  <br /></td></tr>
+<tr class="memitem:abb4297b5ec58b8800222512d3efba1ee inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_abb4297b5ec58b8800222512d3efba1ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#abb4297b5ec58b8800222512d3efba1ee">SetFarClip</a> (float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a563ff0ed093d82a05ca233b9daaaf0db">farClip</a>) noexcept</td></tr>
+<tr class="memdesc:abb4297b5ec58b8800222512d3efba1ee inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラのファークリップ距離を設定  <br /></td></tr>
+<tr class="memitem:adc766a174220b69580f1ed44e03d0234 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_adc766a174220b69580f1ed44e03d0234"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#adc766a174220b69580f1ed44e03d0234">SetFocusDistance</a> (float distance) noexcept</td></tr>
+<tr class="memdesc:adc766a174220b69580f1ed44e03d0234 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの焦点距離を設定  <br /></td></tr>
+<tr class="memitem:a4d0b13a40af8191337b65a5a36530690 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a4d0b13a40af8191337b65a5a36530690"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a4d0b13a40af8191337b65a5a36530690">SetMouseDelta</a> (float deltaX, float deltaY) noexcept</td></tr>
+<tr class="memdesc:a4d0b13a40af8191337b65a5a36530690 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">マウスの移動量を設定  <br /></td></tr>
+<tr class="memitem:a8652aad2aff0d6a815baa5e63fb42429 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a8652aad2aff0d6a815baa5e63fb42429"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a8652aad2aff0d6a815baa5e63fb42429">SetMouseSensitivity</a> (float sensX, float sensY) noexcept</td></tr>
+<tr class="memdesc:a8652aad2aff0d6a815baa5e63fb42429 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">マウス感度を設定  <br /></td></tr>
+<tr class="memitem:a08e40022f3eb8d97a5fb66a70c721e03 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a08e40022f3eb8d97a5fb66a70c721e03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a08e40022f3eb8d97a5fb66a70c721e03">SetRotateMode</a> (<a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ae451cac8864c5e3312c52d97394665aa">RotateMode</a> mode) noexcept</td></tr>
+<tr class="memdesc:a08e40022f3eb8d97a5fb66a70c721e03 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの回転モードを設定  <br /></td></tr>
+<tr class="memitem:aa18926d235abb00236c1344e6919229a inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_aa18926d235abb00236c1344e6919229a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#aa18926d235abb00236c1344e6919229a">GetEyePos</a> () const noexcept</td></tr>
+<tr class="memdesc:aa18926d235abb00236c1344e6919229a inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの位置を取得  <br /></td></tr>
+<tr class="memitem:a6ebfa01c4d0a73727d85d2f98c2d3938 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a6ebfa01c4d0a73727d85d2f98c2d3938"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a6ebfa01c4d0a73727d85d2f98c2d3938">GetTarget</a> () const noexcept</td></tr>
+<tr class="memdesc:a6ebfa01c4d0a73727d85d2f98c2d3938 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの注視点を取得  <br /></td></tr>
+<tr class="memitem:a961471074573710bb3a562d53923fef2 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a961471074573710bb3a562d53923fef2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a961471074573710bb3a562d53923fef2">GetUp</a> () const noexcept</td></tr>
+<tr class="memdesc:a961471074573710bb3a562d53923fef2 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの上方向ベクトルを取得  <br /></td></tr>
+<tr class="memitem:a7f7159081774cc41465c9e810a513216 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a7f7159081774cc41465c9e810a513216"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a7f7159081774cc41465c9e810a513216">GetFOV</a> () const noexcept</td></tr>
+<tr class="memdesc:a7f7159081774cc41465c9e810a513216 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの視野角を取得  <br /></td></tr>
+<tr class="memitem:ad4c10ec53bd610f645f95505466e3192 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_ad4c10ec53bd610f645f95505466e3192"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ad4c10ec53bd610f645f95505466e3192">GetAspectRatio</a> () const noexcept</td></tr>
+<tr class="memdesc:ad4c10ec53bd610f645f95505466e3192 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラのアスペクト比を取得  <br /></td></tr>
+<tr class="memitem:a5917161acd7359a5e9f990e5e838e9ac inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a5917161acd7359a5e9f990e5e838e9ac"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a5917161acd7359a5e9f990e5e838e9ac">GetNearClip</a> () const noexcept</td></tr>
+<tr class="memdesc:a5917161acd7359a5e9f990e5e838e9ac inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラのニアクリップ距離を取得  <br /></td></tr>
+<tr class="memitem:aa6e5274c815c57734febc89e3d9c6274 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_aa6e5274c815c57734febc89e3d9c6274"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#aa6e5274c815c57734febc89e3d9c6274">GetFarClip</a> () const noexcept</td></tr>
+<tr class="memdesc:aa6e5274c815c57734febc89e3d9c6274 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラのファークリップ距離を取得  <br /></td></tr>
+<tr class="memitem:a6fbbaa783c53eee6a32773c32997ed73 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a6fbbaa783c53eee6a32773c32997ed73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a6fbbaa783c53eee6a32773c32997ed73">GetRotation</a> () const noexcept</td></tr>
+<tr class="memdesc:a6fbbaa783c53eee6a32773c32997ed73 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの回転を取得  <br /></td></tr>
+<tr class="memitem:a67dd0b54c4ea5aedb5aaefaab248689b inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a67dd0b54c4ea5aedb5aaefaab248689b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a67dd0b54c4ea5aedb5aaefaab248689b">GetForward</a> () const noexcept</td></tr>
+<tr class="memdesc:a67dd0b54c4ea5aedb5aaefaab248689b inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの焦点距離を取得  <br /></td></tr>
+<tr class="memitem:a77e3d3383a9ea6fc018da65c240724f9 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a77e3d3383a9ea6fc018da65c240724f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a77e3d3383a9ea6fc018da65c240724f9">GetBackward</a> () const noexcept</td></tr>
+<tr class="memdesc:a77e3d3383a9ea6fc018da65c240724f9 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの後方方向ベクトルを取得  <br /></td></tr>
+<tr class="memitem:ad1673672e37d59e4801b6bc1f164775d inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_ad1673672e37d59e4801b6bc1f164775d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ad1673672e37d59e4801b6bc1f164775d">GetRight</a> () const noexcept</td></tr>
+<tr class="memdesc:ad1673672e37d59e4801b6bc1f164775d inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの右方向ベクトルを取得  <br /></td></tr>
+<tr class="memitem:aff903fce1ba3b32abea17f1e31e49317 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_aff903fce1ba3b32abea17f1e31e49317"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#aff903fce1ba3b32abea17f1e31e49317">GetResolution</a> () const noexcept</td></tr>
+<tr class="memdesc:aff903fce1ba3b32abea17f1e31e49317 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの解像度を取得  <br /></td></tr>
+<tr class="memitem:a2347ffb9197be13f4618f46a04e1bbca inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a2347ffb9197be13f4618f46a04e1bbca"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a2347ffb9197be13f4618f46a04e1bbca">GetFocusDistance</a> () const noexcept</td></tr>
+<tr class="memitem:a4d3d76636c3d1e36bbc58e1f7605040c inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a4d3d76636c3d1e36bbc58e1f7605040c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a4d3d76636c3d1e36bbc58e1f7605040c">GetSensitivity</a> (float &amp;outSensX, float &amp;outSensY) const noexcept</td></tr>
+<tr class="memitem:ac468d845fb0b459c7b2eaead3f7fca01 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_ac468d845fb0b459c7b2eaead3f7fca01"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ac468d845fb0b459c7b2eaead3f7fca01">GetPitchAccum</a> () const noexcept</td></tr>
+<tr class="memitem:aea31f3c1a1d8a790094adab229897146 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_aea31f3c1a1d8a790094adab229897146"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#aea31f3c1a1d8a790094adab229897146">MakeViewMatrix</a> () const</td></tr>
+<tr class="memitem:a14ac7c1ed3a79102e5798eb9e263515f inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a14ac7c1ed3a79102e5798eb9e263515f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a14ac7c1ed3a79102e5798eb9e263515f">MakeProjectionMatrix</a> () const noexcept</td></tr>
+<tr class="memitem:ac5314e15f419dc781568ce70fd817ffe inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_ac5314e15f419dc781568ce70fd817ffe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ac5314e15f419dc781568ce70fd817ffe">MakeViewProjMatrix</a> () const</td></tr>
+<tr class="memitem:aa9774a14c3a51f998e566fceee1c0950 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_aa9774a14c3a51f998e566fceee1c0950"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#aa9774a14c3a51f998e566fceee1c0950">MakeViewProjMatrix</a> (float _nearClip, float _farClip) const</td></tr>
+<tr class="memitem:ad8df687adce40f6fe84190bf0fc56055 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_ad8df687adce40f6fe84190bf0fc56055"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ad8df687adce40f6fe84190bf0fc56055">MakeBasis</a> (<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;outRight, <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;outUp, <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;outForward) const noexcept</td></tr>
+<tr class="memitem:a7182a9dc9273a5ed2d372b08df140c6d inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a7182a9dc9273a5ed2d372b08df140c6d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a7182a9dc9273a5ed2d372b08df140c6d">MakeFrustum</a> (bool normalize=false) const</td></tr>
+<tr class="memdesc:a7182a9dc9273a5ed2d372b08df140c6d inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">ビュー行列を取得  <br /></td></tr>
+<tr class="memitem:abda226a0ee17d037ccc3e05277090983 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_abda226a0ee17d037ccc3e05277090983"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_camera_buffer.html">CameraBuffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#abda226a0ee17d037ccc3e05277090983">GetCameraBufferDataNoLock</a> () const noexcept</td></tr>
+<tr class="memdesc:abda226a0ee17d037ccc3e05277090983 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラバッファのデータを取得  <br /></td></tr>
+<tr class="memitem:a97485078c0fb3f9f0daa0ba5fbb27a8b inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a97485078c0fb3f9f0daa0ba5fbb27a8b"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_camera_buffer.html">CameraBuffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a97485078c0fb3f9f0daa0ba5fbb27a8b">GetOldCameraBufferDataNoLock</a> () const noexcept</td></tr>
+<tr class="memdesc:a97485078c0fb3f9f0daa0ba5fbb27a8b inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">遅延分前のカメラバッファのデータを取得  <br /></td></tr>
+<tr class="memitem:ad59d70f76e8fc1fd093162dd16297e63 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_ad59d70f76e8fc1fd093162dd16297e63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ad59d70f76e8fc1fd093162dd16297e63">GetCameraBufferHandle</a> () const noexcept</td></tr>
+<tr class="memitem:a57a1962c30f01a4075d77e834b49de22 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a57a1962c30f01a4075d77e834b49de22"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a57a1962c30f01a4075d77e834b49de22">IsUpdateBuffer</a> () const noexcept</td></tr>
+<tr class="memdesc:a57a1962c30f01a4075d77e834b49de22 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラバッファの更新が必要かどうかを取得  <br /></td></tr>
+<tr class="memitem:a00f9a2daf461a5299ab6cf0601e77c67 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a00f9a2daf461a5299ab6cf0601e77c67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a00f9a2daf461a5299ab6cf0601e77c67">CalcCurrentRotation</a> () const noexcept</td></tr>
+<tr class="memdesc:a00f9a2daf461a5299ab6cf0601e77c67 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">現在の回転を計算して取得する  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+静的公開変数類</h2></td></tr>
+<tr class="memitem:adec355ad9f0b3f94bd679ab0d8575496" id="r_adec355ad9f0b3f94bd679ab0d8575496"><td class="memItemLeft" align="right" valign="top">static constexpr char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adec355ad9f0b3f94bd679ab0d8575496">BUFFER_NAME</a> [] = &quot;3DOrtCamera&quot;</td></tr>
+<tr class="memdesc:adec355ad9f0b3f94bd679ab0d8575496"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの定数バッファの名前  <br /></td></tr>
+<tr class="inherit_header pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">SFW::ECS::IUpdateService</a> に属する継承静的公開変数類</td></tr>
+<tr class="memitem:a73744778bc5cc3113ed77db1b69e1fb1 inherit pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a73744778bc5cc3113ed77db1b69e1fb1"><td class="memItemLeft" align="right" valign="top">static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a73744778bc5cc3113ed77db1b69e1fb1">updatePhase</a> = <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec">EALRY</a></td></tr>
+<tr class="memitem:a9f0e8abd26ab30155b39e558f004ce42 inherit pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a9f0e8abd26ab30155b39e558f004ce42"><td class="memItemLeft" align="right" valign="top">static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a9f0e8abd26ab30155b39e558f004ce42">updateGroup</a> = <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9">GROUP_SERIAL</a></td></tr>
+<tr class="memitem:a116ce546ab92eaf8f4282719b89a5165 inherit pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a116ce546ab92eaf8f4282719b89a5165"><td class="memItemLeft" align="right" valign="top">static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a116ce546ab92eaf8f4282719b89a5165">updateOrder</a> = 0</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
+その他の継承メンバ</h2></td></tr>
+<tr class="inherit_header pub_types_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_types_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService&lt; ProjectionType::Orthographic &gt;</a> に属する継承公開型</td></tr>
+<tr class="memitem:ae451cac8864c5e3312c52d97394665aa inherit pub_types_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_ae451cac8864c5e3312c52d97394665aa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ae451cac8864c5e3312c52d97394665aa">RotateMode</a> </td></tr>
+<tr class="inherit_header pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">SFW::ECS::IUpdateService</a> に属する継承公開型</td></tr>
+<tr class="memitem:ae5407b8ae7f6739250af397382f3f6c7 inherit pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_ae5407b8ae7f6739250af397382f3f6c7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7">Phase</a> : uint16_t { <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec">EALRY</a> = 0
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7">NORMAL</a> = 1
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9">LATE</a> = 2
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907">PHASE_MAX</a>
+ }</td></tr>
+<tr class="memitem:a0a2e8c399f89c675d9de722b706a8608 inherit pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a0a2e8c399f89c675d9de722b706a8608"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608">Group</a> : uint16_t { <br />
+&#160;&#160;<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9">GROUP_SERIAL</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b">GROUP_GRAPHICS</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda">GROUP_PHYSICS</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a">GROUP_INPUT</a>
+, <br />
+&#160;&#160;<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e">GROUP_AUDIO</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580">GROUP_AI</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90">GROUP_MAX</a>
+<br />
+ }</td></tr>
+<tr class="inherit_header pro_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService&lt; ProjectionType::Orthographic &gt;</a> に属する継承限定公開メンバ関数</td></tr>
+<tr class="memitem:a6d1fbb49e8776fdef07f3967a27d656e inherit pro_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a6d1fbb49e8776fdef07f3967a27d656e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a6d1fbb49e8776fdef07f3967a27d656e">UpdateCameraFromMouse</a> ()</td></tr>
+<tr class="memdesc:a6d1fbb49e8776fdef07f3967a27d656e inherit pro_methods_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td class="mdescLeft">&#160;</td><td class="mdescRight">マウスの移動に基づいてカメラの回転を更新する  <br /></td></tr>
+<tr class="inherit_header pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService&lt; ProjectionType::Orthographic &gt;</a> に属する継承限定公開変数類</td></tr>
+<tr class="memitem:af7f4c4bfb97177141741fc1f7d01876a inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_af7f4c4bfb97177141741fc1f7d01876a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#af7f4c4bfb97177141741fc1f7d01876a">cameraBufferHandle</a></td></tr>
+<tr class="memitem:a305edbaa8054aaf07f021c8f95175ba5 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a305edbaa8054aaf07f021c8f95175ba5"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a305edbaa8054aaf07f021c8f95175ba5">frameIdx</a></td></tr>
+<tr class="memitem:ae11a50f0fa711dada7d4bfca3445d904 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_ae11a50f0fa711dada7d4bfca3445d904"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_camera_buffer.html">CameraBuffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ae11a50f0fa711dada7d4bfca3445d904">cameraBuffer</a> [RENDER_BUFFER_COUNT]</td></tr>
+<tr class="memitem:a05992c900a7affda3096a8d8c09640d7 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a05992c900a7affda3096a8d8c09640d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a05992c900a7affda3096a8d8c09640d7">eye</a></td></tr>
+<tr class="memitem:a123df438186cb124e2160187f8a2017e inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a123df438186cb124e2160187f8a2017e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a123df438186cb124e2160187f8a2017e">target</a></td></tr>
+<tr class="memitem:a9b7a807da1f7fa2ee1e2de14ac4451dc inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a9b7a807da1f7fa2ee1e2de14ac4451dc"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a9b7a807da1f7fa2ee1e2de14ac4451dc">fovRad</a></td></tr>
+<tr class="memitem:a21b73d3f0e9d42a4b4951cbaa5c96b39 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a21b73d3f0e9d42a4b4951cbaa5c96b39"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a21b73d3f0e9d42a4b4951cbaa5c96b39">aspectRatio</a></td></tr>
+<tr class="memitem:af8640ab289a3ff476e40dc0a44f9e926 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_af8640ab289a3ff476e40dc0a44f9e926"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#af8640ab289a3ff476e40dc0a44f9e926">nearClip</a></td></tr>
+<tr class="memitem:a563ff0ed093d82a05ca233b9daaaf0db inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a563ff0ed093d82a05ca233b9daaaf0db"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a563ff0ed093d82a05ca233b9daaaf0db">farClip</a></td></tr>
+<tr class="memitem:a225bed5c11a089d140ce197e621102e4 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a225bed5c11a089d140ce197e621102e4"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a225bed5c11a089d140ce197e621102e4">left</a></td></tr>
+<tr class="memitem:a7915e95917125d8128129e27b1a908fa inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a7915e95917125d8128129e27b1a908fa"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a7915e95917125d8128129e27b1a908fa">right</a></td></tr>
+<tr class="memitem:a2c2f99c4b6aceb72ee2127052768b026 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a2c2f99c4b6aceb72ee2127052768b026"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a2c2f99c4b6aceb72ee2127052768b026">bottom</a></td></tr>
+<tr class="memitem:a701d921ec68c68a94fa58ad0a679fff4 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a701d921ec68c68a94fa58ad0a679fff4"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a701d921ec68c68a94fa58ad0a679fff4">top</a></td></tr>
+<tr class="memitem:a07da00eda905d75ab3f2dee5a494ec93 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a07da00eda905d75ab3f2dee5a494ec93"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a07da00eda905d75ab3f2dee5a494ec93">focusDist</a></td></tr>
+<tr class="memitem:a4e6bcb8d236c62c213190354fe9df39a inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a4e6bcb8d236c62c213190354fe9df39a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a4e6bcb8d236c62c213190354fe9df39a">moveVec</a></td></tr>
+<tr class="memitem:a51ed58422b038b122206b436b3c3efba inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a51ed58422b038b122206b436b3c3efba"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a51ed58422b038b122206b436b3c3efba">pitchAccum</a></td></tr>
+<tr class="memitem:ac70f9951ed7681e226fb3af85a9708f4 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_ac70f9951ed7681e226fb3af85a9708f4"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ac70f9951ed7681e226fb3af85a9708f4">currentSlot</a></td></tr>
+<tr class="memitem:afda51b0b333bc317fd8e2a7d5a3e60e4 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_afda51b0b333bc317fd8e2a7d5a3e60e4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#afda51b0b333bc317fd8e2a7d5a3e60e4">isUpdateBuffer</a></td></tr>
+<tr class="memitem:ae16b494ca4eabb0b338046e2d81f4f8c inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_ae16b494ca4eabb0b338046e2d81f4f8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ae16b494ca4eabb0b338046e2d81f4f8c">rot</a></td></tr>
+<tr class="memitem:a139b36bbfb066d1b2a1502e0617ea373 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a139b36bbfb066d1b2a1502e0617ea373"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a139b36bbfb066d1b2a1502e0617ea373">dx</a></td></tr>
+<tr class="memitem:a72be0c683c4c7ae8bc20769437b3e271 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a72be0c683c4c7ae8bc20769437b3e271"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a72be0c683c4c7ae8bc20769437b3e271">dy</a></td></tr>
+<tr class="memitem:ab1a14f1baae18145d35bdf19f75ef344 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_ab1a14f1baae18145d35bdf19f75ef344"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ab1a14f1baae18145d35bdf19f75ef344">sensX_rad_per_px</a></td></tr>
+<tr class="memitem:a84d697690c508a29d681a0694ce6add1 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_a84d697690c508a29d681a0694ce6add1"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#a84d697690c508a29d681a0694ce6add1">sensY_rad_per_px</a></td></tr>
+<tr class="memitem:af8406bae0131b90375cb6a2b9b83839f inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_af8406bae0131b90375cb6a2b9b83839f"><td class="memItemLeft" align="right" valign="top">std::shared_mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#af8406bae0131b90375cb6a2b9b83839f">sharedMutex</a></td></tr>
+<tr class="memitem:aecd7bb74d64620d7839ffa4dfa663701 inherit pro_attribs_class_s_f_w_1_1_graphics_1_1_i3_d_camera_service" id="r_aecd7bb74d64620d7839ffa4dfa663701"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#ae451cac8864c5e3312c52d97394665aa">RotateMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html#aecd7bb74d64620d7839ffa4dfa663701">rotateMode</a></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>DirectX11用の3Dカメラサービス。カメラの定数バッファを管理し、更新する。 </p>
+
+<p class="definition"> <a class="el" href="_d_x113_d_camera_service_8h_source.html">DX113DCameraService.h</a> の <a class="el" href="_d_x113_d_camera_service_8h_source.html#l00102">102</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="ad780a37b075b9d59e51dac37efff70e0" name="ad780a37b075b9d59e51dac37efff70e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad780a37b075b9d59e51dac37efff70e0">&#9670;&#160;</a></span>OrtCamera3DService()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Graphics::DX11::OrtCamera3DService::OrtCamera3DService </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html">BufferManager</a> *</td>          <td class="paramname"><span class="paramname"><em>bufferMgr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>height</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bufferMgr</td><td>BufferManagerのポインタ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_d_x113_d_camera_service_8h_source.html">DX113DCameraService.h</a> の <a class="el" href="_d_x113_d_camera_service_8h_source.html#l00112">112</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="abf47a06e921aead1a26ee1347ce3a92f" name="abf47a06e921aead1a26ee1347ce3a92f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf47a06e921aead1a26ee1347ce3a92f">&#9670;&#160;</a></span>PreUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::OrtCamera3DService::PreUpdate </td>
+          <td>(</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>deltaTime</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの更新関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">deltaTime</td><td>前のフレームからの経過時間（秒） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService&lt; ProjectionType::Orthographic &gt;</a>を再実装しています。</p>
+
+<p class="definition"> <a class="el" href="_d_x113_d_camera_service_8h_source.html">DX113DCameraService.h</a> の <a class="el" href="_d_x113_d_camera_service_8h_source.html#l00125">125</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<a id="adec355ad9f0b3f94bd679ab0d8575496" name="adec355ad9f0b3f94bd679ab0d8575496"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adec355ad9f0b3f94bd679ab0d8575496">&#9670;&#160;</a></span>BUFFER_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char SFW::Graphics::DX11::OrtCamera3DService::BUFFER_NAME[] = &quot;3DOrtCamera&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの定数バッファの名前 </p>
+
+<p class="definition"> <a class="el" href="_d_x113_d_camera_service_8h_source.html">DX113DCameraService.h</a> の <a class="el" href="_d_x113_d_camera_service_8h_source.html#l00107">107</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/<a class="el" href="_d_x113_d_camera_service_8h_source.html">DX113DCameraService.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics.html">Graphics</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">DX11</a></li><li class="navelem"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_ort_camera3_d_service.html">OrtCamera3DService</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

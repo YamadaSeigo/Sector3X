@@ -1,0 +1,82 @@
+\doxysection{convert\+\_\+string.\+h}
+\hypertarget{convert__string_8h_source}{}\label{convert__string_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/convert\_string.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/convert\_string.h}}
+\mbox{\hyperlink{convert__string_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00011}00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00012}00012\ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00013}00013\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ AppendUtf8(std::string\&\ out,\ uint32\_t\ cp)}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00014}00014\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00015}00015\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cp\ <=\ 0x7F)\ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back((\textcolor{keywordtype}{char})cp);}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00017}00017\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00018}00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (cp\ <=\ 0x7FF)\ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back((\textcolor{keywordtype}{char})(0xC0\ |\ (cp\ >>\ 6)));}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back((\textcolor{keywordtype}{char})(0x80\ |\ (cp\ \&\ 0x3F)));}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (cp\ <=\ 0xFFFF)\ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back((\textcolor{keywordtype}{char})(0xE0\ |\ (cp\ >>\ 12)));}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back((\textcolor{keywordtype}{char})(0x80\ |\ ((cp\ >>\ 6)\ \&\ 0x3F)));}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back((\textcolor{keywordtype}{char})(0x80\ |\ (cp\ \&\ 0x3F)));}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back((\textcolor{keywordtype}{char})(0xF0\ |\ (cp\ >>\ 18)));}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back((\textcolor{keywordtype}{char})(0x80\ |\ ((cp\ >>\ 12)\ \&\ 0x3F)));}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back((\textcolor{keywordtype}{char})(0x80\ |\ ((cp\ >>\ 6)\ \&\ 0x3F)));}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back((\textcolor{keywordtype}{char})(0x80\ |\ (cp\ \&\ 0x3F)));}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00033}00033\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00035}00035\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ WCharToUtf8\_portable(\textcolor{keyword}{const}\ \textcolor{keywordtype}{wchar\_t}*\ w)}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00036}00036\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!w)\ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ std::string\ out;}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ out.reserve(64);}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ wchar\_t\ が\ 2byte(UTF-\/16)\ か\ 4byte(UTF-\/32)\ かで処理を分ける}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\textcolor{keyword}{sizeof}(wchar\_t)\ ==\ 2)\ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ UTF-\/16}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ uint16\_t*\ p\ =\ (\textcolor{keyword}{const}\ uint16\_t*)w;\ *p;\ )\ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ u\ =\ *p++;}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ サロゲートペア}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (0xD800\ <=\ u\ \&\&\ u\ <=\ 0xDBFF)\ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ lo\ =\ *p;}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (0xDC00\ <=\ lo\ \&\&\ lo\ <=\ 0xDFFF)\ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++p;}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ cp\ =\ 0x10000\ +\ (((u\ -\/\ 0xD800)\ <<\ 10)\ |\ (lo\ -\/\ 0xDC00));}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ AppendUtf8(out,\ cp);}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 壊れたサロゲート：U+FFFD}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ AppendUtf8(out,\ 0xFFFD);}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (0xDC00\ <=\ u\ \&\&\ u\ <=\ 0xDFFF)\ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 単体の下位サロゲート：U+FFFD}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ AppendUtf8(out,\ 0xFFFD);}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ AppendUtf8(out,\ u);}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ UTF-\/32\ (一般に\ Linux/macOS)}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ uint32\_t*\ p\ =\ (\textcolor{keyword}{const}\ uint32\_t*)w;\ *p;\ ++p)\ \{}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ cp\ =\ *p;}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 不正範囲を軽くケア}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cp\ >\ 0x10FFFF\ ||\ (0xD800\ <=\ cp\ \&\&\ cp\ <=\ 0xDFFF))\ cp\ =\ 0xFFFD;}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ AppendUtf8(out,\ cp);}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00080}00080\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{convert__string_8h_source_l00081}00081\ \}}
+
+\end{DoxyCode}

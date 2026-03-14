@@ -1,0 +1,102 @@
+\doxysection{SFW\+::Physics\+::Contact\+Listener\+Impl クラス}
+\hypertarget{class_s_f_w_1_1_physics_1_1_contact_listener_impl}{}\label{class_s_f_w_1_1_physics_1_1_contact_listener_impl}\index{SFW::Physics::ContactListenerImpl@{SFW::Physics::ContactListenerImpl}}
+
+
+接触イベントの種類を表す名前空間  
+
+
+
+
+{\ttfamily \#include $<$Physics\+Contact\+Listener.\+h$>$}
+
+SFW\+::Physics\+::Contact\+Listener\+Impl の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_f_w_1_1_physics_1_1_contact_listener_impl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_contact_listener_impl_a1245eaae73d3c749f37728030cf7e48c}{Contact\+Listener\+Impl}} (\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_device}{Physics\+Device}} \texorpdfstring{$\ast$}{*}dev)
+\item 
+virtual JPH\+::\+Validate\+Result \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_contact_listener_impl_ad976993ed4940b8175f71a92e0945062}{On\+Contact\+Validate}} (const JPH\+::\+Body \&, const JPH\+::\+Body \&, JPH\+::\+RVec3\+Arg, const JPH\+::\+Collide\+Shape\+Result \&) override
+\item 
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_contact_listener_impl_a0673fe68d8e20f9407ac489cc3b42f31}{On\+Contact\+Added}} (const JPH\+::\+Body \&body1, const JPH\+::\+Body \&body2, const JPH\+::\+Contact\+Manifold \&manifold, JPH\+::\+Contact\+Settings \&) override
+\item 
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_contact_listener_impl_a468eed2db2c0f2b844ae29279f2e5b43}{On\+Contact\+Persisted}} (const JPH\+::\+Body \&body1, const JPH\+::\+Body \&body2, const JPH\+::\+Contact\+Manifold \&manifold, JPH\+::\+Contact\+Settings \&) override
+\item 
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_contact_listener_impl_abf5dcd2697b10dca5424cc8ab477ac77}{On\+Contact\+Removed}} (const JPH\+::\+Sub\+Shape\+IDPair \&pair) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+接触イベントの種類を表す名前空間 
+
+ \mbox{\hyperlink{_physics_contact_listener_8h_source}{Physics\+Contact\+Listener.\+h}} の \mbox{\hyperlink{_physics_contact_listener_8h_source_l00022}{22}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_physics_1_1_contact_listener_impl_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_physics_1_1_contact_listener_impl_a1245eaae73d3c749f37728030cf7e48c}\index{SFW::Physics::ContactListenerImpl@{SFW::Physics::ContactListenerImpl}!ContactListenerImpl@{ContactListenerImpl}}
+\index{ContactListenerImpl@{ContactListenerImpl}!SFW::Physics::ContactListenerImpl@{SFW::Physics::ContactListenerImpl}}
+\doxysubsubsection{\texorpdfstring{ContactListenerImpl()}{ContactListenerImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_contact_listener_impl_a1245eaae73d3c749f37728030cf7e48c} 
+SFW\+::\+Physics\+::\+Contact\+Listener\+Impl\+::\+Contact\+Listener\+Impl (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_device}{Physics\+Device}} \texorpdfstring{$\ast$}{*}}]{dev}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+ \mbox{\hyperlink{_physics_contact_listener_8h_source}{Physics\+Contact\+Listener.\+h}} の \mbox{\hyperlink{_physics_contact_listener_8h_source_l00024}{24}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_physics_1_1_contact_listener_impl_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_physics_1_1_contact_listener_impl_a0673fe68d8e20f9407ac489cc3b42f31}\index{SFW::Physics::ContactListenerImpl@{SFW::Physics::ContactListenerImpl}!OnContactAdded@{OnContactAdded}}
+\index{OnContactAdded@{OnContactAdded}!SFW::Physics::ContactListenerImpl@{SFW::Physics::ContactListenerImpl}}
+\doxysubsubsection{\texorpdfstring{OnContactAdded()}{OnContactAdded()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_contact_listener_impl_a0673fe68d8e20f9407ac489cc3b42f31} 
+virtual void SFW\+::\+Physics\+::\+Contact\+Listener\+Impl\+::\+On\+Contact\+Added (\begin{DoxyParamCaption}\item[{const JPH\+::\+Body \&}]{body1}{, }\item[{const JPH\+::\+Body \&}]{body2}{, }\item[{const JPH\+::\+Contact\+Manifold \&}]{manifold}{, }\item[{JPH\+::\+Contact\+Settings \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+ \mbox{\hyperlink{_physics_contact_listener_8h_source}{Physics\+Contact\+Listener.\+h}} の \mbox{\hyperlink{_physics_contact_listener_8h_source_l00028}{28}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_contact_listener_impl_a468eed2db2c0f2b844ae29279f2e5b43}\index{SFW::Physics::ContactListenerImpl@{SFW::Physics::ContactListenerImpl}!OnContactPersisted@{OnContactPersisted}}
+\index{OnContactPersisted@{OnContactPersisted}!SFW::Physics::ContactListenerImpl@{SFW::Physics::ContactListenerImpl}}
+\doxysubsubsection{\texorpdfstring{OnContactPersisted()}{OnContactPersisted()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_contact_listener_impl_a468eed2db2c0f2b844ae29279f2e5b43} 
+virtual void SFW\+::\+Physics\+::\+Contact\+Listener\+Impl\+::\+On\+Contact\+Persisted (\begin{DoxyParamCaption}\item[{const JPH\+::\+Body \&}]{body1}{, }\item[{const JPH\+::\+Body \&}]{body2}{, }\item[{const JPH\+::\+Contact\+Manifold \&}]{manifold}{, }\item[{JPH\+::\+Contact\+Settings \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+ \mbox{\hyperlink{_physics_contact_listener_8h_source}{Physics\+Contact\+Listener.\+h}} の \mbox{\hyperlink{_physics_contact_listener_8h_source_l00031}{31}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_contact_listener_impl_abf5dcd2697b10dca5424cc8ab477ac77}\index{SFW::Physics::ContactListenerImpl@{SFW::Physics::ContactListenerImpl}!OnContactRemoved@{OnContactRemoved}}
+\index{OnContactRemoved@{OnContactRemoved}!SFW::Physics::ContactListenerImpl@{SFW::Physics::ContactListenerImpl}}
+\doxysubsubsection{\texorpdfstring{OnContactRemoved()}{OnContactRemoved()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_contact_listener_impl_abf5dcd2697b10dca5424cc8ab477ac77} 
+virtual void SFW\+::\+Physics\+::\+Contact\+Listener\+Impl\+::\+On\+Contact\+Removed (\begin{DoxyParamCaption}\item[{const JPH\+::\+Sub\+Shape\+IDPair \&}]{pair}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+ \mbox{\hyperlink{_physics_contact_listener_8h_source}{Physics\+Contact\+Listener.\+h}} の \mbox{\hyperlink{_physics_contact_listener_8h_source_l00034}{34}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_contact_listener_impl_ad976993ed4940b8175f71a92e0945062}\index{SFW::Physics::ContactListenerImpl@{SFW::Physics::ContactListenerImpl}!OnContactValidate@{OnContactValidate}}
+\index{OnContactValidate@{OnContactValidate}!SFW::Physics::ContactListenerImpl@{SFW::Physics::ContactListenerImpl}}
+\doxysubsubsection{\texorpdfstring{OnContactValidate()}{OnContactValidate()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_contact_listener_impl_ad976993ed4940b8175f71a92e0945062} 
+virtual JPH\+::\+Validate\+Result SFW\+::\+Physics\+::\+Contact\+Listener\+Impl\+::\+On\+Contact\+Validate (\begin{DoxyParamCaption}\item[{const JPH\+::\+Body \&}]{}{, }\item[{const JPH\+::\+Body \&}]{}{, }\item[{JPH\+::\+RVec3\+Arg}]{}{, }\item[{const JPH\+::\+Collide\+Shape\+Result \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+ \mbox{\hyperlink{_physics_contact_listener_8h_source}{Physics\+Contact\+Listener.\+h}} の \mbox{\hyperlink{_physics_contact_listener_8h_source_l00025}{25}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Physics/\mbox{\hyperlink{_physics_contact_listener_8h}{Physics\+Contact\+Listener.\+h}}\end{DoxyCompactItemize}

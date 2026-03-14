@@ -1,0 +1,760 @@
+\doxysection{Rectangle.\+hpp}
+\hypertarget{_rectangle_8hpp_source}{}\label{_rectangle_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/Rectangle.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/Rectangle.hpp}}
+\mbox{\hyperlink{_rectangle_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <cfloat>}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00015}00015\ \textcolor{preprocessor}{\#if\ defined(\_MSC\_VER)\ ||\ defined(\_\_SSE2\_\_)}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <immintrin.h>}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00017}00017\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00019}00019\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_matrix_8hpp}{Matrix.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00021}00021\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_math}{SFW::Math}}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00022}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{00022}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{NdcRectWithW}}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00023}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w_a65dca8227d12e74375a1a509f6a72a6a}{00023}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w_aa1035f4e7f70aa1709caa02f66cc5a30}{xmin}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w_a39ea0917bbe36d3f908fe10fa868ffd9}{ymin}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w_a65dca8227d12e74375a1a509f6a72a6a}{xmax}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w_afa7c52ff228e5e3cd3fedfe75db74c60}{ymax}};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00024}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w_ab888b53cb96ab3bd2171b1e00bda6c4f}{00024}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w_ab888b53cb96ab3bd2171b1e00bda6c4f}{wmin}};\ \ \ \textcolor{comment}{//\ 8頂点の\ clip.w\ の最小値（MOCなどに渡す時に使用）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00025}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w_abda7c53cdf8ec8936733edd882ae4d23}{00025}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w_abda7c53cdf8ec8936733edd882ae4d23}{valid}};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00026}00026\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00028}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{00028}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 画面座標（ピクセル）またはNDCに使い回し可。x0<=x1,\ y0<=y1\ を保証。}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00030}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{00030}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}}\{\},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}}\{\},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}}\{\},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}}\{\};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00031}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_aff06deb3ef65e775d03eb0906b6df478}{00031}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_aff06deb3ef65e775d03eb0906b6df478}{valid}}\{\ \textcolor{keyword}{false}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00033}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a0871c5ec0383f9c480fae7a0afb4bd61}{00033}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a0871c5ec0383f9c480fae7a0afb4bd61}{Normalize}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}}\ >\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}})\ std::swap(\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}});}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}}\ >\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}})\ std::swap(\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}});}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00037}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_aee1587102c6d8b366f3703b2789e964a}{00037}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_aee1587102c6d8b366f3703b2789e964a}{Width}}()\ \ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_aff06deb3ef65e775d03eb0906b6df478}{valid}}\ ?\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}}\ -\/\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}})\ :\ 0.0f;\ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00038}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_af9d4c52c39964bc2feda453c2831040e}{00038}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_af9d4c52c39964bc2feda453c2831040e}{Height}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_aff06deb3ef65e775d03eb0906b6df478}{valid}}\ ?\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}}\ -\/\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}})\ :\ 0.0f;\ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00039}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a8b4fcdb82f05dd6287b079f74564662d}{00039}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a8b4fcdb82f05dd6287b079f74564662d}{Area}}()\ \ \ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_aff06deb3ef65e775d03eb0906b6df478}{valid}}\ ?\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_aee1587102c6d8b366f3703b2789e964a}{Width}}()\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_af9d4c52c39964bc2feda453c2831040e}{Height}}()\ :\ 0.0f;\ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00040}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a607388c63fc8d10c9cd22229f8ef5feb}{00040}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a607388c63fc8d10c9cd22229f8ef5feb}{ExpandToInclude}}(\textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_aff06deb3ef65e775d03eb0906b6df478}{valid}})\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}}\ =\ x;\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}}\ =\ y;\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_aff06deb3ef65e775d03eb0906b6df478}{valid}}\ =\ \textcolor{keyword}{true};\ \textcolor{keywordflow}{return};\ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}}\ =\ (std::min)(\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}},\ x);\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}}\ =\ (std::max)(\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}},\ x);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}}\ =\ (std::min)(\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}},\ y);\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}}\ =\ (std::max)(\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}},\ y);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00045}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ace246281db9017fe173c48cd775d93c5}{00045}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ace246281db9017fe173c48cd775d93c5}{Union}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}}\&\ b)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!a.valid)\ \textcolor{keywordflow}{return}\ b;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!b.valid)\ \textcolor{keywordflow}{return}\ a;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}}\ r\{\ (std::min)(a.x0,b.x0),\ (std::min)(a.y0,b.y0),}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (std::max)(a.x1,b.x1),\ (std::max)(a.y1,b.y1),\ \textcolor{keyword}{true}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00053}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_af010d0f1d2e76f29db5a2f631f8b5769}{00053}}\ \ \ \ \ \ \ \ \ std::vector<Vec2f>\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_af010d0f1d2e76f29db5a2f631f8b5769}{MakeLineVertex}}()\ const\ noexcept}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<Vec2f>\ out(8);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ out[0]\ =\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ out[1]\ =\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ out[2]\ =\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ out[3]\ =\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ out[4]\ =\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ out[5]\ =\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ out[6]\ =\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ out[7]\ =\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00066}00066\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00068}00068\ \ \ \ \ \textcolor{comment}{//\ ビューポート}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00069}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect}{00069}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect}{ViewportRect}}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00070}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect_af752b3b55089f71f8245a35e5428cf5f}{00070}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect_af752b3b55089f71f8245a35e5428cf5f}{width}}\{\};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00071}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect_a99bbdedf44e1d8420fc0226c999c8c11}{00071}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect_a99bbdedf44e1d8420fc0226c999c8c11}{height}}\{\};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ピクセル座標への変換で\ y\ の符号を反転するか（D3D:\ 上→下が\ +\ なので反転しないのが一般的）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00073}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect_a47ad3560026c5af0919e05abfb01e9ca}{00073}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect_a47ad3560026c5af0919e05abfb01e9ca}{originTopLeft}}\{\ \textcolor{keyword}{true}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00074}00074\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00076}00076\ \ \ \ \ \textcolor{comment}{//======================================================================}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00077}00077\ \ \ \ \ \textcolor{comment}{//\ AABB\ 8頂点を\ NDC\ に投影（列ベクトル規約\ /\ row-\/major）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00078}00078\ \ \ \ \ \textcolor{comment}{//\ ・VP\ =\ P\ *\ V\ を渡すこと（列ベクトルの標準）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00079}00079\ \ \ \ \ \textcolor{comment}{//\ ・clip.w\ <=\ 0（視点背面）は\ NDC\ 化できないので除外}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00080}00080\ \ \ \ \ \textcolor{comment}{//\ ・GL\ の\ −1..1\ にも対応（分岐）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00081}00081\ \ \ \ \ \textcolor{comment}{//======================================================================}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00082}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a4ef695230ec4d0f9acc2bc45f9b66d99}{00082}}\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{NdcRectWithW}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4ef695230ec4d0f9acc2bc45f9b66d99}{ProjectAABBToNdc}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}}\&\ VP,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ lbx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ lby,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ lbz,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ubx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ uby,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ubz,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{ClipZRange}}\ zrange\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5a4b942544cb3e764bbb8d33f8a8744855}{ClipZRange::ZeroToOne}})\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00086}00086\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ xs[8]\ =\ \{\ lbx,\ ubx,\ lbx,\ ubx,\ lbx,\ ubx,\ lbx,\ ubx\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ys[8]\ =\ \{\ lby,\ lby,\ uby,\ uby,\ lby,\ lby,\ uby,\ uby\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ zs[8]\ =\ \{\ lbz,\ lbz,\ lbz,\ lbz,\ ubz,\ ubz,\ ubz,\ ubz\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ xmin\ =\ FLT\_MAX,\ ymin\ =\ FLT\_MAX,\ xmax\ =\ -\/FLT\_MAX,\ ymax\ =\ -\/FLT\_MAX,\ wmin\ =\ FLT\_MAX;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aa035d644f53c7eddc05164f3e30e7dba}{any}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 8;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cx,\ cy,\ cz,\ cw;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{MulPoint\_RowMajor\_ColVec}}(VP,\ xs[i],\ ys[i],\ zs[i],\ cx,\ cy,\ cz,\ cw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 背面（cw<=0）は\ NDC\ にできない。必要ならここで近似クリップ。}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cw\ <=\ 0.0f)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ndcX\ =\ cx\ /\ cw;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ndcY\ =\ cy\ /\ cw;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ndcZ\ =\ cz\ /\ cw;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Z\ 範囲の正規化（必要なら\ −1..1\ →\ 0..1\ へ寄せる\ or\ 逆）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (zrange\ ==\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5ae4cdc0c2728d06052338b3fd504415bb}{ClipZRange::NegOneToOne}})\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ GL:\ z∈[-\/1,1]\ をそのまま持つ。ここでは矩形算出なので\ z\ は未使用。}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ DX:\ z∈[0,1]\ 前提。ここも矩形算出では未使用。}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ xmin\ =\ (std::min)(xmin,\ ndcX);\ xmax\ =\ (std::max)(xmax,\ ndcX);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ ymin\ =\ (std::min)(ymin,\ ndcY);\ ymax\ =\ (std::max)(ymax,\ ndcY);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ wmin\ =\ (std::min)(wmin,\ cw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aa035d644f53c7eddc05164f3e30e7dba}{any}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1点も\ NDC\ 化できなければ\ invalid}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespace_s_f_w_1_1_math_aa035d644f53c7eddc05164f3e30e7dba}{any}})\ \textcolor{keywordflow}{return}\ \{\ 0,0,0,0,\ wmin,\ \textcolor{keyword}{false}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ NDC\ は通常\ [-\/1,1]。ここではそのまま返す（後でピクセルへ変換）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ xmin,\ ymin,\ xmax,\ ymax,\ wmin,\ \textcolor{keyword}{true}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00124}00124\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00126}00126\ \ \ \ \ \textcolor{comment}{//======================================================================}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00127}00127\ \ \ \ \ \textcolor{comment}{//\ NDC\ 矩形\ →\ ピクセル矩形\ 変換}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00128}00128\ \ \ \ \ \textcolor{comment}{//\ \ ・NDC\ x,y\ ∈\ [-\/1,1]\ を\ viewport\ へ}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00129}00129\ \ \ \ \ \textcolor{comment}{//\ \ ・originTopLeft=true:\ y\ ピクセル上向き→下向き（D3D標準）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00130}00130\ \ \ \ \ \textcolor{comment}{//======================================================================}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00131}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a119f097d433ff3d7d646faf9b8f3b887}{00131}}\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a119f097d433ff3d7d646faf9b8f3b887}{NdcToPixels}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{NdcRectWithW}}\&\ ndc,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect}{ViewportRect}}\&\ vp)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00132}00132\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ndc.valid\ ||\ vp.width\ <=\ 0\ ||\ vp.height\ <=\ 0)\ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ NDC\ [-\/1,1]\ →\ [0,1]}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ nx0\ =\ (ndc.xmin\ *\ 0.5f)\ +\ 0.5f;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ny0\ =\ (ndc.ymin\ *\ 0.5f)\ +\ 0.5f;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ nx1\ =\ (ndc.xmax\ *\ 0.5f)\ +\ 0.5f;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ny1\ =\ (ndc.ymax\ *\ 0.5f)\ +\ 0.5f;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}}\ r\{\};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00142}00142\ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_aff06deb3ef65e775d03eb0906b6df478}{valid}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ x:\ 0..1\ →\ 0..W}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00145}00145\ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}}\ =\ nx0\ *\ vp.width;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00146}00146\ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}}\ =\ nx1\ *\ vp.width;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ y:\ 上端の扱い}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (vp.originTopLeft)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ D3D/UI:\ (0,0)\ が上左。NDC\ +1\ が上、-\/1\ が下\ なので反転してから高さを掛ける}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ py0\ =\ (1.0f\ -\/\ ny0)\ *\ vp.height;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ py1\ =\ (1.0f\ -\/\ ny1)\ *\ vp.height;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}}\ =\ (std::min)(py0,\ py1);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}}\ =\ (std::max)(py0,\ py1);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ GL\ 的下原点}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}}\ =\ ny0\ *\ vp.height;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}}\ =\ ny1\ *\ vp.height;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00162}00162\ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a0871c5ec0383f9c480fae7a0afb4bd61}{Normalize}}();}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00164}00164\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00166}00166\ \ \ \ \ \textcolor{comment}{//======================================================================}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00167}00167\ \ \ \ \ \textcolor{comment}{//\ ワールド空間\ AABB\ →\ ピクセル矩形（1発ヘルパ）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00168}00168\ \ \ \ \ \textcolor{comment}{//\ \ ・VP\ は列ベクトル規約で\ VP=P*V}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00169}00169\ \ \ \ \ \textcolor{comment}{//======================================================================}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00170}\mbox{\hyperlink{namespace_s_f_w_1_1_math_affc5de6f1b0861b310c34327aec7cd89}{00170}}\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_affc5de6f1b0861b310c34327aec7cd89}{ProjectAABBToScreenRect\_Pixels}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}}\&\ VP,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ lbx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ lby,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ lbz,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ubx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ uby,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ubz,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect}{ViewportRect}}\&\ vp,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{ClipZRange}}\ zrange\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5a4b942544cb3e764bbb8d33f8a8744855}{ClipZRange::ZeroToOne}})\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00175}00175\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{NdcRectWithW}}\ ndc\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4ef695230ec4d0f9acc2bc45f9b66d99}{ProjectAABBToNdc}}(VP,\ lbx,\ lby,\ lbz,\ ubx,\ uby,\ ubz,\ zrange);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a119f097d433ff3d7d646faf9b8f3b887}{NdcToPixels}}(ndc,\ vp);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00178}00178\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00180}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a67625bb86a25094686239fb5fe78a7ab}{00180}}\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_affc5de6f1b0861b310c34327aec7cd89}{ProjectAABBToScreenRect\_Pixels}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}}\&\ VP,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}}\&\ box,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect}{ViewportRect}}\&\ vp,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{ClipZRange}}\ zrange\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5a4b942544cb3e764bbb8d33f8a8744855}{ClipZRange::ZeroToOne}})\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00184}00184\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{NdcRectWithW}}\ ndc\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4ef695230ec4d0f9acc2bc45f9b66d99}{ProjectAABBToNdc}}(VP,\ box.lb.x,\ box.lb.y,\ box.lb.z,\ box.ub.x,\ box.ub.y,\ box.ub.z,\ zrange);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a119f097d433ff3d7d646faf9b8f3b887}{NdcToPixels}}(ndc,\ vp);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00187}00187\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00189}00189\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ 内部ユーティリティ\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00190}\mbox{\hyperlink{namespace_s_f_w_1_1_math_af5832a0b7f6e229c7da6ff061b1c642d}{00190}}\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_af5832a0b7f6e229c7da6ff061b1c642d}{ToClip}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix<4,\ 4,\ float>}}\&\ m,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ p)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 同次座標\ (x,y,z,1)\ として変換}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\ v\ =\ \{\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}},\ 1.0f\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\ *\ v;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00194}00194\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00196}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a4f0495e799f8a652519aec8e84e5040c}{00196}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4f0495e799f8a652519aec8e84e5040c}{TrivialRejectClip}}(\textcolor{keyword}{const}\ std::array<Vec4f,\ 8>\&\ clip)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ クリップ空間での6面に対する同側外側判定\ (D3D:\ 近面\ z>=0,\ 遠面\ z<=w)}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ x\ <\ -\/w\ /\ x\ >\ w\ /\ y\ <\ -\/w\ /\ y\ >\ w\ /\ z\ <\ 0\ /\ z\ >\ w}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ all\_out\ =\ [\&](\textcolor{keyword}{auto}\ pred)-\/>\textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ c\ :\ clip)\ \textcolor{keywordflow}{if}\ (!pred(c))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (all\_out([](\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ c)\ \{\ \textcolor{keywordflow}{return}\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a3b73bc23b1366b9bb9fdd5c324eb89ca}{x}}\ <\ -\/c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}};\ \}))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \textcolor{comment}{//\ left}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (all\_out([](\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ c)\ \{\ \textcolor{keywordflow}{return}\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a3b73bc23b1366b9bb9fdd5c324eb89ca}{x}}\ >\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}};\ \}))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \textcolor{comment}{//\ right}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (all\_out([](\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ c)\ \{\ \textcolor{keywordflow}{return}\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a322367280913e6d77a4941b968e1c617}{y}}\ <\ -\/c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}};\ \}))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \textcolor{comment}{//\ bottom}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (all\_out([](\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ c)\ \{\ \textcolor{keywordflow}{return}\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a322367280913e6d77a4941b968e1c617}{y}}\ >\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}};\ \}))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \textcolor{comment}{//\ top}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (all\_out([](\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ c)\ \{\ \textcolor{keywordflow}{return}\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_ad3b5861d4dcef8be1e2b33ec630ab9da}{z}}\ <\ 0.0f;\ \}))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \textcolor{comment}{//\ near}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (all\_out([](\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ c)\ \{\ \textcolor{keywordflow}{return}\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_ad3b5861d4dcef8be1e2b33ec630ab9da}{z}}\ >\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}};\ \}))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \textcolor{comment}{//\ far}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00210}00210\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00212}00212\ \ \ \ \ \textcolor{comment}{//\ 12本のエッジ（AABBの辺）インデックス}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00213}00213\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ kEdges[12][2]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \{0,1\},\{1,3\},\{3,2\},\{2,0\},\ \textcolor{comment}{//\ bottom\ face\ (y=0\ 側と仮定したいが順序は角の定義次第、ここでは頂点配列順に依存しない)}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \{4,5\},\{5,7\},\{7,6\},\{6,4\},\ \textcolor{comment}{//\ top\ face}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \{0,4\},\{1,5\},\{2,6\},\{3,7\}\ \ \textcolor{comment}{//\ vertical}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00217}00217\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00218}00218\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00219}00219\ \ \ \ \ \textcolor{comment}{//\ 近面\ z=0\ に対するエッジクリップ\ (clip空間上での線分交点)}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00220}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6e13ec8795b56482395d1cfbe9f4731d}{00220}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6e13ec8795b56482395d1cfbe9f4731d}{IntersectEdgeWithNearZ0}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ b,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ out)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00221}00221\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ za\ =\ a.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_ad3b5861d4dcef8be1e2b33ec630ab9da}{z}},\ zb\ =\ b.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_ad3b5861d4dcef8be1e2b33ec630ab9da}{z}};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00222}00222\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ ina\ =\ (za\ >=\ 0.0f),\ inb\ =\ (zb\ >=\ 0.0f);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00223}00223\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ina\ ==\ inb)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 片方のみが内側のときだけ交点がある}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ t\ =\ za\ /\ (za\ -\/\ zb);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ z=0\ での比例}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 同次座標は線形補間でOK（クリップ空間）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00226}00226\ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a3b73bc23b1366b9bb9fdd5c324eb89ca}{x}}\ =\ a.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a3b73bc23b1366b9bb9fdd5c324eb89ca}{x}}\ +\ (b.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a3b73bc23b1366b9bb9fdd5c324eb89ca}{x}}\ -\/\ a.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a3b73bc23b1366b9bb9fdd5c324eb89ca}{x}})\ *\ t;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00227}00227\ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a322367280913e6d77a4941b968e1c617}{y}}\ =\ a.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a322367280913e6d77a4941b968e1c617}{y}}\ +\ (b.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a322367280913e6d77a4941b968e1c617}{y}}\ -\/\ a.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a322367280913e6d77a4941b968e1c617}{y}})\ *\ t;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00228}00228\ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_ad3b5861d4dcef8be1e2b33ec630ab9da}{z}}\ =\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00229}00229\ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}}\ =\ a.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}}\ +\ (b.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}}\ -\/\ a.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}})\ *\ t;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}}\ >\ 0.0f;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 後段の除算保護}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00231}00231\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00232}00232\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00233}00233\ \ \ \ \ \textcolor{comment}{//\ 互換API（既存呼び出し箇所はそのまま）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00234}00234\ \ \ \ \ \textcolor{comment}{//\ 1)\ Rectangle\ を返す版}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00235}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a938349c8c256ff2d4edcd9d91355a96a}{00235}}\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a938349c8c256ff2d4edcd9d91355a96a}{ProjectAABBToScreenRect}}(}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00236}00236\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB<float,\ Vec3f>}}\&\ box,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix<4,\ 4,\ float>}}\&\ worldViewProj,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ viewportWidth,\ \textcolor{keywordtype}{float}\ viewportHeight,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ viewportX\ =\ 0.0f,\ \textcolor{keywordtype}{float}\ viewportY\ =\ 0.0f,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ clampMargin\ =\ 0.0f)}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00241}00241\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}}\ out\{\};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ 8コーナー\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ L\ =\ box.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ U\ =\ box.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329}{ub}};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ std::array<Vec3f,\ 8>\ corners\ =\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{L.x,L.y,L.z\},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{U.x,L.y,L.z\},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{L.x,U.y,L.z\},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{U.x,U.y,L.z\},}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{L.x,L.y,U.z\},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{U.x,L.y,U.z\},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{L.x,U.y,U.z\},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{U.x,U.y,U.z\}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00250}00250\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ クリップ空間へ\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00252}00252\ \ \ \ \ \ \ \ \ std::array<Vec4f,\ 8>\ clip\{\};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00253}00253\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 8;\ ++i)\ clip[i]\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_af5832a0b7f6e229c7da6ff061b1c642d}{ToClip}}(worldViewProj,\ corners[i]);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00254}00254\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ 6面の同側外側なら不可視（早期リジェクト）-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{namespace_s_f_w_1_1_math_a4f0495e799f8a652519aec8e84e5040c}{TrivialRejectClip}}(clip))\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 両方とも不可視のまま返す（screen.visible=false,\ ndc.valid=false）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00260}00260\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ 候補点（z>=0,w>0\ の頂点\ +\ 近面(z=0)交点）を収集\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ これを元に\ NDC/Screen\ の\ min/max\ と\ wmin\ を同時計算}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00263}00263\ \ \ \ \ \ \ \ \ std::array<Vec4f,\ 20>\ cand\{\};\ \textcolor{keywordtype}{int}\ n\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00264}00264\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 8;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (clip[i].z\ >=\ 0.0f\ \&\&\ clip[i].w\ >\ 0.0f)\ cand[n++]\ =\ clip[i];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00268}00268\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ e\ :\ kEdges)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\ inter;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6e13ec8795b56482395d1cfbe9f4731d}{IntersectEdgeWithNearZ0}}(clip[e[0]],\ clip[e[1]],\ inter))\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ <\ 20)\ cand[n++]\ =\ inter;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 近面の背後のみ\ →\ 画面/ndcともに無効}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00278}00278\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ Screen\ の\ min/max\ と\ wmin\ を\ 1ループで構築\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00280}00280\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ scrMinX\ =\ +std::numeric\_limits<float>::infinity();}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00282}00282\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ scrMinY\ =\ +std::numeric\_limits<float>::infinity();}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ scrMaxX\ =\ -\/std::numeric\_limits<float>::infinity();}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ scrMaxY\ =\ -\/std::numeric\_limits<float>::infinity();}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00285}00285\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ wmin\ =\ +std::numeric\_limits<float>::infinity();}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00287}00287\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ c\ =\ cand[i];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}}\ <=\ 0.0f)\ \textcolor{keywordflow}{continue};\ \textcolor{comment}{//\ 念のため}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00291}00291\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ wmin（クリップ空間のW。最前の“保守的W”\ =\ 最小w）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ wmin\ =\ (std::min)(wmin,\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}});}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00294}00294\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ NDC}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ invw\ =\ 1.0f\ /\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ x\ =\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a3b73bc23b1366b9bb9fdd5c324eb89ca}{x}}\ *\ invw;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ [-\/1,1]}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ y\ =\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a322367280913e6d77a4941b968e1c617}{y}}\ *\ invw;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ [-\/1,1]}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00299}00299\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Screen（D3D規約：そのまま\ 0..W/H\ へ）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ sx\ =\ viewportX\ +\ (x\ *\ 0.5f\ +\ 0.5f)\ *\ viewportWidth;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ sy\ =\ viewportY\ +\ (y\ *\ 0.5f\ +\ 0.5f)\ *\ viewportHeight;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00303}00303\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ scrMinX\ =\ (std::min)(scrMinX,\ sx);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ scrMinY\ =\ (std::min)(scrMinY,\ sy);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ scrMaxX\ =\ (std::max)(scrMaxX,\ sx);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ scrMaxY\ =\ (std::max)(scrMaxY,\ sy);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00308}00308\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00309}00309\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00310}00310\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ Rectangle（スクリーン）用。ビューポートにクランプ＋margin\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00311}00311\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ rminx\ =\ (std::max)(viewportX\ -\/\ clampMargin,\ scrMinX);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00312}00312\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ rminy\ =\ (std::max)(viewportY\ -\/\ clampMargin,\ scrMinY);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00313}00313\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ rmaxx\ =\ (std::min)(viewportX\ +\ viewportWidth\ +\ clampMargin,\ scrMaxX);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00314}00314\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ rmaxy\ =\ (std::min)(viewportY\ +\ viewportHeight\ +\ clampMargin,\ scrMaxY);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00315}00315\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00316}00316\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rminx\ <\ rmaxx\ \&\&\ rminy\ <\ rmaxy)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}}\ =\ rminx;\ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}}\ =\ rminy;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}}\ =\ rmaxx;\ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}}\ =\ rmaxy;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_aff06deb3ef65e775d03eb0906b6df478}{valid}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}}\{\};\ \textcolor{comment}{//\ visible=false}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00324}00324\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00326}00326\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00327}00327\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00328}00328\ \ \ \ \ \textcolor{comment}{//======================================================================}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00329}00329\ \ \ \ \ \textcolor{comment}{//\ 画面占有率（LOD\ 判定等に）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00330}00330\ \ \ \ \ \textcolor{comment}{//\ \ -\/\ 画面全体に対する矩形の面積比（0..1）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00331}00331\ \ \ \ \ \textcolor{comment}{//======================================================================}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00332}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a2e150683eabf818bdd5d627ae49d460b}{00332}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2e150683eabf818bdd5d627ae49d460b}{ScreenCoverage01}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}}\&\ px,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect}{ViewportRect}}\&\ vp)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00333}00333\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00334}00334\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!px.valid\ ||\ vp.width\ <=\ 0\ ||\ vp.height\ <=\ 0)\ \textcolor{keywordflow}{return}\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00335}00335\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ area\ =\ px.Area();}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00336}00336\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (area\ <=\ 0.0f)\ ?\ 0.0f\ :\ (area\ /\ (vp.width\ *\ vp.height));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00337}00337\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00338}00338\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00339}00339\ \ \ \ \ \textcolor{comment}{//\ 8頂点のローカル座標を\ SoA\ で用意（AABB\ corner\ パターン）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00340}00340\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ MakeAabbCorners8(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}}\&\ b,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00341}00341\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ xs[8],\ \textcolor{keywordtype}{float}\ ys[8],\ \textcolor{keywordtype}{float}\ zs[8])\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00342}00342\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ lx\ =\ b.lb.x,\ ly\ =\ b.lb.y,\ lz\ =\ b.lb.z;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00343}00343\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ux\ =\ b.ub.x,\ uy\ =\ b.ub.y,\ uz\ =\ b.ub.z;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00344}00344\ \ \ \ \ \ \ \ \ xs[0]\ =\ lx;\ ys[0]\ =\ ly;\ zs[0]\ =\ lz;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00345}00345\ \ \ \ \ \ \ \ \ xs[1]\ =\ ux;\ ys[1]\ =\ ly;\ zs[1]\ =\ lz;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00346}00346\ \ \ \ \ \ \ \ \ xs[2]\ =\ lx;\ ys[2]\ =\ uy;\ zs[2]\ =\ lz;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00347}00347\ \ \ \ \ \ \ \ \ xs[3]\ =\ ux;\ ys[3]\ =\ uy;\ zs[3]\ =\ lz;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00348}00348\ \ \ \ \ \ \ \ \ xs[4]\ =\ lx;\ ys[4]\ =\ ly;\ zs[4]\ =\ uz;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00349}00349\ \ \ \ \ \ \ \ \ xs[5]\ =\ ux;\ ys[5]\ =\ ly;\ zs[5]\ =\ uz;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00350}00350\ \ \ \ \ \ \ \ \ xs[6]\ =\ lx;\ ys[6]\ =\ uy;\ zs[6]\ =\ uz;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00351}00351\ \ \ \ \ \ \ \ \ xs[7]\ =\ ux;\ ys[7]\ =\ uy;\ zs[7]\ =\ uz;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00352}00352\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00353}00353\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00354}00354\ \ \ \ \ \textcolor{comment}{//\ 8点を同次クリップ空間へ:\ c\ =\ VPW\ *\ [x\ y\ z\ 1]\string^T（列ベクトル前提）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00355}00355\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Transform8\_Clip\_AVX2(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}}\&\ M,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00356}00356\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ xs[8],\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ys[8],\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ zs[8],}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00357}00357\ \ \ \ \ \ \ \ \ \_\_m256\&\ cx,\ \_\_m256\&\ cy,\ \_\_m256\&\ cz,\ \_\_m256\&\ cw)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00358}00358\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00359}00359\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ X\ =\ \_mm256\_loadu\_ps(xs);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00360}00360\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ Y\ =\ \_mm256\_loadu\_ps(ys);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00361}00361\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ Z\ =\ \_mm256\_loadu\_ps(zs);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00362}00362\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m256\ ONE\ =\ \_mm256\_set1\_ps(1.0f);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00363}00363\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00364}00364\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ row-\/major\ 行列\ ×\ 列ベクトル\ =\ 「各行と\ (x,y,z,1)\ のドット積」}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00365}00365\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ cx\ =\ m00*X\ +\ m01*Y\ +\ m02*Z\ +\ m03}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00366}00366\ \ \ \ \ \ \ \ \ cx\ =\ \_mm256\_set1\_ps(M[0][3]);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00367}00367\ \ \ \ \ \ \ \ \ cx\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(M[0][0]),\ X,\ cx);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00368}00368\ \ \ \ \ \ \ \ \ cx\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(M[0][1]),\ Y,\ cx);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00369}00369\ \ \ \ \ \ \ \ \ cx\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(M[0][2]),\ Z,\ cx);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00370}00370\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00371}00371\ \ \ \ \ \ \ \ \ cy\ =\ \_mm256\_set1\_ps(M[1][3]);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00372}00372\ \ \ \ \ \ \ \ \ cy\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(M[1][0]),\ X,\ cy);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00373}00373\ \ \ \ \ \ \ \ \ cy\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(M[1][1]),\ Y,\ cy);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00374}00374\ \ \ \ \ \ \ \ \ cy\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(M[1][2]),\ Z,\ cy);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00375}00375\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00376}00376\ \ \ \ \ \ \ \ \ cz\ =\ \_mm256\_set1\_ps(M[2][3]);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00377}00377\ \ \ \ \ \ \ \ \ cz\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(M[2][0]),\ X,\ cz);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00378}00378\ \ \ \ \ \ \ \ \ cz\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(M[2][1]),\ Y,\ cz);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00379}00379\ \ \ \ \ \ \ \ \ cz\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(M[2][2]),\ Z,\ cz);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00380}00380\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00381}00381\ \ \ \ \ \ \ \ \ cw\ =\ \_mm256\_set1\_ps(M[3][3]);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00382}00382\ \ \ \ \ \ \ \ \ cw\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(M[3][0]),\ X,\ cw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00383}00383\ \ \ \ \ \ \ \ \ cw\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(M[3][1]),\ Y,\ cw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00384}00384\ \ \ \ \ \ \ \ \ cw\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(M[3][2]),\ Z,\ cw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00385}00385\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ +\ 1.0f\ *\ m[3][3]\ は上の初期値ですでに加算済み}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00386}00386\ \ \ \ \ \ \ \ \ (void)ONE;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00387}00387\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00388}00388\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00389}00389\ \ \ \ \ \textcolor{comment}{//\ 8点の\ outcode\ を一気に作る（LH×ZeroToOne\ の6平面＋\ w<=0）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00390}00390\ \ \ \ \ \textcolor{comment}{//\ 各平面の\ 8bit\ マスクを返す（bit\ i\ は頂点\ i\ の\ outside）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00391}00391\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint8\_t\ OutsideMaskForPlane(\_\_m256\ x,\ \_\_m256\ y,\ \_\_m256\ z,\ \_\_m256\ w,\ \textcolor{keywordtype}{int}\ plane)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00392}00392\ \ \ \ \ \ \ \ \ \_\_m256\ cmp;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00393}00393\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (plane)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00394}00394\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:\ cmp\ =\ \_mm256\_cmp\_ps(x,\ \_mm256\_sub\_ps(\_mm256\_setzero\_ps(),\ w),\ \_CMP\_LT\_OS);\ \textcolor{keywordflow}{break};\ \textcolor{comment}{//\ x\ <\ -\/w}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00395}00395\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:\ cmp\ =\ \_mm256\_cmp\_ps(x,\ w,\ \_CMP\_GT\_OS);\ \textcolor{keywordflow}{break};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ x\ >\ \ w}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00396}00396\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:\ cmp\ =\ \_mm256\_cmp\_ps(y,\ \_mm256\_sub\_ps(\_mm256\_setzero\_ps(),\ w),\ \_CMP\_LT\_OS);\ \textcolor{keywordflow}{break};\ \textcolor{comment}{//\ y\ <\ -\/w}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00397}00397\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:\ cmp\ =\ \_mm256\_cmp\_ps(y,\ w,\ \_CMP\_GT\_OS);\ \textcolor{keywordflow}{break};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ y\ >\ \ w}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00398}00398\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4:\ cmp\ =\ \_mm256\_cmp\_ps(z,\ \_mm256\_setzero\_ps(),\ \_CMP\_LT\_OS);\ \textcolor{keywordflow}{break};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ z\ <\ \ 0}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00399}00399\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 5:\ cmp\ =\ \_mm256\_cmp\_ps(z,\ w,\ \_CMP\_GT\_OS);\ \textcolor{keywordflow}{break};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ z\ >\ \ w}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00400}00400\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ cmp\ =\ \_mm256\_cmp\_ps(w,\ \_mm256\_setzero\_ps(),\ \_CMP\_LE\_OQ);\ \textcolor{keywordflow}{break};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ w\ <=\ 0}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00401}00401\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00402}00402\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}uint8\_t\textcolor{keyword}{>}(\_mm256\_movemask\_ps(cmp));\ \textcolor{comment}{//\ 8bit}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00403}00403\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00404}00404\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00405}00405\ \ \ \ \ \textcolor{comment}{//\ reduce:\ 8\ lanes\ の\ min/max}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00406}00406\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ hmin8(\_\_m256\ v)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00407}00407\ \ \ \ \ \ \ \ \ \_\_m128\ lo\ =\ \_mm256\_castps256\_ps128(v);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00408}00408\ \ \ \ \ \ \ \ \ \_\_m128\ hi\ =\ \_mm256\_extractf128\_ps(v,\ 1);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00409}00409\ \ \ \ \ \ \ \ \ \_\_m128\ m1\ =\ \_mm\_min\_ps(lo,\ hi);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00410}00410\ \ \ \ \ \ \ \ \ \_\_m128\ shuf\ =\ \_mm\_movehdup\_ps(m1);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00411}00411\ \ \ \ \ \ \ \ \ \_\_m128\ m2\ =\ \_mm\_min\_ps(m1,\ shuf);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00412}00412\ \ \ \ \ \ \ \ \ shuf\ =\ \_mm\_movehl\_ps(shuf,\ m2);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00413}00413\ \ \ \ \ \ \ \ \ \_\_m128\ m3\ =\ \_mm\_min\_ss(m2,\ shuf);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00414}00414\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm\_cvtss\_f32(m3);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00415}00415\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00416}00416\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ hmax8(\_\_m256\ v)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00417}00417\ \ \ \ \ \ \ \ \ \_\_m128\ lo\ =\ \_mm256\_castps256\_ps128(v);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00418}00418\ \ \ \ \ \ \ \ \ \_\_m128\ hi\ =\ \_mm256\_extractf128\_ps(v,\ 1);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00419}00419\ \ \ \ \ \ \ \ \ \_\_m128\ m1\ =\ \_mm\_max\_ps(lo,\ hi);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00420}00420\ \ \ \ \ \ \ \ \ \_\_m128\ shuf\ =\ \_mm\_movehdup\_ps(m1);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00421}00421\ \ \ \ \ \ \ \ \ \_\_m128\ m2\ =\ \_mm\_max\_ps(m1,\ shuf);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00422}00422\ \ \ \ \ \ \ \ \ shuf\ =\ \_mm\_movehl\_ps(shuf,\ m2);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00423}00423\ \ \ \ \ \ \ \ \ \_\_m128\ m3\ =\ \_mm\_max\_ss(m2,\ shuf);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00424}00424\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm\_cvtss\_f32(m3);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00425}00425\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00426}00426\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00427}00427\ \ \ \ \ \textcolor{comment}{//\ 列ベクトル規約\ /\ row-\/major\ 格納。VPW\ =\ (proj\ *\ view\ *\ world)}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00428}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a36990d7c74a037540755ff2f2742e358}{00428}}\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{NdcRectWithW}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a36990d7c74a037540755ff2f2742e358}{ProjectAABBToNdc\_Robust}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}}\&\ VPW,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}}\&\ box)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00429}00429\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ AABB\ 8頂点を\ clip\ 空間へ}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00430}00430\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ L\ =\ box.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00431}00431\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ U\ =\ box.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329}{ub}};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00432}00432\ \ \ \ \ \ \ \ \ std::array<Vec3f,\ 8>\ corners\ =\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{L.x,L.y,L.z\},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{U.x,L.y,L.z\},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{L.x,U.y,L.z\},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{U.x,U.y,L.z\},}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00434}00434\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{L.x,L.y,U.z\},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{U.x,L.y,U.z\},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{L.x,U.y,U.z\},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{U.x,U.y,U.z\}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00435}00435\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00436}00436\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00437}00437\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\ clip[8];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00438}00438\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 8;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\ p\ =\ corners[i];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ (lb/ub\ の組合せ)}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00440}00440\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\ v\ =\ \{\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}},\ 1.0f\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ clip[i]\ =\ VPW\ *\ v;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 列ベクトルで右掛け}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00442}00442\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00443}00443\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00444}00444\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ 12エッジを列挙}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00445}00445\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ E[12][2]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00446}00446\ \ \ \ \ \ \ \ \ \ \ \ \ \{0,1\},\{2,3\},\{4,5\},\{6,7\},\ \{0,2\},\{1,3\},\{4,6\},\{5,7\},\ \{0,4\},\{1,5\},\{2,6\},\{3,7\}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00447}00447\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00448}00448\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00449}00449\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3)\ クリップ多角形の頂点バッファ（最大:\ 8\ +\ 12*6\ の交点だが通常は少量）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00450}00450\ \ \ \ \ \ \ \ \ std::vector<Vec4f>\ poly;\ poly.reserve(32);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00451}00451\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00452}00452\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3a)\ 最初は「各頂点がクリップ内なら採用」}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00453}00453\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ inside\ =\ [](\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ c)\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00454}00454\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ x\ =\ c.x,\ y\ =\ c.y,\ z\ =\ c.z,\ w\ =\ c.w;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00455}00455\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (w\ <=\ 0.0f)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x\ <\ -\/w\ ||\ x\ >\ w)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00457}00457\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (y\ <\ -\/w\ ||\ y\ >\ w)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (z\ <\ \ 0.0f\ ||\ z\ >\ w)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \ \ \textcolor{comment}{//\ LH\ ZeroToOne}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00459}00459\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00460}00460\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00461}00461\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 8;\ ++i)\ \textcolor{keywordflow}{if}\ (inside(clip[i]))\ poly.push\_back(clip[i]);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00462}00462\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00463}00463\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3b)\ 各エッジについて、各クリップ平面で「外→内」の交点を追加}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00464}00464\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ addIntersect\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ b,\ \textcolor{keywordtype}{int}\ plane)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ plane:\ 0:x=-\/w,1:x=+w,2:y=-\/w,3:y=+w,4:z=0,5:z=w}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ f(v)\ >=\ 0\ が内側になる符号関数を作る}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00467}00467\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ f\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ v)-\/>\textcolor{keywordtype}{float}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (plane)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:\ \textcolor{keywordflow}{return}\ v.x\ +\ v.w;\ \ \ \ \ \ \ \textcolor{comment}{//\ x\ >=\ -\/w}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00470}00470\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:\ \textcolor{keywordflow}{return}\ -\/v.x\ +\ v.w;\ \ \ \ \ \ \textcolor{comment}{//\ x\ <=\ \ w}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00471}00471\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:\ \textcolor{keywordflow}{return}\ v.y\ +\ v.w;\ \ \ \ \ \ \ \textcolor{comment}{//\ y\ >=\ -\/w}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00472}00472\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:\ \textcolor{keywordflow}{return}\ -\/v.y\ +\ v.w;\ \ \ \ \ \ \textcolor{comment}{//\ y\ <=\ \ w}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00473}00473\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4:\ \textcolor{keywordflow}{return}\ v.z;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ z\ >=\ 0}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00474}00474\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\textcolor{keywordflow}{return}\ v.w\ -\/\ v.z;\ \ \ \ \ \ \ \textcolor{comment}{//\ z\ <=\ w}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00475}00475\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00476}00476\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00477}00477\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ fa\ =\ f(a),\ fb\ =\ f(b);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00478}00478\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((fa\ <\ 0\ \&\&\ fb>0)\ ||\ (fa\ >\ 0\ \&\&\ fb\ <\ 0))\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00479}00479\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ t\ =\ fa\ /\ (fa\ -\/\ fb);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 線形補間で交点}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00480}00480\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\ p\ =\ a\ +\ (b\ -\/\ a)\ *\ t;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 同次で補間}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00481}00481\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ w<=0\ の数値不安定を避けるガード}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00482}00482\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}}\ >\ 1e-\/6f)\ poly.push\_back(p);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00483}00483\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00484}00484\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00485}00485\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00486}00486\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ e\ :\ E)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00487}00487\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ a\ =\ clip[e[0]];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00488}00488\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ b\ =\ clip[e[1]];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00489}00489\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 6平面すべてに対して交差チェック}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ plane\ =\ 0;\ plane\ <\ 6;\ ++plane)\ addIntersect(a,\ b,\ plane);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00491}00491\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00492}00492\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00493}00493\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 万一すべて外：無効}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00494}00494\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (poly.empty())\ \textcolor{keywordflow}{return}\ \{\ 0,0,0,0,\ +INFINITY,\ \textcolor{keyword}{false}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00495}00495\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00496}00496\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4)\ NDCへ割り算\ →\ min/max}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00497}00497\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ xmin\ =\ +1e9f,\ ymin\ =\ +1e9f,\ xmax\ =\ -\/1e9f,\ ymax\ =\ -\/1e9f;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00498}00498\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ wmin\ =\ +1e9f;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00499}00499\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}\&\ c\ :\ poly)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00500}00500\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ invw\ =\ 1.0f\ /\ c.w;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00501}00501\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ x\ =\ c.x\ *\ invw;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00502}00502\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ y\ =\ c.y\ *\ invw;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ xmin\ =\ (std::min)(xmin,\ x);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ ymin\ =\ (std::min)(ymin,\ y);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00505}00505\ \ \ \ \ \ \ \ \ \ \ \ \ xmax\ =\ (std::max)(xmax,\ x);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00506}00506\ \ \ \ \ \ \ \ \ \ \ \ \ ymax\ =\ (std::max)(ymax,\ y);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00507}00507\ \ \ \ \ \ \ \ \ \ \ \ \ wmin\ =\ (std::min)(wmin,\ c.w);\ \textcolor{comment}{//\ MOC\ 用}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00508}00508\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00509}00509\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00510}00510\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 5)\ 画面端での安定化（[-\/1,1]にクランプし、反転に対処）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00511}00511\ \ \ \ \ \ \ \ \ xmin\ =\ (std::max)(-\/1.0f,\ (std::min)(1.0f,\ xmin));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00512}00512\ \ \ \ \ \ \ \ \ xmax\ =\ (std::max)(-\/1.0f,\ (std::min)(1.0f,\ xmax));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00513}00513\ \ \ \ \ \ \ \ \ ymin\ =\ (std::max)(-\/1.0f,\ (std::min)(1.0f,\ ymin));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00514}00514\ \ \ \ \ \ \ \ \ ymax\ =\ (std::max)(-\/1.0f,\ (std::min)(1.0f,\ ymax));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00515}00515\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00516}00516\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xmax\ <\ xmin)\ std::swap(xmin,\ xmax);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00517}00517\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ymax\ <\ ymin)\ std::swap(ymin,\ ymax);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00518}00518\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00519}00519\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ xmin,\ ymin,\ xmax,\ ymax,\ wmin,\ \textcolor{keyword}{true}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00520}00520\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00521}00521\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00522}00522\ \ \ \ \ \textcolor{comment}{//\ 早期破棄つき・高速\ NDC\ 投影。部分交差は\ robustClip()\ に委譲。}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00523}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a4bfef14ce00d860e1b9c9d8bd5f72154}{00523}}\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{NdcRectWithW}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4bfef14ce00d860e1b9c9d8bd5f72154}{ProjectAABBToNdc\_Fast}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}}\&\ VPW,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}}\&\ box,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00524}00524\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ min\_coverage\_for\_precise\ =\ 0.0f)\ \textcolor{comment}{//\ 例:\ 0.001f}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00525}00525\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00526}00526\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ (1)\ 8頂点→clip}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00527}00527\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ xs[8],\ ys[8],\ zs[8];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00528}00528\ \ \ \ \ \ \ \ \ MakeAabbCorners8(box,\ xs,\ ys,\ zs);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00529}00529\ \ \ \ \ \ \ \ \ \_\_m256\ cx,\ cy,\ cz,\ cw;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00530}00530\ \ \ \ \ \ \ \ \ Transform8\_Clip\_AVX2(VPW,\ xs,\ ys,\ zs,\ cx,\ cy,\ cz,\ cw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00531}00531\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00532}00532\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ (2)\ Outcode\ 集計}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00533}00533\ \ \ \ \ \ \ \ \ uint8\_t\ all\_out\_any\_plane\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00534}00534\ \ \ \ \ \ \ \ \ uint8\_t\ any\_out\_any\_plane\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00535}00535\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ p\ =\ 0;\ p\ <\ 6;\ ++p)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00536}00536\ \ \ \ \ \ \ \ \ \ \ \ \ uint8\_t\ m\ =\ OutsideMaskForPlane(cx,\ cy,\ cz,\ cw,\ p);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ all\_out\_any\_plane\ |=\ (uint8\_t)(m\ ==\ 0xFF);\ \textcolor{comment}{//\ 全頂点が同じ平面の外}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ any\_out\_any\_plane\ |=\ (uint8\_t)(m\ !=\ 0x00);\ \textcolor{comment}{//\ 1点でも外}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00539}00539\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00540}00540\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ w<=0}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00541}00541\ \ \ \ \ \ \ \ \ uint8\_t\ wneg\ =\ OutsideMaskForPlane(cx,\ cy,\ cz,\ cw,\ 6);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00542}00542\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (wneg\ ==\ 0xFF)\ \textcolor{keywordflow}{return}\ \{\ 0,0,0,0,\ +INFINITY,\ \textcolor{keyword}{false}\ \};\ \textcolor{comment}{//\ 全点\ w<=0}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00543}00543\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00544}00544\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (all\_out\_any\_plane)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00545}00545\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 完全に外（早期破棄）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00546}00546\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ 0,0,0,0,\ +INFINITY,\ \textcolor{keyword}{false}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00547}00547\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00548}00548\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00549}00549\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!any\_out\_any\_plane\ \&\&\ wneg\ ==\ 0x00)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00550}00550\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ (3)\ 完全内包:\ SIMD\ で透視除算\ \&\ min/max}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00551}00551\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ invw\ ≈\ rcp\ +\ 1回ニュートン\ (精度安定)}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00552}00552\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ invw\ =\ \_mm256\_rcp\_ps(cw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00553}00553\ \ \ \ \ \ \ \ \ \ \ \ \ invw\ =\ \_mm256\_mul\_ps(\_mm256\_fnmadd\_ps(cw,\ invw,\ \_mm256\_set1\_ps(2.0f)),\ invw);\ \textcolor{comment}{//\ invw\ *=\ (2\ -\/\ w*invw)}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00554}00554\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00555}00555\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ ndcX\ =\ \_mm256\_mul\_ps(cx,\ invw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00556}00556\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ ndcY\ =\ \_mm256\_mul\_ps(cy,\ invw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00557}00557\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00558}00558\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ xmin\ =\ hmin8(ndcX),\ xmax\ =\ hmax8(ndcX);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00559}00559\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ymin\ =\ hmin8(ndcY),\ ymax\ =\ hmax8(ndcY);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00560}00560\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ wmin\ =\ hmin8(cw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00561}00561\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00562}00562\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ クランプ＆整形}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00563}00563\ \ \ \ \ \ \ \ \ \ \ \ \ xmin\ =\ (std::max)(-\/1.0f,\ (std::min)(1.0f,\ xmin));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00564}00564\ \ \ \ \ \ \ \ \ \ \ \ \ xmax\ =\ (std::max)(-\/1.0f,\ (std::min)(1.0f,\ xmax));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00565}00565\ \ \ \ \ \ \ \ \ \ \ \ \ ymin\ =\ (std::max)(-\/1.0f,\ (std::min)(1.0f,\ ymin));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00566}00566\ \ \ \ \ \ \ \ \ \ \ \ \ ymax\ =\ (std::max)(-\/1.0f,\ (std::min)(1.0f,\ ymax));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00567}00567\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xmax\ <\ xmin)\ std::swap(xmin,\ xmax);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00568}00568\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ymax\ <\ ymin)\ std::swap(ymin,\ ymax);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00569}00569\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00570}00570\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 早期破棄（小物カットをしたい場合）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00571}00571\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (min\_coverage\_for\_precise\ >\ 0.0f)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00572}00572\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ covX\ =\ (std::max)(0.f,\ (std::min)(1.f,\ (xmax\ -\/\ xmin)\ *\ 0.5f));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00573}00573\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ covY\ =\ (std::max)(0.f,\ (std::min)(1.f,\ (ymax\ -\/\ ymin)\ *\ 0.5f));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00574}00574\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (covX\ *\ covY\ <\ min\_coverage\_for\_precise)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00575}00575\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ xmin,\ ymin,\ xmax,\ ymax,\ wmin,\ \textcolor{keyword}{false}\ \};\ \textcolor{comment}{//\ 可視性は低いのでスキップ目安}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00576}00576\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00577}00577\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00578}00578\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ xmin,\ ymin,\ xmax,\ ymax,\ wmin,\ \textcolor{keyword}{true}\ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00579}00579\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00580}00580\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00581}00581\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ (4)\ 部分交差:\ 重いクリップへ（near/x=±w/y=±w/z=w）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00582}00582\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ 小物しきい値でスキップしたい場合は事前に球近似で\ cheap\ 判定を入れてもOK}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00583}00583\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a36990d7c74a037540755ff2f2742e358}{ProjectAABBToNdc\_Robust}}(VPW,\ box);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00584}00584\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00585}00585\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00586}00586\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \_\_m256\ rcp\_nr1(\_\_m256\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00587}00587\ \ \ \ \ \ \ \ \ \_\_m256\ r\ =\ \_mm256\_rcp\_ps(x);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00588}00588\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ r\ =\ r\ *\ (2\ -\/\ x*r)}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00589}00589\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_mm256\_mul\_ps(\_mm256\_fnmadd\_ps(x,\ r,\ \_mm256\_set1\_ps(2.0f)),\ r);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00590}00590\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00591}00591\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00592}00592\ \ \ \ \ \textcolor{comment}{//\ 安全除算（配列化用）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00593}00593\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ safe\_div8(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ num,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ den,\ \textcolor{keywordtype}{float}*\ out)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00594}00594\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ eps\ =\ 1e-\/6f;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00595}00595\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 8;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00596}00596\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ d\ =\ std::fabs(den[i])\ <\ eps\ ?\ (den[i]\ <\ 0\ ?\ -\/eps\ :\ eps)\ :\ den[i];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00597}00597\ \ \ \ \ \ \ \ \ \ \ \ \ out[i]\ =\ num[i]\ /\ d;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00598}00598\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00599}00599\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00600}00600\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00601}00601\ \ \ \ \ \textcolor{comment}{//\ WVP\ (=\ proj*view*world)\ で\ 8球を一括投影して可視判定/矩形を返す}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00602}00602\ \ \ \ \ \textcolor{comment}{//\ -\/\ BoundingSphere\ は\ \{\ Vec3\ center;\ float\ radius;\ \}\ を想定}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00603}00603\ \ \ \ \ \textcolor{comment}{//\ -\/\ 列ベクトル規約：clip\ =\ WVP\ *\ [x,y,z,1]\string^T}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00604}00604\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Mat4,\ \textcolor{keyword}{class}\ BoundingSphereT>}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00605}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6ab8a2a5eede6f10ed1138df98c1d992}{00605}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6ab8a2a5eede6f10ed1138df98c1d992}{ProjectSpheresToNdc\_Fast\_AVX2}}(}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00606}00606\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Mat4\&\ WVP,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00607}00607\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ BoundingSphereT*\ spheres,\ \ \ \ \ \textcolor{comment}{//\ 長さ>=count}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00608}00608\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ count,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00609}00609\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{NdcRectWithW}}*\ outRects\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 長さ>=count}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00610}00610\ \ \ \ \ )\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00611}00611\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a0d4c404e27ed746cbfcf90079d4665de}{step}}\ =\ 8;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00612}00612\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ base\ =\ 0;\ base\ <\ count;\ base\ +=\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a0d4c404e27ed746cbfcf90079d4665de}{step}})\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00613}00613\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ n\ =\ (std::min)(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a0d4c404e27ed746cbfcf90079d4665de}{step}},\ count\ -\/\ base);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00614}00614\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00615}00615\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ SoA\ ロード}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00616}00616\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cx8[8]\{\},\ cy8[8]\{\},\ cz8[8]\{\},\ cw8[8]\{\};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00617}00617\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ px8[8]\{\},\ py8[8]\{\},\ pz8[8]\{\};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00618}00618\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ pxw8[8]\{\},\ pyw8[8]\{\},\ pzw8[8]\{\};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00619}00619\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ndc\_cx8[8]\{\},\ ndc\_cy8[8]\{\},\ ndc\_cz8[8]\{\};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00620}00620\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ndc\_pxx8[8]\{\},\ ndc\_pyy8[8]\{\},\ ndc\_pzz8[8]\{\};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00621}00621\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00622}00622\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ X[8]\{\},\ Y[8]\{\},\ Z[8]\{\},\ R[8]\{\};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00623}00623\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ n;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00624}00624\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ s\ =\ spheres[base\ +\ i];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00625}00625\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X[i]\ =\ s.center.x;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00626}00626\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Y[i]\ =\ s.center.y;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00627}00627\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Z[i]\ =\ s.center.z;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00628}00628\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R[i]\ =\ s.radius;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00629}00629\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00630}00630\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00631}00631\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ AVX2\ ブロック}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00632}00632\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ VX\ =\ \_mm256\_loadu\_ps(X);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00633}00633\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ VY\ =\ \_mm256\_loadu\_ps(Y);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00634}00634\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ VZ\ =\ \_mm256\_loadu\_ps(Z);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00635}00635\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ VR\ =\ \_mm256\_loadu\_ps(R);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00636}00636\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ ONE\ =\ \_mm256\_set1\_ps(1.0f);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00637}00637\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00638}00638\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ row-\/major\ ×\ 列ベクトル：各行と\ (x,y,z,1)\ のドット積}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00639}00639\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ dot\_row\ =\ [\&](\textcolor{keywordtype}{int}\ row,\ \_\_m256\ x,\ \_\_m256\ y,\ \_\_m256\ z,\ \_\_m256\ one)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00640}00640\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ sum\ =\ \_mm256\_set1\_ps(WVP[row][3]);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ m[row][3]\ *\ 1}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00641}00641\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sum\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[row][0]),\ x,\ sum);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00642}00642\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sum\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[row][1]),\ y,\ sum);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00643}00643\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sum\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[row][2]),\ z,\ sum);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00644}00644\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (void)one;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00645}00645\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ sum;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00646}00646\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00647}00647\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00648}00648\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 中心の\ clip\ 座標}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00649}00649\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Cx\ =\ dot\_row(0,\ VX,\ VY,\ VZ,\ ONE);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00650}00650\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Cy\ =\ dot\_row(1,\ VX,\ VY,\ VZ,\ ONE);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00651}00651\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Cz\ =\ dot\_row(2,\ VX,\ VY,\ VZ,\ ONE);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00652}00652\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Cw\ =\ dot\_row(3,\ VX,\ VY,\ VZ,\ ONE);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00653}00653\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00654}00654\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ +X（局所）:\ (x+R,y,z,1)\ =\ 中心に\ m[*,0]*R\ を足すだけ}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00655}00655\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Px\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[0][0]),\ VR,\ Cx);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00656}00656\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Py\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[1][0]),\ VR,\ Cy);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00657}00657\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Pz\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[2][0]),\ VR,\ Cz);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00658}00658\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Pw\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[3][0]),\ VR,\ Cw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00659}00659\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00660}00660\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ +Y（局所）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00661}00661\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Qx\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[0][1]),\ VR,\ Cx);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00662}00662\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Qy\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[1][1]),\ VR,\ Cy);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00663}00663\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Qz\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[2][1]),\ VR,\ Cz);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00664}00664\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Qw\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[3][1]),\ VR,\ Cw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00665}00665\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00666}00666\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ +Z（局所）…\ z\ 可視範囲推定用}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00667}00667\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Rx\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[0][2]),\ VR,\ Cx);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00668}00668\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Ry\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[1][2]),\ VR,\ Cy);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00669}00669\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Rz\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[2][2]),\ VR,\ Cz);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00670}00670\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ Rw\ =\ \_mm256\_fmadd\_ps(\_mm256\_set1\_ps(WVP[3][2]),\ VR,\ Cw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00671}00671\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00672}00672\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 透視除算（1回ニュートンで安定化）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00673}00673\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ invCw\ =\ rcp\_nr1(Cw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00674}00674\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ invPw\ =\ rcp\_nr1(Pw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00675}00675\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ invQw\ =\ rcp\_nr1(Qw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00676}00676\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ invRw\ =\ rcp\_nr1(Rw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00677}00677\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00678}00678\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ NdC\_x\ =\ \_mm256\_mul\_ps(Cx,\ invCw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00679}00679\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ NdC\_y\ =\ \_mm256\_mul\_ps(Cy,\ invCw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00680}00680\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ NdC\_z\ =\ \_mm256\_mul\_ps(Cz,\ invCw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00681}00681\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00682}00682\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ NdP\_x\ =\ \_mm256\_mul\_ps(Px,\ invPw);\ \textcolor{comment}{//\ +X\ の\ x}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00683}00683\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ NdQ\_y\ =\ \_mm256\_mul\_ps(Qy,\ invQw);\ \textcolor{comment}{//\ +Y\ の\ y}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00684}00684\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ NdR\_z\ =\ \_mm256\_mul\_ps(Rz,\ invRw);\ \textcolor{comment}{//\ +Z\ の\ z}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00685}00685\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00686}00686\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 画面半径\ r\_ndc\ =\ max(|px.x\ -\/\ c.x|,\ |py.y\ -\/\ c.y|)}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00687}00687\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ dx\ =\ \_mm256\_andnot\_ps(\_mm256\_set1\_ps(-\/0.f),\ \_mm256\_sub\_ps(NdP\_x,\ NdC\_x));\ \textcolor{comment}{//\ fabs}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00688}00688\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ dy\ =\ \_mm256\_andnot\_ps(\_mm256\_set1\_ps(-\/0.f),\ \_mm256\_sub\_ps(NdQ\_y,\ NdC\_y));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00689}00689\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ r\ =\ \_mm256\_max\_ps(dx,\ dy);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00690}00690\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00691}00691\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ NDC\ 矩形}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00692}00692\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ xmin\ =\ \_mm256\_sub\_ps(NdC\_x,\ r);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00693}00693\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ xmax\ =\ \_mm256\_add\_ps(NdC\_x,\ r);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00694}00694\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ ymin\ =\ \_mm256\_sub\_ps(NdC\_y,\ r);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00695}00695\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ ymax\ =\ \_mm256\_add\_ps(NdC\_y,\ r);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00696}00696\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00697}00697\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ [-\/1,1]\ にクランプ}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00698}00698\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_m256\ N1\ =\ \_mm256\_set1\_ps(-\/1.0f),\ P1\ =\ \_mm256\_set1\_ps(1.0f);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00699}00699\ \ \ \ \ \ \ \ \ \ \ \ \ xmin\ =\ \_mm256\_min\_ps(P1,\ \_mm256\_max\_ps(N1,\ xmin));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00700}00700\ \ \ \ \ \ \ \ \ \ \ \ \ xmax\ =\ \_mm256\_min\_ps(P1,\ \_mm256\_max\_ps(N1,\ xmax));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00701}00701\ \ \ \ \ \ \ \ \ \ \ \ \ ymin\ =\ \_mm256\_min\_ps(P1,\ \_mm256\_max\_ps(N1,\ ymin));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00702}00702\ \ \ \ \ \ \ \ \ \ \ \ \ ymax\ =\ \_mm256\_min\_ps(P1,\ \_mm256\_max\_ps(N1,\ ymax));}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00703}00703\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00704}00704\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 配列へストア}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00705}00705\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(cx8,\ Cx);\ \_mm256\_storeu\_ps(cy8,\ Cy);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00706}00706\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(cz8,\ Cz);\ \_mm256\_storeu\_ps(cw8,\ Cw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00707}00707\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(px8,\ xmin);\ \_mm256\_storeu\_ps(py8,\ ymin);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00708}00708\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(pz8,\ xmax);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00709}00709\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(pxw8,\ ymax);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00710}00710\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00711}00711\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(ndc\_cx8,\ NdC\_x);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00712}00712\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(ndc\_cy8,\ NdC\_y);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00713}00713\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(ndc\_cz8,\ NdC\_z);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00714}00714\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(ndc\_pxx8,\ NdP\_x);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00715}00715\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(ndc\_pyy8,\ NdQ\_y);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00716}00716\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(ndc\_pzz8,\ NdR\_z);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00717}00717\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00718}00718\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(pyw8,\ Pw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00719}00719\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(pzw8,\ Qw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00720}00720\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(pxw8,\ Pw);\ \textcolor{comment}{//\ 既に\ Pw\ を格納済だが\ wmin\ 計算で再利用}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00721}00721\ \ \ \ \ \ \ \ \ \ \ \ \ \_mm256\_storeu\_ps(pz8,\ Rw);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00722}00722\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00723}00723\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 各レーンをまとめて可視判定・出力}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00724}00724\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ n;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00725}00725\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ndc\_cx\ =\ ndc\_cx8[i];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00726}00726\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ndc\_cy\ =\ ndc\_cy8[i];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00727}00727\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ndc\_cz\ =\ ndc\_cz8[i];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00728}00728\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00729}00729\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ndc\_pz\ =\ ndc\_pzz8[i];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00730}00730\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00731}00731\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 直前で\ xmin/xmax/ymin/ymax\ は\ [-\/1,1]\ にクランプ済み}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00732}00732\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ xmin\_s\ =\ px8[i];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00733}00733\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ymin\_s\ =\ py8[i];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00734}00734\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ xmax\_s\ =\ pz8[i];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00735}00735\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ymax\_s\ =\ pxw8[i];}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00736}00736\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00737}00737\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xmax\_s\ <\ xmin\_s)\ std::swap(xmin\_s,\ xmax\_s);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00738}00738\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ymax\_s\ <\ ymin\_s)\ std::swap(ymin\_s,\ ymax\_s);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00739}00739\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00740}00740\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ z\ の簡易交差（中心と\ +Z\ で保守的）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00741}00741\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ zmin\_est\ =\ (std::min)(ndc\_cz,\ ndc\_pz);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00742}00742\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ zmax\_est\ =\ (std::max)(ndc\_cz,\ ndc\_pz);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00743}00743\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00744}00744\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ x\_overlap\ =\ !(xmax\_s\ <\ -\/1.0f\ ||\ xmin\_s\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00745}00745\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ y\_overlap\ =\ !(ymax\_s\ <\ -\/1.0f\ ||\ ymin\_s\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00746}00746\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ z\_overlap\ =\ !(zmax\_est\ <\ 0.0f\ ||\ zmin\_est\ >\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00747}00747\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00748}00748\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ wmin（MOC\ 等の使用を想定）}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00749}00749\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ wmin\ =\ (std::min)(\{\ cw8[i],\ \textcolor{comment}{/*\ Pw\ */}\ pxw8[i],\ \textcolor{comment}{/*\ Qw\ */}\ pzw8[i],\ \textcolor{comment}{/*\ Rw\ */}\ pz8[i]\ \});}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00750}00750\ }
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00751}00751\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outRects[base\ +\ i]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00752}00752\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ xmin\_s,\ ymin\_s,\ xmax\_s,\ ymax\_s,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00753}00753\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wmin,}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00754}00754\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (x\_overlap\ \&\&\ y\_overlap\ \&\&\ z\_overlap)}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00755}00755\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00756}00756\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00757}00757\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00758}00758\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00759}00759\ \}\ \textcolor{comment}{//\ namespace\ SectorFW::Math}}
+
+\end{DoxyCode}

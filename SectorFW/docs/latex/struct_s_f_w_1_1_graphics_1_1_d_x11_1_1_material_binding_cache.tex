@@ -1,0 +1,141 @@
+\doxysection{SFW\+::Graphics\+::DX11\+::Material\+Binding\+Cache\texorpdfstring{$<$}{<} Cache\+Type \texorpdfstring{$>$}{>} 構造体テンプレート}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache}{}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache}\index{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}}
+
+
+マテリアルバインディングキャッシュ構造体  
+
+
+
+
+{\ttfamily \#include $<$DX11\+Material\+Manager.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a5c4ce92229874cc7baa2a1793a8a01f2}{Push\+Or\+Overwrite}} (std\+::pair$<$ UINT, Cache\+Type $>$ bind)
+\begin{DoxyCompactList}\small\item\em バインディングを追加または上書きする \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a4de446073e2ed9675c38fecfc2959ddc}{valid}} = false
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a18e750fc9297514ffc4381e7e11162c7}{contiguous}} = false
+\item 
+UINT \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a38e41748085f6d9d1b07ef2856ef602e}{min\+Slot}} = 0
+\item 
+UINT \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_ab3664e00376f8c8724a3adb1d5f16162}{count}} = 0
+\item 
+std\+::vector$<$ Cache\+Type $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a9db3169781479efbaaf42a536b8d82fa}{contiguous\+Views}}
+\item 
+std\+::vector$<$ std\+::pair$<$ UINT, Cache\+Type $>$ $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_ac87ce49f7e762e03b2e3b01538a03cfe}{individual\+Views}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename Cache\+Type$>$\newline
+struct SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Binding\+Cache$<$ Cache\+Type $>$}
+マテリアルバインディングキャッシュ構造体 
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00040}{40}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a5c4ce92229874cc7baa2a1793a8a01f2}\index{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}!PushOrOverwrite@{PushOrOverwrite}}
+\index{PushOrOverwrite@{PushOrOverwrite}!SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}}
+\doxysubsubsection{\texorpdfstring{PushOrOverwrite()}{PushOrOverwrite()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a5c4ce92229874cc7baa2a1793a8a01f2} 
+template$<$typename Cache\+Type$>$ \\
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache}{SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Binding\+Cache}}$<$ Cache\+Type $>$\+::\+Push\+Or\+Overwrite (\begin{DoxyParamCaption}\item[{std\+::pair$<$ UINT, Cache\+Type $>$}]{bind}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+バインディングを追加または上書きする 
+
+
+\begin{DoxyParams}{引数}
+{\em bind} & 追加または上書きするバインディング情報のペア (スロット番号, バインディングオブジェクト) \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00052}{52}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a18e750fc9297514ffc4381e7e11162c7}\index{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}!contiguous@{contiguous}}
+\index{contiguous@{contiguous}!SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}}
+\doxysubsubsection{\texorpdfstring{contiguous}{contiguous}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a18e750fc9297514ffc4381e7e11162c7} 
+template$<$typename Cache\+Type$>$ \\
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache}{SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Binding\+Cache}}$<$ Cache\+Type $>$\+::contiguous = false}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00042}{42}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a9db3169781479efbaaf42a536b8d82fa}\index{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}!contiguousViews@{contiguousViews}}
+\index{contiguousViews@{contiguousViews}!SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}}
+\doxysubsubsection{\texorpdfstring{contiguousViews}{contiguousViews}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a9db3169781479efbaaf42a536b8d82fa} 
+template$<$typename Cache\+Type$>$ \\
+std\+::vector$<$Cache\+Type$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache}{SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Binding\+Cache}}$<$ Cache\+Type $>$\+::contiguous\+Views}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00045}{45}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_ab3664e00376f8c8724a3adb1d5f16162}\index{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}!count@{count}}
+\index{count@{count}!SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}}
+\doxysubsubsection{\texorpdfstring{count}{count}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_ab3664e00376f8c8724a3adb1d5f16162} 
+template$<$typename Cache\+Type$>$ \\
+UINT \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache}{SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Binding\+Cache}}$<$ Cache\+Type $>$\+::count = 0}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00044}{44}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_ac87ce49f7e762e03b2e3b01538a03cfe}\index{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}!individualViews@{individualViews}}
+\index{individualViews@{individualViews}!SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}}
+\doxysubsubsection{\texorpdfstring{individualViews}{individualViews}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_ac87ce49f7e762e03b2e3b01538a03cfe} 
+template$<$typename Cache\+Type$>$ \\
+std\+::vector$<$std\+::pair$<$UINT, Cache\+Type$>$ $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache}{SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Binding\+Cache}}$<$ Cache\+Type $>$\+::individual\+Views}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00046}{46}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a38e41748085f6d9d1b07ef2856ef602e}\index{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}!minSlot@{minSlot}}
+\index{minSlot@{minSlot}!SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}}
+\doxysubsubsection{\texorpdfstring{minSlot}{minSlot}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a38e41748085f6d9d1b07ef2856ef602e} 
+template$<$typename Cache\+Type$>$ \\
+UINT \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache}{SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Binding\+Cache}}$<$ Cache\+Type $>$\+::min\+Slot = 0}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00043}{43}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a4de446073e2ed9675c38fecfc2959ddc}\index{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}!valid@{valid}}
+\index{valid@{valid}!SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$@{SFW::Graphics::DX11::MaterialBindingCache$<$ CacheType $>$}}
+\doxysubsubsection{\texorpdfstring{valid}{valid}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache_a4de446073e2ed9675c38fecfc2959ddc} 
+template$<$typename Cache\+Type$>$ \\
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache}{SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Binding\+Cache}}$<$ Cache\+Type $>$\+::valid = false}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00041}{41}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\mbox{\hyperlink{_d_x11_material_manager_8h}{DX11\+Material\+Manager.\+h}}\end{DoxyCompactItemize}

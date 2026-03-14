@@ -1,0 +1,323 @@
+\doxysection{SFW\+::Grid3D\texorpdfstring{$<$}{<} T, Size \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_grid3_d}{}\label{class_s_f_w_1_1_grid3_d}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+
+
+3Dグリッドを表すクラス  
+
+
+
+
+{\ttfamily \#include $<$Grid.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_grid3_d_a2c867bb33418899b1bd520556b1b6771}{Grid3D}} (Size \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_ae4c9969d03aebd71b0eb7231843949d7}{width}}, Size \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_a404759ea36189c36936bb7778b950361}{height}}, Size \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_a4f52e934aa9a051672b6b48a41ba6255}{depth}}) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Args$>$ }\\\mbox{\hyperlink{class_s_f_w_1_1_grid3_d_a55aca72c7360b389ece197d42064f1cb}{Grid3D}} (Size \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_ae4c9969d03aebd71b0eb7231843949d7}{width}}, Size \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_a404759ea36189c36936bb7778b950361}{height}}, Size \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_a4f52e934aa9a051672b6b48a41ba6255}{depth}}, Args \&\&... args) noexcept
+\begin{DoxyCompactList}\small\item\em 引数付きコンストラクタ \end{DoxyCompactList}\item 
+T \& \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_a677d4628066bca914fa85d7760e5036b}{operator()}} (Size x, Size y, Size z)
+\begin{DoxyCompactList}\small\item\em 要素アクセス（非const） \end{DoxyCompactList}\item 
+const T \& \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_af007c6533e37678695e317560afb38fc}{operator()}} (Size x, Size y, Size z) const
+\begin{DoxyCompactList}\small\item\em 要素アクセス（const） \end{DoxyCompactList}\item 
+Size \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_ae4c9969d03aebd71b0eb7231843949d7}{width}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 幅 (x) \end{DoxyCompactList}\item 
+Size \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_a404759ea36189c36936bb7778b950361}{height}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 高さ (y) \end{DoxyCompactList}\item 
+Size \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_a4f52e934aa9a051672b6b48a41ba6255}{depth}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 奥行 (z) \end{DoxyCompactList}\item 
+Size \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_a01e4bc7c8228bfe1db97eee54d57a4cf}{size}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 総要素数 = width \texorpdfstring{$\ast$}{*} height \texorpdfstring{$\ast$}{*} depth \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_abd338338ea59405020d9a7e6ed23670e}{begin}} () noexcept
+\begin{DoxyCompactList}\small\item\em イテレータ（非const） \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_af6ca8de52bd85b3032a43a6ad23a4899}{end}} () noexcept
+\item 
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_ada6ff2db787d8b351ceb40d21f292557}{begin}} () const noexcept
+\begin{DoxyCompactList}\small\item\em イテレータ（const） \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_af3a2202babce7541f3adb4c9ba03ea20}{end}} () const noexcept
+\item 
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_adaa241732578f4c69f078020e5759a01}{data}} () noexcept
+\begin{DoxyCompactList}\small\item\em データ先頭ポインタ（必要なら） \end{DoxyCompactList}\item 
+const T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_grid3_d_a3c9f6428ee4fa1d3b7e62ab1726c2ba5}{data}} () const noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename T, typename Size = size\+\_\+t$>$\newline
+class SFW\+::\+Grid3\+D$<$ T, Size $>$}
+3Dグリッドを表すクラス 
+
+
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em T} & グリッドの要素の型 \\
+\hline
+{\em Size} & サイズの型（デフォルトはsize\+\_\+t） \\
+\hline
+\end{DoxyTemplParams}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00113}{113}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_grid3_d_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_grid3_d_a2c867bb33418899b1bd520556b1b6771}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}!Grid3D@{Grid3D}}
+\index{Grid3D@{Grid3D}!SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{Grid3D()}{Grid3D()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid3_d_a2c867bb33418899b1bd520556b1b6771} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_grid3_d}{SFW\+::\+Grid3D}}$<$ T, Size $>$\+::\+Grid3D (\begin{DoxyParamCaption}\item[{Size}]{width}{, }\item[{Size}]{height}{, }\item[{Size}]{depth}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em width} & グリッドの幅 (x) \\
+\hline
+{\em height} & グリッドの高さ (y) \\
+\hline
+{\em depth} & グリッドの奥行 (z) \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00121}{121}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid3_d_a55aca72c7360b389ece197d42064f1cb}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}!Grid3D@{Grid3D}}
+\index{Grid3D@{Grid3D}!SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{Grid3D()}{Grid3D()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid3_d_a55aca72c7360b389ece197d42064f1cb} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+template$<$typename... Args$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_grid3_d}{SFW\+::\+Grid3D}}$<$ T, Size $>$\+::\+Grid3D (\begin{DoxyParamCaption}\item[{Size}]{width}{, }\item[{Size}]{height}{, }\item[{Size}]{depth}{, }\item[{Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+引数付きコンストラクタ 
+
+
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em Args} & 可変長テンプレート引数 \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{引数}
+{\em width} & グリッドの幅 (x) \\
+\hline
+{\em height} & グリッドの高さ (y) \\
+\hline
+{\em depth} & グリッドの奥行 (z) \\
+\hline
+{\em args} & 要素の初期化に使用する引数 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00135}{135}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_grid3_d_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_grid3_d_ada6ff2db787d8b351ceb40d21f292557}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}!begin@{begin}}
+\index{begin@{begin}!SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid3_d_ada6ff2db787d8b351ceb40d21f292557} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid3_d}{SFW\+::\+Grid3D}}$<$ T, Size $>$\+::begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+イテレータ（const） 
+
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00177}{177}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid3_d_abd338338ea59405020d9a7e6ed23670e}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}!begin@{begin}}
+\index{begin@{begin}!SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid3_d_abd338338ea59405020d9a7e6ed23670e} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid3_d}{SFW\+::\+Grid3D}}$<$ T, Size $>$\+::begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+イテレータ（非const） 
+
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00173}{173}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid3_d_a3c9f6428ee4fa1d3b7e62ab1726c2ba5}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}!data@{data}}
+\index{data@{data}!SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid3_d_a3c9f6428ee4fa1d3b7e62ab1726c2ba5} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+const T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_grid3_d}{SFW\+::\+Grid3D}}$<$ T, Size $>$\+::data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00182}{182}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid3_d_adaa241732578f4c69f078020e5759a01}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}!data@{data}}
+\index{data@{data}!SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid3_d_adaa241732578f4c69f078020e5759a01} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_grid3_d}{SFW\+::\+Grid3D}}$<$ T, Size $>$\+::data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+データ先頭ポインタ（必要なら） 
+
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00181}{181}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid3_d_a4f52e934aa9a051672b6b48a41ba6255}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}!depth@{depth}}
+\index{depth@{depth}!SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{depth()}{depth()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid3_d_a4f52e934aa9a051672b6b48a41ba6255} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+Size \mbox{\hyperlink{class_s_f_w_1_1_grid3_d}{SFW\+::\+Grid3D}}$<$ T, Size $>$\+::depth (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+奥行 (z) 
+
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00167}{167}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid3_d_af3a2202babce7541f3adb4c9ba03ea20}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}!end@{end}}
+\index{end@{end}!SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid3_d_af3a2202babce7541f3adb4c9ba03ea20} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid3_d}{SFW\+::\+Grid3D}}$<$ T, Size $>$\+::end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00178}{178}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid3_d_af6ca8de52bd85b3032a43a6ad23a4899}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}!end@{end}}
+\index{end@{end}!SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid3_d_af6ca8de52bd85b3032a43a6ad23a4899} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid3_d}{SFW\+::\+Grid3D}}$<$ T, Size $>$\+::end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00174}{174}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid3_d_a404759ea36189c36936bb7778b950361}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}!height@{height}}
+\index{height@{height}!SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{height()}{height()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid3_d_a404759ea36189c36936bb7778b950361} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+Size \mbox{\hyperlink{class_s_f_w_1_1_grid3_d}{SFW\+::\+Grid3D}}$<$ T, Size $>$\+::height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+高さ (y) 
+
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00165}{165}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid3_d_a677d4628066bca914fa85d7760e5036b}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid3_d_a677d4628066bca914fa85d7760e5036b} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+T \& \mbox{\hyperlink{class_s_f_w_1_1_grid3_d}{SFW\+::\+Grid3D}}$<$ T, Size $>$\+::operator() (\begin{DoxyParamCaption}\item[{Size}]{x}{, }\item[{Size}]{y}{, }\item[{Size}]{z}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+要素アクセス（非const） 
+
+
+\begin{DoxyParams}{引数}
+{\em x} & x座標 \\
+\hline
+{\em y} & y座標 \\
+\hline
+{\em z} & z座標 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+要素への参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00147}{147}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid3_d_af007c6533e37678695e317560afb38fc}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid3_d_af007c6533e37678695e317560afb38fc} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+const T \& \mbox{\hyperlink{class_s_f_w_1_1_grid3_d}{SFW\+::\+Grid3D}}$<$ T, Size $>$\+::operator() (\begin{DoxyParamCaption}\item[{Size}]{x}{, }\item[{Size}]{y}{, }\item[{Size}]{z}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+要素アクセス（const） 
+
+
+\begin{DoxyParams}{引数}
+{\em x} & x座標 \\
+\hline
+{\em y} & y座標 \\
+\hline
+{\em z} & z座標 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+要素への参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00158}{158}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid3_d_a01e4bc7c8228bfe1db97eee54d57a4cf}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}!size@{size}}
+\index{size@{size}!SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid3_d_a01e4bc7c8228bfe1db97eee54d57a4cf} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+Size \mbox{\hyperlink{class_s_f_w_1_1_grid3_d}{SFW\+::\+Grid3D}}$<$ T, Size $>$\+::size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+総要素数 = width \texorpdfstring{$\ast$}{*} height \texorpdfstring{$\ast$}{*} depth 
+
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00170}{170}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid3_d_ae4c9969d03aebd71b0eb7231843949d7}\index{SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}!width@{width}}
+\index{width@{width}!SFW::Grid3D$<$ T, Size $>$@{SFW::Grid3D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{width()}{width()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid3_d_ae4c9969d03aebd71b0eb7231843949d7} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+Size \mbox{\hyperlink{class_s_f_w_1_1_grid3_d}{SFW\+::\+Grid3D}}$<$ T, Size $>$\+::width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+幅 (x) 
+
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00163}{163}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/\mbox{\hyperlink{_grid_8hpp}{Grid.\+hpp}}\end{DoxyCompactItemize}

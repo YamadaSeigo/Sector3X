@@ -1,0 +1,83 @@
+\doxysection{Non\+Copyable クラス}
+\hypertarget{class_non_copyable}{}\label{class_non_copyable}\index{NonCopyable@{NonCopyable}}
+
+
+コピーを禁止するためのクラスです。  
+
+
+
+
+{\ttfamily \#include $<$Non\+Copyable.\+h$>$}
+
+Non\+Copyable の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_non_copyable}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_non_copyable_a809b6e4ade7ae32f6d248f2a3b783d45}{Non\+Copyable}} ()=default
+\begin{DoxyCompactList}\small\item\em デフォルトコンストラクタ。 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_non_copyable_a501d34ffcc34b30de6d541887a901057}{Non\+Copyable}} (const \mbox{\hyperlink{class_non_copyable}{Non\+Copyable}} \&)=delete
+\begin{DoxyCompactList}\small\item\em コピーコンストラクタを削除。 @detailss このクラスのオブジェクトのコピーは許可されていないため、コピーコンストラクタは削除されています。 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_non_copyable}{Non\+Copyable}} \& \mbox{\hyperlink{class_non_copyable_a222df5be7ad1cf1aef9f17fe2b157a1a}{operator=}} (const \mbox{\hyperlink{class_non_copyable}{Non\+Copyable}} \&)=delete
+\begin{DoxyCompactList}\small\item\em コピー代入演算子を削除。 @detailss このクラスのオブジェクトの代入は許可されていないため、コピー代入演算子は削除されています。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+コピーを禁止するためのクラスです。 
+
+\begin{DoxyAuthor}{著者}
+suzuki このクラスは、派生クラスのコピーと代入を防ぐために設計されています。 コピーコンストラクタとコピー代入演算子を削除しています。 
+\end{DoxyAuthor}
+
+
+ \mbox{\hyperlink{_non_copyable_8h_source}{Non\+Copyable.\+h}} の \mbox{\hyperlink{_non_copyable_8h_source_l00010}{10}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_non_copyable_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_non_copyable_a809b6e4ade7ae32f6d248f2a3b783d45}\index{NonCopyable@{NonCopyable}!NonCopyable@{NonCopyable}}
+\index{NonCopyable@{NonCopyable}!NonCopyable@{NonCopyable}}
+\doxysubsubsection{\texorpdfstring{NonCopyable()}{NonCopyable()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_non_copyable_a809b6e4ade7ae32f6d248f2a3b783d45} 
+Non\+Copyable\+::\+Non\+Copyable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+デフォルトコンストラクタ。 
+
+\Hypertarget{class_non_copyable_a501d34ffcc34b30de6d541887a901057}\index{NonCopyable@{NonCopyable}!NonCopyable@{NonCopyable}}
+\index{NonCopyable@{NonCopyable}!NonCopyable@{NonCopyable}}
+\doxysubsubsection{\texorpdfstring{NonCopyable()}{NonCopyable()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_non_copyable_a501d34ffcc34b30de6d541887a901057} 
+Non\+Copyable\+::\+Non\+Copyable (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_non_copyable}{Non\+Copyable}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+コピーコンストラクタを削除。 @detailss このクラスのオブジェクトのコピーは許可されていないため、コピーコンストラクタは削除されています。 
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_non_copyable_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_non_copyable_a222df5be7ad1cf1aef9f17fe2b157a1a}\index{NonCopyable@{NonCopyable}!operator=@{operator=}}
+\index{operator=@{operator=}!NonCopyable@{NonCopyable}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{class_non_copyable_a222df5be7ad1cf1aef9f17fe2b157a1a} 
+\mbox{\hyperlink{class_non_copyable}{Non\+Copyable}} \& Non\+Copyable\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_non_copyable}{Non\+Copyable}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+コピー代入演算子を削除。 @detailss このクラスのオブジェクトの代入は許可されていないため、コピー代入演算子は削除されています。 
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/\mbox{\hyperlink{_non_copyable_8h}{Non\+Copyable.\+h}}\end{DoxyCompactItemize}

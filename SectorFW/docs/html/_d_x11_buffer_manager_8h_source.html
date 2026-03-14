@@ -1,0 +1,507 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11BufferManager.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_d_x11_buffer_manager_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">DX11BufferManager.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_d_x11_buffer_manager_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="__dx11inc_8h.html">_dx11inc.h</a>&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="_resouce_manager_base_8hpp.html">../../Util/ResouceManagerBase.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;typeindex&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>{</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">Graphics::DX11</a></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    {</div>
+<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html">   23</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html">BufferCreateDesc</a> {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a2d5634229084884f021c71d65ca67de9">   24</a></span>            std::string <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a2d5634229084884f021c71d65ca67de9">name</a>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a420cc8d4a4ed2f5b5c7fdda8146f4b4e">   25</a></span>            uint32_t <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a420cc8d4a4ed2f5b5c7fdda8146f4b4e">size</a> = {};</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#ab821aea901a763c0667af252f1c24734">   26</a></span>            uint32_t <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#ab821aea901a763c0667af252f1c24734">structureByteStride</a> = 0; <span class="comment">// StructuredBuffer 用（CBV では無視される）</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a174466dba1d8feaaf85a43df2a8ecce7">   27</a></span>            <span class="keyword">const</span> <span class="keywordtype">void</span>* <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a174466dba1d8feaaf85a43df2a8ecce7">initialData</a> = <span class="keyword">nullptr</span>; <span class="comment">// 初期データ（nullptr ならゼロクリア）</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a66fc5251317cd8d9e24576595ae71eb0">   28</a></span>            D3D11_USAGE <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a66fc5251317cd8d9e24576595ae71eb0">usage</a> = D3D11_USAGE_DYNAMIC;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a2478b843b3f9266941ebcacd6442c152">   29</a></span>            D3D11_BIND_FLAG <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a2478b843b3f9266941ebcacd6442c152">bindFlags</a> = D3D11_BIND_CONSTANT_BUFFER;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a719d131c7fcef3de2b5acc91ee1ba158">   30</a></span>            D3D11_RESOURCE_MISC_FLAG <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a719d131c7fcef3de2b5acc91ee1ba158">miscFlags</a> = {};</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#ac836391c0c5408e5f3fb2998fca7232e">   31</a></span>            D3D11_CPU_ACCESS_FLAG <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#ac836391c0c5408e5f3fb2998fca7232e">cpuAccessFlags</a> = D3D11_CPU_ACCESS_WRITE; <span class="comment">// D3D11_USAGE_STAGING用</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        };</div>
+</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span></div>
+<div class="foldopen" id="foldopen00036" data-start="{" data-end="};">
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html">   36</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html">BufferData</a> {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#ae530e46e1f691ee2f8f5f148e43e1940">   37</a></span>            ComPtr&lt;ID3D11Buffer&gt; <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#ae530e46e1f691ee2f8f5f148e43e1940">buffer</a>;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#a69557da67864ac4f275c9a6ab9892453">   38</a></span>            ComPtr&lt;ID3D11ShaderResourceView&gt; <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#a69557da67864ac4f275c9a6ab9892453">srv</a>;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#a36418fa060de4b27f779372f52d1baaa">   39</a></span>            ComPtr&lt;ID3D11UnorderedAccessView&gt; <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#a36418fa060de4b27f779372f52d1baaa">uav</a>;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#ad9f8888905d36e1b5a133f2d468fc58c">   40</a></span>            std::string_view <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#ad9f8888905d36e1b5a133f2d468fc58c">name</a>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        };</div>
+</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span></div>
+<div class="foldopen" id="foldopen00045" data-start="{" data-end="};">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html">   45</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html">BufferCacheKey</a> {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a3b52cfa4769886383debb386ee28fd17">   46</a></span>            <span class="keywordtype">size_t</span> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a3b52cfa4769886383debb386ee28fd17">hash</a>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a86f263c9364759c16606bd07afb35498">   47</a></span>            <span class="keywordtype">size_t</span> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a86f263c9364759c16606bd07afb35498">size</a>;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="foldopen" id="foldopen00049" data-start="{" data-end="}">
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a3aa53b143f3f9769c77e94eef60750e0">   49</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a3aa53b143f3f9769c77e94eef60750e0">operator==</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html">BufferCacheKey</a>&amp; other)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a3b52cfa4769886383debb386ee28fd17">hash</a> == other.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a3b52cfa4769886383debb386ee28fd17">hash</a> &amp;&amp; <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a86f263c9364759c16606bd07afb35498">size</a> == other.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a86f263c9364759c16606bd07afb35498">size</a>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            }</div>
+</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        };</div>
+</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span></div>
+<div class="foldopen" id="foldopen00056" data-start="{" data-end="};">
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key_hash.html">   56</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key_hash.html">BufferCacheKeyHash</a> {</div>
+<div class="foldopen" id="foldopen00057" data-start="{" data-end="}">
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key_hash.html#ad9936f5b58e06b97f0c9bfe6cf2fed39">   57</a></span>            std::size_t <a class="code hl_function" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key_hash.html#ad9936f5b58e06b97f0c9bfe6cf2fed39">operator()</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html">BufferCacheKey</a>&amp; k)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                <span class="keywordflow">return</span> std::hash&lt;size_t&gt;()(k.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a3b52cfa4769886383debb386ee28fd17">hash</a>) ^ std::hash&lt;size_t&gt;()(k.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a86f263c9364759c16606bd07afb35498">size</a>);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            }</div>
+</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        };</div>
+</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span></div>
+<div class="foldopen" id="foldopen00064" data-start="{" data-end="};">
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html">   64</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html">BufferUpdateDesc</a> {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#ad5c0b280047f02b553c758437678d546">   65</a></span>            ComPtr&lt;ID3D11Buffer&gt; <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#ad5c0b280047f02b553c758437678d546">buffer</a>;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a97151ab935e54ab98a3e03abfea98948">   66</a></span>            <span class="keyword">const</span> <span class="keywordtype">void</span>* <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a97151ab935e54ab98a3e03abfea98948">data</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a278366276319100c1f60ff289705200d">   67</a></span>            <span class="keywordtype">size_t</span> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a278366276319100c1f60ff289705200d">size</a> = (std::numeric_limits&lt;size_t&gt;::max)();</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="comment">// カスタム更新関数の型定義(dst, src, size)</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a07e31605bcaff0addf3aeacb783385e6">   70</a></span>            <span class="keyword">using </span><a class="code hl_typedef" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a07e31605bcaff0addf3aeacb783385e6">CustomUpdateFunc</a> = void(*)(<span class="keywordtype">void</span>*, <span class="keyword">const</span> <span class="keywordtype">void</span>*, size_t);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a01d288173b48c54da9f3da4febb64d81">   72</a></span>            <a class="code hl_typedef" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a07e31605bcaff0addf3aeacb783385e6">CustomUpdateFunc</a> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a01d288173b48c54da9f3da4febb64d81">customUpdateFunc</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a90526740b06b4c7bd21cb4cedaf0706a">   74</a></span>            <span class="keywordtype">bool</span> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a90526740b06b4c7bd21cb4cedaf0706a">isDelete</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#abcae34323240528fb7f5b218fa5a40d5">   75</a></span>            <span class="keywordtype">bool</span> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#abcae34323240528fb7f5b218fa5a40d5">isArray</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="foldopen" id="foldopen00077" data-start="{" data-end="}">
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a2492ece3cc94f3e6afb82e96922577aa">   77</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a2492ece3cc94f3e6afb82e96922577aa">isValid</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#ad5c0b280047f02b553c758437678d546">buffer</a> != <span class="keyword">nullptr</span> &amp;&amp; <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a97151ab935e54ab98a3e03abfea98948">data</a> != <span class="keyword">nullptr</span> &amp;&amp; <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a278366276319100c1f60ff289705200d">size</a> != (std::numeric_limits&lt;size_t&gt;::max)();</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            }</div>
+</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="foldopen" id="foldopen00081" data-start="{" data-end="}">
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a14ef18965da6011db8ad5171a1d0a32e">   81</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a14ef18965da6011db8ad5171a1d0a32e">operator==</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html">BufferUpdateDesc</a>&amp; other)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#ad5c0b280047f02b553c758437678d546">buffer</a>.Get() == other.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#ad5c0b280047f02b553c758437678d546">buffer</a>.Get();</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            }</div>
+</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        };</div>
+</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span></div>
+<div class="foldopen" id="foldopen00088" data-start="{" data-end="};">
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html">   88</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a5f95be5589a2dcbc3d3f2f0509655e4e">BufferManager</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_s_f_w_1_1_resource_manager_base.html">ResourceManagerBase</a>&lt;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            BufferManager, BufferHandle, BufferCreateDesc, BufferData&gt;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        {</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a37262fb5f172ce3dbc15c399f870eeb7">   92</a></span>            <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span> uint32_t <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a37262fb5f172ce3dbc15c399f870eeb7">MAX_PENDING_UPDATE_NUM</a> = 1024;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span></div>
+<div class="foldopen" id="foldopen00099" data-start="{" data-end="}">
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a5f95be5589a2dcbc3d3f2f0509655e4e">   99</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a5f95be5589a2dcbc3d3f2f0509655e4e">BufferManager</a>(ID3D11Device* device, ID3D11DeviceContext* context) noexcept</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                : device(device), context(context) {</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            }</div>
+</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span></div>
+<div class="foldopen" id="foldopen00105" data-start="{" data-end="}">
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a0ff85419cdd578bf66853139a806e9a5">  105</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a0ff85419cdd578bf66853139a806e9a5">~BufferManager</a>() {</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; pendings : pendingUpdates) {</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; update : pendings) {</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                        <span class="keywordflow">if</span> (update.data &amp;&amp; update.isDelete) {</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                            update.isArray ? <span class="keyword">delete</span>[] update.data : <span class="keyword">delete</span> update.data;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                        }</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                    }</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                }</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            }</div>
+</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span></div>
+<div class="foldopen" id="foldopen00119" data-start="{" data-end="}">
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a94358915d5d48424d358af19bc44ce25">  119</a></span>            std::optional&lt;BufferHandle&gt; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a94358915d5d48424d358af19bc44ce25">FindExisting</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html">BufferCreateDesc</a>&amp; desc) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>                <span class="keywordflow">if</span> (<span class="keyword">auto</span> it = nameToHandle.find(desc.name); it != nameToHandle.end())</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>                    <span class="keywordflow">return</span> it-&gt;second;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>                <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            }</div>
+</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span></div>
+<div class="foldopen" id="foldopen00129" data-start="{" data-end="}">
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a57099632f662a03a5a6b277473128cd7">  129</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a57099632f662a03a5a6b277473128cd7">RegisterKey</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html">BufferCreateDesc</a>&amp; desc, <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> h) {</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>                nameToHandle.emplace(desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a2d5634229084884f021c71d65ca67de9">name</a>, h);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            }</div>
+</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span></div>
+<div class="foldopen" id="foldopen00138" data-start="{" data-end="}">
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a84be09c9b8a573c04e7fe2f52be4eec4">  138</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html">BufferData</a> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a84be09c9b8a573c04e7fe2f52be4eec4">CreateResource</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html">BufferCreateDesc</a>&amp; desc, <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> h) {</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html">BufferData</a> out{};</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                D3D11_BUFFER_DESC bd = {};</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                bd.Usage = desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a66fc5251317cd8d9e24576595ae71eb0">usage</a>;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>                bd.BindFlags = desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a2478b843b3f9266941ebcacd6442c152">bindFlags</a>;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>                <span class="keywordflow">if</span> (desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a66fc5251317cd8d9e24576595ae71eb0">usage</a> == D3D11_USAGE_DYNAMIC) {</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>                    bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>                }</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a66fc5251317cd8d9e24576595ae71eb0">usage</a> == D3D11_USAGE_STAGING) {</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                    bd.CPUAccessFlags = desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#ac836391c0c5408e5f3fb2998fca7232e">cpuAccessFlags</a>; <span class="comment">// CPU アクセスフラグを指定</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>                }</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>                bd.ByteWidth = <span class="keyword">static_cast&lt;</span>UINT<span class="keyword">&gt;</span>(desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a420cc8d4a4ed2f5b5c7fdda8146f4b4e">size</a>);</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                bd.MiscFlags = desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a719d131c7fcef3de2b5acc91ee1ba158">miscFlags</a>;</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>                <span class="keywordflow">if</span> (bd.MiscFlags &amp; D3D11_RESOURCE_MISC_BUFFER_STRUCTURED) {</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>                    bd.StructureByteStride = desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#ab821aea901a763c0667af252f1c24734">structureByteStride</a>;</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>                }</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>                assert(desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a2478b843b3f9266941ebcacd6442c152">bindFlags</a> != D3D11_BIND_CONSTANT_BUFFER || desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a420cc8d4a4ed2f5b5c7fdda8146f4b4e">size</a> % 16 == 0 &amp;&amp; <span class="stringliteral">&quot;定数バッファのサイズが16倍数ではありません&quot;</span>);</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>                HRESULT hr;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>                <span class="keywordflow">if</span> (desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a174466dba1d8feaaf85a43df2a8ecce7">initialData</a> == <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>                    <span class="keywordflow">if</span> (bd.Usage == D3D11_USAGE_IMMUTABLE) {</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>                        assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Immutable buffer must have initial data.&quot;</span>);</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>                    }</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>                    hr = device-&gt;CreateBuffer(&amp;bd, <span class="keyword">nullptr</span>, &amp;out.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#ae530e46e1f691ee2f8f5f148e43e1940">buffer</a>);</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>                }</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>                    D3D11_SUBRESOURCE_DATA initData = {};</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>                    initData.pSysMem = desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a174466dba1d8feaaf85a43df2a8ecce7">initialData</a>;</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                    hr = device-&gt;CreateBuffer(&amp;bd, &amp;initData, &amp;out.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#ae530e46e1f691ee2f8f5f148e43e1940">buffer</a>);</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                }</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                <span class="keywordflow">if</span> (FAILED(hr)) {</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                    assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Failed to create constant buffer&quot;</span>);</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                }</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                <span class="comment">// SRV が必要なら作成</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                <span class="keywordflow">if</span> (desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a2478b843b3f9266941ebcacd6442c152">bindFlags</a> &amp; D3D11_BIND_SHADER_RESOURCE) {</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                    D3D11_SHADER_RESOURCE_VIEW_DESC sd{};</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                    <span class="keywordflow">if</span> (desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a719d131c7fcef3de2b5acc91ee1ba158">miscFlags</a> &amp; D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS) {</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                        <span class="comment">// ByteAddressBuffer (raw)</span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                        sd.Format = DXGI_FORMAT_R32_TYPELESS;</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                        sd.ViewDimension = D3D11_SRV_DIMENSION_BUFFEREX;</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                        sd.BufferEx.FirstElement = 0;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>                        sd.BufferEx.NumElements = desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a420cc8d4a4ed2f5b5c7fdda8146f4b4e">size</a> / 4;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                        sd.BufferEx.Flags = D3D11_BUFFEREX_SRV_FLAG_RAW;</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>                    }</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>                    <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>                        <span class="comment">// StructuredBuffer</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>                        sd.Format = DXGI_FORMAT_UNKNOWN;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                        sd.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>                        sd.Buffer.FirstElement = 0;</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>                        sd.Buffer.NumElements = desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a420cc8d4a4ed2f5b5c7fdda8146f4b4e">size</a> / desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#ab821aea901a763c0667af252f1c24734">structureByteStride</a>;</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>                    }</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>                    HRESULT hr = device-&gt;CreateShaderResourceView(out.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#ae530e46e1f691ee2f8f5f148e43e1940">buffer</a>.Get(), &amp;sd, &amp;out.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#a69557da67864ac4f275c9a6ab9892453">srv</a>);</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                    assert(SUCCEEDED(hr));</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                }</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                <span class="comment">// UAV が必要なら作成（Compute 用）</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>                <span class="keywordflow">if</span> (desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a2478b843b3f9266941ebcacd6442c152">bindFlags</a> &amp; D3D11_BIND_UNORDERED_ACCESS) {</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>                    D3D11_UNORDERED_ACCESS_VIEW_DESC ud{};</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>                    <span class="keywordflow">if</span> (desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a719d131c7fcef3de2b5acc91ee1ba158">miscFlags</a> &amp; D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS) {</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>                        ud.Format = DXGI_FORMAT_R32_TYPELESS;</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>                        ud.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>                        ud.Buffer.FirstElement = 0;</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>                        ud.Buffer.NumElements = desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a420cc8d4a4ed2f5b5c7fdda8146f4b4e">size</a> / 4;</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                        ud.Buffer.Flags = D3D11_BUFFER_UAV_FLAG_RAW;</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>                    }</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>                    <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>                        ud.Format = DXGI_FORMAT_UNKNOWN;</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                        ud.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>                        ud.Buffer.FirstElement = 0;</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>                        ud.Buffer.NumElements = desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a420cc8d4a4ed2f5b5c7fdda8146f4b4e">size</a> / desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#ab821aea901a763c0667af252f1c24734">structureByteStride</a>;</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                        ud.Buffer.Flags = 0;</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                    }</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                    HRESULT hr = device-&gt;CreateUnorderedAccessView(out.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#ae530e46e1f691ee2f8f5f148e43e1940">buffer</a>.Get(), &amp;ud, &amp;out.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#a36418fa060de4b27f779372f52d1baaa">uav</a>);</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>                    assert(SUCCEEDED(hr));</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>                }</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                <span class="keywordflow">return</span> out;</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>            }</div>
+</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span></div>
+<div class="foldopen" id="foldopen00226" data-start="{" data-end="}">
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#acfc7f943801e3d719e85d859ce6fcaaa">  226</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#acfc7f943801e3d719e85d859ce6fcaaa">FindByName</a>(<span class="keyword">const</span> std::string&amp; name) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                <span class="keyword">auto</span> it = nameToHandle.find(name);</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>                <span class="keywordflow">if</span> (it != nameToHandle.end()) <span class="keywordflow">return</span> it-&gt;second;</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>                assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;ConstantBuffer not found&quot;</span>);</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>                <span class="keywordflow">return</span> {};</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>            }</div>
+</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span></div>
+<div class="foldopen" id="foldopen00238" data-start="{" data-end="}">
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a65748b131df27c1bbe129bc9406ec661">  238</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a65748b131df27c1bbe129bc9406ec661">AcquireWithContent</a>(<span class="keyword">const</span> <span class="keywordtype">void</span>* data, uint32_t size) {</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>                assert(data &amp;&amp; size &gt; 0);</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html">BufferCacheKey</a> key{ <a class="code hl_function" href="namespace_s_f_w.html#ab8cb832ca884cf7f1a3ae8dd04491ffa">HashBufferContent</a>(data, size), size };</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>                <span class="keywordflow">if</span> (<span class="keyword">auto</span> it = cbvCache.find(key); it != cbvCache.end()) {</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>                    <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#ae15f0d5d2bed3eb6c9c6d7b6864d78f7">AddRef</a>(it-&gt;second);</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>                    <span class="keywordflow">return</span> it-&gt;second;</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>                }</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>                <span class="comment">// 初回作成：匿名名で Add（Add が +1 を返す）</span></div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> h;</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html">BufferCreateDesc</a> desc = {</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>                    .name = <span class="stringliteral">&quot;auto_cb_&quot;</span> + std::to_string(key.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a3b52cfa4769886383debb386ee28fd17">hash</a>),</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>                    .size = size,</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                    .initialData = data</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                };</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>                <a class="code hl_enumvalue" href="namespace_s_f_w.html#a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9">Add</a>(desc, h);</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>                cbvCache[key] = h;</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>                handleToCacheKey[h.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html#ad448ed941617767de7ff75264c69ac50">index</a>] = key;</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>                <span class="keywordflow">return</span> h;</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>            }</div>
+</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span></div>
+<div class="foldopen" id="foldopen00263" data-start="{" data-end="}">
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a92337ceb4a904e2e9151755b9b12689d">  263</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a92337ceb4a904e2e9151755b9b12689d">UpdateBuffer</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html">BufferUpdateDesc</a>&amp; desc, uint16_t slot) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>                uint32_t count = pendingCount[slot].fetch_add(1, std::memory_order_acq_rel);</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                <span class="keywordflow">if</span> (count &gt;= <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a37262fb5f172ce3dbc15c399f870eeb7">MAX_PENDING_UPDATE_NUM</a>) {</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                    <span class="comment">//LOG_ERROR(&quot;最大更新処理数に達しました&quot;);</span></div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                }</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                pendingUpdates[slot][count] = desc;</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>            }</div>
+</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span></div>
+<div class="foldopen" id="foldopen00275" data-start="{" data-end="}">
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#ac196325f92d5a473fb5073e39558c772">  275</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#ac196325f92d5a473fb5073e39558c772">PendingUpdates</a>(<span class="keywordtype">size_t</span> frameIndex) {</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                uint16_t slot = frameIndex % RENDER_BUFFER_COUNT;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                uint32_t count = pendingCount[slot].load(std::memory_order_relaxed);</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span> </div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>                <span class="keywordflow">if</span> (count &gt; 0) {</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                    <span class="keyword">auto</span>&amp; pendings = pendingUpdates[slot];</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>                    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; count; ++i) {</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>                        <span class="keyword">auto</span>&amp; update = pendings[i];</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>                        assert(update.isValid() &amp;&amp; <span class="stringliteral">&quot;バッファの更新情報が正しくありません&quot;</span>);</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> </div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>                        D3D11_MAPPED_SUBRESOURCE mapped;</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>                        HRESULT hr = context-&gt;Map(update.buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &amp;mapped);</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>                        <span class="keywordflow">if</span> (SUCCEEDED(hr)) [[likely]] {</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>                            <span class="keywordflow">if</span> (update.customUpdateFunc) {</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>                                update.customUpdateFunc(mapped.pData, update.data, update.size);</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>                            }</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>                            <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>                                memcpy(mapped.pData, update.data, update.size);</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>                            }</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>                            context-&gt;Unmap(update.buffer.Get(), 0);</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>                        }</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>                            assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Failed to map constant buffer for update&quot;</span>);</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>                        }</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                        <span class="keywordflow">if</span> (update.data &amp;&amp; update.isDelete) {</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>                            update.isArray ? <span class="keyword">delete</span>[] update.data : <span class="keyword">delete</span> update.data;</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>                            update.isDelete = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>                        }</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                    }</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>                    pendingCount[slot].store(0, std::memory_order_release);</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>                }</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>            }</div>
+</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span></div>
+<div class="foldopen" id="foldopen00314" data-start="{" data-end="}">
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#afcae0aebe1fb1d3ed9213c5aeed5a0b4">  314</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#afcae0aebe1fb1d3ed9213c5aeed5a0b4">RemoveFromCaches</a>(uint32_t idx) {</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>                <span class="keyword">auto</span>&amp; d = <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[idx].data;</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>                <span class="keywordflow">if</span> (!std::string(d.name).empty()) nameToHandle.erase(std::string(d.name));</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>                <span class="keywordflow">if</span> (<span class="keyword">auto</span> it = handleToCacheKey.find(idx); it != handleToCacheKey.end()) {</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>                    cbvCache.erase(it-&gt;second);</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>                    handleToCacheKey.erase(it);</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>                }</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>            }</div>
+</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span></div>
+<div class="foldopen" id="foldopen00326" data-start="{" data-end="}">
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a96378e35af3add1fd6e68939eaf7440a">  326</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a96378e35af3add1fd6e68939eaf7440a">DestroyResource</a>(uint32_t idx, uint64_t <span class="comment">/*currentFrame*/</span>) {</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>                <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[idx].data.buffer.Reset();</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>            }</div>
+</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span></div>
+<div class="foldopen" id="foldopen00335" data-start="{" data-end="}">
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a6310a6c87bce345496102a464a82b59a">  335</a></span>            ComPtr&lt;ID3D11ShaderResourceView&gt; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a6310a6c87bce345496102a464a82b59a">CreateSRV</a>(ComPtr&lt;ID3D11Buffer&gt; buffer, D3D11_SHADER_RESOURCE_VIEW_DESC desc)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>                ComPtr&lt;ID3D11ShaderResourceView&gt; srv;</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>                HRESULT hr = device-&gt;CreateShaderResourceView(buffer.Get(), &amp;desc, &amp;srv);</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>                <span class="keywordflow">if</span> (FAILED(hr)) {</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>                    assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Failed to create shader resource view&quot;</span>);</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>                }</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>                <span class="keywordflow">return</span> srv;</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>            }</div>
+</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span></div>
+<div class="foldopen" id="foldopen00349" data-start="{" data-end="}">
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a489437c94da155d2673ac94fb0ede6ef">  349</a></span>            ComPtr&lt;ID3D11UnorderedAccessView&gt; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a489437c94da155d2673ac94fb0ede6ef">CreateUAV</a>(ComPtr&lt;ID3D11Buffer&gt; buffer, D3D11_UNORDERED_ACCESS_VIEW_DESC desc)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>                ComPtr&lt;ID3D11UnorderedAccessView&gt; uav;</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>                HRESULT hr = device-&gt;CreateUnorderedAccessView(buffer.Get(), &amp;desc, &amp;uav);</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>                <span class="keywordflow">if</span> (FAILED(hr)) {</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>                    assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Failed to create unordered access view&quot;</span>);</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>                }</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>                <span class="keywordflow">return</span> uav;</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>            }</div>
+</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>            ID3D11Device* device;</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>            ID3D11DeviceContext* context;</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>            std::unordered_map&lt;std::string, BufferHandle&gt; nameToHandle;</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>            std::unordered_map&lt;BufferCacheKey, BufferHandle, BufferCacheKeyHash&gt; cbvCache;</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span> </div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>            std::unordered_map&lt;uint32_t, BufferCacheKey&gt; handleToCacheKey; <span class="comment">// key: handle.index</span></div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span> </div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>            std::mutex pendingMutex[RENDER_BUFFER_COUNT];</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>            std::atomic&lt;uint32_t&gt; pendingCount[RENDER_BUFFER_COUNT]{ 0 };</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>            BufferUpdateDesc pendingUpdates[RENDER_BUFFER_COUNT][<a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a37262fb5f172ce3dbc15c399f870eeb7">MAX_PENDING_UPDATE_NUM</a>]; <span class="comment">// 更新待ちのデータ</span></div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>        };</div>
+</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>    }</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>}</div>
+<div class="ttc" id="a__dx11inc_8h_html"><div class="ttname"><a href="__dx11inc_8h.html">_dx11inc.h</a></div><div class="ttdoc">DirectX 11関連のインクルードとユーティリティを定義するヘッダーファイル</div></div>
+<div class="ttc" id="a_resouce_manager_base_8hpp_html"><div class="ttname"><a href="_resouce_manager_base_8hpp.html">ResouceManagerBase.hpp</a></div><div class="ttdoc">リソースマネージャーの基底クラス</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html_a0ff85419cdd578bf66853139a806e9a5"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a0ff85419cdd578bf66853139a806e9a5">SFW::Graphics::DX11::BufferManager::~BufferManager</a></div><div class="ttdeci">~BufferManager()</div><div class="ttdoc">デストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00105">DX11BufferManager.h:105</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html_a37262fb5f172ce3dbc15c399f870eeb7"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a37262fb5f172ce3dbc15c399f870eeb7">SFW::Graphics::DX11::BufferManager::MAX_PENDING_UPDATE_NUM</a></div><div class="ttdeci">static constexpr uint32_t MAX_PENDING_UPDATE_NUM</div><div class="ttdef"><b>Definition</b> <a href="#l00092">DX11BufferManager.h:92</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html_a489437c94da155d2673ac94fb0ede6ef"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a489437c94da155d2673ac94fb0ede6ef">SFW::Graphics::DX11::BufferManager::CreateUAV</a></div><div class="ttdeci">ComPtr&lt; ID3D11UnorderedAccessView &gt; CreateUAV(ComPtr&lt; ID3D11Buffer &gt; buffer, D3D11_UNORDERED_ACCESS_VIEW_DESC desc) const</div><div class="ttdoc">CreateUAV: バッファ用のアンオーダードアクセスビューを作成する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00349">DX11BufferManager.h:349</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html_a57099632f662a03a5a6b277473128cd7"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a57099632f662a03a5a6b277473128cd7">SFW::Graphics::DX11::BufferManager::RegisterKey</a></div><div class="ttdeci">void RegisterKey(const BufferCreateDesc &amp;desc, BufferHandle h)</div><div class="ttdoc">キー登録</div><div class="ttdef"><b>Definition</b> <a href="#l00129">DX11BufferManager.h:129</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html_a5f95be5589a2dcbc3d3f2f0509655e4e"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a5f95be5589a2dcbc3d3f2f0509655e4e">SFW::Graphics::DX11::BufferManager::BufferManager</a></div><div class="ttdeci">BufferManager(ID3D11Device *device, ID3D11DeviceContext *context) noexcept</div><div class="ttdoc">コンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00099">DX11BufferManager.h:99</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html_a6310a6c87bce345496102a464a82b59a"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a6310a6c87bce345496102a464a82b59a">SFW::Graphics::DX11::BufferManager::CreateSRV</a></div><div class="ttdeci">ComPtr&lt; ID3D11ShaderResourceView &gt; CreateSRV(ComPtr&lt; ID3D11Buffer &gt; buffer, D3D11_SHADER_RESOURCE_VIEW_DESC desc) const</div><div class="ttdoc">CreateSRV: バッファ用のシェーダーリソースビューを作成する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00335">DX11BufferManager.h:335</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html_a65748b131df27c1bbe129bc9406ec661"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a65748b131df27c1bbe129bc9406ec661">SFW::Graphics::DX11::BufferManager::AcquireWithContent</a></div><div class="ttdeci">BufferHandle AcquireWithContent(const void *data, uint32_t size)</div><div class="ttdoc">自動CB(内容キャッシュ)は AcquireAPI で</div><div class="ttdef"><b>Definition</b> <a href="#l00238">DX11BufferManager.h:238</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html_a84be09c9b8a573c04e7fe2f52be4eec4"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a84be09c9b8a573c04e7fe2f52be4eec4">SFW::Graphics::DX11::BufferManager::CreateResource</a></div><div class="ttdeci">BufferData CreateResource(const BufferCreateDesc &amp;desc, BufferHandle h)</div><div class="ttdoc">リソース作成</div><div class="ttdef"><b>Definition</b> <a href="#l00138">DX11BufferManager.h:138</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html_a92337ceb4a904e2e9151755b9b12689d"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a92337ceb4a904e2e9151755b9b12689d">SFW::Graphics::DX11::BufferManager::UpdateBuffer</a></div><div class="ttdeci">void UpdateBuffer(const BufferUpdateDesc &amp;desc, uint16_t slot) noexcept</div><div class="ttdoc">バッファの内容を遅延で更新するためにキューに追加</div><div class="ttdef"><b>Definition</b> <a href="#l00263">DX11BufferManager.h:263</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html_a94358915d5d48424d358af19bc44ce25"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a94358915d5d48424d358af19bc44ce25">SFW::Graphics::DX11::BufferManager::FindExisting</a></div><div class="ttdeci">std::optional&lt; BufferHandle &gt; FindExisting(const BufferCreateDesc &amp;desc) noexcept</div><div class="ttdoc">既存検索（名前ベース）</div><div class="ttdef"><b>Definition</b> <a href="#l00119">DX11BufferManager.h:119</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html_a96378e35af3add1fd6e68939eaf7440a"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#a96378e35af3add1fd6e68939eaf7440a">SFW::Graphics::DX11::BufferManager::DestroyResource</a></div><div class="ttdeci">void DestroyResource(uint32_t idx, uint64_t)</div><div class="ttdoc">DestroyResource: GPU 解放</div><div class="ttdef"><b>Definition</b> <a href="#l00326">DX11BufferManager.h:326</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html_ac196325f92d5a473fb5073e39558c772"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#ac196325f92d5a473fb5073e39558c772">SFW::Graphics::DX11::BufferManager::PendingUpdates</a></div><div class="ttdeci">void PendingUpdates(size_t frameIndex)</div><div class="ttdoc">保留中のバッファ更新を処理</div><div class="ttdef"><b>Definition</b> <a href="#l00275">DX11BufferManager.h:275</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html_acfc7f943801e3d719e85d859ce6fcaaa"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#acfc7f943801e3d719e85d859ce6fcaaa">SFW::Graphics::DX11::BufferManager::FindByName</a></div><div class="ttdeci">BufferHandle FindByName(const std::string &amp;name) const noexcept</div><div class="ttdoc">名前でバッファを検索</div><div class="ttdef"><b>Definition</b> <a href="#l00226">DX11BufferManager.h:226</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html_afcae0aebe1fb1d3ed9213c5aeed5a0b4"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html#afcae0aebe1fb1d3ed9213c5aeed5a0b4">SFW::Graphics::DX11::BufferManager::RemoveFromCaches</a></div><div class="ttdeci">void RemoveFromCaches(uint32_t idx)</div><div class="ttdoc">RemoveFromCaches: 名前表 / 内容キャッシュを掃除</div><div class="ttdef"><b>Definition</b> <a href="#l00314">DX11BufferManager.h:314</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a></div><div class="ttdoc">リソースマネージャーの基底クラス。主にRenderer系で使用する。</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00023">ResouceManagerBase.hpp:23</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ab06811456bf9d3e86d400be7459a91ca"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">SFW::ResourceManagerBase&lt; BufferManager, BufferHandle, BufferCreateDesc, BufferData &gt;::slots</a></div><div class="ttdeci">std::vector&lt; Slot &gt; slots</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00352">ResouceManagerBase.hpp:352</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ae15f0d5d2bed3eb6c9c6d7b6864d78f7"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ae15f0d5d2bed3eb6c9c6d7b6864d78f7">SFW::ResourceManagerBase&lt; BufferManager, BufferHandle, BufferCreateDesc, BufferData &gt;::AddRef</a></div><div class="ttdeci">void AddRef(BufferHandle h)</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00138">ResouceManagerBase.hpp:138</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_1_1_d_x11_html"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">SFW::Graphics::DX11</a></div><div class="ttdef"><b>Definition</b> <a href="_d_x11_graphics_8h_source.html#l00034">DX11Graphics.h:35</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html_a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9"><div class="ttname"><a href="namespace_s_f_w.html#a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9">SFW::EApplyLevelSystemOption::Add</a></div><div class="ttdeci">@ Add</div><div class="ttdef"><b>Definition</b> <a href="_world_8hpp_source.html#l00017">World.hpp:17</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html_ab8cb832ca884cf7f1a3ae8dd04491ffa"><div class="ttname"><a href="namespace_s_f_w.html#ab8cb832ca884cf7f1a3ae8dd04491ffa">SFW::HashBufferContent</a></div><div class="ttdeci">size_t HashBufferContent(const void *data, size_t size)</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00375">ResouceManagerBase.hpp:375</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_buffer_handle_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">SFW::Graphics::BufferHandle</a></div><div class="ttdoc">バッファハンドル構造体</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00043">RenderTypes.h:43</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_buffer_handle_html_ad448ed941617767de7ff75264c69ac50"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html#ad448ed941617767de7ff75264c69ac50">SFW::Graphics::BufferHandle::index</a></div><div class="ttdeci">uint32_t index</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00043">RenderTypes.h:43</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key_hash_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key_hash.html">SFW::Graphics::DX11::BufferCacheKeyHash</a></div><div class="ttdoc">DirectX 11のバッファの内容をハッシュ化するための関数</div><div class="ttdef"><b>Definition</b> <a href="#l00056">DX11BufferManager.h:56</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key_hash_html_ad9936f5b58e06b97f0c9bfe6cf2fed39"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key_hash.html#ad9936f5b58e06b97f0c9bfe6cf2fed39">SFW::Graphics::DX11::BufferCacheKeyHash::operator()</a></div><div class="ttdeci">std::size_t operator()(const BufferCacheKey &amp;k) const</div><div class="ttdef"><b>Definition</b> <a href="#l00057">DX11BufferManager.h:57</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html">SFW::Graphics::DX11::BufferCacheKey</a></div><div class="ttdoc">DirectX 11のバッファのハッシュ構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00045">DX11BufferManager.h:45</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key_html_a3aa53b143f3f9769c77e94eef60750e0"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a3aa53b143f3f9769c77e94eef60750e0">SFW::Graphics::DX11::BufferCacheKey::operator==</a></div><div class="ttdeci">bool operator==(const BufferCacheKey &amp;other) const</div><div class="ttdef"><b>Definition</b> <a href="#l00049">DX11BufferManager.h:49</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key_html_a3b52cfa4769886383debb386ee28fd17"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a3b52cfa4769886383debb386ee28fd17">SFW::Graphics::DX11::BufferCacheKey::hash</a></div><div class="ttdeci">size_t hash</div><div class="ttdef"><b>Definition</b> <a href="#l00046">DX11BufferManager.h:46</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key_html_a86f263c9364759c16606bd07afb35498"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a86f263c9364759c16606bd07afb35498">SFW::Graphics::DX11::BufferCacheKey::size</a></div><div class="ttdeci">size_t size</div><div class="ttdef"><b>Definition</b> <a href="#l00047">DX11BufferManager.h:47</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html">SFW::Graphics::DX11::BufferCreateDesc</a></div><div class="ttdoc">DirectX 11のバッファを作成するための構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00023">DX11BufferManager.h:23</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_html_a174466dba1d8feaaf85a43df2a8ecce7"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a174466dba1d8feaaf85a43df2a8ecce7">SFW::Graphics::DX11::BufferCreateDesc::initialData</a></div><div class="ttdeci">const void * initialData</div><div class="ttdef"><b>Definition</b> <a href="#l00027">DX11BufferManager.h:27</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_html_a2478b843b3f9266941ebcacd6442c152"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a2478b843b3f9266941ebcacd6442c152">SFW::Graphics::DX11::BufferCreateDesc::bindFlags</a></div><div class="ttdeci">D3D11_BIND_FLAG bindFlags</div><div class="ttdef"><b>Definition</b> <a href="#l00029">DX11BufferManager.h:29</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_html_a2d5634229084884f021c71d65ca67de9"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a2d5634229084884f021c71d65ca67de9">SFW::Graphics::DX11::BufferCreateDesc::name</a></div><div class="ttdeci">std::string name</div><div class="ttdef"><b>Definition</b> <a href="#l00024">DX11BufferManager.h:24</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_html_a420cc8d4a4ed2f5b5c7fdda8146f4b4e"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a420cc8d4a4ed2f5b5c7fdda8146f4b4e">SFW::Graphics::DX11::BufferCreateDesc::size</a></div><div class="ttdeci">uint32_t size</div><div class="ttdef"><b>Definition</b> <a href="#l00025">DX11BufferManager.h:25</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_html_a66fc5251317cd8d9e24576595ae71eb0"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a66fc5251317cd8d9e24576595ae71eb0">SFW::Graphics::DX11::BufferCreateDesc::usage</a></div><div class="ttdeci">D3D11_USAGE usage</div><div class="ttdef"><b>Definition</b> <a href="#l00028">DX11BufferManager.h:28</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_html_a719d131c7fcef3de2b5acc91ee1ba158"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a719d131c7fcef3de2b5acc91ee1ba158">SFW::Graphics::DX11::BufferCreateDesc::miscFlags</a></div><div class="ttdeci">D3D11_RESOURCE_MISC_FLAG miscFlags</div><div class="ttdef"><b>Definition</b> <a href="#l00030">DX11BufferManager.h:30</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_html_ab821aea901a763c0667af252f1c24734"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#ab821aea901a763c0667af252f1c24734">SFW::Graphics::DX11::BufferCreateDesc::structureByteStride</a></div><div class="ttdeci">uint32_t structureByteStride</div><div class="ttdef"><b>Definition</b> <a href="#l00026">DX11BufferManager.h:26</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_html_ac836391c0c5408e5f3fb2998fca7232e"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#ac836391c0c5408e5f3fb2998fca7232e">SFW::Graphics::DX11::BufferCreateDesc::cpuAccessFlags</a></div><div class="ttdeci">D3D11_CPU_ACCESS_FLAG cpuAccessFlags</div><div class="ttdef"><b>Definition</b> <a href="#l00031">DX11BufferManager.h:31</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html">SFW::Graphics::DX11::BufferData</a></div><div class="ttdoc">DirectX 11のバッファデータを格納する構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00036">DX11BufferManager.h:36</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data_html_a36418fa060de4b27f779372f52d1baaa"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#a36418fa060de4b27f779372f52d1baaa">SFW::Graphics::DX11::BufferData::uav</a></div><div class="ttdeci">ComPtr&lt; ID3D11UnorderedAccessView &gt; uav</div><div class="ttdef"><b>Definition</b> <a href="#l00039">DX11BufferManager.h:39</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data_html_a69557da67864ac4f275c9a6ab9892453"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#a69557da67864ac4f275c9a6ab9892453">SFW::Graphics::DX11::BufferData::srv</a></div><div class="ttdeci">ComPtr&lt; ID3D11ShaderResourceView &gt; srv</div><div class="ttdef"><b>Definition</b> <a href="#l00038">DX11BufferManager.h:38</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data_html_ad9f8888905d36e1b5a133f2d468fc58c"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#ad9f8888905d36e1b5a133f2d468fc58c">SFW::Graphics::DX11::BufferData::name</a></div><div class="ttdeci">std::string_view name</div><div class="ttdef"><b>Definition</b> <a href="#l00040">DX11BufferManager.h:40</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data_html_ae530e46e1f691ee2f8f5f148e43e1940"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#ae530e46e1f691ee2f8f5f148e43e1940">SFW::Graphics::DX11::BufferData::buffer</a></div><div class="ttdeci">ComPtr&lt; ID3D11Buffer &gt; buffer</div><div class="ttdef"><b>Definition</b> <a href="#l00037">DX11BufferManager.h:37</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html">SFW::Graphics::DX11::BufferUpdateDesc</a></div><div class="ttdoc">DirectX 11のバッファを更新するための構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00064">DX11BufferManager.h:64</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html_a01d288173b48c54da9f3da4febb64d81"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a01d288173b48c54da9f3da4febb64d81">SFW::Graphics::DX11::BufferUpdateDesc::customUpdateFunc</a></div><div class="ttdeci">CustomUpdateFunc customUpdateFunc</div><div class="ttdef"><b>Definition</b> <a href="#l00072">DX11BufferManager.h:72</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html_a07e31605bcaff0addf3aeacb783385e6"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a07e31605bcaff0addf3aeacb783385e6">SFW::Graphics::DX11::BufferUpdateDesc::CustomUpdateFunc</a></div><div class="ttdeci">void(*)(void *, const void *, size_t) CustomUpdateFunc</div><div class="ttdef"><b>Definition</b> <a href="#l00070">DX11BufferManager.h:70</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html_a14ef18965da6011db8ad5171a1d0a32e"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a14ef18965da6011db8ad5171a1d0a32e">SFW::Graphics::DX11::BufferUpdateDesc::operator==</a></div><div class="ttdeci">bool operator==(const BufferUpdateDesc &amp;other) const</div><div class="ttdef"><b>Definition</b> <a href="#l00081">DX11BufferManager.h:81</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html_a2492ece3cc94f3e6afb82e96922577aa"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a2492ece3cc94f3e6afb82e96922577aa">SFW::Graphics::DX11::BufferUpdateDesc::isValid</a></div><div class="ttdeci">bool isValid() const</div><div class="ttdef"><b>Definition</b> <a href="#l00077">DX11BufferManager.h:77</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html_a278366276319100c1f60ff289705200d"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a278366276319100c1f60ff289705200d">SFW::Graphics::DX11::BufferUpdateDesc::size</a></div><div class="ttdeci">size_t size</div><div class="ttdef"><b>Definition</b> <a href="#l00067">DX11BufferManager.h:67</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html_a90526740b06b4c7bd21cb4cedaf0706a"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a90526740b06b4c7bd21cb4cedaf0706a">SFW::Graphics::DX11::BufferUpdateDesc::isDelete</a></div><div class="ttdeci">bool isDelete</div><div class="ttdef"><b>Definition</b> <a href="#l00074">DX11BufferManager.h:74</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html_a97151ab935e54ab98a3e03abfea98948"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a97151ab935e54ab98a3e03abfea98948">SFW::Graphics::DX11::BufferUpdateDesc::data</a></div><div class="ttdeci">const void * data</div><div class="ttdef"><b>Definition</b> <a href="#l00066">DX11BufferManager.h:66</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html_abcae34323240528fb7f5b218fa5a40d5"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#abcae34323240528fb7f5b218fa5a40d5">SFW::Graphics::DX11::BufferUpdateDesc::isArray</a></div><div class="ttdeci">bool isArray</div><div class="ttdef"><b>Definition</b> <a href="#l00075">DX11BufferManager.h:75</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html_ad5c0b280047f02b553c758437678d546"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#ad5c0b280047f02b553c758437678d546">SFW::Graphics::DX11::BufferUpdateDesc::buffer</a></div><div class="ttdeci">ComPtr&lt; ID3D11Buffer &gt; buffer</div><div class="ttdef"><b>Definition</b> <a href="#l00065">DX11BufferManager.h:65</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="dir_b1727ce268e62d033d50a1c50b50897f.html">DX11</a></li><li class="navelem"><a href="_d_x11_buffer_manager_8h.html">DX11BufferManager.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

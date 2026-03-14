@@ -1,0 +1,144 @@
+\doxysection{SFW\+::Game\+Engine\texorpdfstring{$<$}{<} Graphics, Level\+Types \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_game_engine}{}\label{class_s_f_w_1_1_game_engine}\index{SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}}
+
+
+ゲームエンジン  
+
+
+
+
+{\ttfamily \#include $<$Game\+Engine.\+h$>$}
+
+SFW\+::Game\+Engine\texorpdfstring{$<$}{<} Graphics, Level\+Types \texorpdfstring{$>$}{>} の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_f_w_1_1_game_engine}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_game_engine_ad4ee0d8680803220f4d32c9611ae98d3}{Game\+Engine}} (Graphics \&\&graphics\+Device, \mbox{\hyperlink{class_s_f_w_1_1_world}{World\+Type}} \&\&world, double fps=60.\+0)
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_game_engine_a26e4f0b29634002f5b47c43152be9fec}{\texorpdfstring{$\sim$}{\string~}\+Game\+Engine}} ()
+\begin{DoxyCompactList}\small\item\em デストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_game_engine_ac637e80bedcc2e7d1ff0b12cf95cc117}{Game\+Engine}} (\mbox{\hyperlink{class_s_f_w_1_1_game_engine}{Game\+Engine}} \&\&)=delete
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_game_engine}{Game\+Engine}} \& \mbox{\hyperlink{class_s_f_w_1_1_game_engine_ac0fd50b51b4b6597286e6387eb96f0aa}{operator=}} (\mbox{\hyperlink{class_s_f_w_1_1_game_engine}{Game\+Engine}} \&\&)=delete
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_game_engine_acca014647ca1ec246d1202a80b9e2354}{Main\+Loop}} (\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor)
+\begin{DoxyCompactList}\small\item\em メインループ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_world}{World\+Type}} \& \mbox{\hyperlink{class_s_f_w_1_1_game_engine_a6402259925794bcc19eaf85aa342b02d}{Get\+World}} () noexcept
+\begin{DoxyCompactList}\small\item\em Worldのインスタンスを取得する \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$Graphics\+Type Graphics, typename... Level\+Types$>$\newline
+class SFW\+::\+Game\+Engine$<$ Graphics, Level\+Types $>$}
+ゲームエンジン 
+
+ゲームロジックを実行するクラス 
+
+ \mbox{\hyperlink{_game_engine_8h_source}{Game\+Engine.\+h}} の \mbox{\hyperlink{_game_engine_8h_source_l00041}{41}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_game_engine_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_game_engine_ad4ee0d8680803220f4d32c9611ae98d3}\index{SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}!GameEngine@{GameEngine}}
+\index{GameEngine@{GameEngine}!SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{GameEngine()}{GameEngine()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_game_engine_ad4ee0d8680803220f4d32c9611ae98d3} 
+template$<$Graphics\+Type Graphics, typename... Level\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_game_engine}{SFW\+::\+Game\+Engine}}$<$ Graphics, Level\+Types $>$\+::\+Game\+Engine (\begin{DoxyParamCaption}\item[{Graphics \&\&}]{graphics\+Device}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_world}{World\+Type}} \&\&}]{world}{, }\item[{double}]{fps}{ = {\ttfamily 60.0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em fps} & フレームレート \\
+\hline
+{\em graphics\+Device} & グラフィックデバイス\\
+\hline
+\end{DoxyParams}
+FPS制御クラスを初期化し、グラフィックデバイスを設定します。 
+
+ \mbox{\hyperlink{_game_engine_8h_source}{Game\+Engine.\+h}} の \mbox{\hyperlink{_game_engine_8h_source_l00052}{52}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_game_engine_a26e4f0b29634002f5b47c43152be9fec}\index{SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}!````~GameEngine@{\texorpdfstring{$\sim$}{\string~}GameEngine}}
+\index{````~GameEngine@{\texorpdfstring{$\sim$}{\string~}GameEngine}!SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}GameEngine()}{\string~GameEngine()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_game_engine_a26e4f0b29634002f5b47c43152be9fec} 
+template$<$Graphics\+Type Graphics, typename... Level\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_game_engine}{SFW\+::\+Game\+Engine}}$<$ Graphics, Level\+Types $>$\+::\texorpdfstring{$\sim$}{\string~}\mbox{\hyperlink{class_s_f_w_1_1_game_engine}{Game\+Engine}} (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+デストラクタ 
+
+
+
+ \mbox{\hyperlink{_game_engine_8h_source}{Game\+Engine.\+h}} の \mbox{\hyperlink{_game_engine_8h_source_l00064}{64}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_game_engine_ac637e80bedcc2e7d1ff0b12cf95cc117}\index{SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}!GameEngine@{GameEngine}}
+\index{GameEngine@{GameEngine}!SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{GameEngine()}{GameEngine()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_game_engine_ac637e80bedcc2e7d1ff0b12cf95cc117} 
+template$<$Graphics\+Type Graphics, typename... Level\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_game_engine}{SFW\+::\+Game\+Engine}}$<$ Graphics, Level\+Types $>$\+::\+Game\+Engine (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_game_engine}{Game\+Engine}}$<$ Graphics, Level\+Types $>$ \&\&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_game_engine_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_game_engine_a6402259925794bcc19eaf85aa342b02d}\index{SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}!GetWorld@{GetWorld}}
+\index{GetWorld@{GetWorld}!SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{GetWorld()}{GetWorld()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_game_engine_a6402259925794bcc19eaf85aa342b02d} 
+template$<$Graphics\+Type Graphics, typename... Level\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_world}{World\+Type}} \& \mbox{\hyperlink{class_s_f_w_1_1_game_engine}{SFW\+::\+Game\+Engine}}$<$ Graphics, Level\+Types $>$\+::\+Get\+World (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Worldのインスタンスを取得する 
+
+
+
+ \mbox{\hyperlink{_game_engine_8h_source}{Game\+Engine.\+h}} の \mbox{\hyperlink{_game_engine_8h_source_l00090}{90}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_game_engine_acca014647ca1ec246d1202a80b9e2354}\index{SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}!MainLoop@{MainLoop}}
+\index{MainLoop@{MainLoop}!SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{MainLoop()}{MainLoop()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_game_engine_acca014647ca1ec246d1202a80b9e2354} 
+template$<$Graphics\+Type Graphics, typename... Level\+Types$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_game_engine}{SFW\+::\+Game\+Engine}}$<$ Graphics, Level\+Types $>$\+::\+Main\+Loop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}}]{executor}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+メインループ 
+
+
+\begin{DoxyParams}{引数}
+{\em fps\+Control} & FPS制御クラスのインスタンス\\
+\hline
+\end{DoxyParams}
+FPS制御クラスを使用して、メインループを実行します。 
+
+ \mbox{\hyperlink{_game_engine_8h_source}{Game\+Engine.\+h}} の \mbox{\hyperlink{_game_engine_8h_source_l00078}{78}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_game_engine_ac0fd50b51b4b6597286e6387eb96f0aa}\index{SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_game_engine_ac0fd50b51b4b6597286e6387eb96f0aa} 
+template$<$Graphics\+Type Graphics, typename... Level\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_game_engine}{Game\+Engine}} \& \mbox{\hyperlink{class_s_f_w_1_1_game_engine}{SFW\+::\+Game\+Engine}}$<$ Graphics, Level\+Types $>$\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_game_engine}{Game\+Engine}}$<$ Graphics, Level\+Types $>$ \&\&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_game_engine_8h}{Game\+Engine.\+h}}\end{DoxyCompactItemize}

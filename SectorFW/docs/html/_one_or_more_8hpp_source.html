@@ -1,0 +1,421 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/OneOrMore.hpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_one_or_more_8hpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">OneOrMore.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_one_or_more_8hpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;variant&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;optional&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;iterator&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;cassert&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="foldopen" id="foldopen00021" data-start="{" data-end="};">
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="class_one_or_more.html">   21</a></span><span class="keyword">class </span><a class="code hl_function" href="class_one_or_more.html#aae5d09681726fe71ced4c0e481d3c0b8">OneOrMore</a> {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    std::variant&lt;std::monostate, T, std::vector&lt;T&gt;&gt; data_;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">static</span> std::pair&lt;const T*, const T*&gt; ptr_range(<span class="keyword">const</span> std::variant&lt;std::monostate, T, std::vector&lt;T&gt;&gt;&amp; v) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keywordflow">if</span> (std::holds_alternative&lt;T&gt;(v)) {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            <span class="keyword">const</span> T&amp; s = std::get&lt;T&gt;(v);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            <span class="keywordflow">return</span> { std::addressof(s), std::addressof(s) + 1 };</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        }</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keywordflow">if</span> (std::holds_alternative&lt;std::vector&lt;T&gt;&gt;(v)) {</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; vec = std::get&lt;std::vector&lt;T&gt;&gt;(v);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            <span class="keywordflow">return</span> { vec.data(), vec.data() + vec.size() };</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        }</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keywordflow">return</span> { <span class="keyword">nullptr</span>, <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    }</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="class_one_or_more.html#aae5d09681726fe71ced4c0e481d3c0b8">   40</a></span>    <a class="code hl_function" href="class_one_or_more.html#aae5d09681726fe71ced4c0e481d3c0b8">OneOrMore</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span></div>
+<div class="foldopen" id="foldopen00046" data-start="{" data-end="}">
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="class_one_or_more.html#a6a3167fed500a2b9b8f8d2251367647f">   46</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_one_or_more.html#a6a3167fed500a2b9b8f8d2251367647f">add</a>(<span class="keyword">const</span> T&amp; value) {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keywordflow">if</span> (std::holds_alternative&lt;std::monostate&gt;(data_)) {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            data_ = value;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        }</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::holds_alternative&lt;T&gt;(data_)) {</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            std::vector&lt;T&gt; vec;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            vec.reserve(2);                    <span class="comment">// ★ single→multi 変換時の再確保を避ける</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            vec.push_back(std::get&lt;T&gt;(data_));</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            vec.push_back(value);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            data_ = std::move(vec);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        }</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            std::get&lt;std::vector&lt;T&gt;&gt;(data_).push_back(value);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        }</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    }</div>
+</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span></div>
+<div class="foldopen" id="foldopen00065" data-start="{" data-end="}">
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="class_one_or_more.html#ac2c388f1f79932cd71a4655fd1b83923">   65</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_one_or_more.html#ac2c388f1f79932cd71a4655fd1b83923">add</a>(T&amp;&amp; value) {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="keywordflow">if</span> (std::holds_alternative&lt;std::monostate&gt;(data_)) {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            data_ = std::move(value);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        }</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::holds_alternative&lt;T&gt;(data_)) {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            std::vector&lt;T&gt; vec;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            vec.reserve(2);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            vec.push_back(std::move(std::get&lt;T&gt;(data_)));</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            vec.push_back(std::move(value));</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            data_ = std::move(vec);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        }</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            std::get&lt;std::vector&lt;T&gt;&gt;(data_).push_back(std::move(value));</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        }</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    }</div>
+</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="keyword">template</span> &lt;<span class="keyword">class</span>... Args&gt;</div>
+<div class="foldopen" id="foldopen00086" data-start="{" data-end="}">
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="class_one_or_more.html#a504358f3f74b9a8571fde6b325d033c6">   86</a></span>    T&amp; <a class="code hl_function" href="class_one_or_more.html#a504358f3f74b9a8571fde6b325d033c6">emplace</a>(Args&amp;&amp;... args) {</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="keywordflow">if</span> (std::holds_alternative&lt;std::monostate&gt;(data_)) {</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            data_.template <a class="code hl_function" href="class_one_or_more.html#a504358f3f74b9a8571fde6b325d033c6">emplace&lt;T&gt;</a>(std::forward&lt;Args&gt;(args)...);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            <span class="keywordflow">return</span> std::get&lt;T&gt;(data_);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        }</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::holds_alternative&lt;T&gt;(data_)) {</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            std::vector&lt;T&gt; vec;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            vec.reserve(2);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            vec.push_back(std::move(std::get&lt;T&gt;(data_)));</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            vec.emplace_back(std::forward&lt;Args&gt;(args)...);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            data_ = std::move(vec);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            <span class="keywordflow">return</span> std::get&lt;std::vector&lt;T&gt;&gt;(data_).back();</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        }</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            <span class="keyword">auto</span>&amp; v = std::get&lt;std::vector&lt;T&gt;&gt;(data_);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            v.emplace_back(std::forward&lt;Args&gt;(args)...);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            <span class="keywordflow">return</span> v.back();</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        }</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    }</div>
+</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span></div>
+<div class="foldopen" id="foldopen00109" data-start="{" data-end="}">
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="class_one_or_more.html#ab078915d88a211212211c82a93bab6f6">  109</a></span>    [[nodiscard]] <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_one_or_more.html#ab078915d88a211212211c82a93bab6f6">size</a>() const noexcept {</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        <span class="keywordflow">if</span> (std::holds_alternative&lt;std::monostate&gt;(data_)) <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        <span class="keywordflow">if</span> (std::holds_alternative&lt;T&gt;(data_)) <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keywordflow">return</span> std::get&lt;std::vector&lt;T&gt;&gt;(data_).<a class="code hl_function" href="class_one_or_more.html#ab078915d88a211212211c82a93bab6f6">size</a>();</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    }</div>
+</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="class_one_or_more.html#a94cf0f6653b0d16f5875fd251a0db897">  114</a></span>    [[nodiscard]] <span class="keywordtype">bool</span> <a class="code hl_function" href="class_one_or_more.html#a94cf0f6653b0d16f5875fd251a0db897">empty</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_function" href="class_one_or_more.html#ab078915d88a211212211c82a93bab6f6">size</a>() == 0; }</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span></div>
+<div class="foldopen" id="foldopen00121" data-start="{" data-end="}">
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="class_one_or_more.html#a9a325fe0c73e28ac6ead6d49f7d2829a">  121</a></span>    [[nodiscard]] std::optional&lt;std::reference_wrapper&lt;const T&gt;&gt; <a class="code hl_function" href="class_one_or_more.html#a9a325fe0c73e28ac6ead6d49f7d2829a">get</a>(<span class="keywordtype">size_t</span> index)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <span class="keywordflow">if</span> (std::holds_alternative&lt;T&gt;(data_)) {</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            <span class="keywordflow">if</span> (index == 0) <span class="keywordflow">return</span> std::cref(std::get&lt;T&gt;(data_));</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        }</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::holds_alternative&lt;std::vector&lt;T&gt;&gt;(data_)) {</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; vec = std::get&lt;std::vector&lt;T&gt;&gt;(data_);</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>            <span class="keywordflow">if</span> (index &lt; vec.size()) <span class="keywordflow">return</span> std::cref(vec[index]);</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        }</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    }</div>
+</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span></div>
+<div class="foldopen" id="foldopen00137" data-start="{" data-end="}">
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="class_one_or_more.html#a6226061515a3867296305b6d5a23dbdc">  137</a></span>    <span class="keyword">const</span> T&amp; <a class="code hl_function" href="class_one_or_more.html#a6226061515a3867296305b6d5a23dbdc">operator[]</a>(<span class="keywordtype">size_t</span> i)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        <span class="keywordflow">if</span> (std::holds_alternative&lt;T&gt;(data_)) { assert(i == 0); <span class="keywordflow">return</span> std::get&lt;T&gt;(data_); }</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; v = std::get&lt;std::vector&lt;T&gt;&gt;(data_);</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <span class="keywordflow">return</span> v[i];</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    }</div>
+</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span></div>
+<div class="foldopen" id="foldopen00146" data-start="{" data-end="}">
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno"><a class="line" href="class_one_or_more.html#a0c6a0caac5c29314df53a8949d6be178">  146</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_one_or_more.html#a0c6a0caac5c29314df53a8949d6be178">reserve</a>(<span class="keywordtype">size_t</span> n) {</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        <span class="keywordflow">if</span> (n &lt;= 1) <span class="keywordflow">return</span>; <span class="comment">// single で十分</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        <span class="keywordflow">if</span> (std::holds_alternative&lt;std::vector&lt;T&gt;&gt;(data_)) {</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>            std::get&lt;std::vector&lt;T&gt;&gt;(data_).<a class="code hl_function" href="class_one_or_more.html#a0c6a0caac5c29314df53a8949d6be178">reserve</a>(n);</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        }</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::holds_alternative&lt;T&gt;(data_)) {</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            <span class="keyword">auto</span> s = std::move(std::get&lt;T&gt;(data_));</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>            std::vector&lt;T&gt; v; v.reserve(n); v.push_back(std::move(s));</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            data_ = std::move(v);</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        }</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            std::vector&lt;T&gt; v; v.reserve(n);</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            data_ = std::move(v);</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        }</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    }</div>
+</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno"><a class="line" href="class_one_or_more.html#ad16136e73d892199985e81b99780f9ce">  164</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_one_or_more.html#ad16136e73d892199985e81b99780f9ce">clear</a>() noexcept { data_.emplace&lt;std::monostate&gt;(); }</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span></div>
+<div class="foldopen" id="foldopen00169" data-start="{" data-end="};">
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno"><a class="line" href="struct_one_or_more_1_1iterator.html">  169</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_one_or_more_1_1iterator.html">iterator</a> {</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno"><a class="line" href="struct_one_or_more_1_1iterator.html#a17f22b17d4df5d8bcd6cfa0b06ea3b71">  170</a></span>        <span class="keyword">const</span> T* <a class="code hl_variable" href="struct_one_or_more_1_1iterator.html#a17f22b17d4df5d8bcd6cfa0b06ea3b71">cur</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno"><a class="line" href="struct_one_or_more_1_1iterator.html#a0ece057f210ff1df8e4f35f907045e98">  171</a></span>        <span class="keyword">const</span> T* <a class="code hl_variable" href="struct_one_or_more_1_1iterator.html#a0ece057f210ff1df8e4f35f907045e98">end</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="struct_one_or_more_1_1iterator.html#aef5bfe8bfd6d12b92767a76219346d4b">  172</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="struct_one_or_more_1_1iterator.html#aef5bfe8bfd6d12b92767a76219346d4b">iterator_category</a> = std::forward_iterator_tag;</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno"><a class="line" href="struct_one_or_more_1_1iterator.html#a32f3ae4790bcff988ce6a7bb7fbcb339">  173</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="struct_one_or_more_1_1iterator.html#a53e4fa797b959b0e0ffc13e8ac71984a">value_type</a> = T; <span class="keyword">using </span><a class="code hl_typedef" href="struct_one_or_more_1_1iterator.html#a32f3ae4790bcff988ce6a7bb7fbcb339">difference_type</a> = std::ptrdiff_t; <span class="keyword">using </span><a class="code hl_typedef" href="struct_one_or_more_1_1iterator.html#a79f59cecede6f25fb5cec1d063ecd335">pointer</a> = <span class="keyword">const</span> T*; <span class="keyword">using </span><a class="code hl_typedef" href="struct_one_or_more_1_1iterator.html#ab074436f952f991b49127b8c7f852396">reference</a> = <span class="keyword">const</span> T&amp;;</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno"><a class="line" href="struct_one_or_more_1_1iterator.html#a76a4ef272794d613f031f9efbdc73d18">  174</a></span>        <a class="code hl_typedef" href="struct_one_or_more_1_1iterator.html#ab074436f952f991b49127b8c7f852396">reference</a> <a class="code hl_function" href="struct_one_or_more_1_1iterator.html#a76a4ef272794d613f031f9efbdc73d18">operator*</a>() const noexcept { <span class="keywordflow">return</span> *<a class="code hl_variable" href="struct_one_or_more_1_1iterator.html#a17f22b17d4df5d8bcd6cfa0b06ea3b71">cur</a>; }</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno"><a class="line" href="struct_one_or_more_1_1iterator.html#a3bb982405d0b73f52e142a7f7e3b594f">  175</a></span>        <a class="code hl_typedef" href="struct_one_or_more_1_1iterator.html#a79f59cecede6f25fb5cec1d063ecd335">pointer</a>   <a class="code hl_function" href="struct_one_or_more_1_1iterator.html#a3bb982405d0b73f52e142a7f7e3b594f">operator-&gt;</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_one_or_more_1_1iterator.html#a17f22b17d4df5d8bcd6cfa0b06ea3b71">cur</a>; }</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno"><a class="line" href="struct_one_or_more_1_1iterator.html#a88dbd5541a789ffdf0d39ccb7fc6ebf1">  176</a></span>        <a class="code hl_struct" href="struct_one_or_more_1_1iterator.html">iterator</a>&amp; <a class="code hl_function" href="struct_one_or_more_1_1iterator.html#a88dbd5541a789ffdf0d39ccb7fc6ebf1">operator++</a>() noexcept { ++<a class="code hl_variable" href="struct_one_or_more_1_1iterator.html#a17f22b17d4df5d8bcd6cfa0b06ea3b71">cur</a>; <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno"><a class="line" href="struct_one_or_more_1_1iterator.html#ae568f1c04c082a5bc978f081e9adb338">  177</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_one_or_more_1_1iterator.html#ae568f1c04c082a5bc978f081e9adb338">operator==</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_one_or_more_1_1iterator.html">iterator</a>&amp; rhs) <span class="keyword">const</span> <span class="keyword">noexcept</span> { <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_one_or_more_1_1iterator.html#a17f22b17d4df5d8bcd6cfa0b06ea3b71">cur</a> == rhs.cur; }</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="struct_one_or_more_1_1iterator.html#a9fbb97de520396573a149cbfa00a7a5d">  178</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_one_or_more_1_1iterator.html#a9fbb97de520396573a149cbfa00a7a5d">operator!=</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_one_or_more_1_1iterator.html">iterator</a>&amp; rhs) <span class="keyword">const</span> <span class="keyword">noexcept</span> { <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_one_or_more_1_1iterator.html#a17f22b17d4df5d8bcd6cfa0b06ea3b71">cur</a> != rhs.cur; }</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    };</div>
+</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span></div>
+<div class="foldopen" id="foldopen00184" data-start="{" data-end="}">
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno"><a class="line" href="class_one_or_more.html#ad52b5506dc893e97f46a27afc805a1ed">  184</a></span>    [[nodiscard]] <a class="code hl_struct" href="struct_one_or_more_1_1iterator.html">iterator</a> <a class="code hl_function" href="class_one_or_more.html#ad52b5506dc893e97f46a27afc805a1ed">begin</a>() const noexcept {</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        <span class="keyword">auto</span> [b, e] = ptr_range(data_);</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        <span class="keywordflow">return</span> { b, e };</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    }</div>
+</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span></div>
+<div class="foldopen" id="foldopen00192" data-start="{" data-end="}">
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno"><a class="line" href="class_one_or_more.html#abf9efaf94bdb9fa68677c01e376f7c50">  192</a></span>    [[nodiscard]] <a class="code hl_struct" href="struct_one_or_more_1_1iterator.html">iterator</a> <a class="code hl_function" href="class_one_or_more.html#abf9efaf94bdb9fa68677c01e376f7c50">end</a>() const noexcept {</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        <span class="keyword">auto</span> [b, e] = ptr_range(data_);</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        (void)b; <span class="keywordflow">return</span> { e, e };</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    }</div>
+</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    <span class="keyword">template</span> &lt;<span class="keyword">class</span> F&gt;</div>
+<div class="foldopen" id="foldopen00200" data-start="{" data-end="}">
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno"><a class="line" href="class_one_or_more.html#a495592f8139045cdf019fb85163d421e">  200</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_one_or_more.html#a495592f8139045cdf019fb85163d421e">for_each</a>(F&amp;&amp; f)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        <span class="keywordflow">if</span> (std::holds_alternative&lt;T&gt;(data_)) {</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>            f(std::get&lt;T&gt;(data_));</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        }</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::holds_alternative&lt;std::vector&lt;T&gt;&gt;(data_)) {</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; v = std::get&lt;std::vector&lt;T&gt;&gt;(data_);</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; x : v) f(x);</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        }</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    }</div>
+</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>};</div>
+</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span></div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keywordtype">size_t</span> SmallN = 4&gt;</div>
+<div class="foldopen" id="foldopen00215" data-start="{" data-end="};">
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno"><a class="line" href="class_one_or_more_s_b_o.html">  215</a></span><span class="keyword">class </span><a class="code hl_function" href="class_one_or_more_s_b_o.html#aa85da916059e913e4bfaefc70003137c">OneOrMoreSBO</a> {</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <span class="keyword">enum class</span> Kind : <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> { Empty, Inline, Heap };</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    Kind kind_ = Kind::Empty;</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    <span class="keywordtype">size_t</span> sz_ = 0;</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    std::array&lt;T, SmallN&gt; inline_;</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    std::vector&lt;T&gt; heap_;</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno"><a class="line" href="class_one_or_more_s_b_o.html#aa85da916059e913e4bfaefc70003137c">  223</a></span>    <a class="code hl_function" href="class_one_or_more_s_b_o.html#aa85da916059e913e4bfaefc70003137c">OneOrMoreSBO</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno"><a class="line" href="class_one_or_more_s_b_o.html#a873f3fef10d2b56a575606064fe1e5c2">  229</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_one_or_more_s_b_o.html#a873f3fef10d2b56a575606064fe1e5c2">size</a>() const noexcept { <span class="keywordflow">return</span> sz_; }</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno"><a class="line" href="class_one_or_more_s_b_o.html#aae6e17b64a03db4e8d4f0b919222ba9b">  234</a></span>    <span class="keywordtype">bool</span>   <a class="code hl_function" href="class_one_or_more_s_b_o.html#aae6e17b64a03db4e8d4f0b919222ba9b">empty</a>() const noexcept { <span class="keywordflow">return</span> sz_ == 0; }</div>
+<div class="foldopen" id="foldopen00238" data-start="{" data-end="}">
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno"><a class="line" href="class_one_or_more_s_b_o.html#ad790f93d790071979e51ecc089683420">  238</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_one_or_more_s_b_o.html#ad790f93d790071979e51ecc089683420">clear</a>() noexcept {</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        <span class="keywordflow">if</span> (kind_ == Kind::Heap) heap_.clear();</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        kind_ = Kind::Empty; sz_ = 0;</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    }</div>
+</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span></div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    <span class="keyword">template</span> &lt;<span class="keyword">class</span>... Args&gt;</div>
+<div class="foldopen" id="foldopen00248" data-start="{" data-end="}">
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno"><a class="line" href="class_one_or_more_s_b_o.html#a85118ee149592a8302bcd0e18cad0998">  248</a></span>    T&amp; <a class="code hl_function" href="class_one_or_more_s_b_o.html#a85118ee149592a8302bcd0e18cad0998">emplace</a>(Args&amp;&amp;... args) {</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        <span class="keywordflow">if</span> (kind_ != Kind::Heap &amp;&amp; sz_ &lt; SmallN) {</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            kind_ = Kind::Inline;</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>            T&amp; r = inline_[sz_++];</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>            ::new (<span class="keyword">static_cast&lt;</span><span class="keywordtype">void</span>*<span class="keyword">&gt;</span>(std::addressof(r))) T(std::forward&lt;Args&gt;(args)...);</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>            <span class="keywordflow">return</span> r;</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        }</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        <span class="keywordflow">if</span> (kind_ != Kind::Heap) {</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>            <span class="comment">// migrate inline -&gt; heap</span></div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>            heap_.reserve(SmallN + 1);</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; sz_; ++i) heap_.push_back(std::move(inline_[i]));</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>            kind_ = Kind::Heap;</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        }</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        heap_.emplace_back(std::forward&lt;Args&gt;(args)...);</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        ++sz_;</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        <span class="keywordflow">return</span> heap_.back();</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    }</div>
+</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span></div>
+<div class="foldopen" id="foldopen00269" data-start="{" data-end="}">
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno"><a class="line" href="class_one_or_more_s_b_o.html#acdc6df09ad62c0b2ea82af158df317a4">  269</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_one_or_more_s_b_o.html#acdc6df09ad62c0b2ea82af158df317a4">reserve</a>(<span class="keywordtype">size_t</span> n) {</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        <span class="keywordflow">if</span> (n &lt;= SmallN) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        <span class="keywordflow">if</span> (kind_ != Kind::Heap) {</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>            heap_.reserve(n);</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; sz_; ++i) heap_.push_back(std::move(inline_[i]));</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>            kind_ = Kind::Heap;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        }</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>            heap_.reserve(n);</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        }</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    }</div>
+</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span></div>
+<div class="foldopen" id="foldopen00285" data-start="{" data-end="}">
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno"><a class="line" href="class_one_or_more_s_b_o.html#af68972ee2859409f4a8a657fcb3e8890">  285</a></span>    <span class="keyword">const</span> T&amp; <a class="code hl_function" href="class_one_or_more_s_b_o.html#af68972ee2859409f4a8a657fcb3e8890">operator[]</a>(<span class="keywordtype">size_t</span> i)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        <span class="keywordflow">if</span> (kind_ == Kind::Inline) { assert(i &lt; sz_); <span class="keywordflow">return</span> inline_[i]; }</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        <span class="keywordflow">return</span> heap_[i];</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    }</div>
+</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span></div>
+<div class="foldopen" id="foldopen00292" data-start="{" data-end="};">
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno"><a class="line" href="struct_one_or_more_s_b_o_1_1iterator.html">  292</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_one_or_more_s_b_o_1_1iterator.html">iterator</a> {</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno"><a class="line" href="struct_one_or_more_s_b_o_1_1iterator.html#af67f247c9547186ac5519035e81e57ac">  293</a></span>        <span class="keyword">const</span> T* <a class="code hl_variable" href="struct_one_or_more_s_b_o_1_1iterator.html#af67f247c9547186ac5519035e81e57ac">cur</a>{}, * <a class="code hl_function" href="class_one_or_more_s_b_o.html#a661f3924ba94bd9cb04103d2b263365b">end</a>{};</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno"><a class="line" href="struct_one_or_more_s_b_o_1_1iterator.html#a529710c2755ac614d152e43e6b39f6dd">  294</a></span>        <span class="keyword">const</span> T&amp; <a class="code hl_function" href="struct_one_or_more_s_b_o_1_1iterator.html#a529710c2755ac614d152e43e6b39f6dd">operator*</a>() const noexcept { <span class="keywordflow">return</span> *<a class="code hl_variable" href="struct_one_or_more_s_b_o_1_1iterator.html#af67f247c9547186ac5519035e81e57ac">cur</a>; }</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno"><a class="line" href="struct_one_or_more_s_b_o_1_1iterator.html#abe22771aacacb4c5d891d099c3f4b60b">  295</a></span>        <span class="keyword">const</span> T* <a class="code hl_function" href="struct_one_or_more_s_b_o_1_1iterator.html#abe22771aacacb4c5d891d099c3f4b60b">operator-&gt;</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_one_or_more_s_b_o_1_1iterator.html#af67f247c9547186ac5519035e81e57ac">cur</a>; }</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno"><a class="line" href="struct_one_or_more_s_b_o_1_1iterator.html#a38b72ff40f41ff4bb7e5210aff1061e6">  296</a></span>        <a class="code hl_struct" href="struct_one_or_more_s_b_o_1_1iterator.html">iterator</a>&amp; <a class="code hl_function" href="struct_one_or_more_s_b_o_1_1iterator.html#a38b72ff40f41ff4bb7e5210aff1061e6">operator++</a>() noexcept { ++<a class="code hl_variable" href="struct_one_or_more_s_b_o_1_1iterator.html#af67f247c9547186ac5519035e81e57ac">cur</a>; <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno"><a class="line" href="struct_one_or_more_s_b_o_1_1iterator.html#a9b146db62be9c419c9f53907c6ef910c">  297</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_one_or_more_s_b_o_1_1iterator.html#a9b146db62be9c419c9f53907c6ef910c">operator==</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_one_or_more_s_b_o_1_1iterator.html">iterator</a>&amp; o) <span class="keyword">const</span> <span class="keyword">noexcept</span> { <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_one_or_more_s_b_o_1_1iterator.html#af67f247c9547186ac5519035e81e57ac">cur</a> == o.cur; }</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno"><a class="line" href="struct_one_or_more_s_b_o_1_1iterator.html#a82a0c431880e190e7fd6ff93a53ff726">  298</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_one_or_more_s_b_o_1_1iterator.html#a82a0c431880e190e7fd6ff93a53ff726">operator!=</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_one_or_more_s_b_o_1_1iterator.html">iterator</a>&amp; o) <span class="keyword">const</span> <span class="keyword">noexcept</span> { <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_one_or_more_s_b_o_1_1iterator.html#af67f247c9547186ac5519035e81e57ac">cur</a> != o.cur; }</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>    };</div>
+</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span></div>
+<div class="foldopen" id="foldopen00304" data-start="{" data-end="}">
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno"><a class="line" href="class_one_or_more_s_b_o.html#a32c2e7ec1aa3c0ca95b031c625de3d56">  304</a></span>    <a class="code hl_struct" href="struct_one_or_more_s_b_o_1_1iterator.html">iterator</a> <a class="code hl_function" href="class_one_or_more_s_b_o.html#a32c2e7ec1aa3c0ca95b031c625de3d56">begin</a>() const noexcept {</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>        <span class="keywordflow">if</span> (kind_ == Kind::Inline) <span class="keywordflow">return</span> { inline_.data(), inline_.data() + sz_ };</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>        <span class="keywordflow">if</span> (kind_ == Kind::Heap)   <span class="keywordflow">return</span> { heap_.data(),   heap_.data() + heap_.size() };</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>        <span class="keywordflow">return</span> { <span class="keyword">nullptr</span>, <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    }</div>
+</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span></div>
+<div class="foldopen" id="foldopen00313" data-start="{" data-end="}">
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno"><a class="line" href="class_one_or_more_s_b_o.html#a661f3924ba94bd9cb04103d2b263365b">  313</a></span>    <a class="code hl_struct" href="struct_one_or_more_s_b_o_1_1iterator.html">iterator</a> <a class="code hl_function" href="class_one_or_more_s_b_o.html#a661f3924ba94bd9cb04103d2b263365b">end</a>() const noexcept {</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>        <span class="keywordflow">if</span> (kind_ == Kind::Inline) <span class="keywordflow">return</span> { inline_.data() + sz_, inline_.data() + sz_ };</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>        <span class="keywordflow">if</span> (kind_ == Kind::Heap)   <span class="keywordflow">return</span> { heap_.data() + heap_.size(), heap_.data() + heap_.size() };</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>        <span class="keywordflow">return</span> { <span class="keyword">nullptr</span>, <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    }</div>
+</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>};</div>
+</div>
+<div class="ttc" id="aclass_one_or_more_html_a0c6a0caac5c29314df53a8949d6be178"><div class="ttname"><a href="class_one_or_more.html#a0c6a0caac5c29314df53a8949d6be178">OneOrMore::reserve</a></div><div class="ttdeci">void reserve(size_t n)</div><div class="ttdoc">reserve</div><div class="ttdef"><b>Definition</b> <a href="#l00146">OneOrMore.hpp:146</a></div></div>
+<div class="ttc" id="aclass_one_or_more_html_a495592f8139045cdf019fb85163d421e"><div class="ttname"><a href="class_one_or_more.html#a495592f8139045cdf019fb85163d421e">OneOrMore::for_each</a></div><div class="ttdeci">void for_each(F &amp;&amp;f) const</div><div class="ttdoc">高速 for_each（分岐1回で全要素処理）</div><div class="ttdef"><b>Definition</b> <a href="#l00200">OneOrMore.hpp:200</a></div></div>
+<div class="ttc" id="aclass_one_or_more_html_a504358f3f74b9a8571fde6b325d033c6"><div class="ttname"><a href="class_one_or_more.html#a504358f3f74b9a8571fde6b325d033c6">OneOrMore::emplace</a></div><div class="ttdeci">T &amp; emplace(Args &amp;&amp;... args)</div><div class="ttdoc">emplace（余計な一時を避ける）</div><div class="ttdef"><b>Definition</b> <a href="#l00086">OneOrMore.hpp:86</a></div></div>
+<div class="ttc" id="aclass_one_or_more_html_a6226061515a3867296305b6d5a23dbdc"><div class="ttname"><a href="class_one_or_more.html#a6226061515a3867296305b6d5a23dbdc">OneOrMore::operator[]</a></div><div class="ttdeci">const T &amp; operator[](size_t i) const</div><div class="ttdoc">直接参照（高速だが自己責任）</div><div class="ttdef"><b>Definition</b> <a href="#l00137">OneOrMore.hpp:137</a></div></div>
+<div class="ttc" id="aclass_one_or_more_html_a6a3167fed500a2b9b8f8d2251367647f"><div class="ttname"><a href="class_one_or_more.html#a6a3167fed500a2b9b8f8d2251367647f">OneOrMore::add</a></div><div class="ttdeci">void add(const T &amp;value)</div><div class="ttdoc">追加（コピー）</div><div class="ttdef"><b>Definition</b> <a href="#l00046">OneOrMore.hpp:46</a></div></div>
+<div class="ttc" id="aclass_one_or_more_html_a94cf0f6653b0d16f5875fd251a0db897"><div class="ttname"><a href="class_one_or_more.html#a94cf0f6653b0d16f5875fd251a0db897">OneOrMore::empty</a></div><div class="ttdeci">bool empty() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00114">OneOrMore.hpp:114</a></div></div>
+<div class="ttc" id="aclass_one_or_more_html_a9a325fe0c73e28ac6ead6d49f7d2829a"><div class="ttname"><a href="class_one_or_more.html#a9a325fe0c73e28ac6ead6d49f7d2829a">OneOrMore::get</a></div><div class="ttdeci">std::optional&lt; std::reference_wrapper&lt; const T &gt; &gt; get(size_t index) const</div><div class="ttdoc">安全取得（optional&lt;ref&gt;）</div><div class="ttdef"><b>Definition</b> <a href="#l00121">OneOrMore.hpp:121</a></div></div>
+<div class="ttc" id="aclass_one_or_more_html_aae5d09681726fe71ced4c0e481d3c0b8"><div class="ttname"><a href="class_one_or_more.html#aae5d09681726fe71ced4c0e481d3c0b8">OneOrMore::OneOrMore</a></div><div class="ttdeci">OneOrMore()=default</div></div>
+<div class="ttc" id="aclass_one_or_more_html_ab078915d88a211212211c82a93bab6f6"><div class="ttname"><a href="class_one_or_more.html#ab078915d88a211212211c82a93bab6f6">OneOrMore::size</a></div><div class="ttdeci">size_t size() const noexcept</div><div class="ttdoc">サイズ / 空判定</div><div class="ttdef"><b>Definition</b> <a href="#l00109">OneOrMore.hpp:109</a></div></div>
+<div class="ttc" id="aclass_one_or_more_html_abf9efaf94bdb9fa68677c01e376f7c50"><div class="ttname"><a href="class_one_or_more.html#abf9efaf94bdb9fa68677c01e376f7c50">OneOrMore::end</a></div><div class="ttdeci">iterator end() const noexcept</div><div class="ttdoc">end</div><div class="ttdef"><b>Definition</b> <a href="#l00192">OneOrMore.hpp:192</a></div></div>
+<div class="ttc" id="aclass_one_or_more_html_ac2c388f1f79932cd71a4655fd1b83923"><div class="ttname"><a href="class_one_or_more.html#ac2c388f1f79932cd71a4655fd1b83923">OneOrMore::add</a></div><div class="ttdeci">void add(T &amp;&amp;value)</div><div class="ttdoc">追加（ムーブ）</div><div class="ttdef"><b>Definition</b> <a href="#l00065">OneOrMore.hpp:65</a></div></div>
+<div class="ttc" id="aclass_one_or_more_html_ad16136e73d892199985e81b99780f9ce"><div class="ttname"><a href="class_one_or_more.html#ad16136e73d892199985e81b99780f9ce">OneOrMore::clear</a></div><div class="ttdeci">void clear() noexcept</div><div class="ttdoc">clear</div><div class="ttdef"><b>Definition</b> <a href="#l00164">OneOrMore.hpp:164</a></div></div>
+<div class="ttc" id="aclass_one_or_more_html_ad52b5506dc893e97f46a27afc805a1ed"><div class="ttname"><a href="class_one_or_more.html#ad52b5506dc893e97f46a27afc805a1ed">OneOrMore::begin</a></div><div class="ttdeci">iterator begin() const noexcept</div><div class="ttdoc">begin</div><div class="ttdef"><b>Definition</b> <a href="#l00184">OneOrMore.hpp:184</a></div></div>
+<div class="ttc" id="aclass_one_or_more_s_b_o_html_a32c2e7ec1aa3c0ca95b031c625de3d56"><div class="ttname"><a href="class_one_or_more_s_b_o.html#a32c2e7ec1aa3c0ca95b031c625de3d56">OneOrMoreSBO::begin</a></div><div class="ttdeci">iterator begin() const noexcept</div><div class="ttdoc">begin</div><div class="ttdef"><b>Definition</b> <a href="#l00304">OneOrMore.hpp:304</a></div></div>
+<div class="ttc" id="aclass_one_or_more_s_b_o_html_a661f3924ba94bd9cb04103d2b263365b"><div class="ttname"><a href="class_one_or_more_s_b_o.html#a661f3924ba94bd9cb04103d2b263365b">OneOrMoreSBO::end</a></div><div class="ttdeci">iterator end() const noexcept</div><div class="ttdoc">end</div><div class="ttdef"><b>Definition</b> <a href="#l00313">OneOrMore.hpp:313</a></div></div>
+<div class="ttc" id="aclass_one_or_more_s_b_o_html_a85118ee149592a8302bcd0e18cad0998"><div class="ttname"><a href="class_one_or_more_s_b_o.html#a85118ee149592a8302bcd0e18cad0998">OneOrMoreSBO::emplace</a></div><div class="ttdeci">T &amp; emplace(Args &amp;&amp;... args)</div><div class="ttdoc">追加（コピー）</div><div class="ttdef"><b>Definition</b> <a href="#l00248">OneOrMore.hpp:248</a></div></div>
+<div class="ttc" id="aclass_one_or_more_s_b_o_html_a873f3fef10d2b56a575606064fe1e5c2"><div class="ttname"><a href="class_one_or_more_s_b_o.html#a873f3fef10d2b56a575606064fe1e5c2">OneOrMoreSBO::size</a></div><div class="ttdeci">size_t size() const noexcept</div><div class="ttdoc">サイズ / 空判定</div><div class="ttdef"><b>Definition</b> <a href="#l00229">OneOrMore.hpp:229</a></div></div>
+<div class="ttc" id="aclass_one_or_more_s_b_o_html_aa85da916059e913e4bfaefc70003137c"><div class="ttname"><a href="class_one_or_more_s_b_o.html#aa85da916059e913e4bfaefc70003137c">OneOrMoreSBO::OneOrMoreSBO</a></div><div class="ttdeci">OneOrMoreSBO()=default</div></div>
+<div class="ttc" id="aclass_one_or_more_s_b_o_html_aae6e17b64a03db4e8d4f0b919222ba9b"><div class="ttname"><a href="class_one_or_more_s_b_o.html#aae6e17b64a03db4e8d4f0b919222ba9b">OneOrMoreSBO::empty</a></div><div class="ttdeci">bool empty() const noexcept</div><div class="ttdoc">空判定</div><div class="ttdef"><b>Definition</b> <a href="#l00234">OneOrMore.hpp:234</a></div></div>
+<div class="ttc" id="aclass_one_or_more_s_b_o_html_acdc6df09ad62c0b2ea82af158df317a4"><div class="ttname"><a href="class_one_or_more_s_b_o.html#acdc6df09ad62c0b2ea82af158df317a4">OneOrMoreSBO::reserve</a></div><div class="ttdeci">void reserve(size_t n)</div><div class="ttdoc">reserve</div><div class="ttdef"><b>Definition</b> <a href="#l00269">OneOrMore.hpp:269</a></div></div>
+<div class="ttc" id="aclass_one_or_more_s_b_o_html_ad790f93d790071979e51ecc089683420"><div class="ttname"><a href="class_one_or_more_s_b_o.html#ad790f93d790071979e51ecc089683420">OneOrMoreSBO::clear</a></div><div class="ttdeci">void clear() noexcept</div><div class="ttdoc">clear</div><div class="ttdef"><b>Definition</b> <a href="#l00238">OneOrMore.hpp:238</a></div></div>
+<div class="ttc" id="aclass_one_or_more_s_b_o_html_af68972ee2859409f4a8a657fcb3e8890"><div class="ttname"><a href="class_one_or_more_s_b_o.html#af68972ee2859409f4a8a657fcb3e8890">OneOrMoreSBO::operator[]</a></div><div class="ttdeci">const T &amp; operator[](size_t i) const</div><div class="ttdoc">直接参照（高速だが自己責任）</div><div class="ttdef"><b>Definition</b> <a href="#l00285">OneOrMore.hpp:285</a></div></div>
+<div class="ttc" id="astruct_one_or_more_1_1iterator_html"><div class="ttname"><a href="struct_one_or_more_1_1iterator.html">OneOrMore::iterator</a></div><div class="ttdoc">反復：分岐なしの軽量イテレータ（ポインタ対）</div><div class="ttdef"><b>Definition</b> <a href="#l00169">OneOrMore.hpp:169</a></div></div>
+<div class="ttc" id="astruct_one_or_more_1_1iterator_html_a0ece057f210ff1df8e4f35f907045e98"><div class="ttname"><a href="struct_one_or_more_1_1iterator.html#a0ece057f210ff1df8e4f35f907045e98">OneOrMore::iterator::end</a></div><div class="ttdeci">const T * end</div><div class="ttdef"><b>Definition</b> <a href="#l00171">OneOrMore.hpp:171</a></div></div>
+<div class="ttc" id="astruct_one_or_more_1_1iterator_html_a17f22b17d4df5d8bcd6cfa0b06ea3b71"><div class="ttname"><a href="struct_one_or_more_1_1iterator.html#a17f22b17d4df5d8bcd6cfa0b06ea3b71">OneOrMore::iterator::cur</a></div><div class="ttdeci">const T * cur</div><div class="ttdef"><b>Definition</b> <a href="#l00170">OneOrMore.hpp:170</a></div></div>
+<div class="ttc" id="astruct_one_or_more_1_1iterator_html_a32f3ae4790bcff988ce6a7bb7fbcb339"><div class="ttname"><a href="struct_one_or_more_1_1iterator.html#a32f3ae4790bcff988ce6a7bb7fbcb339">OneOrMore::iterator::difference_type</a></div><div class="ttdeci">std::ptrdiff_t difference_type</div><div class="ttdef"><b>Definition</b> <a href="#l00173">OneOrMore.hpp:173</a></div></div>
+<div class="ttc" id="astruct_one_or_more_1_1iterator_html_a3bb982405d0b73f52e142a7f7e3b594f"><div class="ttname"><a href="struct_one_or_more_1_1iterator.html#a3bb982405d0b73f52e142a7f7e3b594f">OneOrMore::iterator::operator-&gt;</a></div><div class="ttdeci">pointer operator-&gt;() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00175">OneOrMore.hpp:175</a></div></div>
+<div class="ttc" id="astruct_one_or_more_1_1iterator_html_a53e4fa797b959b0e0ffc13e8ac71984a"><div class="ttname"><a href="struct_one_or_more_1_1iterator.html#a53e4fa797b959b0e0ffc13e8ac71984a">OneOrMore::iterator::value_type</a></div><div class="ttdeci">T value_type</div><div class="ttdef"><b>Definition</b> <a href="#l00173">OneOrMore.hpp:173</a></div></div>
+<div class="ttc" id="astruct_one_or_more_1_1iterator_html_a76a4ef272794d613f031f9efbdc73d18"><div class="ttname"><a href="struct_one_or_more_1_1iterator.html#a76a4ef272794d613f031f9efbdc73d18">OneOrMore::iterator::operator*</a></div><div class="ttdeci">reference operator*() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00174">OneOrMore.hpp:174</a></div></div>
+<div class="ttc" id="astruct_one_or_more_1_1iterator_html_a79f59cecede6f25fb5cec1d063ecd335"><div class="ttname"><a href="struct_one_or_more_1_1iterator.html#a79f59cecede6f25fb5cec1d063ecd335">OneOrMore::iterator::pointer</a></div><div class="ttdeci">const T * pointer</div><div class="ttdef"><b>Definition</b> <a href="#l00173">OneOrMore.hpp:173</a></div></div>
+<div class="ttc" id="astruct_one_or_more_1_1iterator_html_a88dbd5541a789ffdf0d39ccb7fc6ebf1"><div class="ttname"><a href="struct_one_or_more_1_1iterator.html#a88dbd5541a789ffdf0d39ccb7fc6ebf1">OneOrMore::iterator::operator++</a></div><div class="ttdeci">iterator &amp; operator++() noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00176">OneOrMore.hpp:176</a></div></div>
+<div class="ttc" id="astruct_one_or_more_1_1iterator_html_a9fbb97de520396573a149cbfa00a7a5d"><div class="ttname"><a href="struct_one_or_more_1_1iterator.html#a9fbb97de520396573a149cbfa00a7a5d">OneOrMore::iterator::operator!=</a></div><div class="ttdeci">bool operator!=(const iterator &amp;rhs) const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00178">OneOrMore.hpp:178</a></div></div>
+<div class="ttc" id="astruct_one_or_more_1_1iterator_html_ab074436f952f991b49127b8c7f852396"><div class="ttname"><a href="struct_one_or_more_1_1iterator.html#ab074436f952f991b49127b8c7f852396">OneOrMore::iterator::reference</a></div><div class="ttdeci">const T &amp; reference</div><div class="ttdef"><b>Definition</b> <a href="#l00173">OneOrMore.hpp:173</a></div></div>
+<div class="ttc" id="astruct_one_or_more_1_1iterator_html_ae568f1c04c082a5bc978f081e9adb338"><div class="ttname"><a href="struct_one_or_more_1_1iterator.html#ae568f1c04c082a5bc978f081e9adb338">OneOrMore::iterator::operator==</a></div><div class="ttdeci">bool operator==(const iterator &amp;rhs) const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00177">OneOrMore.hpp:177</a></div></div>
+<div class="ttc" id="astruct_one_or_more_1_1iterator_html_aef5bfe8bfd6d12b92767a76219346d4b"><div class="ttname"><a href="struct_one_or_more_1_1iterator.html#aef5bfe8bfd6d12b92767a76219346d4b">OneOrMore::iterator::iterator_category</a></div><div class="ttdeci">std::forward_iterator_tag iterator_category</div><div class="ttdef"><b>Definition</b> <a href="#l00172">OneOrMore.hpp:172</a></div></div>
+<div class="ttc" id="astruct_one_or_more_s_b_o_1_1iterator_html"><div class="ttname"><a href="struct_one_or_more_s_b_o_1_1iterator.html">OneOrMoreSBO::iterator</a></div><div class="ttdoc">反復イテレータ（分岐なし</div><div class="ttdef"><b>Definition</b> <a href="#l00292">OneOrMore.hpp:292</a></div></div>
+<div class="ttc" id="astruct_one_or_more_s_b_o_1_1iterator_html_a38b72ff40f41ff4bb7e5210aff1061e6"><div class="ttname"><a href="struct_one_or_more_s_b_o_1_1iterator.html#a38b72ff40f41ff4bb7e5210aff1061e6">OneOrMoreSBO::iterator::operator++</a></div><div class="ttdeci">iterator &amp; operator++() noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00296">OneOrMore.hpp:296</a></div></div>
+<div class="ttc" id="astruct_one_or_more_s_b_o_1_1iterator_html_a529710c2755ac614d152e43e6b39f6dd"><div class="ttname"><a href="struct_one_or_more_s_b_o_1_1iterator.html#a529710c2755ac614d152e43e6b39f6dd">OneOrMoreSBO::iterator::operator*</a></div><div class="ttdeci">const T &amp; operator*() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00294">OneOrMore.hpp:294</a></div></div>
+<div class="ttc" id="astruct_one_or_more_s_b_o_1_1iterator_html_a82a0c431880e190e7fd6ff93a53ff726"><div class="ttname"><a href="struct_one_or_more_s_b_o_1_1iterator.html#a82a0c431880e190e7fd6ff93a53ff726">OneOrMoreSBO::iterator::operator!=</a></div><div class="ttdeci">bool operator!=(const iterator &amp;o) const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00298">OneOrMore.hpp:298</a></div></div>
+<div class="ttc" id="astruct_one_or_more_s_b_o_1_1iterator_html_a9b146db62be9c419c9f53907c6ef910c"><div class="ttname"><a href="struct_one_or_more_s_b_o_1_1iterator.html#a9b146db62be9c419c9f53907c6ef910c">OneOrMoreSBO::iterator::operator==</a></div><div class="ttdeci">bool operator==(const iterator &amp;o) const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00297">OneOrMore.hpp:297</a></div></div>
+<div class="ttc" id="astruct_one_or_more_s_b_o_1_1iterator_html_abe22771aacacb4c5d891d099c3f4b60b"><div class="ttname"><a href="struct_one_or_more_s_b_o_1_1iterator.html#abe22771aacacb4c5d891d099c3f4b60b">OneOrMoreSBO::iterator::operator-&gt;</a></div><div class="ttdeci">const T * operator-&gt;() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00295">OneOrMore.hpp:295</a></div></div>
+<div class="ttc" id="astruct_one_or_more_s_b_o_1_1iterator_html_af67f247c9547186ac5519035e81e57ac"><div class="ttname"><a href="struct_one_or_more_s_b_o_1_1iterator.html#af67f247c9547186ac5519035e81e57ac">OneOrMoreSBO::iterator::cur</a></div><div class="ttdeci">const T * cur</div><div class="ttdef"><b>Definition</b> <a href="#l00293">OneOrMore.hpp:293</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_a38f029c1e896199722a8ae2b43dab78.html">Util</a></li><li class="navelem"><a href="_one_or_more_8hpp.html">OneOrMore.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+\doxysection{Spatial\+Chunk\+Registry\+Service.\+h}
+\hypertarget{_spatial_chunk_registry_service_8h_source}{}\label{_spatial_chunk_registry_service_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/SpatialChunkRegistryService.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/SpatialChunkRegistryService.h}}
+\mbox{\hyperlink{_spatial_chunk_registry_service_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <shared\_mutex>}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_registry_types_8h}{RegistryTypes.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_entity_manager_8h}{ECS/EntityManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_service_context_8hpp}{ECS/ServiceContext.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00015}00015\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}\ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00019}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{00019}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }SpatialKeyHash\ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ operator()(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{SpatialChunkKey}}\&\ k)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h\ =\ std::hash<LevelID>\{\}(k.\mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_ac6232af82d77e8ac51a31073efbdc193}{level}});}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ h\ \string^=\ (\textcolor{keyword}{static\_cast<}uint8\_t\textcolor{keyword}{>}(k.\mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_a709140dd173dccc65e5d56430f999af2}{scheme}})\ *\ 0x9e37'79b9'7f4a'7c15ull)\ \string^\ (h\ <<\ 6)\ \string^\ (h\ >>\ 2);}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ h\ \string^=\ (k.\mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_a68481121c1a141301ff49e3fab0c2a85}{depth}}\ *\ 0x27d4'eb2d)\ \string^\ (h\ <<\ 6)\ \string^\ (h\ >>\ 2);}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ h\ \string^=\ (k.\mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_acf1ed43a3bc5adefa3ceca52a33ae6b1}{generation}}\ *\ 0x1656'7b1d)\ \string^\ (h\ <<\ 6)\ \string^\ (h\ >>\ 2);}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ h\ \string^=\ std::hash<uint64\_t>\{\}(k.\mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_ab609625f6088b097783303720df7f6d1}{code}})\ +\ 0x9e37'79b9'7f4a'7c15ull\ +\ (h\ <<\ 6)\ +\ (h\ >>\ 2);}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ h;}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00031}00031\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00037}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_af16975058127298f906e43cb35489f8c}{00037}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_af16975058127298f906e43cb35489f8c}{RegisterOwner}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{SpatialChunkKey}}\&\ key,\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\ sp)\ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lk(mu\_);}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ owners\_[key]\ =\ sp;}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00045}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_affa7c775c9a8b17fd30d58741765845b}{00045}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_affa7c775c9a8b17fd30d58741765845b}{UnregisterOwner}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{SpatialChunkKey}}\&\ key)\ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lk(mu\_);}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ owners\_.erase(key);}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00054}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_a44d0e0d4f1ee861ba71c34522ac02407}{00054}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_a44d0e0d4f1ee861ba71c34522ac02407}{ResolveOwner}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{SpatialChunkKey}}\&\ key)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lk(mu\_);}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ owners\_.find(key);}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ it\ ==\ owners\_.end()\ ?\ nullptr\ :\ it-\/>second;}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00064}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_aca7ef55a3ef220e01eb8a71fc2e0ae89}{00064}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS::EntityManager}}*\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_aca7ef55a3ef220e01eb8a71fc2e0ae89}{ResolveOwnerEM}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{SpatialChunkKey}}\&\ key)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lk(mu\_);}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ owners\_.find(key);}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ it\ ==\ owners\_.end()\ ?\ nullptr\ :\ \&it-\/>second-\/>GetEntityManager();}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00070}00070\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::shared\_mutex\ mu\_;}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ std::unordered\_map<SpatialChunkKey,\ SpatialChunk*,\ SpatialKeyHash>\ owners\_;}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00074}00074\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_service_context_8hpp_adbfb2947c9a06b367226fe228627154c}{STATIC\_SERVICE\_TAG}}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00076}00076\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_registry_service_8h_source_l00077}00077\ \}\ \textcolor{comment}{//\ namespace}}
+
+\end{DoxyCode}

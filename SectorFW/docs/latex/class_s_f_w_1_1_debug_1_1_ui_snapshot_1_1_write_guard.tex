@@ -1,0 +1,92 @@
+\doxysection{SFW\+::Debug\+::Ui\+Snapshot\+::Write\+Guard クラス}
+\hypertarget{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{}\label{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}\index{SFW::Debug::UiSnapshot::WriteGuard@{SFW::Debug::UiSnapshot::WriteGuard}}
+
+
+書き込みガード（\+RAII でロック/アンロック）  
+
+
+
+
+{\ttfamily \#include $<$UIBus.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a5ac8f3556c57d92874aecde2dbea2429}{Write\+Guard}} (\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{Ui\+Snapshot}} \&s)
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry}{Telemetry}} \& \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a4948fbcae3d80a7cac7a54e95d4e3ebe}{data}} () noexcept
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a59e5a9479da6e6175e00e47dc6b7323a}{Write\+Guard}} (const \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}} \&)=delete
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}} \& \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_aee552941099605c8b4fe815ab351bbde}{operator=}} (const \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}} \&)=delete
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_af8022bbff52fabf6bcba99033ec80479}{Write\+Guard}} (\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}} \&\&)=default
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}} \& \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a2d5446ac93788293021cf1342a201e67}{operator=}} (\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}} \&\&)=default
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+書き込みガード（\+RAII でロック/アンロック） 
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00073}{73}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a5ac8f3556c57d92874aecde2dbea2429}\index{SFW::Debug::UiSnapshot::WriteGuard@{SFW::Debug::UiSnapshot::WriteGuard}!WriteGuard@{WriteGuard}}
+\index{WriteGuard@{WriteGuard}!SFW::Debug::UiSnapshot::WriteGuard@{SFW::Debug::UiSnapshot::WriteGuard}}
+\doxysubsubsection{\texorpdfstring{WriteGuard()}{WriteGuard()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a5ac8f3556c57d92874aecde2dbea2429} 
+SFW\+::\+Debug\+::\+Ui\+Snapshot\+::\+Write\+Guard\+::\+Write\+Guard (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{Ui\+Snapshot}} \&}]{s}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00075}{75}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a59e5a9479da6e6175e00e47dc6b7323a}\index{SFW::Debug::UiSnapshot::WriteGuard@{SFW::Debug::UiSnapshot::WriteGuard}!WriteGuard@{WriteGuard}}
+\index{WriteGuard@{WriteGuard}!SFW::Debug::UiSnapshot::WriteGuard@{SFW::Debug::UiSnapshot::WriteGuard}}
+\doxysubsubsection{\texorpdfstring{WriteGuard()}{WriteGuard()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a59e5a9479da6e6175e00e47dc6b7323a} 
+SFW\+::\+Debug\+::\+Ui\+Snapshot\+::\+Write\+Guard\+::\+Write\+Guard (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_af8022bbff52fabf6bcba99033ec80479}\index{SFW::Debug::UiSnapshot::WriteGuard@{SFW::Debug::UiSnapshot::WriteGuard}!WriteGuard@{WriteGuard}}
+\index{WriteGuard@{WriteGuard}!SFW::Debug::UiSnapshot::WriteGuard@{SFW::Debug::UiSnapshot::WriteGuard}}
+\doxysubsubsection{\texorpdfstring{WriteGuard()}{WriteGuard()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_af8022bbff52fabf6bcba99033ec80479} 
+SFW\+::\+Debug\+::\+Ui\+Snapshot\+::\+Write\+Guard\+::\+Write\+Guard (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}} \&\&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a4948fbcae3d80a7cac7a54e95d4e3ebe}\index{SFW::Debug::UiSnapshot::WriteGuard@{SFW::Debug::UiSnapshot::WriteGuard}!data@{data}}
+\index{data@{data}!SFW::Debug::UiSnapshot::WriteGuard@{SFW::Debug::UiSnapshot::WriteGuard}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a4948fbcae3d80a7cac7a54e95d4e3ebe} 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry}{Telemetry}} \& SFW\+::\+Debug\+::\+Ui\+Snapshot\+::\+Write\+Guard\+::data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00078}{78}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_aee552941099605c8b4fe815ab351bbde}\index{SFW::Debug::UiSnapshot::WriteGuard@{SFW::Debug::UiSnapshot::WriteGuard}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::Debug::UiSnapshot::WriteGuard@{SFW::Debug::UiSnapshot::WriteGuard}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_aee552941099605c8b4fe815ab351bbde} 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}} \& SFW\+::\+Debug\+::\+Ui\+Snapshot\+::\+Write\+Guard\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a2d5446ac93788293021cf1342a201e67}\index{SFW::Debug::UiSnapshot::WriteGuard@{SFW::Debug::UiSnapshot::WriteGuard}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::Debug::UiSnapshot::WriteGuard@{SFW::Debug::UiSnapshot::WriteGuard}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a2d5446ac93788293021cf1342a201e67} 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}} \& SFW\+::\+Debug\+::\+Ui\+Snapshot\+::\+Write\+Guard\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}} \&\&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Debug/\mbox{\hyperlink{_u_i_bus_8h}{UIBus.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,155 @@
+\doxysection{SFW\+::Graphics\+::DX11\+::Buffer\+Update\+Desc 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc}{}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc}\index{SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}}
+
+
+DirectX 11のバッファを更新するための構造体  
+
+
+
+
+{\ttfamily \#include $<$DX11\+Buffer\+Manager.\+h$>$}
+
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a07e31605bcaff0addf3aeacb783385e6}{Custom\+Update\+Func}} = void(\texorpdfstring{$\ast$}{*})(void\texorpdfstring{$\ast$}{*}, const void\texorpdfstring{$\ast$}{*}, size\+\_\+t)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a2492ece3cc94f3e6afb82e96922577aa}{is\+Valid}} () const
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a14ef18965da6011db8ad5171a1d0a32e}{operator==}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc}{Buffer\+Update\+Desc}} \&other) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_ad5c0b280047f02b553c758437678d546}{buffer}}
+\item 
+const void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a97151ab935e54ab98a3e03abfea98948}{data}} = nullptr
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a278366276319100c1f60ff289705200d}{size}} = (std\+::numeric\+\_\+limits$<$size\+\_\+t$>$\+::max)()
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a07e31605bcaff0addf3aeacb783385e6}{Custom\+Update\+Func}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a01d288173b48c54da9f3da4febb64d81}{custom\+Update\+Func}} = nullptr
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a90526740b06b4c7bd21cb4cedaf0706a}{is\+Delete}} = true
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_abcae34323240528fb7f5b218fa5a40d5}{is\+Array}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+DirectX 11のバッファを更新するための構造体 
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00064}{64}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a07e31605bcaff0addf3aeacb783385e6}\index{SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}!CustomUpdateFunc@{CustomUpdateFunc}}
+\index{CustomUpdateFunc@{CustomUpdateFunc}!SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}}
+\doxysubsubsection{\texorpdfstring{CustomUpdateFunc}{CustomUpdateFunc}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a07e31605bcaff0addf3aeacb783385e6} 
+using \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a07e31605bcaff0addf3aeacb783385e6}{SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Update\+Desc\+::\+Custom\+Update\+Func}} = void(\texorpdfstring{$\ast$}{*})(void\texorpdfstring{$\ast$}{*}, const void\texorpdfstring{$\ast$}{*}, size\+\_\+t)}
+
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00070}{70}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a2492ece3cc94f3e6afb82e96922577aa}\index{SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}!isValid@{isValid}}
+\index{isValid@{isValid}!SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}}
+\doxysubsubsection{\texorpdfstring{isValid()}{isValid()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a2492ece3cc94f3e6afb82e96922577aa} 
+bool SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Update\+Desc\+::is\+Valid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00077}{77}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a14ef18965da6011db8ad5171a1d0a32e}\index{SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}!operator==@{operator==}}
+\index{operator==@{operator==}!SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a14ef18965da6011db8ad5171a1d0a32e} 
+bool SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Update\+Desc\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc}{Buffer\+Update\+Desc}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00081}{81}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_ad5c0b280047f02b553c758437678d546}\index{SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}!buffer@{buffer}}
+\index{buffer@{buffer}!SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}}
+\doxysubsubsection{\texorpdfstring{buffer}{buffer}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_ad5c0b280047f02b553c758437678d546} 
+Com\+Ptr$<$ID3\+D11\+Buffer$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Update\+Desc\+::buffer}
+
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00065}{65}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a01d288173b48c54da9f3da4febb64d81}\index{SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}!customUpdateFunc@{customUpdateFunc}}
+\index{customUpdateFunc@{customUpdateFunc}!SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}}
+\doxysubsubsection{\texorpdfstring{customUpdateFunc}{customUpdateFunc}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a01d288173b48c54da9f3da4febb64d81} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a07e31605bcaff0addf3aeacb783385e6}{Custom\+Update\+Func}} SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Update\+Desc\+::custom\+Update\+Func = nullptr}
+
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00072}{72}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a97151ab935e54ab98a3e03abfea98948}\index{SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}!data@{data}}
+\index{data@{data}!SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a97151ab935e54ab98a3e03abfea98948} 
+const void\texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Update\+Desc\+::data = nullptr}
+
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00066}{66}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_abcae34323240528fb7f5b218fa5a40d5}\index{SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}!isArray@{isArray}}
+\index{isArray@{isArray}!SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}}
+\doxysubsubsection{\texorpdfstring{isArray}{isArray}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_abcae34323240528fb7f5b218fa5a40d5} 
+bool SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Update\+Desc\+::is\+Array = false}
+
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00075}{75}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a90526740b06b4c7bd21cb4cedaf0706a}\index{SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}!isDelete@{isDelete}}
+\index{isDelete@{isDelete}!SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}}
+\doxysubsubsection{\texorpdfstring{isDelete}{isDelete}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a90526740b06b4c7bd21cb4cedaf0706a} 
+bool SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Update\+Desc\+::is\+Delete = true}
+
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00074}{74}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a278366276319100c1f60ff289705200d}\index{SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}!size@{size}}
+\index{size@{size}!SFW::Graphics::DX11::BufferUpdateDesc@{SFW::Graphics::DX11::BufferUpdateDesc}}
+\doxysubsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_a278366276319100c1f60ff289705200d} 
+size\+\_\+t SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Update\+Desc\+::size = (std\+::numeric\+\_\+limits$<$size\+\_\+t$>$\+::max)()}
+
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00067}{67}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\mbox{\hyperlink{_d_x11_buffer_manager_8h}{DX11\+Buffer\+Manager.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,86 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\+IType\+System.hpp ファイル}
+\hypertarget{_i_type_system_8hpp}{}\label{_i_type_system_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ITypeSystem.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ITypeSystem.hpp}}
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$exception$>$}\newline
+{\ttfamily \#include $<$atomic$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include "{}ISystem.\+hpp"{}}\newline
+{\ttfamily \#include "{}Component\+Type\+Registry.\+h"{}}\newline
+{\ttfamily \#include "{}Query.\+h"{}}\newline
+{\ttfamily \#include "{}../../\+Math/\+Frustum.\+hpp"{}}\newline
+{\ttfamily \#include "{}../../\+Util/\+Undeletable\+Ptr.\+hpp"{}}\newline
+{\ttfamily \#include "{}../../\+Util/function\+\_\+trait.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Thread\+Pool\+Executor.\+h"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__subset__impl}{SFW\+::\+ECS\+::access\+\_\+subset\+\_\+impl$<$ Access\+Spec, Allowed $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__subset__impl_3_01_component_access_3_01_override_8_8_8_01_4_00_01_allowed_8_8_8_01_4}{SFW\+::\+ECS\+::access\+\_\+subset\+\_\+impl$<$ Component\+Access$<$ Override... $>$, Allowed... $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__component}{SFW\+::\+ECS\+::access\+\_\+component$<$ A $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__subset__by__comp__impl}{SFW\+::\+ECS\+::access\+\_\+subset\+\_\+by\+\_\+comp\+\_\+impl$<$ Access\+Spec, Allowed $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__subset__by__comp__impl_3_01_component_access_3_01_override_8_8b63d37f859fba1a5f84262d1c35961ab}{SFW\+::\+ECS\+::access\+\_\+subset\+\_\+by\+\_\+comp\+\_\+impl$<$ Component\+Access$<$ Override... $>$, Allowed... $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__spec__normalize}{SFW\+::\+ECS\+::access\+\_\+spec\+\_\+normalize$<$ T $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__spec__normalize_3_01_component_accessor_3_01_ts_8_8_8_01_4_01_4}{SFW\+::\+ECS\+::access\+\_\+spec\+\_\+normalize$<$ Component\+Accessor$<$ Ts... $>$ $>$}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7}{SFW\+::\+ECS\+::\+IType\+System$<$ Derived\+T, Partition, Component\+Access$<$ Access\+Types... $>$, Service\+Context$<$ Services... $>$, Parallel\+Update $>$}}
+\begin{DoxyCompactList}\small\item\em ECSシステムのインターフェース \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{SFW\+::\+ECS}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_start_impl}{SFW\+::\+ECS\+::\+Has\+Start\+Impl}}
+\begin{DoxyCompactList}\small\item\em Start\+Implのオーバーロードをチェックするコンセプト \end{DoxyCompactList}\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_update_impl}{SFW\+::\+ECS\+::\+Has\+Update\+Impl}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_global_update_impl}{SFW\+::\+ECS\+::\+Has\+Global\+Update\+Impl}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_end_impl}{SFW\+::\+ECS\+::\+Has\+End\+Impl}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_global_end_impl}{SFW\+::\+ECS\+::\+Has\+Global\+End\+Impl}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_access_spec_subset_of}{SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_one_of_by_component}{SFW\+::\+ECS\+::\+One\+Of\+By\+Component}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_access_spec_subset_of_by_component}{SFW\+::\+ECS\+::\+Access\+Spec\+Subset\+Of\+By\+Component}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{マクロ定義}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_i_type_system_8hpp_a0cb0f471f1eb356d0a1d91150ea436bd}{SFW\+\_\+\+WARN\+\_\+\+NO\+\_\+\+EXECUTOR\+\_\+\+PARALLEL}}~1
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class T$>$ }\\using \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6}{SFW\+::\+ECS\+::access\+\_\+spec\+\_\+normalize\+\_\+t}} = typename \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__spec__normalize}{access\+\_\+spec\+\_\+normalize}}$<$std\+::remove\+\_\+cvref\+\_\+t$<$T$>$$>$\+::type
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{_i_type_system_8hpp_doc-define-members}
+\doxysubsection{マクロ定義詳解}
+\Hypertarget{_i_type_system_8hpp_a0cb0f471f1eb356d0a1d91150ea436bd}\index{ITypeSystem.hpp@{ITypeSystem.hpp}!SFW\_WARN\_NO\_EXECUTOR\_PARALLEL@{SFW\_WARN\_NO\_EXECUTOR\_PARALLEL}}
+\index{SFW\_WARN\_NO\_EXECUTOR\_PARALLEL@{SFW\_WARN\_NO\_EXECUTOR\_PARALLEL}!ITypeSystem.hpp@{ITypeSystem.hpp}}
+\doxysubsubsection{\texorpdfstring{SFW\_WARN\_NO\_EXECUTOR\_PARALLEL}{SFW\_WARN\_NO\_EXECUTOR\_PARALLEL}}
+{\footnotesize\ttfamily \label{_i_type_system_8hpp_a0cb0f471f1eb356d0a1d91150ea436bd} 
+\#define SFW\+\_\+\+WARN\+\_\+\+NO\+\_\+\+EXECUTOR\+\_\+\+PARALLEL~1}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00027}{27}} 行目に定義があります。
+

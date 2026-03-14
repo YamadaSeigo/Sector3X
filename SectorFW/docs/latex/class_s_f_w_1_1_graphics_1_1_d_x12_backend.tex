@@ -1,0 +1,118 @@
+\doxysection{SFW\+::Graphics\+::DX12\+Backend クラス}
+\hypertarget{class_s_f_w_1_1_graphics_1_1_d_x12_backend}{}\label{class_s_f_w_1_1_graphics_1_1_d_x12_backend}\index{SFW::Graphics::DX12Backend@{SFW::Graphics::DX12Backend}}
+
+
+{\ttfamily \#include $<$DX12\+Render\+Backend.\+h$>$}
+
+SFW\+::Graphics\+::DX12\+Backend の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.437741cm]{class_s_f_w_1_1_graphics_1_1_d_x12_backend}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x12_backend_a7b8cec9fae1996779960a42be2d1a1db}{DX12\+Backend}} (ID3\+D12\+Graphics\+Command\+List \texorpdfstring{$\ast$}{*}cmd)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x12_backend_afbd08938f4ce3f95b5e4532f9985e32c}{Set\+Render\+Targets\+Impl}} (const std\+::vector$<$ D3\+D12\+\_\+\+CPU\+\_\+\+DESCRIPTOR\+\_\+\+HANDLE $>$ \&rtvs, void \texorpdfstring{$\ast$}{*}dsv)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x12_backend_af18bf2682e4d07880f9247c32c34a996}{Bind\+SRVs\+Impl}} (const std\+::vector$<$ D3\+D12\+\_\+\+GPU\+\_\+\+DESCRIPTOR\+\_\+\+HANDLE $>$ \&srvs)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x12_backend_a2f9679b6ab865d7b1a01d5a3365f2bcb}{Execute\+Draw\+Impl}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{Draw\+Command}} \&cmd)
+\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base$<$ DX12\+Backend, D3\+D12\+\_\+\+CPU\+\_\+\+DESCRIPTOR\+\_\+\+HANDLE, D3\+D12\+\_\+\+GPU\+\_\+\+DESCRIPTOR\+\_\+\+HANDLE $>$}} に属する継承公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_af9d1ab7211c075468ba6c849a326818f}{Add\+Resource\+Manager\+To\+Render\+Service}} (\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{Render\+Graph}}$<$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x12_backend}{DX12\+Backend}}, RTV, DSV, SRV, Buffer, View\+Handle $>$ \&graph)
+\begin{DoxyCompactList}\small\item\em Render\+Graphにリソースマネージャーを追加する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a837b63bcc718fcb980542f373649cd98}{Set\+Primitive\+Topology}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0ed}{Primitive\+Topology}} topology) const
+\begin{DoxyCompactList}\small\item\em プリミティブのトポロジーを設定する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a955e3ce740c38bdc3330c177d88c2b1a}{Set\+Rasterizer\+State}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5}{Rasterizer\+State\+ID}} state) const
+\begin{DoxyCompactList}\small\item\em ラスタライザーステートを設定する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_ab3ef7edac5bd80cc13d455eae7c5a778}{Set\+Blend\+State}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556b}{Blend\+State\+ID}} state) const
+\begin{DoxyCompactList}\small\item\em ブレンドステートを設定する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_ad72a2d9b519bcf9c76c178b40002cba3}{Set\+Depth\+Stencil\+State}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3}{Depth\+Stencil\+State\+ID}} state, uint32\+\_\+t stencil\+Ref=0) const
+\begin{DoxyCompactList}\small\item\em デプスステンシルステートを設定する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a509225ed159e1b59d893bd4dab882eef}{Set\+Render\+Targets}} (const std\+::vector$<$ RTV $>$ \&rtvs, void \texorpdfstring{$\ast$}{*}dsv) const
+\begin{DoxyCompactList}\small\item\em レンダーターゲットとデプスステンシルビューを設定する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a994054adf9d660b5e4957da3b1997f51}{Bind\+PSSRVs}} (const std\+::vector$<$ SRV $>$ \&srvs, uint32\+\_\+t start\+Slot=0) const
+\begin{DoxyCompactList}\small\item\em シェーダーリソースビューをバインドする関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_adcc638519750590e321400fa91db7170}{Bind\+VSCBVs}} (const std\+::vector$<$ Buffer $>$ \&cbvs, uint32\+\_\+t start\+Slot=0) const
+\begin{DoxyCompactList}\small\item\em 定数バッファビューをバインドする関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a963fc18d29a587138ec96264143cc3c8}{Bind\+PSCBVs}} (const std\+::vector$<$ Buffer $>$ \&cbvs, uint32\+\_\+t start\+Slot=0) const
+\begin{DoxyCompactList}\small\item\em ピクセルシェーダー用定数バッファビューをバインドする関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a67e4fe237beab588a9644e96ee5f092d}{Bind\+Global\+VSCBVs}} (const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_bind_slot_buffer}{Bind\+Slot\+Buffer}} $>$ \&cbvs) const
+\begin{DoxyCompactList}\small\item\em グローバル定数バッファビューをバインドする関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a3338354686612337875df76617b3174a}{Set\+Viewport}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport}{Viewport}} \&vp) const
+\begin{DoxyCompactList}\small\item\em ビューポートを設定する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a35a067f4039137e3ee3b1b271dc61d2f}{Begin\+Frame\+Upload}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Shared\+Instance\+Arena\+::\+Instance\+Pool}} \texorpdfstring{$\ast$}{*}frame\+Pool, uint32\+\_\+t inst\+Count)
+\begin{DoxyCompactList}\small\item\em フレームごとのインスタンスデータをアップロードする関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a517a7f4033bfccfd1f573427e12420e6}{Execute\+Draw\+Indexed\+Instanced}} (const VecT \&cmds, std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}} $>$ pso\+Override=std\+::nullopt, bool use\+PSORasterizer=true, bool rebind\+PSO=false)
+\begin{DoxyCompactList}\small\item\em インデックス付きインスタンスドローを実行する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a69cfbab42678e659cb8fa984f97e31cc}{Process\+Deferred\+Deletes}} (uint64\+\_\+t current\+Frame)
+\begin{DoxyCompactList}\small\item\em フレーム終了時に遅延削除を処理する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a30707e108564c58fe4e93eea0b00fdc0}{Update\+Camera\+Buffer\+Data}} (Buffer buffer, const void \texorpdfstring{$\ast$}{*}data, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em バッファデータを更新する関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_d_x12_render_backend_8h_source}{DX12\+Render\+Backend.\+h}} の \mbox{\hyperlink{_d_x12_render_backend_8h_source_l00011}{11}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x12_backend_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x12_backend_a7b8cec9fae1996779960a42be2d1a1db}\index{SFW::Graphics::DX12Backend@{SFW::Graphics::DX12Backend}!DX12Backend@{DX12Backend}}
+\index{DX12Backend@{DX12Backend}!SFW::Graphics::DX12Backend@{SFW::Graphics::DX12Backend}}
+\doxysubsubsection{\texorpdfstring{DX12Backend()}{DX12Backend()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x12_backend_a7b8cec9fae1996779960a42be2d1a1db} 
+SFW\+::\+Graphics\+::\+DX12\+Backend\+::\+DX12\+Backend (\begin{DoxyParamCaption}\item[{ID3\+D12\+Graphics\+Command\+List \texorpdfstring{$\ast$}{*}}]{cmd}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x12_render_backend_8h_source}{DX12\+Render\+Backend.\+h}} の \mbox{\hyperlink{_d_x12_render_backend_8h_source_l00013}{13}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x12_backend_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x12_backend_af18bf2682e4d07880f9247c32c34a996}\index{SFW::Graphics::DX12Backend@{SFW::Graphics::DX12Backend}!BindSRVsImpl@{BindSRVsImpl}}
+\index{BindSRVsImpl@{BindSRVsImpl}!SFW::Graphics::DX12Backend@{SFW::Graphics::DX12Backend}}
+\doxysubsubsection{\texorpdfstring{BindSRVsImpl()}{BindSRVsImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x12_backend_af18bf2682e4d07880f9247c32c34a996} 
+void SFW\+::\+Graphics\+::\+DX12\+Backend\+::\+Bind\+SRVs\+Impl (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ D3\+D12\+\_\+\+GPU\+\_\+\+DESCRIPTOR\+\_\+\+HANDLE $>$ \&}]{srvs}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x12_render_backend_8h_source}{DX12\+Render\+Backend.\+h}} の \mbox{\hyperlink{_d_x12_render_backend_8h_source_l00019}{19}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x12_backend_a2f9679b6ab865d7b1a01d5a3365f2bcb}\index{SFW::Graphics::DX12Backend@{SFW::Graphics::DX12Backend}!ExecuteDrawImpl@{ExecuteDrawImpl}}
+\index{ExecuteDrawImpl@{ExecuteDrawImpl}!SFW::Graphics::DX12Backend@{SFW::Graphics::DX12Backend}}
+\doxysubsubsection{\texorpdfstring{ExecuteDrawImpl()}{ExecuteDrawImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x12_backend_a2f9679b6ab865d7b1a01d5a3365f2bcb} 
+void SFW\+::\+Graphics\+::\+DX12\+Backend\+::\+Execute\+Draw\+Impl (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{Draw\+Command}} \&}]{cmd}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x12_render_backend_8h_source}{DX12\+Render\+Backend.\+h}} の \mbox{\hyperlink{_d_x12_render_backend_8h_source_l00023}{23}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x12_backend_afbd08938f4ce3f95b5e4532f9985e32c}\index{SFW::Graphics::DX12Backend@{SFW::Graphics::DX12Backend}!SetRenderTargetsImpl@{SetRenderTargetsImpl}}
+\index{SetRenderTargetsImpl@{SetRenderTargetsImpl}!SFW::Graphics::DX12Backend@{SFW::Graphics::DX12Backend}}
+\doxysubsubsection{\texorpdfstring{SetRenderTargetsImpl()}{SetRenderTargetsImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x12_backend_afbd08938f4ce3f95b5e4532f9985e32c} 
+void SFW\+::\+Graphics\+::\+DX12\+Backend\+::\+Set\+Render\+Targets\+Impl (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ D3\+D12\+\_\+\+CPU\+\_\+\+DESCRIPTOR\+\_\+\+HANDLE $>$ \&}]{rtvs}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{dsv}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x12_render_backend_8h_source}{DX12\+Render\+Backend.\+h}} の \mbox{\hyperlink{_d_x12_render_backend_8h_source_l00015}{15}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX12/\mbox{\hyperlink{_d_x12_render_backend_8h}{DX12\+Render\+Backend.\+h}}\end{DoxyCompactItemize}

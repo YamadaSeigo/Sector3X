@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::ECS::ComponentAccessorBase クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_e_c_s_1_1_component_accessor_base.html','','class_s_f_w_1_1_e_c_s_1_1_component_accessor_base-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::ECS::ComponentAccessorBase クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_accessor_8hpp_source.html">Accessor.hpp</a>&gt;</code></p>
+<div class="dynheader">
+SFW::ECS::ComponentAccessorBase の継承関係図</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_s_f_w_1_1_e_c_s_1_1_component_accessor_base.png" usemap="#SFW_3A_3AECS_3A_3AComponentAccessorBase_map" alt=""/>
+  <map id="SFW_3A_3AECS_3A_3AComponentAccessorBase_map" name="SFW_3A_3AECS_3A_3AComponentAccessorBase_map">
+<area href="class_s_f_w_1_1_e_c_s_1_1_component_accessor.html" title="指定したアクセス型に基づいて、コンポーネントにアクセスするためのクラス" alt="SFW::ECS::ComponentAccessor&lt; AccessTypes &gt;" shape="rect" coords="0,56,293,80"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a467e7d8742a77ef0848d03ca997ae928" id="r_a467e7d8742a77ef0848d03ca997ae928"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a467e7d8742a77ef0848d03ca997ae928">ComponentAccessorBase</a> (<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> *chunk) noexcept</td></tr>
+<tr class="memdesc:a467e7d8742a77ef0848d03ca997ae928"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:afa4177a3a632eceff21603e05b339164" id="r_afa4177a3a632eceff21603e05b339164"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afa4177a3a632eceff21603e05b339164">GetCapacity</a> () const noexcept</td></tr>
+<tr class="memdesc:afa4177a3a632eceff21603e05b339164"><td class="mdescLeft">&#160;</td><td class="mdescRight">チャンクの容量を取得する関数  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:af3183a034746d9f5ecab79b5a474daea" id="r_af3183a034746d9f5ecab79b5a474daea"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; <br />
+requires ECS::IsSoAComponent&lt;T&gt;</td></tr>
+<tr class="memitem:af3183a034746d9f5ecab79b5a474daea template"><td class="memItemLeft" align="right" valign="top">static T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af3183a034746d9f5ecab79b5a474daea">ConvertSoAToAoSComponent</a> (const typename T::ToPtr &amp;p, size_t index) noexcept</td></tr>
+<tr class="memdesc:af3183a034746d9f5ecab79b5a474daea"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントをAoSコンポーネントに変換する関数  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+限定公開メンバ関数</h2></td></tr>
+<tr class="memitem:af7b6e7bbf3372de2af9cd846e20d817e" id="r_af7b6e7bbf3372de2af9cd846e20d817e"><td class="memTemplParams" colspan="2">template&lt;typename AccessType, typename PtrType, typename ComponentType&gt; </td></tr>
+<tr class="memitem:af7b6e7bbf3372de2af9cd846e20d817e template"><td class="memItemLeft" align="right" valign="top">std::optional&lt; typename <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_access_policy.html">AccessPolicy</a>&lt; AccessType &gt;::PointerType &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7b6e7bbf3372de2af9cd846e20d817e">GetComponent</a> ()</td></tr>
+<tr class="memitem:abff4e323707bf5ad2336ce048d93b4a2" id="r_abff4e323707bf5ad2336ce048d93b4a2"><td class="memTemplParams" colspan="2">template&lt;typename PtrType, size_t Index&gt; </td></tr>
+<tr class="memitem:abff4e323707bf5ad2336ce048d93b4a2 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abff4e323707bf5ad2336ce048d93b4a2">GetMemberStartPtrImpl</a> (<a class="el" href="namespace_s_f_w_1_1_e_c_s.html#a1fa083af926da159fc321773dbfc28c5">BufferType</a> *base, size_t capacity, size_t &amp;offset, PtrType &amp;value) noexcept</td></tr>
+<tr class="memdesc:abff4e323707bf5ad2336ce048d93b4a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントのメンバーの開始ポインタを取得する関数の実装  <br /></td></tr>
+<tr class="memitem:aece30059ab312ef987bea62a0e3c1517" id="r_aece30059ab312ef987bea62a0e3c1517"><td class="memTemplParams" colspan="2">template&lt;typename PtrType, size_t... Is&gt; </td></tr>
+<tr class="memitem:aece30059ab312ef987bea62a0e3c1517 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aece30059ab312ef987bea62a0e3c1517">GetMemberStartPtr</a> (<a class="el" href="namespace_s_f_w_1_1_e_c_s.html#a1fa083af926da159fc321773dbfc28c5">BufferType</a> *base, size_t capacity, size_t &amp;offset, PtrType &amp;value, std::index_sequence&lt; Is... &gt;) noexcept</td></tr>
+<tr class="memdesc:aece30059ab312ef987bea62a0e3c1517"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoAコンポーネントのメンバーの開始ポインタを取得する関数  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pro-static-methods" class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
+静的限定公開メンバ関数</h2></td></tr>
+<tr class="memitem:aa04b1bca383abf5e8b61c131e5ecaeb1" id="r_aa04b1bca383abf5e8b61c131e5ecaeb1"><td class="memTemplParams" colspan="2">template&lt;typename T, std::size_t... Is&gt; </td></tr>
+<tr class="memitem:aa04b1bca383abf5e8b61c131e5ecaeb1 template"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa04b1bca383abf5e8b61c131e5ecaeb1">StoreSoAToAoSImpl</a> (const typename T::ToPtr &amp;p, size_t index, T &amp;out, std::index_sequence&lt; Is... &gt;) noexcept</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock">
+<p class="definition"> <a class="el" href="_accessor_8hpp_source.html">Accessor.hpp</a> の <a class="el" href="_accessor_8hpp_source.html#l00074">74</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="a467e7d8742a77ef0848d03ca997ae928" name="a467e7d8742a77ef0848d03ca997ae928"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a467e7d8742a77ef0848d03ca997ae928">&#9670;&#160;</a></span>ComponentAccessorBase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::ECS::ComponentAccessorBase::ComponentAccessorBase </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a> *</td>          <td class="paramname"><span class="paramname"><em>chunk</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">chunk</td><td>アクセスするアーキタイプチャンク </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_accessor_8hpp_source.html">Accessor.hpp</a> の <a class="el" href="_accessor_8hpp_source.html#l00087">87</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="af3183a034746d9f5ecab79b5a474daea" name="af3183a034746d9f5ecab79b5a474daea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3183a034746d9f5ecab79b5a474daea">&#9670;&#160;</a></span>ConvertSoAToAoSComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; <br />
+requires ECS::IsSoAComponent&lt;T&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T SFW::ECS::ComponentAccessorBase::ConvertSoAToAoSComponent </td>
+          <td>(</td>
+          <td class="paramtype">const typename T::ToPtr &amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>SoAコンポーネントをAoSコンポーネントに変換する関数 </p>
+<dl class="tparams"><dt>テンプレート引数</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>SoAコンポーネントの型 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>変換するインデックス </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>T AoSコンポーネントの値 </dd></dl>
+
+<p class="definition"> <a class="el" href="_accessor_8hpp_source.html">Accessor.hpp</a> の <a class="el" href="_accessor_8hpp_source.html#l00097">97</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="afa4177a3a632eceff21603e05b339164" name="afa4177a3a632eceff21603e05b339164"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa4177a3a632eceff21603e05b339164">&#9670;&#160;</a></span>GetCapacity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SFW::ECS::ComponentAccessorBase::GetCapacity </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>チャンクの容量を取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>size_t チャンクの容量 </dd></dl>
+
+<p class="definition"> <a class="el" href="_accessor_8hpp_source.html">Accessor.hpp</a> の <a class="el" href="_accessor_8hpp_source.html#l00111">111</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af7b6e7bbf3372de2af9cd846e20d817e" name="af7b6e7bbf3372de2af9cd846e20d817e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7b6e7bbf3372de2af9cd846e20d817e">&#9670;&#160;</a></span>GetComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename AccessType, typename PtrType, typename ComponentType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; typename <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_access_policy.html">AccessPolicy</a>&lt; AccessType &gt;::PointerType &gt; SFW::ECS::ComponentAccessorBase::GetComponent </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_accessor_8hpp_source.html">Accessor.hpp</a> の <a class="el" href="_accessor_8hpp_source.html#l00118">118</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aece30059ab312ef987bea62a0e3c1517" name="aece30059ab312ef987bea62a0e3c1517"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aece30059ab312ef987bea62a0e3c1517">&#9670;&#160;</a></span>GetMemberStartPtr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename PtrType, size_t... Is&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::ECS::ComponentAccessorBase::GetMemberStartPtr </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_e_c_s.html#a1fa083af926da159fc321773dbfc28c5">BufferType</a> *</td>          <td class="paramname"><span class="paramname"><em>base</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t &amp;</td>          <td class="paramname"><span class="paramname"><em>offset</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PtrType &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::index_sequence&lt; Is... &gt;</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel protected">protected</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>SoAコンポーネントのメンバーの開始ポインタを取得する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SoAコンポーネントのベースポインタ </td></tr>
+    <tr><td class="paramname">capacity</td><td>SoAコンポーネントの容量 </td></tr>
+    <tr><td class="paramname">offset</td><td>現在のオフセット </td></tr>
+    <tr><td class="paramname">value</td><td>SoAコンポーネントのポインタ </td></tr>
+    <tr><td class="paramname">Is</td><td>インデックスシーケンス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_accessor_8hpp_source.html">Accessor.hpp</a> の <a class="el" href="_accessor_8hpp_source.html#l00182">182</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="abff4e323707bf5ad2336ce048d93b4a2" name="abff4e323707bf5ad2336ce048d93b4a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abff4e323707bf5ad2336ce048d93b4a2">&#9670;&#160;</a></span>GetMemberStartPtrImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename PtrType, size_t Index&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::ECS::ComponentAccessorBase::GetMemberStartPtrImpl </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_e_c_s.html#a1fa083af926da159fc321773dbfc28c5">BufferType</a> *</td>          <td class="paramname"><span class="paramname"><em>base</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t &amp;</td>          <td class="paramname"><span class="paramname"><em>offset</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PtrType &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel protected">protected</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>SoAコンポーネントのメンバーの開始ポインタを取得する関数の実装 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SoAコンポーネントのベースポインタ </td></tr>
+    <tr><td class="paramname">capacity</td><td>SoAコンポーネントの容量 </td></tr>
+    <tr><td class="paramname">offset</td><td>現在のオフセット </td></tr>
+    <tr><td class="paramname">value</td><td>SoAコンポーネントのポインタ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_accessor_8hpp_source.html">Accessor.hpp</a> の <a class="el" href="_accessor_8hpp_source.html#l00146">146</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa04b1bca383abf5e8b61c131e5ecaeb1" name="aa04b1bca383abf5e8b61c131e5ecaeb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa04b1bca383abf5e8b61c131e5ecaeb1">&#9670;&#160;</a></span>StoreSoAToAoSImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, std::size_t... Is&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::ECS::ComponentAccessorBase::StoreSoAToAoSImpl </td>
+          <td>(</td>
+          <td class="paramtype">const typename T::ToPtr &amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T &amp;</td>          <td class="paramname"><span class="paramname"><em>out</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::index_sequence&lt; Is... &gt;</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel protected">protected</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_accessor_8hpp_source.html">Accessor.hpp</a> の <a class="el" href="_accessor_8hpp_source.html#l00188">188</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/<a class="el" href="_accessor_8hpp_source.html">Accessor.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_e_c_s.html">ECS</a></li><li class="navelem"><a href="class_s_f_w_1_1_e_c_s_1_1_component_accessor_base.html">ComponentAccessorBase</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

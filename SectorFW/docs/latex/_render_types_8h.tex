@@ -1,0 +1,148 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+Render\+Types.h ファイル}
+\hypertarget{_render_types_8h}{}\label{_render_types_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderTypes.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderTypes.h}}
+
+
+レンダー関連の基本的な型と定数を定義するヘッダーファイル  
+
+
+{\ttfamily \#include "{}../\+Math/\+Matrix.\+hpp"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_mesh_handle}{SFW\+::\+Graphics\+::\+Mesh\+Handle}}
+\begin{DoxyCompactList}\small\item\em メッシュハンドル構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_material_handle}{SFW\+::\+Graphics\+::\+Material\+Handle}}
+\begin{DoxyCompactList}\small\item\em マテリアルハンドル構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shader_handle}{SFW\+::\+Graphics\+::\+Shader\+Handle}}
+\begin{DoxyCompactList}\small\item\em シェーダハンドル構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{SFW\+::\+Graphics\+::\+PSOHandle}}
+\begin{DoxyCompactList}\small\item\em パイプラインステートオブジェクトハンドル構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{SFW\+::\+Graphics\+::\+Texture\+Handle}}
+\begin{DoxyCompactList}\small\item\em テクスチャハンドル構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{SFW\+::\+Graphics\+::\+Buffer\+Handle}}
+\begin{DoxyCompactList}\small\item\em バッファハンドル構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_sampler_handle}{SFW\+::\+Graphics\+::\+Sampler\+Handle}}
+\begin{DoxyCompactList}\small\item\em サンプラーハンドル構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_model_asset_handle}{SFW\+::\+Graphics\+::\+Model\+Asset\+Handle}}
+\begin{DoxyCompactList}\small\item\em モデルアセットハンドル構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data}{SFW\+::\+Graphics\+::\+Instance\+Data}}
+\begin{DoxyCompactList}\small\item\em インスタンスデータ構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{SFW\+::\+Graphics\+::\+Instance\+Index}}
+\begin{DoxyCompactList}\small\item\em インスタンスデータのインデックス構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{SFW\+::\+Graphics\+::\+Draw\+Command}}
+\begin{DoxyCompactList}\small\item\em 描画コマンド構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b}{SFW\+::\+Graphics\+::\+PBRMaterial\+CB}}
+\begin{DoxyCompactList}\small\item\em PBRマテリアル用定数バッファ構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_bind_slot_buffer}{SFW\+::\+Graphics\+::\+Bind\+Slot\+Buffer}}
+\begin{DoxyCompactList}\small\item\em バッファバインドスロット構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport}{SFW\+::\+Graphics\+::\+Viewport}}
+\begin{DoxyCompactList}\small\item\em ビューポート構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_default_view_handle}{SFW\+::\+Graphics\+::\+Default\+View\+Handle$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em デフォルトのビュー・ハンドル管理構造体 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW\+::\+Graphics}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ae93ce8676d3ac86b771af9510fdc993a}{SFW\+::\+Graphics\+::\+Shader\+Variant\+ID}} = uint32\+\_\+t
+\begin{DoxyCompactList}\small\item\em シェーダバリアント\+ID型 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a03256a77eb0e81fa5cb7e058bdda478a}{SFW\+::\+Graphics\+::\+Draw\+Flags}} \+: uint8\+\_\+t \{ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a03256a77eb0e81fa5cb7e058bdda478aa70cd1a75f7b214bb9434b440ccf549df}{SFW\+::\+Graphics\+::\+Rebind\+PSONeeded}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0
+ \}
+\begin{DoxyCompactList}\small\item\em Draw\+Command のフラグビットフィールド \end{DoxyCompactList}\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_afc5edfd2dde8e6f34da6b897a7f0b994}{SFW\+::\+Graphics\+::\+Material\+Template\+ID}} \+: uint32\+\_\+t \{ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_afc5edfd2dde8e6f34da6b897a7f0b994af8357427a3733ebed1a8647f3d5fa31b}{SFW\+::\+Graphics\+::\+PBR}} = 0
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_afc5edfd2dde8e6f34da6b897a7f0b994acfc126be5c3f5c76fb082aa773f24b3d}{SFW\+::\+Graphics\+::\+Unlit}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_afc5edfd2dde8e6f34da6b897a7f0b994aa9b2955fda4994d0d2a9fd3329900fe3}{SFW\+::\+Graphics\+::\+Toon}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_afc5edfd2dde8e6f34da6b897a7f0b994afd4487453885e6013ddea8e02030afb0}{SFW\+::\+Graphics\+::\+MAX\+\_\+\+COUNT}}
+ \}
+\begin{DoxyCompactList}\small\item\em マテリアルテンプレート\+ID列挙型 \end{DoxyCompactList}\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0ed}{SFW\+::\+Graphics\+::\+Primitive\+Topology}} \{ \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0edaec0fc0100c4fc1ce4eea230c3dc10360}{SFW\+::\+Graphics\+::\+Undefined}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0eda1a18ff71b3df3e362a2489eef4b30003}{SFW\+::\+Graphics\+::\+Point\+List}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0eda596e1b7afe8925f3f578c716d5af8fef}{SFW\+::\+Graphics\+::\+Line\+List}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0edae7f9e73b8edd21f420a63b3ace5768a2}{SFW\+::\+Graphics\+::\+Line\+Strip}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0edaf5beeab7a1f452e5b0e9b03b44f0de92}{SFW\+::\+Graphics\+::\+Triangle\+List}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0eda1da0b9ead8b051940a89214bae22831c}{SFW\+::\+Graphics\+::\+Triangle\+Strip}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0eda03baa51fc5c8b0b056ce614ed14fa80b}{SFW\+::\+Graphics\+::\+Line\+List\+Adj}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0edac1852cb12d8adf08120505e7e7e6a864}{SFW\+::\+Graphics\+::\+Line\+Strip\+Adj}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0edae5c62929f91f2f47449923197497a6cb}{SFW\+::\+Graphics\+::\+Triangle\+List\+Adj}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0edaf96be28908bc8d0d4557aae7145df525}{SFW\+::\+Graphics\+::\+Triangle\+Strip\+Adj}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0edac61ab4dae5515086e9d3407f8dafb0fe}{SFW\+::\+Graphics\+::\+Patch1}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0eda411aadce0d3e81a5c6b36a617c3571a4}{SFW\+::\+Graphics\+::\+Patch2}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0edafd4487453885e6013ddea8e02030afb0}{SFW\+::\+Graphics\+::\+MAX\+\_\+\+COUNT}}
+ \}
+\begin{DoxyCompactList}\small\item\em プリミティブトポロジ列挙型 \end{DoxyCompactList}\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5}{SFW\+::\+Graphics\+::\+Rasterizer\+State\+ID}} \{ \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5ae95602a12f4b2df8eb06322f497bf934}{SFW\+::\+Graphics\+::\+Solid\+Cull\+Back}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5a70b711df210a8d5d960bdc002fea5e6d}{SFW\+::\+Graphics\+::\+Solid\+Cull\+Front}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5a2bc5d89c8f62f7181a0eba2881be475c}{SFW\+::\+Graphics\+::\+Solid\+Cull\+None}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5a38bcbb1937368a2873ededf19c74b6a6}{SFW\+::\+Graphics\+::\+Wire\+Cull\+Back}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5adf68084a585319a8b5c2f9658960922a}{SFW\+::\+Graphics\+::\+Wire\+Cull\+Front}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5ac85602c1c5e60bc1ed647e8dc719187f}{SFW\+::\+Graphics\+::\+Wire\+Cull\+None}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5aeb342d08fb77964fbdd9319a05ef9be4}{SFW\+::\+Graphics\+::\+Shadow\+Bias\+Low}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5a6d6e7ef0b194035d6c9c7906cee04aac}{SFW\+::\+Graphics\+::\+Shadow\+Bias\+Medium}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5aef91b79c592c89ee9a749122cc1883f6}{SFW\+::\+Graphics\+::\+Shadow\+Bias\+High}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5afd4487453885e6013ddea8e02030afb0}{SFW\+::\+Graphics\+::\+MAX\+\_\+\+COUNT}}
+ \}
+\begin{DoxyCompactList}\small\item\em ラスタライザーステート\+ID列挙型 \end{DoxyCompactList}\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556b}{SFW\+::\+Graphics\+::\+Blend\+State\+ID}} \{ \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556bafaa90538de35640e4b1e31ccf35b6eb5}{SFW\+::\+Graphics\+::\+Opaque}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556baaacd89df7585eb749bfd3b129758148f}{SFW\+::\+Graphics\+::\+Alpha\+Blend}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556ba3f7b3d8ee7bf0d542bd50821c083888f}{SFW\+::\+Graphics\+::\+Additive}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556bae257376d913f3b53cbb4a9b19d770648}{SFW\+::\+Graphics\+::\+Multiply}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556ba39a960b9c0fdfe58f8963d9ee2399459}{SFW\+::\+Graphics\+::\+Premultiplied}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556ba1d9baf077ee87921f57a8fe42d510b65}{SFW\+::\+Graphics\+::\+Subtract}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556bafd4487453885e6013ddea8e02030afb0}{SFW\+::\+Graphics\+::\+MAX\+\_\+\+COUNT}}
+ \}
+\begin{DoxyCompactList}\small\item\em ブレンドステート\+ID列挙型 \end{DoxyCompactList}\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3}{SFW\+::\+Graphics\+::\+Depth\+Stencil\+State\+ID}} \{ \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3a7a1920d61156abc05a60135aefe8bc67}{SFW\+::\+Graphics\+::\+Default}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3af2f378bea6a87434e8207ee5ac7b910d}{SFW\+::\+Graphics\+::\+Depth\+Read\+Only}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3a93337f9990897eb1c415621257371bf0}{SFW\+::\+Graphics\+::\+Default\+\_\+\+Greater}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3ab32152e630616a268acdea13da5b9d30}{SFW\+::\+Graphics\+::\+Depth\+Read\+Only\+\_\+\+Greater}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3a7e8bc42d971e8efbe01eb2c1e689a89c}{SFW\+::\+Graphics\+::\+Default\+\_\+\+Stencil}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3a22a70360e8456b3709048b10e6b75010}{SFW\+::\+Graphics\+::\+Depth\+Read\+Only\+\_\+\+Stencil}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3a21129bbafd7f02d13d001063cf3252fd}{SFW\+::\+Graphics\+::\+Depth\+Read\+Only\+\_\+\+Greater\+\_\+\+Read\+\_\+\+Stencil}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3adf8711833f37bfca912fcef4ee569796}{SFW\+::\+Graphics\+::\+No\+Depth}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3afd4487453885e6013ddea8e02030afb0}{SFW\+::\+Graphics\+::\+MAX\+\_\+\+COUNT}}
+ \}
+\begin{DoxyCompactList}\small\item\em 深度ステンシルステート\+ID列挙型 \end{DoxyCompactList}\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a15f923fb434f742740bc297d82761eb7}{SFW\+::\+Graphics\+::\+Shader\+Stage}} \{ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a15f923fb434f742740bc297d82761eb7a2c54e23f4c5442c665a807ab19f61204}{SFW\+::\+Graphics\+::\+VS}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a15f923fb434f742740bc297d82761eb7ad3d4c5deb455ac79dd5ff47c88bd65d9}{SFW\+::\+Graphics\+::\+PS}}
+ \}
+\begin{DoxyCompactList}\small\item\em シェーダステージ列挙型 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa90db50f37d650107d5981110448a79d}{SFW\+::\+Graphics\+::\+Make\+Sort\+Key}} (uint32\+\_\+t pso\+Index, uint32\+\_\+t material\+Index, uint32\+\_\+t mesh\+Index)
+\begin{DoxyCompactList}\small\item\em ソートキーを生成するヘルパ関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+レンダー関連の基本的な型と定数を定義するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} に定義があります。
+

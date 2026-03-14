@@ -1,0 +1,95 @@
+\doxysection{Spatial\+Chunk.\+h}
+\hypertarget{_spatial_chunk_8h_source}{}\label{_spatial_chunk_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/SpatialChunk.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/SpatialChunk.h}}
+\mbox{\hyperlink{_spatial_chunk_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_entity_manager_8h}{ECS/EntityManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_registry_types_8h}{RegistryTypes.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00013}00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00014}00014\ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00018}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{00018}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a38b5cd5383a1de4fa3f62470f89625c4}{SpatialChunk}}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00019}00019\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00020}00020\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00025}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a5594dba34c2b41368111b57f057d11e2}{00025}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a5594dba34c2b41368111b57f057d11e2}{SizeType}}\ =\ uint32\_t;}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00027}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}{00027}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}{Bounds3f}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}};}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00033}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a38b5cd5383a1de4fa3f62470f89625c4}{00033}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a38b5cd5383a1de4fa3f62470f89625c4}{SpatialChunk}}()\ :entityManager(\mbox{\hyperlink{namespacestd}{std}}::make\_unique<\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}::EntityManager>())\ \{\}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00038}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a2562539212bdebf93dff9bdb39ff43ec}{00038}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS::EntityManager}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a2562539212bdebf93dff9bdb39ff43ec}{GetEntityManager}}()\ noexcept\ \{\ \textcolor{keywordflow}{return}\ *entityManager;\ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00039}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a3cfe9bee15f89c8726a09bbcc341b457}{00039}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS::EntityManager}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a3cfe9bee15f89c8726a09bbcc341b457}{GetEntityManager}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ *entityManager;\ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ NodeKey\ (space\ /\ code\ /\ depth\ /\ generation)\ をチャンク単位で保持\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00042}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a560ec8ffd2070c9d83a739bd97ec0e44}{00042}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{SpatialChunkKey}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a560ec8ffd2070c9d83a739bd97ec0e44}{GetNodeKey}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ nodeKey;\ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00043}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_abab8fbfd926eb617976eebcfe0500a55}{00043}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_abab8fbfd926eb617976eebcfe0500a55}{SetNodeKey}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{SpatialChunkKey}}\&\ k)\ \textcolor{keyword}{noexcept}\ \{\ nodeKey\ =\ k;\ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00044}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a89ac46fa43e54ec774a30690b5b06794}{00044}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a89ac46fa43e54ec774a30690b5b06794}{BumpGeneration}}()\ noexcept\ \{\ ++nodeKey.generation;\ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00046}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_ade6f6c918550a71866fc0d36c5639ceb}{00046}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_ade6f6c918550a71866fc0d36c5639ceb}{HasStaticBounds}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ hasStaticBounds;\ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00047}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a3cb1caaeea6df05be42ca3ceb8cee2ab}{00047}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}{Bounds3f}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a3cb1caaeea6df05be42ca3ceb8cee2ab}{GetStaticBoundsWS}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ staticBoundsWS;\ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 静的EntityのAABBでのみ拡張（縮めない）}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00050}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a4d7ef098b10aab26652b876742b5ad74}{00050}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a4d7ef098b10aab26652b876742b5ad74}{ExpandStaticBoundsWS}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}{Bounds3f}}\&\ aabbWS)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!hasStaticBounds)}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ staticBoundsWS\ =\ aabbWS;}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hasStaticBounds\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ staticBoundsWS.expandToInclude(aabbWS);}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 初期化したいとき用（任意）}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00064}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_ac2ea0ad02933ed2c1884de7b55d78920}{00064}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_ac2ea0ad02933ed2c1884de7b55d78920}{ResetStaticBounds}}()\ noexcept}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ hasStaticBounds\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ staticBoundsWS.invalidate();}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00070}00070\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{//エンティティマネージャー.空間チャンク内のエンティティを管理する}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ std::unique\_ptr<ECS::EntityManager>\ entityManager;}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{comment}{//このチャンクを特定するキー。現在世代を含む}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{SpatialChunkKey}}\ nodeKey\{\};}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}{Bounds3f}}\ staticBoundsWS\{\};}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ hasStaticBounds\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00078}00078\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00082}\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{00082}}\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\ =\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a5594dba34c2b41368111b57f057d11e2}{SpatialChunk::SizeType}};}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00084}00084\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00085}00085\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00087}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a8494bb7fbce111940dc9614c0c5060f1}{00087}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::vector<ArchetypeChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_ab30526a91aaa023239f86e62d1fc4e71}{Query::MatchingChunks}}(std::vector<SFW::SpatialChunk*>\&\ context)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<ArchetypeChunk*>\ result;}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ collect\_from\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS::EntityManager}}\&\ em)\ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ all\ =\ em.GetArchetypeManager().GetAllData();}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ arch\ :\ all)\ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\&\ mask\ =\ arch-\/>GetMask();}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((mask\ \&\ required)\ ==\ required\ \&\&\ (mask\ \&\ excluded).none())\ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ chunks\ =\ arch-\/>GetChunks();}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 先に必要分だけまとめて拡張（平均的に再確保を減らす）}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result.reserve(result.size()\ +\ chunks.size());}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ ch\ :\ chunks)\ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result.push\_back(ch.get());}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 空間ごと}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ spatial\ :\ context)\ \{}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ collect\_from(spatial-\/>GetEntityManager());}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00111}00111\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spatial_chunk_8h_source_l00112}00112\ \}}
+
+\end{DoxyCode}

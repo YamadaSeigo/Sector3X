@@ -1,0 +1,57 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+I3\+DCamera\+Service.h ファイル}
+\hypertarget{_i3_d_camera_service_8h}{}\label{_i3_d_camera_service_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/I3DCameraService.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/I3DCameraService.h}}
+
+
+3Dカメラサービスのインターフェースを定義するヘッダーファイル  
+
+
+{\ttfamily \#include "{}Render\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Core/\+ECS/\+Service\+Context.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Math/\+Vector.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Math/\+Quaternion.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Math/convert.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Math/\+Frustum.\+hpp"{}}\newline
+{\ttfamily \#include $<$shared\+\_\+mutex$>$}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_buffer}{SFW\+::\+Graphics\+::\+Camera\+Buffer}}
+\begin{DoxyCompactList}\small\item\em 　カメラバッファの構造体 \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service$<$ Type $>$}}
+\begin{DoxyCompactList}\small\item\em 3Dカメラサービスのインターフェース。カメラの操作、ビュー行列の計算、カメラバッファの管理を行う。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW\+::\+Graphics}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a029776c321315c2526303852272a9b27}{SFW\+::\+Graphics\+::\+I3\+DPer\+Camera\+Service}} = \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{I3\+DCamera\+Service}}$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046aa80420eef88d11f77532f1b9cb467fa3}{Projection\+Type\+::\+Perspective}}$>$
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a758fa1a84bb063bfa1ccd266172c8726}{SFW\+::\+Graphics\+::\+I3\+DOrt\+Camera\+Service}} = \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{I3\+DCamera\+Service}}$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046a03424250432f2aa71de95579d2c0eaeb}{Projection\+Type\+::\+Orthographic}}$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{SFW\+::\+Graphics\+::\+Projection\+Type}} \+: uint8\+\_\+t \{ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046aa80420eef88d11f77532f1b9cb467fa3}{SFW\+::\+Graphics\+::\+Perspective}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046a03424250432f2aa71de95579d2c0eaeb}{SFW\+::\+Graphics\+::\+Orthographic}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+3Dカメラサービスのインターフェースを定義するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} に定義があります。
+

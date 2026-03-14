@@ -1,0 +1,23 @@
+\doxysection{SFW\+::Math\+::Bit\+Castable Concept Reference}
+\hypertarget{concept_s_f_w_1_1_math_1_1_bit_castable}{}\label{concept_s_f_w_1_1_math_1_1_bit_castable}\index{SFW::Math::BitCastable@{SFW::Math::BitCastable}}
+
+
+{\ttfamily \#include $<$convert.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ To,\ \textcolor{keyword}{typename}\ From>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_math_1_1_bit_castable}{SFW::Math::BitCastable}}\ =\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(To)\ ==\ \textcolor{keyword}{sizeof}(From)\ \&\&}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ std::is\_trivially\_copyable\_v<To>\ \&\&}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ std::is\_trivially\_copyable\_v<From>}
+
+\end{DoxyCode}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{convert_8hpp_source}{convert.\+hpp}} の \mbox{\hyperlink{convert_8hpp_source_l00038}{38}} 行目に定義があります。
+

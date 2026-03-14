@@ -1,0 +1,57 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+BVHPartition.h ファイル}
+\hypertarget{_b_v_h_partition_8h}{}\label{_b_v_h_partition_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/BVHPartition.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/BVHPartition.h}}
+
+
+Bounding Volume Hierarchy (BVH) パーティション（\+Partition\+Concept 準拠）  
+
+
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$optional$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include "{}partition.\+hpp"{}}\newline
+{\ttfamily \#include "{}Entity\+Manager\+Registry\+Service.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Math/\+AABB.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Math/\+Vector.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Math/sx\+\_\+math.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Debug/\+Debug\+Type.\+h"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition}{Sector\+FW\+::\+BVHPartition}}
+\item 
+struct \mbox{\hyperlink{struct_sector_f_w_1_1_b_v_h_partition_1_1_leaf}{Sector\+FW\+::\+BVHPartition\+::\+Leaf}}
+\item 
+struct \mbox{\hyperlink{struct_sector_f_w_1_1_b_v_h_partition_1_1_node}{Sector\+FW\+::\+BVHPartition\+::\+Node}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_sector_f_w}{Sector\+FW}}
+\item 
+namespace \mbox{\hyperlink{namespace_sector_f_w_1_1_e_c_s}{Sector\+FW\+::\+ECS}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Bounding Volume Hierarchy (BVH) パーティション（\+Partition\+Concept 準拠） 
+
+
+\begin{DoxyItemize}
+\item 動的に葉(\+AABB)を追加・更新・再構築
+\item 叶う限り軽量な\+SAH近似の挿入で木を維持（簡易実装）
+\item Frustumカリング / デバッグワイヤ描画 / Query統合
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{著者}
+seigo 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} に定義があります。
+

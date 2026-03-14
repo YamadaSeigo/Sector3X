@@ -1,0 +1,228 @@
+\doxysection{SFW\+::Graphics\+::Render\+Queue クラス}
+\hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue}{}\label{class_s_f_w_1_1_graphics_1_1_render_queue}\index{SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}}
+
+
+描画コマンドの発行。管理、ソート、バッチングを行うクラス  
+
+
+
+
+{\ttfamily \#include $<$Render\+Queue.\+h$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session}{Producer\+Session}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}}
+\begin{DoxyCompactList}\small\item\em 生産者セッション-\/ユーザーに渡す用（thread\+\_\+localを使わない） \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a6b556e6bf269d23db95db6f0c6f01745}{Render\+Queue}} (const std\+::atomic$<$ uint16\+\_\+t $>$ \&buf\+Slot, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena}{Shared\+Instance\+Arena}} \texorpdfstring{$\ast$}{*}instance\+Arena, uint32\+\_\+t max\+Instances\+Per\+Frame=MAX\+\_\+\+INSTANCES\+\_\+\+PER\+\_\+\+FRAME)
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a2fffa389dc934df94660237c434a3243}{Render\+Queue}} (\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{Render\+Queue}} \&\&other) noexcept
+\begin{DoxyCompactList}\small\item\em ムーブコンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_af61f28027cd0d36d1965af45b1c1beb1}{\texorpdfstring{$\sim$}{\string~}\+Render\+Queue}} ()
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{Render\+Queue}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_af2f1377f00b94c46dc17e21d4299de8d}{operator=}} (\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{Render\+Queue}} \&\&other) noexcept
+\begin{DoxyCompactList}\small\item\em ムーブ代入演算子 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session}{Producer\+Session}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a78e0342099b1a2ff0651f0a16afad444}{Make\+Producer}} ()
+\begin{DoxyCompactList}\small\item\em 各ワーカーはフレーム / タスク開始時にこれで \doxylink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session}{Producer\+Session} を取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a6ca42a9b5aa3c7eb32f4214f8662272a}{Make\+Producer}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}{Producer\+Session\+External\+::\+Small\+Buf}} \&buf)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_ae14724a27e00372d18e80bbf09d41ce1}{Submit}} (uint32\+\_\+t slot, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{Draw\+Command}} $>$ \&out)
+\begin{DoxyCompactList}\small\item\em Submit は「全ワーカーが Flush\+All 済み」バリアの後に呼ぶ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a80d85c6a3382a6f46a65a11725a74e82}{Submit}} (uint32\+\_\+t slot, std\+::pmr\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{Draw\+Command}} $>$ \&out)
+\begin{DoxyCompactList}\small\item\em PMR 版 Submit（pmr\+::vector を直接受けられる） \end{DoxyCompactList}\item 
+std\+::pair$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Instance\+Pool}} \texorpdfstring{$\ast$}{*}, std\+::atomic$<$ uint32\+\_\+t $>$ \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a26d0a5f2e6ae6aff8cf182af45ad5942}{Get\+Current\+Instance\+Pool\+Access}} () noexcept
+\begin{DoxyCompactList}\small\item\em 現在フレーム側の Instance プールアクセス \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_ad4c776bc0646c58b8cda3eab21d73e7d}{Max\+Instances\+Per\+Frame}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 最大インスタンス数の公開 Getter \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+描画コマンドの発行。管理、ソート、バッチングを行うクラス 
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00105}{105}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_a6b556e6bf269d23db95db6f0c6f01745}\index{SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}!RenderQueue@{RenderQueue}}
+\index{RenderQueue@{RenderQueue}!SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}}
+\doxysubsubsection{\texorpdfstring{RenderQueue()}{RenderQueue()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_a6b556e6bf269d23db95db6f0c6f01745} 
+SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Render\+Queue (\begin{DoxyParamCaption}\item[{const std\+::atomic$<$ uint16\+\_\+t $>$ \&}]{buf\+Slot}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena}{Shared\+Instance\+Arena}} \texorpdfstring{$\ast$}{*}}]{instance\+Arena}{, }\item[{uint32\+\_\+t}]{max\+Instances\+Per\+Frame}{ = {\ttfamily MAX\+\_\+INSTANCES\+\_\+PER\+\_\+FRAME}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em max\+Instances\+Per\+Frame} & フレーム当たりの最大インスタンス数（1～\+MAX\+\_\+\+INSTANCES\+\_\+\+PER\+\_\+\+FRAME） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00546}{546}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_a2fffa389dc934df94660237c434a3243}\index{SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}!RenderQueue@{RenderQueue}}
+\index{RenderQueue@{RenderQueue}!SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}}
+\doxysubsubsection{\texorpdfstring{RenderQueue()}{RenderQueue()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_a2fffa389dc934df94660237c434a3243} 
+SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Render\+Queue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{Render\+Queue}} \&\&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ムーブコンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em other} & ムーブ元 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00559}{559}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_af61f28027cd0d36d1965af45b1c1beb1}\index{SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}!````~RenderQueue@{\texorpdfstring{$\sim$}{\string~}RenderQueue}}
+\index{````~RenderQueue@{\texorpdfstring{$\sim$}{\string~}RenderQueue}!SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}RenderQueue()}{\string~RenderQueue()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_af61f28027cd0d36d1965af45b1c1beb1} 
+SFW\+::\+Graphics\+::\+Render\+Queue\+::\texorpdfstring{$\sim$}{\string~}\+Render\+Queue (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00569}{569}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_a26d0a5f2e6ae6aff8cf182af45ad5942}\index{SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}!GetCurrentInstancePoolAccess@{GetCurrentInstancePoolAccess}}
+\index{GetCurrentInstancePoolAccess@{GetCurrentInstancePoolAccess}!SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}}
+\doxysubsubsection{\texorpdfstring{GetCurrentInstancePoolAccess()}{GetCurrentInstancePoolAccess()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_a26d0a5f2e6ae6aff8cf182af45ad5942} 
+std\+::pair$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Instance\+Pool}} \texorpdfstring{$\ast$}{*}, std\+::atomic$<$ uint32\+\_\+t $>$ \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Get\+Current\+Instance\+Pool\+Access (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+現在フレーム側の Instance プールアクセス 
+
+\begin{DoxyReturn}{戻り値}
+(Instance\+Data\texorpdfstring{$\ast$}{*}, 書き込み位置へのポインタ) 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00659}{659}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_a78e0342099b1a2ff0651f0a16afad444}\index{SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}!MakeProducer@{MakeProducer}}
+\index{MakeProducer@{MakeProducer}!SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}}
+\doxysubsubsection{\texorpdfstring{MakeProducer()}{MakeProducer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_a78e0342099b1a2ff0651f0a16afad444} 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session}{Producer\+Session}} SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Make\+Producer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+各ワーカーはフレーム / タスク開始時にこれで \doxylink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session}{Producer\+Session} を取得 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session}{Producer\+Session} 生産者セッション 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00589}{589}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_a6ca42a9b5aa3c7eb32f4214f8662272a}\index{SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}!MakeProducer@{MakeProducer}}
+\index{MakeProducer@{MakeProducer}!SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}}
+\doxysubsubsection{\texorpdfstring{MakeProducer()}{MakeProducer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_a6ca42a9b5aa3c7eb32f4214f8662272a} 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}} SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Make\+Producer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}{Producer\+Session\+External\+::\+Small\+Buf}} \&}]{buf}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00590}{590}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_ad4c776bc0646c58b8cda3eab21d73e7d}\index{SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}!MaxInstancesPerFrame@{MaxInstancesPerFrame}}
+\index{MaxInstancesPerFrame@{MaxInstancesPerFrame}!SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}}
+\doxysubsubsection{\texorpdfstring{MaxInstancesPerFrame()}{MaxInstancesPerFrame()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_ad4c776bc0646c58b8cda3eab21d73e7d} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Max\+Instances\+Per\+Frame (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+最大インスタンス数の公開 Getter 
+
+\begin{DoxyReturn}{戻り値}
+uint32\+\_\+t 最大インスタンス数 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00668}{668}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_af2f1377f00b94c46dc17e21d4299de8d}\index{SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_af2f1377f00b94c46dc17e21d4299de8d} 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{Render\+Queue}} \& SFW\+::\+Graphics\+::\+Render\+Queue\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{Render\+Queue}} \&\&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ムーブ代入演算子 
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00576}{576}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_a80d85c6a3382a6f46a65a11725a74e82}\index{SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}!Submit@{Submit}}
+\index{Submit@{Submit}!SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}}
+\doxysubsubsection{\texorpdfstring{Submit()}{Submit()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_a80d85c6a3382a6f46a65a11725a74e82} 
+void SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Submit (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{slot}{, }\item[{std\+::pmr\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{Draw\+Command}} $>$ \&}]{out}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+PMR 版 Submit（pmr\+::vector を直接受けられる） 
+
+
+\begin{DoxyParams}{引数}
+{\em out} & \doxylink{struct_s_f_w_1_1_graphics_1_1_draw_command}{Draw\+Command} コンテナ（呼び出し側で確保して渡す） \\
+\hline
+{\em out\+Instances} & インスタンスプールの生配列（次フレーム用に確保済み） \\
+\hline
+{\em out\+Count} & インスタンスプールの使用数 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00629}{629}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_ae14724a27e00372d18e80bbf09d41ce1}\index{SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}!Submit@{Submit}}
+\index{Submit@{Submit}!SFW::Graphics::RenderQueue@{SFW::Graphics::RenderQueue}}
+\doxysubsubsection{\texorpdfstring{Submit()}{Submit()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_ae14724a27e00372d18e80bbf09d41ce1} 
+void SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Submit (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{slot}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{Draw\+Command}} $>$ \&}]{out}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Submit は「全ワーカーが Flush\+All 済み」バリアの後に呼ぶ 
+
+
+\begin{DoxyParams}{引数}
+{\em out} & \doxylink{struct_s_f_w_1_1_graphics_1_1_draw_command}{Draw\+Command} コンテナ（呼び出し側で確保して渡す） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00596}{596}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_render_queue_8h}{Render\+Queue.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,62 @@
+\doxysection{Archetype\+Manager.\+h}
+\hypertarget{_archetype_manager_8h_source}{}\label{_archetype_manager_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ArchetypeManager.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ArchetypeManager.h}}
+\mbox{\hyperlink{_archetype_manager_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_archetype_8h}{Archetype.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_query_8h}{Query.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00013}00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00014}00014\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00015}00015\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00016}00016\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00020}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{00020}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{ArchetypeManager}}\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00028}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_aa059fd2deb627fdbea3c0a7634d7407b}{00028}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype}{Archetype}}*\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_aa059fd2deb627fdbea3c0a7634d7407b}{GetOrCreate}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\&\ mask);}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00030}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_ad8d1293c7f5d776c9fd75854ad225506}{00030}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype}{Archetype}}*\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_ad8d1293c7f5d776c9fd75854ad225506}{AccessArchetype}}(uint32\_t\ idx)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (idx\ >=\ archetypeData.size())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ archetypeData[idx].get();}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00036}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_a364435057a0b5f83a65abedf9e272cf0}{00036}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::unordered\_map<ComponentMask,\ uint32\_t>\&\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_a364435057a0b5f83a65abedf9e272cf0}{GetAllMaskIndices}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ archetypeIndices;}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00043}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_a0b597d772d8c7a9273eca33e8f3351db}{00043}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::unique\_ptr<Archetype>>\&\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_a0b597d772d8c7a9273eca33e8f3351db}{GetAllData}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ archetypeData;}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//アーキタイプマネージャーのアーキタイプを格納するマップ}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ std::unordered\_map<ComponentMask,\ uint32\_t>\ archetypeIndices;}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//実際のアーキタイプのデータ}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::unique\_ptr<Archetype>>\ archetypeData;}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00056}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location}{00056}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location}{EntityLocation}}\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00057}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location_a4bf9725e97b030ce6533fb5c2ab28a1b}{00057}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{ArchetypeChunk}}*\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location_a4bf9725e97b030ce6533fb5c2ab28a1b}{chunk}};}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00058}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location_a2b59141b4fd2a9af6d7f26de1fde9031}{00058}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location_a2b59141b4fd2a9af6d7f26de1fde9031}{index}};}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00066}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a527bcc9975d0702f5c39e0e9ad889103}{00066}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::vector<ArchetypeChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_ab30526a91aaa023239f86e62d1fc4e71}{Query::MatchingChunks}}(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{ArchetypeManager}}\&\ context)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<ArchetypeChunk*>\ result;}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ arch\ :\ context.GetAllData())\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\&\ mask\ =\ arch-\/>GetMask();}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((mask\ \&\ required)\ ==\ required\ \&\&\ (mask\ \&\ excluded).none())\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ chunks\ =\ arch-\/>GetChunks();}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result.reserve(result.size()\ +\ chunks.size());}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ chunk\ :\ chunks)\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result.emplace\_back(chunk.get());}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00081}00081\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_manager_8h_source_l00082}00082\ \}}
+
+\end{DoxyCode}

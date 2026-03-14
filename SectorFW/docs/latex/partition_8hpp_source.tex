@@ -1,0 +1,69 @@
+\doxysection{partition.\+hpp}
+\hypertarget{partition_8hpp_source}{}\label{partition_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/partition.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/partition.hpp}}
+\mbox{\hyperlink{partition_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector_8hpp}{Math/Vector.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_a_a_b_b_8hpp}{Math/AABB.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_frustum_8hpp}{Math/Frustum.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_spatial_chunk_8h}{SpatialChunk.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_registry_types_8h}{RegistryTypes.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00018}00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_spatial_chunk_registry_service_8h}{SpatialChunkRegistryService.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00020}00020\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_debug_type_8h}{Debug/DebugType.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00022}00022\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00023}00023\ \{}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00027}\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{00027}}\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOutOfBoundsPolicy}}\ \{}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00028}\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ead98ac12774fca5c3cbaffe276840c55f}{00028}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ead98ac12774fca5c3cbaffe276840c55f}{Reject}},\ \textcolor{comment}{//\ 範囲外のチャンクを拒否}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00029}\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{00029}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{ClampToEdge}},\ \textcolor{comment}{//\ 範囲外のチャンクをエッジにクランプ}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00030}00030\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00034}00034\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Derived>}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00035}\mbox{\hyperlink{concept_s_f_w_1_1_partition_concept}{00035}}\ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_partition_concept}{PartitionConcept}}\ =\ \textcolor{keyword}{requires}(}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ Derived\ t,}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ originWS,}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ v,\ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\ size,\ \textcolor{keywordtype}{float}\ chunkSize,}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOutOfBoundsPolicy}}\ policy,}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\ \&\ reg,\ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}\ level,}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\ \&\ fr,}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \&\ center,\ \textcolor{keywordtype}{float}\ radius,}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ cp,\ \textcolor{keywordtype}{float}\ hy,}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug::LineVertex}}\ *\ outLine,\ uint32\_t\ lineCapacity,\ uint32\_t\ displayCount}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00045}00045\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00046}00046\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{comment}{//コンストラクタ}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00048}00048\ \ \ \ \ \ \ \ \ Derived\{\ originWS,\ size,\ size,\ chunkSize\ \};}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{comment}{//ポイントからチャンクを取得}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \{\ t.GetChunk(v,\ reg,\ level,\ policy)\ \}\ -\/>\ std::same\_as<std::optional<SpatialChunk*>>;}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{comment}{//分割に依存しないグローバルなエンティティマネージャーを取得}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \{\ t.GetGlobalEntityManager()\ \}\ -\/>\ std::same\_as<ECS::EntityManager\&>;}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \textcolor{comment}{//チャンクの登録}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \{\ t.RegisterAllChunks(reg,\ level)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{comment}{//エンティティの総数を取得}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \{\ t.GetEntityNum()\ \}\ -\/>\ std::same\_as<size\_t>;}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \textcolor{comment}{//フラスタムカリング}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \{\ t.CullChunks(fr)\ \}\ -\/>\ std::same\_as<std::vector<SpatialChunk*>>;}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{comment}{//半径カリング}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \{\ t.CullChunks(center,\ radius)\ \}\ -\/>\ std::same\_as<std::vector<SpatialChunk*>>;}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{comment}{//フラスタムカリング（近い順番）}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \{\ t.CullChunksNear(fr,\ cp)\ \}\ -\/>\ std::same\_as<std::vector<SpatialChunk*>>;}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{comment}{//チャンクのワイヤーフレームを取得}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \{\ t.CullChunkLine(fr,\ cp,\ hy,\ outLine,\ lineCapacity,\ displayCount)\ \}\ -\/>\ std::same\_as<uint32\_t>;}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \textcolor{comment}{//チャンクをクリアする}}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \{\ t.CleanChunk()\ \}-\/>std::same\_as<\textcolor{keywordtype}{void}>;}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00068}00068\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00072}00072\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Derived>}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00073}\mbox{\hyperlink{concept_s_f_w_1_1_has_partition_update}{00073}}\ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_has_partition_update}{HasPartitionUpdate}}\ =\ \textcolor{keyword}{requires}(Derived\ t,\ \textcolor{keywordtype}{double}\ deltaTime)}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00074}00074\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \{\ t.Update(deltaTime)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00076}00076\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{partition_8hpp_source_l00077}00077\ \}}
+
+\end{DoxyCode}

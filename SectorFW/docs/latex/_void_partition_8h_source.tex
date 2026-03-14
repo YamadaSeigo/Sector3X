@@ -1,0 +1,66 @@
+\doxysection{Void\+Partition.\+h}
+\hypertarget{_void_partition_8h_source}{}\label{_void_partition_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/VoidPartition.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/VoidPartition.h}}
+\mbox{\hyperlink{_void_partition_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{partition_8hpp}{partition.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00012}00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00013}00013\ \{}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00018}\mbox{\hyperlink{class_s_f_w_1_1_void_partition}{00018}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_void_partition_a237afeec09ce769dd3323a8736590499}{VoidPartition}}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00019}00019\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00020}00020\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00021}\mbox{\hyperlink{class_s_f_w_1_1_void_partition_a237afeec09ce769dd3323a8736590499}{00021}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_void_partition_a237afeec09ce769dd3323a8736590499}{VoidPartition}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}},\ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}},\ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}},\ \textcolor{keywordtype}{float})\ \{\}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00023}\mbox{\hyperlink{class_s_f_w_1_1_void_partition_ac7468533b477e8323e8231f91e5dbe9b}{00023}}\ \ \ \ \ \ \ \ \ std::optional<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_void_partition_ac7468533b477e8323e8231f91e5dbe9b}{GetChunk}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}},}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\&,\ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}},}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOutOfBoundsPolicy}}\ =\ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOutOfBoundsPolicy::ClampToEdge}})\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&m\_chunk;}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00030}\mbox{\hyperlink{class_s_f_w_1_1_void_partition_a3839dfe8494c8a9176f58ea96560d355}{00030}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS::EntityManager}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_void_partition_a3839dfe8494c8a9176f58ea96560d355}{GetGlobalEntityManager}}()\ noexcept\ \{\ \textcolor{keywordflow}{return}\ m\_chunk.GetEntityManager();\ \}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00032}\mbox{\hyperlink{class_s_f_w_1_1_void_partition_a745a7c5b10150e80fa21644250e51617}{00032}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_void_partition_a745a7c5b10150e80fa21644250e51617}{RegisterAllChunks}}(\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\&,\ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}})\ \{\}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00034}\mbox{\hyperlink{class_s_f_w_1_1_void_partition_ad74fc96bb64360ec3365c48eb4acd3a7}{00034}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_s_f_w_1_1_void_partition_ad74fc96bb64360ec3365c48eb4acd3a7}{GetEntityNum}}()\ const\ noexcept}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_chunk.GetEntityManager().GetEntityCount();}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00039}\mbox{\hyperlink{class_s_f_w_1_1_void_partition_a0f1b8690737c3f5abf20cb44513f666d}{00039}}\ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_void_partition_a0f1b8690737c3f5abf20cb44513f666d}{CullChunks}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ \&m\_chunk\ \};}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00044}\mbox{\hyperlink{class_s_f_w_1_1_void_partition_a98cc4545d09834bc6dd3ef9466c106d0}{00044}}\ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_void_partition_a98cc4545d09834bc6dd3ef9466c106d0}{CullChunks}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&,\ \textcolor{keywordtype}{float})\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ \&m\_chunk\ \};}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00049}\mbox{\hyperlink{class_s_f_w_1_1_void_partition_aa59599dff062545948fd16b259a22e33}{00049}}\ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_void_partition_aa59599dff062545948fd16b259a22e33}{CullChunksNear}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}})\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ \&m\_chunk\ \};}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00054}\mbox{\hyperlink{class_s_f_w_1_1_void_partition_af4e25223a566d5ac1d85e45ee74686ad}{00054}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_void_partition_af4e25223a566d5ac1d85e45ee74686ad}{CullChunkLine}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&,}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}},\ \textcolor{keywordtype}{float},}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug::LineVertex}}*,\ uint32\_t,\ uint32\_t)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00061}\mbox{\hyperlink{class_s_f_w_1_1_void_partition_ae8c236ed5af6a4e7befc2b73a1815ce9}{00061}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_void_partition_ae8c236ed5af6a4e7befc2b73a1815ce9}{CleanChunk}}()}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ m\_chunk.GetEntityManager().CleanAllEntity();}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00066}00066\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}\ m\_chunk;}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00068}00068\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_void_partition_8h_source_l00069}00069\ \}}
+
+\end{DoxyCode}

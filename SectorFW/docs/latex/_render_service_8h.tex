@@ -1,0 +1,57 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+Render\+Service.h ファイル}
+\hypertarget{_render_service_8h}{}\label{_render_service_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderService.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderService.h}}
+
+
+描画関連を提供するサービスクラス  
+
+
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$shared\+\_\+mutex$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include "{}../external/\+MOC/\+Masked\+Occlusion\+Culling.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Core/\+ECS/\+Service\+Context.\+hpp"{}}\newline
+{\ttfamily \#include "{}Render\+Queue.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Util/\+Type\+Checker.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Math/\+Rectangle.\+hpp"{}}\newline
+{\ttfamily \#include "{}Occluder\+Toolkit.\+h"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch}{SFW\+::\+Graphics\+::\+Moc\+Quad\+Batch}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch}{SFW\+::\+Graphics\+::\+Moc\+Tri\+Batch}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service}{SFW\+::\+Graphics\+::\+Render\+Service}}
+\begin{DoxyCompactList}\small\item\em Systemが依存するレンダーサービスを管理するクラス \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW\+::\+Graphics}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aad14d2e80e921b0442903b65576ce417}{SFW\+::\+Graphics\+::\+MOC}} = Masked\+Occlusion\+Culling
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch}{Moc\+Quad\+Batch}} \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a59c20dc5983617367e3313e0e03389da}{SFW\+::\+Graphics\+::\+Convert\+AABBFront\+Face\+Quad\+To\+Moc}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Math\+::\+Vec4f}} \texorpdfstring{$\ast$}{*}clips, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{SFW\+::\+Math\+::\+Matrix}}$<$ 4, 4, float $>$ \&view\+Proj, float near\+ClipW)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+描画関連を提供するサービスクラス 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_render_service_8h_source}{Render\+Service.\+h}} に定義があります。
+

@@ -1,0 +1,194 @@
+\doxysection{Frame\+Timer クラス}
+\hypertarget{class_frame_timer}{}\label{class_frame_timer}\index{FrameTimer@{FrameTimer}}
+
+
+フレームタイマーを定義するクラス  
+
+
+
+
+{\ttfamily \#include $<$Frame\+Timer.\+h$>$}
+
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{class_frame_timer_a3217946eb0acbe1bc79ac90f6f8144e1}{clock}} = std\+::chrono\+::steady\+\_\+clock
+\item 
+using \mbox{\hyperlink{class_frame_timer_ac5742bb027cf48a1bc48baef2e59fab8}{time\+\_\+point}} = std\+::chrono\+::time\+\_\+point$<$\mbox{\hyperlink{class_frame_timer_a3217946eb0acbe1bc79ac90f6f8144e1}{clock}}$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_frame_timer_aa2ac0cee560c4996e6b688b83079c0ba}{Frame\+Timer}} () noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_frame_timer_a9d85f6d41e3706c74c4c6ad764651b7e}{Reset}} () noexcept
+\begin{DoxyCompactList}\small\item\em タイマーをリセットします。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_frame_timer_aa3786a8b83778be5b59e106f04456d47}{Tick}} ()
+\begin{DoxyCompactList}\small\item\em フレームタイマーを更新します。 \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_frame_timer_a29cf3680664b7783fab3331dbd6176fb}{Get\+Delta\+Time}} () const noexcept
+\begin{DoxyCompactList}\small\item\em デルタタイムを取得します。 \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_frame_timer_adeb483d987cd3d30e6a3fcff6c3f1040}{Get\+Total\+Time}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 開始時間からの経過時間を取得します。 \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_frame_timer_a2ed250232f00bfe334a420b94791b4b2}{Get\+FPS}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 現在の\+FPSを取得します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_frame_timer_a40826a4a33433071b9fc00d4fb5f6176}{Set\+Max\+Frame\+Rate}} (double fps\+Limit) noexcept
+\begin{DoxyCompactList}\small\item\em 最大フレームレートを設定します。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+フレームタイマーを定義するクラス 
+
+ \mbox{\hyperlink{_frame_timer_8h_source}{Frame\+Timer.\+h}} の \mbox{\hyperlink{_frame_timer_8h_source_l00015}{15}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{class_frame_timer_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{class_frame_timer_a3217946eb0acbe1bc79ac90f6f8144e1}\index{FrameTimer@{FrameTimer}!clock@{clock}}
+\index{clock@{clock}!FrameTimer@{FrameTimer}}
+\doxysubsubsection{\texorpdfstring{clock}{clock}}
+{\footnotesize\ttfamily \label{class_frame_timer_a3217946eb0acbe1bc79ac90f6f8144e1} 
+using \mbox{\hyperlink{class_frame_timer_a3217946eb0acbe1bc79ac90f6f8144e1}{Frame\+Timer\+::clock}} = std\+::chrono\+::steady\+\_\+clock}
+
+
+
+ \mbox{\hyperlink{_frame_timer_8h_source}{Frame\+Timer.\+h}} の \mbox{\hyperlink{_frame_timer_8h_source_l00017}{17}} 行目に定義があります。
+
+\Hypertarget{class_frame_timer_ac5742bb027cf48a1bc48baef2e59fab8}\index{FrameTimer@{FrameTimer}!time\_point@{time\_point}}
+\index{time\_point@{time\_point}!FrameTimer@{FrameTimer}}
+\doxysubsubsection{\texorpdfstring{time\_point}{time\_point}}
+{\footnotesize\ttfamily \label{class_frame_timer_ac5742bb027cf48a1bc48baef2e59fab8} 
+using \mbox{\hyperlink{class_frame_timer_ac5742bb027cf48a1bc48baef2e59fab8}{Frame\+Timer\+::time\+\_\+point}} = std\+::chrono\+::time\+\_\+point$<$\mbox{\hyperlink{class_frame_timer_a3217946eb0acbe1bc79ac90f6f8144e1}{clock}}$>$}
+
+
+
+ \mbox{\hyperlink{_frame_timer_8h_source}{Frame\+Timer.\+h}} の \mbox{\hyperlink{_frame_timer_8h_source_l00018}{18}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_frame_timer_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_frame_timer_aa2ac0cee560c4996e6b688b83079c0ba}\index{FrameTimer@{FrameTimer}!FrameTimer@{FrameTimer}}
+\index{FrameTimer@{FrameTimer}!FrameTimer@{FrameTimer}}
+\doxysubsubsection{\texorpdfstring{FrameTimer()}{FrameTimer()}}
+{\footnotesize\ttfamily \label{class_frame_timer_aa2ac0cee560c4996e6b688b83079c0ba} 
+Frame\+Timer\+::\+Frame\+Timer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+タイマーを初期化し、開始時間を設定します。 
+
+ \mbox{\hyperlink{_frame_timer_8h_source}{Frame\+Timer.\+h}} の \mbox{\hyperlink{_frame_timer_8h_source_l00023}{23}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_frame_timer_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_frame_timer_a29cf3680664b7783fab3331dbd6176fb}\index{FrameTimer@{FrameTimer}!GetDeltaTime@{GetDeltaTime}}
+\index{GetDeltaTime@{GetDeltaTime}!FrameTimer@{FrameTimer}}
+\doxysubsubsection{\texorpdfstring{GetDeltaTime()}{GetDeltaTime()}}
+{\footnotesize\ttfamily \label{class_frame_timer_a29cf3680664b7783fab3331dbd6176fb} 
+double Frame\+Timer\+::\+Get\+Delta\+Time (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+デルタタイムを取得します。 
+
+\begin{DoxyReturn}{戻り値}
+デルタタイム（秒単位） 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_frame_timer_8h_source}{Frame\+Timer.\+h}} の \mbox{\hyperlink{_frame_timer_8h_source_l00110}{110}} 行目に定義があります。
+
+\Hypertarget{class_frame_timer_a2ed250232f00bfe334a420b94791b4b2}\index{FrameTimer@{FrameTimer}!GetFPS@{GetFPS}}
+\index{GetFPS@{GetFPS}!FrameTimer@{FrameTimer}}
+\doxysubsubsection{\texorpdfstring{GetFPS()}{GetFPS()}}
+{\footnotesize\ttfamily \label{class_frame_timer_a2ed250232f00bfe334a420b94791b4b2} 
+double Frame\+Timer\+::\+Get\+FPS (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+現在の\+FPSを取得します。 
+
+\begin{DoxyReturn}{戻り値}
+現在の\+FPS 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_frame_timer_8h_source}{Frame\+Timer.\+h}} の \mbox{\hyperlink{_frame_timer_8h_source_l00122}{122}} 行目に定義があります。
+
+\Hypertarget{class_frame_timer_adeb483d987cd3d30e6a3fcff6c3f1040}\index{FrameTimer@{FrameTimer}!GetTotalTime@{GetTotalTime}}
+\index{GetTotalTime@{GetTotalTime}!FrameTimer@{FrameTimer}}
+\doxysubsubsection{\texorpdfstring{GetTotalTime()}{GetTotalTime()}}
+{\footnotesize\ttfamily \label{class_frame_timer_adeb483d987cd3d30e6a3fcff6c3f1040} 
+double Frame\+Timer\+::\+Get\+Total\+Time (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+開始時間からの経過時間を取得します。 
+
+\begin{DoxyReturn}{戻り値}
+経過時間（秒単位） 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_frame_timer_8h_source}{Frame\+Timer.\+h}} の \mbox{\hyperlink{_frame_timer_8h_source_l00115}{115}} 行目に定義があります。
+
+\Hypertarget{class_frame_timer_a9d85f6d41e3706c74c4c6ad764651b7e}\index{FrameTimer@{FrameTimer}!Reset@{Reset}}
+\index{Reset@{Reset}!FrameTimer@{FrameTimer}}
+\doxysubsubsection{\texorpdfstring{Reset()}{Reset()}}
+{\footnotesize\ttfamily \label{class_frame_timer_a9d85f6d41e3706c74c4c6ad764651b7e} 
+void Frame\+Timer\+::\+Reset (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+タイマーをリセットします。 
+
+
+
+ \mbox{\hyperlink{_frame_timer_8h_source}{Frame\+Timer.\+h}} の \mbox{\hyperlink{_frame_timer_8h_source_l00035}{35}} 行目に定義があります。
+
+\Hypertarget{class_frame_timer_a40826a4a33433071b9fc00d4fb5f6176}\index{FrameTimer@{FrameTimer}!SetMaxFrameRate@{SetMaxFrameRate}}
+\index{SetMaxFrameRate@{SetMaxFrameRate}!FrameTimer@{FrameTimer}}
+\doxysubsubsection{\texorpdfstring{SetMaxFrameRate()}{SetMaxFrameRate()}}
+{\footnotesize\ttfamily \label{class_frame_timer_a40826a4a33433071b9fc00d4fb5f6176} 
+void Frame\+Timer\+::\+Set\+Max\+Frame\+Rate (\begin{DoxyParamCaption}\item[{double}]{fps\+Limit}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+最大フレームレートを設定します。 
+
+
+\begin{DoxyParams}{引数}
+{\em fps\+Limit} & 最大フレームレート（\+FPS） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_frame_timer_8h_source}{Frame\+Timer.\+h}} の \mbox{\hyperlink{_frame_timer_8h_source_l00127}{127}} 行目に定義があります。
+
+\Hypertarget{class_frame_timer_aa3786a8b83778be5b59e106f04456d47}\index{FrameTimer@{FrameTimer}!Tick@{Tick}}
+\index{Tick@{Tick}!FrameTimer@{FrameTimer}}
+\doxysubsubsection{\texorpdfstring{Tick()}{Tick()}}
+{\footnotesize\ttfamily \label{class_frame_timer_aa3786a8b83778be5b59e106f04456d47} 
+void Frame\+Timer\+::\+Tick (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+フレームタイマーを更新します。 
+
+
+
+ \mbox{\hyperlink{_frame_timer_8h_source}{Frame\+Timer.\+h}} の \mbox{\hyperlink{_frame_timer_8h_source_l00046}{46}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/\mbox{\hyperlink{_frame_timer_8h}{Frame\+Timer.\+h}}\end{DoxyCompactItemize}

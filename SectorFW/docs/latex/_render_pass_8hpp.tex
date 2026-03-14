@@ -1,0 +1,43 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+Render\+Pass.hpp ファイル}
+\hypertarget{_render_pass_8hpp}{}\label{_render_pass_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderPass.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderPass.hpp}}
+
+
+レンダーパスを定義する構造体  
+
+
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include "{}Render\+Queue.\+h"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\begin{DoxyCompactList}\small\item\em 描画するパスごとの設定を定義する構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_desc}{SFW\+::\+Graphics\+::\+Render\+Pass\+Desc$<$ RTV, DSV, View\+Handle $>$}}
+\begin{DoxyCompactList}\small\item\em レンダーパスの設定を定義する構造体 @detial ラスタライズを指定しない場合\+PSOで指定したラスタライズを使用する \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW\+::\+Graphics}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a2689db17ff3c0424507f4a95b861b3ea}{SFW\+::\+Graphics\+::\+Pass\+Custom\+Func\+Type}} = void(\texorpdfstring{$\ast$}{*})(uint64\+\_\+t)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+レンダーパスを定義する構造体 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} に定義があります。
+

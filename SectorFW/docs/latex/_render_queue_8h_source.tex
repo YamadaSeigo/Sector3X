@@ -1,0 +1,597 @@
+\doxysection{Render\+Queue.\+h}
+\hypertarget{_render_queue_8h_source}{}\label{_render_queue_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderQueue.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderQueue.h}}
+\mbox{\hyperlink{_render_queue_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00008}00008\ \ \textcolor{comment}{//インスタンスの情報を変更する場合は以下のマクロを使用する}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00009}00009\ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00010}00010\ \textcolor{comment}{\ \ \ \ \ SFW\_MAX\_INSTANCES\_PER\_FRAME\ :\ フレーム当たりの最大インスタンス数(パス全体)}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00011}00011\ \textcolor{comment}{\ \ \ \ \ SFW\_MAX\_INSTANCE\_INDICES\_PER\_PASS\ :\ パス当たりの最大インスタンスインデックス数}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00012}00012\ \textcolor{comment}{\ \ \ \ \ SFW\_DRAWCOMMAND\_TMPBUF\_SIZE\ :\ 描画コマンドをキューから取り出す際のバッチサイズ}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00013}00013\ \textcolor{comment}{\ \ */}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00015}00015\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}../external/concurrentqueue/concurrentqueue.h"{}}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <thread>}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00022}00022\ \textcolor{preprocessor}{\#include\ <barrier>}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00023}00023\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00024}00024\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00026}00026\ \ \ \textcolor{comment}{//\#define\ NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00028}00028\ \textcolor{preprocessor}{\#ifndef\ NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00029}00029\ \textcolor{preprocessor}{\#include\ <memory\_resource>}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00030}00030\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00032}00032\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_render_types_8h}{RenderTypes.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00034}00034\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00035}00035\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00036}00036\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{Graphics}}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00037}00037\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00041}00041\ \textcolor{preprocessor}{\#ifdef\ SFW\_MAX\_INSTANCES\_PER\_FRAME}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ uint32\_t\ MAX\_INSTANCES\_PER\_FRAME\ =\ SFW\_MAX\_INSTANCES\_PER\_FRAME;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00043}00043\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ uint32\_t\ MAX\_INSTANCES\_PER\_FRAME\ =\ 1u\ <<\ 16;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00045}00045\ \textcolor{preprocessor}{\#endif}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00049}00049\ \textcolor{preprocessor}{\#ifdef\ SFW\_MAX\_INSTANCE\_INDICES\_PER\_PASS}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ uint32\_t\ MAX\_INSTANCE\_INDICES\_PER\_PASS\ =\ SFW\_MAX\_INSTANCE\_INDICES\_PER\_PASS;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00051}00051\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ uint32\_t\ MAX\_INSTANCE\_INDICES\_PER\_PASS\ =\ 1u\ <<\ 14;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00053}00053\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{comment}{//========================================================================}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00059}00059\ \textcolor{preprocessor}{\#ifdef\ SFW\_DRAWCOMMAND\_TMPBUF\_SIZE}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ DRAWCOMMAND\_TMPBUF\_SIZE\ =\ 1u\ <<\ SFW\_DRAWCOMMAND\_TMPBUF\_SIZE;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00061}00061\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ DRAWCOMMAND\_TMPBUF\_SIZE\ =\ 1u\ <<\ 12;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00063}00063\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{comment}{//========================================================================}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ RenderQueue\ とは独立した“フレーム共有”アリーナ}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00067}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena}{00067}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_a105f2a81154525009cd50c7535379e15}{SharedInstanceArena}}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00068}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{00068}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\textcolor{keyword}{alignas}(16)\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{InstancePool}}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00069}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_a070229814ae2170902e52e0f71aebda7}{00069}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{SFW::Math::Matrix<3,\ 4,\ float>}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_a070229814ae2170902e52e0f71aebda7}{world}}\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00070}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_acdb0b19c902acef266222674aefff991}{00070}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Math::Vec4f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_acdb0b19c902acef266222674aefff991}{color}}\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00072}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_afabb2e12f7fdee9caf1b6d8839037805}{00072}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{InstancePool}}\&\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_afabb2e12f7fdee9caf1b6d8839037805}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data}{InstanceData}}\&\ data)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4x4\ 行列を\ 3x4\ にコピー}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ memcpy(\&\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_a070229814ae2170902e52e0f71aebda7}{world}},\ \&data,\ \textcolor{keyword}{sizeof}(\textcolor{keyword}{decltype}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_a070229814ae2170902e52e0f71aebda7}{world}})));}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_acdb0b19c902acef266222674aefff991}{color}}\ =\ data.color;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00078}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_ac8f03bc3ed2b4be5a5b87e4611de3781}{00078}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{InstancePool}}\&\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_ac8f03bc3ed2b4be5a5b87e4611de3781}{operator=}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data}{InstanceData}}\&\&\ data)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4x4\ 行列を\ 3x4\ にコピー}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ memcpy(\&\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_a070229814ae2170902e52e0f71aebda7}{world}},\ \&data,\ \textcolor{keyword}{sizeof}(\textcolor{keyword}{decltype}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_a070229814ae2170902e52e0f71aebda7}{world}})));}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool_acdb0b19c902acef266222674aefff991}{color}}\ =\ data.color;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00086}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_a105f2a81154525009cd50c7535379e15}{00086}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_a105f2a81154525009cd50c7535379e15}{SharedInstanceArena}}()\ :\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ae7c8f39ac78c64d5dcd8f50ac8661b0d}{capacity}}(MAX\_INSTANCES\_PER\_FRAME)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint16\_t\ i\ =\ 0;\ i\ <\ RENDER\_BUFFER\_COUNT;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ac4f2b3771bc504ea4567c55b4a7ae079}{pools}}[i]\ =\ std::make\_unique<InstancePool[]>(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ae7c8f39ac78c64d5dcd8f50ac8661b0d}{capacity}});}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ad539e479b15e7fa44bf0c6e46378ab81}{head}}[i].store(0,\ std::memory\_order\_relaxed);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00093}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ae7c8f39ac78c64d5dcd8f50ac8661b0d}{00093}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ae7c8f39ac78c64d5dcd8f50ac8661b0d}{capacity}};\ \textcolor{comment}{//\ MAX\_INSTANCES\_PER\_FRAME\ 相当}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00094}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ac4f2b3771bc504ea4567c55b4a7ae079}{00094}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<InstancePool[]>\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ac4f2b3771bc504ea4567c55b4a7ae079}{pools}}[RENDER\_BUFFER\_COUNT];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00095}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ad539e479b15e7fa44bf0c6e46378ab81}{00095}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::atomic<uint32\_t>\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ad539e479b15e7fa44bf0c6e46378ab81}{head}}[RENDER\_BUFFER\_COUNT];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00097}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_a245ad166a211c7ba1d98992dcd8b5684}{00097}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_a245ad166a211c7ba1d98992dcd8b5684}{ResetSlot}}(\textcolor{keywordtype}{int}\ slot)\ \textcolor{keyword}{noexcept}\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ad539e479b15e7fa44bf0c6e46378ab81}{head}}[slot].store(0,\ std::memory\_order\_release);\ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00098}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_abcd24a6faa440e95c7c8c45c12d4c4d3}{00098}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{InstancePool}}*\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_abcd24a6faa440e95c7c8c45c12d4c4d3}{Data}}(\textcolor{keywordtype}{int}\ slot)\ \textcolor{keyword}{noexcept}\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ac4f2b3771bc504ea4567c55b4a7ae079}{pools}}[slot].get();\ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00099}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_afb477b7394891d4751548756dd86ecad}{00099}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_afb477b7394891d4751548756dd86ecad}{Size}}(\textcolor{keywordtype}{int}\ slot)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ad539e479b15e7fa44bf0c6e46378ab81}{head}}[slot].load(std::memory\_order\_acquire);\ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00105}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{00105}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a6b556e6bf269d23db95db6f0c6f01745}{RenderQueue}}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }InstancePool\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{SharedInstanceArena::InstancePool}};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }SortContext\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00112}00112\ \textcolor{preprocessor}{\#ifndef\ NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PMR\ 有効時は\ DrawCommand\ コンテナ型を\ pmr::vector\ に切替}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }DrawCmdVec\ =\ std::pmr::vector<DrawCommand>;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }IndexVec\ =\ std::pmr::vector<uint32\_t>;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }KeyVec\ =\ std::pmr::vector<uint64\_t>;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }ByteVec\ =\ std::pmr::vector<uint8\_t>;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00118}00118\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }DrawCmdVec\ =\ std::vector<DrawCommand>;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }IndexVec\ =\ std::vector<uint32\_t>;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }KeyVec\ =\ std::vector<uint64\_t>;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }ByteVec\ =\ std::vector<uint8\_t>;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00123}00123\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ SortContext(}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00127}00127\ \#ifndef\ \mbox{\hyperlink{_render_graph_8hpp_aa676f4ad480964a90f23ff3914e9eae8}{NO\_USE\_PMR\_RENDER\_QUEUE}}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::pmr::memory\_resource*\ mr\ =\ std::pmr::get\_default\_resource(),}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00129}00129\ \#endif\ \textcolor{comment}{//NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ threadCount\ =\ std::thread::hardware\_concurrency())}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00131}00131\ \textcolor{preprocessor}{\#ifndef\ NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ tempBuffer(mr)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ indexBuf(mr)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ keysBuf(mr)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ visited\_(mr)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ histPool(mr)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ offPool(mr)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ threadCount(threadCount),\ mr\_(mr)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00139}00139\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ threadCount(threadCount)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00141}00141\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PMR/通常どちらのベクタでも動くようにテンプレート化}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ VecT>}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Sort(VecT\&\ cmds)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ N\ =\ cmds.size();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00149}00149\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (N\ <\ 500000)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ 間接ソート：index\ だけを動かし、最後に一括適用\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IndirectSortStd(cmds);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*else\ if\ (N\ <\ 500000)\ \{}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00156}00156\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EnsureTempBuffer(N);}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00157}00157\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RadixSortSingle(cmds,\ tempBuffer);}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00158}00158\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}*/}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EnsureTempBuffer(N);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SortContext::RadixSortMulti(cmds,\ (VecT\&)tempBuffer,\ threadCount);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DrawCmdVec\ tempBuffer;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IndexVec\ indexBuf;\ \ \ \ \textcolor{comment}{//\ 再利用}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ KeyVec\ \ \ keysBuf;\ \ \ \ \ \textcolor{comment}{//\ 再利用（sortKey\ を抽出）}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IndexVec\ tmpIdxBuf;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ByteVec\ \ visited\_;\ \ \ \ \textcolor{comment}{//\ ApplyPermutation\ 用\ “訪問フラグ”\ を再利用}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00171}00171\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Radix(MT)\ 用の大域ワーク（threadCount\ *\ BUCKETS）}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ※スレッド生成は据え置き。まずは確保回数の削減を優先}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ RADIX\_BITS\ =\ 8;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ RADIX\_BUCKETS\ =\ 1\ <<\ RADIX\_BITS;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00176}00176\ \textcolor{preprocessor}{\#ifndef\ NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::pmr::vector<size\_t>\ histPool;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::pmr::vector<size\_t>\ offPool;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00179}00179\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<size\_t>\ histPool;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<size\_t>\ offPool;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00182}00182\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ threadCount;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00185}00185\ \textcolor{preprocessor}{\#ifndef\ NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::pmr::memory\_resource*\ mr\_\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00187}00187\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ EnsureTempBuffer(\textcolor{keywordtype}{size\_t}\ requiredSize)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tempBuffer.size()\ <\ requiredSize)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tempBuffer.resize(requiredSize);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ EnsureScratch(\textcolor{keywordtype}{size\_t}\ N)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (indexBuf.capacity()\ <\ N)\ indexBuf.reserve(N);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (keysBuf.capacity()\ <\ N)\ keysBuf.reserve(N);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tmpIdxBuf.capacity()\ <\ N)\ tmpIdxBuf.reserve(N);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (visited\_.capacity()\ <\ N)\ visited\_.reserve(N);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ need\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(threadCount)\ *\ RADIX\_BUCKETS;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (histPool.size()\ <\ need)\ histPool.resize(need);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (offPool.size()\ <\ need)\ offPool.resize(need);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00202}00202\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ======\ 比較ソート用：間接ソート\ +\ 一括適用\ ======}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ VecT>}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ IndirectSortStd(VecT\&\ cmds)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ N\ =\ cmds.size();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (N\ <=\ 1)\ [[unlikely]]\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EnsureScratch(N);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (indexBuf.size()\ <\ N)\ indexBuf.resize(N);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (keysBuf.size()\ <\ N)\ keysBuf.resize(N);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ N;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ indexBuf[i]\ =\ i;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ keysBuf[i]\ =\ cmds[i].sortKey;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (N\ >=\ 32768)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ TOP\_BITS\ =\ 12;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ uint32\_t\ B\ =\ 1u\ <<\ TOP\_BITS;\ \textcolor{comment}{//\ 4096}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00221}00221\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ここは「固定サイズ」なので\ thread\_local\ の配列で確保ゼロに}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{thread\_local}\ std::array<uint32\_t,\ B>\ count\{\};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{thread\_local}\ std::array<uint32\_t,\ B>\ offset\{\};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ クリア}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ count.fill(0);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ offset.fill(0);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00229}00229\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ bucketId\ =\ [](uint64\_t\ k)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ uint32\_t(k\ >>\ (64\ -\/\ TOP\_BITS));}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00233}00233\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ N;\ ++i)\ ++count[bucketId(keysBuf[indexBuf[i]])];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ b\ =\ 1;\ b\ <\ B;\ ++b)\ offset[b]\ =\ offset[b\ -\/\ 1]\ +\ count[b\ -\/\ 1];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ←\ ここで\ pmr\ と同型の一時バッファを使用}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ tmpIdx\ =\ tmpIdxBuf;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tmpIdx.resize(N);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00240}00240\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ N;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tmpIdx[offset[bucketId(keysBuf[indexBuf[i]])]++]\ =\ indexBuf[i];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00243}00243\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ indexBuf.swap(tmpIdx);\ \textcolor{comment}{//\ 同じ\ IndexVec\ 同士なので\ OK}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00245}00245\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ バケット内を\ keys\ で比較ソート}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ start\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ b\ =\ 0;\ b\ <\ B;\ ++b)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ len\ =\ count[b];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (len\ >\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::sort(indexBuf.begin()\ +\ start,\ indexBuf.begin()\ +\ start\ +\ len,}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [k\ =\ keysBuf.data()](uint32\_t\ a,\ uint32\_t\ b)\ \textcolor{keyword}{noexcept}\ \{\ return\ k[a]\ <\ k[b];\ \});}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ start\ +=\ len;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::sort(indexBuf.begin(),\ indexBuf.begin()\ +\ N,}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [k\ =\ keysBuf.data()](uint32\_t\ a,\ uint32\_t\ b)\ \textcolor{keyword}{noexcept}\ \{\ return\ k[a]\ <\ k[b];\ \});}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00261}00261\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ApplyPermutationInPlace(cmds,\ indexBuf);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00264}00264\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ VecTLocal,\ \textcolor{keyword}{class}\ IndexContainer>}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ApplyPermutationInPlace(VecTLocal\&\ cmds,\ IndexContainer\&\ idx)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ N\ =\ cmds.size();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ visited\_.assign(N,\ 0);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint8\_t*\ visited\ =\ visited\_.data();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00270}00270\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ N;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (visited[i]\ ||\ idx[i]\ ==\ i)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ cur\ =\ i;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ tmp\ =\ std::move(cmds[cur]);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!visited[cur])\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ visited[cur]\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ nxt\ =\ idx[cur];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (nxt\ ==\ i)\ \{\ cmds[cur]\ =\ std::move(tmp);\ \textcolor{keywordflow}{break};\ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds[cur]\ =\ std::move(cmds[nxt]);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cur\ =\ nxt;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00284}00284\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Single-\/threaded\ Radix\ Sort}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ VecT>}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RadixSortSingle(VecT\&\ cmds,\ VecT\&\ temp)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ BITS\ =\ 8;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ BUCKETS\ =\ 1\ <<\ BITS;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ PASSES\ =\ 64\ /\ BITS;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ pass\ =\ 0;\ pass\ <\ PASSES;\ ++pass)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ shift\ =\ pass\ *\ BITS;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::array<size\_t,\ BUCKETS>\ count\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ cmd\ :\ cmds)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++count[(cmd.sortKey\ >>\ shift)\ \&\ (BUCKETS\ -\/\ 1)];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00296}00296\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::array<size\_t,\ BUCKETS>\ offset\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ sum\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ BUCKETS;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ offset[i]\ =\ sum;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sum\ +=\ count[i];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00303}00303\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ cmd\ :\ cmds)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ idx\ =\ (cmd.sortKey\ >>\ shift)\ \&\ (BUCKETS\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp[offset[idx]++]\ =\ std::move(cmd);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00308}00308\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds.swap(temp);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00312}00312\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Multi-\/threaded\ Radix\ Sort}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ VecT>}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RadixSortMulti(VecT\&\ cmds,\ VecT\&\ temp,\ \textcolor{keywordtype}{int}\ threadCount)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ BITS\ =\ RADIX\_BITS;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ BUCKETS\ =\ RADIX\_BUCKETS;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ PASSES\ =\ 64\ /\ BITS;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00319}00319\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ N\ =\ cmds.size();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VecT*\ in\ =\ \&cmds;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VecT*\ out\ =\ \&temp;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00323}00323\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ 再確保ゼロのプール利用\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ histPool/offPool\ は呼び出し側\ EnsureScratch\ により容量確保済み想定}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ histPoolRef\ =\ \textcolor{keyword}{const\_cast<}SortContext*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>histPool;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ offPoolRef\ =\ \textcolor{keyword}{const\_cast<}SortContext*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>offPool;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00328}00328\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ pass\ =\ 0;\ pass\ <\ PASSES;\ ++pass)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ shift\ =\ pass\ *\ BITS;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ chunkSize\ =\ (N\ +\ threadCount\ -\/\ 1)\ /\ threadCount;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00332}00332\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Histogram\ phase}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::thread>\ workers;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ t\ =\ 0;\ t\ <\ threadCount;\ ++t)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ start\ =\ t\ *\ chunkSize;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ end\ =\ (std::min)(start\ +\ chunkSize,\ N);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ workers.emplace\_back([=,\ \&in,\ \&histPoolRef]()\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}*\ hist\ =\ \&histPoolRef[t\ *\ BUCKETS];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::fill\_n(hist,\ BUCKETS,\ \textcolor{keywordtype}{size\_t}(0));}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ start;\ i\ <\ end;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ key\ =\ ((*in)[i].sortKey\ >>\ shift)\ \&\ (BUCKETS\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++hist[key];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ w\ :\ workers)\ w.join();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ workers.clear();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00349}00349\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Global\ offset}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::array<size\_t,\ BUCKETS>\ globalOffset\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ running\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ b\ =\ 0;\ b\ <\ BUCKETS;\ ++b)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ globalOffset[b]\ =\ running;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ sum\_b\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ t\ =\ 0;\ t\ <\ threadCount;\ ++t)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sum\_b\ +=\ histPoolRef[t\ *\ BUCKETS\ +\ b];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ running\ +=\ sum\_b;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00360}00360\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ t\ =\ 0;\ t\ <\ threadCount;\ ++t)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ accum\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ b\ =\ 0;\ b\ <\ BUCKETS;\ ++b)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ offPoolRef[t\ *\ BUCKETS\ +\ b]\ =\ globalOffset[b]\ +\ accum;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ accum\ +=\ histPoolRef[t\ *\ BUCKETS\ +\ b];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00368}00368\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Scatter\ phase}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ t\ =\ 0;\ t\ <\ threadCount;\ ++t)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ start\ =\ t\ *\ chunkSize;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ end\ =\ (std::min)(start\ +\ chunkSize,\ N);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ workers.emplace\_back([=,\ \&in,\ \&out,\ \&offPoolRef]()\ \textcolor{keyword}{mutable}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}*\ localOff\ =\ \&offPoolRef[t\ *\ BUCKETS];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ start;\ i\ <\ end;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ key\ =\ ((*in)[i].sortKey\ >>\ shift)\ \&\ (BUCKETS\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*out)[localOff[key]++]\ =\ std::move((*in)[i]);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ w\ :\ workers)\ w.join();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00382}00382\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(in,\ out);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00385}00385\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (in\ !=\ \&cmds)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds\ =\ std::move(*in);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00390}00390\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00391}00391\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00396}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{00396}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a4990fc2a08040d643ac4dd9de631dd8e}{ProducerSessionExternal}}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ まとめ用固定長バッファ（ヒープなし）}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00399}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aa5eef23167db2c3345fa338323c85d00}{00399}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aa5eef23167db2c3345fa338323c85d00}{kChunk}}\ =\ 128;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00400}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}{00400}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\textcolor{keyword}{alignas}(32)\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}{SmallBuf}}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00401}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_a7c110ea4039e3e9b4204b52eaabe0d5e}{00401}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{DrawCommand}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_a7c110ea4039e3e9b4204b52eaabe0d5e}{data}}[\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aa5eef23167db2c3345fa338323c85d00}{kChunk}}];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00402}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_ae95dea5754113118bfeaabea9acc3bea}{00402}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_ae95dea5754113118bfeaabea9acc3bea}{size}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00403}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_a9cdf8735ac49a1a0350ff2cd4e4ef6a9}{00403}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_a9cdf8735ac49a1a0350ff2cd4e4ef6a9}{push\_back}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{DrawCommand}}\ c)\ \textcolor{keyword}{noexcept}\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_a7c110ea4039e3e9b4204b52eaabe0d5e}{data}}[\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_ae95dea5754113118bfeaabea9acc3bea}{size}}++]\ =\ c;\ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00404}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_aed5a2f4b14010b56b172a914c742e579}{00404}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_aed5a2f4b14010b56b172a914c742e579}{push\_back}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{DrawCommand}}\&\&\ c)\ \textcolor{keyword}{noexcept}\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_a7c110ea4039e3e9b4204b52eaabe0d5e}{data}}[\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_ae95dea5754113118bfeaabea9acc3bea}{size}}++]\ =\ std::move(c);\ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00405}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_ae4b6efd84f3794eefad59d3550a46688}{00405}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_ae4b6efd84f3794eefad59d3550a46688}{full}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_ae95dea5754113118bfeaabea9acc3bea}{size}}\ >=\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aa5eef23167db2c3345fa338323c85d00}{kChunk}};\ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00406}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_a7098d1ec6d5cb7c90eda3c0bfc422d0d}{00406}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_a7098d1ec6d5cb7c90eda3c0bfc422d0d}{clear}}()\ noexcept\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf_ae95dea5754113118bfeaabea9acc3bea}{size}}\ =\ 0;\ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00408}00408\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00413}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a4990fc2a08040d643ac4dd9de631dd8e}{00413}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a4990fc2a08040d643ac4dd9de631dd8e}{ProducerSessionExternal}}(\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a6b556e6bf269d23db95db6f0c6f01745}{RenderQueue}}\&\ owner,\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}{SmallBuf}}\&\ buf)\ noexcept}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ rq(\&owner),\ buf(buf)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00419}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a85b9ec0b9c9ad1ecb238c43fce01b225}{00419}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a85b9ec0b9c9ad1ecb238c43fce01b225}{ProducerSessionExternal}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a4990fc2a08040d643ac4dd9de631dd8e}{ProducerSessionExternal}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00420}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a645708f64198823d50f44b1c90a24384}{00420}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a4990fc2a08040d643ac4dd9de631dd8e}{ProducerSessionExternal}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a645708f64198823d50f44b1c90a24384}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a4990fc2a08040d643ac4dd9de631dd8e}{ProducerSessionExternal}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00424}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aa88dd21008ec8d6f7783044a91e47f18}{00424}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aa88dd21008ec8d6f7783044a91e47f18}{ProducerSessionExternal}}(\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a4990fc2a08040d643ac4dd9de631dd8e}{ProducerSessionExternal}}\&\&\ other)\ noexcept}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ rq(other.rq),\ boundQueue(other.boundQueue),\ token(std::move(other.token)),\ buf(other.buf)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ other.rq\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00427}00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ other.boundQueue\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ other.token.reset();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ other.buf.clear();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00430}00430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00431}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a11167714e954f89140458ebd2e4756ab}{00431}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a4990fc2a08040d643ac4dd9de631dd8e}{ProducerSessionExternal}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a11167714e954f89140458ebd2e4756ab}{operator=}}(\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a4990fc2a08040d643ac4dd9de631dd8e}{ProducerSessionExternal}}\&\&\ other)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ !=\ \&other)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_ad7f42262109e12fcf721b9a78b7a2266}{FlushAll}}();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00434}00434\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rq\ =\ other.rq;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ boundQueue\ =\ other.boundQueue;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ token\ =\ std::move(other.token);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ buf\ =\ std::move(other.buf);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00438}00438\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ other.rq\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ other.boundQueue\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00440}00440\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ other.token.reset();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ other.buf.clear();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00442}00442\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00445}00445\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00446}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a8225ffc3544cc8a72d495851602bc29d}{00446}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a8225ffc3544cc8a72d495851602bc29d}{\string~ProducerSessionExternal}}()\ \{\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_ad7f42262109e12fcf721b9a78b7a2266}{FlushAll}}();\ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00447}00447\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00452}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a208b3164e835d24532f0ea68d69f2b34}{00452}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a208b3164e835d24532f0ea68d69f2b34}{Push}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{DrawCommand}}\ cmd)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00453}00453\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RebindIfNeeded();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00454}00454\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ buf.push\_back(cmd);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00455}00455\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (buf.full())\ flushChunk();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00460}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_abc678eebcf697d6b0ecbd90ce87cdbfb}{00460}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{InstanceIndex}}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_abc678eebcf697d6b0ecbd90ce87cdbfb}{AllocInstance}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data}{InstanceData}}\&\ inst);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00464}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a676ec1e5f136a22af0335284099c4d96}{00464}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{InstanceIndex}}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a676ec1e5f136a22af0335284099c4d96}{AllocInstance}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data}{InstanceData}}\&\&\ inst);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00465}00465\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00469}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aabce60fecbbec79912c1700860df8ce5}{00469}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{InstanceIndex}}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aabce60fecbbec79912c1700860df8ce5}{AllocInstance}}(\textcolor{keyword}{const}\ InstancePool\&\ inst);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00473}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a03a5a8adc2b87f3a66862de7c0d4b0e7}{00473}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{InstanceIndex}}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a03a5a8adc2b87f3a66862de7c0d4b0e7}{AllocInstance}}(InstancePool\&\&\ inst);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00474}00474\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00481}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a73fc07b95267231e77a4d77f192a3fd9}{00481}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a73fc07b95267231e77a4d77f192a3fd9}{AllocInstancesFromWorldSoA}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a}{Math::Matrix3x4fSoA}}\&\ wSoa,\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{InstanceIndex}}*\ outIdx\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00482}00482\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00486}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aba32bf5aa7875f7a48fc7ef2ca6a7efe}{00486}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aba32bf5aa7875f7a48fc7ef2ca6a7efe}{AllocInstancesFromWorldColorSoA}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a}{Math::Matrix3x4fSoA}}\&\ wSoa,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Math::Vec4f}}*\ cSoa,\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{InstanceIndex}}*\ outIdx\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00491}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a61f3124166e815a89bcdb90931f51070}{00491}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{InstanceIndex}}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a61f3124166e815a89bcdb90931f51070}{NextInstanceIndex}}();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00497}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_af033992f66ef4be28c4ff102168312d7}{00497}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_af033992f66ef4be28c4ff102168312d7}{MemsetInstancePool}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{InstanceIndex}}\ index,\ \textcolor{keyword}{const}\ InstancePool\&\ inst)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00498}00498\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00502}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_ad7f42262109e12fcf721b9a78b7a2266}{00502}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_ad7f42262109e12fcf721b9a78b7a2266}{FlushAll}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ “現在バインドされているキュー”\ に吐く（フレーム切替後でも取りこぼさない）}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (boundQueue\ \&\&\ token\ \&\&\ buf.size)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00505}00505\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flushChunk();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00506}00506\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00507}00507\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00509}00509\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a6b556e6bf269d23db95db6f0c6f01745}{RenderQueue}}*\ rq\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00510}00510\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ moodycamel::ConcurrentQueue<DrawCommand>*\ boundQueue\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00511}00511\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<moodycamel::ProducerToken>\ token;\ \textcolor{comment}{//\ インライン保持（ヒープなし）}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SmallBuf\&\ buf;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00513}00513\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00514}00514\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ flushChunk()\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00515}00515\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ boundQueue-\/>enqueue\_bulk(*token,\ buf.data,\ buf.size);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ buf.clear();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00518}00518\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RebindIfNeeded()\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ cur\ =\ \&rq-\/>CurQ();\ \textcolor{comment}{//\ 現在の生産キュー}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00521}00521\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (boundQueue\ !=\ cur)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 旧キューへ残りを吐き出してからバインド切替（安全）}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (boundQueue\ \&\&\ token\ \&\&\ buf.size)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ boundQueue-\/>enqueue\_bulk(*token,\ buf.data,\ buf.size);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ buf.clear();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00526}00526\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00527}00527\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ token.reset();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00528}00528\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ token.emplace(*cur);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00529}00529\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ boundQueue\ =\ cur;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00531}00531\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00532}00532\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00533}00533\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00534}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session}{00534}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_a7b82f7cdabca99615565d73c66ab49d7}{ProducerSession}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a4990fc2a08040d643ac4dd9de631dd8e}{ProducerSessionExternal}}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00535}00535\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00536}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_a7b82f7cdabca99615565d73c66ab49d7}{00536}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_a7b82f7cdabca99615565d73c66ab49d7}{ProducerSession}}(\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a6b556e6bf269d23db95db6f0c6f01745}{RenderQueue}}\&\ owner)\ :\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a4990fc2a08040d643ac4dd9de631dd8e}{ProducerSessionExternal}}(owner,\ buf)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}{ProducerSessionExternal::SmallBuf}}\ buf;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00540}00540\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00541}00541\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00546}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a6b556e6bf269d23db95db6f0c6f01745}{00546}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a6b556e6bf269d23db95db6f0c6f01745}{RenderQueue}}(\textcolor{keyword}{const}\ std::atomic<uint16\_t>\&\ bufSlot,\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena}{SharedInstanceArena}}*\ instanceArena,\ uint32\_t\ maxInstancesPerFrame\ =\ MAX\_INSTANCES\_PER\_FRAME)\ :}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00547}00547\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ current(bufSlot),\ sharedInstanceArena(instanceArena),\ maxInstancesPerFrame(maxInstancesPerFrame)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00548}00548\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(maxInstancesPerFrame\ >\ 0\ \&\&\ maxInstancesPerFrame\ <=\ MAX\_INSTANCES\_PER\_FRAME);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00549}00549\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00550}00550\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint16\_t\ i\ =\ 0;\ i\ <\ RENDER\_BUFFER\_COUNT;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00551}00551\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ queues[i]\ =\ std::make\_unique<moodycamel::ConcurrentQueue<DrawCommand>>();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00552}00552\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00553}00553\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00554}00554\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00559}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a2fffa389dc934df94660237c434a3243}{00559}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a2fffa389dc934df94660237c434a3243}{RenderQueue}}(\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a6b556e6bf269d23db95db6f0c6f01745}{RenderQueue}}\&\&\ other)\ noexcept}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00560}00560\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ current(other.current),\ sharedInstanceArena(other.sharedInstanceArena),}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00561}00561\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maxInstancesPerFrame(other.maxInstancesPerFrame),\ sortContext(std::move(other.sortContext))\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00562}00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(maxInstancesPerFrame\ >\ 0\ \&\&\ maxInstancesPerFrame\ <=\ MAX\_INSTANCES\_PER\_FRAME);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00563}00563\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00564}00564\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint16\_t\ i\ =\ 0;\ i\ <\ RENDER\_BUFFER\_COUNT;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00565}00565\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ queues[i]\ =\ std::move(other.queues[i]);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00566}00566\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00567}00567\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00568}00568\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00569}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_af61f28027cd0d36d1965af45b1c1beb1}{00569}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_af61f28027cd0d36d1965af45b1c1beb1}{\string~RenderQueue}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00570}00570\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ t\ :\ ctoken)\ t.reset();\ \textcolor{comment}{//\ ConsumerToken\ 明示破棄}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00571}00571\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00572}00572\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00576}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_af2f1377f00b94c46dc17e21d4299de8d}{00576}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a6b556e6bf269d23db95db6f0c6f01745}{RenderQueue}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_af2f1377f00b94c46dc17e21d4299de8d}{operator=}}(\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a6b556e6bf269d23db95db6f0c6f01745}{RenderQueue}}\&\&\ other)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00577}00577\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ !=\ \&other)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00578}00578\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sortContext\ =\ std::move(other.sortContext);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00579}00579\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint16\_t\ i\ =\ 0;\ i\ <\ RENDER\_BUFFER\_COUNT;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00580}00580\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ queues[i]\ =\ std::move(other.queues[i]);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00581}00581\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00582}00582\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00583}00583\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00584}00584\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00589}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a78e0342099b1a2ff0651f0a16afad444}{00589}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session}{ProducerSession}}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a78e0342099b1a2ff0651f0a16afad444}{MakeProducer}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session}{ProducerSession}}\{\ *\textcolor{keyword}{this}\ \};\ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00590}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a6ca42a9b5aa3c7eb32f4214f8662272a}{00590}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{ProducerSessionExternal}}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a6ca42a9b5aa3c7eb32f4214f8662272a}{MakeProducer}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}{ProducerSessionExternal::SmallBuf}}\&\ buf)\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{ProducerSessionExternal}}\{\ *\textcolor{keyword}{this},\ buf\ \};\ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00591}00591\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00596}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_ae14724a27e00372d18e80bbf09d41ce1}{00596}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_ae14724a27e00372d18e80bbf09d41ce1}{Submit}}(uint32\_t\ slot,\ std::vector<DrawCommand>\&\ out)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00597}00597\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ q\ =\ *queues[slot];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00598}00598\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ctoken[slot])\ ctoken[slot].emplace(q);\ \textcolor{comment}{//\ 初回だけ生成して再利用}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00599}00599\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00600}00600\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//概算サイズで\ out\ を一発確保}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00601}00601\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}\ approx\ =\ q.size\_approx();\ approx\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00602}00602\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 既存要素があればその分も見越しておく}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00603}00603\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.reserve(out.size()\ +\ approx);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00604}00604\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00605}00605\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00606}00606\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ pTmp\ =\ tmp.data();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00607}00607\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00608}00608\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ n;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00609}00609\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ((n\ =\ q.try\_dequeue\_bulk(*ctoken[slot],\ pTmp,\ DRAWCOMMAND\_TMPBUF\_SIZE))\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00610}00610\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ old\ =\ out.size();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00611}00611\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.resize(old\ +\ n);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 先にサイズだけ伸ばす（再確保は\ reserve\ 済みで起きない前提）}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00612}00612\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_trivially\_copyable\_v<DrawCommand>)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00613}00613\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::memcpy(out.data()\ +\ old,\ pTmp,\ n\ *\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{DrawCommand}}));}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00614}00614\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00615}00615\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00616}00616\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00617}00617\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::move(pTmp,\ pTmp\ +\ n,\ out.begin()\ +\ old);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00618}00618\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00619}00619\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00620}00620\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sortContext.Sort(out);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00621}00621\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00622}00622\ \textcolor{preprocessor}{\#ifndef\ NO\_USE\_PMR\_RENDER\_QUEUE}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00629}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a80d85c6a3382a6f46a65a11725a74e82}{00629}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a80d85c6a3382a6f46a65a11725a74e82}{Submit}}(uint32\_t\ slot,\ std::pmr::vector<DrawCommand>\&\ out)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00630}00630\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ q\ =\ *queues[slot];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00631}00631\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ctoken[slot])\ ctoken[slot].emplace(q);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00632}00632\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00633}00633\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 概算で一撃\ reserve（pmr\ アリーナから確保）}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00634}00634\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}\ approx\ =\ q.size\_approx();\ approx\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00635}00635\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.reserve(out.size()\ +\ approx);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00636}00636\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00637}00637\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00638}00638\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ pTmp\ =\ tmp.data();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00639}00639\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ n;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00640}00640\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ((n\ =\ q.try\_dequeue\_bulk(*ctoken[slot],\ pTmp,\ DRAWCOMMAND\_TMPBUF\_SIZE))\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00641}00641\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ old\ =\ out.size();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00642}00642\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.resize(old\ +\ n);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00643}00643\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_trivially\_copyable\_v<DrawCommand>)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00644}00644\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::memcpy(out.data()\ +\ old,\ pTmp,\ n\ *\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{DrawCommand}}));}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00645}00645\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00646}00646\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00647}00647\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::move(pTmp,\ pTmp\ +\ n,\ out.begin()\ +\ old);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00648}00648\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00649}00649\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00650}00650\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sortContext.Sort(out);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00651}00651\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00652}00652\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00653}00653\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00658}00658\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::pair<InstancePool*,\ std::atomic<uint32\_t>*>}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00659}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a26d0a5f2e6ae6aff8cf182af45ad5942}{00659}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a26d0a5f2e6ae6aff8cf182af45ad5942}{GetCurrentInstancePoolAccess}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00660}00660\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ cur\ =\ current.load(std::memory\_order\_acquire);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00661}00661\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ sharedInstanceArena-\/>Data(cur),\ \&sharedInstanceArena-\/>head[cur]\ \};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00662}00662\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00663}00663\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00668}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_ad4c776bc0646c58b8cda3eab21d73e7d}{00668}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_ad4c776bc0646c58b8cda3eab21d73e7d}{MaxInstancesPerFrame}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ maxInstancesPerFrame;\ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00669}00669\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00670}00670\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00671}00671\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 現在の生産キュー}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00672}00672\ \ \ \ \ \ \ \ \ \ \ \ \ moodycamel::ConcurrentQueue<DrawCommand>\&\ CurQ()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00673}00673\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *queues[current.load(std::memory\_order\_acquire)];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00674}00674\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00675}00675\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00676}00676\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ maxInstancesPerFrame;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00677}00677\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00678}00678\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<moodycamel::ConcurrentQueue<DrawCommand>>\ queues[RENDER\_BUFFER\_COUNT];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00679}00679\ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<moodycamel::ConsumerToken>\ ctoken[RENDER\_BUFFER\_COUNT];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00680}00680\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::atomic<uint16\_t>\&\ current;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00681}00681\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00682}00682\ \ \ \ \ \ \ \ \ \ \ \ \ SharedInstanceArena*\ sharedInstanceArena\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00683}00683\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00684}00684\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 取り込み用一時バッファ：std::array\ でヒープ確保ゼロ化}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00685}00685\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<DrawCommand,\ DRAWCOMMAND\_TMPBUF\_SIZE>\ tmp\{\};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00686}00686\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00687}00687\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PMR時は\ tempBuffer\ も同資源で確保されるようにコンストラクト}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00688}00688\ \textcolor{preprocessor}{\#ifndef\ NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00689}00689\ \ \ \ \ \ \ \ \ \ \ \ \ SortContext\ sortContext\{\ std::pmr::get\_default\_resource()\ \};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00690}00690\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00691}00691\ \ \ \ \ \ \ \ \ \ \ \ \ SortContext\ sortContext;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00692}00692\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00693}00693\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00694}00694\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00695}00695\ \}}
+
+\end{DoxyCode}

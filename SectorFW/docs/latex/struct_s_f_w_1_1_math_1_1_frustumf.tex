@@ -1,0 +1,267 @@
+\doxysection{SFW\+::Math\+::Frustumf 構造体}
+\hypertarget{struct_s_f_w_1_1_math_1_1_frustumf}{}\label{struct_s_f_w_1_1_math_1_1_frustumf}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+
+
+{\ttfamily \#include $<$Frustum.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+float \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a8f6b68d7476e4579748d40a35e68c1ca}{data}} () noexcept
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa06205b36004ab4a0c631ffec8c0a183}{Normalize}} () noexcept
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a54ee4a7833a5eec5f4f37b4632d12edf}{Contains\+Point}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&pt) const noexcept
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_adc5f3cb0a7153239b111ecc962821d05}{Intersects\+Sphere}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&c, float r) const noexcept
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a98e76d2faa1114777992553adf902702}{Intersects\+AABB}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&center, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&extent) const noexcept
+\item 
+{\footnotesize template$<$class AABB3$>$ }\\bool \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_abd48efdb5bf4ba9cd970792ae768a81e}{Intersects\+AABB}} (const AABB3 \&aabb) const noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a9d373afc3d9791f3410d7d329ea2e77e}{Pushed\+Along\+Direction}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&light\+Dir\+WS, float length) const noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a8e7a38d6767158f34b72289f9d8b94c6}{Clamped\+Far}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&eye\+WS, float max\+Far) const noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_abb24171178e2808d79734cfb819f7551}{From\+Row\+Major}} (const float m\mbox{[}16\mbox{]}, bool normalize=true) noexcept
+\item 
+static \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a8f31019ecc0626ec8fca134bdedc49cb}{From\+Col\+Major}} (const float m\mbox{[}16\mbox{]}, bool normalize=true) noexcept
+\item 
+static \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a3a5b73ce77c5f79225311109a4682d88}{From\+Row\+Major\+WithZ}} (const float m\mbox{[}16\mbox{]}, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{Clip\+ZRange}} zrange, bool normalize=true) noexcept
+\item 
+static \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_ac2a7cc36a692394b322e0439da5635b8}{From\+Col\+Major\+WithZ}} (const float m\mbox{[}16\mbox{]}, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{Clip\+ZRange}} zrange, bool normalize=true) noexcept
+\item 
+static void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_ae323781d9782bffab65c6973a6fec7f0}{Make\+Frustum\+Planes\+\_\+\+World\+Space}} (const float View\+Proj\mbox{[}16\mbox{]}, float out\+Planes\mbox{[}6\mbox{]}\mbox{[}4\mbox{]})
+\item 
+static void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a9e5d116a35e07156efa7a3bc75e8800a}{Make\+Frustum\+Planes\+\_\+\+World\+Space\+\_\+\+Oriented}} (const float View\+Proj\mbox{[}16\mbox{]}, const float cam\+Pos\mbox{[}3\mbox{]}, float \texorpdfstring{$\ast$}{*}out\+Planes)
+\item 
+static void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_abcd66afe40c15785902685e1187600ac}{Make\+Frustum\+Planes\+\_\+\+Object\+Space}} (const float View\+Proj\mbox{[}16\mbox{]}, const float \mbox{\hyperlink{class_s_f_w_1_1_world}{World}}\mbox{[}16\mbox{]}, float out\+Planes\mbox{[}6\mbox{]}\mbox{[}4\mbox{]})
+\item 
+{\footnotesize template$<$class T$>$ }\\static \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a0346c8fb2d40bb8a846013229553227e}{From\+Row\+Major\+Matrix}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \&M, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{Clip\+ZRange}} zrange, bool normalize=true) noexcept
+\item 
+static void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a47a3bc0243bf0989034db9d99f033776}{Face\+Inward}} (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} \&fr, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&cam\+Pos, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&cam\+Fwd, float near\+Clip) noexcept
+\item 
+static bool \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a806d47877b24616790a7fb569631f2cc}{Compute\+YOverlap\+At\+XZ}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, float x, float z, float ymin, float ymax, float \&out\+CenterY, float \&out\+ExtentY) noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+std\+::array$<$ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}}, 6 $>$ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}} \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00091}{91}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_a8e7a38d6767158f34b72289f9d8b94c6}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!ClampedFar@{ClampedFar}}
+\index{ClampedFar@{ClampedFar}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{ClampedFar()}{ClampedFar()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_a8e7a38d6767158f34b72289f9d8b94c6} 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} SFW\+::\+Math\+::\+Frustumf\+::\+Clamped\+Far (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&}]{eye\+WS}{, }\item[{float}]{max\+Far}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00453}{453}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_a806d47877b24616790a7fb569631f2cc}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!ComputeYOverlapAtXZ@{ComputeYOverlapAtXZ}}
+\index{ComputeYOverlapAtXZ@{ComputeYOverlapAtXZ}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{ComputeYOverlapAtXZ()}{ComputeYOverlapAtXZ()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_a806d47877b24616790a7fb569631f2cc} 
+bool SFW\+::\+Math\+::\+Frustumf\+::\+Compute\+YOverlap\+At\+XZ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{float}]{x}{, }\item[{float}]{z}{, }\item[{float}]{ymin}{, }\item[{float}]{ymax}{, }\item[{float \&}]{out\+CenterY}{, }\item[{float \&}]{out\+ExtentY}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00331}{331}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_a54ee4a7833a5eec5f4f37b4632d12edf}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!ContainsPoint@{ContainsPoint}}
+\index{ContainsPoint@{ContainsPoint}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{ContainsPoint()}{ContainsPoint()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_a54ee4a7833a5eec5f4f37b4632d12edf} 
+bool SFW\+::\+Math\+::\+Frustumf\+::\+Contains\+Point (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&}]{pt}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00373}{373}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_a8f6b68d7476e4579748d40a35e68c1ca}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!data@{data}}
+\index{data@{data}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_a8f6b68d7476e4579748d40a35e68c1ca} 
+float \texorpdfstring{$\ast$}{*} SFW\+::\+Math\+::\+Frustumf\+::data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00094}{94}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_a47a3bc0243bf0989034db9d99f033776}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!FaceInward@{FaceInward}}
+\index{FaceInward@{FaceInward}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{FaceInward()}{FaceInward()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_a47a3bc0243bf0989034db9d99f033776} 
+void SFW\+::\+Math\+::\+Frustumf\+::\+Face\+Inward (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} \&}]{fr}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&}]{cam\+Pos}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&}]{cam\+Fwd}{, }\item[{float}]{near\+Clip}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00313}{313}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_a8f31019ecc0626ec8fca134bdedc49cb}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!FromColMajor@{FromColMajor}}
+\index{FromColMajor@{FromColMajor}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{FromColMajor()}{FromColMajor()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_a8f31019ecc0626ec8fca134bdedc49cb} 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} SFW\+::\+Math\+::\+Frustumf\+::\+From\+Col\+Major (\begin{DoxyParamCaption}\item[{const float}]{m}{\mbox{[}16\mbox{]}, }\item[{bool}]{normalize}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00153}{153}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_ac2a7cc36a692394b322e0439da5635b8}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!FromColMajorWithZ@{FromColMajorWithZ}}
+\index{FromColMajorWithZ@{FromColMajorWithZ}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{FromColMajorWithZ()}{FromColMajorWithZ()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_ac2a7cc36a692394b322e0439da5635b8} 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} SFW\+::\+Math\+::\+Frustumf\+::\+From\+Col\+Major\+WithZ (\begin{DoxyParamCaption}\item[{const float}]{m}{\mbox{[}16\mbox{]}, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{Clip\+ZRange}}}]{zrange}{, }\item[{bool}]{normalize}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00212}{212}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_abb24171178e2808d79734cfb819f7551}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!FromRowMajor@{FromRowMajor}}
+\index{FromRowMajor@{FromRowMajor}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{FromRowMajor()}{FromRowMajor()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_abb24171178e2808d79734cfb819f7551} 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} SFW\+::\+Math\+::\+Frustumf\+::\+From\+Row\+Major (\begin{DoxyParamCaption}\item[{const float}]{m}{\mbox{[}16\mbox{]}, }\item[{bool}]{normalize}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00101}{101}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_a0346c8fb2d40bb8a846013229553227e}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!FromRowMajorMatrix@{FromRowMajorMatrix}}
+\index{FromRowMajorMatrix@{FromRowMajorMatrix}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{FromRowMajorMatrix()}{FromRowMajorMatrix()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_a0346c8fb2d40bb8a846013229553227e} 
+template$<$class T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} SFW\+::\+Math\+::\+Frustumf\+::\+From\+Row\+Major\+Matrix (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \&}]{M}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{Clip\+ZRange}}}]{zrange}{, }\item[{bool}]{normalize}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00303}{303}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_a3a5b73ce77c5f79225311109a4682d88}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!FromRowMajorWithZ@{FromRowMajorWithZ}}
+\index{FromRowMajorWithZ@{FromRowMajorWithZ}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{FromRowMajorWithZ()}{FromRowMajorWithZ()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_a3a5b73ce77c5f79225311109a4682d88} 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} SFW\+::\+Math\+::\+Frustumf\+::\+From\+Row\+Major\+WithZ (\begin{DoxyParamCaption}\item[{const float}]{m}{\mbox{[}16\mbox{]}, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{Clip\+ZRange}}}]{zrange}{, }\item[{bool}]{normalize}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00176}{176}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_abd48efdb5bf4ba9cd970792ae768a81e}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!IntersectsAABB@{IntersectsAABB}}
+\index{IntersectsAABB@{IntersectsAABB}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{IntersectsAABB()}{IntersectsAABB()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_abd48efdb5bf4ba9cd970792ae768a81e} 
+template$<$class AABB3$>$ \\
+bool SFW\+::\+Math\+::\+Frustumf\+::\+Intersects\+AABB (\begin{DoxyParamCaption}\item[{const AABB3 \&}]{aabb}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00396}{396}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_a98e76d2faa1114777992553adf902702}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!IntersectsAABB@{IntersectsAABB}}
+\index{IntersectsAABB@{IntersectsAABB}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{IntersectsAABB()}{IntersectsAABB()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_a98e76d2faa1114777992553adf902702} 
+bool SFW\+::\+Math\+::\+Frustumf\+::\+Intersects\+AABB (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&}]{center}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&}]{extent}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00385}{385}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_adc5f3cb0a7153239b111ecc962821d05}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!IntersectsSphere@{IntersectsSphere}}
+\index{IntersectsSphere@{IntersectsSphere}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{IntersectsSphere()}{IntersectsSphere()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_adc5f3cb0a7153239b111ecc962821d05} 
+bool SFW\+::\+Math\+::\+Frustumf\+::\+Intersects\+Sphere (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&}]{c}{, }\item[{float}]{r}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00379}{379}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_abcd66afe40c15785902685e1187600ac}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!MakeFrustumPlanes\_ObjectSpace@{MakeFrustumPlanes\_ObjectSpace}}
+\index{MakeFrustumPlanes\_ObjectSpace@{MakeFrustumPlanes\_ObjectSpace}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{MakeFrustumPlanes\_ObjectSpace()}{MakeFrustumPlanes\_ObjectSpace()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_abcd66afe40c15785902685e1187600ac} 
+void SFW\+::\+Math\+::\+Frustumf\+::\+Make\+Frustum\+Planes\+\_\+\+Object\+Space (\begin{DoxyParamCaption}\item[{const float}]{View\+Proj}{\mbox{[}16\mbox{]}, }\item[{const float}]{World}{\mbox{[}16\mbox{]}, }\item[{float}]{out\+Planes}{\mbox{[}6\mbox{]}\mbox{[}4\mbox{]}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00284}{284}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_ae323781d9782bffab65c6973a6fec7f0}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!MakeFrustumPlanes\_WorldSpace@{MakeFrustumPlanes\_WorldSpace}}
+\index{MakeFrustumPlanes\_WorldSpace@{MakeFrustumPlanes\_WorldSpace}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{MakeFrustumPlanes\_WorldSpace()}{MakeFrustumPlanes\_WorldSpace()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_ae323781d9782bffab65c6973a6fec7f0} 
+void SFW\+::\+Math\+::\+Frustumf\+::\+Make\+Frustum\+Planes\+\_\+\+World\+Space (\begin{DoxyParamCaption}\item[{const float}]{View\+Proj}{\mbox{[}16\mbox{]}, }\item[{float}]{out\+Planes}{\mbox{[}6\mbox{]}\mbox{[}4\mbox{]}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00250}{250}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_a9e5d116a35e07156efa7a3bc75e8800a}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!MakeFrustumPlanes\_WorldSpace\_Oriented@{MakeFrustumPlanes\_WorldSpace\_Oriented}}
+\index{MakeFrustumPlanes\_WorldSpace\_Oriented@{MakeFrustumPlanes\_WorldSpace\_Oriented}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{MakeFrustumPlanes\_WorldSpace\_Oriented()}{MakeFrustumPlanes\_WorldSpace\_Oriented()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_a9e5d116a35e07156efa7a3bc75e8800a} 
+void SFW\+::\+Math\+::\+Frustumf\+::\+Make\+Frustum\+Planes\+\_\+\+World\+Space\+\_\+\+Oriented (\begin{DoxyParamCaption}\item[{const float}]{View\+Proj}{\mbox{[}16\mbox{]}, }\item[{const float}]{cam\+Pos}{\mbox{[}3\mbox{]}, }\item[{float \texorpdfstring{$\ast$}{*}}]{out\+Planes}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00261}{261}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_aa06205b36004ab4a0c631ffec8c0a183}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!Normalize@{Normalize}}
+\index{Normalize@{Normalize}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{Normalize()}{Normalize()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_aa06205b36004ab4a0c631ffec8c0a183} 
+void SFW\+::\+Math\+::\+Frustumf\+::\+Normalize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00096}{96}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_a9d373afc3d9791f3410d7d329ea2e77e}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!PushedAlongDirection@{PushedAlongDirection}}
+\index{PushedAlongDirection@{PushedAlongDirection}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{PushedAlongDirection()}{PushedAlongDirection()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_a9d373afc3d9791f3410d7d329ea2e77e} 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}} SFW\+::\+Math\+::\+Frustumf\+::\+Pushed\+Along\+Direction (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&}]{light\+Dir\+WS}{, }\item[{float}]{length}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00421}{421}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}\index{SFW::Math::Frustumf@{SFW::Math::Frustumf}!p@{p}}
+\index{p@{p}!SFW::Math::Frustumf@{SFW::Math::Frustumf}}
+\doxysubsubsection{\texorpdfstring{p}{p}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37} 
+std\+::array$<$\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}}, 6$>$ SFW\+::\+Math\+::\+Frustumf\+::p \{\}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00092}{92}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Math/\mbox{\hyperlink{_frustum_8hpp}{Frustum.\+hpp}}\end{DoxyCompactItemize}

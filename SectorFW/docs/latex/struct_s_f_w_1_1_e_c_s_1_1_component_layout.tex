@@ -1,0 +1,69 @@
+\doxysection{SFW\+::ECS\+::Component\+Layout 構造体}
+\hypertarget{struct_s_f_w_1_1_e_c_s_1_1_component_layout}{}\label{struct_s_f_w_1_1_e_c_s_1_1_component_layout}\index{SFW::ECS::ComponentLayout@{SFW::ECS::ComponentLayout}}
+
+
+コンポーネントのデータにアクセスするためのレイアウトを定義する構造体  
+
+
+
+
+{\ttfamily \#include $<$Component\+Layout\+Registry.\+h$>$}
+
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{Component\+Type\+ID}}, uint32\+\_\+t $>$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a88343f1ee39dfe0d56941f26292e7cdd}{info\+Idx}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_info}{Component\+Info}} $>$ $>$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a3d7b7770b3ccf40851c113417bd24de7}{info}}
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a3d7b2c535e71a34bcf019aa55c972dda}{capacity}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+コンポーネントのデータにアクセスするためのレイアウトを定義する構造体 
+
+コンポーネントの型\+IDとインデックス、コンポーネントのoffsetとstrideを格納します。 
+
+ \mbox{\hyperlink{_component_layout_registry_8h_source}{Component\+Layout\+Registry.\+h}} の \mbox{\hyperlink{_component_layout_registry_8h_source_l00024}{24}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_component_layout_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a3d7b2c535e71a34bcf019aa55c972dda}\index{SFW::ECS::ComponentLayout@{SFW::ECS::ComponentLayout}!capacity@{capacity}}
+\index{capacity@{capacity}!SFW::ECS::ComponentLayout@{SFW::ECS::ComponentLayout}}
+\doxysubsubsection{\texorpdfstring{capacity}{capacity}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a3d7b2c535e71a34bcf019aa55c972dda} 
+size\+\_\+t SFW\+::\+ECS\+::\+Component\+Layout\+::capacity = 0}
+
+
+
+ \mbox{\hyperlink{_component_layout_registry_8h_source}{Component\+Layout\+Registry.\+h}} の \mbox{\hyperlink{_component_layout_registry_8h_source_l00028}{28}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a3d7b7770b3ccf40851c113417bd24de7}\index{SFW::ECS::ComponentLayout@{SFW::ECS::ComponentLayout}!info@{info}}
+\index{info@{info}!SFW::ECS::ComponentLayout@{SFW::ECS::ComponentLayout}}
+\doxysubsubsection{\texorpdfstring{info}{info}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a3d7b7770b3ccf40851c113417bd24de7} 
+std\+::vector$<$\mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_info}{Component\+Info}}$>$ $>$ SFW\+::\+ECS\+::\+Component\+Layout\+::info}
+
+
+
+ \mbox{\hyperlink{_component_layout_registry_8h_source}{Component\+Layout\+Registry.\+h}} の \mbox{\hyperlink{_component_layout_registry_8h_source_l00027}{27}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a88343f1ee39dfe0d56941f26292e7cdd}\index{SFW::ECS::ComponentLayout@{SFW::ECS::ComponentLayout}!infoIdx@{infoIdx}}
+\index{infoIdx@{infoIdx}!SFW::ECS::ComponentLayout@{SFW::ECS::ComponentLayout}}
+\doxysubsubsection{\texorpdfstring{infoIdx}{infoIdx}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_component_layout_a88343f1ee39dfe0d56941f26292e7cdd} 
+std\+::unordered\+\_\+map$<$\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{Component\+Type\+ID}}, uint32\+\_\+t$>$ SFW\+::\+ECS\+::\+Component\+Layout\+::info\+Idx}
+
+
+
+ \mbox{\hyperlink{_component_layout_registry_8h_source}{Component\+Layout\+Registry.\+h}} の \mbox{\hyperlink{_component_layout_registry_8h_source_l00026}{26}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_component_layout_registry_8h}{Component\+Layout\+Registry.\+h}}\end{DoxyCompactItemize}

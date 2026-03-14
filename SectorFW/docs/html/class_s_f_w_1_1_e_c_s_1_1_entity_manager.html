@@ -1,0 +1,907 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::ECS::EntityManager クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_e_c_s_1_1_entity_manager.html','','class_s_f_w_1_1_e_c_s_1_1_entity_manager-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::ECS::EntityManager クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>エンティティの生成と破棄、コンポーネントの追加・削除を管理するクラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a4d0341903c59ff6583abd2d5ea384c53" id="r_a4d0341903c59ff6583abd2d5ea384c53"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d0341903c59ff6583abd2d5ea384c53">EntityManager</a> ()=default</td></tr>
+<tr class="memdesc:a4d0341903c59ff6583abd2d5ea384c53"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:acfb84437dc645adb705daf9ac7a7c0c7" id="r_acfb84437dc645adb705daf9ac7a7c0c7"><td class="memTemplParams" colspan="2">template&lt;typename... Components&gt; </td></tr>
+<tr class="memitem:acfb84437dc645adb705daf9ac7a7c0c7 template"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acfb84437dc645adb705daf9ac7a7c0c7">AddEntity</a> (const Components &amp;... components)</td></tr>
+<tr class="memdesc:acfb84437dc645adb705daf9ac7a7c0c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティの追加  <br /></td></tr>
+<tr class="memitem:aa745de0f28163065ac818f45132c52c6" id="r_aa745de0f28163065ac818f45132c52c6"><td class="memTemplParams" colspan="2">template&lt;typename... Components&gt; </td></tr>
+<tr class="memitem:aa745de0f28163065ac818f45132c52c6 template"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa745de0f28163065ac818f45132c52c6">AddEntity</a> (<a class="el" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a> mask, const Components &amp;... components)</td></tr>
+<tr class="memdesc:aa745de0f28163065ac818f45132c52c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティの追加(コンポーネントマスクを指定)  <br /></td></tr>
+<tr class="memitem:a41a39a172c7b77331ab96fdaac3be892" id="r_a41a39a172c7b77331ab96fdaac3be892"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a41a39a172c7b77331ab96fdaac3be892">DestroyEntity</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id)</td></tr>
+<tr class="memdesc:a41a39a172c7b77331ab96fdaac3be892"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティの削除  <br /></td></tr>
+<tr class="memitem:a6aab877f81d89c16c00301c2f39d4939" id="r_a6aab877f81d89c16c00301c2f39d4939"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6aab877f81d89c16c00301c2f39d4939">CleanAllEntity</a> ()</td></tr>
+<tr class="memdesc:a6aab877f81d89c16c00301c2f39d4939"><td class="mdescLeft">&#160;</td><td class="mdescRight">すべてのエンティティの削除  <br /></td></tr>
+<tr class="memitem:a413e1b9a5f4381593e0e4c66292f2609" id="r_a413e1b9a5f4381593e0e4c66292f2609"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a413e1b9a5f4381593e0e4c66292f2609 template"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a413e1b9a5f4381593e0e4c66292f2609">HasComponent</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id) const noexcept</td></tr>
+<tr class="memdesc:a413e1b9a5f4381593e0e4c66292f2609"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティにコンポ―ネントがあるかどうかを確認する関数  <br /></td></tr>
+<tr class="memitem:ae228c9994a18ce223ec03982a435e4b9" id="r_ae228c9994a18ce223ec03982a435e4b9"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:ae228c9994a18ce223ec03982a435e4b9 template"><td class="memItemLeft" align="right" valign="top">std::optional&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae228c9994a18ce223ec03982a435e4b9">ReadComponent</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id) noexcept</td></tr>
+<tr class="memdesc:ae228c9994a18ce223ec03982a435e4b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティからコンポーネントを取得する関数  <br /></td></tr>
+<tr class="memitem:a0bd80e350df1bbaf14b67840a44c3f0f" id="r_a0bd80e350df1bbaf14b67840a44c3f0f"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a0bd80e350df1bbaf14b67840a44c3f0f template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0bd80e350df1bbaf14b67840a44c3f0f">WriteComponent</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id, const T &amp;value) noexcept</td></tr>
+<tr class="memdesc:a0bd80e350df1bbaf14b67840a44c3f0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティのコンポーネントを書き換える関数  <br /></td></tr>
+<tr class="memitem:a609ef9eef1fec06c51cb36962c969ddb" id="r_a609ef9eef1fec06c51cb36962c969ddb"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a609ef9eef1fec06c51cb36962c969ddb template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a609ef9eef1fec06c51cb36962c969ddb">ReadWriteComponent</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id, std::function&lt; T(T)&gt; &amp;&amp;f)</td></tr>
+<tr class="memitem:ae0be59c244dd2340674ea89d2f7a0203" id="r_ae0be59c244dd2340674ea89d2f7a0203"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:ae0be59c244dd2340674ea89d2f7a0203 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae0be59c244dd2340674ea89d2f7a0203">AddComponent</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id, const T &amp;value)</td></tr>
+<tr class="memdesc:ae0be59c244dd2340674ea89d2f7a0203"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティにコンポーネントを追加する関数  <br /></td></tr>
+<tr class="memitem:a7db41cd8a8a95648d35552f4a472eb10" id="r_a7db41cd8a8a95648d35552f4a472eb10"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a7db41cd8a8a95648d35552f4a472eb10 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7db41cd8a8a95648d35552f4a472eb10">RemoveComponent</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id)</td></tr>
+<tr class="memdesc:a7db41cd8a8a95648d35552f4a472eb10"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティからコンポーネントを削除する関数  <br /></td></tr>
+<tr class="memitem:a8741afc591965b27b7ded1983ca637a1" id="r_a8741afc591965b27b7ded1983ca637a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8741afc591965b27b7ded1983ca637a1">MoveAllSparseTo</a> (<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">EntityManager</a> &amp;dst)</td></tr>
+<tr class="memdesc:a8741afc591965b27b7ded1983ca637a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">すべての Sparse を this-&gt;dst に一括 move（型消去で処理）  <br /></td></tr>
+<tr class="memitem:a713c9102af0b1271b674ca9868836027" id="r_a713c9102af0b1271b674ca9868836027"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a713c9102af0b1271b674ca9868836027">MoveSparseIDsTo</a> (<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">EntityManager</a> &amp;dst, const std::vector&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> &gt; &amp;ids)</td></tr>
+<tr class="memdesc:a713c9102af0b1271b674ca9868836027"><td class="mdescLeft">&#160;</td><td class="mdescRight">指定 ID 群の Sparse を this-&gt;dst に一括 move（型消去で処理）  <br /></td></tr>
+<tr class="memitem:a843a38ca9d1bbc6babb8dbeb095de3c8" id="r_a843a38ca9d1bbc6babb8dbeb095de3c8"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a843a38ca9d1bbc6babb8dbeb095de3c8">MergeFromAll</a> (<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">EntityManager</a> &amp;src)</td></tr>
+<tr class="memitem:a24623ec0fcad2a19030118ed26425d5a" id="r_a24623ec0fcad2a19030118ed26425d5a"><td class="memTemplParams" colspan="2">template&lt;typename Router&gt; </td></tr>
+<tr class="memitem:a24623ec0fcad2a19030118ed26425d5a template"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24623ec0fcad2a19030118ed26425d5a">SplitByAll</a> (Router &amp;&amp;router)</td></tr>
+<tr class="memitem:a9ef664ba5532b7414726a4f6b36179d5" id="r_a9ef664ba5532b7414726a4f6b36179d5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ef664ba5532b7414726a4f6b36179d5">GetAllEntityIDs</a> () const</td></tr>
+<tr class="memitem:ae1a31ba953c8e4609a06f606ba03ef75" id="r_ae1a31ba953c8e4609a06f606ba03ef75"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; <br />
+requires SparseComponent&lt;T&gt;</td></tr>
+<tr class="memitem:ae1a31ba953c8e4609a06f606ba03ef75 template"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_read_write_view.html">ReadWriteView</a>&lt; std::unordered_map&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>, T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1a31ba953c8e4609a06f606ba03ef75">GetSparseComponents</a> ()</td></tr>
+<tr class="memdesc:ae1a31ba953c8e4609a06f606ba03ef75"><td class="mdescLeft">&#160;</td><td class="mdescRight">まばらなコンポーネントを取得する関数  <br /></td></tr>
+<tr class="memitem:ae388a688fd1615210c7048b338e2fb43" id="r_ae388a688fd1615210c7048b338e2fb43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae388a688fd1615210c7048b338e2fb43">GetMask</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id) const noexcept</td></tr>
+<tr class="memdesc:ae388a688fd1615210c7048b338e2fb43"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティのコンポーネントマスクを取得する関数  <br /></td></tr>
+<tr class="memitem:addb50338b7958c516a5465725d56c972" id="r_addb50338b7958c516a5465725d56c972"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_manager.html">ArchetypeManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#addb50338b7958c516a5465725d56c972">GetArchetypeManager</a> () const noexcept</td></tr>
+<tr class="memdesc:addb50338b7958c516a5465725d56c972"><td class="mdescLeft">&#160;</td><td class="mdescRight">アーキタイプマネージャーを取得する関数  <br /></td></tr>
+<tr class="memitem:ab40b3d768f3d483b9df69e450412d488" id="r_ab40b3d768f3d483b9df69e450412d488"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_location.html">EntityLocation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab40b3d768f3d483b9df69e450412d488">TryGetLocation</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id) const noexcept</td></tr>
+<tr class="memdesc:ab40b3d768f3d483b9df69e450412d488"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティの現在位置（Chunk と行）を O(1) で取得（共有ロック）  <br /></td></tr>
+<tr class="memitem:a8df08b9c7042c6c3c05d4076591ee454" id="r_a8df08b9c7042c6c3c05d4076591ee454"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8df08b9c7042c6c3c05d4076591ee454">GetEntityCount</a> () const noexcept</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:a46db8df58dca07d7201c30e4d4dde6cc" id="r_a46db8df58dca07d7201c30e4d4dde6cc"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html">EntityIDAllocator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a46db8df58dca07d7201c30e4d4dde6cc">GetEntityAllocator</a> () noexcept</td></tr>
+<tr class="memdesc:a46db8df58dca07d7201c30e4d4dde6cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティIDアロケータを取得する関数  <br /></td></tr>
+<tr class="memitem:a7fb5684e80545fe00492cae3fe531cb0" id="r_a7fb5684e80545fe00492cae3fe531cb0"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7fb5684e80545fe00492cae3fe531cb0">InsertWithID_ForManagerMove</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> id, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">EntityManager</a> &amp;src, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">EntityManager</a> &amp;dst)</td></tr>
+<tr class="memdesc:a7fb5684e80545fe00492cae3fe531cb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">IDを保持したまま dst 側に1行確保し、非スパースをコピー（manager間移送用）  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>エンティティの生成と破棄、コンポーネントの追加・削除を管理するクラス </p>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00034">34</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="a4d0341903c59ff6583abd2d5ea384c53" name="a4d0341903c59ff6583abd2d5ea384c53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d0341903c59ff6583abd2d5ea384c53">&#9670;&#160;</a></span>EntityManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::ECS::EntityManager::EntityManager </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="ae0be59c244dd2340674ea89d2f7a0203" name="ae0be59c244dd2340674ea89d2f7a0203"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0be59c244dd2340674ea89d2f7a0203">&#9670;&#160;</a></span>AddComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::ECS::EntityManager::AddComponent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティにコンポーネントを追加する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>エンティティID</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>※archetypeの移動があるため高負荷 </p><dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>追加するコンポーネントの値 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00250">250</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa745de0f28163065ac818f45132c52c6" name="aa745de0f28163065ac818f45132c52c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa745de0f28163065ac818f45132c52c6">&#9670;&#160;</a></span>AddEntity() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Components&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> SFW::ECS::EntityManager::AddEntity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a></td>          <td class="paramname"><span class="paramname"><em>mask</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Components &amp;...</td>          <td class="paramname"><span class="paramname"><em>components</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティの追加(コンポーネントマスクを指定) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mask</td><td>コンポーネントマスク </td></tr>
+    <tr><td class="paramname">...components</td><td>追加するコンポーネントの可変引数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html" title="EntityのIDを表す構造体">EntityID</a> 新しく追加されたエンティティのID </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00074">74</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="acfb84437dc645adb705daf9ac7a7c0c7" name="acfb84437dc645adb705daf9ac7a7c0c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfb84437dc645adb705daf9ac7a7c0c7">&#9670;&#160;</a></span>AddEntity() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Components&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> SFW::ECS::EntityManager::AddEntity </td>
+          <td>(</td>
+          <td class="paramtype">const Components &amp;...</td>          <td class="paramname"><span class="paramname"><em>components</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティの追加 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">...components</td><td>追加するコンポーネントの可変引数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html" title="EntityのIDを表す構造体">EntityID</a> 新しく追加されたエンティティのID </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00046">46</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6aab877f81d89c16c00301c2f39d4939" name="a6aab877f81d89c16c00301c2f39d4939"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6aab877f81d89c16c00301c2f39d4939">&#9670;&#160;</a></span>CleanAllEntity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::ECS::EntityManager::CleanAllEntity </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>すべてのエンティティの削除 </p>
+
+</div>
+</div>
+<a id="a41a39a172c7b77331ab96fdaac3be892" name="a41a39a172c7b77331ab96fdaac3be892"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41a39a172c7b77331ab96fdaac3be892">&#9670;&#160;</a></span>DestroyEntity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::ECS::EntityManager::DestroyEntity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>エンティティの削除 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>削除するエンティティのID </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9ef664ba5532b7414726a4f6b36179d5" name="a9ef664ba5532b7414726a4f6b36179d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ef664ba5532b7414726a4f6b36179d5">&#9670;&#160;</a></span>GetAllEntityIDs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> &gt; SFW::ECS::EntityManager::GetAllEntityIDs </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="addb50338b7958c516a5465725d56c972" name="addb50338b7958c516a5465725d56c972"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addb50338b7958c516a5465725d56c972">&#9670;&#160;</a></span>GetArchetypeManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_manager.html">ArchetypeManager</a> &amp; SFW::ECS::EntityManager::GetArchetypeManager </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>アーキタイプマネージャーを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_archetype_manager.html" title="各コンポーネントマスクごとのアーキタイプチャンクを管理するクラス">ArchetypeManager</a>&amp; アーキタイプマネージャーへの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00448">448</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a46db8df58dca07d7201c30e4d4dde6cc" name="a46db8df58dca07d7201c30e4d4dde6cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46db8df58dca07d7201c30e4d4dde6cc">&#9670;&#160;</a></span>GetEntityAllocator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html">EntityIDAllocator</a> &amp; SFW::ECS::EntityManager::GetEntityAllocator </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティIDアロケータを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html" title="エンティティIDを管理するクラス(スレッドセーフ)">EntityIDAllocator</a>&amp; エンティティIDアロケータへの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00453">453</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8df08b9c7042c6c3c05d4076591ee454" name="a8df08b9c7042c6c3c05d4076591ee454"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8df08b9c7042c6c3c05d4076591ee454">&#9670;&#160;</a></span>GetEntityCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SFW::ECS::EntityManager::GetEntityCount </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00464">464</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae388a688fd1615210c7048b338e2fb43" name="ae388a688fd1615210c7048b338e2fb43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae388a688fd1615210c7048b338e2fb43">&#9670;&#160;</a></span>GetMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a> SFW::ECS::EntityManager::GetMask </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティのコンポーネントマスクを取得する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>エンティティID </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d" title="コンポーネントマスクを定義するビットセット型">ComponentMask</a> エンティティのコンポーネントマスク </dd></dl>
+
+</div>
+</div>
+<a id="ae1a31ba953c8e4609a06f606ba03ef75" name="ae1a31ba953c8e4609a06f606ba03ef75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1a31ba953c8e4609a06f606ba03ef75">&#9670;&#160;</a></span>GetSparseComponents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; <br />
+requires SparseComponent&lt;T&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_read_write_view.html">ReadWriteView</a>&lt; std::unordered_map&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a>, T &gt; &gt; SFW::ECS::EntityManager::GetSparseComponents </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>まばらなコンポーネントを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="class_s_f_w_1_1_read_write_view.html" title="コンテナの読み書きビューを提供するクラス">ReadWriteView&lt;std::unordered_map&lt;EntityID, T&gt;&gt;</a> まばらなコンポーネントのビュー </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00434">434</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a413e1b9a5f4381593e0e4c66292f2609" name="a413e1b9a5f4381593e0e4c66292f2609"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a413e1b9a5f4381593e0e4c66292f2609">&#9670;&#160;</a></span>HasComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::ECS::EntityManager::HasComponent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティにコンポ―ネントがあるかどうかを確認する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>エンティティID </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>bool コンポーネントがある場合はtrue、ない場合はfalse </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00108">108</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7fb5684e80545fe00492cae3fe531cb0" name="a7fb5684e80545fe00492cae3fe531cb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fb5684e80545fe00492cae3fe531cb0">&#9670;&#160;</a></span>InsertWithID_ForManagerMove()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::ECS::EntityManager::InsertWithID_ForManagerMove </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">EntityManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>src</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">EntityManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>dst</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>IDを保持したまま dst 側に1行確保し、非スパースをコピー（manager間移送用） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>エンティティID </td></tr>
+    <tr><td class="paramname">src</td><td>元のエンティティマネージャー </td></tr>
+    <tr><td class="paramname">dst</td><td>移動先のエンティティマネージャー </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>bool 移動に成功した場合はtrue、失敗した場合はfalse </dd></dl>
+
+</div>
+</div>
+<a id="a843a38ca9d1bbc6babb8dbeb095de3c8" name="a843a38ca9d1bbc6babb8dbeb095de3c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a843a38ca9d1bbc6babb8dbeb095de3c8">&#9670;&#160;</a></span>MergeFromAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SFW::ECS::EntityManager::MergeFromAll </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">EntityManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>src</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8741afc591965b27b7ded1983ca637a1" name="a8741afc591965b27b7ded1983ca637a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8741afc591965b27b7ded1983ca637a1">&#9670;&#160;</a></span>MoveAllSparseTo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::ECS::EntityManager::MoveAllSparseTo </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">EntityManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>dst</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>すべての Sparse を this-&gt;dst に一括 move（型消去で処理） </p>
+
+</div>
+</div>
+<a id="a713c9102af0b1271b674ca9868836027" name="a713c9102af0b1271b674ca9868836027"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a713c9102af0b1271b674ca9868836027">&#9670;&#160;</a></span>MoveSparseIDsTo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::ECS::EntityManager::MoveSparseIDsTo </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">EntityManager</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>dst</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>ids</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>指定 ID 群の Sparse を this-&gt;dst に一括 move（型消去で処理） </p>
+
+</div>
+</div>
+<a id="ae228c9994a18ce223ec03982a435e4b9" name="ae228c9994a18ce223ec03982a435e4b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae228c9994a18ce223ec03982a435e4b9">&#9670;&#160;</a></span>ReadComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; T &gt; SFW::ECS::EntityManager::ReadComponent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティからコンポーネントを取得する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>エンティティID</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>コンポーネントが見つからない場合nullptrを返す</p>
+<p>Systemからアクセスする場合は必ずアクセスするコンポーネントに追加する </p><dl class="section return"><dt>戻り値</dt><dd>std::optional&lt;T&gt; コンポーネントの値 </dd></dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00131">131</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a609ef9eef1fec06c51cb36962c969ddb" name="a609ef9eef1fec06c51cb36962c969ddb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a609ef9eef1fec06c51cb36962c969ddb">&#9670;&#160;</a></span>ReadWriteComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::ECS::EntityManager::ReadWriteComponent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; T(T)&gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>f</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00194">194</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7db41cd8a8a95648d35552f4a472eb10" name="a7db41cd8a8a95648d35552f4a472eb10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7db41cd8a8a95648d35552f4a472eb10">&#9670;&#160;</a></span>RemoveComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::ECS::EntityManager::RemoveComponent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティからコンポーネントを削除する関数 </p>
+<p>※Archetypeを移動する処理があるので高負荷 </p><dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>エンティティID </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00326">326</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a24623ec0fcad2a19030118ed26425d5a" name="a24623ec0fcad2a19030118ed26425d5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24623ec0fcad2a19030118ed26425d5a">&#9670;&#160;</a></span>SplitByAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Router&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SFW::ECS::EntityManager::SplitByAll </td>
+          <td>(</td>
+          <td class="paramtype">Router &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>router</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00403">403</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab40b3d768f3d483b9df69e450412d488" name="ab40b3d768f3d483b9df69e450412d488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab40b3d768f3d483b9df69e450412d488">&#9670;&#160;</a></span>TryGetLocation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_location.html">EntityLocation</a> &gt; SFW::ECS::EntityManager::TryGetLocation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティの現在位置（Chunk と行）を O(1) で取得（共有ロック） </p>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00457">457</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0bd80e350df1bbaf14b67840a44c3f0f" name="a0bd80e350df1bbaf14b67840a44c3f0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bd80e350df1bbaf14b67840a44c3f0f">&#9670;&#160;</a></span>WriteComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::ECS::EntityManager::WriteComponent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティのコンポーネントを書き換える関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>エンティティID </td></tr>
+    <tr><td class="paramname">value</td><td>書き換えるコンポーネントの値</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Systemからアクセスする場合は必ずアクセスするコンポーネントに追加する </p>
+
+<p class="definition"> <a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a> の <a class="el" href="_entity_manager_8h_source.html#l00173">173</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/<a class="el" href="_entity_manager_8h_source.html">EntityManager.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_e_c_s.html">ECS</a></li><li class="navelem"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">EntityManager</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

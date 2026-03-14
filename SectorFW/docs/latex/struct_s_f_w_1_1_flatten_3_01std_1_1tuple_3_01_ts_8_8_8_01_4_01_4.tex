@@ -1,0 +1,50 @@
+\doxysection{SFW\+::Flatten\texorpdfstring{$<$}{<} std\+::tuple\texorpdfstring{$<$}{<} Ts... \texorpdfstring{$>$}{>} \texorpdfstring{$>$}{>} 構造体テンプレート}
+\hypertarget{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4}{}\label{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4}\index{SFW::Flatten$<$ std::tuple$<$ Ts... $>$ $>$@{SFW::Flatten$<$ std::tuple$<$ Ts... $>$ $>$}}
+
+
+タプルを再帰的に展開するための特殊化  
+
+
+
+
+{\ttfamily \#include $<$Flatten.\+hpp$>$}
+
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_ac7b6c0e9df2e12ed53c19815d67e5fb9}{type}} = typename Tuple\+Concat$<$flatten\+\_\+t$<$Ts$>$...$>$\+::type
+\begin{DoxyCompactList}\small\item\em 再帰的に展開されたタプルの型を定義する \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename... Ts$>$\newline
+struct SFW\+::\+Flatten$<$ std\+::tuple$<$ Ts... $>$ $>$}
+タプルを再帰的に展開するための特殊化 
+
+ \mbox{\hyperlink{_flatten_8hpp_source}{Flatten.\+hpp}} の \mbox{\hyperlink{_flatten_8hpp_source_l00045}{45}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_ac7b6c0e9df2e12ed53c19815d67e5fb9}\index{SFW::Flatten$<$ std::tuple$<$ Ts... $>$ $>$@{SFW::Flatten$<$ std::tuple$<$ Ts... $>$ $>$}!type@{type}}
+\index{type@{type}!SFW::Flatten$<$ std::tuple$<$ Ts... $>$ $>$@{SFW::Flatten$<$ std::tuple$<$ Ts... $>$ $>$}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_ac7b6c0e9df2e12ed53c19815d67e5fb9} 
+template$<$typename... Ts$>$ \\
+using \mbox{\hyperlink{struct_s_f_w_1_1_flatten}{SFW\+::\+Flatten}}$<$ std\+::tuple$<$ Ts... $>$ $>$\+::type = typename Tuple\+Concat$<$flatten\+\_\+t$<$Ts$>$...$>$\+::type}
+
+
+
+再帰的に展開されたタプルの型を定義する 
+
+
+
+ \mbox{\hyperlink{_flatten_8hpp_source}{Flatten.\+hpp}} の \mbox{\hyperlink{_flatten_8hpp_source_l00075}{75}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/\mbox{\hyperlink{_flatten_8hpp}{Flatten.\+hpp}}\end{DoxyCompactItemize}

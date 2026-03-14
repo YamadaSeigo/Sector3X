@@ -1,0 +1,366 @@
+\doxysection{SFW\+::ECS 名前空間}
+\hypertarget{namespace_s_f_w_1_1_e_c_s}{}\label{namespace_s_f_w_1_1_e_c_s}\index{SFW::ECS@{SFW::ECS}}
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__component}{access\+\_\+component}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__spec__normalize}{access\+\_\+spec\+\_\+normalize}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__spec__normalize_3_01_component_accessor_3_01_ts_8_8_8_01_4_01_4}{access\+\_\+spec\+\_\+normalize$<$ Component\+Accessor$<$ Ts... $>$ $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__subset__by__comp__impl}{access\+\_\+subset\+\_\+by\+\_\+comp\+\_\+impl}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__subset__by__comp__impl_3_01_component_access_3_01_override_8_8b63d37f859fba1a5f84262d1c35961ab}{access\+\_\+subset\+\_\+by\+\_\+comp\+\_\+impl$<$ Component\+Access$<$ Override... $>$, Allowed... $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__subset__impl}{access\+\_\+subset\+\_\+impl}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__subset__impl_3_01_component_access_3_01_override_8_8_8_01_4_00_01_allowed_8_8_8_01_4}{access\+\_\+subset\+\_\+impl$<$ Component\+Access$<$ Override... $>$, Allowed... $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_access_info}{Access\+Info}}
+\begin{DoxyCompactList}\small\item\em アクセス情報を管理する構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_access_policy}{Access\+Policy}}
+\begin{DoxyCompactList}\small\item\em コンポーネントアクセスのポリシーを定義するテンプレート \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_access_policy_3_01_read_3_01_t_01_4_01_4}{Access\+Policy$<$ Read$<$ T $>$ $>$}}
+\begin{DoxyCompactList}\small\item\em 読み取りアクセスのポリシーを定義するテンプレート \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_access_policy_3_01_write_3_01_t_01_4_01_4}{Access\+Policy$<$ Write$<$ T $>$ $>$}}
+\begin{DoxyCompactList}\small\item\em 書き込みアクセスのポリシーを定義するテンプレート \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype}{Archetype}}
+\begin{DoxyCompactList}\small\item\em アーキタイプを表すクラス(マスクベースのコンポーネント管理) \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}}
+\begin{DoxyCompactList}\small\item\em 対象のアーキタイプのコンポーネントのデータを格納するクラス \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{Archetype\+Manager}}
+\begin{DoxyCompactList}\small\item\em 各コンポーネントマスクごとのアーキタイプチャンクを管理するクラス \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Component\+Access}}
+\begin{DoxyCompactList}\small\item\em コンポーネントアクセスの型を定義するテンプレート \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor}{Component\+Accessor}}
+\begin{DoxyCompactList}\small\item\em 指定したアクセス型に基づいて、コンポーネントにアクセスするためのクラス \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base}{Component\+Accessor\+Base}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_info}{Component\+Info}}
+\begin{DoxyCompactList}\small\item\em コンポーネントのレイアウトを定義する構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout}{Component\+Layout}}
+\begin{DoxyCompactList}\small\item\em コンポーネントのデータにアクセスするためのレイアウトを定義する構造体 \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_layout_registry}{Component\+Layout\+Registry}}
+\begin{DoxyCompactList}\small\item\em コンポーネントレイアウトを一元的に管理するクラス（\+Component\+Maskごとに共通!） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_meta}{Component\+Meta}}
+\begin{DoxyCompactList}\small\item\em コンポーネントの型\+IDとメタ情報を管理するクラス \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry}{Component\+Type\+Registry}}
+\begin{DoxyCompactList}\small\item\em コンポーネントの型\+IDとそれに対応するメタ情報を登録、管理するクラス \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_dense_runner}{Dense\+Runner}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}
+\begin{DoxyCompactList}\small\item\em Entityの\+IDを表す構造体 \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator}{Entity\+IDAllocator}}
+\begin{DoxyCompactList}\small\item\em エンティティ\+IDを管理するクラス(スレッドセーフ) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location}{Entity\+Location}}
+\begin{DoxyCompactList}\small\item\em エンティティのアーキタイプの位置を表す構造体 \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{Entity\+Manager}}
+\begin{DoxyCompactList}\small\item\em エンティティの生成と破棄、コンポーネントの追加・削除を管理するクラス \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_commit_service}{ICommit\+Service}}
+\begin{DoxyCompactList}\small\item\em コミットサービスのインターフェース(Systemを更新した後に呼び出される) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__soa__component}{is\+\_\+soa\+\_\+component}}
+\begin{DoxyCompactList}\small\item\em So\+Aコンポーネントを識別するためのトレイト \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__soa__component_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1soa__type_01_4_01_4}{is\+\_\+soa\+\_\+component$<$ T, std\+::void\+\_\+t$<$ typename T\+::soa\+\_\+type $>$ $>$}}
+\begin{DoxyCompactList}\small\item\em So\+Aコンポーネントを識別するためのトレイトの特殊化 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__sparse__component}{is\+\_\+sparse\+\_\+component}}
+\begin{DoxyCompactList}\small\item\em まばらなコンポーネントを識別するためのトレイト \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__sparse__component_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1sparse__tag_01_4_01_4}{is\+\_\+sparse\+\_\+component$<$ T, std\+::void\+\_\+t$<$ typename T\+::sparse\+\_\+tag $>$ $>$}}
+\begin{DoxyCompactList}\small\item\em 　まばらなコンポーネントを識別するためのトレイトの特殊化 \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{ISystem}}
+\begin{DoxyCompactList}\small\item\em システムのインターフェース \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system}{IType\+System}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7}{IType\+System$<$ Derived\+T, Partition, Component\+Access$<$ Access\+Types... $>$, Service\+Context$<$ Services... $>$, Parallel\+Update $>$}}
+\begin{DoxyCompactList}\small\item\em ECSシステムのインターフェース \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{IUpdate\+Service}}
+\begin{DoxyCompactList}\small\item\em 更新サービスのインターフェース(Systemよりも前に更新) \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query}{Query}}
+\begin{DoxyCompactList}\small\item\em 指定したコンポーネントにマッチングするチャンクを取得ためのクラス \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_read}{Read}}
+\begin{DoxyCompactList}\small\item\em コンポーネントの読み取りアクセスを表すテンプレート \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{Service\+Context}}
+\begin{DoxyCompactList}\small\item\em Systemに注入されるサービスのコンテキストを定義するテンプレート \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}}
+\begin{DoxyCompactList}\small\item\em Systemが依存するサービスを管理するクラス \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_so_a_ptr}{So\+APtr}}
+\begin{DoxyCompactList}\small\item\em So\+Aコンポーネントのポインタ型を定義するテンプレート \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_so_a_ptr_3_01_t_01_4}{So\+APtr$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em So\+Aコンポーネントのポインタ型を定義するテンプレートの特殊化 \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store}{Sparse\+Component\+Store}}
+\begin{DoxyCompactList}\small\item\em まばらなコンポーネントを管理するクラス \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_component_tag}{Sparse\+Component\+Tag}}
+\begin{DoxyCompactList}\small\item\em まばらなコンポーネントを識別するタグ \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge}{Sparse\+Merge}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler}{System\+Scheduler}}
+\begin{DoxyCompactList}\small\item\em システムを管理し、競合がないようにスケジューリングするクラス \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_write}{Write}}
+\begin{DoxyCompactList}\small\item\em コンポーネントの書き込みアクセスを表すテンプレート \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_sparse_component}{Sparse\+Component}}
+\begin{DoxyCompactList}\small\item\em まばらなコンポーネントを識別するためのコンセプト \end{DoxyCompactList}\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_is_so_a_component}{Is\+So\+AComponent}}
+\begin{DoxyCompactList}\small\item\em So\+Aコンポーネントを識別するためのコンセプト \end{DoxyCompactList}\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_start_impl}{Has\+Start\+Impl}}
+\begin{DoxyCompactList}\small\item\em Start\+Implのオーバーロードをチェックするコンセプト \end{DoxyCompactList}\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_update_impl}{Has\+Update\+Impl}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_global_update_impl}{Has\+Global\+Update\+Impl}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_end_impl}{Has\+End\+Impl}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_global_end_impl}{Has\+Global\+End\+Impl}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_access_spec_subset_of}{Access\+Spec\+Subset\+Of}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_one_of_by_component}{One\+Of\+By\+Component}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_access_spec_subset_of_by_component}{Access\+Spec\+Subset\+Of\+By\+Component}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_all_dense}{All\+Dense}}
+\begin{DoxyCompactList}\small\item\em まばらなコンポーネントを識別するトレイト \end{DoxyCompactList}\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_reference_only}{Reference\+Only}}
+\begin{DoxyCompactList}\small\item\em 参照のみの型を識別するトレイト \end{DoxyCompactList}\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_service_tag}{Has\+Service\+Tag}}
+\begin{DoxyCompactList}\small\item\em サービスの型にis\+Staticメンバーが存在するかをチェックするコンセプト \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1fa083af926da159fc321773dbfc28c5}{Buffer\+Type}} = uint8\+\_\+t
+\begin{DoxyCompactList}\small\item\em アーキタイプチャンクのバッファ型 \end{DoxyCompactList}\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{Component\+Type\+ID}} = uint32\+\_\+t
+\begin{DoxyCompactList}\small\item\em コンポーネントの型\+IDを定義する型 \end{DoxyCompactList}\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} = std\+::bitset$<$\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a4dd4bb40129246ff9c8f24d576bf3b7c}{Max\+Components}}$>$
+\begin{DoxyCompactList}\small\item\em コンポーネントマスクを定義するビットセット型 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\using \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_acc45c11b7021883610af3dafbfe19fa8}{Const\+Return\+Type}}
+\begin{DoxyCompactList}\small\item\em T がポインタなら const T\+::element\+\_\+type\texorpdfstring{$\ast$}{*}、そうでなければ const T \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T$>$ }\\using \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6}{access\+\_\+spec\+\_\+normalize\+\_\+t}} = typename \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__spec__normalize}{access\+\_\+spec\+\_\+normalize}}$<$std\+::remove\+\_\+cvref\+\_\+t$<$T$>$$>$\+::type
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T$>$ }\\void \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a446f4a52c3a534b0eb0a458956c5b04b}{Set\+Mask}} (\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} \&mask) noexcept
+\begin{DoxyCompactList}\small\item\em コンポーネントマスクに指定されたコンポーネントをセットします。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{変数}
+\begin{DoxyCompactItemize}
+\item 
+constexpr size\+\_\+t \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a2e93fe0a9759446633f84df6d7867ecb}{Chunk\+Size\+Bytes}} = 32 \texorpdfstring{$\ast$}{*} 1024
+\begin{DoxyCompactList}\small\item\em アーキタイプチャンクのサイズ（バイト単位） \end{DoxyCompactList}\item 
+constexpr size\+\_\+t \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a4dd4bb40129246ff9c8f24d576bf3b7c}{Max\+Components}} = 64
+\begin{DoxyCompactList}\small\item\em 最大コンポーネント数を定義する定数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\constexpr bool \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a45563ebd21e0cf9af2157c470cd54aba}{is\+\_\+sparse\+\_\+component\+\_\+v}} = \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__sparse__component}{is\+\_\+sparse\+\_\+component}}$<$T$>$\+::value
+\begin{DoxyCompactList}\small\item\em まばらなコンポーネントを識別するためのトレイトの値 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\constexpr bool \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a25d9a1e96eb15d02aa7924495157cae4}{is\+\_\+soa\+\_\+component\+\_\+v}} = \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__soa__component}{is\+\_\+soa\+\_\+component}}$<$T$>$\+::value
+\begin{DoxyCompactList}\small\item\em So\+Aコンポーネントを識別するためのトレイトの値 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename$>$ }\\constexpr bool \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_aba295ea4455071ce785c6a1dce464654}{always\+\_\+false}} = false
+\begin{DoxyCompactList}\small\item\em 常にfalseを返す定数テンプレート \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Services$>$ }\\constexpr bool \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a8aac419d65bb75ed8784b0ad269564ae}{All\+Static\+Services}} = (Services\+::is\+Static \&\& ...)
+\begin{DoxyCompactList}\small\item\em サービスの静的な型を定義するテンプレート \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-typedef-members}
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_doc-typedef-members}
+\doxysubsection{型定義詳解}
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6}\index{SFW::ECS@{SFW::ECS}!access\_spec\_normalize\_t@{access\_spec\_normalize\_t}}
+\index{access\_spec\_normalize\_t@{access\_spec\_normalize\_t}!SFW::ECS@{SFW::ECS}}
+\doxysubsubsection{\texorpdfstring{access\_spec\_normalize\_t}{access\_spec\_normalize\_t}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6} 
+template$<$class T$>$ \\
+using \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_ae385c86b85111223704ff46684268eb6}{SFW\+::\+ECS\+::access\+\_\+spec\+\_\+normalize\+\_\+t}} = typename \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1access__spec__normalize}{access\+\_\+spec\+\_\+normalize}}$<$std\+::remove\+\_\+cvref\+\_\+t$<$T$>$$>$\+::type}
+
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00143}{143}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_a1fa083af926da159fc321773dbfc28c5}\index{SFW::ECS@{SFW::ECS}!BufferType@{BufferType}}
+\index{BufferType@{BufferType}!SFW::ECS@{SFW::ECS}}
+\doxysubsubsection{\texorpdfstring{BufferType}{BufferType}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_e_c_s_a1fa083af926da159fc321773dbfc28c5} 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1fa083af926da159fc321773dbfc28c5}{SFW\+::\+ECS\+::\+Buffer\+Type}} = uint8\+\_\+t}
+
+
+
+アーキタイプチャンクのバッファ型 
+
+
+
+ \mbox{\hyperlink{_archetype_chunk_8h_source}{Archetype\+Chunk.\+h}} の \mbox{\hyperlink{_archetype_chunk_8h_source_l00036}{36}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}\index{SFW::ECS@{SFW::ECS}!ComponentMask@{ComponentMask}}
+\index{ComponentMask@{ComponentMask}!SFW::ECS@{SFW::ECS}}
+\doxysubsubsection{\texorpdfstring{ComponentMask}{ComponentMask}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d} 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{SFW\+::\+ECS\+::\+Component\+Mask}} = std\+::bitset$<$\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a4dd4bb40129246ff9c8f24d576bf3b7c}{Max\+Components}}$>$}
+
+
+
+コンポーネントマスクを定義するビットセット型 
+
+
+
+ \mbox{\hyperlink{component_8hpp_source}{component.\+hpp}} の \mbox{\hyperlink{component_8hpp_source_l00042}{42}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}\index{SFW::ECS@{SFW::ECS}!ComponentTypeID@{ComponentTypeID}}
+\index{ComponentTypeID@{ComponentTypeID}!SFW::ECS@{SFW::ECS}}
+\doxysubsubsection{\texorpdfstring{ComponentTypeID}{ComponentTypeID}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1} 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{SFW\+::\+ECS\+::\+Component\+Type\+ID}} = uint32\+\_\+t}
+
+
+
+コンポーネントの型\+IDを定義する型 
+
+
+
+ \mbox{\hyperlink{component_8hpp_source}{component.\+hpp}} の \mbox{\hyperlink{component_8hpp_source_l00038}{38}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_acc45c11b7021883610af3dafbfe19fa8}\index{SFW::ECS@{SFW::ECS}!ConstReturnType@{ConstReturnType}}
+\index{ConstReturnType@{ConstReturnType}!SFW::ECS@{SFW::ECS}}
+\doxysubsubsection{\texorpdfstring{ConstReturnType}{ConstReturnType}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_e_c_s_acc45c11b7021883610af3dafbfe19fa8} 
+template$<$typename T$>$ \\
+using \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_acc45c11b7021883610af3dafbfe19fa8}{SFW\+::\+ECS\+::\+Const\+Return\+Type}}}
+
+{\bfseries 初期値\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ std::conditional\_t<}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ std::is\_pointer\_v<T>,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ std::add\_pointer\_t<std::add\_const\_t<std::remove\_pointer\_t<T>>>,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ std::add\_const\_t<T>}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ >}
+
+\end{DoxyCode}
+
+
+T がポインタなら const T\+::element\+\_\+type\texorpdfstring{$\ast$}{*}、そうでなければ const T 
+
+
+
+ \mbox{\hyperlink{component_8hpp_source}{component.\+hpp}} の \mbox{\hyperlink{component_8hpp_source_l00119}{119}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_a446f4a52c3a534b0eb0a458956c5b04b}\index{SFW::ECS@{SFW::ECS}!SetMask@{SetMask}}
+\index{SetMask@{SetMask}!SFW::ECS@{SFW::ECS}}
+\doxysubsubsection{\texorpdfstring{SetMask()}{SetMask()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_e_c_s_a446f4a52c3a534b0eb0a458956c5b04b} 
+template$<$typename T$>$ \\
+void SFW\+::\+ECS\+::\+Set\+Mask (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} \&}]{mask}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+コンポーネントマスクに指定されたコンポーネントをセットします。 
+
+
+\begin{DoxyParams}{引数}
+{\em mask} & コンポーネントマスク \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_component_type_registry_8h_source}{Component\+Type\+Registry.\+h}} の \mbox{\hyperlink{_component_type_registry_8h_source_l00201}{201}} 行目に定義があります。
+
+
+
+\label{doc-var-members}
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_doc-var-members}
+\doxysubsection{変数詳解}
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_a8aac419d65bb75ed8784b0ad269564ae}\index{SFW::ECS@{SFW::ECS}!AllStaticServices@{AllStaticServices}}
+\index{AllStaticServices@{AllStaticServices}!SFW::ECS@{SFW::ECS}}
+\doxysubsubsection{\texorpdfstring{AllStaticServices}{AllStaticServices}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_e_c_s_a8aac419d65bb75ed8784b0ad269564ae} 
+template$<$typename... Services$>$ \\
+bool SFW\+::\+ECS\+::\+All\+Static\+Services = (Services\+::is\+Static \&\& ...)\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+サービスの静的な型を定義するテンプレート 
+
+サービスの型に対して、静的なis\+Staticメンバーを定義します。 
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em Services...} & サービスの型リスト \\
+\hline
+\end{DoxyTemplParams}
+
+
+ \mbox{\hyperlink{_service_context_8hpp_source}{Service\+Context.\+hpp}} の \mbox{\hyperlink{_service_context_8hpp_source_l00020}{20}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_aba295ea4455071ce785c6a1dce464654}\index{SFW::ECS@{SFW::ECS}!always\_false@{always\_false}}
+\index{always\_false@{always\_false}!SFW::ECS@{SFW::ECS}}
+\doxysubsubsection{\texorpdfstring{always\_false}{always\_false}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_e_c_s_aba295ea4455071ce785c6a1dce464654} 
+template$<$typename$>$ \\
+bool SFW\+::\+ECS\+::always\+\_\+false = false\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+常にfalseを返す定数テンプレート 
+
+
+
+ \mbox{\hyperlink{_query_8h_source}{Query.\+h}} の \mbox{\hyperlink{_query_8h_source_l00032}{32}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_a2e93fe0a9759446633f84df6d7867ecb}\index{SFW::ECS@{SFW::ECS}!ChunkSizeBytes@{ChunkSizeBytes}}
+\index{ChunkSizeBytes@{ChunkSizeBytes}!SFW::ECS@{SFW::ECS}}
+\doxysubsubsection{\texorpdfstring{ChunkSizeBytes}{ChunkSizeBytes}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_e_c_s_a2e93fe0a9759446633f84df6d7867ecb} 
+size\+\_\+t SFW\+::\+ECS\+::\+Chunk\+Size\+Bytes = 32 \texorpdfstring{$\ast$}{*} 1024\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+アーキタイプチャンクのサイズ（バイト単位） 
+
+
+
+ \mbox{\hyperlink{_archetype_chunk_8h_source}{Archetype\+Chunk.\+h}} の \mbox{\hyperlink{_archetype_chunk_8h_source_l00030}{30}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_a25d9a1e96eb15d02aa7924495157cae4}\index{SFW::ECS@{SFW::ECS}!is\_soa\_component\_v@{is\_soa\_component\_v}}
+\index{is\_soa\_component\_v@{is\_soa\_component\_v}!SFW::ECS@{SFW::ECS}}
+\doxysubsubsection{\texorpdfstring{is\_soa\_component\_v}{is\_soa\_component\_v}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_e_c_s_a25d9a1e96eb15d02aa7924495157cae4} 
+template$<$typename T$>$ \\
+bool SFW\+::\+ECS\+::is\+\_\+soa\+\_\+component\+\_\+v = \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__soa__component}{is\+\_\+soa\+\_\+component}}$<$T$>$\+::value\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+So\+Aコンポーネントを識別するためのトレイトの値 
+
+
+
+ \mbox{\hyperlink{component_8hpp_source}{component.\+hpp}} の \mbox{\hyperlink{component_8hpp_source_l00085}{85}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_a45563ebd21e0cf9af2157c470cd54aba}\index{SFW::ECS@{SFW::ECS}!is\_sparse\_component\_v@{is\_sparse\_component\_v}}
+\index{is\_sparse\_component\_v@{is\_sparse\_component\_v}!SFW::ECS@{SFW::ECS}}
+\doxysubsubsection{\texorpdfstring{is\_sparse\_component\_v}{is\_sparse\_component\_v}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_e_c_s_a45563ebd21e0cf9af2157c470cd54aba} 
+template$<$typename T$>$ \\
+bool SFW\+::\+ECS\+::is\+\_\+sparse\+\_\+component\+\_\+v = \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__sparse__component}{is\+\_\+sparse\+\_\+component}}$<$T$>$\+::value\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+まばらなコンポーネントを識別するためのトレイトの値 
+
+
+
+ \mbox{\hyperlink{component_8hpp_source}{component.\+hpp}} の \mbox{\hyperlink{component_8hpp_source_l00070}{70}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_e_c_s_a4dd4bb40129246ff9c8f24d576bf3b7c}\index{SFW::ECS@{SFW::ECS}!MaxComponents@{MaxComponents}}
+\index{MaxComponents@{MaxComponents}!SFW::ECS@{SFW::ECS}}
+\doxysubsubsection{\texorpdfstring{MaxComponents}{MaxComponents}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_e_c_s_a4dd4bb40129246ff9c8f24d576bf3b7c} 
+size\+\_\+t SFW\+::\+ECS\+::\+Max\+Components = 64\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+最大コンポーネント数を定義する定数 
+
+最大コンポーネント数を定義する定数 
+
+ \mbox{\hyperlink{component_8hpp_source}{component.\+hpp}} の \mbox{\hyperlink{component_8hpp_source_l00033}{33}} 行目に定義があります。
+

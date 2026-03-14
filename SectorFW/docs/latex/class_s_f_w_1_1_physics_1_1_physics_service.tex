@@ -1,0 +1,1029 @@
+\doxysection{SFW\+::Physics\+::Physics\+Service クラス}
+\hypertarget{class_s_f_w_1_1_physics_1_1_physics_service}{}\label{class_s_f_w_1_1_physics_1_1_physics_service}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+
+
+物理サービスを提供するクラス。systemから物理\+Deviceを操作するための\+APIを提供する  
+
+
+
+
+{\ttfamily \#include $<$Physics\+Service.\+h$>$}
+
+SFW\+::Physics\+::Physics\+Service の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_f_w_1_1_physics_1_1_physics_service}
+\end{center}
+\end{figure}
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_created_body}{Created\+Body}}
+\begin{DoxyCompactList}\small\item\em Body 作成完了イベントの取り出し（\+Write\+Back用） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_create_intent}{Create\+Intent}}
+\begin{DoxyCompactList}\small\item\em 生成インテント：発生源で「この \doxylink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity} を作って」と積んでおく \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_material}{Material}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_plan}{Plan}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a4016b934601a7192d57c6e29f5cf6daa}{Physics\+Service}} (\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_device}{Physics\+Device}} \&device, \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager}{Physics\+Shape\+Manager}} \&shape\+Mgr, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_plan}{Plan}} plan=\{ 1.\+0f/60.\+0f, 1, false \}, size\+\_\+t queue\+Capacity\+Pow2=4096)
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a5bc68ae5001e47b8b5ae93d407e41573}{Make\+Shape}} (const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc}{Shape\+Create\+Desc}} \&desc)
+\begin{DoxyCompactList}\small\item\em 指定した形状を生成する \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a46433923c9ab77fe7892134274940026}{Make\+Box}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} he, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}} s=\{ \{1, 1, 1\} \})
+\begin{DoxyCompactList}\small\item\em Box 形状を生成する \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_ab11f7b7d9e04eb95553b688acc6ea3d4}{Make\+Sphere}} (float radius, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}} s=\{ \{1, 1, 1\} \})
+\begin{DoxyCompactList}\small\item\em 球形状を生成する \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a0918d0eafefe67b55a974c3e3032dd34}{Make\+Capsule}} (float half\+Height, float radius, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}} s=\{ \{1, 1, 1\} \})
+\begin{DoxyCompactList}\small\item\em カプセル形状を生成する \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_af65cb7e071e1febd6c1364287d0c529e}{Make\+Mesh}} (const std\+::vector$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} $>$ \&vertex, const std\+::vector$<$ uint32\+\_\+t $>$ \&indices, bool rh\+Flip=false, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}} s=\{ \{1, 1, 1\} \})
+\begin{DoxyCompactList}\small\item\em メッシュ形状を生成する \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a53529fe945e59e8855b26101ecb4a4d4}{Make\+Mesh}} (const std\+::string \&path, bool rh\+Flip=false, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}} s=\{ \{1, 1, 1\} \})
+\begin{DoxyCompactList}\small\item\em メッシュ形状を生成する（ファイル読み込み版） \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_aebabbbc7fcf26f8983b7b6afd403da6c}{Make\+Convex}} (const std\+::vector$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} $>$ \&pts, const std\+::vector$<$ uint32\+\_\+t $>$ \&idx, float r=0.\+05f, float tol=0.\+005f)
+\begin{DoxyCompactList}\small\item\em 凸形状を生成する \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_ad9f0d3fd79bff442fe6ebc8f98fda052}{Make\+Convex\+Compound}} (const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_v_h_a_c_d_hull}{VHACDHull}} $>$ \&hulls, bool rh\+Flip=false, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}} s=\{ \{1, 1, 1\} \}, float r=0.\+05f, float tol=0.\+005f)
+\begin{DoxyCompactList}\small\item\em 凸形状群から Static\+Compound\+Shape を生成する \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_aec4d164a2b201f7626f6e91e24357686}{Make\+Convex\+Compound}} (const std\+::string \&path, bool rh\+Flip=false, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}} s=\{ \{1, 1, 1\} \}, float r=0.\+05f, float tol=0.\+005f)
+\begin{DoxyCompactList}\small\item\em VHACD バイナリファイルから凸形状群を読み込み、\+Static\+Compound\+Shape を生成する \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_aff6de318c36e37a38fb05524f4f742c9}{Release\+Shape}} (\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} h, uint64\+\_\+t sync=0)
+\begin{DoxyCompactList}\small\item\em 形状を解放する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_acd73ffaf40fef1103ec1129bc3f87279}{Create\+Body}} (const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_create_body_cmd}{Create\+Body\+Cmd}} \&c)
+\begin{DoxyCompactList}\small\item\em 物理ボディを作成するコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a716fa33012dd2db8dd787bf9d87123a3}{Destroy\+Body}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e)
+\begin{DoxyCompactList}\small\item\em 物理ボディを破棄するコマンドをキューに必ず追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a2d4edf2123e841370f0f90b716ae3b89}{Teleport}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e, const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mat34f}{Mat34f}} \&tm, bool wake=true)
+\begin{DoxyCompactList}\small\item\em 物理ボディをテレポートするコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a2554438f5a1b77bfd617ce53cd95d74d}{Set\+Linear\+Velocity}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e, \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} v)
+\begin{DoxyCompactList}\small\item\em 物理ボディの線形速度を設定するコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a05f70b826e98bca19baeb05eac0754eb}{Set\+Angular\+Velocity}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e, \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} w)
+\begin{DoxyCompactList}\small\item\em 物理ボディの角速度を設定するコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_ac8974f346515592b21a9310d317df9ac}{Add\+Force}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e, \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} f, std\+::optional$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} $>$ at=std\+::nullopt)
+\begin{DoxyCompactList}\small\item\em 物理ボディに力を加えるコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_ae0dc44e231b7b5ba1bfb45dc1a5162c0}{Add\+Impulse}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e, \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} p, std\+::optional$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} $>$ at=std\+::nullopt)
+\begin{DoxyCompactList}\small\item\em 物理ボディにインパルスを加えるコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_aa5ebaf86506c7e4e7339731d56984ac9}{Set\+Kinematic\+Target}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e, const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mat34f}{Mat34f}} \&tm)
+\begin{DoxyCompactList}\small\item\em 物理ボディにトルクを加えるコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_ac4ee7c2435fed337172fed5a369cf8fc}{Set\+Collision\+Mask}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e, uint32\+\_\+t mask)
+\begin{DoxyCompactList}\small\item\em 物理ボディの衝突マスクを設定するコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_ab5fa8961b1fdda172933dd596f1e0532}{Set\+Object\+Layer}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e, uint16\+\_\+t layer, uint16\+\_\+t broad)
+\begin{DoxyCompactList}\small\item\em 物理ボディのレイヤーを設定するコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a48ab2e7d94dc234641d1006b5e430ef0}{Ray\+Cast}} (uint32\+\_\+t req\+Id, \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} o, \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} dir, float max\+Dist)
+\begin{DoxyCompactList}\small\item\em レイキャストを実行するコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a26e08304af463bf0da778f9ad2a7544e}{Ray\+Cast}} (const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_ray_cast_cmd}{Ray\+Cast\+Cmd}} \&c)
+\begin{DoxyCompactList}\small\item\em レイキャストを実行するコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_ad287a42a6dd4c4e7cb37d456eafc43f8}{Create\+Character}} (const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_create_character_cmd}{Create\+Character\+Cmd}} \&c)
+\begin{DoxyCompactList}\small\item\em キャラクターを生成するコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_ad43f5aa4141eedeba2e8b63a967d5ff2}{Set\+Character\+Velocity}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e, \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} v)
+\begin{DoxyCompactList}\small\item\em キャラクターの速度を設定するコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a143a054c517fd9871ae9b574a0425ef0}{Set\+Character\+Rotation}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e, const \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a1fdfe70e25b6445560f443d0e054477d}{Quatf}} \&q)
+\begin{DoxyCompactList}\small\item\em キャラクターの回転を設定するコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a15da7a510ca89d3cdd6da093e2159506}{Teleport\+Character}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e, const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mat34f}{Mat34f}} \&tm)
+\begin{DoxyCompactList}\small\item\em キャラクターをテレポートするコマンドをキューに追加する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a19a63d25f486259e0be1977225dec59d}{Destroy\+Character}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e)
+\begin{DoxyCompactList}\small\item\em キャラクターを破棄するコマンドをキューに必ず追加する \end{DoxyCompactList}\item 
+std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_character_pose}{Character\+Pose}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a7e929199b082432ba3b4b64e8c5f9da7}{Read\+Character\+Pose}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e)
+\begin{DoxyCompactList}\small\item\em キャラクターのポーズを取得する \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_af319e17a0fdd2fc05472b8b7ee0b435a}{Pre\+Update}} (double dt) override
+\begin{DoxyCompactList}\small\item\em 物理シミュレーションを更新する（\+IUpdate\+Service 実装） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a5efaea4787c4abb6c2eff16b7a206ca1}{Build\+Pose\+Batch}} (\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_pose_batch_view}{Pose\+Batch\+View}} \&v) const
+\begin{DoxyCompactList}\small\item\em ポーズバッチを構築する（描画フレームで呼ぶ） \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a29863f6c2de54be3ecfc7d281af58053}{Get\+Alpha}} () const
+\begin{DoxyCompactList}\small\item\em 補間に使うための α を取得（描画フレームで使う） \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_snapshot}{Physics\+Snapshot}} \& \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a4f4ec8dc39eb4eba78ca6177fe1e1f83}{Current\+Snapshot}} () const
+\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_snapshot}{Physics\+Snapshot}} \& \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a0f55b3ccced37d0fa038957ad7a8ba08}{Previous\+Snapshot}} () const
+\item 
+std\+::optional$<$ JPH\+::\+Body\+ID $>$ \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_af7beb150f2482a6b210058ced950df22}{Try\+Get\+Body\+ID}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e) const noexcept
+\begin{DoxyCompactList}\small\item\em 生成済み Body\+ID の参照（差し込み用 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_ab48c3babc13f26c862995cd84a06d170}{Enqueue\+Create\+Intent}} (\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}} e, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} h, const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&owner, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_material}{Material}} mat=\{\})
+\begin{DoxyCompactList}\small\item\em 生成インテントをキューに追加する（\+Body 作成要求用 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a88b8571199da3df1ffa25d6323e6f1fd}{Swap\+Create\+Intents}} (\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} id, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_create_intent}{Create\+Intent}} $>$ \&out)
+\begin{DoxyCompactList}\small\item\em 生成インテントを取り出す（\+Body 作成要求用 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_aee38394c0367888c820483899fd62967}{Consume\+Created\+Bodies}} (\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} id, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_created_body}{Created\+Body}} $>$ \&out)
+\begin{DoxyCompactList}\small\item\em 生成済み Body イベントを取り出す \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager}{Physics\+Shape\+Manager}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_a9e70ce936fe505a22469a13d12c831b8}{Get\+Shape\+Manager}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 形状マネージャーの参照を取得する \end{DoxyCompactList}\item 
+std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims}{Shape\+Dims}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service_ac11c62e59d0fee0d072122cdcc3340b5}{Get\+Shape\+Dims}} (\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} h) const
+\begin{DoxyCompactList}\small\item\em 形状の寸法を取得する \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{その他の継承メンバ}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7}{Phase}} \+: uint16\+\_\+t \{ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}} = 0
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7}{NORMAL}} = 1
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9}{LATE}} = 2
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907}{PHASE\+\_\+\+MAX}}
+ \}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608}{Group}} \+: uint16\+\_\+t \{ \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b}{GROUP\+\_\+\+GRAPHICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda}{GROUP\+\_\+\+PHYSICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a}{GROUP\+\_\+\+INPUT}}
+, \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e}{GROUP\+\_\+\+AUDIO}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580}{GROUP\+\_\+\+AI}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90}{GROUP\+\_\+\+MAX}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a73744778bc5cc3113ed77db1b69e1fb1}{update\+Phase}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a9f0e8abd26ab30155b39e558f004ce42}{update\+Group}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a116ce546ab92eaf8f4282719b89a5165}{update\+Order}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+物理サービスを提供するクラス。systemから物理\+Deviceを操作するための\+APIを提供する 
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00023}{23}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a4016b934601a7192d57c6e29f5cf6daa}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!PhysicsService@{PhysicsService}}
+\index{PhysicsService@{PhysicsService}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{PhysicsService()}{PhysicsService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a4016b934601a7192d57c6e29f5cf6daa} 
+SFW\+::\+Physics\+::\+Physics\+Service\+::\+Physics\+Service (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_device}{Physics\+Device}} \&}]{device}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager}{Physics\+Shape\+Manager}} \&}]{shape\+Mgr}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_plan}{Plan}}}]{plan}{ = {\ttfamily \{~1.0f~/~60.0f,~1,~false~\}}, }\item[{size\+\_\+t}]{queue\+Capacity\+Pow2}{ = {\ttfamily 4096}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em device} & 物理デバイス \\
+\hline
+{\em shape\+Mgr} & 形状マネージャー \\
+\hline
+{\em plan} & 物理シミュレーションの計画（固定時間ステップ等） \\
+\hline
+{\em queue\+Capacity\+Pow2} & コマンドキューの容量（2の累乗、デフォルトは4096） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00059}{59}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_ac8974f346515592b21a9310d317df9ac}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!AddForce@{AddForce}}
+\index{AddForce@{AddForce}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{AddForce()}{AddForce()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_ac8974f346515592b21a9310d317df9ac} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Add\+Force (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}}]{f}{, }\item[{std\+::optional$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} $>$}]{at}{ = {\ttfamily std\+:\+:nullopt}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+物理ボディに力を加えるコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & 力を加えるエンティティ \\
+\hline
+{\em f} & 加える力（\+Vec3f） \\
+\hline
+{\em at} & 力を加える位置（ワールド座標、デフォルトはボディ中心） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00214}{214}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_ae0dc44e231b7b5ba1bfb45dc1a5162c0}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!AddImpulse@{AddImpulse}}
+\index{AddImpulse@{AddImpulse}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{AddImpulse()}{AddImpulse()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_ae0dc44e231b7b5ba1bfb45dc1a5162c0} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Add\+Impulse (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}}]{p}{, }\item[{std\+::optional$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} $>$}]{at}{ = {\ttfamily std\+:\+:nullopt}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+物理ボディにインパルスを加えるコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & インパルスを加えるエンティティ \\
+\hline
+{\em p} & 加えるインパルス（\+Vec3f） \\
+\hline
+{\em at} & インパルスを加える位置（ワールド座標、デフォルトはボディ中心） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00225}{225}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a5efaea4787c4abb6c2eff16b7a206ca1}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!BuildPoseBatch@{BuildPoseBatch}}
+\index{BuildPoseBatch@{BuildPoseBatch}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{BuildPoseBatch()}{BuildPoseBatch()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a5efaea4787c4abb6c2eff16b7a206ca1} 
+void SFW\+::\+Physics\+::\+Physics\+Service\+::\+Build\+Pose\+Batch (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_pose_batch_view}{Pose\+Batch\+View}} \&}]{v}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ポーズバッチを構築する（描画フレームで呼ぶ） 
+
+
+\begin{DoxyParams}{引数}
+{\em v} & ポーズバッチビューの参照 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00336}{336}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_aee38394c0367888c820483899fd62967}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!ConsumeCreatedBodies@{ConsumeCreatedBodies}}
+\index{ConsumeCreatedBodies@{ConsumeCreatedBodies}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{ConsumeCreatedBodies()}{ConsumeCreatedBodies()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_aee38394c0367888c820483899fd62967} 
+void SFW\+::\+Physics\+::\+Physics\+Service\+::\+Consume\+Created\+Bodies (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}}}]{id}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_created_body}{Created\+Body}} $>$ \&}]{out}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+生成済み Body イベントを取り出す 
+
+
+\begin{DoxyParams}{引数}
+{\em out} & 取り出し先のベクター \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00396}{396}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_acd73ffaf40fef1103ec1129bc3f87279}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!CreateBody@{CreateBody}}
+\index{CreateBody@{CreateBody}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{CreateBody()}{CreateBody()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_acd73ffaf40fef1103ec1129bc3f87279} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Create\+Body (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_create_body_cmd}{Create\+Body\+Cmd}} \&}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+物理ボディを作成するコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em c} & 作成コマンド \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00183}{183}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_ad287a42a6dd4c4e7cb37d456eafc43f8}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!CreateCharacter@{CreateCharacter}}
+\index{CreateCharacter@{CreateCharacter}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{CreateCharacter()}{CreateCharacter()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_ad287a42a6dd4c4e7cb37d456eafc43f8} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Create\+Character (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_create_character_cmd}{Create\+Character\+Cmd}} \&}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+キャラクターを生成するコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em c} & キャラクター生成コマンド \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00270}{270}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a4f4ec8dc39eb4eba78ca6177fe1e1f83}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!CurrentSnapshot@{CurrentSnapshot}}
+\index{CurrentSnapshot@{CurrentSnapshot}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{CurrentSnapshot()}{CurrentSnapshot()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a4f4ec8dc39eb4eba78ca6177fe1e1f83} 
+const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_snapshot}{Physics\+Snapshot}} \& SFW\+::\+Physics\+::\+Physics\+Service\+::\+Current\+Snapshot (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00348}{348}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a716fa33012dd2db8dd787bf9d87123a3}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!DestroyBody@{DestroyBody}}
+\index{DestroyBody@{DestroyBody}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{DestroyBody()}{DestroyBody()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a716fa33012dd2db8dd787bf9d87123a3} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Destroy\+Body (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+物理ボディを破棄するコマンドをキューに必ず追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & 破棄するエンティティ \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00188}{188}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a19a63d25f486259e0be1977225dec59d}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!DestroyCharacter@{DestroyCharacter}}
+\index{DestroyCharacter@{DestroyCharacter}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{DestroyCharacter()}{DestroyCharacter()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a19a63d25f486259e0be1977225dec59d} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Destroy\+Character (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+キャラクターを破棄するコマンドをキューに必ず追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & 対象のエンティティ \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00301}{301}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_ab48c3babc13f26c862995cd84a06d170}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!EnqueueCreateIntent@{EnqueueCreateIntent}}
+\index{EnqueueCreateIntent@{EnqueueCreateIntent}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{EnqueueCreateIntent()}{EnqueueCreateIntent()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_ab48c3babc13f26c862995cd84a06d170} 
+void SFW\+::\+Physics\+::\+Physics\+Service\+::\+Enqueue\+Create\+Intent (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}}}]{h}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&}]{owner}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_material}{Material}}}]{mat}{ = {\ttfamily \{\}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+生成インテントをキューに追加する（\+Body 作成要求用 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & 対象のエンティティ \\
+\hline
+{\em h} & 形状ハンドル \\
+\hline
+{\em owner} & 所有チャンクキー \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00365}{365}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a29863f6c2de54be3ecfc7d281af58053}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!GetAlpha@{GetAlpha}}
+\index{GetAlpha@{GetAlpha}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{GetAlpha()}{GetAlpha()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a29863f6c2de54be3ecfc7d281af58053} 
+float SFW\+::\+Physics\+::\+Physics\+Service\+::\+Get\+Alpha (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+補間に使うための α を取得（描画フレームで使う） 
+
+\begin{DoxyReturn}{戻り値}
+float 補間係数 α (0.\+0 〜 1.\+0) 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00343}{343}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_ac11c62e59d0fee0d072122cdcc3340b5}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!GetShapeDims@{GetShapeDims}}
+\index{GetShapeDims@{GetShapeDims}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{GetShapeDims()}{GetShapeDims()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_ac11c62e59d0fee0d072122cdcc3340b5} 
+std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims}{Shape\+Dims}} $>$ SFW\+::\+Physics\+::\+Physics\+Service\+::\+Get\+Shape\+Dims (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}}}]{h}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+形状の寸法を取得する 
+
+
+\begin{DoxyParams}{引数}
+{\em h} & 形状ハンドル \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+std\+::optional$<$\+Shape\+Dims$>$ 形状の寸法（存在しない場合は std\+::nullopt 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00412}{412}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a9e70ce936fe505a22469a13d12c831b8}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!GetShapeManager@{GetShapeManager}}
+\index{GetShapeManager@{GetShapeManager}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{GetShapeManager()}{GetShapeManager()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a9e70ce936fe505a22469a13d12c831b8} 
+const \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager}{Physics\+Shape\+Manager}} \texorpdfstring{$\ast$}{*} SFW\+::\+Physics\+::\+Physics\+Service\+::\+Get\+Shape\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+形状マネージャーの参照を取得する 
+
+\begin{DoxyReturn}{戻り値}
+const Physics\+Shape\+Manager\texorpdfstring{$\ast$}{*} 形状マネージャーの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00406}{406}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a46433923c9ab77fe7892134274940026}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!MakeBox@{MakeBox}}
+\index{MakeBox@{MakeBox}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{MakeBox()}{MakeBox()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a46433923c9ab77fe7892134274940026} 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} SFW\+::\+Physics\+::\+Physics\+Service\+::\+Make\+Box (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}}]{he}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}}}]{s}{ = {\ttfamily \{~\{1,1,1\}~\}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+Box 形状を生成する 
+
+
+\begin{DoxyParams}{引数}
+{\em he} & ボックスサイズの半分の長さ（\+Vec3f） \\
+\hline
+{\em s} & スケール（デフォルトは \{1,1,1\}） \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle} 生成されたボックス形状のハンドル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00078}{78}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a0918d0eafefe67b55a974c3e3032dd34}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!MakeCapsule@{MakeCapsule}}
+\index{MakeCapsule@{MakeCapsule}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{MakeCapsule()}{MakeCapsule()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a0918d0eafefe67b55a974c3e3032dd34} 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} SFW\+::\+Physics\+::\+Physics\+Service\+::\+Make\+Capsule (\begin{DoxyParamCaption}\item[{float}]{half\+Height}{, }\item[{float}]{radius}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}}}]{s}{ = {\ttfamily \{~\{1,1,1\}~\}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+カプセル形状を生成する 
+
+
+\begin{DoxyParams}{引数}
+{\em half\+Height} & 半分の高さ \\
+\hline
+{\em radius} & 球の半径 \\
+\hline
+{\em s} & スケール（デフォルトは \{1,1,1\}） \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle} 生成された球形状のハンドル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00097}{97}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_aebabbbc7fcf26f8983b7b6afd403da6c}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!MakeConvex@{MakeConvex}}
+\index{MakeConvex@{MakeConvex}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{MakeConvex()}{MakeConvex()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_aebabbbc7fcf26f8983b7b6afd403da6c} 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} SFW\+::\+Physics\+::\+Physics\+Service\+::\+Make\+Convex (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} $>$ \&}]{pts}{, }\item[{const std\+::vector$<$ uint32\+\_\+t $>$ \&}]{idx}{, }\item[{float}]{r}{ = {\ttfamily 0.05f}, }\item[{float}]{tol}{ = {\ttfamily 0.005f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+凸形状を生成する 
+
+
+\begin{DoxyParams}{引数}
+{\em pts} & 凸形状を作成する頂点群 \\
+\hline
+{\em idx} & 頂点インデックス群 \\
+\hline
+{\em s} & スケール（デフォルトは \{1,1,1\}） \\
+\hline
+{\em r} & シュリンク半径（デフォルトは 0.\+05f） \\
+\hline
+{\em tol} & 許容誤差（デフォルトは 0.\+005f） \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle} 生成されたカプセル形状のハンドル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00133}{133}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_aec4d164a2b201f7626f6e91e24357686}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!MakeConvexCompound@{MakeConvexCompound}}
+\index{MakeConvexCompound@{MakeConvexCompound}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{MakeConvexCompound()}{MakeConvexCompound()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_aec4d164a2b201f7626f6e91e24357686} 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} SFW\+::\+Physics\+::\+Physics\+Service\+::\+Make\+Convex\+Compound (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path}{, }\item[{bool}]{rh\+Flip}{ = {\ttfamily false}, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}}}]{s}{ = {\ttfamily \{~\{1,1,1\}~\}}, }\item[{float}]{r}{ = {\ttfamily 0.05f}, }\item[{float}]{tol}{ = {\ttfamily 0.005f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+VHACD バイナリファイルから凸形状群を読み込み、\+Static\+Compound\+Shape を生成する 
+
+
+\begin{DoxyParams}{引数}
+{\em path} & 凸形状バイナリファイルのパス \\
+\hline
+{\em rh\+Flip} & 右手系変換が必要なら true \\
+\hline
+{\em s} & スケール（デフォルトは \{1,1,1\}） \\
+\hline
+{\em r} & シュリンク半径（デフォルトは 0.\+05f） \\
+\hline
+{\em tol} & 許容誤差（デフォルトは 0.\+005f） \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle} 生成された Static\+Compound\+Shape 形状のハンドル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00159}{159}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_ad9f0d3fd79bff442fe6ebc8f98fda052}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!MakeConvexCompound@{MakeConvexCompound}}
+\index{MakeConvexCompound@{MakeConvexCompound}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{MakeConvexCompound()}{MakeConvexCompound()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_ad9f0d3fd79bff442fe6ebc8f98fda052} 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} SFW\+::\+Physics\+::\+Physics\+Service\+::\+Make\+Convex\+Compound (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_v_h_a_c_d_hull}{VHACDHull}} $>$ \&}]{hulls}{, }\item[{bool}]{rh\+Flip}{ = {\ttfamily false}, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}}}]{s}{ = {\ttfamily \{~\{1,1,1\}~\}}, }\item[{float}]{r}{ = {\ttfamily 0.05f}, }\item[{float}]{tol}{ = {\ttfamily 0.005f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+凸形状群から Static\+Compound\+Shape を生成する 
+
+
+\begin{DoxyParams}{引数}
+{\em hulls} & 凸形状群 \\
+\hline
+{\em rh\+Flip} & 右手系変換が必要なら true \\
+\hline
+{\em s} & スケール（デフォルトは \{1,1,1\}） \\
+\hline
+{\em r} & シュリンク半径（デフォルトは 0.\+05f） \\
+\hline
+{\em tol} & 許容誤差（デフォルトは 0.\+005f） \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle} 生成された Static\+Compound\+Shape 形状のハンドル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00146}{146}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a53529fe945e59e8855b26101ecb4a4d4}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!MakeMesh@{MakeMesh}}
+\index{MakeMesh@{MakeMesh}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{MakeMesh()}{MakeMesh()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a53529fe945e59e8855b26101ecb4a4d4} 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} SFW\+::\+Physics\+::\+Physics\+Service\+::\+Make\+Mesh (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path}{, }\item[{bool}]{rh\+Flip}{ = {\ttfamily false}, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}}}]{s}{ = {\ttfamily \{~\{1,1,1\}~\}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+メッシュ形状を生成する（ファイル読み込み版） 
+
+
+\begin{DoxyParams}{引数}
+{\em path} & メッシュファイルのパス \\
+\hline
+{\em rh\+Flip} & 右手系変換が必要なら true \\
+\hline
+{\em s} & スケール（デフォルトは \{1,1,1\}） \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle} 生成されたメッシュ形状のハンドル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00120}{120}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_af65cb7e071e1febd6c1364287d0c529e}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!MakeMesh@{MakeMesh}}
+\index{MakeMesh@{MakeMesh}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{MakeMesh()}{MakeMesh()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_af65cb7e071e1febd6c1364287d0c529e} 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} SFW\+::\+Physics\+::\+Physics\+Service\+::\+Make\+Mesh (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} $>$ \&}]{vertex}{, }\item[{const std\+::vector$<$ uint32\+\_\+t $>$ \&}]{indices}{, }\item[{bool}]{rh\+Flip}{ = {\ttfamily false}, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}}}]{s}{ = {\ttfamily \{~\{1,1,1\}~\}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+メッシュ形状を生成する 
+
+
+\begin{DoxyParams}{引数}
+{\em vertex} & 頂点群 \\
+\hline
+{\em indices} & 頂点インデックス群 \\
+\hline
+{\em s} & スケール（デフォルトは \{1,1,1\}） \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle} 生成されたメッシュ形状のハンドル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00109}{109}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a5bc68ae5001e47b8b5ae93d407e41573}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!MakeShape@{MakeShape}}
+\index{MakeShape@{MakeShape}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{MakeShape()}{MakeShape()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a5bc68ae5001e47b8b5ae93d407e41573} 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} SFW\+::\+Physics\+::\+Physics\+Service\+::\+Make\+Shape (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc}{Shape\+Create\+Desc}} \&}]{desc}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+指定した形状を生成する 
+
+
+\begin{DoxyParams}{引数}
+{\em desc} & 形状生成記述子 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle} 生成された形状のハンドル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00069}{69}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_ab11f7b7d9e04eb95553b688acc6ea3d4}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!MakeSphere@{MakeSphere}}
+\index{MakeSphere@{MakeSphere}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{MakeSphere()}{MakeSphere()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_ab11f7b7d9e04eb95553b688acc6ea3d4} 
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}} SFW\+::\+Physics\+::\+Physics\+Service\+::\+Make\+Sphere (\begin{DoxyParamCaption}\item[{float}]{radius}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}}}]{s}{ = {\ttfamily \{~\{1,1,1\}~\}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+球形状を生成する 
+
+
+\begin{DoxyParams}{引数}
+{\em radius} & 球の半径 \\
+\hline
+{\em s} & スケール（デフォルトは \{1,1,1\}） \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle} 生成された球形状のハンドル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00087}{87}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_af319e17a0fdd2fc05472b8b7ee0b435a}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!PreUpdate@{PreUpdate}}
+\index{PreUpdate@{PreUpdate}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{PreUpdate()}{PreUpdate()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_af319e17a0fdd2fc05472b8b7ee0b435a} 
+void SFW\+::\+Physics\+::\+Physics\+Service\+::\+Pre\+Update (\begin{DoxyParamCaption}\item[{double}]{dt}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+物理シミュレーションを更新する（\+IUpdate\+Service 実装） 
+
+
+\begin{DoxyParams}{引数}
+{\em dt} & 可変フレーム時間（ゲームループから呼ぶ） \\
+\hline
+\end{DoxyParams}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}}を実装しています。
+
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00317}{317}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a0f55b3ccced37d0fa038957ad7a8ba08}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!PreviousSnapshot@{PreviousSnapshot}}
+\index{PreviousSnapshot@{PreviousSnapshot}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{PreviousSnapshot()}{PreviousSnapshot()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a0f55b3ccced37d0fa038957ad7a8ba08} 
+const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_snapshot}{Physics\+Snapshot}} \& SFW\+::\+Physics\+::\+Physics\+Service\+::\+Previous\+Snapshot (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00349}{349}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a26e08304af463bf0da778f9ad2a7544e}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!RayCast@{RayCast}}
+\index{RayCast@{RayCast}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{RayCast()}{RayCast()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a26e08304af463bf0da778f9ad2a7544e} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Ray\+Cast (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_ray_cast_cmd}{Ray\+Cast\+Cmd}} \&}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+レイキャストを実行するコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em c} & レイキャストコマンド \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00262}{262}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a48ab2e7d94dc234641d1006b5e430ef0}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!RayCast@{RayCast}}
+\index{RayCast@{RayCast}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{RayCast()}{RayCast()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a48ab2e7d94dc234641d1006b5e430ef0} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Ray\+Cast (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{req\+Id}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}}]{o}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}}]{dir}{, }\item[{float}]{max\+Dist}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+レイキャストを実行するコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em req\+Id} & リクエスト\+ID（応答時に返される） \\
+\hline
+{\em o} & 開始位置（\+Vec3f） \\
+\hline
+{\em dir} & 方向ベクトル（正規化されていること、\+Vec3f） \\
+\hline
+{\em max\+Dist} & 最大距離 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00256}{256}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a7e929199b082432ba3b4b64e8c5f9da7}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!ReadCharacterPose@{ReadCharacterPose}}
+\index{ReadCharacterPose@{ReadCharacterPose}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{ReadCharacterPose()}{ReadCharacterPose()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a7e929199b082432ba3b4b64e8c5f9da7} 
+std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_character_pose}{Character\+Pose}} $>$ SFW\+::\+Physics\+::\+Physics\+Service\+::\+Read\+Character\+Pose (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+キャラクターのポーズを取得する 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & 対象のエンティティ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+std\+::optional$<$\+Character\+Pose$>$ キャラクターポーズ（存在しない場合は std\+::nullopt） 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00309}{309}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_aff6de318c36e37a38fb05524f4f742c9}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!ReleaseShape@{ReleaseShape}}
+\index{ReleaseShape@{ReleaseShape}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{ReleaseShape()}{ReleaseShape()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_aff6de318c36e37a38fb05524f4f742c9} 
+void SFW\+::\+Physics\+::\+Physics\+Service\+::\+Release\+Shape (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{Shape\+Handle}}}]{h}{, }\item[{uint64\+\_\+t}]{sync}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+形状を解放する 
+
+
+\begin{DoxyParams}{引数}
+{\em h} & 解放する形状のハンドル \\
+\hline
+{\em sync} & 同期用のシグナル（デフォルトは0、未使用 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00176}{176}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a05f70b826e98bca19baeb05eac0754eb}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!SetAngularVelocity@{SetAngularVelocity}}
+\index{SetAngularVelocity@{SetAngularVelocity}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{SetAngularVelocity()}{SetAngularVelocity()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a05f70b826e98bca19baeb05eac0754eb} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Set\+Angular\+Velocity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}}]{w}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+物理ボディの角速度を設定するコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & 設定するエンティティ \\
+\hline
+{\em w} & 設定する角速度（\+Vec3f） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00207}{207}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a143a054c517fd9871ae9b574a0425ef0}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!SetCharacterRotation@{SetCharacterRotation}}
+\index{SetCharacterRotation@{SetCharacterRotation}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{SetCharacterRotation()}{SetCharacterRotation()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a143a054c517fd9871ae9b574a0425ef0} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Set\+Character\+Rotation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a1fdfe70e25b6445560f443d0e054477d}{Quatf}} \&}]{q}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+キャラクターの回転を設定するコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & 対象のエンティティ \\
+\hline
+{\em q} & 設定する回転（\+Quatf） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00286}{286}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_ad43f5aa4141eedeba2e8b63a967d5ff2}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!SetCharacterVelocity@{SetCharacterVelocity}}
+\index{SetCharacterVelocity@{SetCharacterVelocity}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{SetCharacterVelocity()}{SetCharacterVelocity()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_ad43f5aa4141eedeba2e8b63a967d5ff2} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Set\+Character\+Velocity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+キャラクターの速度を設定するコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & 対象のエンティティ \\
+\hline
+{\em v} & 設定する速度（\+Vec3f） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00278}{278}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_ac4ee7c2435fed337172fed5a369cf8fc}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!SetCollisionMask@{SetCollisionMask}}
+\index{SetCollisionMask@{SetCollisionMask}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{SetCollisionMask()}{SetCollisionMask()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_ac4ee7c2435fed337172fed5a369cf8fc} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Set\+Collision\+Mask (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{, }\item[{uint32\+\_\+t}]{mask}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+物理ボディの衝突マスクを設定するコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & 設定するエンティティ \\
+\hline
+{\em mask} & 設定する衝突マスク \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00241}{241}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_aa5ebaf86506c7e4e7339731d56984ac9}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!SetKinematicTarget@{SetKinematicTarget}}
+\index{SetKinematicTarget@{SetKinematicTarget}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{SetKinematicTarget()}{SetKinematicTarget()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_aa5ebaf86506c7e4e7339731d56984ac9} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Set\+Kinematic\+Target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mat34f}{Mat34f}} \&}]{tm}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+物理ボディにトルクを加えるコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & トルクを加えるエンティティ \\
+\hline
+{\em tm} & 加えるトルク（\+Vec3f） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00235}{235}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a2554438f5a1b77bfd617ce53cd95d74d}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!SetLinearVelocity@{SetLinearVelocity}}
+\index{SetLinearVelocity@{SetLinearVelocity}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{SetLinearVelocity()}{SetLinearVelocity()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a2554438f5a1b77bfd617ce53cd95d74d} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Set\+Linear\+Velocity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+物理ボディの線形速度を設定するコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & 設定するエンティティ \\
+\hline
+{\em v} & 設定する線形速度（\+Vec3f） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00201}{201}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_ab5fa8961b1fdda172933dd596f1e0532}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!SetObjectLayer@{SetObjectLayer}}
+\index{SetObjectLayer@{SetObjectLayer}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{SetObjectLayer()}{SetObjectLayer()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_ab5fa8961b1fdda172933dd596f1e0532} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Set\+Object\+Layer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{, }\item[{uint16\+\_\+t}]{layer}{, }\item[{uint16\+\_\+t}]{broad}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+物理ボディのレイヤーを設定するコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & 設定するエンティティ \\
+\hline
+{\em layer} & レイヤー \\
+\hline
+{\em broad} & ブロードフェーズレイヤー \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00248}{248}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a88b8571199da3df1ffa25d6323e6f1fd}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!SwapCreateIntents@{SwapCreateIntents}}
+\index{SwapCreateIntents@{SwapCreateIntents}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{SwapCreateIntents()}{SwapCreateIntents()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a88b8571199da3df1ffa25d6323e6f1fd} 
+void SFW\+::\+Physics\+::\+Physics\+Service\+::\+Swap\+Create\+Intents (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}}}]{id}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_create_intent}{Create\+Intent}} $>$ \&}]{out}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+生成インテントを取り出す（\+Body 作成要求用 
+
+
+\begin{DoxyParams}{引数}
+{\em out} & 取り出し先のベクター \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00373}{373}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a2d4edf2123e841370f0f90b716ae3b89}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!Teleport@{Teleport}}
+\index{Teleport@{Teleport}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{Teleport()}{Teleport()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a2d4edf2123e841370f0f90b716ae3b89} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Teleport (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mat34f}{Mat34f}} \&}]{tm}{, }\item[{bool}]{wake}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+物理ボディをテレポートするコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & テレポートするエンティティ \\
+\hline
+{\em tm} & テレポート先の変換行列 \\
+\hline
+{\em wake} & テレポート後に起こすかどうか（デフォルトは true） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00195}{195}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_a15da7a510ca89d3cdd6da093e2159506}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!TeleportCharacter@{TeleportCharacter}}
+\index{TeleportCharacter@{TeleportCharacter}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{TeleportCharacter()}{TeleportCharacter()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_a15da7a510ca89d3cdd6da093e2159506} 
+bool SFW\+::\+Physics\+::\+Physics\+Service\+::\+Teleport\+Character (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mat34f}{Mat34f}} \&}]{tm}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+キャラクターをテレポートするコマンドをキューに追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & 対象のエンティティ \\
+\hline
+{\em tm} & テレポート先の変換行列 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00294}{294}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_service_af7beb150f2482a6b210058ced950df22}\index{SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}!TryGetBodyID@{TryGetBodyID}}
+\index{TryGetBodyID@{TryGetBodyID}!SFW::Physics::PhysicsService@{SFW::Physics::PhysicsService}}
+\doxysubsubsection{\texorpdfstring{TryGetBodyID()}{TryGetBodyID()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_service_af7beb150f2482a6b210058ced950df22} 
+std\+::optional$<$ JPH\+::\+Body\+ID $>$ SFW\+::\+Physics\+::\+Physics\+Service\+::\+Try\+Get\+Body\+ID (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity}}}]{e}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+生成済み Body\+ID の参照（差し込み用 
+
+
+\begin{DoxyParams}{引数}
+{\em e} & エンティティ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+std\+::optional$<$\+JPH\+::\+Body\+ID$>$ 生成済み Body\+ID（存在しない場合は std\+::nullopt 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} の \mbox{\hyperlink{_physics_service_8h_source_l00356}{356}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Physics/\mbox{\hyperlink{_physics_service_8h}{Physics\+Service.\+h}}\end{DoxyCompactItemize}

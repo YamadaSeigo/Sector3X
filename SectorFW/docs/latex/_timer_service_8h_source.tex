@@ -1,0 +1,55 @@
+\doxysection{Timer\+Service.\+h}
+\hypertarget{_timer_service_8h_source}{}\label{_timer_service_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/TimerService.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/TimerService.h}}
+\mbox{\hyperlink{_timer_service_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_service_context_8hpp}{ECS/ServiceContext.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00012}00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00013}00013\ \{}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00014}\mbox{\hyperlink{class_s_f_w_1_1_timer_service}{00014}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_timer_service}{TimerService}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{ECS::IUpdateService}}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00015}00015\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00016}00016\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00017}\mbox{\hyperlink{class_s_f_w_1_1_timer_service_a9ed4d88f310acf1ce46ede8d939c34f7}{00017}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_timer_service_a9ed4d88f310acf1ce46ede8d939c34f7}{PreUpdate}}(\textcolor{keywordtype}{double}\ rawDtSeconds)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ m\_rawDeltaTime\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(rawDtSeconds);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 実時間\ dt（スローモーションなし）}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ スローモーション\ /\ ポーズを反映}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ scale\ =\ m\_isPaused\ ?\ 0.0f\ :\ m\_timeScale;}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ m\_scaledDeltaTime\ =\ m\_rawDeltaTime\ *\ scale;}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ m\_unscaledTotalTime\ +=\ m\_rawDeltaTime;\ \ \textcolor{comment}{//\ 実時間の累積}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ m\_scaledTotalTime\ +=\ m\_scaledDeltaTime;\ \textcolor{comment}{//\ ゲーム内時間の累積}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ getter\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ スローモーション反映済み（ゲームロジック用）}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00030}\mbox{\hyperlink{class_s_f_w_1_1_timer_service_aff57bcd46278a6d6f50c37d173573152}{00030}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_f_w_1_1_timer_service_aff57bcd46278a6d6f50c37d173573152}{GetDeltaTime}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_scaledDeltaTime;\ \}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ スローモーション無視（UIのアニメ、カメラシェイク等用）}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00033}\mbox{\hyperlink{class_s_f_w_1_1_timer_service_adf1d8af530afb18d23e706de02356766}{00033}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_f_w_1_1_timer_service_adf1d8af530afb18d23e706de02356766}{GetUnscaledDeltaTime}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_rawDeltaTime;\ \}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00035}\mbox{\hyperlink{class_s_f_w_1_1_timer_service_aacbbe7e749853bb823993c215ad7d5b6}{00035}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_f_w_1_1_timer_service_aacbbe7e749853bb823993c215ad7d5b6}{GetTimeScale}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_timeScale;\ \}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00036}\mbox{\hyperlink{class_s_f_w_1_1_timer_service_a995d15ce5723f852c6d0b41990cb1ac4}{00036}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \ \mbox{\hyperlink{class_s_f_w_1_1_timer_service_a995d15ce5723f852c6d0b41990cb1ac4}{SetTimeScale}}(\textcolor{keywordtype}{float}\ s)\ \{\ m\_timeScale\ =\ s;\ \}\ \ \ \textcolor{comment}{//\ 0.1f\ なら\ 1/10\ スロー}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00037}\mbox{\hyperlink{class_s_f_w_1_1_timer_service_acf3e918c332d017f1e13eb60bac3a6f1}{00037}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \ \mbox{\hyperlink{class_s_f_w_1_1_timer_service_acf3e918c332d017f1e13eb60bac3a6f1}{SetPaused}}(\textcolor{keywordtype}{bool}\ p)\ \{\ m\_isPaused\ =\ p;\ \}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00039}\mbox{\hyperlink{class_s_f_w_1_1_timer_service_a9ab864024c20604c8a7daf52ee2f07db}{00039}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_f_w_1_1_timer_service_a9ab864024c20604c8a7daf52ee2f07db}{GetGameTime}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_scaledTotalTime;\ \}\ \ \ \textcolor{comment}{//\ スローモーションを含むゲーム時間}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00040}\mbox{\hyperlink{class_s_f_w_1_1_timer_service_ade15828fa8026ce306b294fff66df0b4}{00040}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_f_w_1_1_timer_service_ade15828fa8026ce306b294fff66df0b4}{GetRealTime}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_unscaledTotalTime;\ \}\ \textcolor{comment}{//\ 実際に経過した時間}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00042}00042\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_rawDeltaTime\ =\ 0.0f;\ \textcolor{comment}{//\ 生\ dt}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_scaledDeltaTime\ =\ 0.0f;\ \textcolor{comment}{//\ スケール後\ dt}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_timeScale\ =\ 1.0f;\ \textcolor{comment}{//\ 0.1f\ =\ スローモーション}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ m\_isPaused\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_unscaledTotalTime\ =\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_scaledTotalTime\ =\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00051}00051\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_service_context_8hpp_adbfb2947c9a06b367226fe228627154c}{STATIC\_SERVICE\_TAG}}}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00053}00053\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_timer_service_8h_source_l00054}00054\ \}}
+
+\end{DoxyCode}

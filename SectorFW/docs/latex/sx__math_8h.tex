@@ -1,0 +1,112 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Math/sx\+\_\+math.h ファイル}
+\hypertarget{sx__math_8h}{}\label{sx__math_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/sx\_math.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/sx\_math.h}}
+
+
+数学関数と定数を提供するヘッダーファイル  
+
+
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$bit$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_math}{SFW\+::\+Math}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_math_1_1_arithmetic}{SFW\+::\+Math\+::\+Arithmetic}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_math_1_1_unsigned_int}{SFW\+::\+Math\+::\+Unsigned\+Int}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$Arithmetic T, class R = std\+::conditional\+\_\+t$<$std\+::is\+\_\+integral\+\_\+v$<$\+T$>$, double, T$>$$>$ }\\constexpr R \mbox{\hyperlink{namespace_s_f_w_1_1_math_ac2884a43b39f0fbf516983950f3c613b}{SFW\+::\+Math\+::deg2rad}} (T deg) noexcept
+\item 
+{\footnotesize template$<$Arithmetic T, class R = std\+::conditional\+\_\+t$<$std\+::is\+\_\+integral\+\_\+v$<$\+T$>$, double, T$>$$>$ }\\constexpr R \mbox{\hyperlink{namespace_s_f_w_1_1_math_a60ca2ea01e84e32793d1476e337f38a3}{SFW\+::\+Math\+::rad2deg}} (T rad) noexcept
+\item 
+{\footnotesize template$<$Arithmetic T$>$ }\\constexpr bool \mbox{\hyperlink{namespace_s_f_w_1_1_math_a68c517a6d496926dcab807159f3eba9a}{SFW\+::\+Math\+::is\+\_\+finite}} (T x) noexcept
+\item 
+{\footnotesize template$<$Arithmetic T, class R = std\+::conditional\+\_\+t$<$std\+::is\+\_\+integral\+\_\+v$<$\+T$>$, double, T$>$$>$ }\\constexpr bool \mbox{\hyperlink{namespace_s_f_w_1_1_math_af9e7154689bb37d5a41eb9719b577e36}{SFW\+::\+Math\+::approx\+\_\+equal}} (T a, T b, R rel\+\_\+tol=R(1e-\/6), R abs\+\_\+tol=R(0)) noexcept
+\item 
+{\footnotesize template$<$Arithmetic T$>$ }\\constexpr T \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6da573157f3c186ebd2979ad7ec3da2f}{SFW\+::\+Math\+::clamp}} (T x, T lo, T hi) noexcept
+\item 
+{\footnotesize template$<$Arithmetic T$>$ }\\constexpr T \mbox{\hyperlink{namespace_s_f_w_1_1_math_ac0685ec91e2cf95f7e80f565798bc8fc}{SFW\+::\+Math\+::clamp01}} (T x) noexcept
+\item 
+{\footnotesize template$<$Arithmetic T$>$ }\\constexpr T \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5ff11ef932c9d6a411a6bf4c5facbada}{SFW\+::\+Math\+::saturate}} (T x) noexcept
+\item 
+{\footnotesize template$<$Arithmetic A, Arithmetic B, Arithmetic U$>$ }\\constexpr auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_aee67464c8d047a0a7ce050fbe60e583e}{SFW\+::\+Math\+::lerp}} (A a, B b, U t) noexcept
+\item 
+{\footnotesize template$<$Arithmetic A, Arithmetic B, Arithmetic U$>$ }\\constexpr auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_aef029c5a2d8331e1a6de2fa526fc2f15}{SFW\+::\+Math\+::lerp\+\_\+clamped}} (A a, B b, U t) noexcept
+\item 
+{\footnotesize template$<$Arithmetic A, Arithmetic B, Arithmetic X$>$ }\\constexpr auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4b5edcef2023bf1b1869596453fe1a1b}{SFW\+::\+Math\+::inverse\+\_\+lerp}} (A a, B b, X x) noexcept
+\item 
+{\footnotesize template$<$Arithmetic X, Arithmetic A, Arithmetic B, Arithmetic C, Arithmetic D$>$ }\\constexpr auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5280d7836d045724131976b7315270f0}{SFW\+::\+Math\+::remap}} (X x, A in0, B in1, C out0, D out1) noexcept
+\item 
+{\footnotesize template$<$Arithmetic X, Arithmetic A, Arithmetic B$>$ }\\constexpr auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_aeb1f6697f3acf28f55a98d1b4f982866}{SFW\+::\+Math\+::remap01}} (X x, A in0, B in1) noexcept
+\item 
+{\footnotesize template$<$Arithmetic E, Arithmetic X$>$ }\\constexpr auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_a0d4c404e27ed746cbfcf90079d4665de}{SFW\+::\+Math\+::step}} (E edge, X x) noexcept
+\item 
+{\footnotesize template$<$Arithmetic E0, Arithmetic E1, Arithmetic X$>$ }\\constexpr auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_a60b65ad8124f4271f3d9eb83f616ef3d}{SFW\+::\+Math\+::smoothstep}} (E0 e0, E1 e1, X x) noexcept
+\item 
+{\footnotesize template$<$Arithmetic E0, Arithmetic E1, Arithmetic X$>$ }\\constexpr auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_a73a597f555ce07332220385e2597b38a}{SFW\+::\+Math\+::smootherstep}} (E0 e0, E1 e1, X x) noexcept
+\item 
+{\footnotesize template$<$Arithmetic X, Arithmetic A, Arithmetic B$>$ }\\constexpr auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_a9320eda62af49b8ec164cd6bbe771e4f}{SFW\+::\+Math\+::wrap}} (X x, A lo, B hi) noexcept
+\item 
+{\footnotesize template$<$Arithmetic X$>$ }\\constexpr auto \mbox{\hyperlink{namespace_s_f_w_1_1_math_aa9524f783eda489919dcfae71133e00e}{SFW\+::\+Math\+::wrap01}} (X x) noexcept
+\item 
+{\footnotesize template$<$std\+::floating\+\_\+point T$>$ }\\constexpr T \mbox{\hyperlink{namespace_s_f_w_1_1_math_af57aebe73c0bdb08d36b68fa17e02fd5}{SFW\+::\+Math\+::wrap\+\_\+angle\+\_\+pi}} (T a) noexcept
+\item 
+{\footnotesize template$<$std\+::floating\+\_\+point T$>$ }\\constexpr T \mbox{\hyperlink{namespace_s_f_w_1_1_math_ae0e21ca4096dfbb464e856319e128bdf}{SFW\+::\+Math\+::shortest\+\_\+angle\+\_\+delta}} (T from, T to) noexcept
+\item 
+{\footnotesize template$<$Arithmetic T$>$ }\\constexpr int \mbox{\hyperlink{namespace_s_f_w_1_1_math_aaa6ead6c3194e314cdd7156616f70892}{SFW\+::\+Math\+::sign}} (T x) noexcept
+\item 
+{\footnotesize template$<$Arithmetic T$>$ }\\constexpr T \mbox{\hyperlink{namespace_s_f_w_1_1_math_a9986d4d1c2f3a2053d4ceaf802bb851f}{SFW\+::\+Math\+::absdiff}} (T a, T b) noexcept
+\item 
+{\footnotesize template$<$Unsigned\+Int U$>$ }\\constexpr bool \mbox{\hyperlink{namespace_s_f_w_1_1_math_a064589bad2a658bed9c85f0d34b09a5b}{SFW\+::\+Math\+::is\+\_\+power\+\_\+of\+\_\+two}} (U x) noexcept
+\item 
+{\footnotesize template$<$Unsigned\+Int U$>$ }\\constexpr U \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2da8d020d41e1a6ce298b9208abe8aeb}{SFW\+::\+Math\+::ceil\+\_\+pow2}} (U v) noexcept
+\item 
+{\footnotesize template$<$Unsigned\+Int U$>$ }\\constexpr U \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5a5265b3352630c97926d5958a305cc5}{SFW\+::\+Math\+::floor\+\_\+pow2}} (U v) noexcept
+\item 
+{\footnotesize template$<$Unsigned\+Int U$>$ }\\constexpr U \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6d2f2cca0eab3fb0956deebf5f85d876}{SFW\+::\+Math\+::align\+\_\+up}} (U value, U alignment) noexcept
+\item 
+{\footnotesize template$<$Unsigned\+Int U$>$ }\\constexpr U \mbox{\hyperlink{namespace_s_f_w_1_1_math_aeb67007b73e0ec4790c708b317a1657b}{SFW\+::\+Math\+::align\+\_\+down}} (U value, U alignment) noexcept
+\item 
+{\footnotesize template$<$Unsigned\+Int U$>$ }\\constexpr U \mbox{\hyperlink{namespace_s_f_w_1_1_math_a8ccee36bb7a7d2b2d194d57108a4ec40}{SFW\+::\+Math\+::align\+\_\+up\+\_\+pow2}} (U value, U alignment\+\_\+pow2) noexcept
+\item 
+{\footnotesize template$<$Unsigned\+Int U$>$ }\\constexpr U \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab5373efd982025e5706b2518fb1141a4}{SFW\+::\+Math\+::align\+\_\+down\+\_\+pow2}} (U value, U alignment\+\_\+pow2) noexcept
+\item 
+{\footnotesize template$<$std\+::floating\+\_\+point T$>$ }\\T \mbox{\hyperlink{namespace_s_f_w_1_1_math_a0afb6bbaa6af8409b739ec5d5385a19f}{SFW\+::\+Math\+::rsqrt}} (T x) noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{変数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class T$>$ }\\constexpr T \mbox{\hyperlink{namespace_s_f_w_1_1_math_afb53d4eea9f78548805a3bf2dd5644e6}{SFW\+::\+Math\+::pi\+\_\+v}} = static\+\_\+cast$<$T$>$(3.\+141592653589793238462643383279502884L)
+\item 
+{\footnotesize template$<$class T$>$ }\\constexpr T \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab77bfce2d71e02eaf7ab1434d99b2585}{SFW\+::\+Math\+::tau\+\_\+v}} = static\+\_\+cast$<$T$>$(6.\+283185307179586476925286766559005768L)
+\item 
+{\footnotesize template$<$class T$>$ }\\constexpr T \mbox{\hyperlink{namespace_s_f_w_1_1_math_a447997829e4e73bf1ba706c4b7988336}{SFW\+::\+Math\+::half\+\_\+pi\+\_\+v}} = static\+\_\+cast$<$T$>$(1.\+570796326794896619231321691639751442L)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+数学関数と定数を提供するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{sx__math_8h_source}{sx\+\_\+math.\+h}} に定義があります。
+

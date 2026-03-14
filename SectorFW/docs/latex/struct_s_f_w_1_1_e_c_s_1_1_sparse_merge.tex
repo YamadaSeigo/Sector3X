@@ -1,0 +1,65 @@
+\doxysection{SFW\+::ECS\+::Sparse\+Merge 構造体}
+\hypertarget{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge}{}\label{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge}\index{SFW::ECS::SparseMerge@{SFW::ECS::SparseMerge}}
+
+
+{\ttfamily \#include $<$Sparse\+Marge.\+hpp$>$}
+
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Sparse\+Map$>$ }\\static void \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_a41f65fb415b2a2cc926fab8c00eb7e6e}{Build\+Sorted\+Keys}} (const Sparse\+Map \&m, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&out\+Sorted\+Keys)
+\item 
+{\footnotesize template$<$class Sparse\+Map, class Fn$>$ }\\static size\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_a94128c3711b08cec38dc69cc8d24db68}{Merge\+Join\+Apply}} (const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&chunk\+IDs, const Sparse\+Map \&sparse\+Map, const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&sorted\+Keys, Fn \&\&fn)
+\item 
+{\footnotesize template$<$class S, class... Dense, class Apply$>$ }\\static size\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_af4d3f7fb90eed7e3ac581aa458731446}{Run\+Dense\+With\+Sparse}} (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{Archetype\+Manager}} \&am, const std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}, S $>$ \&sparse\+Map, const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&sorted\+Keys, Apply \&\&apply\+Dense)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_sparse_marge_8hpp_source}{Sparse\+Marge.\+hpp}} の \mbox{\hyperlink{_sparse_marge_8hpp_source_l00060}{60}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_a41f65fb415b2a2cc926fab8c00eb7e6e}\index{SFW::ECS::SparseMerge@{SFW::ECS::SparseMerge}!BuildSortedKeys@{BuildSortedKeys}}
+\index{BuildSortedKeys@{BuildSortedKeys}!SFW::ECS::SparseMerge@{SFW::ECS::SparseMerge}}
+\doxysubsubsection{\texorpdfstring{BuildSortedKeys()}{BuildSortedKeys()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_a41f65fb415b2a2cc926fab8c00eb7e6e} 
+template$<$class Sparse\+Map$>$ \\
+void SFW\+::\+ECS\+::\+Sparse\+Merge\+::\+Build\+Sorted\+Keys (\begin{DoxyParamCaption}\item[{const Sparse\+Map \&}]{m}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&}]{out\+Sorted\+Keys}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+ \mbox{\hyperlink{_sparse_marge_8hpp_source}{Sparse\+Marge.\+hpp}} の \mbox{\hyperlink{_sparse_marge_8hpp_source_l00063}{63}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_a94128c3711b08cec38dc69cc8d24db68}\index{SFW::ECS::SparseMerge@{SFW::ECS::SparseMerge}!MergeJoinApply@{MergeJoinApply}}
+\index{MergeJoinApply@{MergeJoinApply}!SFW::ECS::SparseMerge@{SFW::ECS::SparseMerge}}
+\doxysubsubsection{\texorpdfstring{MergeJoinApply()}{MergeJoinApply()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_a94128c3711b08cec38dc69cc8d24db68} 
+template$<$class Sparse\+Map, class Fn$>$ \\
+size\+\_\+t SFW\+::\+ECS\+::\+Sparse\+Merge\+::\+Merge\+Join\+Apply (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&}]{chunk\+IDs}{, }\item[{const Sparse\+Map \&}]{sparse\+Map}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&}]{sorted\+Keys}{, }\item[{Fn \&\&}]{fn}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+ \mbox{\hyperlink{_sparse_marge_8hpp_source}{Sparse\+Marge.\+hpp}} の \mbox{\hyperlink{_sparse_marge_8hpp_source_l00073}{73}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_af4d3f7fb90eed7e3ac581aa458731446}\index{SFW::ECS::SparseMerge@{SFW::ECS::SparseMerge}!RunDenseWithSparse@{RunDenseWithSparse}}
+\index{RunDenseWithSparse@{RunDenseWithSparse}!SFW::ECS::SparseMerge@{SFW::ECS::SparseMerge}}
+\doxysubsubsection{\texorpdfstring{RunDenseWithSparse()}{RunDenseWithSparse()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_af4d3f7fb90eed7e3ac581aa458731446} 
+template$<$class S, class... Dense, class Apply$>$ \\
+size\+\_\+t SFW\+::\+ECS\+::\+Sparse\+Merge\+::\+Run\+Dense\+With\+Sparse (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{Archetype\+Manager}} \&}]{am}{, }\item[{const std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}, S $>$ \&}]{sparse\+Map}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&}]{sorted\+Keys}{, }\item[{Apply \&\&}]{apply\+Dense}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+ \mbox{\hyperlink{_sparse_marge_8hpp_source}{Sparse\+Marge.\+hpp}} の \mbox{\hyperlink{_sparse_marge_8hpp_source_l00101}{101}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_sparse_marge_8hpp}{Sparse\+Marge.\+hpp}}\end{DoxyCompactItemize}

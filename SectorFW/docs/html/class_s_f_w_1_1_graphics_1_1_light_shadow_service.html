@@ -1,0 +1,649 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Graphics::LightShadowService クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_graphics_1_1_light_shadow_service.html','','class_s_f_w_1_1_graphics_1_1_light_shadow_service-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Graphics::LightShadowService クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:CascadeConfig" id="r_CascadeConfig"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config.html">CascadeConfig</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:ad587fbefaf8eefa7a25deda32da62c17" id="r_ad587fbefaf8eefa7a25deda32da62c17"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad587fbefaf8eefa7a25deda32da62c17">LightShadowService</a> ()=default</td></tr>
+<tr class="memitem:aa3710c8c3f8f753e68f5f7fa196c3187" id="r_aa3710c8c3f8f753e68f5f7fa196c3187"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa3710c8c3f8f753e68f5f7fa196c3187">SetEnvironment</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_directional_light.html">DirectionalLight</a> &amp;dirLight, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_ambient_light.html">AmbientLight</a> &amp;ambientLight, float emissiveBoost)</td></tr>
+<tr class="memitem:a4cf5368a6bde5652bc2679c7cf892db6" id="r_a4cf5368a6bde5652bc2679c7cf892db6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4cf5368a6bde5652bc2679c7cf892db6">SetDirectionalLight</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_directional_light.html">DirectionalLight</a> &amp;d)</td></tr>
+<tr class="memitem:ad37eb8a51830d33d6c92c4137a7afcce" id="r_ad37eb8a51830d33d6c92c4137a7afcce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad37eb8a51830d33d6c92c4137a7afcce">SetAmbientLight</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_ambient_light.html">AmbientLight</a> &amp;a)</td></tr>
+<tr class="memitem:a04b004052a408e2cebc4f54b9a2a2fe6" id="r_a04b004052a408e2cebc4f54b9a2a2fe6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a04b004052a408e2cebc4f54b9a2a2fe6">SetEmissiveBoost</a> (float boost)</td></tr>
+<tr class="memitem:af72336d5166083c160fdc0641f9ea3c4" id="r_af72336d5166083c160fdc0641f9ea3c4"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_directional_light.html">DirectionalLight</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af72336d5166083c160fdc0641f9ea3c4">GetDirectionalLight</a> () const noexcept</td></tr>
+<tr class="memitem:ac25f9839a83530e4a3d47a6e1e927bce" id="r_ac25f9839a83530e4a3d47a6e1e927bce"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_ambient_light.html">AmbientLight</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac25f9839a83530e4a3d47a6e1e927bce">GetAmbientLight</a> () const noexcept</td></tr>
+<tr class="memitem:a1e75e793ebe3c43377b34f9779b702e1" id="r_a1e75e793ebe3c43377b34f9779b702e1"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e75e793ebe3c43377b34f9779b702e1">GetEmissiveBoost</a> () const noexcept</td></tr>
+<tr class="memitem:a3dc36ad2fe38f4e8bff19f5871b54db9" id="r_a3dc36ad2fe38f4e8bff19f5871b54db9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data.html">CPULightData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3dc36ad2fe38f4e8bff19f5871b54db9">GetCPULightData</a> () const</td></tr>
+<tr class="memitem:aa0e5179c5cf6d59745ff24ff705f228b" id="r_aa0e5179c5cf6d59745ff24ff705f228b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0e5179c5cf6d59745ff24ff705f228b">SetCascadeConfig</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config.html">CascadeConfig</a> &amp;cfg)</td></tr>
+<tr class="memitem:aca330e5e88d0ea2c15a1f05fcc70464c" id="r_aca330e5e88d0ea2c15a1f05fcc70464c"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config.html">CascadeConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca330e5e88d0ea2c15a1f05fcc70464c">GetCascadeConfig</a> () const noexcept</td></tr>
+<tr class="memitem:a20e29b21df3b7e98e6af1216e69467bc" id="r_a20e29b21df3b7e98e6af1216e69467bc"><td class="memItemLeft" align="right" valign="top">std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20e29b21df3b7e98e6af1216e69467bc">GetCascadeCount</a> () const noexcept</td></tr>
+<tr class="memitem:aaf16c99b7defafacf372a38c5ceb2b6f" id="r_aaf16c99b7defafacf372a38c5ceb2b6f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_shadow_cascade.html">ShadowCascade</a>&lt; <a class="el" href="namespace_s_f_w_1_1_graphics.html#aa3a9b6ad855fc9ed63fec0f7125eaed2">kMaxShadowCascades</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf16c99b7defafacf372a38c5ceb2b6f">GetCascades</a> () const</td></tr>
+<tr class="memitem:aaf4a9c3c1bf2b5d0509c1300746ff1e9" id="r_aaf4a9c3c1bf2b5d0509c1300746ff1e9"><td class="memItemLeft" align="right" valign="top">const std::array&lt; float, <a class="el" href="namespace_s_f_w_1_1_graphics.html#aa3a9b6ad855fc9ed63fec0f7125eaed2">kMaxShadowCascades</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf4a9c3c1bf2b5d0509c1300746ff1e9">GetSplitDistances</a> () const</td></tr>
+<tr class="memitem:a521e0e3a987481665d48c172360a06fd" id="r_a521e0e3a987481665d48c172360a06fd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a521e0e3a987481665d48c172360a06fd">GetCascadeIndex</a> (float viewDist) const</td></tr>
+<tr class="memitem:a3093c10de8e57b385a2610539f8afe48" id="r_a3093c10de8e57b385a2610539f8afe48"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3093c10de8e57b385a2610539f8afe48">GetMaxShadowDistance</a> () const</td></tr>
+<tr class="memitem:adf6821713bd49610d384bb5e725f9335" id="r_adf6821713bd49610d384bb5e725f9335"><td class="memItemLeft" align="right" valign="top">std::pair&lt; uint32_t, uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adf6821713bd49610d384bb5e725f9335">GetCascadeIndexRangeUnlock</a> (float min, float max) const</td></tr>
+<tr class="memitem:a08be4f4a330168acda97a7075708caf3" id="r_a08be4f4a330168acda97a7075708caf3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08be4f4a330168acda97a7075708caf3">UpdateCascade</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_camera_params.html">CameraParams</a> &amp;cam, const <a class="el" href="namespace_s_f_w_1_1_math.html#a2ded83bd3f26c7d6258ce43e16bdc067">Math::AABB3f</a> &amp;sceneBounds)</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock">
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00093">93</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="ad587fbefaf8eefa7a25deda32da62c17" name="ad587fbefaf8eefa7a25deda32da62c17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad587fbefaf8eefa7a25deda32da62c17">&#9670;&#160;</a></span>LightShadowService()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Graphics::LightShadowService::LightShadowService </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="ac25f9839a83530e4a3d47a6e1e927bce" name="ac25f9839a83530e4a3d47a6e1e927bce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac25f9839a83530e4a3d47a6e1e927bce">&#9670;&#160;</a></span>GetAmbientLight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_ambient_light.html">AmbientLight</a> &amp; SFW::Graphics::LightShadowService::GetAmbientLight </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00141">141</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aca330e5e88d0ea2c15a1f05fcc70464c" name="aca330e5e88d0ea2c15a1f05fcc70464c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca330e5e88d0ea2c15a1f05fcc70464c">&#9670;&#160;</a></span>GetCascadeConfig()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config.html">CascadeConfig</a> &amp; SFW::Graphics::LightShadowService::GetCascadeConfig </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00174">174</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a20e29b21df3b7e98e6af1216e69467bc" name="a20e29b21df3b7e98e6af1216e69467bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20e29b21df3b7e98e6af1216e69467bc">&#9670;&#160;</a></span>GetCascadeCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uint32_t SFW::Graphics::LightShadowService::GetCascadeCount </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00180">180</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a521e0e3a987481665d48c172360a06fd" name="a521e0e3a987481665d48c172360a06fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a521e0e3a987481665d48c172360a06fd">&#9670;&#160;</a></span>GetCascadeIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::Graphics::LightShadowService::GetCascadeIndex </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>viewDist</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00195">195</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="adf6821713bd49610d384bb5e725f9335" name="adf6821713bd49610d384bb5e725f9335"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf6821713bd49610d384bb5e725f9335">&#9670;&#160;</a></span>GetCascadeIndexRangeUnlock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt; uint32_t, uint32_t &gt; SFW::Graphics::LightShadowService::GetCascadeIndexRangeUnlock </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>min</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>max</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00211">211</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aaf16c99b7defafacf372a38c5ceb2b6f" name="aaf16c99b7defafacf372a38c5ceb2b6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf16c99b7defafacf372a38c5ceb2b6f">&#9670;&#160;</a></span>GetCascades()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_shadow_cascade.html">ShadowCascade</a>&lt; <a class="el" href="namespace_s_f_w_1_1_graphics.html#aa3a9b6ad855fc9ed63fec0f7125eaed2">kMaxShadowCascades</a> &gt; &amp; SFW::Graphics::LightShadowService::GetCascades </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00185">185</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3dc36ad2fe38f4e8bff19f5871b54db9" name="a3dc36ad2fe38f4e8bff19f5871b54db9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3dc36ad2fe38f4e8bff19f5871b54db9">&#9670;&#160;</a></span>GetCPULightData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data.html">CPULightData</a> SFW::Graphics::LightShadowService::GetCPULightData </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00152">152</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af72336d5166083c160fdc0641f9ea3c4" name="af72336d5166083c160fdc0641f9ea3c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af72336d5166083c160fdc0641f9ea3c4">&#9670;&#160;</a></span>GetDirectionalLight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_directional_light.html">DirectionalLight</a> &amp; SFW::Graphics::LightShadowService::GetDirectionalLight </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00137">137</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a1e75e793ebe3c43377b34f9779b702e1" name="a1e75e793ebe3c43377b34f9779b702e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e75e793ebe3c43377b34f9779b702e1">&#9670;&#160;</a></span>GetEmissiveBoost()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Graphics::LightShadowService::GetEmissiveBoost </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00146">146</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3093c10de8e57b385a2610539f8afe48" name="a3093c10de8e57b385a2610539f8afe48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3093c10de8e57b385a2610539f8afe48">&#9670;&#160;</a></span>GetMaxShadowDistance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Graphics::LightShadowService::GetMaxShadowDistance </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00205">205</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aaf4a9c3c1bf2b5d0509c1300746ff1e9" name="aaf4a9c3c1bf2b5d0509c1300746ff1e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf4a9c3c1bf2b5d0509c1300746ff1e9">&#9670;&#160;</a></span>GetSplitDistances()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::array&lt; float, <a class="el" href="namespace_s_f_w_1_1_graphics.html#aa3a9b6ad855fc9ed63fec0f7125eaed2">kMaxShadowCascades</a> &gt; &amp; SFW::Graphics::LightShadowService::GetSplitDistances </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00190">190</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad37eb8a51830d33d6c92c4137a7afcce" name="ad37eb8a51830d33d6c92c4137a7afcce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad37eb8a51830d33d6c92c4137a7afcce">&#9670;&#160;</a></span>SetAmbientLight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::LightShadowService::SetAmbientLight </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_ambient_light.html">AmbientLight</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>a</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00125">125</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa0e5179c5cf6d59745ff24ff705f228b" name="aa0e5179c5cf6d59745ff24ff705f228b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0e5179c5cf6d59745ff24ff705f228b">&#9670;&#160;</a></span>SetCascadeConfig()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::LightShadowService::SetCascadeConfig </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config.html">CascadeConfig</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>cfg</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00166">166</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4cf5368a6bde5652bc2679c7cf892db6" name="a4cf5368a6bde5652bc2679c7cf892db6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cf5368a6bde5652bc2679c7cf892db6">&#9670;&#160;</a></span>SetDirectionalLight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::LightShadowService::SetDirectionalLight </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_directional_light.html">DirectionalLight</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>d</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00119">119</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a04b004052a408e2cebc4f54b9a2a2fe6" name="a04b004052a408e2cebc4f54b9a2a2fe6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04b004052a408e2cebc4f54b9a2a2fe6">&#9670;&#160;</a></span>SetEmissiveBoost()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::LightShadowService::SetEmissiveBoost </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>boost</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00131">131</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa3710c8c3f8f753e68f5f7fa196c3187" name="aa3710c8c3f8f753e68f5f7fa196c3187"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3710c8c3f8f753e68f5f7fa196c3187">&#9670;&#160;</a></span>SetEnvironment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::LightShadowService::SetEnvironment </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_directional_light.html">DirectionalLight</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>dirLight</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_ambient_light.html">AmbientLight</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ambientLight</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>emissiveBoost</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00108">108</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a08be4f4a330168acda97a7075708caf3" name="a08be4f4a330168acda97a7075708caf3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08be4f4a330168acda97a7075708caf3">&#9670;&#160;</a></span>UpdateCascade()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::LightShadowService::UpdateCascade </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_camera_params.html">CameraParams</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>cam</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#a2ded83bd3f26c7d6258ce43e16bdc067">Math::AABB3f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>sceneBounds</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a> の <a class="el" href="_light_shadow_service_8h_source.html#l00246">246</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/<a class="el" href="_light_shadow_service_8h_source.html">LightShadowService.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics.html">Graphics</a></li><li class="navelem"><a href="class_s_f_w_1_1_graphics_1_1_light_shadow_service.html">LightShadowService</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

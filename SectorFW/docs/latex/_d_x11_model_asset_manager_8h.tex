@@ -1,0 +1,71 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\+DX11\+Model\+Asset\+Manager.h ファイル}
+\hypertarget{_d_x11_model_asset_manager_8h}{}\label{_d_x11_model_asset_manager_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11ModelAssetManager.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11ModelAssetManager.h}}
+
+
+DirectX 11用のモデルアセットマネージャーを定義するヘッダーファイル  
+
+
+{\ttfamily \#include $<$filesystem$>$}\newline
+{\ttfamily \#include $<$variant$>$}\newline
+{\ttfamily \#include "{}DX11\+Mesh\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}DX11\+PSOManager.\+h"{}}\newline
+{\ttfamily \#include "{}../\+LODPolicy.\+h"{}}\newline
+{\ttfamily \#include "{}../../\+Math/\+Matrix.\+hpp"{}}\newline
+{\ttfamily \#include "{}../../\+Math/\+Bounding\+Sphere.\+hpp"{}}\newline
+{\ttfamily \#include "{}../../\+Math/\+AABB.\+hpp"{}}\newline
+{\ttfamily \#include "{}../../\+Util/\+Path\+View.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Occluder\+Toolkit.\+h"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_skeleton_joint}{SFW\+::\+Graphics\+::\+DX11\+::\+Skeleton\+Joint}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_skeleton}{SFW\+::\+Graphics\+::\+DX11\+::\+Skeleton}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc}{SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_1_1_bind_node}{SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::\+Bind\+Node}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_data}{SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Data}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_data_1_1_submesh_l_o_d}{SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Data\+::\+Submesh\+LOD}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_data_1_1_sub_mesh}{SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Data\+::\+Sub\+Mesh}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_data_1_1_sub_mesh_1_1_occluder_info}{SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Data\+::\+Sub\+Mesh\+::\+Occluder\+Info}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_manager}{SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Manager}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_manager_1_1_asset_stats}{SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Manager\+::\+Asset\+Stats}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_manager_1_1_lod_recipe}{SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Manager\+::\+Lod\+Recipe}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW\+::\+Graphics}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11}{SFW\+::\+Graphics\+::\+DX11}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a11bb13d4a681aa20464317cb5736031f}{SFW\+::\+Graphics\+::\+DX11\+::\+Lod\+Thresholds}} = \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_lod_thresholds_px}{SFW\+::\+Graphics\+::\+Lod\+Thresholds\+Px}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+DirectX 11用のモデルアセットマネージャーを定義するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} に定義があります。
+

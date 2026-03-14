@@ -1,0 +1,56 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/\+Type\+Checker.hpp ファイル}
+\hypertarget{_type_checker_8hpp}{}\label{_type_checker_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/TypeChecker.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/TypeChecker.hpp}}
+
+
+型チェックとコンセプトを定義するヘッダーファイル  
+
+
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1is__crtp__base__of}{SFW\+::is\+\_\+crtp\+\_\+base\+\_\+of$<$ T, CRTP $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1user__primitive}{SFW\+::user\+\_\+primitive$<$ T $>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1is__crtp__base__of__1arg}{SFW\+::is\+\_\+crtp\+\_\+base\+\_\+of\+\_\+1arg}}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_is_primitive}{SFW\+::\+Is\+Primitive}}
+\begin{DoxyCompactList}\small\item\em プリミティブ型をチェックするコンセプト \end{DoxyCompactList}\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_one_of}{SFW\+::\+One\+Of}}
+\begin{DoxyCompactList}\small\item\em 型 T が Allowed\+Types... のいずれかと一致するかをチェックするコンセプト \end{DoxyCompactList}\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_all_of}{SFW\+::\+All\+Of}}
+\begin{DoxyCompactList}\small\item\em Query\+Types のすべてが Allowed\+Types... に含まれているかをチェックするコンセプト \end{DoxyCompactList}\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_pointer_type}{SFW\+::\+Pointer\+Type}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{変数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T, template$<$ typename, typename... $>$ class CRTP$>$ }\\constexpr bool \mbox{\hyperlink{namespace_s_f_w_ac398b6585f609c973904165eb7869bb5}{SFW\+::is\+\_\+crtp\+\_\+base\+\_\+of\+\_\+v}} = \mbox{\hyperlink{struct_s_f_w_1_1is__crtp__base__of}{is\+\_\+crtp\+\_\+base\+\_\+of}}$<$T, CRTP$>$\+::value
+\item 
+{\footnotesize template$<$class T$>$ }\\constexpr bool \mbox{\hyperlink{namespace_s_f_w_a611f46c1c4fc43defe841c92c34e3e9f}{SFW\+::user\+\_\+primitive\+\_\+v}} = \mbox{\hyperlink{struct_s_f_w_1_1user__primitive}{user\+\_\+primitive}}$<$std\+::remove\+\_\+cv\+\_\+t$<$T$>$$>$\+::value
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+型チェックとコンセプトを定義するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+June 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_type_checker_8hpp_source}{Type\+Checker.\+hpp}} に定義があります。
+

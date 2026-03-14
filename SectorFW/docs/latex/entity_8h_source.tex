@@ -1,0 +1,41 @@
+\doxysection{entity.\+h}
+\hypertarget{entity_8h_source}{}\label{entity_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/entity.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/entity.h}}
+\mbox{\hyperlink{entity_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00010}00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00011}00011\ \{}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00012}00012\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00013}00013\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00017}00017\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ MAX\_ENTITY\_NUM\ =\ 500000;}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00022}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{00022}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \{}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00023}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a7031930fd2acbd990d6e2feef7255035}{00023}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a7031930fd2acbd990d6e2feef7255035}{index}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00024}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a94ce1622fa78b03446bd2610ac20afe4}{00024}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a94ce1622fa78b03446bd2610ac20afe4}{generation}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00030}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a48acd58cc4edd31dd9ce0750d0ee4e6d}{00030}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a48acd58cc4edd31dd9ce0750d0ee4e6d}{operator==}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\&\ other)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a7031930fd2acbd990d6e2feef7255035}{index}}\ ==\ other.index\ \&\&\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a94ce1622fa78b03446bd2610ac20afe4}{generation}}\ ==\ other.generation;}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00037}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a9a264970ecd0710b41ccdcbf83fb3844}{00037}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a9a264970ecd0710b41ccdcbf83fb3844}{IsValid}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a7031930fd2acbd990d6e2feef7255035}{index}}\ !=\ UINT32\_MAX;}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00044}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a8989b77f347b8c20136be29535371faf}{00044}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a8989b77f347b8c20136be29535371faf}{Invalid}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\{\ UINT32\_MAX,\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00048}00048\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00049}00049\ \}}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00051}\mbox{\hyperlink{namespacestd}{00051}}\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacestd}{std}}\ \{}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00057}00057\ \ \ \ \ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00058}\mbox{\hyperlink{structstd_1_1hash_3_01_s_f_w_1_1_e_c_s_1_1_entity_i_d_01_4}{00058}}\ \ \ \ \ \textcolor{keyword}{struct\ }hash<\mbox{\hyperlink{namespace_s_f_w}{SFW}}::ECS::EntityID>\ \{}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00059}\mbox{\hyperlink{structstd_1_1hash_3_01_s_f_w_1_1_e_c_s_1_1_entity_i_d_01_4_a52a8ea78312090a69d4ba734cb574be6}{00059}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structstd_1_1hash_3_01_s_f_w_1_1_e_c_s_1_1_entity_i_d_01_4_a52a8ea78312090a69d4ba734cb574be6}{operator()}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{SFW::ECS::EntityID}}\&\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 高速な組み合わせ：FNV1a,\ Boostのhash\_combine風}}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::hash<uint64\_t>\{\}(\textcolor{keyword}{static\_cast<}uint64\_t\textcolor{keyword}{>}(\textcolor{keywordtype}{id}.generation)\ <<\ 32\ |\ \textcolor{keywordtype}{id}.index);}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00063}00063\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{entity_8h_source_l00064}00064\ \}}
+
+\end{DoxyCode}

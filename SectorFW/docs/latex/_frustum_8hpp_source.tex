@@ -1,0 +1,531 @@
+\doxysection{Frustum.\+hpp}
+\hypertarget{_frustum_8hpp_source}{}\label{_frustum_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/Frustum.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/Frustum.hpp}}
+\mbox{\hyperlink{_frustum_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector_8hpp}{Vector.hpp}}"{}}\ \ \ \textcolor{comment}{//\ SectorFW::Math::Vec3f}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_a_a_b_b_8hpp}{AABB.hpp}}"{}}\ \ \ \ \ \textcolor{comment}{//\ SectorFW::Math::AABB2f\ /\ AABB3f\ (lb,\ ub)}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_matrix_8hpp}{Matrix.hpp}}"{}}\ \ \ \textcolor{comment}{//\ 行列からの抽出に使う場合（必要なら）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00016}00016\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_math}{SFW::Math}}\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00017}00017\ \ \ \ \ \textcolor{comment}{//\ n・x\ +\ d\ =\ 0}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00018}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{00018}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}{Planef}}\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00019}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{00019}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}}\{\ 0.f,\ 0.f,\ 1.f\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00020}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{00020}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{d}}\{\ 0.f\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00022}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}{00022}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}{Planef}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00023}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_ae7943baf423b17cea232f20fbe0bee95}{00023}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_ae7943baf423b17cea232f20fbe0bee95}{Planef}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ normal,\ \textcolor{keywordtype}{float}\ dd)\ :\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}}(normal),\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{d}}(dd)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ax\ +\ by\ +\ cz\ +\ d\ =\ 0\ から（正規化オプション）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00026}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a059ed45049903891ba655238d8c99d54}{00026}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}{Planef}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a059ed45049903891ba655238d8c99d54}{FromCoefficients}}(\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b,\ \textcolor{keywordtype}{float}\ c,\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{d}},\ \textcolor{keywordtype}{bool}\ normalize\ =\ \textcolor{keyword}{true})\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}{Planef}}\ pl\{\ \{a,b,c\},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{d}}\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (normalize)\ pl.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a7f97f81142af4416286e4667dcf78a52}{Normalize}}();}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pl;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 点＋法線から}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00033}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_aab94b5e276bb1844226f48f2f9f4db6a}{00033}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}{Planef}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_aab94b5e276bb1844226f48f2f9f4db6a}{FromPointNormal}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ point,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ normal,\ \textcolor{keywordtype}{bool}\ normalize\ =\ \textcolor{keyword}{true})\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\ nn\ =\ normal;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (normalize)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ len\ =\ std::sqrt(nn.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ *\ nn.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ +\ nn.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ *\ nn.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ +\ nn.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ *\ nn.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}});}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (len\ >\ 0.f)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ inv\ =\ 1.f\ /\ len;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nn.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ *=\ inv;\ nn.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ *=\ inv;\ nn.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ *=\ inv;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ nn,\ -\/(nn.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ *\ point.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ +\ nn.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ *\ point.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ +\ nn.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ *\ point.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}})\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3平面の交点。失敗時\ false}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00046}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a024ddccebe5acd244c5094d9f7e3f4ac}{00046}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a024ddccebe5acd244c5094d9f7e3f4ac}{Intersect3Planes}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}{Planef}}\&\ p1,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}{Planef}}\&\ p2,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}{Planef}}\&\ p3,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ out)}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ n1\ =\ p1.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}},\ n2\ =\ p2.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}},\ n3\ =\ p3.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ c23\ =\ Cross(n2,\ n3);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ c31\ =\ Cross(n3,\ n1);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ c12\ =\ Cross(n1,\ n2);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ denom\ =\ Dot(n1,\ c23);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ eps\ =\ 1e-\/6f;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabsf(denom)\ <\ eps)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ MulAdd\ =\ [](\textcolor{keywordtype}{float}\ s,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ v,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ acc)\ \textcolor{keyword}{noexcept}\ -\/>\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\{\ acc.x\ +\ s\ *\ v.x,\ acc.y\ +\ s\ *\ v.y,\ acc.z\ +\ s\ *\ v.z\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ x\ =\ [(-\/d1)*c23\ +\ (-\/d2)*c31\ +\ (-\/d3)*c12]\ /\ denom}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ num\{\ 0,0,0\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ num\ =\ MulAdd(-\/p1.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{d}},\ c23,\ num);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ num\ =\ MulAdd(-\/p2.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{d}},\ c31,\ num);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ num\ =\ MulAdd(-\/p3.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{d}},\ c12,\ num);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ num\ /\ denom;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 片側正規化}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00073}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a7f97f81142af4416286e4667dcf78a52}{00073}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a7f97f81142af4416286e4667dcf78a52}{Normalize}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ len\ =\ std::sqrt(\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}}.x\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}}.x\ +\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}}.y\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}}.y\ +\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}}.z\ *\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}}.z);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (len\ >\ 0.f)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ inv\ =\ 1.f\ /\ len;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}}.x\ *=\ inv;\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}}.y\ *=\ inv;\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}}.z\ *=\ inv;\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{d}}\ *=\ inv;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00080}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_aee1975bbef4cff08a78a768060fd7505}{00080}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}{Planef}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_aee1975bbef4cff08a78a768060fd7505}{Normalized}}()\ const\ noexcept\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}{Planef}}\ t\ =\ *\textcolor{keyword}{this};\ t.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a7f97f81142af4416286e4667dcf78a52}{Normalize}}();\ \textcolor{keywordflow}{return}\ t;\ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 符号付き距離（n\ が非正規化でもそのスケールの距離）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00083}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a99ba3e22bb33220c0cb45111348fe37d}{00083}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a99ba3e22bb33220c0cb45111348fe37d}{SignedDistance}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ p)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}}.x\ *\ p.x\ +\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}}.y\ *\ p.y\ +\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}}.z\ *\ p.z\ +\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{d}};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00086}00086\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00088}00088\ \ \ \ \ \textcolor{comment}{//\ 0..5\ =\ \{Left,\ Right,\ Bottom,\ Top,\ Near,\ Far\}}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00089}\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa2ad9d63b69c4a10a5cc9cad923133bc4}{00089}}\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aef}{FrustumPlane}}\ :\ \textcolor{keywordtype}{int}\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa945d5e233cf7d6240f6b783b36a374ff}{Left}}\ =\ 0,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa92b09c7c48c520c3c55e497875da437c}{Right}},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa2ad9d63b69c4a10a5cc9cad923133bc4}{Bottom}},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefaa4ffdcf0dc1f31b9acaf295d75b51d00}{Top}},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefaa535711d028372f87fdbce03cd43b25d}{Near}},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefacfcd41f0c1804fb7778f8f01301223f6}{Far}}\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00091}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{00091}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00092}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{00092}}\ \ \ \ \ \ \ \ \ std::array<Planef,\ 6>\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}\{\};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00094}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a8f6b68d7476e4579748d40a35e68c1ca}{00094}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}*\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a8f6b68d7476e4579748d40a35e68c1ca}{data}}()\ noexcept\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{float}*\textcolor{keyword}{>}(\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}.data());\ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00096}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa06205b36004ab4a0c631ffec8c0a183}{00096}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa06205b36004ab4a0c631ffec8c0a183}{Normalize}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ pl\ :\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}})\ pl.Normalize();}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Row-\/major\ 4x4（DirectX想定）:\ m[16]\ =\ row-\/major\ 配列}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00101}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_abb24171178e2808d79734cfb819f7551}{00101}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_abb24171178e2808d79734cfb819f7551}{FromRowMajor}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ m[16],\ \textcolor{keywordtype}{bool}\ normalize\ =\ \textcolor{keyword}{true})\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ M\ =\ [\&](\textcolor{keywordtype}{int}\ r,\ \textcolor{keywordtype}{int}\ c)\ -\/>\ \textcolor{keywordtype}{float}\ \{\ \textcolor{keywordflow}{return}\ m[r\ *\ 4\ +\ c];\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ make\ =\ [normalize](\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b,\ \textcolor{keywordtype}{float}\ c,\ \textcolor{keywordtype}{float}\ d)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a059ed45049903891ba655238d8c99d54}{Planef::FromCoefficients}}(a,\ b,\ c,\ d,\ normalize);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\ fr;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ row4\ ±\ rowX\ で各成分を作る（a,b,c,d\ は列\ 0,1,2,3）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Left:\ \ row4\ +\ row1}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa945d5e233cf7d6240f6b783b36a374ff}{FrustumPlane::Left}}]\ =\ make(}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 0)\ +\ M(0,\ 0),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 1)\ +\ M(0,\ 1),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 2)\ +\ M(0,\ 2),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 3)\ +\ M(0,\ 3));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Right:\ row4\ -\/\ row1}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa92b09c7c48c520c3c55e497875da437c}{FrustumPlane::Right}}]\ =\ make(}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 0)\ -\/\ M(0,\ 0),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 1)\ -\/\ M(0,\ 1),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 2)\ -\/\ M(0,\ 2),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 3)\ -\/\ M(0,\ 3));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Bottom:\ row4\ +\ row2}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa2ad9d63b69c4a10a5cc9cad923133bc4}{FrustumPlane::Bottom}}]\ =\ make(}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 0)\ +\ M(1,\ 0),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 1)\ +\ M(1,\ 1),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 2)\ +\ M(1,\ 2),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 3)\ +\ M(1,\ 3));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Top:\ \ \ \ row4\ -\/\ row2}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefaa4ffdcf0dc1f31b9acaf295d75b51d00}{FrustumPlane::Top}}]\ =\ make(}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 0)\ -\/\ M(1,\ 0),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 1)\ -\/\ M(1,\ 1),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 2)\ -\/\ M(1,\ 2),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 3)\ -\/\ M(1,\ 3));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Near\ (DX\ 0..1):\ row3}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefaa535711d028372f87fdbce03cd43b25d}{FrustumPlane::Near}}]\ =\ make(}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(2,\ 0),\ M(2,\ 1),\ M(2,\ 2),\ M(2,\ 3));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Far\ (DX\ 0..1):\ \ row4\ -\/\ row3}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefacfcd41f0c1804fb7778f8f01301223f6}{FrustumPlane::Far}}]\ =\ make(}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 0)\ -\/\ M(2,\ 0),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 1)\ -\/\ M(2,\ 1),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 2)\ -\/\ M(2,\ 2),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M(3,\ 3)\ -\/\ M(2,\ 3));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (normalize)\ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa06205b36004ab4a0c631ffec8c0a183}{Normalize}}();}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ fr;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00153}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a8f31019ecc0626ec8fca134bdedc49cb}{00153}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a8f31019ecc0626ec8fca134bdedc49cb}{FromColMajor}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ m[16],\ \textcolor{keywordtype}{bool}\ normalize\ =\ \textcolor{keyword}{true})\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ make\ =\ [normalize](\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b,\ \textcolor{keywordtype}{float}\ c,\ \textcolor{keywordtype}{float}\ d)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a059ed45049903891ba655238d8c99d54}{Planef::FromCoefficients}}(a,\ b,\ c,\ d,\ normalize);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ C\ =\ [\&](\textcolor{keywordtype}{int}\ r,\ \textcolor{keywordtype}{int}\ c)-\/>\textcolor{keywordtype}{float}\ \{\ \textcolor{keywordflow}{return}\ m[c\ *\ 4\ +\ r];\ \};\ \textcolor{comment}{//\ column-\/major}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ col\ =\ [\&](\textcolor{keywordtype}{int}\ c)\ \{\ \textcolor{keywordflow}{return}\ std::array<float,\ 4>\{\ C(0,\ c),\ C(1,\ c),\ C(2,\ c),\ C(3,\ c)\ \};\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\ fr;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 列抽出（col4±colX,\ Near=col3,\ Far=col4-\/col3）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ c1\ =\ col(0),\ c2\ =\ col(1),\ c3\ =\ col(2),\ c4\ =\ col(3);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa945d5e233cf7d6240f6b783b36a374ff}{FrustumPlane::Left}}]\ =\ make(c4[0]\ +\ c1[0],\ c4[1]\ +\ c1[1],\ c4[2]\ +\ c1[2],\ c4[3]\ +\ c1[3]);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa92b09c7c48c520c3c55e497875da437c}{FrustumPlane::Right}}]\ =\ make(c4[0]\ -\/\ c1[0],\ c4[1]\ -\/\ c1[1],\ c4[2]\ -\/\ c1[2],\ c4[3]\ -\/\ c1[3]);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa2ad9d63b69c4a10a5cc9cad923133bc4}{FrustumPlane::Bottom}}]\ =\ make(c4[0]\ +\ c2[0],\ c4[1]\ +\ c2[1],\ c4[2]\ +\ c2[2],\ c4[3]\ +\ c2[3]);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefaa4ffdcf0dc1f31b9acaf295d75b51d00}{FrustumPlane::Top}}]\ =\ make(c4[0]\ -\/\ c2[0],\ c4[1]\ -\/\ c2[1],\ c4[2]\ -\/\ c2[2],\ c4[3]\ -\/\ c2[3]);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefaa535711d028372f87fdbce03cd43b25d}{FrustumPlane::Near}}]\ =\ make(c3[0],\ c3[1],\ c3[2],\ c3[3]);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefacfcd41f0c1804fb7778f8f01301223f6}{FrustumPlane::Far}}]\ =\ make(c4[0]\ -\/\ c3[0],\ c4[1]\ -\/\ c3[1],\ c4[2]\ -\/\ c3[2],\ c4[3]\ -\/\ c3[3]);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ fr;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00171}00171\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \textcolor{comment}{//===============================}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Row-\/major\ 配列から抽出（列ベクトル規約）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ Near/Far\ は\ ClipZRange\ で分岐}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \textcolor{comment}{//===============================}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00176}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a3a5b73ce77c5f79225311109a4682d88}{00176}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a3a5b73ce77c5f79225311109a4682d88}{FromRowMajorWithZ}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ m[16],}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{ClipZRange}}\ zrange,}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ normalize\ =\ \textcolor{keyword}{true})\ noexcept}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ M\ =\ [\&](\textcolor{keywordtype}{int}\ r,\ \textcolor{keywordtype}{int}\ c)\ -\/>\ \textcolor{keywordtype}{float}\ \{\ \textcolor{keywordflow}{return}\ m[r\ *\ 4\ +\ c];\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ make\ =\ [normalize](\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b,\ \textcolor{keywordtype}{float}\ c,\ \textcolor{keywordtype}{float}\ d)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a059ed45049903891ba655238d8c99d54}{Planef::FromCoefficients}}(a,\ b,\ c,\ d,\ normalize);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\ fr;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ row4\ ±\ row\{1,2,3\}}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa945d5e233cf7d6240f6b783b36a374ff}{FrustumPlane::Left}}]\ =\ make(M(3,\ 0)\ +\ M(0,\ 0),\ M(3,\ 1)\ +\ M(0,\ 1),\ M(3,\ 2)\ +\ M(0,\ 2),\ M(3,\ 3)\ +\ M(0,\ 3));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa92b09c7c48c520c3c55e497875da437c}{FrustumPlane::Right}}]\ =\ make(M(3,\ 0)\ -\/\ M(0,\ 0),\ M(3,\ 1)\ -\/\ M(0,\ 1),\ M(3,\ 2)\ -\/\ M(0,\ 2),\ M(3,\ 3)\ -\/\ M(0,\ 3));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa2ad9d63b69c4a10a5cc9cad923133bc4}{FrustumPlane::Bottom}}]\ =\ make(M(3,\ 0)\ +\ M(1,\ 0),\ M(3,\ 1)\ +\ M(1,\ 1),\ M(3,\ 2)\ +\ M(1,\ 2),\ M(3,\ 3)\ +\ M(1,\ 3));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefaa4ffdcf0dc1f31b9acaf295d75b51d00}{FrustumPlane::Top}}]\ =\ make(M(3,\ 0)\ -\/\ M(1,\ 0),\ M(3,\ 1)\ -\/\ M(1,\ 1),\ M(3,\ 2)\ -\/\ M(1,\ 2),\ M(3,\ 3)\ -\/\ M(1,\ 3));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (zrange\ ==\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5a4b942544cb3e764bbb8d33f8a8744855}{ClipZRange::ZeroToOne}})\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ DX:\ Near=row3,\ Far=row4-\/row3}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefaa535711d028372f87fdbce03cd43b25d}{FrustumPlane::Near}}]\ =\ make(M(2,\ 0),\ M(2,\ 1),\ M(2,\ 2),\ M(2,\ 3));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefacfcd41f0c1804fb7778f8f01301223f6}{FrustumPlane::Far}}]\ =\ make(M(3,\ 0)\ -\/\ M(2,\ 0),\ M(3,\ 1)\ -\/\ M(2,\ 1),\ M(3,\ 2)\ -\/\ M(2,\ 2),\ M(3,\ 3)\ -\/\ M(2,\ 3));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ GL:\ Near=row4+row3,\ Far=row4-\/row3}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefaa535711d028372f87fdbce03cd43b25d}{FrustumPlane::Near}}]\ =\ make(M(3,\ 0)\ +\ M(2,\ 0),\ M(3,\ 1)\ +\ M(2,\ 1),\ M(3,\ 2)\ +\ M(2,\ 2),\ M(3,\ 3)\ +\ M(2,\ 3));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefacfcd41f0c1804fb7778f8f01301223f6}{FrustumPlane::Far}}]\ =\ make(M(3,\ 0)\ -\/\ M(2,\ 0),\ M(3,\ 1)\ -\/\ M(2,\ 1),\ M(3,\ 2)\ -\/\ M(2,\ 2),\ M(3,\ 3)\ -\/\ M(2,\ 3));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00203}00203\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (normalize)\ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa06205b36004ab4a0c631ffec8c0a183}{Normalize}}();}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ fr;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \textcolor{comment}{//================================}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Column-\/major\ 配列から抽出（列ベクトル規約）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ Near/Far\ は\ ClipZRange\ で分岐}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \textcolor{comment}{//================================}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00212}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_ac2a7cc36a692394b322e0439da5635b8}{00212}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_ac2a7cc36a692394b322e0439da5635b8}{FromColMajorWithZ}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ m[16],}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{ClipZRange}}\ zrange,}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ normalize\ =\ \textcolor{keyword}{true})\ noexcept}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ C\ =\ [\&](\textcolor{keywordtype}{int}\ r,\ \textcolor{keywordtype}{int}\ c)-\/>\textcolor{keywordtype}{float}\ \{\ \textcolor{keywordflow}{return}\ m[c\ *\ 4\ +\ r];\ \};\ \textcolor{comment}{//\ col-\/major}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ make\ =\ [normalize](\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b,\ \textcolor{keywordtype}{float}\ c,\ \textcolor{keywordtype}{float}\ d)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a059ed45049903891ba655238d8c99d54}{Planef::FromCoefficients}}(a,\ b,\ c,\ d,\ normalize);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00220}00220\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 列ベクトル\ c1..c4\ を用意（c4±c\{1,2,3\}）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ c1[4]\ =\ \{\ C(0,0),\ C(1,0),\ C(2,0),\ C(3,0)\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ c2[4]\ =\ \{\ C(0,1),\ C(1,1),\ C(2,1),\ C(3,1)\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ c3[4]\ =\ \{\ C(0,2),\ C(1,2),\ C(2,2),\ C(3,2)\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ c4[4]\ =\ \{\ C(0,3),\ C(1,3),\ C(2,3),\ C(3,3)\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00226}00226\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\ fr;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00228}00228\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa945d5e233cf7d6240f6b783b36a374ff}{FrustumPlane::Left}}]\ =\ make(c4[0]\ +\ c1[0],\ c4[1]\ +\ c1[1],\ c4[2]\ +\ c1[2],\ c4[3]\ +\ c1[3]);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa92b09c7c48c520c3c55e497875da437c}{FrustumPlane::Right}}]\ =\ make(c4[0]\ -\/\ c1[0],\ c4[1]\ -\/\ c1[1],\ c4[2]\ -\/\ c1[2],\ c4[3]\ -\/\ c1[3]);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa2ad9d63b69c4a10a5cc9cad923133bc4}{FrustumPlane::Bottom}}]\ =\ make(c4[0]\ +\ c2[0],\ c4[1]\ +\ c2[1],\ c4[2]\ +\ c2[2],\ c4[3]\ +\ c2[3]);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefaa4ffdcf0dc1f31b9acaf295d75b51d00}{FrustumPlane::Top}}]\ =\ make(c4[0]\ -\/\ c2[0],\ c4[1]\ -\/\ c2[1],\ c4[2]\ -\/\ c2[2],\ c4[3]\ -\/\ c2[3]);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00233}00233\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (zrange\ ==\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5a4b942544cb3e764bbb8d33f8a8744855}{ClipZRange::ZeroToOne}})\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ DX:\ Near=col3,\ Far=col4-\/col3}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefaa535711d028372f87fdbce03cd43b25d}{FrustumPlane::Near}}]\ =\ make(c3[0],\ c3[1],\ c3[2],\ c3[3]);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefacfcd41f0c1804fb7778f8f01301223f6}{FrustumPlane::Far}}]\ =\ make(c4[0]\ -\/\ c3[0],\ c4[1]\ -\/\ c3[1],\ c4[2]\ -\/\ c3[2],\ c4[3]\ -\/\ c3[3]);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ GL:\ Near=col4+col3,\ Far=col4-\/col3}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefaa535711d028372f87fdbce03cd43b25d}{FrustumPlane::Near}}]\ =\ make(c4[0]\ +\ c3[0],\ c4[1]\ +\ c3[1],\ c4[2]\ +\ c3[2],\ c4[3]\ +\ c3[3]);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefacfcd41f0c1804fb7778f8f01301223f6}{FrustumPlane::Far}}]\ =\ make(c4[0]\ -\/\ c3[0],\ c4[1]\ -\/\ c3[1],\ c4[2]\ -\/\ c3[2],\ c4[3]\ -\/\ c3[3]);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00244}00244\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (normalize)\ fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa06205b36004ab4a0c631ffec8c0a183}{Normalize}}();}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ fr;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00248}00248\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ m\ は\ row-\/major\ 配列（float[16]）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00250}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_ae323781d9782bffab65c6973a6fec7f0}{00250}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_ae323781d9782bffab65c6973a6fec7f0}{MakeFrustumPlanes\_WorldSpace}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ViewProj[16],\ \textcolor{keywordtype}{float}\ outPlanes[6][4])\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ fr\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a3a5b73ce77c5f79225311109a4682d88}{SFW::Math::Frustumf::FromRowMajorWithZ}}(ViewProj,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5a4b942544cb3e764bbb8d33f8a8744855}{SFW::Math::ClipZRange::ZeroToOne}},\ \textcolor{comment}{/*normalize=*/}\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ n・d\ をそのまま出す（CS側の判定:\ dot(n,\ X)\ +\ d\ >=\ 0\ を\ IN\ とする）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 6;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outPlanes[i][0]\ =\ fr.p[i].n.x;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outPlanes[i][1]\ =\ fr.p[i].n.y;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outPlanes[i][2]\ =\ fr.p[i].n.z;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outPlanes[i][3]\ =\ fr.p[i].d;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00260}00260\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00261}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a9e5d116a35e07156efa7a3bc75e8800a}{00261}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a9e5d116a35e07156efa7a3bc75e8800a}{MakeFrustumPlanes\_WorldSpace\_Oriented}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ViewProj[16],}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ camPos[3],}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ outPlanes)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ まず通常どおり抽出（ZeroToOne\ /\ 正規化）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ planes[6][4];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_ae323781d9782bffab65c6973a6fec7f0}{MakeFrustumPlanes\_WorldSpace}}(ViewProj,\ planes);\ \textcolor{comment}{//\ ←あなたが今使っている関数}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00267}00267\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ 各面を「カメラ位置が内側（>=0）」になるよう整える}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 6;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ a\ =\ planes[i][0],\ b\ =\ planes[i][1],\ c\ =\ planes[i][2],\ d\ =\ planes[i][3];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ evalAtCam\ =\ a\ *\ camPos[0]\ +\ b\ *\ camPos[1]\ +\ c\ *\ camPos[2]\ +\ d;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ もしカメラ位置が負（外側）なら、法線と\ d\ を反転して“内向き”にする}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (evalAtCam\ <\ 0.0f)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ planes[i][0]\ =\ -\/planes[i][0];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ planes[i][1]\ =\ -\/planes[i][1];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ planes[i][2]\ =\ -\/planes[i][2];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ planes[i][3]\ =\ -\/planes[i][3];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ memcpy(outPlanes,\ planes,\ \textcolor{keyword}{sizeof}(planes));}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00282}00282\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ AABB\ がオブジェクト空間の場合（＝VSで\ mul(World,\ p)\ しているなら、ここでは\ ViewProj*World\ で抽出）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00284}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_abcd66afe40c15785902685e1187600ac}{00284}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_abcd66afe40c15785902685e1187600ac}{MakeFrustumPlanes\_ObjectSpace}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ ViewProj[16],\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_f_w_1_1_world}{World}}[16],\ \textcolor{keywordtype}{float}\ outPlanes[6][4])\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 行列は\ row-\/major\ 同士のかけ算（row-\/majorの数式で\ OK）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ mulRM\ =\ [](\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ A[16],\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ B[16],\ \textcolor{keywordtype}{float}\ M[16])\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ r\ =\ 0;\ r\ <\ 4;\ ++r)\ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ c\ =\ 0;\ c\ <\ 4;\ ++c)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M[r\ *\ 4\ +\ c]\ =\ A[r\ *\ 4\ +\ 0]\ *\ B[0\ *\ 4\ +\ c]\ +\ A[r\ *\ 4\ +\ 1]\ *\ B[1\ *\ 4\ +\ c]\ +\ A[r\ *\ 4\ +\ 2]\ *\ B[2\ *\ 4\ +\ c]\ +\ A[r\ *\ 4\ +\ 3]\ *\ B[3\ *\ 4\ +\ c];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ VPW[16];\ mulRM(ViewProj,\ \mbox{\hyperlink{class_s_f_w_1_1_world}{World}},\ VPW);\ \textcolor{comment}{//\ VPW\ =\ ViewProj\ *\ World}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ fr\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a3a5b73ce77c5f79225311109a4682d88}{SFW::Math::Frustumf::FromRowMajorWithZ}}(VPW,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5a4b942544cb3e764bbb8d33f8a8744855}{SFW::Math::ClipZRange::ZeroToOne}},\ \textcolor{comment}{/*normalize=*/}\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 6;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outPlanes[i][0]\ =\ fr.p[i].n.x;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outPlanes[i][1]\ =\ fr.p[i].n.y;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outPlanes[i][2]\ =\ fr.p[i].n.z;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outPlanes[i][3]\ =\ fr.p[i].d;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00299}00299\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00300}00300\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Matrix<4,4,T>\ から直接作るヘルパ}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00302}00302\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00303}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a0346c8fb2d40bb8a846013229553227e}{00303}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a0346c8fb2d40bb8a846013229553227e}{FromRowMajorMatrix}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix<4,\ 4,\ T>}}\&\ M,}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{ClipZRange}}\ zrange,}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ normalize\ =\ \textcolor{keyword}{true})\ noexcept}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m[16];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ r\ =\ 0;\ r\ <\ 4;\ ++r)\ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ c\ =\ 0;\ c\ <\ 4;\ ++c)\ m[r\ *\ 4\ +\ c]\ =\ (\textcolor{keywordtype}{float})M[r][c];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a3a5b73ce77c5f79225311109a4682d88}{FromRowMajorWithZ}}(m,\ zrange,\ normalize);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00310}00310\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00311}00311\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00312}00312\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 任意：面の向きを「内側=正」に揃える（判定式\ s+r<0\ と整合させる保険）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00313}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a47a3bc0243bf0989034db9d99f033776}{00313}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a47a3bc0243bf0989034db9d99f033776}{FaceInward}}(\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\&\ fr,}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ camPos,}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ camFwd,}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ nearClip)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00317}00317\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\ inside\ =\ \{\ camPos.x\ +\ camFwd.x\ *\ (std::max)(nearClip\ *\ 2.0f,\ 0.01f),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ camPos.y\ +\ camFwd.y\ *\ (std::max)(nearClip\ *\ 2.0f,\ 0.01f),}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ camPos.z\ +\ camFwd.z\ *\ (std::max)(nearClip\ *\ 2.0f,\ 0.01f)\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ pl\ :\ fr.p)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pl.SignedDistance(inside)\ <\ 0.0f)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pl.n.x\ =\ -\/pl.n.x;\ pl.n.y\ =\ -\/pl.n.y;\ pl.n.z\ =\ -\/pl.n.z;\ pl.d\ =\ -\/pl.d;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00326}00326\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00327}00327\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00328}00328\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ヘルパ：セル中心\ (x,z)\ におけるフラスタムの縦方向可視範囲を求め、}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00329}00329\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ [ymin,ymax]\ と交差させて「実効的\ centerY/extentY」を返す。}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00330}00330\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 交差が無ければ\ false\ を返す。}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00331}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a806d47877b24616790a7fb569631f2cc}{00331}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a806d47877b24616790a7fb569631f2cc}{ComputeYOverlapAtXZ}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&\ fr,}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ z,}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ymin,\ \textcolor{keywordtype}{float}\ ymax,}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\&\ outCenterY,\ \textcolor{keywordtype}{float}\&\ outExtentY)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00335}00335\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 入力の順序が逆でも安全に}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ymin\ >\ ymax)\ std::swap(ymin,\ ymax);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00338}00338\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ top\ =\ fr.p[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefaa4ffdcf0dc1f31b9acaf295d75b51d00}{Math::FrustumPlane::Top}}];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ bottom\ =\ fr.p[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefa2ad9d63b69c4a10a5cc9cad923133bc4}{Math::FrustumPlane::Bottom}}];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00341}00341\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ EPS\ =\ 1e-\/6f;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00343}00343\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ y\ =\ -\/(nx*x\ +\ nz*z\ +\ d)\ /\ ny}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ solveY\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Math::Planef}}\&\ pl)-\/>\textcolor{keywordtype}{float}\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::fabs(pl.n.y)\ <\ EPS)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ほぼ水平制約が無い（=\ この平面では\ Y\ を縛れない）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 上界/下界を表すために\ ±∞\ を返しておく}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (pl.n.y\ >=\ 0.f)\ ?\ std::numeric\_limits<float>::infinity()}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ -\/std::numeric\_limits<float>::infinity();}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/(pl.n.x\ *\ x\ +\ pl.n.z\ *\ z\ +\ pl.d)\ /\ pl.n.y;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00354}00354\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ yTop\ =\ solveY(top);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ yBottom\ =\ solveY(bottom);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00357}00357\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ フラスタムの\ Y\ 範囲（順序正規化）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ yFmin\ =\ (std::min)(yTop,\ yBottom);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ yFmax\ =\ (std::max)(yTop,\ yBottom);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00361}00361\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 入力スラブと交差}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ y0\ =\ (std::max)(ymin,\ yFmin);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ y1\ =\ (std::min)(ymax,\ yFmax);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (y0\ >\ y1)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ そもそもその\ (x,z)\ で縦に重ならない}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00366}00366\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ outCenterY\ =\ 0.5f\ *\ (y0\ +\ y1);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ outExtentY\ =\ 0.5f\ *\ (y1\ -\/\ y0);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00370}00370\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00371}00371\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00372}00372\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 点}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00373}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a54ee4a7833a5eec5f4f37b4632d12edf}{00373}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a54ee4a7833a5eec5f4f37b4632d12edf}{ContainsPoint}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ pt)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ pl\ :\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}})\ \textcolor{keywordflow}{if}\ (pl.SignedDistance(pt)\ <\ 0.f)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00376}00376\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00377}00377\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00378}00378\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 球}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00379}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_adc5f3cb0a7153239b111ecc962821d05}{00379}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_adc5f3cb0a7153239b111ecc962821d05}{IntersectsSphere}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ c,\ \textcolor{keywordtype}{float}\ r)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ pl\ :\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}})\ \textcolor{keywordflow}{if}\ (pl.SignedDistance(c)\ <\ -\/r)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00382}00382\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00383}00383\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00384}00384\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ AABB:\ center/extents\ 版}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00385}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a98e76d2faa1114777992553adf902702}{00385}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a98e76d2faa1114777992553adf902702}{IntersectsAABB}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ center,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ extent)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ pl\ :\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}})\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ s\ =\ pl.n.x\ *\ center.x\ +\ pl.n.y\ *\ center.y\ +\ pl.n.z\ *\ center.z\ +\ pl.d;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ r\ =\ std::fabs(pl.n.x)\ *\ extent.x\ +\ std::fabs(pl.n.y)\ *\ extent.y\ +\ std::fabs(pl.n.z)\ *\ extent.z;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s\ +\ r\ <\ 0.f)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ 完全外}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00391}00391\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00392}00392\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00393}00393\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00394}00394\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ AABB:\ lb/ub\ 版（AABB3f\ がある場合）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00395}00395\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ AABB3>}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00396}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_abd48efdb5bf4ba9cd970792ae768a81e}{00396}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_abd48efdb5bf4ba9cd970792ae768a81e}{IntersectsAABB}}(\textcolor{keyword}{const}\ AABB3\&\ aabb)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\ c\{\ (aabb.lb.x\ +\ aabb.ub.x)\ *\ 0.5f,}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (aabb.lb.y\ +\ aabb.ub.y)\ *\ 0.5f,}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (aabb.lb.z\ +\ aabb.ub.z)\ *\ 0.5f\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\ e\{\ (aabb.ub.x\ -\/\ aabb.lb.x)\ *\ 0.5f,}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (aabb.ub.y\ -\/\ aabb.lb.y)\ *\ 0.5f,}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (aabb.ub.z\ -\/\ aabb.lb.z)\ *\ 0.5f\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a98e76d2faa1114777992553adf902702}{IntersectsAABB}}(c,\ e);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00404}00404\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00405}00405\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00406}00406\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00407}00407\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 方向光に沿ってフラスタムを押し伸ばす}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00408}00408\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00409}00409\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ @brief\ 方向光に沿ってフラスタムを押し伸ばしたものを返す}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00410}00410\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ @param\ lightDirWS\ ワールド空間の光の方向（ワールド→ライト方向）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00411}00411\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ @param\ length\ 押し伸ばす距離（ワールド座標系の長さ）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00412}00412\ \ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00413}00413\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 元のフラスタム内に「点\ P\ を\ -\/lightDirWS\ 方向に\ [0,length]\ だけ}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00414}00414\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ スライドさせたどこかの点」が入っていれば\ P\ も\ IN\ とみなす、}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00415}00415\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ という体積を表します。}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00416}00416\ \ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00417}00417\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 数式的には、各平面\ n・x\ +\ d\ >=\ 0\ に対し、}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00418}00418\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ if\ dot(n,\ L)\ <\ 0\ then\ d'\ =\ d\ -\/\ length\ *\ dot(n,\ L)}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00419}00419\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ else\ d'\ =\ d}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00420}00420\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ として新しい半空間を定義しています。}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00421}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a9d373afc3d9791f3410d7d329ea2e77e}{00421}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a9d373afc3d9791f3410d7d329ea2e77e}{PushedAlongDirection}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ lightDirWS,\ \textcolor{keywordtype}{float}\ length)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00422}00422\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00423}00423\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\ out\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00424}00424\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ L\ を正規化}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\ L\ =\ lightDirWS;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00427}00427\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ len\ =\ lightDirWS.length();}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (len\ <=\ 0.f)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ゼロベクトルなら拡張なし}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00430}00430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00431}00431\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ invLen\ =\ 1.f\ /\ len;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ L.x\ *=\ invLen;\ L.y\ *=\ invLen;\ L.z\ *=\ invLen;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00434}00434\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ pl\ :\ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}})\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 平面法線とライト方向の内積}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ndotl\ =\ pl.n.x\ *\ L.x\ +\ pl.n.y\ *\ L.y\ +\ pl.n.z\ *\ L.z;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00438}00438\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 「ライト方向に対して裏側を向いている平面」だけを外側へ押し出す}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00440}00440\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ndotl\ <\ 0.f)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ d'\ =\ d\ -\/\ length\ *\ (n・L)}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00442}00442\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pl.d\ -\/=\ length\ *\ ndotl;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00445}00445\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00446}00446\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00447}00447\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00448}00448\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00449}00449\ \textcolor{comment}{\ \ \ \ \ \ \ \ @brief\ Far\ 平面をカメラ位置から\ maxFar\ までに制限したフラスタムを返す}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00450}00450\ \textcolor{comment}{\ \ \ \ \ \ \ \ @param\ eyeWS\ ワールド空間のカメラ位置}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00451}00451\ \textcolor{comment}{\ \ \ \ \ \ \ \ @param\ maxFar\ カメラから\ Far\ 平面までの最大距離}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00452}00452\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00453}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a8e7a38d6767158f34b72289f9d8b94c6}{00453}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a8e7a38d6767158f34b72289f9d8b94c6}{ClampedFar}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ eyeWS,\ \textcolor{keywordtype}{float}\ maxFar)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00454}00454\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00455}00455\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Frustumf}}\ out\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00456}00456\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00457}00457\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Far\ 平面（enum\ class\ FrustumPlane\ :\ int\ \{\ Left,\ Right,\ Bottom,\ Top,\ Near,\ Far\ \};）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}}\&\ farPl\ =\ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)\mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aefacfcd41f0c1804fb7778f8f01301223f6}{FrustumPlane::Far}}];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00459}00459\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00460}00460\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 平面は\ Normalize\ 済み前提なので、SignedDistance\ はワールド距離とみなせる}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00461}00461\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ dist\ =\ farPl.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a99ba3e22bb33220c0cb45111348fe37d}{SignedDistance}}(eyeWS);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00462}00462\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00463}00463\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カメラがフラスタム外なら何もしない（異常ケース防止）}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00464}00464\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dist\ <\ 0.0f)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00467}00467\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ すでに\ far\ が十分手前なら何もしない}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dist\ <=\ maxFar)\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00470}00470\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00471}00471\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00472}00472\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00473}00473\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ここから\ Far\ を「カメラから\ maxFar\ の位置」まで寄せる}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00474}00474\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00475}00475\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 平面:\ n・x\ +\ d\ =\ 0}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00476}00476\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カメラ位置\ eye\ に対して、SignedDistance(eye)\ =\ n・eye\ +\ d\ =\ dist}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00477}00477\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 「カメラから\ maxFar\ の距離の位置で\ 0\ になる」ようにしたいので}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00478}00478\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ n・eye\ +\ d'\ =\ maxFar}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00479}00479\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ →\ d'\ =\ maxFar\ -\/\ n・eye}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00480}00480\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ n・eye\ =\ dist\ -\/\ d\ なので}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00481}00481\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ →\ d'\ =\ d\ +\ maxFar\ -\/\ dist}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00482}00482\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ delta\ =\ maxFar\ -\/\ dist;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00483}00483\ \ \ \ \ \ \ \ \ \ \ \ \ farPl.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{d}}\ +=\ delta;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00484}00484\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00485}00485\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00486}00486\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00487}00487\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00488}00488\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00489}00489\ \ \ \ \ \textcolor{comment}{//==========================================================================}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00490}00490\ \ \ \ \ \textcolor{comment}{//\ Helper:\ compute\ world-\/space\ AABB\ that\ encloses\ the\ frustum\ (via\ 8\ corners).}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00491}00491\ \ \ \ \ \textcolor{comment}{//\ This\ is\ used\ only\ to\ narrow\ down\ candidate\ grid\ cells\ before\ precise\ tests.}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00492}00492\ \ \ \ \ \textcolor{comment}{//==========================================================================}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00493}00493\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}}\ ComputeFrustumAABB\_WS(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&\ fr)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00494}00494\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00495}00495\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}}\ aabb;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00496}00496\ \ \ \ \ \ \ \ \ aabb.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ad48bc28d3137bd015e774ea8e2980c18}{invalidate}}();}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00497}00497\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00498}00498\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }FP\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_abc23a4a6489371afe9bad7e848310aef}{Math::FrustumPlane}};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00499}00499\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ plL\ =\ fr.p[(int)FP::Left];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00500}00500\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ plR\ =\ fr.p[(int)FP::Right];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00501}00501\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ plB\ =\ fr.p[(int)FP::Bottom];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00502}00502\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ plT\ =\ fr.p[(int)FP::Top];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00503}00503\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ plN\ =\ fr.p[(int)FP::Near];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00504}00504\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ plF\ =\ fr.p[(int)FP::Far];}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00505}00505\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00506}00506\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ add\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\&\ p)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00507}00507\ \ \ \ \ \ \ \ \ \ \ \ \ ExpandAABB(aabb,\ p);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00509}00509\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00510}00510\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\ c;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00511}00511\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Near\ plane\ corners}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00512}00512\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a024ddccebe5acd244c5094d9f7e3f4ac}{Planef::Intersect3Planes}}(plL,\ plB,\ plN,\ c))\ add(c);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00513}00513\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a024ddccebe5acd244c5094d9f7e3f4ac}{Planef::Intersect3Planes}}(plL,\ plT,\ plN,\ c))\ add(c);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00514}00514\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a024ddccebe5acd244c5094d9f7e3f4ac}{Planef::Intersect3Planes}}(plR,\ plB,\ plN,\ c))\ add(c);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00515}00515\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a024ddccebe5acd244c5094d9f7e3f4ac}{Planef::Intersect3Planes}}(plR,\ plT,\ plN,\ c))\ add(c);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00516}00516\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Far\ plane\ corners}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00517}00517\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a024ddccebe5acd244c5094d9f7e3f4ac}{Planef::Intersect3Planes}}(plL,\ plB,\ plF,\ c))\ add(c);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00518}00518\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a024ddccebe5acd244c5094d9f7e3f4ac}{Planef::Intersect3Planes}}(plL,\ plT,\ plF,\ c))\ add(c);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00519}00519\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a024ddccebe5acd244c5094d9f7e3f4ac}{Planef::Intersect3Planes}}(plR,\ plB,\ plF,\ c))\ add(c);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00520}00520\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a024ddccebe5acd244c5094d9f7e3f4ac}{Planef::Intersect3Planes}}(plR,\ plT,\ plF,\ c))\ add(c);}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00521}00521\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00522}00522\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Fallback:\ if\ we\ couldn't\ compute\ any\ corner\ (degenerate),\ return\ a\ huge\ box.}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00523}00523\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(aabb.lb.x\ <=\ aabb.ub.x\ \&\&\ aabb.lb.y\ <=\ aabb.ub.y\ \&\&\ aabb.lb.z\ <=\ aabb.ub.z))\ \{}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ aabb.lb\ =\ \{\ -\/1.0e30f,\ -\/1.0e30f,\ -\/1.0e30f\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ aabb.ub\ =\ \{\ 1.0e30f,\ \ 1.0e30f,\ \ 1.0e30f\ \};}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00526}00526\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00527}00527\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ aabb;}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00528}00528\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00529}00529\ }
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00530}00530\ \}\ \textcolor{comment}{//\ namespace\ SectorFW::Math}}
+
+\end{DoxyCode}

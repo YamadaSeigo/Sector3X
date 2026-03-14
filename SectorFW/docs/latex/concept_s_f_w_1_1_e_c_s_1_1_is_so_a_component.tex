@@ -1,0 +1,29 @@
+\doxysection{SFW\+::ECS\+::Is\+So\+AComponent Concept Reference}
+\hypertarget{concept_s_f_w_1_1_e_c_s_1_1_is_so_a_component}{}\label{concept_s_f_w_1_1_e_c_s_1_1_is_so_a_component}\index{SFW::ECS::IsSoAComponent@{SFW::ECS::IsSoAComponent}}
+
+
+So\+Aコンポーネントを識別するためのコンセプト  
+
+
+
+
+{\ttfamily \#include $<$component.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_is_so_a_component}{SFW::ECS::IsSoAComponent}}\ =\ \ \textcolor{keyword}{requires}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ T::soa\_type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ T::variant\_type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{\ T::member\_ptr\_tuple\ \}\ -\/>\ std::convertible\_to<\textcolor{keyword}{decltype}(T::member\_ptr\_tuple)>;\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{詳解}
+So\+Aコンポーネントを識別するためのコンセプト 
+
+ \mbox{\hyperlink{component_8hpp_source}{component.\+hpp}} の \mbox{\hyperlink{component_8hpp_source_l00095}{95}} 行目に定義があります。
+

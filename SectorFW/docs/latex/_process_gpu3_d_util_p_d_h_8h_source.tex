@@ -1,0 +1,148 @@
+\doxysection{Process\+Gpu3\+DUtil\+PDH.\+h}
+\hypertarget{_process_gpu3_d_util_p_d_h_8h_source}{}\label{_process_gpu3_d_util_p_d_h_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/ProcessGpu3DUtilPDH.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/ProcessGpu3DUtilPDH.h}}
+\mbox{\hyperlink{_process_gpu3_d_util_p_d_h_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00008}00008\ \textcolor{comment}{//\ Minimal\ PDH\ per-\/process\ 3D\ GPU\ utilization\ (\%)}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00009}00009\ \textcolor{comment}{//\ Build:\ link\ with\ pdh.lib}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00010}\mbox{\hyperlink{_process_gpu3_d_util_p_d_h_8h_a9f918755b601cf4bffca775992e6fb90}{00010}}\ \textcolor{preprocessor}{\#define\ NOMINMAX}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <windows.h>}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <pdh.h>}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <pdhmsg.h>}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <cwctype>}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00018}00018\ \textcolor{preprocessor}{\#pragma\ comment(lib,\ "{}pdh.lib"{})}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00020}00020\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_debug}{SFW::Debug}}\ \{}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00021}00021\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ wcontains(\textcolor{keyword}{const}\ std::wstring\&\ s,\ \textcolor{keyword}{const}\ std::wstring\&\ sub)\ \{}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ s.find(sub)\ !=\ std::wstring::npos;}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00023}00023\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00025}00025\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ is\_target\_3d\_instance(\textcolor{keyword}{const}\ std::wstring\&\ inst,\ DWORD\ pid)\ \{}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Typical\ instance:\ "{}pid\_1234\_engtype\_3D\_0"{}}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Some\ systems\ show\ "{}engtype\_3d"{}\ (lowercase)\ in\ PowerShell\ patterns,\ so\ be\ tolerant.}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ std::wstring\ pidTag\ =\ L\textcolor{stringliteral}{"{}pid\_"{}}\ +\ std::to\_wstring(pid);}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!wcontains(inst,\ pidTag))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Accept\ "{}engtype\_3D"{}\ /\ "{}engtype\_3d"{}}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (wcontains(inst,\ L\textcolor{stringliteral}{"{}engtype\_3D"{}})\ ||\ wcontains(inst,\ L\textcolor{stringliteral}{"{}engtype\_3d"{}}))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00035}00035\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00037}00037\ \ \ \ \ \textcolor{comment}{//より厳密にPIDマッチングを行う}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00038}00038\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ match\_pid\_and\_3d(\textcolor{keyword}{const}\ std::wstring\&\ inst,\ DWORD\ pid)}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00039}00039\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ find\ "{}pid\_"{}}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ pidPos\ =\ inst.find(L\textcolor{stringliteral}{"{}pid\_"{}});}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pidPos\ ==\ std::wstring::npos)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ numStart\ =\ pidPos\ +\ 4;\ \textcolor{comment}{//\ after\ "{}pid\_"{}}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ numEnd\ =\ numStart;}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (numEnd\ <\ inst.size()\ \&\&\ iswdigit(inst[numEnd]))\ numEnd++;}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (numEnd\ ==\ numStart)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ DWORD\ instPid\ =\ (DWORD)\_wtoi(inst.substr(numStart,\ numEnd\ -\/\ numStart).c\_str());}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (instPid\ !=\ pid)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ require\ engtype\_3D\ token}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (inst.find(L\textcolor{stringliteral}{"{}engtype\_3D"{}})\ !=\ std::wstring::npos\ ||}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ inst.find(L\textcolor{stringliteral}{"{}engtype\_3d"{}})\ !=\ std::wstring::npos);}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00055}00055\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00057}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_process_gpu3_d_util_p_d_h}{00057}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_process_gpu3_d_util_p_d_h}{ProcessGpu3DUtilPDH}}\ \{}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00058}00058\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00059}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_process_gpu3_d_util_p_d_h_a442dc38de699b92bde375898fc4fb136}{00059}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_process_gpu3_d_util_p_d_h_a442dc38de699b92bde375898fc4fb136}{init}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ PDH\_STATUS\ s\ =\ PdhOpenQueryW(\textcolor{keyword}{nullptr},\ 0,\ \&m\_query);}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s\ !=\ ERROR\_SUCCESS)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ English\ counter\ name\ avoids\ locale\ issues}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ PdhAddEnglishCounterW(m\_query,}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)GPU\ Engine(*)\(\backslash\)\(\backslash\)Utilization\ Percentage"{}},}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0,\ \&m\_counter);}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s\ !=\ ERROR\_SUCCESS)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ m\_primed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00073}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_process_gpu3_d_util_p_d_h_afeb96500ed9570d5fec791045a5d440b}{00073}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_process_gpu3_d_util_p_d_h_afeb96500ed9570d5fec791045a5d440b}{shutdown}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_query)\ \{}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PdhCloseQuery(m\_query);}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_query\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_counter\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ m\_primed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Call\ periodically\ (e.g.\ every\ 200ms..1000ms).}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ when\ value\ is\ valid.}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00084}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_process_gpu3_d_util_p_d_h_aa40a38856f2a3f8927dff240c803db5e}{00084}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_process_gpu3_d_util_p_d_h_aa40a38856f2a3f8927dff240c803db5e}{sample}}(DWORD\ pid,\ \textcolor{keywordtype}{double}\&\ outPercent)\ \{}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ outPercent\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_query\ ||\ !m\_counter)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ PDH\_STATUS\ s\ =\ PdhCollectQueryData(m\_query);}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s\ !=\ ERROR\_SUCCESS)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Need\ at\ least\ two\ collects\ to\ get\ a\ non-\/zero\ cooked\ value}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_primed)\ \{}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_primed\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ DWORD\ bufSize\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ DWORD\ itemCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ PdhGetFormattedCounterArrayW(}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_counter,}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PDH\_FMT\_DOUBLE,}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&bufSize,}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&itemCount,}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s\ !=\ PDH\_MORE\_DATA)\ \{}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Some\ systems\ may\ return\ ERROR\_SUCCESS\ with\ itemCount=0;\ treat\ as\ not\ ready.}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<BYTE>\ buffer(bufSize);}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ items\ =\ \textcolor{keyword}{reinterpret\_cast<}PDH\_FMT\_COUNTERVALUE\_ITEM\_W*\textcolor{keyword}{>}(buffer.data());}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ PdhGetFormattedCounterArrayW(}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_counter,}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PDH\_FMT\_DOUBLE,}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&bufSize,}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&itemCount,}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ items);}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s\ !=\ ERROR\_SUCCESS)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ sum\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (DWORD\ i\ =\ 0;\ i\ <\ itemCount;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::wstring\ inst\ =\ items[i].szName\ ?\ items[i].szName\ :\ L\textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ val\ =\ items[i].FmtValue;}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!match\_pid\_and\_3d(inst,\ pid))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (val.CStatus\ ==\ ERROR\_SUCCESS)\ \{}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ This\ is\ already\ percentage\ for\ that\ engine\ instance.}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sum\ +=\ val.doubleValue;}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ outPercent\ =\ sum;}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00140}00140\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00142}00142\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ PDH\_HQUERY\ \ \ m\_query\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ PDH\_HCOUNTER\ m\_counter\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00145}00145\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_primed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00146}00146\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_process_gpu3_d_util_p_d_h_8h_source_l00147}00147\ \}}
+
+\end{DoxyCode}

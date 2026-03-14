@@ -1,0 +1,556 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Graphics::RenderGraph&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt; クラステンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_graphics_1_1_render_graph.html','','class_s_f_w_1_1_graphics_1_1_render_graph-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Graphics::RenderGraph&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt; クラステンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>RenderPassごとに管理して描画を行うクラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:GroupState" id="r_GroupState"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state.html">GroupState</a></td></tr>
+<tr class="memitem:PassGroup" id="r_PassGroup"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html">PassGroup</a></td></tr>
+<tr class="memitem:PassNode" id="r_PassNode"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node.html">PassNode</a></td></tr>
+<tr class="memitem:PassViewRange" id="r_PassViewRange"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range.html">PassViewRange</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+公開型</h2></td></tr>
+<tr class="memitem:acbe3114ec6824586da26a61b8a370b71" id="r_acbe3114ec6824586da26a61b8a370b71"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acbe3114ec6824586da26a61b8a370b71">PassType</a> = <a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html">RenderPass</a>&lt;RTV, DSV, SRV, Buffer, ViewHandle&lt;std::remove_pointer_t&lt;RTV&gt;&gt;, ViewHandle&lt;std::remove_pointer_t&lt;DSV&gt;&gt;&gt;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:aa75f37d513a78ddaae73aa803a459ca9" id="r_aa75f37d513a78ddaae73aa803a459ca9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa75f37d513a78ddaae73aa803a459ca9">RenderGraph</a> (Backend &amp;backend, <a class="el" href="namespace_s_f_w_1_1_graphics.html#aad14d2e80e921b0442903b65576ce417">MOC</a> *moc)</td></tr>
+<tr class="memdesc:aa75f37d513a78ddaae73aa803a459ca9"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:a7cc982da686fd4351bbb99f23b712a02" id="r_a7cc982da686fd4351bbb99f23b712a02"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7cc982da686fd4351bbb99f23b712a02">AddPass</a> (<a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html">RenderPassDesc</a>&lt; RTV, DSV, ViewHandle &gt; &amp;desc)</td></tr>
+<tr class="memdesc:a7cc982da686fd4351bbb99f23b712a02"><td class="mdescLeft">&#160;</td><td class="mdescRight">RenderPassの追加  <br /></td></tr>
+<tr class="memitem:ac3e2f1ccdb0f8ced9c5030006581c36c" id="r_ac3e2f1ccdb0f8ced9c5030006581c36c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html">PassGroup</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac3e2f1ccdb0f8ced9c5030006581c36c">AddPassGroup</a> (const std::string &amp;name, uint32_t maxInstancesPerFrame=MAX_INSTANCES_PER_FRAME)</td></tr>
+<tr class="memitem:af0c5eb2e8ea1c1d6daa8062a3b3a254f" id="r_af0c5eb2e8ea1c1d6daa8062a3b3a254f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#acbe3114ec6824586da26a61b8a370b71">PassType</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0c5eb2e8ea1c1d6daa8062a3b3a254f">AddPassToGroup</a> (<a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html">PassGroup</a> &amp;group, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html">RenderPassDesc</a>&lt; RTV, DSV, ViewHandle &gt; &amp;desc, uint16_t viewBit)</td></tr>
+<tr class="memitem:a0c56827b2149d7a62b94fadb2073446d" id="r_a0c56827b2149d7a62b94fadb2073446d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c56827b2149d7a62b94fadb2073446d">SetExecutionOrder</a> (const std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node.html">PassNode</a> &gt; &amp;order)</td></tr>
+<tr class="memitem:a135085aff88dbf83b333a5e741e0fc73" id="r_a135085aff88dbf83b333a5e741e0fc73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#acbe3114ec6824586da26a61b8a370b71">PassType</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a135085aff88dbf83b333a5e741e0fc73">GetPass</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:a135085aff88dbf83b333a5e741e0fc73"><td class="mdescLeft">&#160;</td><td class="mdescRight">パスの取得  <br /></td></tr>
+<tr class="memitem:a45e05bf02408f81c03250d1fc0d7a8d2" id="r_a45e05bf02408f81c03250d1fc0d7a8d2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a45e05bf02408f81c03250d1fc0d7a8d2">BindPassGlobalResources</a> (<a class="el" href="#acbe3114ec6824586da26a61b8a370b71">PassType</a> *pass)</td></tr>
+<tr class="memitem:ac5b415af330779d96eb574721a1e58d3" id="r_ac5b415af330779d96eb574721a1e58d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5b415af330779d96eb574721a1e58d3">Execute</a> ()</td></tr>
+<tr class="memdesc:ac5b415af330779d96eb574721a1e58d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">描画の実行  <br /></td></tr>
+<tr class="memitem:a8aacb6652a3489b24d565a91087de3df" id="r_a8aacb6652a3489b24d565a91087de3df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_service.html">RenderService</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8aacb6652a3489b24d565a91087de3df">GetRenderService</a> ()</td></tr>
+<tr class="memdesc:a8aacb6652a3489b24d565a91087de3df"><td class="mdescLeft">&#160;</td><td class="mdescRight">レンダーサービスの取得  <br /></td></tr>
+<tr class="memitem:a470b856264b8201db260826dd3e5aba2" id="r_a470b856264b8201db260826dd3e5aba2"><td class="memTemplParams" colspan="2">template&lt;typename ResourceType&gt; </td></tr>
+<tr class="memitem:a470b856264b8201db260826dd3e5aba2 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a470b856264b8201db260826dd3e5aba2">RegisterResourceManager</a> (ResourceType *manager)</td></tr>
+<tr class="memdesc:a470b856264b8201db260826dd3e5aba2"><td class="mdescLeft">&#160;</td><td class="mdescRight">リソースマネージャーの登録  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+静的公開変数類</h2></td></tr>
+<tr class="memitem:ad85976b25f485815738e875d35d2f9b7" id="r_ad85976b25f485815738e875d35d2f9b7"><td class="memItemLeft" align="right" valign="top">static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad85976b25f485815738e875d35d2f9b7">kFlights</a> = RENDER_BUFFER_COUNT</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt;<br />
+class SFW::Graphics::RenderGraph&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt;</div><p>RenderPassごとに管理して描画を行うクラス </p>
+
+<p class="definition"> <a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a> の <a class="el" href="_render_graph_8hpp_source.html#l00038">38</a> 行目に定義があります。</p>
+</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">型定義メンバ詳解</h2>
+<a id="acbe3114ec6824586da26a61b8a370b71" name="acbe3114ec6824586da26a61b8a370b71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbe3114ec6824586da26a61b8a370b71">&#9670;&#160;</a></span>PassType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">SFW::Graphics::RenderGraph</a>&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt;::PassType = <a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_pass.html">RenderPass</a>&lt;RTV, DSV, SRV, Buffer, ViewHandle&lt;std::remove_pointer_t&lt;RTV&gt;&gt;, ViewHandle&lt;std::remove_pointer_t&lt;DSV&gt;&gt;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a> の <a class="el" href="_render_graph_8hpp_source.html#l00040">40</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="aa75f37d513a78ddaae73aa803a459ca9" name="aa75f37d513a78ddaae73aa803a459ca9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa75f37d513a78ddaae73aa803a459ca9">&#9670;&#160;</a></span>RenderGraph()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">SFW::Graphics::RenderGraph</a>&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt;::RenderGraph </td>
+          <td>(</td>
+          <td class="paramtype">Backend &amp;</td>          <td class="paramname"><span class="paramname"><em>backend</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_graphics.html#aad14d2e80e921b0442903b65576ce417">MOC</a> *</td>          <td class="paramname"><span class="paramname"><em>moc</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<p>RenderGraphにResouceManagerの追加を行う </p><dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">backend</td><td>レンダーバックエンド </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a> の <a class="el" href="_render_graph_8hpp_source.html#l00070">70</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a7cc982da686fd4351bbb99f23b712a02" name="a7cc982da686fd4351bbb99f23b712a02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7cc982da686fd4351bbb99f23b712a02">&#9670;&#160;</a></span>AddPass()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">SFW::Graphics::RenderGraph</a>&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt;::AddPass </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html">RenderPassDesc</a>&lt; RTV, DSV, ViewHandle &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>desc</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>RenderPassの追加 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">desc</td><td>レンダーパスの詳細 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a> の <a class="el" href="_render_graph_8hpp_source.html#l00081">81</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac3e2f1ccdb0f8ced9c5030006581c36c" name="ac3e2f1ccdb0f8ced9c5030006581c36c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3e2f1ccdb0f8ced9c5030006581c36c">&#9670;&#160;</a></span>AddPassGroup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html">PassGroup</a> &amp; <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">SFW::Graphics::RenderGraph</a>&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt;::AddPassGroup </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>maxInstancesPerFrame</em></span><span class="paramdefsep"> = </span><span class="paramdefval">MAX_INSTANCES_PER_FRAME</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a> の <a class="el" href="_render_graph_8hpp_source.html#l00115">115</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af0c5eb2e8ea1c1d6daa8062a3b3a254f" name="af0c5eb2e8ea1c1d6daa8062a3b3a254f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0c5eb2e8ea1c1d6daa8062a3b3a254f">&#9670;&#160;</a></span>AddPassToGroup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#acbe3114ec6824586da26a61b8a370b71">PassType</a> &amp; <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">SFW::Graphics::RenderGraph</a>&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt;::AddPassToGroup </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group.html">PassGroup</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>group</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_pass_desc.html">RenderPassDesc</a>&lt; RTV, DSV, ViewHandle &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>desc</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>viewBit</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a> の <a class="el" href="_render_graph_8hpp_source.html#l00133">133</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a45e05bf02408f81c03250d1fc0d7a8d2" name="a45e05bf02408f81c03250d1fc0d7a8d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45e05bf02408f81c03250d1fc0d7a8d2">&#9670;&#160;</a></span>BindPassGlobalResources()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">SFW::Graphics::RenderGraph</a>&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt;::BindPassGlobalResources </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#acbe3114ec6824586da26a61b8a370b71">PassType</a> *</td>          <td class="paramname"><span class="paramname"><em>pass</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a> の <a class="el" href="_render_graph_8hpp_source.html#l00177">177</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac5b415af330779d96eb574721a1e58d3" name="ac5b415af330779d96eb574721a1e58d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5b415af330779d96eb574721a1e58d3">&#9670;&#160;</a></span>Execute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">SFW::Graphics::RenderGraph</a>&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt;::Execute </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>描画の実行 </p>
+
+<p class="definition"> <a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a> の <a class="el" href="_render_graph_8hpp_source.html#l00199">199</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a135085aff88dbf83b333a5e741e0fc73" name="a135085aff88dbf83b333a5e741e0fc73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a135085aff88dbf83b333a5e741e0fc73">&#9670;&#160;</a></span>GetPass()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#acbe3114ec6824586da26a61b8a370b71">PassType</a> &amp; <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">SFW::Graphics::RenderGraph</a>&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt;::GetPass </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>パスの取得 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>パスの名前 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="#acbe3114ec6824586da26a61b8a370b71">PassType</a>&amp; パスの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a> の <a class="el" href="_render_graph_8hpp_source.html#l00169">169</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8aacb6652a3489b24d565a91087de3df" name="a8aacb6652a3489b24d565a91087de3df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8aacb6652a3489b24d565a91087de3df">&#9670;&#160;</a></span>GetRenderService()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_service.html">RenderService</a> * <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">SFW::Graphics::RenderGraph</a>&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt;::GetRenderService </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>レンダーサービスの取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd>RenderService* レンダーサービスのポインタ </dd></dl>
+
+<p class="definition"> <a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a> の <a class="el" href="_render_graph_8hpp_source.html#l00326">326</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a470b856264b8201db260826dd3e5aba2" name="a470b856264b8201db260826dd3e5aba2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a470b856264b8201db260826dd3e5aba2">&#9670;&#160;</a></span>RegisterResourceManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<div class="memtemplate">
+template&lt;typename ResourceType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">SFW::Graphics::RenderGraph</a>&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt;::RegisterResourceManager </td>
+          <td>(</td>
+          <td class="paramtype">ResourceType *</td>          <td class="paramname"><span class="paramname"><em>manager</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>リソースマネージャーの登録 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">manager</td><td>リソースマネージャーのポインタ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a> の <a class="el" href="_render_graph_8hpp_source.html#l00334">334</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0c56827b2149d7a62b94fadb2073446d" name="a0c56827b2149d7a62b94fadb2073446d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c56827b2149d7a62b94fadb2073446d">&#9670;&#160;</a></span>SetExecutionOrder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">SFW::Graphics::RenderGraph</a>&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt;::SetExecutionOrder </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node.html">PassNode</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>order</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a> の <a class="el" href="_render_graph_8hpp_source.html#l00160">160</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<a id="ad85976b25f485815738e875d35d2f9b7" name="ad85976b25f485815738e875d35d2f9b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad85976b25f485815738e875d35d2f9b7">&#9670;&#160;</a></span>kFlights</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">SFW::Graphics::RenderGraph</a>&lt; Backend, RTV, DSV, SRV, Buffer, ViewHandle &gt;::kFlights = RENDER_BUFFER_COUNT</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a> の <a class="el" href="_render_graph_8hpp_source.html#l00041">41</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/<a class="el" href="_render_graph_8hpp_source.html">RenderGraph.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics.html">Graphics</a></li><li class="navelem"><a href="class_s_f_w_1_1_graphics_1_1_render_graph.html">RenderGraph</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

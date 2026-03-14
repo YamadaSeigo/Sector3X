@@ -1,0 +1,142 @@
+\doxysection{SFW\+::Spatial\+Chunk\+Key 構造体}
+\hypertarget{struct_s_f_w_1_1_spatial_chunk_key}{}\label{struct_s_f_w_1_1_spatial_chunk_key}\index{SFW::SpatialChunkKey@{SFW::SpatialChunkKey}}
+
+
+\doxylink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}\+: どの \doxylink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk} を指すか（\+Level 区画 世代）  
+
+
+
+
+{\ttfamily \#include $<$Registry\+Types.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_a03689a8d31af6def449ecaf145192beb}{operator==}} (const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&o) const noexcept=default
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \& \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_a5f48bbbf57d25a1b29922ddcacaf9600}{operator=}} (const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&mgr) noexcept=default
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_a7685da96ac3aca964cb8a6493fe6b4ad}{Is\+Valid}} () const noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_ac6232af82d77e8ac51a31073efbdc193}{level}} \{\}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_a834dda392d6f71061e76b5b138ef43e6}{Partition\+Scheme}} \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_a709140dd173dccc65e5d56430f999af2}{scheme}} \{ \mbox{\hyperlink{namespace_s_f_w_a834dda392d6f71061e76b5b138ef43e6aea730ecd1f61168b907030ec96d79172}{Partition\+Scheme\+::\+Grid2D}} \}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_a68481121c1a141301ff49e3fab0c2a85}{depth}} \{ 0 \}
+\item 
+std\+::uint16\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_acf1ed43a3bc5adefa3ceca52a33ae6b1}{generation}} \{ 0 \}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_ab609625f6088b097783303720df7f6d1}{code}} \{ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_a01f516a32fc7f8cdadd526aaa4786a6d}{k\+Invalid\+Code}} \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint64\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_a01f516a32fc7f8cdadd526aaa4786a6d}{k\+Invalid\+Code}} = (std\+::numeric\+\_\+limits$<$uint64\+\_\+t$>$\+::max)()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\doxylink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}\+: どの \doxylink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk} を指すか（\+Level 区画 世代） 
+
+ \mbox{\hyperlink{_registry_types_8h_source}{Registry\+Types.\+h}} の \mbox{\hyperlink{_registry_types_8h_source_l00021}{21}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_spatial_chunk_key_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_spatial_chunk_key_a7685da96ac3aca964cb8a6493fe6b4ad}\index{SFW::SpatialChunkKey@{SFW::SpatialChunkKey}!IsValid@{IsValid}}
+\index{IsValid@{IsValid}!SFW::SpatialChunkKey@{SFW::SpatialChunkKey}}
+\doxysubsubsection{\texorpdfstring{IsValid()}{IsValid()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_spatial_chunk_key_a7685da96ac3aca964cb8a6493fe6b4ad} 
+bool SFW\+::\+Spatial\+Chunk\+Key\+::\+Is\+Valid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_registry_types_8h_source}{Registry\+Types.\+h}} の \mbox{\hyperlink{_registry_types_8h_source_l00033}{33}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_spatial_chunk_key_a5f48bbbf57d25a1b29922ddcacaf9600}\index{SFW::SpatialChunkKey@{SFW::SpatialChunkKey}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::SpatialChunkKey@{SFW::SpatialChunkKey}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_spatial_chunk_key_a5f48bbbf57d25a1b29922ddcacaf9600} 
+\mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \& SFW\+::\+Spatial\+Chunk\+Key\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&}]{mgr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}, {\ttfamily [noexcept]}}
+
+\Hypertarget{struct_s_f_w_1_1_spatial_chunk_key_a03689a8d31af6def449ecaf145192beb}\index{SFW::SpatialChunkKey@{SFW::SpatialChunkKey}!operator==@{operator==}}
+\index{operator==@{operator==}!SFW::SpatialChunkKey@{SFW::SpatialChunkKey}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_spatial_chunk_key_a03689a8d31af6def449ecaf145192beb} 
+bool SFW\+::\+Spatial\+Chunk\+Key\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&}]{o}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [default]}, {\ttfamily [noexcept]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_spatial_chunk_key_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_spatial_chunk_key_ab609625f6088b097783303720df7f6d1}\index{SFW::SpatialChunkKey@{SFW::SpatialChunkKey}!code@{code}}
+\index{code@{code}!SFW::SpatialChunkKey@{SFW::SpatialChunkKey}}
+\doxysubsubsection{\texorpdfstring{code}{code}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_spatial_chunk_key_ab609625f6088b097783303720df7f6d1} 
+uint64\+\_\+t SFW\+::\+Spatial\+Chunk\+Key\+::code \{ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_a01f516a32fc7f8cdadd526aaa4786a6d}{k\+Invalid\+Code}} \}}
+
+
+
+ \mbox{\hyperlink{_registry_types_8h_source}{Registry\+Types.\+h}} の \mbox{\hyperlink{_registry_types_8h_source_l00026}{26}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_spatial_chunk_key_a68481121c1a141301ff49e3fab0c2a85}\index{SFW::SpatialChunkKey@{SFW::SpatialChunkKey}!depth@{depth}}
+\index{depth@{depth}!SFW::SpatialChunkKey@{SFW::SpatialChunkKey}}
+\doxysubsubsection{\texorpdfstring{depth}{depth}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_spatial_chunk_key_a68481121c1a141301ff49e3fab0c2a85} 
+uint8\+\_\+t SFW\+::\+Spatial\+Chunk\+Key\+::depth \{ 0 \}}
+
+
+
+ \mbox{\hyperlink{_registry_types_8h_source}{Registry\+Types.\+h}} の \mbox{\hyperlink{_registry_types_8h_source_l00024}{24}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_spatial_chunk_key_acf1ed43a3bc5adefa3ceca52a33ae6b1}\index{SFW::SpatialChunkKey@{SFW::SpatialChunkKey}!generation@{generation}}
+\index{generation@{generation}!SFW::SpatialChunkKey@{SFW::SpatialChunkKey}}
+\doxysubsubsection{\texorpdfstring{generation}{generation}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_spatial_chunk_key_acf1ed43a3bc5adefa3ceca52a33ae6b1} 
+std\+::uint16\+\_\+t SFW\+::\+Spatial\+Chunk\+Key\+::generation \{ 0 \}}
+
+
+
+ \mbox{\hyperlink{_registry_types_8h_source}{Registry\+Types.\+h}} の \mbox{\hyperlink{_registry_types_8h_source_l00025}{25}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_spatial_chunk_key_a01f516a32fc7f8cdadd526aaa4786a6d}\index{SFW::SpatialChunkKey@{SFW::SpatialChunkKey}!kInvalidCode@{kInvalidCode}}
+\index{kInvalidCode@{kInvalidCode}!SFW::SpatialChunkKey@{SFW::SpatialChunkKey}}
+\doxysubsubsection{\texorpdfstring{kInvalidCode}{kInvalidCode}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_spatial_chunk_key_a01f516a32fc7f8cdadd526aaa4786a6d} 
+uint64\+\_\+t SFW\+::\+Spatial\+Chunk\+Key\+::k\+Invalid\+Code = (std\+::numeric\+\_\+limits$<$uint64\+\_\+t$>$\+::max)()\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+ \mbox{\hyperlink{_registry_types_8h_source}{Registry\+Types.\+h}} の \mbox{\hyperlink{_registry_types_8h_source_l00028}{28}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_spatial_chunk_key_ac6232af82d77e8ac51a31073efbdc193}\index{SFW::SpatialChunkKey@{SFW::SpatialChunkKey}!level@{level}}
+\index{level@{level}!SFW::SpatialChunkKey@{SFW::SpatialChunkKey}}
+\doxysubsubsection{\texorpdfstring{level}{level}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_spatial_chunk_key_ac6232af82d77e8ac51a31073efbdc193} 
+\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} SFW\+::\+Spatial\+Chunk\+Key\+::level \{\}}
+
+
+
+ \mbox{\hyperlink{_registry_types_8h_source}{Registry\+Types.\+h}} の \mbox{\hyperlink{_registry_types_8h_source_l00022}{22}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_spatial_chunk_key_a709140dd173dccc65e5d56430f999af2}\index{SFW::SpatialChunkKey@{SFW::SpatialChunkKey}!scheme@{scheme}}
+\index{scheme@{scheme}!SFW::SpatialChunkKey@{SFW::SpatialChunkKey}}
+\doxysubsubsection{\texorpdfstring{scheme}{scheme}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_spatial_chunk_key_a709140dd173dccc65e5d56430f999af2} 
+\mbox{\hyperlink{namespace_s_f_w_a834dda392d6f71061e76b5b138ef43e6}{Partition\+Scheme}} SFW\+::\+Spatial\+Chunk\+Key\+::scheme \{ \mbox{\hyperlink{namespace_s_f_w_a834dda392d6f71061e76b5b138ef43e6aea730ecd1f61168b907030ec96d79172}{Partition\+Scheme\+::\+Grid2D}} \}}
+
+
+
+ \mbox{\hyperlink{_registry_types_8h_source}{Registry\+Types.\+h}} の \mbox{\hyperlink{_registry_types_8h_source_l00023}{23}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_registry_types_8h}{Registry\+Types.\+h}}\end{DoxyCompactItemize}

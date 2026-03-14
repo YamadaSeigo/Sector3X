@@ -1,0 +1,223 @@
+\doxysection{SFW\+::Debug\+::Rolling\+Buffer 構造体}
+\hypertarget{struct_s_f_w_1_1_debug_1_1_rolling_buffer}{}\label{struct_s_f_w_1_1_debug_1_1_rolling_buffer}\index{SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}}
+
+
+固定サイズのローリングバッファ  
+
+
+
+
+{\ttfamily \#include $<$Perf\+HUD.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a93db1dac22da233d3584a61227ee5f9b}{init}} (size\+\_\+t cap)
+\begin{DoxyCompactList}\small\item\em バッファを初期化する \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a154c19539c97700a76004b8ac28a336f}{size}} () const
+\begin{DoxyCompactList}\small\item\em バッファのサイズを取得する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a8ceea90bd21398bab573823fa0931991}{empty}} () const
+\begin{DoxyCompactList}\small\item\em バッファが空かどうかを確認する \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a053d0edcfc418f93892e81805bae64f9}{push}} (float v)
+\begin{DoxyCompactList}\small\item\em バッファに値を追加する \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a2acd053ac499ce7df8b24c4369bf0321}{to\+Linear}} (std\+::vector$<$ float $>$ \&out) const
+\begin{DoxyCompactList}\small\item\em バッファの内容を線形配列に変換する \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a9f22a01939a93fe17a31f676282b3f86}{autoscale}} ()
+\begin{DoxyCompactList}\small\item\em バッファの内容を自動的にスケーリングする \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_rolling_buffer_abac3880d0f4778c595f702dbefe35499}{average}} () const
+\begin{DoxyCompactList}\small\item\em バッファの平均値を計算する \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ float $>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a6a09809d045497c12b6700223f515585}{data}}
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a4aa18de47886565ada44515ed67546ca}{head}} = 0
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a92e16f54393a08ac213ec8d4afc58f92}{last\+Min}} = 0.f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a948232c3b7f2b1023f7c7af7aa4edd0b}{last\+Max}} = 1.f
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+固定サイズのローリングバッファ 
+
+ \mbox{\hyperlink{_perf_h_u_d_8h_source}{Perf\+HUD.\+h}} の \mbox{\hyperlink{_perf_h_u_d_8h_source_l00022}{22}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_rolling_buffer_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a9f22a01939a93fe17a31f676282b3f86}\index{SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}!autoscale@{autoscale}}
+\index{autoscale@{autoscale}!SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}}
+\doxysubsubsection{\texorpdfstring{autoscale()}{autoscale()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a9f22a01939a93fe17a31f676282b3f86} 
+void SFW\+::\+Debug\+::\+Rolling\+Buffer\+::autoscale (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+バッファの内容を自動的にスケーリングする 
+
+
+
+ \mbox{\hyperlink{_perf_h_u_d_8h_source}{Perf\+HUD.\+h}} の \mbox{\hyperlink{_perf_h_u_d_8h_source_l00068}{68}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_rolling_buffer_abac3880d0f4778c595f702dbefe35499}\index{SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}!average@{average}}
+\index{average@{average}!SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}}
+\doxysubsubsection{\texorpdfstring{average()}{average()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_rolling_buffer_abac3880d0f4778c595f702dbefe35499} 
+float SFW\+::\+Debug\+::\+Rolling\+Buffer\+::average (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+バッファの平均値を計算する 
+
+\begin{DoxyReturn}{戻り値}
+float 平均値 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_perf_h_u_d_8h_source}{Perf\+HUD.\+h}} の \mbox{\hyperlink{_perf_h_u_d_8h_source_l00079}{79}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a8ceea90bd21398bab573823fa0931991}\index{SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}!empty@{empty}}
+\index{empty@{empty}!SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}}
+\doxysubsubsection{\texorpdfstring{empty()}{empty()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a8ceea90bd21398bab573823fa0931991} 
+bool SFW\+::\+Debug\+::\+Rolling\+Buffer\+::empty (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+バッファが空かどうかを確認する 
+
+\begin{DoxyReturn}{戻り値}
+bool 空の場合はtrue、そうでない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_perf_h_u_d_8h_source}{Perf\+HUD.\+h}} の \mbox{\hyperlink{_perf_h_u_d_8h_source_l00043}{43}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a93db1dac22da233d3584a61227ee5f9b}\index{SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}!init@{init}}
+\index{init@{init}!SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a93db1dac22da233d3584a61227ee5f9b} 
+void SFW\+::\+Debug\+::\+Rolling\+Buffer\+::init (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{cap}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+バッファを初期化する 
+
+
+\begin{DoxyParams}{引数}
+{\em cap} & バッファの容量 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_perf_h_u_d_8h_source}{Perf\+HUD.\+h}} の \mbox{\hyperlink{_perf_h_u_d_8h_source_l00033}{33}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a053d0edcfc418f93892e81805bae64f9}\index{SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}!push@{push}}
+\index{push@{push}!SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}}
+\doxysubsubsection{\texorpdfstring{push()}{push()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a053d0edcfc418f93892e81805bae64f9} 
+void SFW\+::\+Debug\+::\+Rolling\+Buffer\+::push (\begin{DoxyParamCaption}\item[{float}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+バッファに値を追加する 
+
+
+\begin{DoxyParams}{引数}
+{\em v} & 追加する値 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_perf_h_u_d_8h_source}{Perf\+HUD.\+h}} の \mbox{\hyperlink{_perf_h_u_d_8h_source_l00048}{48}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a154c19539c97700a76004b8ac28a336f}\index{SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}!size@{size}}
+\index{size@{size}!SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a154c19539c97700a76004b8ac28a336f} 
+size\+\_\+t SFW\+::\+Debug\+::\+Rolling\+Buffer\+::size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+バッファのサイズを取得する 
+
+\begin{DoxyReturn}{戻り値}
+size\+\_\+t バッファのサイズ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_perf_h_u_d_8h_source}{Perf\+HUD.\+h}} の \mbox{\hyperlink{_perf_h_u_d_8h_source_l00038}{38}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a2acd053ac499ce7df8b24c4369bf0321}\index{SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}!toLinear@{toLinear}}
+\index{toLinear@{toLinear}!SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}}
+\doxysubsubsection{\texorpdfstring{toLinear()}{toLinear()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a2acd053ac499ce7df8b24c4369bf0321} 
+void SFW\+::\+Debug\+::\+Rolling\+Buffer\+::to\+Linear (\begin{DoxyParamCaption}\item[{std\+::vector$<$ float $>$ \&}]{out}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+バッファの内容を線形配列に変換する 
+
+
+\begin{DoxyParams}{引数}
+{\em out} & 出力先の配列 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_perf_h_u_d_8h_source}{Perf\+HUD.\+h}} の \mbox{\hyperlink{_perf_h_u_d_8h_source_l00057}{57}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_rolling_buffer_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a6a09809d045497c12b6700223f515585}\index{SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}!data@{data}}
+\index{data@{data}!SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a6a09809d045497c12b6700223f515585} 
+std\+::vector$<$float$>$ SFW\+::\+Debug\+::\+Rolling\+Buffer\+::data}
+
+
+
+ \mbox{\hyperlink{_perf_h_u_d_8h_source}{Perf\+HUD.\+h}} の \mbox{\hyperlink{_perf_h_u_d_8h_source_l00024}{24}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a4aa18de47886565ada44515ed67546ca}\index{SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}!head@{head}}
+\index{head@{head}!SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}}
+\doxysubsubsection{\texorpdfstring{head}{head}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a4aa18de47886565ada44515ed67546ca} 
+size\+\_\+t SFW\+::\+Debug\+::\+Rolling\+Buffer\+::head = 0}
+
+
+
+ \mbox{\hyperlink{_perf_h_u_d_8h_source}{Perf\+HUD.\+h}} の \mbox{\hyperlink{_perf_h_u_d_8h_source_l00026}{26}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a948232c3b7f2b1023f7c7af7aa4edd0b}\index{SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}!lastMax@{lastMax}}
+\index{lastMax@{lastMax}!SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}}
+\doxysubsubsection{\texorpdfstring{lastMax}{lastMax}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a948232c3b7f2b1023f7c7af7aa4edd0b} 
+float SFW\+::\+Debug\+::\+Rolling\+Buffer\+::last\+Max = 1.f}
+
+
+
+ \mbox{\hyperlink{_perf_h_u_d_8h_source}{Perf\+HUD.\+h}} の \mbox{\hyperlink{_perf_h_u_d_8h_source_l00028}{28}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a92e16f54393a08ac213ec8d4afc58f92}\index{SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}!lastMin@{lastMin}}
+\index{lastMin@{lastMin}!SFW::Debug::RollingBuffer@{SFW::Debug::RollingBuffer}}
+\doxysubsubsection{\texorpdfstring{lastMin}{lastMin}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_rolling_buffer_a92e16f54393a08ac213ec8d4afc58f92} 
+float SFW\+::\+Debug\+::\+Rolling\+Buffer\+::last\+Min = 0.f}
+
+
+
+ \mbox{\hyperlink{_perf_h_u_d_8h_source}{Perf\+HUD.\+h}} の \mbox{\hyperlink{_perf_h_u_d_8h_source_l00028}{28}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Debug/\mbox{\hyperlink{_perf_h_u_d_8h}{Perf\+HUD.\+h}}\end{DoxyCompactItemize}

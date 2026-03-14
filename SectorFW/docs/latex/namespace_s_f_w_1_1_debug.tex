@@ -1,0 +1,512 @@
+\doxysection{SFW\+::Debug 名前空間}
+\hypertarget{namespace_s_f_w_1_1_debug}{}\label{namespace_s_f_w_1_1_debug}\index{SFW::Debug@{SFW::Debug}}
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control}{Debug\+Control}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11}{Gpu\+Timer\+D3\+D11}}
+\begin{DoxyCompactList}\small\item\em Direct3\+D11用の\+GPUタイマー \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend}{IIm\+Gui\+Backend}}
+\begin{DoxyCompactList}\small\item\em Im\+Guiのバックエンドインターフェース(抽象クラス) \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32}{Im\+Gui\+Backend\+DX11\+Win32}}
+\begin{DoxyCompactList}\small\item\em Im\+Guiの\+Direct\+X11と\+Win32のバックエンドを実装するクラス \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info}{Im\+Gui\+Init\+Info}}
+\begin{DoxyCompactList}\small\item\em Im\+Guiの初期化情報を格納する構造体 \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer}{Im\+Gui\+Layer}}
+\begin{DoxyCompactList}\small\item\em バックエンドを使用して\+Im\+Guiの描画を管理するクラス \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}
+\begin{DoxyCompactList}\small\item\em 軽量 \doxylink{struct_s_f_w_1_1_debug_1_1_latest}{Latest} 値（trivially copyable 用） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_3_01std_1_1string_01_4}{Latest$<$ std\+::string $>$}}
+\begin{DoxyCompactList}\small\item\em 文字列など非trivialはロックで \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Line\+Vertex}}
+\begin{DoxyCompactList}\small\item\em ライン描画用の頂点構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_perf_h_u_d}{Perf\+HUD}}
+\begin{DoxyCompactList}\small\item\em パフォーマンス\+HUDを表示するクラス \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_process_cpu_usage_win32}{Process\+Cpu\+Usage\+Win32}}
+\begin{DoxyCompactList}\small\item\em Win32環境でプロセスの\+CPU使用率を測定するクラス \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_process_gpu3_d_util_p_d_h}{Process\+Gpu3\+DUtil\+PDH}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_rolling_buffer}{Rolling\+Buffer}}
+\begin{DoxyCompactList}\small\item\em 固定サイズのローリングバッファ \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry}{Telemetry}}
+\begin{DoxyCompactList}\small\item\em 必要ならスナップショット（二重バッファ） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_frame}{Tree\+Frame}}
+\begin{DoxyCompactList}\small\item\em ツリーフレーム（前順＋depth 付きアイテム群） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item}{Tree\+Item}}
+\begin{DoxyCompactList}\small\item\em Tree snapshot types(\doxylink{_u_i_bus_8h}{UIBus.\+h}) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus}{UIBus}}
+\begin{DoxyCompactList}\small\item\em バス本体（ここだけをグローバルにする） \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue}{Ui\+Queue}}
+\begin{DoxyCompactList}\small\item\em 小さな MPMC 風キュー（\+UI側で毎フレ drain するだけなのでロックで\+OK） \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{Ui\+Snapshot}}
+\begin{DoxyCompactList}\small\item\em \doxylink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{Ui\+Snapshot}\+: RAII 版 \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot}{Ui\+Tree\+Snapshot}}
+\begin{DoxyCompactList}\small\item\em 既存 \doxylink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{Ui\+Snapshot} をそのまま流用して \doxylink{struct_s_f_w_1_1_debug_1_1_tree_frame}{Tree\+Frame} 用を追加 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_vertex_p_n_u_v}{Vertex\+PNUV}}
+\begin{DoxyCompactList}\small\item\em デバッグ用の頂点構造体（位置、法線、\+UV） \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_debug_1_1_im_gui_backend_type}{Im\+Gui\+Backend\+Type}}
+\begin{DoxyCompactList}\small\item\em IIm\+Gui\+Backendを継承しているかをチェックするコンセプト \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7}{World\+Tree\+Depth}} \+: uint32\+\_\+t \{ \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a2b45a029635465d690236b2cc1cbad60}{TREEDEPTH\+\_\+\+WORLD}} = 0
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a04b592d815dcee98bfcf032e71dc71da}{TREEDEPTH\+\_\+\+LEVEL}} = 1
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{TREEDEPTH\+\_\+\+LEVELNODE}} = 2
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7ab0b6eb4ee39bfc02a41160ee04491bf3}{TREEDEPTH\+\_\+\+SYSTEM}} = 3
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a51a97141f1708d6abe7f1503a50d1390}{TREEDEPTH\+\_\+\+RENDERGRAPH}} = 0
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a4e911bdeaf47d5d831614e65d4ce4b0c}{TREEDEPTH\+\_\+\+GROUP}} = 1
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a31d454798115b8615b2e41760c95a52a}{TREEDEPTH\+\_\+\+DRAWCOMMAND}} = 2
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a50745519cbf5e21c2aac8cb11f4fc3fb}{TREEDEPTH\+\_\+\+MAX}}
+ \}
+\begin{DoxyCompactList}\small\item\em ワールドのデバッグツリーの深さ \end{DoxyCompactList}\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6e}{Debug\+Control\+Kind}} \{ \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea17a2005227b5091b43b18b95f1a0d878}{DC\+\_\+\+SLIDERFLOAT}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6eac2113140649de9a385e390d6e9702dbb}{DC\+\_\+\+SLIDERINT}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ead2c909ffc1aeb322b9c749f17e5a0aa1}{DC\+\_\+\+CHECKBOX}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea06f85ad35ec8764cf3b1f69b2b3050c5}{DC\+\_\+\+BUTTON}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea9dcd4833f6f2f107094ae561b9aad64f}{DC\+\_\+\+STRING}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea59cf1d5848281d090de6ca134575e7ea}{DC\+\_\+\+MAX}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ad9176b9ec7bce1195c82555b0ca97f34}{Report\+Assert\+Failure}} (const char \texorpdfstring{$\ast$}{*}expr, const char \texorpdfstring{$\ast$}{*}file, int line, const char \texorpdfstring{$\ast$}{*}msg=nullptr)
+\item 
+std\+::array$<$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug\+::\+Line\+Vertex}}, 24 $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a6344d103705920b8aa103c99585967a6}{Make\+AABBLine\+Vertices}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}} \&box, uint32\+\_\+t rgba=0x\+FFFFFFFF)
+\begin{DoxyCompactList}\small\item\em AABB3f を 12 本のライン用 24 頂点で返す（重複あり・インデックス不要） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a6d7ec86cc627f9d7309579d87f167658}{Append\+AABBLine\+List\+Indexed}} (std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug\+::\+Line\+Vertex}} $>$ \&out\+Verts, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Indices, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}} \&box, uint32\+\_\+t rgba=0x\+FFFFFFFF)
+\begin{DoxyCompactList}\small\item\em AABB3f を 8 頂点 + 24 インデックスで追加（頂点の重複を避けたい場合） \end{DoxyCompactList}\item 
+std\+::array$<$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug\+::\+Line\+Vertex}}, 24 $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ad69e3e2e767235fee5c818ac93353b81}{Make\+Frustum\+Line\+Vertices}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&frustum, uint32\+\_\+t rgba=0x\+FFFFFFFF)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a870ef2c794ecbe2e07f50ee78891e5e1}{assert\+\_\+with\+\_\+msg}} (bool expr, const char \texorpdfstring{$\ast$}{*}file, int line, const char \texorpdfstring{$\ast$}{*}func, const char \texorpdfstring{$\ast$}{*}format,...)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a950ab8f369d53ce8da36b2b5948eecb0}{assert\+\_\+with\+\_\+msg}} (bool expr, const char \texorpdfstring{$\ast$}{*}file, int line, const wchar\+\_\+t \texorpdfstring{$\ast$}{*}func, const char \texorpdfstring{$\ast$}{*}format,...)
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus}{UIBus}} \& \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d0bba14e83fddcf055f0f5882ef1d20}{Get\+UIBus}} ()
+\begin{DoxyCompactList}\small\item\em グローバル\+UIバスの取得 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3a2550c44f664296d2cb5964d84b8371}{Register\+Debug\+Slider\+Float}} (const std\+::string \&category, const std\+::string \&label, float initial\+Value, float min\+Value, float max\+Value, float speed, std\+::function$<$ void(float)$>$ on\+Change, float \texorpdfstring{$\ast$}{*}bound=nullptr)
+\begin{DoxyCompactList}\small\item\em Im\+Gui の Slider\+Float + コールバック. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_aab4c10e135d3458cd168dd0cd6d67ceb}{Bind\+Debug\+Slider\+Float}} (const std\+::string \&category, const std\+::string \&label, float \texorpdfstring{$\ast$}{*}target, float min\+Value, float max\+Value, float speed=0.\+1f)
+\begin{DoxyCompactList}\small\item\em 変数ポインタを直接バインドする簡易版. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a5fa99aa82d281e8132a3425db5bc380c}{Register\+Debug\+Slider\+Int}} (const std\+::string \&category, const std\+::string \&label, int initial\+Value, int min\+Value, int max\+Value, std\+::function$<$ void(int)$>$ on\+Change, int \texorpdfstring{$\ast$}{*}bound=nullptr)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a943a25648edcc118fbdde28001b97e71}{Bind\+Debug\+Slider\+Int}} (const std\+::string \&category, const std\+::string \&label, int \texorpdfstring{$\ast$}{*}target, int min\+Value, int max\+Value)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a01a7201fbf0ff09ad1cb9aec2bb776cc}{Register\+Debug\+Check\+Box}} (const std\+::string \&category, const std\+::string \&label, bool initial\+Value, std\+::function$<$ void(bool)$>$ on\+Change, bool \texorpdfstring{$\ast$}{*}bound=nullptr)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ab0d1c9a03e298b6aa90e3ba7c9015cef}{Bind\+Debug\+Check\+Box}} (const std\+::string \&category, const std\+::string \&label, bool \texorpdfstring{$\ast$}{*}target)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_aedcb688663a956ee879675fbb6aeb92b}{Register\+Debug\+Button}} (const std\+::string \&category, const std\+::string \&label, std\+::function$<$ void(bool)$>$ on\+Change)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a2c8e0a8d4e63206d4cae287d01ee46e6}{Register\+Debug\+Text}} (const std\+::string \&category, const std\+::string \&label, const std\+::string \&initial, std\+::function$<$ void(std\+::string)$>$ on\+Change)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ad07e49b18e66359e5a6b7eff8f478fbf}{Bind\+Debug\+Text}} (const std\+::string \&category, const std\+::string \&label, std\+::string \texorpdfstring{$\ast$}{*}target)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a52ff234b5d6e40bcef2b394ae7999cc8}{Start\+UIBus}} ()
+\begin{DoxyCompactList}\small\item\em ライフサイクル（起動時 / 終了時に呼ぶ） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae2759b232b15cacfdc131ee5c9ec0585}{Stop\+UIBus}} ()
+\begin{DoxyCompactList}\small\item\em ライフサイクル（起動時 / 終了時に呼ぶ） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae62b8d5feb3160cf83ad7102867c899e}{Publish\+Cpu}} (float v)
+\begin{DoxyCompactList}\small\item\em CPUの計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_adad758e341c01e05d1143fbaa3fed49d}{Publish\+Gpu}} (float v)
+\begin{DoxyCompactList}\small\item\em GPUの計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_aa600d63fbaac812f9054d99e9771d555}{Publish\+Logic\+Ms}} (float ms)
+\begin{DoxyCompactList}\small\item\em ロジックの計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a414fa917af9d755a3555b5209873c24e}{Publish\+Render\+Ms}} (float ms)
+\begin{DoxyCompactList}\small\item\em 描画の\+CPU部分の計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a9e1a99f1084579cbeab606452559bafe}{Publish\+Gpu\+Frame\+Ms}} (float ms)
+\begin{DoxyCompactList}\small\item\em GPUフレーム時間の計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a4f848186328195747e7e0164bdf74d87}{Publish\+Status}} (std\+::string s)
+\begin{DoxyCompactList}\small\item\em ステータス文字列を発行。公開\+API（どこからでも呼べる“関数”だけを露出） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_debug_aedec323da1ec660d4b9776b7f93a8b6b}{Push\+Log}} (std\+::string s)
+\begin{DoxyCompactList}\small\item\em ログ文字列を発行。公開\+API（どこからでも呼べる“関数”だけを露出） \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Ui\+Snapshot\+::\+Write\+Guard}} \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a8f49bf39cb26ca3db5ed6a01fb989e56}{Begin\+Telemetry\+Write}} ()
+\begin{DoxyCompactList}\small\item\em テレメトリ書き込み開始（\+RAIIでロック/アンロック） \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard}{Ui\+Tree\+Snapshot\+::\+Write\+Guard}} \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48}{Begin\+Tree\+Write}} ()
+\begin{DoxyCompactList}\small\item\em ツリー書き込み開始（\+RAIIでロック/アンロック） \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-enum-members}
+\Hypertarget{namespace_s_f_w_1_1_debug_doc-enum-members}
+\doxysubsection{列挙型詳解}
+\Hypertarget{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6e}\index{SFW::Debug@{SFW::Debug}!DebugControlKind@{DebugControlKind}}
+\index{DebugControlKind@{DebugControlKind}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{DebugControlKind}{DebugControlKind}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6e} 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6e}{SFW\+::\+Debug\+::\+Debug\+Control\+Kind}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DC\_SLIDERFLOAT@{DC\_SLIDERFLOAT}!SFW::Debug@{SFW::Debug}}\index{SFW::Debug@{SFW::Debug}!DC\_SLIDERFLOAT@{DC\_SLIDERFLOAT}}}\Hypertarget{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea17a2005227b5091b43b18b95f1a0d878}\label{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea17a2005227b5091b43b18b95f1a0d878} 
+DC\+\_\+\+SLIDERFLOAT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DC\_SLIDERINT@{DC\_SLIDERINT}!SFW::Debug@{SFW::Debug}}\index{SFW::Debug@{SFW::Debug}!DC\_SLIDERINT@{DC\_SLIDERINT}}}\Hypertarget{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6eac2113140649de9a385e390d6e9702dbb}\label{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6eac2113140649de9a385e390d6e9702dbb} 
+DC\+\_\+\+SLIDERINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DC\_CHECKBOX@{DC\_CHECKBOX}!SFW::Debug@{SFW::Debug}}\index{SFW::Debug@{SFW::Debug}!DC\_CHECKBOX@{DC\_CHECKBOX}}}\Hypertarget{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ead2c909ffc1aeb322b9c749f17e5a0aa1}\label{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ead2c909ffc1aeb322b9c749f17e5a0aa1} 
+DC\+\_\+\+CHECKBOX&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DC\_BUTTON@{DC\_BUTTON}!SFW::Debug@{SFW::Debug}}\index{SFW::Debug@{SFW::Debug}!DC\_BUTTON@{DC\_BUTTON}}}\Hypertarget{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea06f85ad35ec8764cf3b1f69b2b3050c5}\label{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea06f85ad35ec8764cf3b1f69b2b3050c5} 
+DC\+\_\+\+BUTTON&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DC\_STRING@{DC\_STRING}!SFW::Debug@{SFW::Debug}}\index{SFW::Debug@{SFW::Debug}!DC\_STRING@{DC\_STRING}}}\Hypertarget{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea9dcd4833f6f2f107094ae561b9aad64f}\label{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea9dcd4833f6f2f107094ae561b9aad64f} 
+DC\+\_\+\+STRING&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DC\_MAX@{DC\_MAX}!SFW::Debug@{SFW::Debug}}\index{SFW::Debug@{SFW::Debug}!DC\_MAX@{DC\_MAX}}}\Hypertarget{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea59cf1d5848281d090de6ca134575e7ea}\label{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea59cf1d5848281d090de6ca134575e7ea} 
+DC\+\_\+\+MAX&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00192}{192}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7}\index{SFW::Debug@{SFW::Debug}!WorldTreeDepth@{WorldTreeDepth}}
+\index{WorldTreeDepth@{WorldTreeDepth}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{WorldTreeDepth}{WorldTreeDepth}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7} 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7}{SFW\+::\+Debug\+::\+World\+Tree\+Depth}} \+: uint32\+\_\+t\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+ワールドのデバッグツリーの深さ 
+
+\begin{DoxyEnumFields}[2]{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TREEDEPTH\_WORLD@{TREEDEPTH\_WORLD}!SFW::Debug@{SFW::Debug}}\index{SFW::Debug@{SFW::Debug}!TREEDEPTH\_WORLD@{TREEDEPTH\_WORLD}}}\Hypertarget{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a2b45a029635465d690236b2cc1cbad60}\label{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a2b45a029635465d690236b2cc1cbad60} 
+TREEDEPTH\+\_\+\+WORLD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TREEDEPTH\_LEVEL@{TREEDEPTH\_LEVEL}!SFW::Debug@{SFW::Debug}}\index{SFW::Debug@{SFW::Debug}!TREEDEPTH\_LEVEL@{TREEDEPTH\_LEVEL}}}\Hypertarget{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a04b592d815dcee98bfcf032e71dc71da}\label{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a04b592d815dcee98bfcf032e71dc71da} 
+TREEDEPTH\+\_\+\+LEVEL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TREEDEPTH\_LEVELNODE@{TREEDEPTH\_LEVELNODE}!SFW::Debug@{SFW::Debug}}\index{SFW::Debug@{SFW::Debug}!TREEDEPTH\_LEVELNODE@{TREEDEPTH\_LEVELNODE}}}\Hypertarget{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}\label{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797} 
+TREEDEPTH\+\_\+\+LEVELNODE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TREEDEPTH\_SYSTEM@{TREEDEPTH\_SYSTEM}!SFW::Debug@{SFW::Debug}}\index{SFW::Debug@{SFW::Debug}!TREEDEPTH\_SYSTEM@{TREEDEPTH\_SYSTEM}}}\Hypertarget{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7ab0b6eb4ee39bfc02a41160ee04491bf3}\label{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7ab0b6eb4ee39bfc02a41160ee04491bf3} 
+TREEDEPTH\+\_\+\+SYSTEM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TREEDEPTH\_RENDERGRAPH@{TREEDEPTH\_RENDERGRAPH}!SFW::Debug@{SFW::Debug}}\index{SFW::Debug@{SFW::Debug}!TREEDEPTH\_RENDERGRAPH@{TREEDEPTH\_RENDERGRAPH}}}\Hypertarget{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a51a97141f1708d6abe7f1503a50d1390}\label{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a51a97141f1708d6abe7f1503a50d1390} 
+TREEDEPTH\+\_\+\+RENDERGRAPH&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TREEDEPTH\_GROUP@{TREEDEPTH\_GROUP}!SFW::Debug@{SFW::Debug}}\index{SFW::Debug@{SFW::Debug}!TREEDEPTH\_GROUP@{TREEDEPTH\_GROUP}}}\Hypertarget{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a4e911bdeaf47d5d831614e65d4ce4b0c}\label{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a4e911bdeaf47d5d831614e65d4ce4b0c} 
+TREEDEPTH\+\_\+\+GROUP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TREEDEPTH\_DRAWCOMMAND@{TREEDEPTH\_DRAWCOMMAND}!SFW::Debug@{SFW::Debug}}\index{SFW::Debug@{SFW::Debug}!TREEDEPTH\_DRAWCOMMAND@{TREEDEPTH\_DRAWCOMMAND}}}\Hypertarget{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a31d454798115b8615b2e41760c95a52a}\label{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a31d454798115b8615b2e41760c95a52a} 
+TREEDEPTH\+\_\+\+DRAWCOMMAND&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TREEDEPTH\_MAX@{TREEDEPTH\_MAX}!SFW::Debug@{SFW::Debug}}\index{SFW::Debug@{SFW::Debug}!TREEDEPTH\_MAX@{TREEDEPTH\_MAX}}}\Hypertarget{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a50745519cbf5e21c2aac8cb11f4fc3fb}\label{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a50745519cbf5e21c2aac8cb11f4fc3fb} 
+TREEDEPTH\+\_\+\+MAX&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00114}{114}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{namespace_s_f_w_1_1_debug_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{namespace_s_f_w_1_1_debug_a6d7ec86cc627f9d7309579d87f167658}\index{SFW::Debug@{SFW::Debug}!AppendAABBLineListIndexed@{AppendAABBLineListIndexed}}
+\index{AppendAABBLineListIndexed@{AppendAABBLineListIndexed}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{AppendAABBLineListIndexed()}{AppendAABBLineListIndexed()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a6d7ec86cc627f9d7309579d87f167658} 
+void SFW\+::\+Debug\+::\+Append\+AABBLine\+List\+Indexed (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug\+::\+Line\+Vertex}} $>$ \&}]{out\+Verts}{, }\item[{std\+::vector$<$ uint32\+\_\+t $>$ \&}]{out\+Indices}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}} \&}]{box}{, }\item[{uint32\+\_\+t}]{rgba}{ = {\ttfamily 0xFFFFFFFF}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+AABB3f を 8 頂点 + 24 インデックスで追加（頂点の重複を避けたい場合） 
+
+
+
+ \mbox{\hyperlink{_debug_type_8h_source}{Debug\+Type.\+h}} の \mbox{\hyperlink{_debug_type_8h_source_l00079}{79}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_debug_a870ef2c794ecbe2e07f50ee78891e5e1}\index{SFW::Debug@{SFW::Debug}!assert\_with\_msg@{assert\_with\_msg}}
+\index{assert\_with\_msg@{assert\_with\_msg}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{assert\_with\_msg()}{assert\_with\_msg()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a870ef2c794ecbe2e07f50ee78891e5e1} 
+void SFW\+::\+Debug\+::assert\+\_\+with\+\_\+msg (\begin{DoxyParamCaption}\item[{bool}]{expr}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{file}{, }\item[{int}]{line}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{func}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{format}{, }\item[{}]{...}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_s_f_w_1_1_debug_a950ab8f369d53ce8da36b2b5948eecb0}\index{SFW::Debug@{SFW::Debug}!assert\_with\_msg@{assert\_with\_msg}}
+\index{assert\_with\_msg@{assert\_with\_msg}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{assert\_with\_msg()}{assert\_with\_msg()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a950ab8f369d53ce8da36b2b5948eecb0} 
+void SFW\+::\+Debug\+::assert\+\_\+with\+\_\+msg (\begin{DoxyParamCaption}\item[{bool}]{expr}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{file}{, }\item[{int}]{line}{, }\item[{const wchar\+\_\+t \texorpdfstring{$\ast$}{*}}]{func}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{format}{, }\item[{}]{...}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_s_f_w_1_1_debug_a8f49bf39cb26ca3db5ed6a01fb989e56}\index{SFW::Debug@{SFW::Debug}!BeginTelemetryWrite@{BeginTelemetryWrite}}
+\index{BeginTelemetryWrite@{BeginTelemetryWrite}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{BeginTelemetryWrite()}{BeginTelemetryWrite()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a8f49bf39cb26ca3db5ed6a01fb989e56} 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Ui\+Snapshot\+::\+Write\+Guard}} SFW\+::\+Debug\+::\+Begin\+Telemetry\+Write (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+テレメトリ書き込み開始（\+RAIIでロック/アンロック） 
+
+\Hypertarget{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48}\index{SFW::Debug@{SFW::Debug}!BeginTreeWrite@{BeginTreeWrite}}
+\index{BeginTreeWrite@{BeginTreeWrite}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{BeginTreeWrite()}{BeginTreeWrite()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48} 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard}{Ui\+Tree\+Snapshot\+::\+Write\+Guard}} SFW\+::\+Debug\+::\+Begin\+Tree\+Write (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+ツリー書き込み開始（\+RAIIでロック/アンロック） 
+
+\Hypertarget{namespace_s_f_w_1_1_debug_ab0d1c9a03e298b6aa90e3ba7c9015cef}\index{SFW::Debug@{SFW::Debug}!BindDebugCheckBox@{BindDebugCheckBox}}
+\index{BindDebugCheckBox@{BindDebugCheckBox}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{BindDebugCheckBox()}{BindDebugCheckBox()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_ab0d1c9a03e298b6aa90e3ba7c9015cef} 
+void SFW\+::\+Debug\+::\+Bind\+Debug\+Check\+Box (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{category}{, }\item[{const std\+::string \&}]{label}{, }\item[{bool \texorpdfstring{$\ast$}{*}}]{target}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00332}{332}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_debug_aab4c10e135d3458cd168dd0cd6d67ceb}\index{SFW::Debug@{SFW::Debug}!BindDebugSliderFloat@{BindDebugSliderFloat}}
+\index{BindDebugSliderFloat@{BindDebugSliderFloat}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{BindDebugSliderFloat()}{BindDebugSliderFloat()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_aab4c10e135d3458cd168dd0cd6d67ceb} 
+void SFW\+::\+Debug\+::\+Bind\+Debug\+Slider\+Float (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{category}{, }\item[{const std\+::string \&}]{label}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{target}{, }\item[{float}]{min\+Value}{, }\item[{float}]{max\+Value}{, }\item[{float}]{speed}{ = {\ttfamily 0.1f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+変数ポインタを直接バインドする簡易版. 
+
+
+\begin{DoxyParams}{引数}
+{\em label} & ラベル名 \\
+\hline
+{\em target} & 設定する変数のポインタ \\
+\hline
+{\em min\+Value　上限} & \\
+\hline
+{\em max\+Value　下限} & \\
+\hline
+{\em speed　スライダーの速度} & \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00276}{276}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_debug_a943a25648edcc118fbdde28001b97e71}\index{SFW::Debug@{SFW::Debug}!BindDebugSliderInt@{BindDebugSliderInt}}
+\index{BindDebugSliderInt@{BindDebugSliderInt}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{BindDebugSliderInt()}{BindDebugSliderInt()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a943a25648edcc118fbdde28001b97e71} 
+void SFW\+::\+Debug\+::\+Bind\+Debug\+Slider\+Int (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{category}{, }\item[{const std\+::string \&}]{label}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{target}{, }\item[{int}]{min\+Value}{, }\item[{int}]{max\+Value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00306}{306}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_debug_ad07e49b18e66359e5a6b7eff8f478fbf}\index{SFW::Debug@{SFW::Debug}!BindDebugText@{BindDebugText}}
+\index{BindDebugText@{BindDebugText}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{BindDebugText()}{BindDebugText()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_ad07e49b18e66359e5a6b7eff8f478fbf} 
+void SFW\+::\+Debug\+::\+Bind\+Debug\+Text (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{category}{, }\item[{const std\+::string \&}]{label}{, }\item[{std\+::string \texorpdfstring{$\ast$}{*}}]{target}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00360}{360}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_debug_a0d0bba14e83fddcf055f0f5882ef1d20}\index{SFW::Debug@{SFW::Debug}!GetUIBus@{GetUIBus}}
+\index{GetUIBus@{GetUIBus}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{GetUIBus()}{GetUIBus()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a0d0bba14e83fddcf055f0f5882ef1d20} 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus}{UIBus}} \& SFW\+::\+Debug\+::\+Get\+UIBus (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+グローバル\+UIバスの取得 
+
+\Hypertarget{namespace_s_f_w_1_1_debug_a6344d103705920b8aa103c99585967a6}\index{SFW::Debug@{SFW::Debug}!MakeAABBLineVertices@{MakeAABBLineVertices}}
+\index{MakeAABBLineVertices@{MakeAABBLineVertices}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{MakeAABBLineVertices()}{MakeAABBLineVertices()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a6344d103705920b8aa103c99585967a6} 
+std\+::array$<$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug\+::\+Line\+Vertex}}, 24 $>$ SFW\+::\+Debug\+::\+Make\+AABBLine\+Vertices (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}} \&}]{box}{, }\item[{uint32\+\_\+t}]{rgba}{ = {\ttfamily 0xFFFFFFFF}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+AABB3f を 12 本のライン用 24 頂点で返す（重複あり・インデックス不要） 
+
+
+
+ \mbox{\hyperlink{_debug_type_8h_source}{Debug\+Type.\+h}} の \mbox{\hyperlink{_debug_type_8h_source_l00033}{33}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_debug_ad69e3e2e767235fee5c818ac93353b81}\index{SFW::Debug@{SFW::Debug}!MakeFrustumLineVertices@{MakeFrustumLineVertices}}
+\index{MakeFrustumLineVertices@{MakeFrustumLineVertices}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{MakeFrustumLineVertices()}{MakeFrustumLineVertices()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_ad69e3e2e767235fee5c818ac93353b81} 
+std\+::array$<$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug\+::\+Line\+Vertex}}, 24 $>$ SFW\+::\+Debug\+::\+Make\+Frustum\+Line\+Vertices (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{frustum}{, }\item[{uint32\+\_\+t}]{rgba}{ = {\ttfamily 0xFFFFFFFF}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_debug_type_8h_source}{Debug\+Type.\+h}} の \mbox{\hyperlink{_debug_type_8h_source_l00121}{121}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_debug_ae62b8d5feb3160cf83ad7102867c899e}\index{SFW::Debug@{SFW::Debug}!PublishCpu@{PublishCpu}}
+\index{PublishCpu@{PublishCpu}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{PublishCpu()}{PublishCpu()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_ae62b8d5feb3160cf83ad7102867c899e} 
+void SFW\+::\+Debug\+::\+Publish\+Cpu (\begin{DoxyParamCaption}\item[{float}]{v}{}\end{DoxyParamCaption})}
+
+
+
+CPUの計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） 
+
+\Hypertarget{namespace_s_f_w_1_1_debug_adad758e341c01e05d1143fbaa3fed49d}\index{SFW::Debug@{SFW::Debug}!PublishGpu@{PublishGpu}}
+\index{PublishGpu@{PublishGpu}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{PublishGpu()}{PublishGpu()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_adad758e341c01e05d1143fbaa3fed49d} 
+void SFW\+::\+Debug\+::\+Publish\+Gpu (\begin{DoxyParamCaption}\item[{float}]{v}{}\end{DoxyParamCaption})}
+
+
+
+GPUの計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） 
+
+\Hypertarget{namespace_s_f_w_1_1_debug_a9e1a99f1084579cbeab606452559bafe}\index{SFW::Debug@{SFW::Debug}!PublishGpuFrameMs@{PublishGpuFrameMs}}
+\index{PublishGpuFrameMs@{PublishGpuFrameMs}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{PublishGpuFrameMs()}{PublishGpuFrameMs()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a9e1a99f1084579cbeab606452559bafe} 
+void SFW\+::\+Debug\+::\+Publish\+Gpu\+Frame\+Ms (\begin{DoxyParamCaption}\item[{float}]{ms}{}\end{DoxyParamCaption})}
+
+
+
+GPUフレーム時間の計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） 
+
+\Hypertarget{namespace_s_f_w_1_1_debug_aa600d63fbaac812f9054d99e9771d555}\index{SFW::Debug@{SFW::Debug}!PublishLogicMs@{PublishLogicMs}}
+\index{PublishLogicMs@{PublishLogicMs}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{PublishLogicMs()}{PublishLogicMs()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_aa600d63fbaac812f9054d99e9771d555} 
+void SFW\+::\+Debug\+::\+Publish\+Logic\+Ms (\begin{DoxyParamCaption}\item[{float}]{ms}{}\end{DoxyParamCaption})}
+
+
+
+ロジックの計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） 
+
+\Hypertarget{namespace_s_f_w_1_1_debug_a414fa917af9d755a3555b5209873c24e}\index{SFW::Debug@{SFW::Debug}!PublishRenderMs@{PublishRenderMs}}
+\index{PublishRenderMs@{PublishRenderMs}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{PublishRenderMs()}{PublishRenderMs()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a414fa917af9d755a3555b5209873c24e} 
+void SFW\+::\+Debug\+::\+Publish\+Render\+Ms (\begin{DoxyParamCaption}\item[{float}]{ms}{}\end{DoxyParamCaption})}
+
+
+
+描画の\+CPU部分の計測情報を発行。公開\+API（どこからでも呼べる“関数”だけを露出） 
+
+\Hypertarget{namespace_s_f_w_1_1_debug_a4f848186328195747e7e0164bdf74d87}\index{SFW::Debug@{SFW::Debug}!PublishStatus@{PublishStatus}}
+\index{PublishStatus@{PublishStatus}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{PublishStatus()}{PublishStatus()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a4f848186328195747e7e0164bdf74d87} 
+void SFW\+::\+Debug\+::\+Publish\+Status (\begin{DoxyParamCaption}\item[{std\+::string}]{s}{}\end{DoxyParamCaption})}
+
+
+
+ステータス文字列を発行。公開\+API（どこからでも呼べる“関数”だけを露出） 
+
+\Hypertarget{namespace_s_f_w_1_1_debug_aedec323da1ec660d4b9776b7f93a8b6b}\index{SFW::Debug@{SFW::Debug}!PushLog@{PushLog}}
+\index{PushLog@{PushLog}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{PushLog()}{PushLog()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_aedec323da1ec660d4b9776b7f93a8b6b} 
+void SFW\+::\+Debug\+::\+Push\+Log (\begin{DoxyParamCaption}\item[{std\+::string}]{s}{}\end{DoxyParamCaption})}
+
+
+
+ログ文字列を発行。公開\+API（どこからでも呼べる“関数”だけを露出） 
+
+\Hypertarget{namespace_s_f_w_1_1_debug_aedcb688663a956ee879675fbb6aeb92b}\index{SFW::Debug@{SFW::Debug}!RegisterDebugButton@{RegisterDebugButton}}
+\index{RegisterDebugButton@{RegisterDebugButton}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{RegisterDebugButton()}{RegisterDebugButton()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_aedcb688663a956ee879675fbb6aeb92b} 
+void SFW\+::\+Debug\+::\+Register\+Debug\+Button (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{category}{, }\item[{const std\+::string \&}]{label}{, }\item[{std\+::function$<$ void(bool)$>$}]{on\+Change}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_s_f_w_1_1_debug_a01a7201fbf0ff09ad1cb9aec2bb776cc}\index{SFW::Debug@{SFW::Debug}!RegisterDebugCheckBox@{RegisterDebugCheckBox}}
+\index{RegisterDebugCheckBox@{RegisterDebugCheckBox}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{RegisterDebugCheckBox()}{RegisterDebugCheckBox()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a01a7201fbf0ff09ad1cb9aec2bb776cc} 
+void SFW\+::\+Debug\+::\+Register\+Debug\+Check\+Box (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{category}{, }\item[{const std\+::string \&}]{label}{, }\item[{bool}]{initial\+Value}{, }\item[{std\+::function$<$ void(bool)$>$}]{on\+Change}{, }\item[{bool \texorpdfstring{$\ast$}{*}}]{bound}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_s_f_w_1_1_debug_a3a2550c44f664296d2cb5964d84b8371}\index{SFW::Debug@{SFW::Debug}!RegisterDebugSliderFloat@{RegisterDebugSliderFloat}}
+\index{RegisterDebugSliderFloat@{RegisterDebugSliderFloat}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{RegisterDebugSliderFloat()}{RegisterDebugSliderFloat()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a3a2550c44f664296d2cb5964d84b8371} 
+void SFW\+::\+Debug\+::\+Register\+Debug\+Slider\+Float (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{category}{, }\item[{const std\+::string \&}]{label}{, }\item[{float}]{initial\+Value}{, }\item[{float}]{min\+Value}{, }\item[{float}]{max\+Value}{, }\item[{float}]{speed}{, }\item[{std\+::function$<$ void(float)$>$}]{on\+Change}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{bound}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+
+
+Im\+Gui の Slider\+Float + コールバック. 
+
+
+\begin{DoxyParams}{引数}
+{\em label} & ラベル名 \\
+\hline
+{\em initial\+Value} & 初期値 \\
+\hline
+{\em min\+Value　上限} & \\
+\hline
+{\em max\+Value　下限} & \\
+\hline
+{\em speed　スライダーの速度} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{namespace_s_f_w_1_1_debug_a5fa99aa82d281e8132a3425db5bc380c}\index{SFW::Debug@{SFW::Debug}!RegisterDebugSliderInt@{RegisterDebugSliderInt}}
+\index{RegisterDebugSliderInt@{RegisterDebugSliderInt}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{RegisterDebugSliderInt()}{RegisterDebugSliderInt()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a5fa99aa82d281e8132a3425db5bc380c} 
+void SFW\+::\+Debug\+::\+Register\+Debug\+Slider\+Int (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{category}{, }\item[{const std\+::string \&}]{label}{, }\item[{int}]{initial\+Value}{, }\item[{int}]{min\+Value}{, }\item[{int}]{max\+Value}{, }\item[{std\+::function$<$ void(int)$>$}]{on\+Change}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{bound}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_s_f_w_1_1_debug_a2c8e0a8d4e63206d4cae287d01ee46e6}\index{SFW::Debug@{SFW::Debug}!RegisterDebugText@{RegisterDebugText}}
+\index{RegisterDebugText@{RegisterDebugText}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{RegisterDebugText()}{RegisterDebugText()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a2c8e0a8d4e63206d4cae287d01ee46e6} 
+void SFW\+::\+Debug\+::\+Register\+Debug\+Text (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{category}{, }\item[{const std\+::string \&}]{label}{, }\item[{const std\+::string \&}]{initial}{, }\item[{std\+::function$<$ void(std\+::string)$>$}]{on\+Change}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_s_f_w_1_1_debug_ad9176b9ec7bce1195c82555b0ca97f34}\index{SFW::Debug@{SFW::Debug}!ReportAssertFailure@{ReportAssertFailure}}
+\index{ReportAssertFailure@{ReportAssertFailure}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{ReportAssertFailure()}{ReportAssertFailure()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_ad9176b9ec7bce1195c82555b0ca97f34} 
+void SFW\+::\+Debug\+::\+Report\+Assert\+Failure (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{expr}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{file}{, }\item[{int}]{line}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{msg}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{assert__config_8h_source}{assert\+\_\+config.\+h}} の \mbox{\hyperlink{assert__config_8h_source_l00014}{14}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_debug_a52ff234b5d6e40bcef2b394ae7999cc8}\index{SFW::Debug@{SFW::Debug}!StartUIBus@{StartUIBus}}
+\index{StartUIBus@{StartUIBus}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{StartUIBus()}{StartUIBus()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_a52ff234b5d6e40bcef2b394ae7999cc8} 
+void SFW\+::\+Debug\+::\+Start\+UIBus (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+ライフサイクル（起動時 / 終了時に呼ぶ） 
+
+\Hypertarget{namespace_s_f_w_1_1_debug_ae2759b232b15cacfdc131ee5c9ec0585}\index{SFW::Debug@{SFW::Debug}!StopUIBus@{StopUIBus}}
+\index{StopUIBus@{StopUIBus}!SFW::Debug@{SFW::Debug}}
+\doxysubsubsection{\texorpdfstring{StopUIBus()}{StopUIBus()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_debug_ae2759b232b15cacfdc131ee5c9ec0585} 
+void SFW\+::\+Debug\+::\+Stop\+UIBus (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+ライフサイクル（起動時 / 終了時に呼ぶ） 
+

@@ -1,0 +1,825 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Graphics::RenderBackendBase&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt; クラステンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_graphics_1_1_render_backend_base.html','','class_s_f_w_1_1_graphics_1_1_render_backend_base-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Graphics::RenderBackendBase&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt; クラステンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>レンダリングバックエンドの基底クラス。CRTPを使用して派生クラスで実装を強制する。  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:af9d1ab7211c075468ba6c849a326818f" id="r_af9d1ab7211c075468ba6c849a326818f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9d1ab7211c075468ba6c849a326818f">AddResourceManagerToRenderService</a> (<a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">RenderGraph</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt; &amp;graph)</td></tr>
+<tr class="memdesc:af9d1ab7211c075468ba6c849a326818f"><td class="mdescLeft">&#160;</td><td class="mdescRight">RenderGraphにリソースマネージャーを追加する関数  <br /></td></tr>
+<tr class="memitem:a837b63bcc718fcb980542f373649cd98" id="r_a837b63bcc718fcb980542f373649cd98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a837b63bcc718fcb980542f373649cd98">SetPrimitiveTopology</a> (<a class="el" href="namespace_s_f_w_1_1_graphics.html#a802b889fe73ae6c9bc7754be4cd2c0ed">PrimitiveTopology</a> topology) const</td></tr>
+<tr class="memdesc:a837b63bcc718fcb980542f373649cd98"><td class="mdescLeft">&#160;</td><td class="mdescRight">プリミティブのトポロジーを設定する関数  <br /></td></tr>
+<tr class="memitem:a955e3ce740c38bdc3330c177d88c2b1a" id="r_a955e3ce740c38bdc3330c177d88c2b1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a955e3ce740c38bdc3330c177d88c2b1a">SetRasterizerState</a> (<a class="el" href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5">RasterizerStateID</a> state) const</td></tr>
+<tr class="memdesc:a955e3ce740c38bdc3330c177d88c2b1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ラスタライザーステートを設定する関数  <br /></td></tr>
+<tr class="memitem:ab3ef7edac5bd80cc13d455eae7c5a778" id="r_ab3ef7edac5bd80cc13d455eae7c5a778"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab3ef7edac5bd80cc13d455eae7c5a778">SetBlendState</a> (<a class="el" href="namespace_s_f_w_1_1_graphics.html#ad3b0ed4e715bafe26a5351c574c1556b">BlendStateID</a> state) const</td></tr>
+<tr class="memdesc:ab3ef7edac5bd80cc13d455eae7c5a778"><td class="mdescLeft">&#160;</td><td class="mdescRight">ブレンドステートを設定する関数  <br /></td></tr>
+<tr class="memitem:ad72a2d9b519bcf9c76c178b40002cba3" id="r_ad72a2d9b519bcf9c76c178b40002cba3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad72a2d9b519bcf9c76c178b40002cba3">SetDepthStencilState</a> (<a class="el" href="namespace_s_f_w_1_1_graphics.html#a8a6b5530cdc2c1eaaa1065d6ff7dfef3">DepthStencilStateID</a> state, uint32_t stencilRef=0) const</td></tr>
+<tr class="memdesc:ad72a2d9b519bcf9c76c178b40002cba3"><td class="mdescLeft">&#160;</td><td class="mdescRight">デプスステンシルステートを設定する関数  <br /></td></tr>
+<tr class="memitem:a509225ed159e1b59d893bd4dab882eef" id="r_a509225ed159e1b59d893bd4dab882eef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a509225ed159e1b59d893bd4dab882eef">SetRenderTargets</a> (const std::vector&lt; RTV &gt; &amp;rtvs, void *dsv) const</td></tr>
+<tr class="memdesc:a509225ed159e1b59d893bd4dab882eef"><td class="mdescLeft">&#160;</td><td class="mdescRight">レンダーターゲットとデプスステンシルビューを設定する関数  <br /></td></tr>
+<tr class="memitem:a994054adf9d660b5e4957da3b1997f51" id="r_a994054adf9d660b5e4957da3b1997f51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a994054adf9d660b5e4957da3b1997f51">BindPSSRVs</a> (const std::vector&lt; SRV &gt; &amp;srvs, uint32_t startSlot=0) const</td></tr>
+<tr class="memdesc:a994054adf9d660b5e4957da3b1997f51"><td class="mdescLeft">&#160;</td><td class="mdescRight">シェーダーリソースビューをバインドする関数  <br /></td></tr>
+<tr class="memitem:adcc638519750590e321400fa91db7170" id="r_adcc638519750590e321400fa91db7170"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adcc638519750590e321400fa91db7170">BindVSCBVs</a> (const std::vector&lt; Buffer &gt; &amp;cbvs, uint32_t startSlot=0) const</td></tr>
+<tr class="memdesc:adcc638519750590e321400fa91db7170"><td class="mdescLeft">&#160;</td><td class="mdescRight">定数バッファビューをバインドする関数  <br /></td></tr>
+<tr class="memitem:a963fc18d29a587138ec96264143cc3c8" id="r_a963fc18d29a587138ec96264143cc3c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a963fc18d29a587138ec96264143cc3c8">BindPSCBVs</a> (const std::vector&lt; Buffer &gt; &amp;cbvs, uint32_t startSlot=0) const</td></tr>
+<tr class="memdesc:a963fc18d29a587138ec96264143cc3c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">ピクセルシェーダー用定数バッファビューをバインドする関数  <br /></td></tr>
+<tr class="memitem:a67e4fe237beab588a9644e96ee5f092d" id="r_a67e4fe237beab588a9644e96ee5f092d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67e4fe237beab588a9644e96ee5f092d">BindGlobalVSCBVs</a> (const std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_bind_slot_buffer.html">BindSlotBuffer</a> &gt; &amp;cbvs) const</td></tr>
+<tr class="memdesc:a67e4fe237beab588a9644e96ee5f092d"><td class="mdescLeft">&#160;</td><td class="mdescRight">グローバル定数バッファビューをバインドする関数  <br /></td></tr>
+<tr class="memitem:a3338354686612337875df76617b3174a" id="r_a3338354686612337875df76617b3174a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3338354686612337875df76617b3174a">SetViewport</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_viewport.html">Viewport</a> &amp;vp) const</td></tr>
+<tr class="memdesc:a3338354686612337875df76617b3174a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ビューポートを設定する関数  <br /></td></tr>
+<tr class="memitem:a35a067f4039137e3ee3b1b271dc61d2f" id="r_a35a067f4039137e3ee3b1b271dc61d2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35a067f4039137e3ee3b1b271dc61d2f">BeginFrameUpload</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool.html">SharedInstanceArena::InstancePool</a> *framePool, uint32_t instCount)</td></tr>
+<tr class="memdesc:a35a067f4039137e3ee3b1b271dc61d2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">フレームごとのインスタンスデータをアップロードする関数  <br /></td></tr>
+<tr class="memitem:a517a7f4033bfccfd1f573427e12420e6" id="r_a517a7f4033bfccfd1f573427e12420e6"><td class="memTemplParams" colspan="2">template&lt;typename VecT&gt; </td></tr>
+<tr class="memitem:a517a7f4033bfccfd1f573427e12420e6 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a517a7f4033bfccfd1f573427e12420e6">ExecuteDrawIndexedInstanced</a> (const VecT &amp;cmds, std::optional&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_p_s_o_handle.html">PSOHandle</a> &gt; psoOverride=std::nullopt, bool usePSORasterizer=true, bool rebindPSO=false)</td></tr>
+<tr class="memdesc:a517a7f4033bfccfd1f573427e12420e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">インデックス付きインスタンスドローを実行する関数  <br /></td></tr>
+<tr class="memitem:ac8489ee91a8e2ef8ba614dea79befd20" id="r_ac8489ee91a8e2ef8ba614dea79befd20"><td class="memTemplParams" colspan="2">template&lt;typename VecT&gt; </td></tr>
+<tr class="memitem:ac8489ee91a8e2ef8ba614dea79befd20 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac8489ee91a8e2ef8ba614dea79befd20">ExecuteDrawIndexedInstanced</a> (const VecT &amp;cmds, std::span&lt; const uint32_t &gt; indices, std::optional&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_p_s_o_handle.html">PSOHandle</a> &gt; psoOverride=std::nullopt, bool usePSORasterizer=true, bool rebindPSO=false)</td></tr>
+<tr class="memitem:a69cfbab42678e659cb8fa984f97e31cc" id="r_a69cfbab42678e659cb8fa984f97e31cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a69cfbab42678e659cb8fa984f97e31cc">ProcessDeferredDeletes</a> (uint64_t currentFrame)</td></tr>
+<tr class="memdesc:a69cfbab42678e659cb8fa984f97e31cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">フレーム終了時に遅延削除を処理する関数  <br /></td></tr>
+<tr class="memitem:a30707e108564c58fe4e93eea0b00fdc0" id="r_a30707e108564c58fe4e93eea0b00fdc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a30707e108564c58fe4e93eea0b00fdc0">UpdateCameraBufferData</a> (Buffer buffer, const void *data, size_t size)</td></tr>
+<tr class="memdesc:a30707e108564c58fe4e93eea0b00fdc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">バッファデータを更新する関数  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt;<br />
+class SFW::Graphics::RenderBackendBase&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;</div><p>レンダリングバックエンドの基底クラス。CRTPを使用して派生クラスで実装を強制する。 </p>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00023">23</a> 行目に定義があります。</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="af9d1ab7211c075468ba6c849a326818f" name="af9d1ab7211c075468ba6c849a326818f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9d1ab7211c075468ba6c849a326818f">&#9670;&#160;</a></span>AddResourceManagerToRenderService()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::AddResourceManagerToRenderService </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html">RenderGraph</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>graph</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>RenderGraphにリソースマネージャーを追加する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graph</td><td>レンダーグラフの参照 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00029">29</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a35a067f4039137e3ee3b1b271dc61d2f" name="a35a067f4039137e3ee3b1b271dc61d2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35a067f4039137e3ee3b1b271dc61d2f">&#9670;&#160;</a></span>BeginFrameUpload()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::BeginFrameUpload </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool.html">SharedInstanceArena::InstancePool</a> *</td>          <td class="paramname"><span class="paramname"><em>framePool</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>instCount</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>フレームごとのインスタンスデータをアップロードする関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">framePool</td><td>インスタンスデータの配列 </td></tr>
+    <tr><td class="paramname">instCount</td><td>インスタンスデータの数 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00111">111</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a67e4fe237beab588a9644e96ee5f092d" name="a67e4fe237beab588a9644e96ee5f092d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67e4fe237beab588a9644e96ee5f092d">&#9670;&#160;</a></span>BindGlobalVSCBVs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::BindGlobalVSCBVs </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_bind_slot_buffer.html">BindSlotBuffer</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>cbvs</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>グローバル定数バッファビューをバインドする関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cbvs</td><td>定数バッファビューの配列 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00096">96</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a963fc18d29a587138ec96264143cc3c8" name="a963fc18d29a587138ec96264143cc3c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a963fc18d29a587138ec96264143cc3c8">&#9670;&#160;</a></span>BindPSCBVs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::BindPSCBVs </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; Buffer &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>cbvs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>startSlot</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ピクセルシェーダー用定数バッファビューをバインドする関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cbvs</td><td>定数バッファビューの配列 </td></tr>
+    <tr><td class="paramname">startSlot</td><td>バインド開始スロット </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00089">89</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a994054adf9d660b5e4957da3b1997f51" name="a994054adf9d660b5e4957da3b1997f51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a994054adf9d660b5e4957da3b1997f51">&#9670;&#160;</a></span>BindPSSRVs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::BindPSSRVs </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; SRV &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>srvs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>startSlot</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>シェーダーリソースビューをバインドする関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">srvs</td><td>シェーダーリソースビューの配列 </td></tr>
+    <tr><td class="paramname">startSlot</td><td>バインド開始スロット </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00073">73</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="adcc638519750590e321400fa91db7170" name="adcc638519750590e321400fa91db7170"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcc638519750590e321400fa91db7170">&#9670;&#160;</a></span>BindVSCBVs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::BindVSCBVs </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; Buffer &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>cbvs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>startSlot</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>定数バッファビューをバインドする関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cbvs</td><td>定数バッファビューの配列 </td></tr>
+    <tr><td class="paramname">startSlot</td><td>バインド開始スロット </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00081">81</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a517a7f4033bfccfd1f573427e12420e6" name="a517a7f4033bfccfd1f573427e12420e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a517a7f4033bfccfd1f573427e12420e6">&#9670;&#160;</a></span>ExecuteDrawIndexedInstanced() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<div class="memtemplate">
+template&lt;typename VecT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::ExecuteDrawIndexedInstanced </td>
+          <td>(</td>
+          <td class="paramtype">const VecT &amp;</td>          <td class="paramname"><span class="paramname"><em>cmds</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_p_s_o_handle.html">PSOHandle</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>psoOverride</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::nullopt</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>usePSORasterizer</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>rebindPSO</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>インデックス付きインスタンスドローを実行する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cmds</td><td>インデックス付きインスタンスドローコマンドの配列 </td></tr>
+    <tr><td class="paramname">usePSORastarizer</td><td>ラスタライザーステートをPSOから設定するかどうか </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00120">120</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac8489ee91a8e2ef8ba614dea79befd20" name="ac8489ee91a8e2ef8ba614dea79befd20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8489ee91a8e2ef8ba614dea79befd20">&#9670;&#160;</a></span>ExecuteDrawIndexedInstanced() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<div class="memtemplate">
+template&lt;typename VecT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::ExecuteDrawIndexedInstanced </td>
+          <td>(</td>
+          <td class="paramtype">const VecT &amp;</td>          <td class="paramname"><span class="paramname"><em>cmds</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::span&lt; const uint32_t &gt;</td>          <td class="paramname"><span class="paramname"><em>indices</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_p_s_o_handle.html">PSOHandle</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>psoOverride</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::nullopt</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>usePSORasterizer</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>rebindPSO</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00125">125</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a69cfbab42678e659cb8fa984f97e31cc" name="a69cfbab42678e659cb8fa984f97e31cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69cfbab42678e659cb8fa984f97e31cc">&#9670;&#160;</a></span>ProcessDeferredDeletes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::ProcessDeferredDeletes </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>currentFrame</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>フレーム終了時に遅延削除を処理する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">currentFrame</td><td>現在のフレーム番号 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00132">132</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab3ef7edac5bd80cc13d455eae7c5a778" name="ab3ef7edac5bd80cc13d455eae7c5a778"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3ef7edac5bd80cc13d455eae7c5a778">&#9670;&#160;</a></span>SetBlendState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::SetBlendState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_graphics.html#ad3b0ed4e715bafe26a5351c574c1556b">BlendStateID</a></td>          <td class="paramname"><span class="paramname"><em>state</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ブレンドステートを設定する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>ブレンドステートID </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00050">50</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad72a2d9b519bcf9c76c178b40002cba3" name="ad72a2d9b519bcf9c76c178b40002cba3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad72a2d9b519bcf9c76c178b40002cba3">&#9670;&#160;</a></span>SetDepthStencilState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::SetDepthStencilState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a8a6b5530cdc2c1eaaa1065d6ff7dfef3">DepthStencilStateID</a></td>          <td class="paramname"><span class="paramname"><em>state</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>stencilRef</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>デプスステンシルステートを設定する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>デプスステンシルステートID </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00057">57</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a837b63bcc718fcb980542f373649cd98" name="a837b63bcc718fcb980542f373649cd98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a837b63bcc718fcb980542f373649cd98">&#9670;&#160;</a></span>SetPrimitiveTopology()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::SetPrimitiveTopology </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a802b889fe73ae6c9bc7754be4cd2c0ed">PrimitiveTopology</a></td>          <td class="paramname"><span class="paramname"><em>topology</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>プリミティブのトポロジーを設定する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">topology　プリミティブのトポロジー</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00036">36</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a955e3ce740c38bdc3330c177d88c2b1a" name="a955e3ce740c38bdc3330c177d88c2b1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a955e3ce740c38bdc3330c177d88c2b1a">&#9670;&#160;</a></span>SetRasterizerState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::SetRasterizerState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5">RasterizerStateID</a></td>          <td class="paramname"><span class="paramname"><em>state</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ラスタライザーステートを設定する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>ラスタライザーステートID </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00043">43</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a509225ed159e1b59d893bd4dab882eef" name="a509225ed159e1b59d893bd4dab882eef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a509225ed159e1b59d893bd4dab882eef">&#9670;&#160;</a></span>SetRenderTargets()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::SetRenderTargets </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; RTV &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rtvs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>dsv</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>レンダーターゲットとデプスステンシルビューを設定する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rtvs</td><td>レンダーターゲットビューの配列 </td></tr>
+    <tr><td class="paramname">dsv</td><td>デプスステンシルビュー </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00065">65</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3338354686612337875df76617b3174a" name="a3338354686612337875df76617b3174a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3338354686612337875df76617b3174a">&#9670;&#160;</a></span>SetViewport()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::SetViewport </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_viewport.html">Viewport</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>vp</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ビューポートを設定する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vp</td><td>ビューポート情報 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00103">103</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a30707e108564c58fe4e93eea0b00fdc0" name="a30707e108564c58fe4e93eea0b00fdc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30707e108564c58fe4e93eea0b00fdc0">&#9670;&#160;</a></span>UpdateCameraBufferData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template&lt; typename &gt; class ViewHandle&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">SFW::Graphics::RenderBackendBase</a>&lt; Derived, RTV, DSV, SRV, Buffer, ViewHandle &gt;::UpdateCameraBufferData </td>
+          <td>(</td>
+          <td class="paramtype">Buffer</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>バッファデータを更新する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>更新するバッファ </td></tr>
+    <tr><td class="paramname">data</td><td>更新データへのポインタ </td></tr>
+    <tr><td class="paramname">size</td><td>更新データのサイズ（バイト単位） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a> の <a class="el" href="_render_backend_8hpp_source.html#l00141">141</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/<a class="el" href="_render_backend_8hpp_source.html">RenderBackend.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics.html">Graphics</a></li><li class="navelem"><a href="class_s_f_w_1_1_graphics_1_1_render_backend_base.html">RenderBackendBase</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

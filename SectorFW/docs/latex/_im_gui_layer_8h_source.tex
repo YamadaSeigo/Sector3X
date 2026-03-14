@@ -1,0 +1,44 @@
+\doxysection{Im\+Gui\+Layer.\+h}
+\hypertarget{_im_gui_layer_8h_source}{}\label{_im_gui_layer_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/ImGuiLayer.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/ImGuiLayer.h}}
+\mbox{\hyperlink{_im_gui_layer_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00007}00007\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00009}00009\ \textcolor{preprocessor}{\#if\ \_DEBUG}}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00010}00010\ \ \textcolor{comment}{//\ デバッグビルド時は\ ImGui\ を有効化}}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00011}00011\ \textcolor{preprocessor}{\#define\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00012}00012\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_DEBUG}}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_im_gui_backend_8h}{ImGuiBackend.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00018}00018\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00019}00019\ \{}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00020}00020\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_debug}{Debug}}\ \{}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{comment}{//前方定義}}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend}{IImGuiBackend}};}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00026}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer}{00026}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a4b63c5c694ee0c37d850deeb7a0702d5}{ImGuiLayer}}\ \{}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00034}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a4b63c5c694ee0c37d850deeb7a0702d5}{00034}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a4b63c5c694ee0c37d850deeb7a0702d5}{ImGuiLayer}}(std::unique\_ptr<IImGuiBackend>\ backend);}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00035}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_abcba63143610036ed397ded8b23dfe76}{00035}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_abcba63143610036ed397ded8b23dfe76}{\string~ImGuiLayer}}();}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00040}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a33d586d946e3d8e78df25735fcea706d}{00040}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::type\_info\&\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a33d586d946e3d8e78df25735fcea706d}{GetWindowType}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ backend\_-\/>GetWindowType();}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00047}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a763579230940049386d8484a5f78240b}{00047}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::type\_info\&\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a763579230940049386d8484a5f78240b}{GetDeviceType}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ backend\_-\/>GetDeviceType();}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00055}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a03b3fb6a2f3796cc22fe4faf692141bf}{00055}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a03b3fb6a2f3796cc22fe4faf692141bf}{Init}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info}{ImGuiInitInfo}}\&\ info);}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00059}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_ac81ea621f1f9a68cb5192fe794366773}{00059}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_ac81ea621f1f9a68cb5192fe794366773}{BeginFrame}}();}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00063}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a1de9389c3e2371806584d832803c4aa0}{00063}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a1de9389c3e2371806584d832803c4aa0}{DrawUI}}(\textcolor{keywordtype}{float}\ frameSec);}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00067}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a35b6cdd027f79af2c5a17ea918c1df66}{00067}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a35b6cdd027f79af2c5a17ea918c1df66}{EndFrame}}();}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00071}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a34c1d3801ffe23e2ee12157acfee451b}{00071}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_layer_a34c1d3801ffe23e2ee12157acfee451b}{Render}}();}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<IImGuiBackend>\ backend\_;}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00076}00076\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_im_gui_layer_8h_source_l00077}00077\ \}}
+
+\end{DoxyCode}

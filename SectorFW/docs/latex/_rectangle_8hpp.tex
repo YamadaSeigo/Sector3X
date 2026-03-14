@@ -1,0 +1,71 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Math/\+Rectangle.hpp ファイル}
+\hypertarget{_rectangle_8hpp}{}\label{_rectangle_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/Rectangle.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/Rectangle.hpp}}
+
+
+スクリーン矩形/\+NDC矩形ユーティリティ（列ベクトル規約対応版）  
+
+
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$cfloat$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include "{}Matrix.\+hpp"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{SFW\+::\+Math\+::\+Ndc\+Rect\+WithW}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{SFW\+::\+Math\+::\+Rectangle}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect}{SFW\+::\+Math\+::\+Viewport\+Rect}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_math}{SFW\+::\+Math}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{Ndc\+Rect\+WithW}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4ef695230ec4d0f9acc2bc45f9b66d99}{SFW\+::\+Math\+::\+Project\+AABBTo\+Ndc}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&VP, const float lbx, const float lby, const float lbz, const float ubx, const float uby, const float ubz, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{Clip\+ZRange}} zrange=\mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5a4b942544cb3e764bbb8d33f8a8744855}{Clip\+ZRange\+::\+Zero\+To\+One}}) noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_a119f097d433ff3d7d646faf9b8f3b887}{SFW\+::\+Math\+::\+Ndc\+To\+Pixels}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{Ndc\+Rect\+WithW}} \&ndc, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect}{Viewport\+Rect}} \&vp) noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_affc5de6f1b0861b310c34327aec7cd89}{SFW\+::\+Math\+::\+Project\+AABBTo\+Screen\+Rect\+\_\+\+Pixels}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&VP, const float lbx, const float lby, const float lbz, const float ubx, const float uby, const float ubz, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect}{Viewport\+Rect}} \&vp, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{Clip\+ZRange}} zrange=\mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5a4b942544cb3e764bbb8d33f8a8744855}{Clip\+ZRange\+::\+Zero\+To\+One}}) noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_a67625bb86a25094686239fb5fe78a7ab}{SFW\+::\+Math\+::\+Project\+AABBTo\+Screen\+Rect\+\_\+\+Pixels}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&VP, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}} \&box, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect}{Viewport\+Rect}} \&vp, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{Clip\+ZRange}} zrange=\mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5a4b942544cb3e764bbb8d33f8a8744855}{Clip\+ZRange\+::\+Zero\+To\+One}}) noexcept
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_af5832a0b7f6e229c7da6ff061b1c642d}{SFW\+::\+Math\+::\+To\+Clip}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, float $>$ \&m, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&p)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4f0495e799f8a652519aec8e84e5040c}{SFW\+::\+Math\+::\+Trivial\+Reject\+Clip}} (const std\+::array$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}}, 8 $>$ \&clip)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6e13ec8795b56482395d1cfbe9f4731d}{SFW\+::\+Math\+::\+Intersect\+Edge\+With\+Near\+Z0}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}} \&a, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}} \&b, \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Vec4f}} \&out)
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_a938349c8c256ff2d4edcd9d91355a96a}{SFW\+::\+Math\+::\+Project\+AABBTo\+Screen\+Rect}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ float, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} $>$ \&box, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, float $>$ \&world\+View\+Proj, float viewport\+Width, float viewport\+Height, float viewportX=0.\+0f, float viewportY=0.\+0f, float clamp\+Margin=0.\+0f)
+\item 
+float \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2e150683eabf818bdd5d627ae49d460b}{SFW\+::\+Math\+::\+Screen\+Coverage01}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}} \&px, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_viewport_rect}{Viewport\+Rect}} \&vp) noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{Ndc\+Rect\+WithW}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_a36990d7c74a037540755ff2f2742e358}{SFW\+::\+Math\+::\+Project\+AABBTo\+Ndc\+\_\+\+Robust}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&VPW, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}} \&box)
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{Ndc\+Rect\+WithW}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4bfef14ce00d860e1b9c9d8bd5f72154}{SFW\+::\+Math\+::\+Project\+AABBTo\+Ndc\+\_\+\+Fast}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&VPW, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}} \&box, float min\+\_\+coverage\+\_\+for\+\_\+precise=0.\+0f)
+\item 
+{\footnotesize template$<$class Mat4, class Bounding\+SphereT$>$ }\\void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6ab8a2a5eede6f10ed1138df98c1d992}{SFW\+::\+Math\+::\+Project\+Spheres\+To\+Ndc\+\_\+\+Fast\+\_\+\+AVX2}} (const Mat4 \&WVP, const Bounding\+SphereT \texorpdfstring{$\ast$}{*}spheres, size\+\_\+t count, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}{Ndc\+Rect\+WithW}} \texorpdfstring{$\ast$}{*}out\+Rects)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+スクリーン矩形/\+NDC矩形ユーティリティ（列ベクトル規約対応版） 
+
+(row-\/major storage × column-\/vector convention) \begin{DoxyAuthor}{著者}
+you 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_rectangle_8hpp_source}{Rectangle.\+hpp}} に定義があります。
+

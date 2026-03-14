@@ -1,0 +1,115 @@
+\doxysection{SFW\+::Graphics\+::DX11\+::Material\+Create\+Desc 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc}{}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc}\index{SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}}
+
+
+DirectX 11用のマテリアル作成情報構造体  
+
+
+
+
+{\ttfamily \#include $<$DX11\+Material\+Manager.\+h$>$}
+
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shader_handle}{Shader\+Handle}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_ac4fbc11723ca9cf2dcf86ac6c556cb4b}{shader}} = \{\}
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_a2dc3a2c3128921c2c238f2dee1b03f44}{is\+Bind\+VSSampler}} \{ false \}
+\item 
+std\+::unordered\+\_\+map$<$ uint32\+\_\+t, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{Shader\+Resource\+Handle}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_a9af4ef50a40099a79f565c0a0cb5b83f}{ps\+SRV}}
+\item 
+std\+::unordered\+\_\+map$<$ uint32\+\_\+t, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{Shader\+Resource\+Handle}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_af180d4c5fe32f7586b9bb53d61e5c5ca}{vs\+SRV}}
+\item 
+std\+::unordered\+\_\+map$<$ UINT, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_a5f0fb5547181d26c500a1b3d227ee957}{ps\+CBV}}
+\item 
+std\+::unordered\+\_\+map$<$ UINT, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_a44a7f09683a097fc58f7229c63e57a77}{vs\+CBV}}
+\item 
+std\+::unordered\+\_\+map$<$ UINT, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_sampler_handle}{Sampler\+Handle}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_ada19abb00cf541516d0c0bbf9fe01523}{sampler\+Map}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+DirectX 11用のマテリアル作成情報構造体 
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00027}{27}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_a2dc3a2c3128921c2c238f2dee1b03f44}\index{SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}!isBindVSSampler@{isBindVSSampler}}
+\index{isBindVSSampler@{isBindVSSampler}!SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}}
+\doxysubsubsection{\texorpdfstring{isBindVSSampler}{isBindVSSampler}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_a2dc3a2c3128921c2c238f2dee1b03f44} 
+bool SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Create\+Desc\+::is\+Bind\+VSSampler \{ false \}}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00029}{29}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_a5f0fb5547181d26c500a1b3d227ee957}\index{SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}!psCBV@{psCBV}}
+\index{psCBV@{psCBV}!SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}}
+\doxysubsubsection{\texorpdfstring{psCBV}{psCBV}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_a5f0fb5547181d26c500a1b3d227ee957} 
+std\+::unordered\+\_\+map$<$UINT, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}}$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Create\+Desc\+::ps\+CBV}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00032}{32}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_a9af4ef50a40099a79f565c0a0cb5b83f}\index{SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}!psSRV@{psSRV}}
+\index{psSRV@{psSRV}!SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}}
+\doxysubsubsection{\texorpdfstring{psSRV}{psSRV}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_a9af4ef50a40099a79f565c0a0cb5b83f} 
+std\+::unordered\+\_\+map$<$uint32\+\_\+t, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{Shader\+Resource\+Handle}}$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Create\+Desc\+::ps\+SRV}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00030}{30}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_ada19abb00cf541516d0c0bbf9fe01523}\index{SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}!samplerMap@{samplerMap}}
+\index{samplerMap@{samplerMap}!SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}}
+\doxysubsubsection{\texorpdfstring{samplerMap}{samplerMap}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_ada19abb00cf541516d0c0bbf9fe01523} 
+std\+::unordered\+\_\+map$<$UINT, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_sampler_handle}{Sampler\+Handle}}$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Create\+Desc\+::sampler\+Map}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00034}{34}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_ac4fbc11723ca9cf2dcf86ac6c556cb4b}\index{SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}!shader@{shader}}
+\index{shader@{shader}!SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}}
+\doxysubsubsection{\texorpdfstring{shader}{shader}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_ac4fbc11723ca9cf2dcf86ac6c556cb4b} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shader_handle}{Shader\+Handle}} SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Create\+Desc\+::shader = \{\}}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00028}{28}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_a44a7f09683a097fc58f7229c63e57a77}\index{SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}!vsCBV@{vsCBV}}
+\index{vsCBV@{vsCBV}!SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}}
+\doxysubsubsection{\texorpdfstring{vsCBV}{vsCBV}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_a44a7f09683a097fc58f7229c63e57a77} 
+std\+::unordered\+\_\+map$<$UINT, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}}$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Create\+Desc\+::vs\+CBV}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00033}{33}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_af180d4c5fe32f7586b9bb53d61e5c5ca}\index{SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}!vsSRV@{vsSRV}}
+\index{vsSRV@{vsSRV}!SFW::Graphics::DX11::MaterialCreateDesc@{SFW::Graphics::DX11::MaterialCreateDesc}}
+\doxysubsubsection{\texorpdfstring{vsSRV}{vsSRV}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc_af180d4c5fe32f7586b9bb53d61e5c5ca} 
+std\+::unordered\+\_\+map$<$uint32\+\_\+t, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{Shader\+Resource\+Handle}}$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Create\+Desc\+::vs\+SRV}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00031}{31}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\mbox{\hyperlink{_d_x11_material_manager_8h}{DX11\+Material\+Manager.\+h}}\end{DoxyCompactItemize}

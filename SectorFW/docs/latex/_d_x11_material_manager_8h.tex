@@ -1,0 +1,60 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\+DX11\+Material\+Manager.h ファイル}
+\hypertarget{_d_x11_material_manager_8h}{}\label{_d_x11_material_manager_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11MaterialManager.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11MaterialManager.h}}
+
+
+DirectX 11用のマテリアルマネージャークラスを定義するヘッダーファイル  
+
+
+{\ttfamily \#include $<$bitset$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$variant$>$}\newline
+{\ttfamily \#include "{}DX11\+Shader\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}DX11\+Texture\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}DX11\+Buffer\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}DX11\+Sampler\+Manager.\+h"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc}{SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Create\+Desc}}
+\begin{DoxyCompactList}\small\item\em DirectX 11用のマテリアル作成情報構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache}{SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Binding\+Cache$<$ Cache\+Type $>$}}
+\begin{DoxyCompactList}\small\item\em マテリアルバインディングキャッシュ構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data}{SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Data}}
+\begin{DoxyCompactList}\small\item\em DirectX 11用のマテリアルデータ構造体 \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager}{SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager}}
+\begin{DoxyCompactList}\small\item\em DirectX 11用のマテリアルマネージャークラス. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW\+::\+Graphics}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11}{SFW\+::\+Graphics\+::\+DX11}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Resource\+Handle}} = std\+::variant$<$std\+::monostate, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{Texture\+Handle}}, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}}$>$
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a975071e883e497bcb601dacc1ee4b18d}{SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Binding\+Cache\+SRV}} = \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache}{Material\+Binding\+Cache}}$<$ID3\+D11\+Shader\+Resource\+View\texorpdfstring{$\ast$}{*}$>$
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_afcc32b3c5cf80f1b6223418d477187cd}{SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Binding\+Cache\+CBV}} = \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache}{Material\+Binding\+Cache}}$<$ID3\+D11\+Buffer\texorpdfstring{$\ast$}{*}$>$
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0db1737e1f208324896303c5fef44941}{SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Binding\+Cache\+Sampler}} = \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache}{Material\+Binding\+Cache}}$<$ID3\+D11\+Sampler\+State\texorpdfstring{$\ast$}{*}$>$
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+DirectX 11用のマテリアルマネージャークラスを定義するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} に定義があります。
+

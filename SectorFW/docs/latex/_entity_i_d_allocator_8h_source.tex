@@ -1,0 +1,104 @@
+\doxysection{Entity\+IDAllocator.\+h}
+\hypertarget{_entity_i_d_allocator_8h_source}{}\label{_entity_i_d_allocator_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/EntityIDAllocator.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/EntityIDAllocator.h}}
+\mbox{\hyperlink{_entity_i_d_allocator_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}../external/concurrentqueue/concurrentqueue.h"{}}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{assert__config_8h}{../../Debug/assert\_config.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{entity_8h}{entity.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00018}00018\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00019}00019\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00020}00020\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00021}00021\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00025}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator}{00025}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_af336676aca5dae81f12e2a3fe106641d}{EntityIDAllocator}}\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00031}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_af336676aca5dae81f12e2a3fe106641d}{00031}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_af336676aca5dae81f12e2a3fe106641d}{EntityIDAllocator}}(\textcolor{keywordtype}{size\_t}\ maxEntities)}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ maxEntities(static\_cast<uint32\_t>(maxEntities)),}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ generations(maxEntities),}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nextIndex(0),}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ freeQueue(static\_cast<int>(maxEntities))}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Initially\ empty}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00043}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_abd15dcb763c2e7be3f39fb8d2379de02}{00043}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_abd15dcb763c2e7be3f39fb8d2379de02}{Create}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ index;}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 再利用できるインデックスを取得}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (freeQueue.try\_dequeue(index))\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ gen\ =\ generations[index].load(std::memory\_order\_acquire);}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\{\ index,\ gen\ \};}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 新しいインデックスを割り当て}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ index\ =\ nextIndex.fetch\_add(1,\ std::memory\_order\_relaxed);}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index\ >=\ maxEntities)\ [[unlikely]]\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d_a8989b77f347b8c20136be29535371faf}{EntityID::Invalid}}();\ \textcolor{comment}{//\ Exhausted}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 新しいIDの世代を0に初期化}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ generations[index].store(0,\ std::memory\_order\_release);}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\{\ index,\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00066}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a91557aa74d5bb75ee44bcc9492a1ca42}{00066}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a91557aa74d5bb75ee44bcc9492a1ca42}{Destroy}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id})\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{id}.index\ >=\ maxEntities)\ [[unlikely]]\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Invalidate\ old\ ID}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ generations[\textcolor{keywordtype}{id}.index].fetch\_add(1,\ std::memory\_order\_acq\_rel);}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Reuse\ the\ index}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ success\ =\ freeQueue.try\_enqueue(\textcolor{keywordtype}{id}.index);}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Free\ queue\ full\ →\ ID\ leak（無視してもよい\ or\ ログ出力）}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{assert__config_8h_a7c360e1bd29ee4fa83ec85935d37dbeb}{SFW\_ASSERT}}(success\ \&\&\ \textcolor{stringliteral}{"{}EntityIDAllocator:\ Free\ queue\ is\ full,\ ID\ leak\ occurred."{}});}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00078}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_aedeb76d27dc99d28770d29880a931867}{00078}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_aedeb76d27dc99d28770d29880a931867}{DestroyBulk}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}*\ ids,\ \textcolor{keywordtype}{size\_t}\ count)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\ indices;}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ indices.reserve(count);}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ i\ =\ 0;\ i\ <\ count;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keywordtype}{id}\ =\ ids[i];}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{id}.index\ >=\ maxEntities)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Invalidate\ old\ ID}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ generations[\textcolor{keywordtype}{id}.index].fetch\_add(1,\ std::memory\_order\_acq\_rel);}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ indices.push\_back(\textcolor{keywordtype}{id}.index);}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ moodycamel::ProducerToken\ pt(freeQueue);}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Reuse\ the\ indices}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ success\ =\ freeQueue.try\_enqueue\_bulk(pt,\ indices.data(),\ indices.size());}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Free\ queue\ full\ →\ ID\ leak（無視してもよい\ or\ ログ出力）}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{assert__config_8h_a7c360e1bd29ee4fa83ec85935d37dbeb}{SFW\_ASSERT}}(success\ \&\&\ \textcolor{stringliteral}{"{}EntityIDAllocator:\ Free\ queue\ is\ full,\ ID\ leak\ occurred."{}});}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00107}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a178dfebf6eafdf65360ba884f9177e03}{00107}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a178dfebf6eafdf65360ba884f9177e03}{IsAlive}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{id}.index\ >=\ maxEntities)\ [[unlikely]]\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ generations[\textcolor{keywordtype}{id}.index].load(std::memory\_order\_acquire)\ ==\ \textcolor{keywordtype}{id}.generation;}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00115}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a556803037b9fcaee5e2f698145b5e86c}{00115}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a556803037b9fcaee5e2f698145b5e86c}{Capacity}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ maxEntities;\ \}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//最大エンティティ数}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ maxEntities;}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//次のエンティティIDのインデックス}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ std::atomic<uint32\_t>\ nextIndex;}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//世代管理のための配列}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::atomic<uint32\_t>>\ generations;}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//未使用のエンティティIDを管理するキュー}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ moodycamel::ConcurrentQueue<uint32\_t>\ freeQueue;}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00125}00125\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00126}00126\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_entity_i_d_allocator_8h_source_l00127}00127\ \}}
+
+\end{DoxyCode}

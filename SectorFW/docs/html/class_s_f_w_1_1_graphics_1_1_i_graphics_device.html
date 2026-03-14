@@ -1,0 +1,528 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Graphics::IGraphicsDevice&lt; Impl &gt; クラステンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_graphics_1_1_i_graphics_device.html','','class_s_f_w_1_1_graphics_1_1_i_graphics_device-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Graphics::IGraphicsDevice&lt; Impl &gt; クラステンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>グラフィックデバイスのインターフェース  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:aead7deb30ab52aef3c7e4cd7968fd58b" id="r_aead7deb30ab52aef3c7e4cd7968fd58b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aead7deb30ab52aef3c7e4cd7968fd58b">IGraphicsDevice</a> ()=default</td></tr>
+<tr class="memdesc:aead7deb30ab52aef3c7e4cd7968fd58b"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:a0f0271012c8d9fe7c508a1f424ead2da" id="r_a0f0271012c8d9fe7c508a1f424ead2da"><td class="memTemplParams" colspan="2">template&lt;Debug::ImGuiBackendType ImGuiBackend&gt; </td></tr>
+<tr class="memitem:a0f0271012c8d9fe7c508a1f424ead2da template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0f0271012c8d9fe7c508a1f424ead2da">Configure</a> (const <a class="el" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">NativeWindowHandle</a> &amp;nativeWindowHandle, uint32_t width, uint32_t height, double fps)</td></tr>
+<tr class="memdesc:a0f0271012c8d9fe7c508a1f424ead2da"><td class="mdescLeft">&#160;</td><td class="mdescRight">初期化  <br /></td></tr>
+<tr class="memitem:a755ede26c777008d980552218ce96530" id="r_a755ede26c777008d980552218ce96530"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a755ede26c777008d980552218ce96530">Clear</a> (const float clearColor[4])</td></tr>
+<tr class="memdesc:a755ede26c777008d980552218ce96530"><td class="mdescLeft">&#160;</td><td class="mdescRight">画面をクリア  <br /></td></tr>
+<tr class="memitem:a3a54c028d48da1a75038656f7dee3394" id="r_a3a54c028d48da1a75038656f7dee3394"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3a54c028d48da1a75038656f7dee3394">Draw</a> ()</td></tr>
+<tr class="memitem:abcb0602a6cec5134423c8941bd277e46" id="r_abcb0602a6cec5134423c8941bd277e46"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abcb0602a6cec5134423c8941bd277e46">Present</a> ()</td></tr>
+<tr class="memdesc:abcb0602a6cec5134423c8941bd277e46"><td class="mdescLeft">&#160;</td><td class="mdescRight">描画  <br /></td></tr>
+<tr class="memitem:a3d210c34b525b87e33208989c4aec1d2" id="r_a3d210c34b525b87e33208989c4aec1d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d210c34b525b87e33208989c4aec1d2">SubmitFrame</a> (const FLOAT clearColor[4], uint64_t frameIdx)</td></tr>
+<tr class="memdesc:a3d210c34b525b87e33208989c4aec1d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">フレームの提出  <br /></td></tr>
+<tr class="memitem:a3f13d959dd8c2f9e275cb335764aa17a" id="r_a3f13d959dd8c2f9e275cb335764aa17a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f13d959dd8c2f9e275cb335764aa17a">WaitSubmittedFrames</a> (uint64_t uptoFrame)</td></tr>
+<tr class="memdesc:a3f13d959dd8c2f9e275cb335764aa17a"><td class="mdescLeft">&#160;</td><td class="mdescRight">提出済みフレームの完了待ち  <br /></td></tr>
+<tr class="memitem:a669ea0c8873cf05be43c35d1d10a4412" id="r_a669ea0c8873cf05be43c35d1d10a4412"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a669ea0c8873cf05be43c35d1d10a4412">~IGraphicsDevice</a> ()=default</td></tr>
+<tr class="memdesc:a669ea0c8873cf05be43c35d1d10a4412"><td class="mdescLeft">&#160;</td><td class="mdescRight">デストラクタ  <br /></td></tr>
+<tr class="memitem:a6dd6f41ea22d3d5d01046473a8216961" id="r_a6dd6f41ea22d3d5d01046473a8216961"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6dd6f41ea22d3d5d01046473a8216961">IsInitialized</a> () const</td></tr>
+<tr class="memdesc:a6dd6f41ea22d3d5d01046473a8216961"><td class="mdescLeft">&#160;</td><td class="mdescRight">初期化フラグの取得  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+限定公開メンバ関数</h2></td></tr>
+<tr class="memitem:acd355dc1d7f35212ee71c1e8219be1e0" id="r_acd355dc1d7f35212ee71c1e8219be1e0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd355dc1d7f35212ee71c1e8219be1e0">Initialize</a> (const <a class="el" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">NativeWindowHandle</a> &amp;nativeWindowHandle, uint32_t width, uint32_t height, double fps)</td></tr>
+<tr class="memdesc:acd355dc1d7f35212ee71c1e8219be1e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">初期化  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Impl&gt;<br />
+class SFW::Graphics::IGraphicsDevice&lt; Impl &gt;</div><p>グラフィックデバイスのインターフェース </p>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00034">34</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="aead7deb30ab52aef3c7e4cd7968fd58b" name="aead7deb30ab52aef3c7e4cd7968fd58b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aead7deb30ab52aef3c7e4cd7968fd58b">&#9670;&#160;</a></span>IGraphicsDevice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">SFW::Graphics::IGraphicsDevice</a>&lt; Impl &gt;::IGraphicsDevice </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+
+</div>
+</div>
+<a id="a669ea0c8873cf05be43c35d1d10a4412" name="a669ea0c8873cf05be43c35d1d10a4412"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a669ea0c8873cf05be43c35d1d10a4412">&#9670;&#160;</a></span>~IGraphicsDevice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">SFW::Graphics::IGraphicsDevice</a>&lt; Impl &gt;::~<a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">IGraphicsDevice</a> </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>デストラクタ </p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a755ede26c777008d980552218ce96530" name="a755ede26c777008d980552218ce96530"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a755ede26c777008d980552218ce96530">&#9670;&#160;</a></span>Clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">SFW::Graphics::IGraphicsDevice</a>&lt; Impl &gt;::Clear </td>
+          <td>(</td>
+          <td class="paramtype">const float</td>          <td class="paramname"><span class="paramname"><em>clearColor</em></span>[4]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>画面をクリア </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clearColor</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00121">121</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0f0271012c8d9fe7c508a1f424ead2da" name="a0f0271012c8d9fe7c508a1f424ead2da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f0271012c8d9fe7c508a1f424ead2da">&#9670;&#160;</a></span>Configure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl&gt; </div>
+<div class="memtemplate">
+template&lt;Debug::ImGuiBackendType ImGuiBackend&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">SFW::Graphics::IGraphicsDevice</a>&lt; Impl &gt;::Configure </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">NativeWindowHandle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>nativeWindowHandle</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>fps</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>初期化 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nativeWindowHandle</td><td>ウィンドウハンドル </td></tr>
+    <tr><td class="paramname">width</td><td>ウィンドウ幅 </td></tr>
+    <tr><td class="paramname">height</td><td>ウィンドウ高さ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00057">57</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3a54c028d48da1a75038656f7dee3394" name="a3a54c028d48da1a75038656f7dee3394"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a54c028d48da1a75038656f7dee3394">&#9670;&#160;</a></span>Draw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">SFW::Graphics::IGraphicsDevice</a>&lt; Impl &gt;::Draw </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00124">124</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="acd355dc1d7f35212ee71c1e8219be1e0" name="acd355dc1d7f35212ee71c1e8219be1e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd355dc1d7f35212ee71c1e8219be1e0">&#9670;&#160;</a></span>Initialize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">SFW::Graphics::IGraphicsDevice</a>&lt; Impl &gt;::Initialize </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">NativeWindowHandle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>nativeWindowHandle</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>fps</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>初期化 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nativeWindowHandle</td><td>ウィンドウハンドル </td></tr>
+    <tr><td class="paramname">width</td><td>ウィンドウ幅 </td></tr>
+    <tr><td class="paramname">height</td><td>ウィンドウ高さ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00042">42</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6dd6f41ea22d3d5d01046473a8216961" name="a6dd6f41ea22d3d5d01046473a8216961"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dd6f41ea22d3d5d01046473a8216961">&#9670;&#160;</a></span>IsInitialized()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">SFW::Graphics::IGraphicsDevice</a>&lt; Impl &gt;::IsInitialized </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>初期化フラグの取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd>初期化フラグ </dd></dl>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00167">167</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="abcb0602a6cec5134423c8941bd277e46" name="abcb0602a6cec5134423c8941bd277e46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcb0602a6cec5134423c8941bd277e46">&#9670;&#160;</a></span>Present()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">SFW::Graphics::IGraphicsDevice</a>&lt; Impl &gt;::Present </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>描画 </p>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00141">141</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3d210c34b525b87e33208989c4aec1d2" name="a3d210c34b525b87e33208989c4aec1d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d210c34b525b87e33208989c4aec1d2">&#9670;&#160;</a></span>SubmitFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">SFW::Graphics::IGraphicsDevice</a>&lt; Impl &gt;::SubmitFrame </td>
+          <td>(</td>
+          <td class="paramtype">const FLOAT</td>          <td class="paramname"><span class="paramname"><em>clearColor</em></span>[4], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>frameIdx</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>フレームの提出 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clearColor</td><td>クリアカラー </td></tr>
+    <tr><td class="paramname">frameIdx</td><td>フレームインデックス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00149">149</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3f13d959dd8c2f9e275cb335764aa17a" name="a3f13d959dd8c2f9e275cb335764aa17a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f13d959dd8c2f9e275cb335764aa17a">&#9670;&#160;</a></span>WaitSubmittedFrames()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Impl&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">SFW::Graphics::IGraphicsDevice</a>&lt; Impl &gt;::WaitSubmittedFrames </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>uptoFrame</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>提出済みフレームの完了待ち </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uptoFrame</td><td>フレームインデックス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a> の <a class="el" href="_i_graphics_device_8hpp_source.html#l00156">156</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/<a class="el" href="_i_graphics_device_8hpp_source.html">IGraphicsDevice.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics.html">Graphics</a></li><li class="navelem"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">IGraphicsDevice</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

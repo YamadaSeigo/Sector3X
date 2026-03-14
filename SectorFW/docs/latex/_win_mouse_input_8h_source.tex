@@ -1,0 +1,54 @@
+\doxysection{Win\+Mouse\+Input.\+h}
+\hypertarget{_win_mouse_input_8h_source}{}\label{_win_mouse_input_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Input/WinMouseInput.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Input/WinMouseInput.h}}
+\mbox{\hyperlink{_win_mouse_input_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <windows.h>}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <hidusage.h>}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00013}00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00014}00014\ \{}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00015}00015\ \ \ \ \ \textcolor{keyword}{class\ }WindowHandler;}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00017}00017\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_input}{Input}}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00018}00018\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00022}\mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input}{00022}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }WinMouseInput\ \{}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00023}\mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_ae4de32c550ad314e206d7602e545b244}{00023}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_ae4de32c550ad314e206d7602e545b244}{SFW::WindowHandler}};}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ WinMouseInput(HWND\ hwnd);}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RegisterRawInput(\textcolor{keywordtype}{bool}\ enable,\ \textcolor{keywordtype}{bool}\ noLegacy\ =\ \textcolor{keyword}{true},\ \textcolor{keywordtype}{bool}\ capture\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ HandleRawInput(LPARAM\ lParam);}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ OnFocus();}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ OnFocusLost();}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Reclip();}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ConsumeDelta(LONG\&\ outDx,\ LONG\&\ outDy)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Cleanup();}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00070}\mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_afc12bb86540554ec3aee8c98f5f2db2a}{00070}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_afc12bb86540554ec3aee8c98f5f2db2a}{ToggleCapture}}(\textcolor{keywordtype}{bool}\ on);}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00076}\mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_acc0ee3e9ac7eb97e8a069c8778c56f3f}{00076}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_acc0ee3e9ac7eb97e8a069c8778c56f3f}{GetDelta}}(LONG\&\ outDx,\ LONG\&\ outDy)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{\ outDx\ =\ dx;\ outDy\ =\ dy;\ \}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00082}\mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_a975bbbc21fbb780fbc836aee0c0b6694}{00082}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_a975bbbc21fbb780fbc836aee0c0b6694}{GetMouseWheel}}(\textcolor{keywordtype}{int}\&\ outWheelV,\ \textcolor{keywordtype}{int}\&\ outWheelH)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{\ outWheelV\ =\ wheelV;\ outWheelH\ =\ wheelH;\ \}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00087}\mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_a0b94e37dd1fc38590eacdc2aa085352b}{00087}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_a0b94e37dd1fc38590eacdc2aa085352b}{IsCaptured}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ captured;\ \}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00092}\mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_ad44e0fc97bbd34c089c40e8ac0af647c}{00092}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_ad44e0fc97bbd34c089c40e8ac0af647c}{IsLeftDown}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ lDown;\ \}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00097}\mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_ae8607d8b0f958cd3a079114488c0acfe}{00097}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_ae8607d8b0f958cd3a079114488c0acfe}{IsRightDown}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ rDown;\ \}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ HWND\ hwnd;}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ captured\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ lDown\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ rDown\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ mDown\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ LONG\ dx\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ LONG\ dy\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ wheelV\ =\ 0;\ \textcolor{comment}{//\ 垂直ホイールの回転量（1\ =\ 一段）}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ wheelH\ =\ 0;\ \textcolor{comment}{//\ 水平ホイールの回転量（1\ =\ 一段）}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<BYTE>\ rawBuffer;}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00112}00112\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_win_mouse_input_8h_source_l00113}00113\ \}}
+
+\end{DoxyCode}

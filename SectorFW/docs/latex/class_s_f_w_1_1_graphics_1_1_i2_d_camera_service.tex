@@ -1,0 +1,640 @@
+\doxysection{SFW\+::Graphics\+::I2\+DCamera\+Service クラス}
+\hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service}{}\label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+
+
+2Dカメラサービスのインターフェース（正射影・回転\+Z・ズーム）  
+
+
+
+
+{\ttfamily \#include $<$I2\+DCamera\+Service.\+h$>$}
+
+SFW\+::Graphics\+::I2\+DCamera\+Service の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service}
+\end{center}
+\end{figure}
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_i2_d_camera_service_1_1_camera_buffer}{Camera\+Buffer}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a60957cf3e01c9edc322c71dfe9776f56}{I2\+DCamera\+Service}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} buffer\+Handle) noexcept
+\item 
+virtual \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a73828a4929956c80a9a4f22a95d25d51}{\texorpdfstring{$\sim$}{\string~}\+I2\+DCamera\+Service}} ()=default
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a1663590b6e35491b0aa26de52afc8350}{Set\+Center}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \&center\+\_\+) noexcept
+\begin{DoxyCompactList}\small\item\em カメラ中心（ワールド座標）を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a90ebd00ebba4358e5e97c7f161d3c401}{Pan\+By}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \&delta) noexcept
+\begin{DoxyCompactList}\small\item\em カメラ中心をオフセット移動（パン） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a20c60fab4907cf04de294c0a1823601c}{Set\+RotationZ}} (float radians) noexcept
+\begin{DoxyCompactList}\small\item\em カメラ回転\+Z（ラジアン）を設定（画面全体の傾き演出など） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a4176945bf9bf4a5a86c16f9ddd8784b1}{Set\+Zoom}} (float z) noexcept
+\begin{DoxyCompactList}\small\item\em カメラズームを設定（\texorpdfstring{$>$}{>}1で拡大、\texorpdfstring{$<$}{<}1で縮小） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a0cbf1d8dcb45c741f6fc4e8c47bebd81}{Set\+Virtual\+Resolution}} (float width, float height) noexcept
+\begin{DoxyCompactList}\small\item\em 論理解像度（\+UI基準・設計解像度）を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a54f44ecf4a41a0998b544c5b19043495}{Set\+Pixels\+Per\+Unit}} (float ppu) noexcept
+\begin{DoxyCompactList}\small\item\em 世界単位1uが何ピクセルか（\+PPU）を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a81bc745a907830806be6213313a6deac}{Set\+Near\+Far}} (float nearZ, float farZ) noexcept
+\begin{DoxyCompactList}\small\item\em クリップ面（2\+Dでもレイヤー用途で残置） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ab497e4c8f2082e55e6af312a6745e0ae}{Add\+Wheel\+Zoom\+Steps}} (int steps, float per\+Step\+Scale=1.\+1f) noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a716f894970a501978fe0ae0f5ffcca3c}{Move}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \&delta) noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a37b40d8f8aa705530fcf98c6d608b7e1}{Zoom}} (float add)
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a3a353848bb7349e3677b46c204a5e958}{Get\+Center}} () const noexcept
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_af520a526e9203af7475fde0ee0fcad7f}{Get\+RotationZ}} () const noexcept
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a905169e0b7805fb97e811c5fc53f93a1}{Get\+Zoom}} () const noexcept
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ae0fbafcf18e35c9b9d77651e05d628c3}{Get\+Virtual\+Resolution}} () const noexcept
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a3986eac997bc629faf397b0aad4798cc}{Get\+Pixels\+Per\+Unit}} () const noexcept
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ab11ef0e8db18bfe77bd088c6d34176f0}{Get\+Near}} () const noexcept
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a33a1c82b359ad2c7e5813d2a0025af86}{Get\+Far}} () const noexcept
+\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_i2_d_camera_service_1_1_camera_buffer}{Camera\+Buffer}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a40574211b5e46f1421a442661c295f94}{Get\+Camera\+Buffer\+Data}} () const noexcept
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a68a006af64739ab4750e634501298a9d}{Screen\+To\+World}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \&screen) const noexcept
+\begin{DoxyCompactList}\small\item\em virtual解像度でのスクリーン座標(x,y)→ワールド座標 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a807b7aaee60bd0fe30a8d59e6f8d7878}{World\+To\+Screen}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \&world) const noexcept
+\begin{DoxyCompactList}\small\item\em ワールド座標→virtual解像度のスクリーン座標(x,y) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{Math\+::\+AABB}}$<$ float, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_adea7dadbe52caffc2d4be8affbcff016}{Make\+View\+AABB}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 現在のビューで可視なワールド範囲（\+Zは\mbox{[}near,far\mbox{]}）を返す \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a8f046a412352c0070756bafd13028111}{Recompute\+Matrices\+\_\+\+No\+Lock}} (uint16\+\_\+t slot) noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{限定公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ab23ac5475731a1ea187b992074405592}{camera\+Buffer\+Handle}}
+\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a357211746a8f849a41e85b9e9d912042}{frame\+Idx}} \{ 0 \}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_acc5e33f51fc590d3bcaf63d87d69b9b6}{current\+Slot}} \{ 0 \}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_i2_d_camera_service_1_1_camera_buffer}{Camera\+Buffer}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ad8b54bf75faee51088d44de9b789ffa1}{camera\+Buffer}} \mbox{[}RENDER\+\_\+\+BUFFER\+\_\+\+COUNT\mbox{]} \{\}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a23fab9e4c285793f741eea52523480d1}{camera\+Buffer\+Inv}} \{ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix_a176732d2017915e26be58c2bfcf7c930}{Math\+::\+Matrix4x4f\+::\+Identity}}() \}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ad9233b8ff0c074c02321b7779c017f18}{center}} \{ 0.\+0f, 0.\+0f \}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_aa86ecea1fb1bbb2d4ae5677db71b8128}{rotZ}} \{ 0.\+0f \}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_abf43070b5f26a9873bcdc07449255fe5}{zoom}} \{ 1.\+0f \}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ac04b956798e1fc1076862c0fb220617d}{move\+Vec}} \{ 0.\+0f, 0.\+0f \}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a07201e7211bc0c7b70e5b12249a1fe74}{move\+Zoom}} \{ 0.\+0f \}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a04bd88279eefbc58f13032365b2e6816}{virtual\+Width}} \{ 1920.\+0f \}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a149adc9cbce6257d53a85a9034bae523}{virtual\+Height}} \{ 1080.\+0f \}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a213330e1490b3fb65b983d30bb9d5e68}{pixels\+Per\+Unit}} \{ 1.\+0f \}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_adbe6b827dad88f075ccb2a69116b99e5}{near\+Clip}} \{ 0.\+0f \}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a470785313a3f449fa1a41805b2f9ed13}{far\+Clip}} \{ 1.\+0f \}
+\item 
+std\+::shared\+\_\+mutex \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a9f91a570509629dd96106bc8bf3ee77f}{shared\+Mutex}}
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_aea53437f03ec0e4452a0b369deec7226}{is\+Update\+Buffer}} \{ true \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{フレンド}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a4f48f4062bd3381abba782519439a61c}{ECS\+::\+Service\+Locator}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{その他の継承メンバ}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7}{Phase}} \+: uint16\+\_\+t \{ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}} = 0
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7}{NORMAL}} = 1
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9}{LATE}} = 2
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907}{PHASE\+\_\+\+MAX}}
+ \}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608}{Group}} \+: uint16\+\_\+t \{ \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b}{GROUP\+\_\+\+GRAPHICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda}{GROUP\+\_\+\+PHYSICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a}{GROUP\+\_\+\+INPUT}}
+, \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e}{GROUP\+\_\+\+AUDIO}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580}{GROUP\+\_\+\+AI}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90}{GROUP\+\_\+\+MAX}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a73744778bc5cc3113ed77db1b69e1fb1}{update\+Phase}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a9f0e8abd26ab30155b39e558f004ce42}{update\+Group}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a116ce546ab92eaf8f4282719b89a5165}{update\+Order}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+2Dカメラサービスのインターフェース（正射影・回転\+Z・ズーム） 
+
+
+\begin{DoxyItemize}
+\item 画面＝左上(0,0) / 右下(virtual\+Width, virtual\+Height) を前提とした座標にも対応
+\item pixels\+Per\+Unit を用いて世界単位 \texorpdfstring{$<$}{<}-\/\texorpdfstring{$>$}{>} ピクセル換算を制御
+\item スクロール（パン）、ズーム、回転\+Z（シェイク/演出）に対応 
+\end{DoxyItemize}
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00031}{31}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a60957cf3e01c9edc322c71dfe9776f56}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!I2DCameraService@{I2DCameraService}}
+\index{I2DCameraService@{I2DCameraService}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{I2DCameraService()}{I2DCameraService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a60957cf3e01c9edc322c71dfe9776f56} 
+SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+I2\+DCamera\+Service (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}}}]{buffer\+Handle}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00041}{41}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a73828a4929956c80a9a4f22a95d25d51}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!````~I2DCameraService@{\texorpdfstring{$\sim$}{\string~}I2DCameraService}}
+\index{````~I2DCameraService@{\texorpdfstring{$\sim$}{\string~}I2DCameraService}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}I2DCameraService()}{\string~I2DCameraService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a73828a4929956c80a9a4f22a95d25d51} 
+virtual SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\texorpdfstring{$\sim$}{\string~}\+I2\+DCamera\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ab497e4c8f2082e55e6af312a6745e0ae}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!AddWheelZoomSteps@{AddWheelZoomSteps}}
+\index{AddWheelZoomSteps@{AddWheelZoomSteps}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{AddWheelZoomSteps()}{AddWheelZoomSteps()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ab497e4c8f2082e55e6af312a6745e0ae} 
+void SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Add\+Wheel\+Zoom\+Steps (\begin{DoxyParamCaption}\item[{int}]{steps}{, }\item[{float}]{per\+Step\+Scale}{ = {\ttfamily 1.1f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00104}{104}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a40574211b5e46f1421a442661c295f94}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!GetCameraBufferData@{GetCameraBufferData}}
+\index{GetCameraBufferData@{GetCameraBufferData}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{GetCameraBufferData()}{GetCameraBufferData()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a40574211b5e46f1421a442661c295f94} 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_i2_d_camera_service_1_1_camera_buffer}{Camera\+Buffer}} \& SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Get\+Camera\+Buffer\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00156}{156}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a3a353848bb7349e3677b46c204a5e958}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!GetCenter@{GetCenter}}
+\index{GetCenter@{GetCenter}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{GetCenter()}{GetCenter()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a3a353848bb7349e3677b46c204a5e958} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Get\+Center (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00128}{128}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a33a1c82b359ad2c7e5813d2a0025af86}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!GetFar@{GetFar}}
+\index{GetFar@{GetFar}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{GetFar()}{GetFar()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a33a1c82b359ad2c7e5813d2a0025af86} 
+float SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Get\+Far (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00154}{154}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ab11ef0e8db18bfe77bd088c6d34176f0}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!GetNear@{GetNear}}
+\index{GetNear@{GetNear}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{GetNear()}{GetNear()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ab11ef0e8db18bfe77bd088c6d34176f0} 
+float SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Get\+Near (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00153}{153}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a3986eac997bc629faf397b0aad4798cc}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!GetPixelsPerUnit@{GetPixelsPerUnit}}
+\index{GetPixelsPerUnit@{GetPixelsPerUnit}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{GetPixelsPerUnit()}{GetPixelsPerUnit()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a3986eac997bc629faf397b0aad4798cc} 
+float SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Get\+Pixels\+Per\+Unit (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00148}{148}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_af520a526e9203af7475fde0ee0fcad7f}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!GetRotationZ@{GetRotationZ}}
+\index{GetRotationZ@{GetRotationZ}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{GetRotationZ()}{GetRotationZ()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_af520a526e9203af7475fde0ee0fcad7f} 
+float SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Get\+RotationZ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00133}{133}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ae0fbafcf18e35c9b9d77651e05d628c3}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!GetVirtualResolution@{GetVirtualResolution}}
+\index{GetVirtualResolution@{GetVirtualResolution}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{GetVirtualResolution()}{GetVirtualResolution()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ae0fbafcf18e35c9b9d77651e05d628c3} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Get\+Virtual\+Resolution (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00143}{143}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a905169e0b7805fb97e811c5fc53f93a1}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!GetZoom@{GetZoom}}
+\index{GetZoom@{GetZoom}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{GetZoom()}{GetZoom()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a905169e0b7805fb97e811c5fc53f93a1} 
+float SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Get\+Zoom (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00138}{138}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_adea7dadbe52caffc2d4be8affbcff016}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!MakeViewAABB@{MakeViewAABB}}
+\index{MakeViewAABB@{MakeViewAABB}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{MakeViewAABB()}{MakeViewAABB()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_adea7dadbe52caffc2d4be8affbcff016} 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{Math\+::\+AABB}}$<$ float, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} $>$ SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Make\+View\+AABB (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+現在のビューで可視なワールド範囲（\+Zは\mbox{[}near,far\mbox{]}）を返す 
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00189}{189}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a716f894970a501978fe0ae0f5ffcca3c}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!Move@{Move}}
+\index{Move@{Move}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{Move()}{Move()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a716f894970a501978fe0ae0f5ffcca3c} 
+void SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Move (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \&}]{delta}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00113}{113}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a90ebd00ebba4358e5e97c7f161d3c401}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!PanBy@{PanBy}}
+\index{PanBy@{PanBy}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{PanBy()}{PanBy()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a90ebd00ebba4358e5e97c7f161d3c401} 
+void SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Pan\+By (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \&}]{delta}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラ中心をオフセット移動（パン） 
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00059}{59}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a8f046a412352c0070756bafd13028111}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!RecomputeMatrices\_NoLock@{RecomputeMatrices\_NoLock}}
+\index{RecomputeMatrices\_NoLock@{RecomputeMatrices\_NoLock}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{RecomputeMatrices\_NoLock()}{RecomputeMatrices\_NoLock()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a8f046a412352c0070756bafd13028111} 
+void SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Recompute\+Matrices\+\_\+\+No\+Lock (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{slot}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00199}{199}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a68a006af64739ab4750e634501298a9d}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!ScreenToWorld@{ScreenToWorld}}
+\index{ScreenToWorld@{ScreenToWorld}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{ScreenToWorld()}{ScreenToWorld()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a68a006af64739ab4750e634501298a9d} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Screen\+To\+World (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \&}]{screen}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+virtual解像度でのスクリーン座標(x,y)→ワールド座標 
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00164}{164}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a1663590b6e35491b0aa26de52afc8350}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!SetCenter@{SetCenter}}
+\index{SetCenter@{SetCenter}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{SetCenter()}{SetCenter()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a1663590b6e35491b0aa26de52afc8350} 
+void SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Set\+Center (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \&}]{center\+\_\+}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラ中心（ワールド座標）を設定 
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00052}{52}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a81bc745a907830806be6213313a6deac}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!SetNearFar@{SetNearFar}}
+\index{SetNearFar@{SetNearFar}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{SetNearFar()}{SetNearFar()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a81bc745a907830806be6213313a6deac} 
+void SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Set\+Near\+Far (\begin{DoxyParamCaption}\item[{float}]{nearZ}{, }\item[{float}]{farZ}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+クリップ面（2\+Dでもレイヤー用途で残置） 
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00095}{95}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a54f44ecf4a41a0998b544c5b19043495}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!SetPixelsPerUnit@{SetPixelsPerUnit}}
+\index{SetPixelsPerUnit@{SetPixelsPerUnit}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{SetPixelsPerUnit()}{SetPixelsPerUnit()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a54f44ecf4a41a0998b544c5b19043495} 
+void SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Set\+Pixels\+Per\+Unit (\begin{DoxyParamCaption}\item[{float}]{ppu}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+世界単位1uが何ピクセルか（\+PPU）を設定 
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00088}{88}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a20c60fab4907cf04de294c0a1823601c}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!SetRotationZ@{SetRotationZ}}
+\index{SetRotationZ@{SetRotationZ}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{SetRotationZ()}{SetRotationZ()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a20c60fab4907cf04de294c0a1823601c} 
+void SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Set\+RotationZ (\begin{DoxyParamCaption}\item[{float}]{radians}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラ回転\+Z（ラジアン）を設定（画面全体の傾き演出など） 
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00066}{66}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a0cbf1d8dcb45c741f6fc4e8c47bebd81}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!SetVirtualResolution@{SetVirtualResolution}}
+\index{SetVirtualResolution@{SetVirtualResolution}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{SetVirtualResolution()}{SetVirtualResolution()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a0cbf1d8dcb45c741f6fc4e8c47bebd81} 
+void SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Set\+Virtual\+Resolution (\begin{DoxyParamCaption}\item[{float}]{width}{, }\item[{float}]{height}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+論理解像度（\+UI基準・設計解像度）を設定 
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00080}{80}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a4176945bf9bf4a5a86c16f9ddd8784b1}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!SetZoom@{SetZoom}}
+\index{SetZoom@{SetZoom}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{SetZoom()}{SetZoom()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a4176945bf9bf4a5a86c16f9ddd8784b1} 
+void SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Set\+Zoom (\begin{DoxyParamCaption}\item[{float}]{z}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラズームを設定（\texorpdfstring{$>$}{>}1で拡大、\texorpdfstring{$<$}{<}1で縮小） 
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00073}{73}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a807b7aaee60bd0fe30a8d59e6f8d7878}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!WorldToScreen@{WorldToScreen}}
+\index{WorldToScreen@{WorldToScreen}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{WorldToScreen()}{WorldToScreen()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a807b7aaee60bd0fe30a8d59e6f8d7878} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+World\+To\+Screen (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \&}]{world}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ワールド座標→virtual解像度のスクリーン座標(x,y) 
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00178}{178}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a37b40d8f8aa705530fcf98c6d608b7e1}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!Zoom@{Zoom}}
+\index{Zoom@{Zoom}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{Zoom()}{Zoom()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a37b40d8f8aa705530fcf98c6d608b7e1} 
+void SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::\+Zoom (\begin{DoxyParamCaption}\item[{float}]{add}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00119}{119}} 行目に定義があります。
+
+
+
+\label{doc-related-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_doc-related-members}
+\doxysubsection{フレンドと関連関数の詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a4f48f4062bd3381abba782519439a61c}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!ECS::ServiceLocator@{ECS::ServiceLocator}}
+\index{ECS::ServiceLocator@{ECS::ServiceLocator}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{ECS::ServiceLocator}{ECS::ServiceLocator}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a4f48f4062bd3381abba782519439a61c} 
+friend class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00032}{32}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ad8b54bf75faee51088d44de9b789ffa1}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!cameraBuffer@{cameraBuffer}}
+\index{cameraBuffer@{cameraBuffer}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{cameraBuffer}{cameraBuffer}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ad8b54bf75faee51088d44de9b789ffa1} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_i2_d_camera_service_1_1_camera_buffer}{Camera\+Buffer}} SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::camera\+Buffer\mbox{[}RENDER\+\_\+\+BUFFER\+\_\+\+COUNT\mbox{]} \{\}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00250}{250}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ab23ac5475731a1ea187b992074405592}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!cameraBufferHandle@{cameraBufferHandle}}
+\index{cameraBufferHandle@{cameraBufferHandle}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{cameraBufferHandle}{cameraBufferHandle}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ab23ac5475731a1ea187b992074405592} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::camera\+Buffer\+Handle\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00247}{247}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a23fab9e4c285793f741eea52523480d1}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!cameraBufferInv@{cameraBufferInv}}
+\index{cameraBufferInv@{cameraBufferInv}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{cameraBufferInv}{cameraBufferInv}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a23fab9e4c285793f741eea52523480d1} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::camera\+Buffer\+Inv \{ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix_a176732d2017915e26be58c2bfcf7c930}{Math\+::\+Matrix4x4f\+::\+Identity}}() \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00251}{251}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ad9233b8ff0c074c02321b7779c017f18}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!center@{center}}
+\index{center@{center}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{center}{center}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ad9233b8ff0c074c02321b7779c017f18} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::center \{ 0.\+0f, 0.\+0f \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00254}{254}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_acc5e33f51fc590d3bcaf63d87d69b9b6}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!currentSlot@{currentSlot}}
+\index{currentSlot@{currentSlot}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{currentSlot}{currentSlot}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_acc5e33f51fc590d3bcaf63d87d69b9b6} 
+uint16\+\_\+t SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::current\+Slot \{ 0 \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00249}{249}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a470785313a3f449fa1a41805b2f9ed13}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!farClip@{farClip}}
+\index{farClip@{farClip}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{farClip}{farClip}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a470785313a3f449fa1a41805b2f9ed13} 
+float SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::far\+Clip \{ 1.\+0f \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00268}{268}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a357211746a8f849a41e85b9e9d912042}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!frameIdx@{frameIdx}}
+\index{frameIdx@{frameIdx}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{frameIdx}{frameIdx}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a357211746a8f849a41e85b9e9d912042} 
+size\+\_\+t SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::frame\+Idx \{ 0 \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00248}{248}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_aea53437f03ec0e4452a0b369deec7226}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!isUpdateBuffer@{isUpdateBuffer}}
+\index{isUpdateBuffer@{isUpdateBuffer}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{isUpdateBuffer}{isUpdateBuffer}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_aea53437f03ec0e4452a0b369deec7226} 
+bool SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::is\+Update\+Buffer \{ true \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00272}{272}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ac04b956798e1fc1076862c0fb220617d}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!moveVec@{moveVec}}
+\index{moveVec@{moveVec}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{moveVec}{moveVec}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_ac04b956798e1fc1076862c0fb220617d} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::move\+Vec \{ 0.\+0f, 0.\+0f \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00258}{258}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a07201e7211bc0c7b70e5b12249a1fe74}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!moveZoom@{moveZoom}}
+\index{moveZoom@{moveZoom}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{moveZoom}{moveZoom}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a07201e7211bc0c7b70e5b12249a1fe74} 
+float SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::move\+Zoom \{ 0.\+0f \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00259}{259}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_adbe6b827dad88f075ccb2a69116b99e5}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!nearClip@{nearClip}}
+\index{nearClip@{nearClip}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{nearClip}{nearClip}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_adbe6b827dad88f075ccb2a69116b99e5} 
+float SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::near\+Clip \{ 0.\+0f \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00267}{267}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a213330e1490b3fb65b983d30bb9d5e68}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!pixelsPerUnit@{pixelsPerUnit}}
+\index{pixelsPerUnit@{pixelsPerUnit}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{pixelsPerUnit}{pixelsPerUnit}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a213330e1490b3fb65b983d30bb9d5e68} 
+float SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::pixels\+Per\+Unit \{ 1.\+0f \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00264}{264}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_aa86ecea1fb1bbb2d4ae5677db71b8128}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!rotZ@{rotZ}}
+\index{rotZ@{rotZ}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{rotZ}{rotZ}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_aa86ecea1fb1bbb2d4ae5677db71b8128} 
+float SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::rotZ \{ 0.\+0f \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00255}{255}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a9f91a570509629dd96106bc8bf3ee77f}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!sharedMutex@{sharedMutex}}
+\index{sharedMutex@{sharedMutex}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{sharedMutex}{sharedMutex}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a9f91a570509629dd96106bc8bf3ee77f} 
+std\+::shared\+\_\+mutex SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::shared\+Mutex\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00271}{271}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a149adc9cbce6257d53a85a9034bae523}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!virtualHeight@{virtualHeight}}
+\index{virtualHeight@{virtualHeight}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{virtualHeight}{virtualHeight}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a149adc9cbce6257d53a85a9034bae523} 
+float SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::virtual\+Height \{ 1080.\+0f \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00263}{263}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a04bd88279eefbc58f13032365b2e6816}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!virtualWidth@{virtualWidth}}
+\index{virtualWidth@{virtualWidth}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{virtualWidth}{virtualWidth}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_a04bd88279eefbc58f13032365b2e6816} 
+float SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::virtual\+Width \{ 1920.\+0f \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00262}{262}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_abf43070b5f26a9873bcdc07449255fe5}\index{SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}!zoom@{zoom}}
+\index{zoom@{zoom}!SFW::Graphics::I2DCameraService@{SFW::Graphics::I2DCameraService}}
+\doxysubsubsection{\texorpdfstring{zoom}{zoom}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service_abf43070b5f26a9873bcdc07449255fe5} 
+float SFW\+::\+Graphics\+::\+I2\+DCamera\+Service\+::zoom \{ 1.\+0f \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i2_d_camera_service_8h_source}{I2\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i2_d_camera_service_8h_source_l00256}{256}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_i2_d_camera_service_8h}{I2\+DCamera\+Service.\+h}}\end{DoxyCompactItemize}

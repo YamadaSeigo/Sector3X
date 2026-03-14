@@ -1,0 +1,332 @@
+\doxysection{SFW\+::Physics\+::Shape\+Key 構造体}
+\hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key}{}\label{struct_s_f_w_1_1_physics_1_1_shape_key}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+
+
+{\ttfamily \#include $<$Physics\+Shape\+Manager.\+h$>$}
+
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53d}{Kind}} \+: uint8\+\_\+t \{ \newline
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3cfce651e667ab85486dd42a8185f98a}{Box}}
+, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dab7095f057db3fefa7325ad93a04e14fd}{Sphere}}
+, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da4880c0f12c06dd6d142e7a40b041bf1a}{Capsule}}
+, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da710fdb6adb881b408116ef95335e1961}{Mesh}}
+, \newline
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da5614c6f50f3db598910134bae4d6ead8}{Mesh\+File}}
+, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da9a7e8772035f8412fc62cd830d0ba944}{Height\+Field}}
+, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3e1ee9920ed982b5da9becaf4b5463e5}{Convex\+Hull}}
+, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da8ec606de5bac1a7d607facea2bc46fa7}{Convex\+Compound}}
+, \newline
+\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dad81b2ccc0ede82aa7d953ec01ea761a6}{Convex\+Compound\+File}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a74e89756cbcc967f68c4e220e85b3984}{he}} \{\}
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a081113eb5453b9596b970ea0d0e76bf7}{r}} \{ 0.f \}
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a4fef09bf10d8411c12f0b1e82743d385}{hh}} \{ 0.f \}
+\item 
+int \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a3a12bd913d7025acb1b768b6c721d98f}{sizeX}} \{ 0 \}
+\item 
+int \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a00b8f77277e77413bb0e112dbf0127b0}{sizeY}} \{ 0 \}
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a4d697180efd77ee99a25a231dcbbdaa9}{scaleY}} \{ 1.f \}
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_adc221ab59cca33d060985f19203885a7}{cellX}} \{ 1.f \}
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a82204875073e07fd206fdcf2f1ed8d6c}{cellY}} \{ 1.f \}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_af1db6ede9a0049f0651b2efd5502a0e0}{vcount}} \{ 0 \}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aec0a42b13bad264dae77b3fd31de1469}{icount}} \{ 0 \}
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_ac2b29805f554a3443e90200ebe0b619b}{vhash}} \{ 0 \}
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_acd6fd20fe02701f29501397f0e72e16d}{ihash}} \{ 0 \}
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_ac29dff7a7bcdbbaa0be5e80db29b8fec}{hf\+Hash}} \{ 0 \}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a7c2642575db9d56166f84b490230757c}{scale}} \{ 1,1,1 \}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a22776efe3fcc575db0b1275400b612d1}{offset}} \{ 0,0,0 \}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_physics_a1fdfe70e25b6445560f443d0e054477d}{Quatf}} \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a90531eb6fbd9fe8743844813b5886f9f}{rotation}} = \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_ae9c5394d3e19e4500b11307037795c63}{Quatf\+::\+Identity}}()
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa40cbfe053e59b9e27c502ee715a4aea}{chash}} \{ 0 \}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a2af0adb6e3bdaba98c0ed0ddb5a0eb68}{pcount}} \{ 0 \}
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_ae47007f69ff69b64dd7542bc0f362893}{file\+Hash}} \{ 0 \}
+\item 
+enum \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53d}{SFW\+::\+Physics\+::\+Shape\+Key\+::\+Kind}} \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa9c196cb29e30d03c657920f1e251a85}{kind}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00050}{50}} 行目に定義があります。
+
+
+
+\label{doc-enum-members}
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_doc-enum-members}
+\doxysubsection{列挙型メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53d}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!Kind@{Kind}}
+\index{Kind@{Kind}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{Kind}{Kind}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53d} 
+enum class \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53d}{SFW\+::\+Physics\+::\+Shape\+Key\+::\+Kind}} \+: uint8\+\_\+t\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Box@{Box}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!Box@{Box}}}\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3cfce651e667ab85486dd42a8185f98a}\label{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3cfce651e667ab85486dd42a8185f98a} 
+Box&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Sphere@{Sphere}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!Sphere@{Sphere}}}\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dab7095f057db3fefa7325ad93a04e14fd}\label{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dab7095f057db3fefa7325ad93a04e14fd} 
+Sphere&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Capsule@{Capsule}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!Capsule@{Capsule}}}\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da4880c0f12c06dd6d142e7a40b041bf1a}\label{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da4880c0f12c06dd6d142e7a40b041bf1a} 
+Capsule&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Mesh@{Mesh}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!Mesh@{Mesh}}}\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da710fdb6adb881b408116ef95335e1961}\label{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da710fdb6adb881b408116ef95335e1961} 
+Mesh&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MeshFile@{MeshFile}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!MeshFile@{MeshFile}}}\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da5614c6f50f3db598910134bae4d6ead8}\label{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da5614c6f50f3db598910134bae4d6ead8} 
+Mesh\+File&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HeightField@{HeightField}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!HeightField@{HeightField}}}\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da9a7e8772035f8412fc62cd830d0ba944}\label{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da9a7e8772035f8412fc62cd830d0ba944} 
+Height\+Field&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ConvexHull@{ConvexHull}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!ConvexHull@{ConvexHull}}}\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3e1ee9920ed982b5da9becaf4b5463e5}\label{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3e1ee9920ed982b5da9becaf4b5463e5} 
+Convex\+Hull&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ConvexCompound@{ConvexCompound}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!ConvexCompound@{ConvexCompound}}}\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da8ec606de5bac1a7d607facea2bc46fa7}\label{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da8ec606de5bac1a7d607facea2bc46fa7} 
+Convex\+Compound&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ConvexCompoundFile@{ConvexCompoundFile}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!ConvexCompoundFile@{ConvexCompoundFile}}}\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dad81b2ccc0ede82aa7d953ec01ea761a6}\label{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dad81b2ccc0ede82aa7d953ec01ea761a6} 
+Convex\+Compound\+File&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00075}{75}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_adc221ab59cca33d060985f19203885a7}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!cellX@{cellX}}
+\index{cellX@{cellX}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{cellX}{cellX}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_adc221ab59cca33d060985f19203885a7} 
+float SFW\+::\+Physics\+::\+Shape\+Key\+::cellX \{ 1.f \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00057}{57}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a82204875073e07fd206fdcf2f1ed8d6c}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!cellY@{cellY}}
+\index{cellY@{cellY}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{cellY}{cellY}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_a82204875073e07fd206fdcf2f1ed8d6c} 
+float SFW\+::\+Physics\+::\+Shape\+Key\+::cellY \{ 1.f \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00057}{57}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_aa40cbfe053e59b9e27c502ee715a4aea}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!chash@{chash}}
+\index{chash@{chash}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{chash}{chash}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_aa40cbfe053e59b9e27c502ee715a4aea} 
+size\+\_\+t SFW\+::\+Physics\+::\+Shape\+Key\+::chash \{ 0 \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00069}{69}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_ae47007f69ff69b64dd7542bc0f362893}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!fileHash@{fileHash}}
+\index{fileHash@{fileHash}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{fileHash}{fileHash}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_ae47007f69ff69b64dd7542bc0f362893} 
+size\+\_\+t SFW\+::\+Physics\+::\+Shape\+Key\+::file\+Hash \{ 0 \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00073}{73}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a74e89756cbcc967f68c4e220e85b3984}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!he@{he}}
+\index{he@{he}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{he}{he}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_a74e89756cbcc967f68c4e220e85b3984} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} SFW\+::\+Physics\+::\+Shape\+Key\+::he \{\}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00052}{52}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_ac29dff7a7bcdbbaa0be5e80db29b8fec}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!hfHash@{hfHash}}
+\index{hfHash@{hfHash}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{hfHash}{hfHash}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_ac29dff7a7bcdbbaa0be5e80db29b8fec} 
+size\+\_\+t SFW\+::\+Physics\+::\+Shape\+Key\+::hf\+Hash \{ 0 \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00061}{61}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a4fef09bf10d8411c12f0b1e82743d385}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!hh@{hh}}
+\index{hh@{hh}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{hh}{hh}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_a4fef09bf10d8411c12f0b1e82743d385} 
+float SFW\+::\+Physics\+::\+Shape\+Key\+::hh \{ 0.f \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00054}{54}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_aec0a42b13bad264dae77b3fd31de1469}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!icount@{icount}}
+\index{icount@{icount}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{icount}{icount}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_aec0a42b13bad264dae77b3fd31de1469} 
+uint32\+\_\+t SFW\+::\+Physics\+::\+Shape\+Key\+::icount \{ 0 \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00059}{59}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_acd6fd20fe02701f29501397f0e72e16d}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!ihash@{ihash}}
+\index{ihash@{ihash}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{ihash}{ihash}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_acd6fd20fe02701f29501397f0e72e16d} 
+size\+\_\+t SFW\+::\+Physics\+::\+Shape\+Key\+::ihash \{ 0 \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00060}{60}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_aa9c196cb29e30d03c657920f1e251a85}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!kind@{kind}}
+\index{kind@{kind}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{kind}{kind}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_aa9c196cb29e30d03c657920f1e251a85} 
+enum \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53d}{SFW\+::\+Physics\+::\+Shape\+Key\+::\+Kind}} SFW\+::\+Physics\+::\+Shape\+Key\+::kind}
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a22776efe3fcc575db0b1275400b612d1}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!offset@{offset}}
+\index{offset@{offset}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{offset}{offset}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_a22776efe3fcc575db0b1275400b612d1} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} SFW\+::\+Physics\+::\+Shape\+Key\+::offset \{ 0,0,0 \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00065}{65}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a2af0adb6e3bdaba98c0ed0ddb5a0eb68}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!pcount@{pcount}}
+\index{pcount@{pcount}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{pcount}{pcount}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_a2af0adb6e3bdaba98c0ed0ddb5a0eb68} 
+uint32\+\_\+t SFW\+::\+Physics\+::\+Shape\+Key\+::pcount \{ 0 \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00070}{70}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a081113eb5453b9596b970ea0d0e76bf7}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!r@{r}}
+\index{r@{r}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{r}{r}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_a081113eb5453b9596b970ea0d0e76bf7} 
+float SFW\+::\+Physics\+::\+Shape\+Key\+::r \{ 0.f \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00053}{53}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a90531eb6fbd9fe8743844813b5886f9f}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!rotation@{rotation}}
+\index{rotation@{rotation}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{rotation}{rotation}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_a90531eb6fbd9fe8743844813b5886f9f} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_physics_a1fdfe70e25b6445560f443d0e054477d}{Quatf}} SFW\+::\+Physics\+::\+Shape\+Key\+::rotation = \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_ae9c5394d3e19e4500b11307037795c63}{Quatf\+::\+Identity}}()}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00067}{67}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a7c2642575db9d56166f84b490230757c}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!scale@{scale}}
+\index{scale@{scale}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{scale}{scale}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_a7c2642575db9d56166f84b490230757c} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} SFW\+::\+Physics\+::\+Shape\+Key\+::scale \{ 1,1,1 \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00063}{63}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a4d697180efd77ee99a25a231dcbbdaa9}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!scaleY@{scaleY}}
+\index{scaleY@{scaleY}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{scaleY}{scaleY}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_a4d697180efd77ee99a25a231dcbbdaa9} 
+float SFW\+::\+Physics\+::\+Shape\+Key\+::scaleY \{ 1.f \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00057}{57}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a3a12bd913d7025acb1b768b6c721d98f}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!sizeX@{sizeX}}
+\index{sizeX@{sizeX}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{sizeX}{sizeX}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_a3a12bd913d7025acb1b768b6c721d98f} 
+int SFW\+::\+Physics\+::\+Shape\+Key\+::sizeX \{ 0 \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00056}{56}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_a00b8f77277e77413bb0e112dbf0127b0}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!sizeY@{sizeY}}
+\index{sizeY@{sizeY}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{sizeY}{sizeY}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_a00b8f77277e77413bb0e112dbf0127b0} 
+int SFW\+::\+Physics\+::\+Shape\+Key\+::sizeY \{ 0 \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00056}{56}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_af1db6ede9a0049f0651b2efd5502a0e0}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!vcount@{vcount}}
+\index{vcount@{vcount}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{vcount}{vcount}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_af1db6ede9a0049f0651b2efd5502a0e0} 
+uint32\+\_\+t SFW\+::\+Physics\+::\+Shape\+Key\+::vcount \{ 0 \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00059}{59}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_physics_1_1_shape_key_ac2b29805f554a3443e90200ebe0b619b}\index{SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}!vhash@{vhash}}
+\index{vhash@{vhash}!SFW::Physics::ShapeKey@{SFW::Physics::ShapeKey}}
+\doxysubsubsection{\texorpdfstring{vhash}{vhash}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_physics_1_1_shape_key_ac2b29805f554a3443e90200ebe0b619b} 
+size\+\_\+t SFW\+::\+Physics\+::\+Shape\+Key\+::vhash \{ 0 \}}
+
+
+
+ \mbox{\hyperlink{_physics_shape_manager_8h_source}{Physics\+Shape\+Manager.\+h}} の \mbox{\hyperlink{_physics_shape_manager_8h_source_l00060}{60}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Physics/\mbox{\hyperlink{_physics_shape_manager_8h}{Physics\+Shape\+Manager.\+h}}\end{DoxyCompactItemize}

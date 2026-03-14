@@ -1,0 +1,348 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Level&lt; Partition &gt;::Session 構造体</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('struct_s_f_w_1_1_level_1_1_session.html','','struct_s_f_w_1_1_level_1_1_session-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Level&lt; Partition &gt;::Session 構造体</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>レベルへの要求を管理するセッション構造体  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_level_8hpp_source.html">Level.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a8b4665fa7ec338679029e854b7e4e1c7" id="r_a8b4665fa7ec338679029e854b7e4e1c7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b4665fa7ec338679029e854b7e4e1c7">Session</a> (<a class="el" href="class_s_f_w_1_1_level.html">Level</a>&lt; Partition &gt; &amp;_level, std::shared_mutex &amp;_m)</td></tr>
+<tr class="memitem:a1497f0e7d6f5910ab9e3abac04a78884" id="r_a1497f0e7d6f5910ab9e3abac04a78884"><td class="memTemplParams" colspan="2">template&lt;typename... Components&gt; </td></tr>
+<tr class="memitem:a1497f0e7d6f5910ab9e3abac04a78884 template"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1497f0e7d6f5910ab9e3abac04a78884">AddEntity</a> (const Components &amp;... components)</td></tr>
+<tr class="memdesc:a1497f0e7d6f5910ab9e3abac04a78884"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティを追加する関数  <br /></td></tr>
+<tr class="memitem:a8b87ed219a0226e66c527535c329b6b8" id="r_a8b87ed219a0226e66c527535c329b6b8"><td class="memTemplParams" colspan="2">template&lt;typename... Components&gt; </td></tr>
+<tr class="memitem:a8b87ed219a0226e66c527535c329b6b8 template"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b87ed219a0226e66c527535c329b6b8">AddStaticBoundsEntity</a> (<a class="el" href="class_s_f_w_1_1_spatial_chunk.html#af290a42d0fc1b4a1862cd90e56878711">SpatialChunk::Bounds3f</a> boundsWS, const Components &amp;... components)</td></tr>
+<tr class="memdesc:a8b87ed219a0226e66c527535c329b6b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">静的境界ボリュームを持つエンティティを追加する関数  <br /></td></tr>
+<tr class="memitem:ae5f0dbb27c12ac67b189a7b467630a8f" id="r_ae5f0dbb27c12ac67b189a7b467630a8f"><td class="memTemplParams" colspan="2">template&lt;typename... Components&gt; </td></tr>
+<tr class="memitem:ae5f0dbb27c12ac67b189a7b467630a8f template"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae5f0dbb27c12ac67b189a7b467630a8f">AddEntityWithLocation</a> (<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> location, const Components &amp;... components)</td></tr>
+<tr class="memdesc:ae5f0dbb27c12ac67b189a7b467630a8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">位置を指定してエンティティを追加する関数  <br /></td></tr>
+<tr class="memitem:ad260b94cdba1682550dbc752aed2e765" id="r_ad260b94cdba1682550dbc752aed2e765"><td class="memTemplParams" colspan="2">template&lt;typename... Components&gt; </td></tr>
+<tr class="memitem:ad260b94cdba1682550dbc752aed2e765 template"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad260b94cdba1682550dbc752aed2e765">AddGlobalEntity</a> (const Components &amp;... components)</td></tr>
+<tr class="memdesc:ad260b94cdba1682550dbc752aed2e765"><td class="mdescLeft">&#160;</td><td class="mdescRight">グローバルエンティティを追加する関数  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;PartitionConcept Partition&gt;<br />
+struct SFW::Level&lt; Partition &gt;::Session</div><p>レベルへの要求を管理するセッション構造体 </p>
+<p>専有ロックを取得しているので、システムの更新で生成するとデッドロックの可能性あり </p>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00143">143</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="a8b4665fa7ec338679029e854b7e4e1c7" name="a8b4665fa7ec338679029e854b7e4e1c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b4665fa7ec338679029e854b7e4e1c7">&#9670;&#160;</a></span>Session()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::Session::Session </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_level.html">Level</a>&lt; Partition &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>_level</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_mutex &amp;</td>          <td class="paramname"><span class="paramname"><em>_m</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00145">145</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a1497f0e7d6f5910ab9e3abac04a78884" name="a1497f0e7d6f5910ab9e3abac04a78884"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1497f0e7d6f5910ab9e3abac04a78884">&#9670;&#160;</a></span>AddEntity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<div class="memtemplate">
+template&lt;typename... Components&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> &gt; <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::Session::AddEntity </td>
+          <td>(</td>
+          <td class="paramtype">const Components &amp;...</td>          <td class="paramname"><span class="paramname"><em>components</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティを追加する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">...components</td><td>追加するコンポーネントの可変引数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::optional&lt;ECS::EntityID&gt; エンティティIDのオプション </dd></dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00153">153</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae5f0dbb27c12ac67b189a7b467630a8f" name="ae5f0dbb27c12ac67b189a7b467630a8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5f0dbb27c12ac67b189a7b467630a8f">&#9670;&#160;</a></span>AddEntityWithLocation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<div class="memtemplate">
+template&lt;typename... Components&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> &gt; <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::Session::AddEntityWithLocation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>location</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Components &amp;...</td>          <td class="paramname"><span class="paramname"><em>components</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>位置を指定してエンティティを追加する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">location</td><td>エンティティの位置 </td></tr>
+    <tr><td class="paramname">...components</td><td>追加するコンポーネントの可変引数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::optional&lt;ECS::EntityID&gt; エンティティID </dd></dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00252">252</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad260b94cdba1682550dbc752aed2e765" name="ad260b94cdba1682550dbc752aed2e765"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad260b94cdba1682550dbc752aed2e765">&#9670;&#160;</a></span>AddGlobalEntity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<div class="memtemplate">
+template&lt;typename... Components&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> &gt; <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::Session::AddGlobalEntity </td>
+          <td>(</td>
+          <td class="paramtype">const Components &amp;...</td>          <td class="paramname"><span class="paramname"><em>components</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>グローバルエンティティを追加する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">...components</td><td>追加するコンポーネントの可変引数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::optional&lt;ECS::EntityID&gt; エンティティIDのオプション </dd></dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00292">292</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8b87ed219a0226e66c527535c329b6b8" name="a8b87ed219a0226e66c527535c329b6b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b87ed219a0226e66c527535c329b6b8">&#9670;&#160;</a></span>AddStaticBoundsEntity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<div class="memtemplate">
+template&lt;typename... Components&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> &gt; <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::Session::AddStaticBoundsEntity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_spatial_chunk.html#af290a42d0fc1b4a1862cd90e56878711">SpatialChunk::Bounds3f</a></td>          <td class="paramname"><span class="paramname"><em>boundsWS</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Components &amp;...</td>          <td class="paramname"><span class="paramname"><em>components</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>静的境界ボリュームを持つエンティティを追加する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">boundsWS</td><td>ワールド空間での境界ボリューム </td></tr>
+    <tr><td class="paramname">...components</td><td>追加するコンポーネントの可変引数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::optional&lt;ECS::EntityID&gt; エンティティID </dd></dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00201">201</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>この構造体詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/<a class="el" href="_level_8hpp_source.html">Level.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="class_s_f_w_1_1_level.html">Level</a></li><li class="navelem"><a href="struct_s_f_w_1_1_level_1_1_session.html">Session</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

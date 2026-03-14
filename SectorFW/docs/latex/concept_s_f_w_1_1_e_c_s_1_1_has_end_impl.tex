@@ -1,0 +1,32 @@
+\doxysection{SFW\+::ECS\+::Has\+End\+Impl Concept Reference}
+\hypertarget{concept_s_f_w_1_1_e_c_s_1_1_has_end_impl}{}\label{concept_s_f_w_1_1_e_c_s_1_1_has_end_impl}\index{SFW::ECS::HasEndImpl@{SFW::ECS::HasEndImpl}}
+
+
+{\ttfamily \#include $<$IType\+System.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Derived,\ \textcolor{keyword}{typename}\ Partition,\ \textcolor{keyword}{typename}...\ Services>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_end_impl}{SFW::ECS::HasEndImpl}}\ =\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ (Derived\ \&\ t,\ \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr}{UndeletablePtr<Services>}}...\ services)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ t.EndImpl(services...)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ ||}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ (Derived\ \&\ t,\ Partition\ \&\ partition,\ \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr}{UndeletablePtr<Services>}}...\ services)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ t.EndImpl(partition,\ services...)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ ||}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ (Derived\ \&\ t,\ LevelContext<Partition>\ ctx,\ UndeletablePtr<Services>...\ services)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ t.EndImpl(ctx,\ services...)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ ||}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ (Derived\ \&\ t,\ Partition\ \&\ partition,\ LevelContext<Partition>\ \&ctx,\ UndeletablePtr<Services>...\ services)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ t.EndImpl(partition,\ ctx,\ services...)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00080}{80}} 行目に定義があります。
+

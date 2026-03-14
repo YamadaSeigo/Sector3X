@@ -1,0 +1,254 @@
+\doxysection{SFW\+::ECS\+::Query クラス}
+\hypertarget{class_s_f_w_1_1_e_c_s_1_1_query}{}\label{class_s_f_w_1_1_e_c_s_1_1_query}\index{SFW::ECS::Query@{SFW::ECS::Query}}
+
+
+指定したコンポーネントにマッチングするチャンクを取得ためのクラス  
+
+
+
+
+{\ttfamily \#include $<$Query.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename... Ts$>$ \newline
+requires All\+Dense$<$Ts...$>$}\\\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query}{Query}} \& \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a82286a440d7074faadabd3ae7750befb}{With}} () noexcept
+\begin{DoxyCompactList}\small\item\em クエリに含めるコンポーネントを指定するテンプレート \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Ts$>$ \newline
+requires All\+Dense$<$Ts...$>$}\\\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query}{Query}} \& \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a35e6e545e7ced5dbbd83498f002f7e72}{Without}} () noexcept
+\begin{DoxyCompactList}\small\item\em クエリから除外するコンポーネントを指定するテンプレート \end{DoxyCompactList}\item 
+{\footnotesize template$<$Reference\+Only T$>$ }\\std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_ab30526a91aaa023239f86e62d1fc4e71}{Matching\+Chunks}} (T context) const noexcept
+\begin{DoxyCompactList}\small\item\em クエリにマッチするアーキタイプチャンクを取得します。 \end{DoxyCompactList}\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_ab8769a82b0d78cfb45d8af0c046f3b10}{Matching\+Chunks}} (BVHPartition \&context) const noexcept
+\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a527bcc9975d0702f5c39e0e9ad889103}{Matching\+Chunks}} (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{Archetype\+Manager}} \&context) const noexcept
+\begin{DoxyCompactList}\small\item\em Archetype\+Managerのクエリを表すクラス(特殊化) \end{DoxyCompactList}\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a7b90b6e7b91ca9c827769c1cab9b5a56}{Matching\+Chunks}} (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \&em) const noexcept
+\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_aa8511d4d90f72c61e0c602939b7d37d8}{Matching\+Chunks}} (\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition}{Grid2\+DPartition}} \&context) const noexcept
+\begin{DoxyCompactList}\small\item\em Grid2\+DPartitionのクエリを表すクラス(特殊化) \end{DoxyCompactList}\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a8d3c51e534edac768d7b1b8782ed1f93}{Matching\+Chunks}} (\mbox{\hyperlink{class_s_f_w_1_1_grid3_d_partition}{Grid3\+DPartition}} \&context) const noexcept
+\begin{DoxyCompactList}\small\item\em \doxylink{class_s_f_w_1_1_grid3_d_partition}{Grid3\+DPartition} のチャンク列挙用クエリ（特殊化） \end{DoxyCompactList}\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a522877b24ce2b908a87020ca6aab23e8}{Matching\+Chunks}} (\mbox{\hyperlink{class_s_f_w_1_1_octree_partition}{SFW\+::\+Octree\+Partition}} \&ctx) const noexcept
+\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_af8e45791fccc555cd5fefd9a179658c3}{Matching\+Chunks}} (\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition}{SFW\+::\+Quad\+Tree\+Partition}} \&ctx) const noexcept
+\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a490c0190881f3492718ff949ba0ad968}{Matching\+Chunks}} (SAPPartition \&context) const noexcept
+\item 
+template$<$$>$ std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a8494bb7fbce111940dc9614c0c5060f1}{Matching\+Chunks}} (std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SFW\+::\+Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \&context) const noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+指定したコンポーネントにマッチングするチャンクを取得ためのクラス 
+
+ \mbox{\hyperlink{_query_8h_source}{Query.\+h}} の \mbox{\hyperlink{_query_8h_source_l00036}{36}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_query_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_query_a527bcc9975d0702f5c39e0e9ad889103}\index{SFW::ECS::Query@{SFW::ECS::Query}!MatchingChunks@{MatchingChunks}}
+\index{MatchingChunks@{MatchingChunks}!SFW::ECS::Query@{SFW::ECS::Query}}
+\doxysubsubsection{\texorpdfstring{MatchingChunks()}{MatchingChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [1/10]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_query_a527bcc9975d0702f5c39e0e9ad889103} 
+template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+ECS\+::\+Query\+::\+Matching\+Chunks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{Archetype\+Manager}} \&}]{context}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Archetype\+Managerのクエリを表すクラス(特殊化) 
+
+
+\begin{DoxyParams}{引数}
+{\em context} & アーキタイプマネージャーのコンテキスト \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+std\+::vector$<$\+Archetype\+Chunk\texorpdfstring{$\ast$}{*}$>$ マッチするチャンクのベクター 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_archetype_manager_8h_source}{Archetype\+Manager.\+h}} の \mbox{\hyperlink{_archetype_manager_8h_source_l00066}{66}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_query_ab8769a82b0d78cfb45d8af0c046f3b10}\index{SFW::ECS::Query@{SFW::ECS::Query}!MatchingChunks@{MatchingChunks}}
+\index{MatchingChunks@{MatchingChunks}!SFW::ECS::Query@{SFW::ECS::Query}}
+\doxysubsubsection{\texorpdfstring{MatchingChunks()}{MatchingChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [2/10]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_query_ab8769a82b0d78cfb45d8af0c046f3b10} 
+template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+ECS\+::\+Query\+::\+Matching\+Chunks (\begin{DoxyParamCaption}\item[{BVHPartition \&}]{context}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00326}{326}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_query_a7b90b6e7b91ca9c827769c1cab9b5a56}\index{SFW::ECS::Query@{SFW::ECS::Query}!MatchingChunks@{MatchingChunks}}
+\index{MatchingChunks@{MatchingChunks}!SFW::ECS::Query@{SFW::ECS::Query}}
+\doxysubsubsection{\texorpdfstring{MatchingChunks()}{MatchingChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [3/10]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_query_a7b90b6e7b91ca9c827769c1cab9b5a56} 
+template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+ECS\+::\+Query\+::\+Matching\+Chunks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \&}]{em}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00706}{706}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_query_aa8511d4d90f72c61e0c602939b7d37d8}\index{SFW::ECS::Query@{SFW::ECS::Query}!MatchingChunks@{MatchingChunks}}
+\index{MatchingChunks@{MatchingChunks}!SFW::ECS::Query@{SFW::ECS::Query}}
+\doxysubsubsection{\texorpdfstring{MatchingChunks()}{MatchingChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [4/10]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_query_aa8511d4d90f72c61e0c602939b7d37d8} 
+template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+ECS\+::\+Query\+::\+Matching\+Chunks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition}{Grid2\+DPartition}} \&}]{context}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Grid2\+DPartitionのクエリを表すクラス(特殊化) 
+
+
+\begin{DoxyParams}{引数}
+{\em context} & Grid2\+DPartitionのコンテキスト \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+std\+::vector$<$\+Archetype\+Chunk\texorpdfstring{$\ast$}{*}$>$ マッチするチャンクのベクター 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid2_d_partition_8h_source}{Grid2\+DPartition.\+h}} の \mbox{\hyperlink{_grid2_d_partition_8h_source_l00603}{603}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_query_a8d3c51e534edac768d7b1b8782ed1f93}\index{SFW::ECS::Query@{SFW::ECS::Query}!MatchingChunks@{MatchingChunks}}
+\index{MatchingChunks@{MatchingChunks}!SFW::ECS::Query@{SFW::ECS::Query}}
+\doxysubsubsection{\texorpdfstring{MatchingChunks()}{MatchingChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [5/10]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_query_a8d3c51e534edac768d7b1b8782ed1f93} 
+template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+ECS\+::\+Query\+::\+Matching\+Chunks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_grid3_d_partition}{Grid3\+DPartition}} \&}]{context}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+\doxylink{class_s_f_w_1_1_grid3_d_partition}{Grid3\+DPartition} のチャンク列挙用クエリ（特殊化） 
+
+
+
+ \mbox{\hyperlink{_grid3_d_partition_8h_source}{Grid3\+DPartition.\+h}} の \mbox{\hyperlink{_grid3_d_partition_8h_source_l00427}{427}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_query_a490c0190881f3492718ff949ba0ad968}\index{SFW::ECS::Query@{SFW::ECS::Query}!MatchingChunks@{MatchingChunks}}
+\index{MatchingChunks@{MatchingChunks}!SFW::ECS::Query@{SFW::ECS::Query}}
+\doxysubsubsection{\texorpdfstring{MatchingChunks()}{MatchingChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [6/10]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_query_a490c0190881f3492718ff949ba0ad968} 
+template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+ECS\+::\+Query\+::\+Matching\+Chunks (\begin{DoxyParamCaption}\item[{SAPPartition \&}]{context}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00295}{295}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_query_a522877b24ce2b908a87020ca6aab23e8}\index{SFW::ECS::Query@{SFW::ECS::Query}!MatchingChunks@{MatchingChunks}}
+\index{MatchingChunks@{MatchingChunks}!SFW::ECS::Query@{SFW::ECS::Query}}
+\doxysubsubsection{\texorpdfstring{MatchingChunks()}{MatchingChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [7/10]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_query_a522877b24ce2b908a87020ca6aab23e8} 
+template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+ECS\+::\+Query\+::\+Matching\+Chunks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_octree_partition}{SFW\+::\+Octree\+Partition}} \&}]{ctx}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00859}{859}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_query_af8e45791fccc555cd5fefd9a179658c3}\index{SFW::ECS::Query@{SFW::ECS::Query}!MatchingChunks@{MatchingChunks}}
+\index{MatchingChunks@{MatchingChunks}!SFW::ECS::Query@{SFW::ECS::Query}}
+\doxysubsubsection{\texorpdfstring{MatchingChunks()}{MatchingChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [8/10]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_query_af8e45791fccc555cd5fefd9a179658c3} 
+template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+ECS\+::\+Query\+::\+Matching\+Chunks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition}{SFW\+::\+Quad\+Tree\+Partition}} \&}]{ctx}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00814}{814}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_query_a8494bb7fbce111940dc9614c0c5060f1}\index{SFW::ECS::Query@{SFW::ECS::Query}!MatchingChunks@{MatchingChunks}}
+\index{MatchingChunks@{MatchingChunks}!SFW::ECS::Query@{SFW::ECS::Query}}
+\doxysubsubsection{\texorpdfstring{MatchingChunks()}{MatchingChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [9/10]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_query_a8494bb7fbce111940dc9614c0c5060f1} 
+template$<$$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+ECS\+::\+Query\+::\+Matching\+Chunks (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SFW\+::\+Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \&}]{context}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_spatial_chunk_8h_source}{Spatial\+Chunk.\+h}} の \mbox{\hyperlink{_spatial_chunk_8h_source_l00087}{87}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_query_ab30526a91aaa023239f86e62d1fc4e71}\index{SFW::ECS::Query@{SFW::ECS::Query}!MatchingChunks@{MatchingChunks}}
+\index{MatchingChunks@{MatchingChunks}!SFW::ECS::Query@{SFW::ECS::Query}}
+\doxysubsubsection{\texorpdfstring{MatchingChunks()}{MatchingChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [10/10]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_query_ab30526a91aaa023239f86e62d1fc4e71} 
+template$<$Reference\+Only T$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+ECS\+::\+Query\+::\+Matching\+Chunks (\begin{DoxyParamCaption}\item[{T}]{context}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+クエリにマッチするアーキタイプチャンクを取得します。 
+
+
+\begin{DoxyParams}{引数}
+{\em context} & コンテキストを指定するテンプレート \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+std\+::vector$<$\+Archetype\+Chunk\texorpdfstring{$\ast$}{*}$>$ マッチするチャンクのベクター 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_query_8h_source}{Query.\+h}} の \mbox{\hyperlink{_query_8h_source_l00066}{66}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_query_a82286a440d7074faadabd3ae7750befb}\index{SFW::ECS::Query@{SFW::ECS::Query}!With@{With}}
+\index{With@{With}!SFW::ECS::Query@{SFW::ECS::Query}}
+\doxysubsubsection{\texorpdfstring{With()}{With()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_query_a82286a440d7074faadabd3ae7750befb} 
+template$<$typename... Ts$>$ \newline
+requires All\+Dense$<$Ts...$>$\\
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query}{Query}} \& SFW\+::\+ECS\+::\+Query\+::\+With (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+クエリに含めるコンポーネントを指定するテンプレート 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_e_c_s_1_1_query}{Query}\& クエリ自身の参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_query_8h_source}{Query.\+h}} の \mbox{\hyperlink{_query_8h_source_l00045}{45}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_query_a35e6e545e7ced5dbbd83498f002f7e72}\index{SFW::ECS::Query@{SFW::ECS::Query}!Without@{Without}}
+\index{Without@{Without}!SFW::ECS::Query@{SFW::ECS::Query}}
+\doxysubsubsection{\texorpdfstring{Without()}{Without()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_query_a35e6e545e7ced5dbbd83498f002f7e72} 
+template$<$typename... Ts$>$ \newline
+requires All\+Dense$<$Ts...$>$\\
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query}{Query}} \& SFW\+::\+ECS\+::\+Query\+::\+Without (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+クエリから除外するコンポーネントを指定するテンプレート 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_e_c_s_1_1_query}{Query}\& クエリ自身の参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_query_8h_source}{Query.\+h}} の \mbox{\hyperlink{_query_8h_source_l00055}{55}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_query_8h}{Query.\+h}}\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_b_v_h_partition_8h}{BVHPartition.\+h}}\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_archetype_manager_8h}{Archetype\+Manager.\+h}}\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_entity_manager_8h}{Entity\+Manager.\+h}}\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_grid2_d_partition_8h}{Grid2\+DPartition.\+h}}\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_grid3_d_partition_8h}{Grid3\+DPartition.\+h}}\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_octree_partition_8h}{Octree\+Partition.\+h}}\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_quad_tree_partition_8h}{Quad\+Tree\+Partition.\+h}}\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_s_a_p_partitionh_8h}{SAPPartitionh.\+h}}\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_spatial_chunk_8h}{Spatial\+Chunk.\+h}}\end{DoxyCompactItemize}

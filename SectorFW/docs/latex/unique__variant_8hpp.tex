@@ -1,0 +1,53 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/unique\+\_\+variant.hpp ファイル}
+\hypertarget{unique__variant_8hpp}{}\label{unique__variant_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/unique\_variant.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/unique\_variant.hpp}}
+
+
+ユニークな型のvariantを生成するためのヘッダーファイル  
+
+
+{\ttfamily \#include $<$variant$>$}\newline
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+{\ttfamily \#include $<$tuple$>$}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1unique__types}{SFW\+::unique\+\_\+types$<$ Ts $>$}}
+\begin{DoxyCompactList}\small\item\em ユニークな型のリストを生成するためのヘルパー構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1tuple__to__variant_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4}{SFW\+::tuple\+\_\+to\+\_\+variant$<$ std\+::tuple$<$ Ts... $>$ $>$}}
+\begin{DoxyCompactList}\small\item\em tuple → variant に変換する特化版 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1unique__variant__impl_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4}{SFW\+::unique\+\_\+variant\+\_\+impl$<$ std\+::tuple$<$ Ts... $>$ $>$}}
+\begin{DoxyCompactList}\small\item\em unique\+\_\+variant\+\_\+impl：tuple$<$\+Ts...$>$ の特化版 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1unique__variant__impl__alt}{SFW\+::unique\+\_\+variant\+\_\+impl\+\_\+alt$<$ Ts $>$}}
+\begin{DoxyCompactList}\small\item\em unique\+\_\+variant\+\_\+impl\+\_\+alt：可変長引数テンプレートを使用してユニークな型のvariantを生成する \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T$>$ }\\using \mbox{\hyperlink{namespace_s_f_w_ac1a922727827786057f3e7536210c13b}{SFW\+::unique\+\_\+variant\+\_\+from\+\_\+tuple}} = typename \mbox{\hyperlink{struct_s_f_w_1_1unique__variant__impl}{unique\+\_\+variant\+\_\+impl}}$<$T$>$\+::type
+\begin{DoxyCompactList}\small\item\em ユニークな型のvariantを生成するためのエイリアス(tuple版) \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Ts$>$ }\\using \mbox{\hyperlink{namespace_s_f_w_aa5240e4afb668ccce19e97a3a37eb883}{SFW\+::unique\+\_\+variant\+\_\+from\+\_\+args}} = typename \mbox{\hyperlink{struct_s_f_w_1_1unique__variant__impl__alt}{unique\+\_\+variant\+\_\+impl\+\_\+alt}}$<$Ts...$>$\+::type
+\begin{DoxyCompactList}\small\item\em ユニークな型のvariantを生成するためのエイリアス（可変長引数テンプレート版） \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{変数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T, typename... Ts$>$ }\\constexpr bool \mbox{\hyperlink{namespace_s_f_w_abae658b4aaafd0420409846ac5fdca2d}{SFW\+::is\+\_\+in\+\_\+v}} = (std\+::is\+\_\+same\+\_\+v$<$T, Ts$>$ \texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|} ...)
+\begin{DoxyCompactList}\small\item\em 指定された型\+Tが、可変長引数の型リスト\+Ts...のいずれかと同じかどうかを判定する \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+ユニークな型のvariantを生成するためのヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+June 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{unique__variant_8hpp_source}{unique\+\_\+variant.\+hpp}} に定義があります。
+

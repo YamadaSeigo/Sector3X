@@ -1,0 +1,132 @@
+\doxysection{SFW\+::Debug\+::Gpu\+Timer\+D3\+D11 クラス}
+\hypertarget{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11}{}\label{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11}\index{SFW::Debug::GpuTimerD3D11@{SFW::Debug::GpuTimerD3D11}}
+
+
+Direct3\+D11用の\+GPUタイマー  
+
+
+
+
+{\ttfamily \#include $<$GPUTimer\+D3\+D11.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11_a7542ff0c895677f25c97eb4f1519de4f}{init}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, int history=3)
+\begin{DoxyCompactList}\small\item\em 初期化 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11_ad97eb574cb218de75208ea7236b84781}{begin}} (ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}ctx)
+\begin{DoxyCompactList}\small\item\em フレーム先頭（描画直前） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11_aa6287ce3de72102fb8615b2bb99524eb}{end}} (ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}ctx)
+\begin{DoxyCompactList}\small\item\em フレーム最後（\+Present前） \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11_a0a0e5f3b80d126c1f2492e6b9070c1da}{try\+Resolve}} (ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}ctx)
+\begin{DoxyCompactList}\small\item\em 1フレ遅れで取得（ノンブロッキング） \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Direct3\+D11用の\+GPUタイマー 
+
+
+\begin{DoxyItemize}
+\item タイムスタンプクエリをリングバッファで管理
+\item 未解決（\+GPU がまだ終わっていない）クエリは再利用しない → QUERY\+\_\+\+BEGIN\+\_\+\+ABANDONING\+\_\+\+PREVIOUS\+\_\+\+RESULTS / QUERY\+\_\+\+END\+\_\+\+ABANDONING\+\_\+\+PREVIOUS\+\_\+\+RESULTS を回避
+\item 空きスロットがない場合、そのフレームの計測はスキップする 
+\end{DoxyItemize}
+
+ \mbox{\hyperlink{_g_p_u_timer_d3_d11_8h_source}{GPUTimer\+D3\+D11.\+h}} の \mbox{\hyperlink{_g_p_u_timer_d3_d11_8h_source_l00026}{26}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11_ad97eb574cb218de75208ea7236b84781}\index{SFW::Debug::GpuTimerD3D11@{SFW::Debug::GpuTimerD3D11}!begin@{begin}}
+\index{begin@{begin}!SFW::Debug::GpuTimerD3D11@{SFW::Debug::GpuTimerD3D11}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11_ad97eb574cb218de75208ea7236b84781} 
+void SFW\+::\+Debug\+::\+Gpu\+Timer\+D3\+D11\+::begin (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+フレーム先頭（描画直前） 
+
+
+\begin{DoxyParams}{引数}
+{\em ctx} & デバイスコンテキスト\\
+\hline
+\end{DoxyParams}
+空いているリングスロット（in\+Flight == false）のみを使用する。 全スロットが in\+Flight の場合は計測をスキップする。 
+
+ \mbox{\hyperlink{_g_p_u_timer_d3_d11_8h_source}{GPUTimer\+D3\+D11.\+h}} の \mbox{\hyperlink{_g_p_u_timer_d3_d11_8h_source_l00070}{70}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11_aa6287ce3de72102fb8615b2bb99524eb}\index{SFW::Debug::GpuTimerD3D11@{SFW::Debug::GpuTimerD3D11}!end@{end}}
+\index{end@{end}!SFW::Debug::GpuTimerD3D11@{SFW::Debug::GpuTimerD3D11}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11_aa6287ce3de72102fb8615b2bb99524eb} 
+void SFW\+::\+Debug\+::\+Gpu\+Timer\+D3\+D11\+::end (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+フレーム最後（\+Present前） 
+
+
+\begin{DoxyParams}{引数}
+{\em ctx} & デバイスコンテキスト\\
+\hline
+\end{DoxyParams}
+\doxylink{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11_ad97eb574cb218de75208ea7236b84781}{begin()} に成功したときのみ End を発行する。 
+
+ \mbox{\hyperlink{_g_p_u_timer_d3_d11_8h_source}{GPUTimer\+D3\+D11.\+h}} の \mbox{\hyperlink{_g_p_u_timer_d3_d11_8h_source_l00112}{112}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11_a7542ff0c895677f25c97eb4f1519de4f}\index{SFW::Debug::GpuTimerD3D11@{SFW::Debug::GpuTimerD3D11}!init@{init}}
+\index{init@{init}!SFW::Debug::GpuTimerD3D11@{SFW::Debug::GpuTimerD3D11}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11_a7542ff0c895677f25c97eb4f1519de4f} 
+void SFW\+::\+Debug\+::\+Gpu\+Timer\+D3\+D11\+::init (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device \texorpdfstring{$\ast$}{*}}]{dev}{, }\item[{int}]{history}{ = {\ttfamily 3}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+初期化 
+
+
+\begin{DoxyParams}{引数}
+{\em dev} & デバイス \\
+\hline
+{\em history} & 履歴数（同時 in-\/flight させる最大フレーム数目安） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_g_p_u_timer_d3_d11_8h_source}{GPUTimer\+D3\+D11.\+h}} の \mbox{\hyperlink{_g_p_u_timer_d3_d11_8h_source_l00033}{33}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11_a0a0e5f3b80d126c1f2492e6b9070c1da}\index{SFW::Debug::GpuTimerD3D11@{SFW::Debug::GpuTimerD3D11}!tryResolve@{tryResolve}}
+\index{tryResolve@{tryResolve}!SFW::Debug::GpuTimerD3D11@{SFW::Debug::GpuTimerD3D11}}
+\doxysubsubsection{\texorpdfstring{tryResolve()}{tryResolve()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11_a0a0e5f3b80d126c1f2492e6b9070c1da} 
+double SFW\+::\+Debug\+::\+Gpu\+Timer\+D3\+D11\+::try\+Resolve (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+1フレ遅れで取得（ノンブロッキング） 
+
+
+\begin{DoxyParams}{引数}
+{\em ctx} & デバイスコンテキスト \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+秒（新しい結果が取得できなかった場合は \texorpdfstring{$<$}{<} 0）
+\end{DoxyReturn}
+
+\begin{DoxyItemize}
+\item 一番古い未解決のリング（read\+Index\+\_\+ 起点）から順に解決を試みる
+\item 解決できたものは必ず Get\+Data(\+S\+\_\+\+OK) 済みにして in\+Flight = false にする
+\item これにより「未取得結果を残したまま Query を再利用する」ことを避ける 
+\end{DoxyItemize}
+
+ \mbox{\hyperlink{_g_p_u_timer_d3_d11_8h_source}{GPUTimer\+D3\+D11.\+h}} の \mbox{\hyperlink{_g_p_u_timer_d3_d11_8h_source_l00138}{138}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Debug/\mbox{\hyperlink{_g_p_u_timer_d3_d11_8h}{GPUTimer\+D3\+D11.\+h}}\end{DoxyCompactItemize}

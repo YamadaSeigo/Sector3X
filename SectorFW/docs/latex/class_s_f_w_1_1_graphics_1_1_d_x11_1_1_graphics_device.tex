@@ -1,0 +1,412 @@
+\doxysection{SFW\+::Graphics\+::DX11\+::Graphics\+Device クラス}
+\hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}{}\label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+
+
+{\ttfamily \#include $<$DX11\+Graphics.\+h$>$}
+
+SFW\+::Graphics\+::DX11\+::Graphics\+Device の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_abeddbd92f0d8f4cbcbc05071d32a3cf4}{Render\+Graph}} = \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_abeddbd92f0d8f4cbcbc05071d32a3cf4}{Render\+Graph}}$<$\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend}{Render\+Backend}}, ID3\+D11\+Render\+Target\+View\texorpdfstring{$\ast$}{*}, ID3\+D11\+Depth\+Stencil\+View\texorpdfstring{$\ast$}{*}, ID3\+D11\+Shader\+Resource\+View\texorpdfstring{$\ast$}{*}, ID3\+D11\+Buffer\texorpdfstring{$\ast$}{*}, Com\+Ptr$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_afe68fa02385b14547b14337552a59ce7}{Graphics\+Device}} ()=default
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a0e2da158a6f17afc9f668f4baf339d8b}{\texorpdfstring{$\sim$}{\string~}\+Graphics\+Device}} ()
+\begin{DoxyCompactList}\small\item\em デストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a48728df786c6b9a19d863c1719255ae0}{Graphics\+Device}} (\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}{Graphics\+Device}} \&\&rhs) noexcept
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}{Graphics\+Device}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_acb5af09505a59fa0604a6f158b67efc3}{operator=}} (\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}{Graphics\+Device}} \&\&rhs) noexcept
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a6fee3d3805e1c9ad5faf9caccb4edbc2}{Graphics\+Device}} (const \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}{Graphics\+Device}} \&)=delete
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}{Graphics\+Device}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_acb0e9e1736ee79355664bc37bd0f7ecd}{operator=}} (const \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}{Graphics\+Device}} \&)=delete
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a0d7345574bf7a81c90c8d30e25427a3a}{Initialize\+Impl}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{Native\+Window\+Handle}} \&native\+Window\+Handle, uint32\+\_\+t width, uint32\+\_\+t height, double fps)
+\begin{DoxyCompactList}\small\item\em 初期化関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_afd7529b1240416e583c06271c81595f1}{Clear\+Impl}} (const FLOAT clear\+Color\mbox{[}4\mbox{]})
+\begin{DoxyCompactList}\small\item\em 画面をクリアする関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a3798d3d0a59ceedbed1fdf40d3d6b4fe}{Draw\+Impl}} ()
+\begin{DoxyCompactList}\small\item\em 描画を実行する関数 @detailss Render\+Graphを使用して描画を実行します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a15ed685258d22d4e79ea4fc0aab091a6}{Present\+Impl}} ()
+\begin{DoxyCompactList}\small\item\em 描画を実行する関数 @detailss Render\+Graphを使用して描画を実行します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a3cf4f27906aeb15493d35dbabd84447b}{Start\+Render\+Thread}} ()
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_abc8669a07c0f5b56c54218df11e813b0}{Stop\+Render\+Thread}} ()
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_ad43491a04b805c3b6b0ea7aebaf10c8c}{Submit\+Frame\+Impl}} (const FLOAT clear\+Color\mbox{[}4\mbox{]}, uint64\+\_\+t frame\+Idx)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a90c8a484b547dabb5a320186c0bde399}{Wait\+Submitted\+Frames\+Impl}} (uint64\+\_\+t upto\+Frame)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_ad8ecbad717838b9324832559a9797846}{Set\+Main\+Render\+Target\+And\+Depth}} ()
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a5a6be44e999078e0fe92d72321ed586d}{Set\+Main\+Render\+Target\+No\+Depth}} ()
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_ae57d349537b706d2db11707db680f6af}{Set\+Blend\+State}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556b}{Blend\+State\+ID}} state)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_adec516e7e9fc93ff030b513b410be370}{Set\+Depth\+Stencil\+State}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3}{Depth\+Stencil\+State\+ID}} state, UINT stencil\+Ref=0)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_aaafe50d8157268ed66a6fb086af2658a}{Set\+Rasterizer\+State}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5}{Rasterizer\+State\+ID}} state)
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service}{Render\+Service}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a6314da2af52dad190b212f5744a0339d}{Get\+Render\+Service}} () noexcept
+\item 
+{\footnotesize template$<$typename F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a69e5e12709963b2aace5084e40f48bce}{Execute\+Custom\+Func}} (F \&\&func)
+\begin{DoxyCompactList}\small\item\em 指定した関数オブジェクトに引数を渡して実行する \end{DoxyCompactList}\item 
+ID3\+D11\+Device \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a99acd2a3093931632beea699f677cc81}{Get\+Device}} () const noexcept
+\item 
+ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_ac7662923ed2c2e6219d937500debbd93}{Get\+Device\+Context}} () const noexcept
+\item 
+const \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend}{Render\+Backend}} \texorpdfstring{$\ast$}{*}const \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a918b266a21c058c06e80406ae3175fc2}{Get\+Backend}} () const noexcept
+\item 
+Com\+Ptr$<$ ID3\+D11\+Render\+Target\+View $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a31c5350fd1d092ba91668fe4fa1967d5}{Get\+Main\+Render\+Target\+View}} () const noexcept
+\item 
+Com\+Ptr$<$ ID3\+D11\+Depth\+Stencil\+View $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a9e887461ee7d3f8b244e5ce559c06f8e}{Get\+Main\+Depth\+Stencil\+View}} () const noexcept
+\item 
+Com\+Ptr$<$ ID3\+D11\+Depth\+Stencil\+View $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a17cfabda61ef6e2b1af2ad00ffa227fd}{Get\+Main\+Depth\+Stencil\+View\+Read\+Only}} () const noexcept
+\item 
+Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a9226eb000359e10d86694c23e15cadec}{Get\+Main\+Depth\+Stencil\+SRV}} () const noexcept
+\item 
+const D3\+D11\+\_\+\+VIEWPORT \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a0919c51c6ffc5f05d0363d133753b6d1}{Get\+Main\+Viewport}} () const noexcept
+\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+Graphics\+::\+IGraphics\+Device$<$ Graphics\+Device $>$}} に属する継承公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_aead7deb30ab52aef3c7e4cd7968fd58b}{IGraphics\+Device}} ()=default
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a0f0271012c8d9fe7c508a1f424ead2da}{Configure}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{Native\+Window\+Handle}} \&native\+Window\+Handle, uint32\+\_\+t width, uint32\+\_\+t height, double fps)
+\begin{DoxyCompactList}\small\item\em 初期化 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a755ede26c777008d980552218ce96530}{Clear}} (const float clear\+Color\mbox{[}4\mbox{]})
+\begin{DoxyCompactList}\small\item\em 画面をクリア \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3a54c028d48da1a75038656f7dee3394}{Draw}} ()
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_abcb0602a6cec5134423c8941bd277e46}{Present}} ()
+\begin{DoxyCompactList}\small\item\em 描画 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3d210c34b525b87e33208989c4aec1d2}{Submit\+Frame}} (const FLOAT clear\+Color\mbox{[}4\mbox{]}, uint64\+\_\+t frame\+Idx)
+\begin{DoxyCompactList}\small\item\em フレームの提出 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3f13d959dd8c2f9e275cb335764aa17a}{Wait\+Submitted\+Frames}} (uint64\+\_\+t upto\+Frame)
+\begin{DoxyCompactList}\small\item\em 提出済みフレームの完了待ち \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a669ea0c8873cf05be43c35d1d10a4412}{\texorpdfstring{$\sim$}{\string~}\+IGraphics\+Device}} ()=default
+\begin{DoxyCompactList}\small\item\em デストラクタ \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a6dd6f41ea22d3d5d01046473a8216961}{Is\+Initialized}} () const
+\begin{DoxyCompactList}\small\item\em 初期化フラグの取得 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{その他の継承メンバ}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+Graphics\+::\+IGraphics\+Device$<$ Graphics\+Device $>$}} に属する継承限定公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_acd355dc1d7f35212ee71c1e8219be1e0}{Initialize}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{Native\+Window\+Handle}} \&native\+Window\+Handle, uint32\+\_\+t width, uint32\+\_\+t height, double fps)
+\begin{DoxyCompactList}\small\item\em 初期化 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_d_x11_graphics_8h_source}{DX11\+Graphics.\+h}} の \mbox{\hyperlink{_d_x11_graphics_8h_source_l00040}{40}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_abeddbd92f0d8f4cbcbc05071d32a3cf4}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!RenderGraph@{RenderGraph}}
+\index{RenderGraph@{RenderGraph}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{RenderGraph}{RenderGraph}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_abeddbd92f0d8f4cbcbc05071d32a3cf4} 
+using \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_abeddbd92f0d8f4cbcbc05071d32a3cf4}{SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Render\+Graph}} = \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_abeddbd92f0d8f4cbcbc05071d32a3cf4}{Render\+Graph}}$<$\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend}{Render\+Backend}}, ID3\+D11\+Render\+Target\+View\texorpdfstring{$\ast$}{*}, ID3\+D11\+Depth\+Stencil\+View\texorpdfstring{$\ast$}{*}, ID3\+D11\+Shader\+Resource\+View\texorpdfstring{$\ast$}{*}, ID3\+D11\+Buffer\texorpdfstring{$\ast$}{*}, Com\+Ptr$>$}
+
+
+
+ \mbox{\hyperlink{_d_x11_graphics_8h_source}{DX11\+Graphics.\+h}} の \mbox{\hyperlink{_d_x11_graphics_8h_source_l00043}{43}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_afe68fa02385b14547b14337552a59ce7}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!GraphicsDevice@{GraphicsDevice}}
+\index{GraphicsDevice@{GraphicsDevice}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{GraphicsDevice()}{GraphicsDevice()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_afe68fa02385b14547b14337552a59ce7} 
+SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Graphics\+Device (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+コンストラクタ 
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a0e2da158a6f17afc9f668f4baf339d8b}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!````~GraphicsDevice@{\texorpdfstring{$\sim$}{\string~}GraphicsDevice}}
+\index{````~GraphicsDevice@{\texorpdfstring{$\sim$}{\string~}GraphicsDevice}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}GraphicsDevice()}{\string~GraphicsDevice()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a0e2da158a6f17afc9f668f4baf339d8b} 
+SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\texorpdfstring{$\sim$}{\string~}\+Graphics\+Device (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+デストラクタ 
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a48728df786c6b9a19d863c1719255ae0}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!GraphicsDevice@{GraphicsDevice}}
+\index{GraphicsDevice@{GraphicsDevice}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{GraphicsDevice()}{GraphicsDevice()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a48728df786c6b9a19d863c1719255ae0} 
+SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Graphics\+Device (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}{Graphics\+Device}} \&\&}]{rhs}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a6fee3d3805e1c9ad5faf9caccb4edbc2}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!GraphicsDevice@{GraphicsDevice}}
+\index{GraphicsDevice@{GraphicsDevice}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{GraphicsDevice()}{GraphicsDevice()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a6fee3d3805e1c9ad5faf9caccb4edbc2} 
+SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Graphics\+Device (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}{Graphics\+Device}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_afd7529b1240416e583c06271c81595f1}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!ClearImpl@{ClearImpl}}
+\index{ClearImpl@{ClearImpl}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{ClearImpl()}{ClearImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_afd7529b1240416e583c06271c81595f1} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Clear\+Impl (\begin{DoxyParamCaption}\item[{const FLOAT}]{clear\+Color}{\mbox{[}4\mbox{]}}\end{DoxyParamCaption})}
+
+
+
+画面をクリアする関数 
+
+
+\begin{DoxyParams}{引数}
+{\em clear\+Color} & クリアカラー（\+RGBA） \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a3798d3d0a59ceedbed1fdf40d3d6b4fe}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!DrawImpl@{DrawImpl}}
+\index{DrawImpl@{DrawImpl}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{DrawImpl()}{DrawImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a3798d3d0a59ceedbed1fdf40d3d6b4fe} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Draw\+Impl (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+描画を実行する関数 @detailss Render\+Graphを使用して描画を実行します。 
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a69e5e12709963b2aace5084e40f48bce}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!ExecuteCustomFunc@{ExecuteCustomFunc}}
+\index{ExecuteCustomFunc@{ExecuteCustomFunc}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{ExecuteCustomFunc()}{ExecuteCustomFunc()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a69e5e12709963b2aace5084e40f48bce} 
+template$<$typename F$>$ \\
+void SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Execute\+Custom\+Func (\begin{DoxyParamCaption}\item[{F \&\&}]{func}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+指定した関数オブジェクトに引数を渡して実行する 
+
+
+\begin{DoxyParams}{引数}
+{\em func} & \doxylink{class_s_f_w_1_1_graphics_1_1_render_graph}{Render\+Graph},ID3\+D11\+Render\+Target\+View,ID3\+D11\+Depth\+Stencil\+Viewを引数に取る関数オブジェクト \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_d_x11_graphics_8h_source}{DX11\+Graphics.\+h}} の \mbox{\hyperlink{_d_x11_graphics_8h_source_l00103}{103}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a918b266a21c058c06e80406ae3175fc2}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!GetBackend@{GetBackend}}
+\index{GetBackend@{GetBackend}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{GetBackend()}{GetBackend()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a918b266a21c058c06e80406ae3175fc2} 
+const \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend}{Render\+Backend}} \texorpdfstring{$\ast$}{*}const SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Get\+Backend (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_graphics_8h_source}{DX11\+Graphics.\+h}} の \mbox{\hyperlink{_d_x11_graphics_8h_source_l00111}{111}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a99acd2a3093931632beea699f677cc81}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!GetDevice@{GetDevice}}
+\index{GetDevice@{GetDevice}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{GetDevice()}{GetDevice()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a99acd2a3093931632beea699f677cc81} 
+ID3\+D11\+Device \texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Get\+Device (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_graphics_8h_source}{DX11\+Graphics.\+h}} の \mbox{\hyperlink{_d_x11_graphics_8h_source_l00108}{108}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_ac7662923ed2c2e6219d937500debbd93}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!GetDeviceContext@{GetDeviceContext}}
+\index{GetDeviceContext@{GetDeviceContext}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{GetDeviceContext()}{GetDeviceContext()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_ac7662923ed2c2e6219d937500debbd93} 
+ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Get\+Device\+Context (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_graphics_8h_source}{DX11\+Graphics.\+h}} の \mbox{\hyperlink{_d_x11_graphics_8h_source_l00109}{109}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a9226eb000359e10d86694c23e15cadec}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!GetMainDepthStencilSRV@{GetMainDepthStencilSRV}}
+\index{GetMainDepthStencilSRV@{GetMainDepthStencilSRV}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{GetMainDepthStencilSRV()}{GetMainDepthStencilSRV()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a9226eb000359e10d86694c23e15cadec} 
+Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Get\+Main\+Depth\+Stencil\+SRV (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_graphics_8h_source}{DX11\+Graphics.\+h}} の \mbox{\hyperlink{_d_x11_graphics_8h_source_l00124}{124}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a9e887461ee7d3f8b244e5ce559c06f8e}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!GetMainDepthStencilView@{GetMainDepthStencilView}}
+\index{GetMainDepthStencilView@{GetMainDepthStencilView}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{GetMainDepthStencilView()}{GetMainDepthStencilView()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a9e887461ee7d3f8b244e5ce559c06f8e} 
+Com\+Ptr$<$ ID3\+D11\+Depth\+Stencil\+View $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Get\+Main\+Depth\+Stencil\+View (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_graphics_8h_source}{DX11\+Graphics.\+h}} の \mbox{\hyperlink{_d_x11_graphics_8h_source_l00118}{118}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a17cfabda61ef6e2b1af2ad00ffa227fd}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!GetMainDepthStencilViewReadOnly@{GetMainDepthStencilViewReadOnly}}
+\index{GetMainDepthStencilViewReadOnly@{GetMainDepthStencilViewReadOnly}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{GetMainDepthStencilViewReadOnly()}{GetMainDepthStencilViewReadOnly()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a17cfabda61ef6e2b1af2ad00ffa227fd} 
+Com\+Ptr$<$ ID3\+D11\+Depth\+Stencil\+View $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Get\+Main\+Depth\+Stencil\+View\+Read\+Only (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_graphics_8h_source}{DX11\+Graphics.\+h}} の \mbox{\hyperlink{_d_x11_graphics_8h_source_l00121}{121}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a31c5350fd1d092ba91668fe4fa1967d5}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!GetMainRenderTargetView@{GetMainRenderTargetView}}
+\index{GetMainRenderTargetView@{GetMainRenderTargetView}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{GetMainRenderTargetView()}{GetMainRenderTargetView()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a31c5350fd1d092ba91668fe4fa1967d5} 
+Com\+Ptr$<$ ID3\+D11\+Render\+Target\+View $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Get\+Main\+Render\+Target\+View (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_graphics_8h_source}{DX11\+Graphics.\+h}} の \mbox{\hyperlink{_d_x11_graphics_8h_source_l00115}{115}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a0919c51c6ffc5f05d0363d133753b6d1}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!GetMainViewport@{GetMainViewport}}
+\index{GetMainViewport@{GetMainViewport}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{GetMainViewport()}{GetMainViewport()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a0919c51c6ffc5f05d0363d133753b6d1} 
+const D3\+D11\+\_\+\+VIEWPORT \& SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Get\+Main\+Viewport (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_graphics_8h_source}{DX11\+Graphics.\+h}} の \mbox{\hyperlink{_d_x11_graphics_8h_source_l00128}{128}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a6314da2af52dad190b212f5744a0339d}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!GetRenderService@{GetRenderService}}
+\index{GetRenderService@{GetRenderService}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{GetRenderService()}{GetRenderService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a6314da2af52dad190b212f5744a0339d} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_service}{Render\+Service}} \texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Get\+Render\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_graphics_8h_source}{DX11\+Graphics.\+h}} の \mbox{\hyperlink{_d_x11_graphics_8h_source_l00095}{95}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a0d7345574bf7a81c90c8d30e25427a3a}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!InitializeImpl@{InitializeImpl}}
+\index{InitializeImpl@{InitializeImpl}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{InitializeImpl()}{InitializeImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a0d7345574bf7a81c90c8d30e25427a3a} 
+bool SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Initialize\+Impl (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{Native\+Window\+Handle}} \&}]{native\+Window\+Handle}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{double}]{fps}{}\end{DoxyParamCaption})}
+
+
+
+初期化関数 
+
+
+\begin{DoxyParams}{引数}
+{\em native\+Window\+Handle} & ウィンドウハンドル \\
+\hline
+{\em width} & ウィンドウ幅 \\
+\hline
+{\em height} & ウィンドウ高さ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+bool 初期化に成功したかどうか 
+\end{DoxyReturn}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_acb0e9e1736ee79355664bc37bd0f7ecd}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_acb0e9e1736ee79355664bc37bd0f7ecd} 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}{Graphics\+Device}} \& SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}{Graphics\+Device}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_acb5af09505a59fa0604a6f158b67efc3}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_acb5af09505a59fa0604a6f158b67efc3} 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}{Graphics\+Device}} \& SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}{Graphics\+Device}} \&\&}]{rhs}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a15ed685258d22d4e79ea4fc0aab091a6}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!PresentImpl@{PresentImpl}}
+\index{PresentImpl@{PresentImpl}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{PresentImpl()}{PresentImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a15ed685258d22d4e79ea4fc0aab091a6} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Present\+Impl (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+描画を実行する関数 @detailss Render\+Graphを使用して描画を実行します。 
+
+
+\begin{DoxyParams}{引数}
+{\em render\+Graph} & Render\+Graphの参照 \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_ae57d349537b706d2db11707db680f6af}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!SetBlendState@{SetBlendState}}
+\index{SetBlendState@{SetBlendState}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{SetBlendState()}{SetBlendState()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_ae57d349537b706d2db11707db680f6af} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Set\+Blend\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556b}{Blend\+State\+ID}}}]{state}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_adec516e7e9fc93ff030b513b410be370}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!SetDepthStencilState@{SetDepthStencilState}}
+\index{SetDepthStencilState@{SetDepthStencilState}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{SetDepthStencilState()}{SetDepthStencilState()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_adec516e7e9fc93ff030b513b410be370} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Set\+Depth\+Stencil\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3}{Depth\+Stencil\+State\+ID}}}]{state}{, }\item[{UINT}]{stencil\+Ref}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_ad8ecbad717838b9324832559a9797846}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!SetMainRenderTargetAndDepth@{SetMainRenderTargetAndDepth}}
+\index{SetMainRenderTargetAndDepth@{SetMainRenderTargetAndDepth}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{SetMainRenderTargetAndDepth()}{SetMainRenderTargetAndDepth()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_ad8ecbad717838b9324832559a9797846} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Set\+Main\+Render\+Target\+And\+Depth (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a5a6be44e999078e0fe92d72321ed586d}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!SetMainRenderTargetNoDepth@{SetMainRenderTargetNoDepth}}
+\index{SetMainRenderTargetNoDepth@{SetMainRenderTargetNoDepth}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{SetMainRenderTargetNoDepth()}{SetMainRenderTargetNoDepth()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a5a6be44e999078e0fe92d72321ed586d} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Set\+Main\+Render\+Target\+No\+Depth (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_aaafe50d8157268ed66a6fb086af2658a}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!SetRasterizerState@{SetRasterizerState}}
+\index{SetRasterizerState@{SetRasterizerState}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{SetRasterizerState()}{SetRasterizerState()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_aaafe50d8157268ed66a6fb086af2658a} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Set\+Rasterizer\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5}{Rasterizer\+State\+ID}}}]{state}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a3cf4f27906aeb15493d35dbabd84447b}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!StartRenderThread@{StartRenderThread}}
+\index{StartRenderThread@{StartRenderThread}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{StartRenderThread()}{StartRenderThread()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a3cf4f27906aeb15493d35dbabd84447b} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Start\+Render\+Thread (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_abc8669a07c0f5b56c54218df11e813b0}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!StopRenderThread@{StopRenderThread}}
+\index{StopRenderThread@{StopRenderThread}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{StopRenderThread()}{StopRenderThread()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_abc8669a07c0f5b56c54218df11e813b0} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Stop\+Render\+Thread (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_ad43491a04b805c3b6b0ea7aebaf10c8c}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!SubmitFrameImpl@{SubmitFrameImpl}}
+\index{SubmitFrameImpl@{SubmitFrameImpl}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{SubmitFrameImpl()}{SubmitFrameImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_ad43491a04b805c3b6b0ea7aebaf10c8c} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Submit\+Frame\+Impl (\begin{DoxyParamCaption}\item[{const FLOAT}]{clear\+Color}{\mbox{[}4\mbox{]}, }\item[{uint64\+\_\+t}]{frame\+Idx}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a90c8a484b547dabb5a320186c0bde399}\index{SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}!WaitSubmittedFramesImpl@{WaitSubmittedFramesImpl}}
+\index{WaitSubmittedFramesImpl@{WaitSubmittedFramesImpl}!SFW::Graphics::DX11::GraphicsDevice@{SFW::Graphics::DX11::GraphicsDevice}}
+\doxysubsubsection{\texorpdfstring{WaitSubmittedFramesImpl()}{WaitSubmittedFramesImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device_a90c8a484b547dabb5a320186c0bde399} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Graphics\+Device\+::\+Wait\+Submitted\+Frames\+Impl (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{upto\+Frame}{}\end{DoxyParamCaption})}
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\mbox{\hyperlink{_d_x11_graphics_8h}{DX11\+Graphics.\+h}}\end{DoxyCompactItemize}

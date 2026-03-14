@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/HeightmapBake.h ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_heightmap_bake_8h.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">HeightmapBake.h ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>地形メッシュからグリッド（頂点格子）への高さマップ焼き付けユーティリティ  
+<a href="#details">[詳解]</a></p>
+<div class="textblock"><code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;limits&gt;</code><br />
+<code>#include &lt;algorithm&gt;</code><br />
+</div>
+<p><a href="_heightmap_bake_8h_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ATerrainBake_3A_3ATri" id="r_SFW_3A_3AGraphics_3A_3ATerrainBake_3A_3ATri"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_tri.html">SFW::Graphics::TerrainBake::Tri</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ATerrainBake_3A_3AGrid" id="r_SFW_3A_3AGraphics_3A_3ATerrainBake_3A_3AGrid"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid.html">SFW::Graphics::TerrainBake::Grid</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ATerrainBake_3A_3ABakeOptions" id="r_SFW_3A_3AGraphics_3A_3ATerrainBake_3A_3ABakeOptions"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options.html">SFW::Graphics::TerrainBake::BakeOptions</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ATerrainBake_3A_3ABakeStats" id="r_SFW_3A_3AGraphics_3A_3ATerrainBake_3A_3ABakeStats"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html">SFW::Graphics::TerrainBake::BakeStats</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+名前空間</h2></td></tr>
+<tr class="memitem:SFW" id="r_SFW"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html">SFW</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics" id="r_SFW_3A_3AGraphics"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html">SFW::Graphics</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ATerrainBake" id="r_SFW_3A_3AGraphics_3A_3ATerrainBake"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_terrain_bake.html">SFW::Graphics::TerrainBake</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+型定義</h2></td></tr>
+<tr class="memitem:af49891dde17dab335465c724b9ec9867" id="r_af49891dde17dab335465c724b9ec9867"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_terrain_bake.html#af49891dde17dab335465c724b9ec9867">SFW::Graphics::TerrainBake::Vec3</a> = <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
+列挙型</h2></td></tr>
+<tr class="memitem:ac6673f4629bf89536e378f300383af8a" id="r_ac6673f4629bf89536e378f300383af8a"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_terrain_bake.html#ac6673f4629bf89536e378f300383af8a">SFW::Graphics::TerrainBake::BakeMode</a> : uint32_t { <a class="el" href="namespace_s_f_w_1_1_graphics_1_1_terrain_bake.html#ac6673f4629bf89536e378f300383af8aa6872355c934b9dcaa090dbdc4afa83c2">SFW::Graphics::TerrainBake::MaxHeight</a>
+, <a class="el" href="namespace_s_f_w_1_1_graphics_1_1_terrain_bake.html#ac6673f4629bf89536e378f300383af8aab1897515d548a960afe49ecf66a29021">SFW::Graphics::TerrainBake::Average</a>
+ }</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:a7e54a44c80f08d6f1d4b3b8cf89d84cb" id="r_a7e54a44c80f08d6f1d4b3b8cf89d84cb"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_terrain_bake.html#a7e54a44c80f08d6f1d4b3b8cf89d84cb">SFW::Graphics::TerrainBake::clamp01</a> (float v)</td></tr>
+<tr class="memitem:aa0a591e58e1f6218dbe3ab7512808e18" id="r_aa0a591e58e1f6218dbe3ab7512808e18"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_terrain_bake.html#aa0a591e58e1f6218dbe3ab7512808e18">SFW::Graphics::TerrainBake::BakeHeightFieldFromMesh</a> (const std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_tri.html">Tri</a> &gt; &amp;tris, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid.html">Grid</a> &amp;grid, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options.html">BakeOptions</a> &amp;opt, std::vector&lt; float &gt; &amp;outH01, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html">BakeStats</a> *outStats=nullptr)</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>地形メッシュからグリッド（頂点格子）への高さマップ焼き付けユーティリティ </p>
+<dl class="section author"><dt>著者</dt><dd>seigo </dd></dl>
+<dl class="section date"><dt>日付</dt><dd>December 2025 </dd></dl>
+
+<p class="definition"> <a class="el" href="_heightmap_bake_8h_source.html">HeightmapBake.h</a> に定義があります。</p>
+</div></div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="_heightmap_bake_8h.html">HeightmapBake.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

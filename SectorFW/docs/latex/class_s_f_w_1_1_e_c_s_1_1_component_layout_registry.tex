@@ -1,0 +1,51 @@
+\doxysection{SFW\+::ECS\+::Component\+Layout\+Registry クラス}
+\hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_layout_registry}{}\label{class_s_f_w_1_1_e_c_s_1_1_component_layout_registry}\index{SFW::ECS::ComponentLayoutRegistry@{SFW::ECS::ComponentLayoutRegistry}}
+
+
+コンポーネントレイアウトを一元的に管理するクラス（\+Component\+Maskごとに共通!）  
+
+
+
+
+{\ttfamily \#include $<$Component\+Layout\+Registry.\+h$>$}
+
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+static const \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout}{Component\+Layout}} \& \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_layout_registry_a353a31fef00921a202eb3193b5146077}{Get\+Layout}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} \&mask) noexcept
+\begin{DoxyCompactList}\small\item\em コンポーネントマスクに対応するコンポーネントレイアウトを取得します。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+コンポーネントレイアウトを一元的に管理するクラス（\+Component\+Maskごとに共通!） 
+
+ \mbox{\hyperlink{_component_layout_registry_8h_source}{Component\+Layout\+Registry.\+h}} の \mbox{\hyperlink{_component_layout_registry_8h_source_l00033}{33}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_layout_registry_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_layout_registry_a353a31fef00921a202eb3193b5146077}\index{SFW::ECS::ComponentLayoutRegistry@{SFW::ECS::ComponentLayoutRegistry}!GetLayout@{GetLayout}}
+\index{GetLayout@{GetLayout}!SFW::ECS::ComponentLayoutRegistry@{SFW::ECS::ComponentLayoutRegistry}}
+\doxysubsubsection{\texorpdfstring{GetLayout()}{GetLayout()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_layout_registry_a353a31fef00921a202eb3193b5146077} 
+const \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_layout}{Component\+Layout}} \& SFW\+::\+ECS\+::\+Component\+Layout\+Registry\+::\+Get\+Layout (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} \&}]{mask}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+コンポーネントマスクに対応するコンポーネントレイアウトを取得します。 
+
+
+\begin{DoxyParams}{引数}
+{\em mask} & コンポーネントマスク \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+const \doxylink{struct_s_f_w_1_1_e_c_s_1_1_component_layout}{Component\+Layout}\& コンポーネントレイアウトへの参照 
+\end{DoxyReturn}
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_component_layout_registry_8h}{Component\+Layout\+Registry.\+h}}\end{DoxyCompactItemize}

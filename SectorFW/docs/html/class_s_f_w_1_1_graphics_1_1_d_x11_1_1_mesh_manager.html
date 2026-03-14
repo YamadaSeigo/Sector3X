@@ -1,0 +1,787 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Graphics::DX11::MeshManager クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager.html','','class_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Graphics::DX11::MeshManager クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>DirectX 11のメッシュマネージャークラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_d_x11_mesh_manager_8h_source.html">DX11MeshManager.h</a>&gt;</code></p>
+<div class="dynheader">
+SFW::Graphics::DX11::MeshManager の継承関係図</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager.png" usemap="#SFW_3A_3AGraphics_3A_3ADX11_3A_3AMeshManager_map" alt=""/>
+  <map id="SFW_3A_3AGraphics_3A_3ADX11_3A_3AMeshManager_map" name="SFW_3A_3AGraphics_3A_3ADX11_3A_3AMeshManager_map">
+<area href="class_s_f_w_1_1_resource_manager_base.html" alt="SFW::ResourceManagerBase&lt; MeshManager, MeshHandle, MeshCreateDesc, MeshData &gt;" shape="rect" coords="0,0,537,24"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:ClusterInfo" id="r_ClusterInfo"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager_1_1_cluster_info.html">ClusterInfo</a></td></tr>
+<tr class="memitem:RemappedStreams" id="r_RemappedStreams"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager_1_1_remapped_streams.html">RemappedStreams</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+公開型</h2></td></tr>
+<tr class="memitem:a3799bbf6a656c313f6400d5b98cc2d75" id="r_a3799bbf6a656c313f6400d5b98cc2d75"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3799bbf6a656c313f6400d5b98cc2d75">NormalWCustomFunc</a> = std::vector&lt;float&gt;(*)(const std::vector&lt;<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&gt;&amp;)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:ae35a2af21d33301e365def92e6643117" id="r_ae35a2af21d33301e365def92e6643117"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae35a2af21d33301e365def92e6643117">MeshManager</a> (ID3D11Device *dev) noexcept</td></tr>
+<tr class="memdesc:ae35a2af21d33301e365def92e6643117"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:aa839c6b76f917bcaab3d8c3e43c60400" id="r_aa839c6b76f917bcaab3d8c3e43c60400"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_mesh_handle.html">MeshHandle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa839c6b76f917bcaab3d8c3e43c60400">FindExisting</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_create_desc.html">MeshCreateDesc</a> &amp;d) noexcept</td></tr>
+<tr class="memdesc:aa839c6b76f917bcaab3d8c3e43c60400"><td class="mdescLeft">&#160;</td><td class="mdescRight">既存のメッシュを検索する関数  <br /></td></tr>
+<tr class="memitem:af367a7b50fa26f932d15f949db95e594" id="r_af367a7b50fa26f932d15f949db95e594"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af367a7b50fa26f932d15f949db95e594">RegisterKey</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_create_desc.html">MeshCreateDesc</a> &amp;d, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_mesh_handle.html">MeshHandle</a> h)</td></tr>
+<tr class="memdesc:af367a7b50fa26f932d15f949db95e594"><td class="mdescLeft">&#160;</td><td class="mdescRight">メッシュハンドルをキャッシュに登録する関数  <br /></td></tr>
+<tr class="memitem:ab6c6d220bbdc7d072ca70c7831adb61f" id="r_ab6c6d220bbdc7d072ca70c7831adb61f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data.html">MeshData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6c6d220bbdc7d072ca70c7831adb61f">CreateResource</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_create_desc.html">MeshCreateDesc</a> &amp;desc, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_mesh_handle.html">MeshHandle</a> h)</td></tr>
+<tr class="memdesc:ab6c6d220bbdc7d072ca70c7831adb61f"><td class="mdescLeft">&#160;</td><td class="mdescRight">メッシュリソースを作成する関数  <br /></td></tr>
+<tr class="memitem:a353333944836ad83cb9483e5074166db" id="r_a353333944836ad83cb9483e5074166db"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a353333944836ad83cb9483e5074166db">CreateFromGLTF_SoA_R8Snorm</a> (const std::wstring &amp;pathW, const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; &amp;positions, const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; &amp;normals, const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#aba1dfa36baa96e43434532113c99dae7">Math::Vec4f</a> &gt; &amp;tangents, const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> &gt; &amp;tex0, const std::vector&lt; std::array&lt; uint8_t, 4 &gt; &gt; &amp;skinIdx, const std::vector&lt; std::array&lt; uint8_t, 4 &gt; &gt; &amp;skinWgt, const std::vector&lt; uint32_t &gt; &amp;indices, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data.html">MeshData</a> &amp;out, <a class="el" href="#a3799bbf6a656c313f6400d5b98cc2d75">NormalWCustomFunc</a> customFunc=nullptr)</td></tr>
+<tr class="memdesc:a353333944836ad83cb9483e5074166db"><td class="mdescLeft">&#160;</td><td class="mdescRight">cgltf から抽出した float 配列を SNORM / half にパックして SoA ストリームを作る  <br /></td></tr>
+<tr class="memitem:a8f159fda437f02c51654e98fb6981d3d" id="r_a8f159fda437f02c51654e98fb6981d3d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8f159fda437f02c51654e98fb6981d3d">AddFromSoA_R8Snorm</a> (const std::wstring &amp;sourcePath, const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; &amp;positions, const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; &amp;normals, const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#aba1dfa36baa96e43434532113c99dae7">Math::Vec4f</a> &gt; &amp;tangents, const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> &gt; &amp;tex0, const std::vector&lt; std::array&lt; uint8_t, 4 &gt; &gt; &amp;skinIdx, const std::vector&lt; std::array&lt; uint8_t, 4 &gt; &gt; &amp;skinWgt, const std::vector&lt; uint32_t &gt; &amp;indices, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_mesh_handle.html">MeshHandle</a> &amp;outHandle, <a class="el" href="#a3799bbf6a656c313f6400d5b98cc2d75">NormalWCustomFunc</a> customFunc=nullptr)</td></tr>
+<tr class="memdesc:a8f159fda437f02c51654e98fb6981d3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">CreateFromGLTF_SoA_R8Snorm用のラッパー関数(重複チャックなし)  <br /></td></tr>
+<tr class="memitem:a48d251cc31b38ef2a801568d1dfb9a2e" id="r_a48d251cc31b38ef2a801568d1dfb9a2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a48d251cc31b38ef2a801568d1dfb9a2e">RemoveFromCaches</a> (uint32_t idx)</td></tr>
+<tr class="memdesc:a48d251cc31b38ef2a801568d1dfb9a2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">キャッシュからメッシュハンドルを削除する関数  <br /></td></tr>
+<tr class="memitem:a8ecd7f2ca819aa9339e946e90751591c" id="r_a8ecd7f2ca819aa9339e946e90751591c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ecd7f2ca819aa9339e946e90751591c">DestroyResource</a> (uint32_t idx, uint64_t currentFrame)</td></tr>
+<tr class="memdesc:a8ecd7f2ca819aa9339e946e90751591c"><td class="mdescLeft">&#160;</td><td class="mdescRight">メッシュリソースを破棄する関数  <br /></td></tr>
+<tr class="memitem:aec8810624e6ee4502dff88aa550dffb0" id="r_aec8810624e6ee4502dff88aa550dffb0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec8810624e6ee4502dff88aa550dffb0">SetIndexCount</a> (<a class="el" href="struct_s_f_w_1_1_graphics_1_1_mesh_handle.html">MeshHandle</a> h, uint32_t count, uint32_t start=0)</td></tr>
+<tr class="memdesc:aec8810624e6ee4502dff88aa550dffb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">メッシュのインデックス数を設定する関数  <br /></td></tr>
+<tr class="memitem:a0dffac3b13628b5471179601e6c002b2" id="r_a0dffac3b13628b5471179601e6c002b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_mesh_handle.html">MeshHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0dffac3b13628b5471179601e6c002b2">GetSpriteQuadHandle</a> () const</td></tr>
+<tr class="inherit_header pub_methods_class_s_f_w_1_1_resource_manager_base"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_s_f_w_1_1_resource_manager_base')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase&lt; MeshManager, MeshHandle, MeshCreateDesc, MeshData &gt;</a> に属する継承公開メンバ関数</td></tr>
+<tr class="memitem:a04eedb5dbac041ec944a8dc0da60f7db inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_a04eedb5dbac041ec944a8dc0da60f7db"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#a04eedb5dbac041ec944a8dc0da60f7db">Add</a> (const MeshCreateDesc &amp;desc, MeshHandle &amp;out)</td></tr>
+<tr class="memdesc:a04eedb5dbac041ec944a8dc0da60f7db inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add: 既存があれば再利用(+1)＆削除要求が入っていればキャンセル  <br /></td></tr>
+<tr class="memitem:ae15f0d5d2bed3eb6c9c6d7b6864d78f7 inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_ae15f0d5d2bed3eb6c9c6d7b6864d78f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#ae15f0d5d2bed3eb6c9c6d7b6864d78f7">AddRef</a> (MeshHandle h)</td></tr>
+<tr class="memdesc:ae15f0d5d2bed3eb6c9c6d7b6864d78f7 inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">AddRef: 参照カウント +1  <br /></td></tr>
+<tr class="memitem:a88895bdec90c2a6a1ad0981d1ea37fc5 inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_a88895bdec90c2a6a1ad0981d1ea37fc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#a88895bdec90c2a6a1ad0981d1ea37fc5">Release</a> (MeshHandle h, uint64_t deleteSync=0)</td></tr>
+<tr class="memdesc:a88895bdec90c2a6a1ad0981d1ea37fc5 inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release: 0 になったら削除要求を積む（alive はここでは落とさない）  <br /></td></tr>
+<tr class="memitem:a73343b94d71c058a7d42f0df945a99ce inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_a73343b94d71c058a7d42f0df945a99ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#a73343b94d71c058a7d42f0df945a99ce">EnqueueDelete</a> (uint32_t index, uint64_t deleteSync)</td></tr>
+<tr class="memdesc:a73343b94d71c058a7d42f0df945a99ce inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">削除要求の登録（重複を防いで期限更新）  <br /></td></tr>
+<tr class="memitem:a0d85020d8eff2ffb1b33e7e24360a125 inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_a0d85020d8eff2ffb1b33e7e24360a125"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#a0d85020d8eff2ffb1b33e7e24360a125">CancelPending</a> (uint32_t index)</td></tr>
+<tr class="memdesc:a0d85020d8eff2ffb1b33e7e24360a125 inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">削除要求のキャンセル（Add での復活時など）  <br /></td></tr>
+<tr class="memitem:a21636b46b48c6f7e1948240a84cdd137 inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_a21636b46b48c6f7e1948240a84cdd137"><td class="memItemLeft" align="right" valign="top">LockedResource&lt; MeshData, std::shared_lock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#a21636b46b48c6f7e1948240a84cdd137">Get</a> (MeshHandle h) const</td></tr>
+<tr class="memdesc:a21636b46b48c6f7e1948240a84cdd137 inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get: 有効なハンドルなら Shared Lock 付きでリソースを返す  <br /></td></tr>
+<tr class="memitem:ab7f43893189687e9557458e1561ac53b inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_ab7f43893189687e9557458e1561ac53b"><td class="memItemLeft" align="right" valign="top">LockedResource&lt; MeshData, std::unique_lock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#ab7f43893189687e9557458e1561ac53b">GetWrite</a> (MeshHandle h)</td></tr>
+<tr class="memdesc:ab7f43893189687e9557458e1561ac53b inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get: 有効なハンドルなら Shared Lock 付きでリソースを返す  <br /></td></tr>
+<tr class="memitem:a58e70f715b1c75115a43136bff591499 inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_a58e70f715b1c75115a43136bff591499"><td class="memItemLeft" align="right" valign="top">LockedResource&lt; MeshData, std::shared_lock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#a58e70f715b1c75115a43136bff591499">GetDirect</a> (uint32_t idx) const</td></tr>
+<tr class="memdesc:a58e70f715b1c75115a43136bff591499 inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">GetDirect: インデックス直指定で Shared Lock 付きでリソースを返す（IsValid チェックなし）  <br /></td></tr>
+<tr class="memitem:ae1be2923e2cc12d30597a2a883b4c870 inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_ae1be2923e2cc12d30597a2a883b4c870"><td class="memItemLeft" align="right" valign="top">LockedResource&lt; MeshData, std::unique_lock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#ae1be2923e2cc12d30597a2a883b4c870">GetDirectWrite</a> (uint32_t idx)</td></tr>
+<tr class="memdesc:ae1be2923e2cc12d30597a2a883b4c870 inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">GetDirect: インデックス直指定で Shared Lock 付きでリソースを返す（IsValid チェックなし）  <br /></td></tr>
+<tr class="memitem:a093db57dc6b50c4487114228c21f43eb inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_a093db57dc6b50c4487114228c21f43eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#a093db57dc6b50c4487114228c21f43eb">ProcessDeferredDeletes</a> (uint64_t currentFrame)</td></tr>
+<tr class="memdesc:a093db57dc6b50c4487114228c21f43eb inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">期限到達で最終判断：ref == 0 なら破棄、&gt;0 なら削除キャンセル  <br /></td></tr>
+<tr class="memitem:a3b45f3d62337fc9cab8535042c015c7c inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_a3b45f3d62337fc9cab8535042c015c7c"><td class="memItemLeft" align="right" valign="top">std::shared_lock&lt; std::shared_mutex &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#a3b45f3d62337fc9cab8535042c015c7c">AcquireReadLock</a> () const</td></tr>
+<tr class="memdesc:a3b45f3d62337fc9cab8535042c015c7c inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">読み取り用ロックを取得する関数  <br /></td></tr>
+<tr class="memitem:ae763873166f069f11652407b915cde4d inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_ae763873166f069f11652407b915cde4d"><td class="memItemLeft" align="right" valign="top">std::unique_lock&lt; std::shared_mutex &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#ae763873166f069f11652407b915cde4d">AcquireWriteLock</a> ()</td></tr>
+<tr class="memdesc:ae763873166f069f11652407b915cde4d inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">書き込み用ロックを取得する関数  <br /></td></tr>
+<tr class="memitem:ab962efb2490c3a8364ddee6d4d986db8 inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_ab962efb2490c3a8364ddee6d4d986db8"><td class="memItemLeft" align="right" valign="top">const MeshData &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#ab962efb2490c3a8364ddee6d4d986db8">GetNoLock</a> (MeshHandle h) const</td></tr>
+<tr class="memdesc:ab962efb2490c3a8364ddee6d4d986db8 inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">ロック無しでリソースを取得する関数（IsValid チェック付き）  <br /></td></tr>
+<tr class="memitem:ad0e3f3458a61ff42eae76f90fe81fda4 inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_ad0e3f3458a61ff42eae76f90fe81fda4"><td class="memItemLeft" align="right" valign="top">MeshData &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#ad0e3f3458a61ff42eae76f90fe81fda4">GetNoLockWrite</a> (MeshHandle h)</td></tr>
+<tr class="memdesc:ad0e3f3458a61ff42eae76f90fe81fda4 inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">ロック無しでリソースを取得する関数（IsValid チェック付き）  <br /></td></tr>
+<tr class="memitem:acd8921794ec5f4579cf8207b8fa788bb inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_acd8921794ec5f4579cf8207b8fa788bb"><td class="memItemLeft" align="right" valign="top">const MeshData &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#acd8921794ec5f4579cf8207b8fa788bb">GetDirectNoLock</a> (uint32_t idx) const</td></tr>
+<tr class="memdesc:acd8921794ec5f4579cf8207b8fa788bb inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">ロック無しでリソースを取得する関数（IsValid チェックなし）  <br /></td></tr>
+<tr class="memitem:ac24562d389854f09bca4eecd53a82f6d inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_ac24562d389854f09bca4eecd53a82f6d"><td class="memItemLeft" align="right" valign="top">MeshData &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#ac24562d389854f09bca4eecd53a82f6d">GetDirectNoLockWrite</a> (uint32_t idx)</td></tr>
+<tr class="memdesc:ac24562d389854f09bca4eecd53a82f6d inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">ロック無しでリソースを取得する関数（IsValid チェックなし）  <br /></td></tr>
+<tr class="memitem:a27c5b607075c0da3b758542764848b9b inherit pub_methods_class_s_f_w_1_1_resource_manager_base" id="r_a27c5b607075c0da3b758542764848b9b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#a27c5b607075c0da3b758542764848b9b">IsValid</a> (MeshHandle h) const noexcept</td></tr>
+<tr class="memdesc:a27c5b607075c0da3b758542764848b9b inherit pub_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">ハンドルが有効かどうかをチェックする関数  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:a18b2c70ac9b2d48b33d917566bebdf0b" id="r_a18b2c70ac9b2d48b33d917566bebdf0b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a18b2c70ac9b2d48b33d917566bebdf0b">ApplyRemapToStreams</a> (const std::vector&lt; uint32_t &gt; &amp;remap, const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; &amp;inPos, const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; *inNor, const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#aba1dfa36baa96e43434532113c99dae7">Math::Vec4f</a> &gt; *inTan, const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> &gt; *inUV, const std::vector&lt; std::array&lt; uint8_t, 4 &gt; &gt; *inSkinIdx, const std::vector&lt; std::array&lt; uint8_t, 4 &gt; &gt; *inSkinWgt, size_t outVertexCount, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager_1_1_remapped_streams.html">RemappedStreams</a> &amp;out)</td></tr>
+<tr class="memitem:a1b4a2418b67fad8e29045a646d2ff3ff" id="r_a1b4a2418b67fad8e29045a646d2ff3ff"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b4a2418b67fad8e29045a646d2ff3ff">BuildClustersWithMeshoptimizer</a> (const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; &amp;positions, const std::vector&lt; uint32_t &gt; &amp;indices, std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager_1_1_cluster_info.html">ClusterInfo</a> &gt; &amp;outClusters, std::vector&lt; uint8_t &gt; &amp;outClusterTriangles, std::vector&lt; uint32_t &gt; &amp;outClusterVertices, uint32_t maxVertsPerCluster=64, uint32_t maxTrisPerCluster=124, float coneWeight=0.0f)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
+その他の継承メンバ</h2></td></tr>
+<tr class="inherit_header pro_methods_class_s_f_w_1_1_resource_manager_base"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_s_f_w_1_1_resource_manager_base')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase&lt; MeshManager, MeshHandle, MeshCreateDesc, MeshData &gt;</a> に属する継承限定公開メンバ関数</td></tr>
+<tr class="memitem:a4fba9ec2f754f59999f3cc890bf8d3aa inherit pro_methods_class_s_f_w_1_1_resource_manager_base" id="r_a4fba9ec2f754f59999f3cc890bf8d3aa"><td class="memItemLeft" align="right" valign="top">MeshHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#a4fba9ec2f754f59999f3cc890bf8d3aa">AllocateHandle</a> ()</td></tr>
+<tr class="memdesc:a4fba9ec2f754f59999f3cc890bf8d3aa inherit pro_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">ハンドルを新規確保する関数  <br /></td></tr>
+<tr class="memitem:aa9555e8b96e02a75e848d470033541dd inherit pro_methods_class_s_f_w_1_1_resource_manager_base" id="r_aa9555e8b96e02a75e848d470033541dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#aa9555e8b96e02a75e848d470033541dd">MarkDead</a> (uint32_t index)</td></tr>
+<tr class="memdesc:aa9555e8b96e02a75e848d470033541dd inherit pro_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">派生が使うユーティリティ  <br /></td></tr>
+<tr class="memitem:ad8e12c82c8062899e2114e20d0bfcd5a inherit pro_methods_class_s_f_w_1_1_resource_manager_base" id="r_ad8e12c82c8062899e2114e20d0bfcd5a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#ad8e12c82c8062899e2114e20d0bfcd5a">FreeIndex</a> (uint32_t index)</td></tr>
+<tr class="memdesc:ad8e12c82c8062899e2114e20d0bfcd5a inherit pro_methods_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">派生が使うユーティリティ  <br /></td></tr>
+<tr class="inherit_header pro_attribs_class_s_f_w_1_1_resource_manager_base"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_s_f_w_1_1_resource_manager_base')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase&lt; MeshManager, MeshHandle, MeshCreateDesc, MeshData &gt;</a> に属する継承限定公開変数類</td></tr>
+<tr class="memitem:ab06811456bf9d3e86d400be7459a91ca inherit pro_attribs_class_s_f_w_1_1_resource_manager_base" id="r_ab06811456bf9d3e86d400be7459a91ca"><td class="memItemLeft" align="right" valign="top">std::vector&lt; Slot &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a></td></tr>
+<tr class="memdesc:ab06811456bf9d3e86d400be7459a91ca inherit pro_attribs_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">スロット情報のリスト  <br /></td></tr>
+<tr class="memitem:a33a333a87b00d23717ff7e74c0e3bed2 inherit pro_attribs_class_s_f_w_1_1_resource_manager_base" id="r_a33a333a87b00d23717ff7e74c0e3bed2"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_s_f_w_1_1_copyable_atomic.html">CopyableAtomic</a>&lt; uint32_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#a33a333a87b00d23717ff7e74c0e3bed2">refCount</a></td></tr>
+<tr class="memdesc:a33a333a87b00d23717ff7e74c0e3bed2 inherit pro_attribs_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">参照カウントのリスト  <br /></td></tr>
+<tr class="memitem:af242d92113df8594cc180534243e98a8 inherit pro_attribs_class_s_f_w_1_1_resource_manager_base" id="r_af242d92113df8594cc180534243e98a8"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#af242d92113df8594cc180534243e98a8">freeList</a></td></tr>
+<tr class="memdesc:af242d92113df8594cc180534243e98a8 inherit pro_attribs_class_s_f_w_1_1_resource_manager_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">空きスロットインデックスのリスト  <br /></td></tr>
+<tr class="memitem:a2a05fb3cf3b0ea6767b836876caf0793 inherit pro_attribs_class_s_f_w_1_1_resource_manager_base" id="r_a2a05fb3cf3b0ea6767b836876caf0793"><td class="memItemLeft" align="right" valign="top">std::shared_mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">mapMutex</a></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>DirectX 11のメッシュマネージャークラス </p>
+
+<p class="definition"> <a class="el" href="_d_x11_mesh_manager_8h_source.html">DX11MeshManager.h</a> の <a class="el" href="_d_x11_mesh_manager_8h_source.html#l00073">73</a> 行目に定義があります。</p>
+</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">型定義メンバ詳解</h2>
+<a id="a3799bbf6a656c313f6400d5b98cc2d75" name="a3799bbf6a656c313f6400d5b98cc2d75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3799bbf6a656c313f6400d5b98cc2d75">&#9670;&#160;</a></span>NormalWCustomFunc</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a3799bbf6a656c313f6400d5b98cc2d75">SFW::Graphics::DX11::MeshManager::NormalWCustomFunc</a> = std::vector&lt;float&gt;(*)(const std::vector&lt;<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&gt;&amp;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_mesh_manager_8h_source.html">DX11MeshManager.h</a> の <a class="el" href="_d_x11_mesh_manager_8h_source.html#l00077">77</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="ae35a2af21d33301e365def92e6643117" name="ae35a2af21d33301e365def92e6643117"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae35a2af21d33301e365def92e6643117">&#9670;&#160;</a></span>MeshManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Graphics::DX11::MeshManager::MeshManager </td>
+          <td>(</td>
+          <td class="paramtype">ID3D11Device *</td>          <td class="paramname"><span class="paramname"><em>dev</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dev</td><td>DirectX 11のデバイス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_d_x11_mesh_manager_8h_source.html">DX11MeshManager.h</a> の <a class="el" href="_d_x11_mesh_manager_8h_source.html#l00094">94</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a8f159fda437f02c51654e98fb6981d3d" name="a8f159fda437f02c51654e98fb6981d3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f159fda437f02c51654e98fb6981d3d">&#9670;&#160;</a></span>AddFromSoA_R8Snorm()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Graphics::DX11::MeshManager::AddFromSoA_R8Snorm </td>
+          <td>(</td>
+          <td class="paramtype">const std::wstring &amp;</td>          <td class="paramname"><span class="paramname"><em>sourcePath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>positions</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>normals</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#aba1dfa36baa96e43434532113c99dae7">Math::Vec4f</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>tangents</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>tex0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::array&lt; uint8_t, 4 &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>skinIdx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::array&lt; uint8_t, 4 &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>skinWgt</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; uint32_t &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>indices</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_mesh_handle.html">MeshHandle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>outHandle</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a3799bbf6a656c313f6400d5b98cc2d75">NormalWCustomFunc</a></td>          <td class="paramname"><span class="paramname"><em>customFunc</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>CreateFromGLTF_SoA_R8Snorm用のラッパー関数(重複チャックなし) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pathW</td><td>メッシュの元ファイルパス（キャッシュ用） </td></tr>
+    <tr><td class="paramname">positions</td><td>: float3（そのまま） </td></tr>
+    <tr><td class="paramname">normals</td><td>: float3 → R8G8B8A8_SNORM（w=0） </td></tr>
+    <tr><td class="paramname">tangents</td><td>: float4 (xyz, w=handedness) → R8G8B8A8_SNORM </td></tr>
+    <tr><td class="paramname">tex0</td><td>: float2 → R16G16_FLOAT（half2） </td></tr>
+    <tr><td class="paramname">skinIdx</td><td>: u8x4 → R8G8B8A8_UINT </td></tr>
+    <tr><td class="paramname">skinWgt</td><td>: u8x4(UNORM) → R8G8B8A8_UNORM (0..255, 正規化済み) </td></tr>
+    <tr><td class="paramname">indices</td><td>: uint32_t インデックス配列 </td></tr>
+    <tr><td class="paramname">outHandle</td><td>: 出力メッシュハンドル </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>bool 成功したら true、失敗したら false </dd></dl>
+
+</div>
+</div>
+<a id="a18b2c70ac9b2d48b33d917566bebdf0b" name="a18b2c70ac9b2d48b33d917566bebdf0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18b2c70ac9b2d48b33d917566bebdf0b">&#9670;&#160;</a></span>ApplyRemapToStreams()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::MeshManager::ApplyRemapToStreams </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; uint32_t &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>remap</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>inPos</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; *</td>          <td class="paramname"><span class="paramname"><em>inNor</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#aba1dfa36baa96e43434532113c99dae7">Math::Vec4f</a> &gt; *</td>          <td class="paramname"><span class="paramname"><em>inTan</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> &gt; *</td>          <td class="paramname"><span class="paramname"><em>inUV</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::array&lt; uint8_t, 4 &gt; &gt; *</td>          <td class="paramname"><span class="paramname"><em>inSkinIdx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::array&lt; uint8_t, 4 &gt; &gt; *</td>          <td class="paramname"><span class="paramname"><em>inSkinWgt</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>outVertexCount</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager_1_1_remapped_streams.html">RemappedStreams</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>out</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1b4a2418b67fad8e29045a646d2ff3ff" name="a1b4a2418b67fad8e29045a646d2ff3ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b4a2418b67fad8e29045a646d2ff3ff">&#9670;&#160;</a></span>BuildClustersWithMeshoptimizer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Graphics::DX11::MeshManager::BuildClustersWithMeshoptimizer </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>positions</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; uint32_t &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>indices</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager_1_1_cluster_info.html">ClusterInfo</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>outClusters</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; uint8_t &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>outClusterTriangles</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; uint32_t &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>outClusterVertices</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>maxVertsPerCluster</em></span><span class="paramdefsep"> = </span><span class="paramdefval">64</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>maxTrisPerCluster</em></span><span class="paramdefsep"> = </span><span class="paramdefval">124</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>coneWeight</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.0f</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a353333944836ad83cb9483e5074166db" name="a353333944836ad83cb9483e5074166db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a353333944836ad83cb9483e5074166db">&#9670;&#160;</a></span>CreateFromGLTF_SoA_R8Snorm()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Graphics::DX11::MeshManager::CreateFromGLTF_SoA_R8Snorm </td>
+          <td>(</td>
+          <td class="paramtype">const std::wstring &amp;</td>          <td class="paramname"><span class="paramname"><em>pathW</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>positions</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>normals</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#aba1dfa36baa96e43434532113c99dae7">Math::Vec4f</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>tangents</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>tex0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::array&lt; uint8_t, 4 &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>skinIdx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::array&lt; uint8_t, 4 &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>skinWgt</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; uint32_t &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>indices</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data.html">MeshData</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>out</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a3799bbf6a656c313f6400d5b98cc2d75">NormalWCustomFunc</a></td>          <td class="paramname"><span class="paramname"><em>customFunc</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>cgltf から抽出した float 配列を SNORM / half にパックして SoA ストリームを作る </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pathW</td><td>メッシュの元ファイルパス（キャッシュ用） </td></tr>
+    <tr><td class="paramname">positions</td><td>: float3（そのまま） </td></tr>
+    <tr><td class="paramname">normals</td><td>: float3 → R8G8B8A8_SNORM（w=0） </td></tr>
+    <tr><td class="paramname">tangents</td><td>: float4 (xyz, w=handedness) → R8G8B8A8_SNORM </td></tr>
+    <tr><td class="paramname">tex0</td><td>: float2 → R16G16_FLOAT（half2） </td></tr>
+    <tr><td class="paramname">skinIdx</td><td>: u8x4 → R8G8B8A8_UINT </td></tr>
+    <tr><td class="paramname">skinWgt</td><td>: u8x4(UNORM) → R8G8B8A8_UNORM (0..255, 正規化済み) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab6c6d220bbdc7d072ca70c7831adb61f" name="ab6c6d220bbdc7d072ca70c7831adb61f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6c6d220bbdc7d072ca70c7831adb61f">&#9670;&#160;</a></span>CreateResource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data.html">MeshData</a> SFW::Graphics::DX11::MeshManager::CreateResource </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_create_desc.html">MeshCreateDesc</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>desc</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_mesh_handle.html">MeshHandle</a></td>          <td class="paramname"><span class="paramname"><em>h</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>メッシュリソースを作成する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">desc</td><td>メッシュ作成のための構造体 </td></tr>
+    <tr><td class="paramname">h</td><td>メッシュハンドル </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>DX11MeshData 作成されたメッシュデータ </dd></dl>
+
+</div>
+</div>
+<a id="a8ecd7f2ca819aa9339e946e90751591c" name="a8ecd7f2ca819aa9339e946e90751591c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ecd7f2ca819aa9339e946e90751591c">&#9670;&#160;</a></span>DestroyResource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::MeshManager::DestroyResource </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>idx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>currentFrame</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>メッシュリソースを破棄する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idx</td><td>破棄するメッシュのインデックス </td></tr>
+    <tr><td class="paramname">currentFrame</td><td>現在のフレーム番号 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa839c6b76f917bcaab3d8c3e43c60400" name="aa839c6b76f917bcaab3d8c3e43c60400"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa839c6b76f917bcaab3d8c3e43c60400">&#9670;&#160;</a></span>FindExisting()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_mesh_handle.html">MeshHandle</a> &gt; SFW::Graphics::DX11::MeshManager::FindExisting </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_create_desc.html">MeshCreateDesc</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>d</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>既存のメッシュを検索する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td>メッシュ作成のための構造体 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>std::optional&lt;MeshHandle&gt; 既存のメッシュハンドル、存在しない場合はstd::nullopt </dd></dl>
+
+<p class="definition"> <a class="el" href="_d_x11_mesh_manager_8h_source.html">DX11MeshManager.h</a> の <a class="el" href="_d_x11_mesh_manager_8h_source.html#l00103">103</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0dffac3b13628b5471179601e6c002b2" name="a0dffac3b13628b5471179601e6c002b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0dffac3b13628b5471179601e6c002b2">&#9670;&#160;</a></span>GetSpriteQuadHandle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_mesh_handle.html">MeshHandle</a> SFW::Graphics::DX11::MeshManager::GetSpriteQuadHandle </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_mesh_manager_8h_source.html">DX11MeshManager.h</a> の <a class="el" href="_d_x11_mesh_manager_8h_source.html#l00235">235</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af367a7b50fa26f932d15f949db95e594" name="af367a7b50fa26f932d15f949db95e594"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af367a7b50fa26f932d15f949db95e594">&#9670;&#160;</a></span>RegisterKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::MeshManager::RegisterKey </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_create_desc.html">MeshCreateDesc</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>d</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_mesh_handle.html">MeshHandle</a></td>          <td class="paramname"><span class="paramname"><em>h</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>メッシュハンドルをキャッシュに登録する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td>メッシュ作成のための構造体 </td></tr>
+    <tr><td class="paramname">h</td><td>メッシュハンドル </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_d_x11_mesh_manager_8h_source.html">DX11MeshManager.h</a> の <a class="el" href="_d_x11_mesh_manager_8h_source.html#l00115">115</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a48d251cc31b38ef2a801568d1dfb9a2e" name="a48d251cc31b38ef2a801568d1dfb9a2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48d251cc31b38ef2a801568d1dfb9a2e">&#9670;&#160;</a></span>RemoveFromCaches()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::MeshManager::RemoveFromCaches </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>idx</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>キャッシュからメッシュハンドルを削除する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idx</td><td>削除するメッシュのインデックス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aec8810624e6ee4502dff88aa550dffb0" name="aec8810624e6ee4502dff88aa550dffb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec8810624e6ee4502dff88aa550dffb0">&#9670;&#160;</a></span>SetIndexCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::MeshManager::SetIndexCount </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_mesh_handle.html">MeshHandle</a></td>          <td class="paramname"><span class="paramname"><em>h</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>count</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>start</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>メッシュのインデックス数を設定する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>メッシュハンドル </td></tr>
+    <tr><td class="paramname">count</td><td>インデックス数 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_d_x11_mesh_manager_8h_source.html">DX11MeshManager.h</a> の <a class="el" href="_d_x11_mesh_manager_8h_source.html#l00224">224</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/<a class="el" href="_d_x11_mesh_manager_8h_source.html">DX11MeshManager.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics.html">Graphics</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">DX11</a></li><li class="navelem"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager.html">MeshManager</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

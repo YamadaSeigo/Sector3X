@@ -1,0 +1,56 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Math/aabb\+\_\+util.h ファイル}
+\hypertarget{aabb__util_8h}{}\label{aabb__util_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/aabb\_util.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/aabb\_util.h}}
+
+
+Axis-\/\+Aligned Bounding Box (AABB) を計算するためのユーティリティ関数を提供する。  
+
+
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include "{}Vector.\+hpp"{}}\newline
+{\ttfamily \#include "{}AABB.\+hpp"{}}\newline
+{\ttfamily \#include "{}Matrix.\+hpp"{}}\newline
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_math}{SFW\+::\+Math}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{namespace_s_f_w_1_1_math_ac8a4b9fdb1660d6e8e6a9a68ac0c52e7}{SFW\+::\+Math\+::\+Sanitize\+Finite}} (float v) noexcept
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_afa8c6e69dada3f3a492cfd54f2af8184}{SFW\+::\+Math\+::\+Make\+AABB\+\_\+\+From\+AoS}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \texorpdfstring{$\ast$}{*}positions, size\+\_\+t count, size\+\_\+t stride\+Bytes=sizeof(\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}})) noexcept
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_a80e74a81d77a35e8209f3e999863fac4}{SFW\+::\+Math\+::\+Make\+AABB\+\_\+\+From\+Ao\+SWith\+Index}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \texorpdfstring{$\ast$}{*}positions, size\+\_\+t pos\+Count, const uint32\+\_\+t \texorpdfstring{$\ast$}{*}indices, size\+\_\+t idx\+Count, size\+\_\+t stride\+Bytes=sizeof(\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}})) noexcept
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_a74a84c33d6d0cb85154646caf2fd35de}{SFW\+::\+Math\+::\+Make\+AABB\+\_\+\+From\+SoA}} (const float \texorpdfstring{$\ast$}{*}xs, const float \texorpdfstring{$\ast$}{*}ys, const float \texorpdfstring{$\ast$}{*}zs, size\+\_\+t count) noexcept
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_afbd9fba0b27f75e0a3f9b78dfe7fb6f2}{SFW\+::\+Math\+::\+Make\+AABB}} (const std\+::vector$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} $>$ \&positions) noexcept
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_a505491f39330f5a9eb541bd49101a486}{SFW\+::\+Math\+::\+Make\+AABB}} (const std\+::vector$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} $>$ \&positions, const std\+::vector$<$ uint32\+\_\+t $>$ \&indices) noexcept
+\item 
+std\+::array$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}, 8 $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4e85ebafeca57b25b48c0b962ed6dba0}{SFW\+::\+Math\+::\+AABBCorners}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}} \&box)
+\begin{DoxyCompactList}\small\item\em ついでに 8 コーナーだけ欲しい場合 \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ T, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a47ff1bebda1ff3f1ea7c7dfdccc8f337}{SFW\+::\+Math\+::\+Transform\+AABB\+\_\+\+Affine}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \&M, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ T, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ $>$ \&box) noexcept
+\item 
+{\footnotesize template$<$class T$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ T, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_af265bc863952f7e9c5f4db7b7f197817}{SFW\+::\+Math\+::\+Transform\+AABB\+\_\+\+Affine}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 3, 4, T $>$ \&M, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ T, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ $>$ \&box) noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Axis-\/\+Aligned Bounding Box (AABB) を計算するためのユーティリティ関数を提供する。 
+
+\begin{DoxyAuthor}{著者}
+seigo 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+December 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{aabb__util_8h_source}{aabb\+\_\+util.\+h}} に定義があります。
+

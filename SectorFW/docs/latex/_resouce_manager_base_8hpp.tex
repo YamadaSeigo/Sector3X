@@ -1,0 +1,46 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/\+Resouce\+Manager\+Base.hpp ファイル}
+\hypertarget{_resouce_manager_base_8hpp}{}\label{_resouce_manager_base_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/ResouceManagerBase.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/ResouceManagerBase.hpp}}
+
+
+リソースマネージャーの基底クラス  
+
+
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$shared\+\_\+mutex$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include "{}Copyable\+Atomic.\+hpp"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base}{SFW\+::\+Resource\+Manager\+Base$<$ Derived, Handle\+Type, Create\+Desc\+Type, Resource\+Type $>$}}
+\begin{DoxyCompactList}\small\item\em リソースマネージャーの基底クラス。主に\+Renderer系で使用する。 \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource}{SFW\+::\+Resource\+Manager\+Base$<$ Derived, Handle\+Type, Create\+Desc\+Type, Resource\+Type $>$\+::\+Locked\+Resource$<$ T, Lock $>$}}
+\begin{DoxyCompactList}\small\item\em リソースを\+SLock付きで取得するためのラッパー \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_resource_manager_base_1_1_slot}{SFW\+::\+Resource\+Manager\+Base$<$ Derived, Handle\+Type, Create\+Desc\+Type, Resource\+Type $>$\+::\+Slot}}
+\begin{DoxyCompactList}\small\item\em リソースが有効かどうかをチェックする関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{namespace_s_f_w_ab8cb832ca884cf7f1a3ae8dd04491ffa}{SFW\+::\+Hash\+Buffer\+Content}} (const void \texorpdfstring{$\ast$}{*}data, size\+\_\+t size)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+リソースマネージャーの基底クラス 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_resouce_manager_base_8hpp_source}{Resouce\+Manager\+Base.\+hpp}} に定義があります。
+

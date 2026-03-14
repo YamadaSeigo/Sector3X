@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::ECS::SystemScheduler&lt; Partition &gt; クラステンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_e_c_s_1_1_system_scheduler.html','','class_s_f_w_1_1_e_c_s_1_1_system_scheduler-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::ECS::SystemScheduler&lt; Partition &gt; クラステンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>システムを管理し、競合がないようにスケジューリングするクラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_system_scheduler_8hpp_source.html">SystemScheduler.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a34a90dcda4a2b31d5bbf16705d9dc43b" id="r_a34a90dcda4a2b31d5bbf16705d9dc43b"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename &gt; class SystemType&gt; </td></tr>
+<tr class="memitem:a34a90dcda4a2b31d5bbf16705d9dc43b template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a34a90dcda4a2b31d5bbf16705d9dc43b">AddSystem</a> (const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;serviceLocator)</td></tr>
+<tr class="memdesc:a34a90dcda4a2b31d5bbf16705d9dc43b"><td class="mdescLeft">&#160;</td><td class="mdescRight">システムを追加する関数  <br /></td></tr>
+<tr class="memitem:af1737a582026e12b8a4e0ba452ee253d" id="r_af1737a582026e12b8a4e0ba452ee253d"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename &gt; class SystemType&gt; </td></tr>
+<tr class="memitem:af1737a582026e12b8a4e0ba452ee253d template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1737a582026e12b8a4e0ba452ee253d">RemoveSystem</a> ()</td></tr>
+<tr class="memdesc:af1737a582026e12b8a4e0ba452ee253d"><td class="mdescLeft">&#160;</td><td class="mdescRight">システムを削除する関数  <br /></td></tr>
+<tr class="memitem:a2a88d9abeeec784b511d549257762e86" id="r_a2a88d9abeeec784b511d549257762e86"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename &gt; class SystemType&gt; </td></tr>
+<tr class="memitem:a2a88d9abeeec784b511d549257762e86 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a88d9abeeec784b511d549257762e86">PauseSystem</a> ()</td></tr>
+<tr class="memitem:a4e37411f4e67306266cd5470121f355b" id="r_a4e37411f4e67306266cd5470121f355b"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename &gt; class SystemType&gt; </td></tr>
+<tr class="memitem:a4e37411f4e67306266cd5470121f355b template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e37411f4e67306266cd5470121f355b">ResumeSystem</a> ()</td></tr>
+<tr class="memitem:a66fdc3e61bbd361ce9863eca11befcb1" id="r_a66fdc3e61bbd361ce9863eca11befcb1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a66fdc3e61bbd361ce9863eca11befcb1">UpdateAll</a> (Partition &amp;partition, <a class="el" href="struct_s_f_w_1_1_level_context.html">LevelContext</a>&lt; Partition &gt; &amp;levelCtx, const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;serviceLocator, <a class="el" href="struct_s_f_w_1_1_i_thread_executor.html">IThreadExecutor</a> *executor)</td></tr>
+<tr class="memdesc:a66fdc3e61bbd361ce9863eca11befcb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">すべてのシステムを更新する関数  <br /></td></tr>
+<tr class="memitem:abcfb7bd0e8877ec6a6466d65014d7a2a" id="r_abcfb7bd0e8877ec6a6466d65014d7a2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abcfb7bd0e8877ec6a6466d65014d7a2a">UpdateGlobal</a> (const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;serviceLocator, <a class="el" href="struct_s_f_w_1_1_i_thread_executor.html">IThreadExecutor</a> *executor)</td></tr>
+<tr class="memdesc:abcfb7bd0e8877ec6a6466d65014d7a2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">すべてのシステムをグローバルに更新する関数  <br /></td></tr>
+<tr class="memitem:a59e18ae5a6e55d16740f0c456906cefd" id="r_a59e18ae5a6e55d16740f0c456906cefd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59e18ae5a6e55d16740f0c456906cefd">CleanSystem</a> (Partition &amp;partition, <a class="el" href="struct_s_f_w_1_1_level_context.html">LevelContext</a>&lt; Partition &gt; &amp;levelCtx, const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;serviceLocator)</td></tr>
+<tr class="memitem:a1b9c1533c11e3d295684c3d4352543be" id="r_a1b9c1533c11e3d295684c3d4352543be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b9c1533c11e3d295684c3d4352543be">ShowDebugSystemTree</a> (uint32_t treeDepth)</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Partition&gt;<br />
+class SFW::ECS::SystemScheduler&lt; Partition &gt;</div><p>システムを管理し、競合がないようにスケジューリングするクラス </p>
+<dl class="tparams"><dt>テンプレート引数</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Partition</td><td>パーティションの型 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_system_scheduler_8hpp_source.html">SystemScheduler.hpp</a> の <a class="el" href="_system_scheduler_8hpp_source.html#l00033">33</a> 行目に定義があります。</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a34a90dcda4a2b31d5bbf16705d9dc43b" name="a34a90dcda4a2b31d5bbf16705d9dc43b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34a90dcda4a2b31d5bbf16705d9dc43b">&#9670;&#160;</a></span>AddSystem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<div class="memtemplate">
+template&lt;template&lt; typename &gt; class SystemType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_system_scheduler.html">SFW::ECS::SystemScheduler</a>&lt; Partition &gt;::AddSystem </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>serviceLocator</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>システムを追加する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">serviceLocator</td><td>サービスロケーター </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_system_scheduler_8hpp_source.html">SystemScheduler.hpp</a> の <a class="el" href="_system_scheduler_8hpp_source.html#l00040">40</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a59e18ae5a6e55d16740f0c456906cefd" name="a59e18ae5a6e55d16740f0c456906cefd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59e18ae5a6e55d16740f0c456906cefd">&#9670;&#160;</a></span>CleanSystem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_system_scheduler.html">SFW::ECS::SystemScheduler</a>&lt; Partition &gt;::CleanSystem </td>
+          <td>(</td>
+          <td class="paramtype">Partition &amp;</td>          <td class="paramname"><span class="paramname"><em>partition</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_level_context.html">LevelContext</a>&lt; Partition &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>levelCtx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>serviceLocator</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_system_scheduler_8hpp_source.html">SystemScheduler.hpp</a> の <a class="el" href="_system_scheduler_8hpp_source.html#l00192">192</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2a88d9abeeec784b511d549257762e86" name="a2a88d9abeeec784b511d549257762e86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a88d9abeeec784b511d549257762e86">&#9670;&#160;</a></span>PauseSystem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<div class="memtemplate">
+template&lt;template&lt; typename &gt; class SystemType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_system_scheduler.html">SFW::ECS::SystemScheduler</a>&lt; Partition &gt;::PauseSystem </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_system_scheduler_8hpp_source.html">SystemScheduler.hpp</a> の <a class="el" href="_system_scheduler_8hpp_source.html#l00059">59</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af1737a582026e12b8a4e0ba452ee253d" name="af1737a582026e12b8a4e0ba452ee253d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1737a582026e12b8a4e0ba452ee253d">&#9670;&#160;</a></span>RemoveSystem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<div class="memtemplate">
+template&lt;template&lt; typename &gt; class SystemType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_system_scheduler.html">SFW::ECS::SystemScheduler</a>&lt; Partition &gt;::RemoveSystem </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>システムを削除する関数 </p>
+
+<p class="definition"> <a class="el" href="_system_scheduler_8hpp_source.html">SystemScheduler.hpp</a> の <a class="el" href="_system_scheduler_8hpp_source.html#l00052">52</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4e37411f4e67306266cd5470121f355b" name="a4e37411f4e67306266cd5470121f355b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e37411f4e67306266cd5470121f355b">&#9670;&#160;</a></span>ResumeSystem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<div class="memtemplate">
+template&lt;template&lt; typename &gt; class SystemType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_system_scheduler.html">SFW::ECS::SystemScheduler</a>&lt; Partition &gt;::ResumeSystem </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_system_scheduler_8hpp_source.html">SystemScheduler.hpp</a> の <a class="el" href="_system_scheduler_8hpp_source.html#l00066">66</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a1b9c1533c11e3d295684c3d4352543be" name="a1b9c1533c11e3d295684c3d4352543be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b9c1533c11e3d295684c3d4352543be">&#9670;&#160;</a></span>ShowDebugSystemTree()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_system_scheduler.html">SFW::ECS::SystemScheduler</a>&lt; Partition &gt;::ShowDebugSystemTree </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>treeDepth</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_system_scheduler_8hpp_source.html">SystemScheduler.hpp</a> の <a class="el" href="_system_scheduler_8hpp_source.html#l00225">225</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a66fdc3e61bbd361ce9863eca11befcb1" name="a66fdc3e61bbd361ce9863eca11befcb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66fdc3e61bbd361ce9863eca11befcb1">&#9670;&#160;</a></span>UpdateAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_system_scheduler.html">SFW::ECS::SystemScheduler</a>&lt; Partition &gt;::UpdateAll </td>
+          <td>(</td>
+          <td class="paramtype">Partition &amp;</td>          <td class="paramname"><span class="paramname"><em>partition</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_level_context.html">LevelContext</a>&lt; Partition &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>levelCtx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>serviceLocator</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_i_thread_executor.html">IThreadExecutor</a> *</td>          <td class="paramname"><span class="paramname"><em>executor</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>すべてのシステムを更新する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">partition</td><td>対象のパーティション </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_system_scheduler_8hpp_source.html">SystemScheduler.hpp</a> の <a class="el" href="_system_scheduler_8hpp_source.html#l00077">77</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="abcfb7bd0e8877ec6a6466d65014d7a2a" name="abcfb7bd0e8877ec6a6466d65014d7a2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcfb7bd0e8877ec6a6466d65014d7a2a">&#9670;&#160;</a></span>UpdateGlobal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_system_scheduler.html">SFW::ECS::SystemScheduler</a>&lt; Partition &gt;::UpdateGlobal </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>serviceLocator</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_i_thread_executor.html">IThreadExecutor</a> *</td>          <td class="paramname"><span class="paramname"><em>executor</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>すべてのシステムをグローバルに更新する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">serviceLocator</td><td>サービスロケーター </td></tr>
+    <tr><td class="paramname">executor</td><td>スレッド実行クラス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_system_scheduler_8hpp_source.html">SystemScheduler.hpp</a> の <a class="el" href="_system_scheduler_8hpp_source.html#l00144">144</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/<a class="el" href="_system_scheduler_8hpp_source.html">SystemScheduler.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_e_c_s.html">ECS</a></li><li class="navelem"><a href="class_s_f_w_1_1_e_c_s_1_1_system_scheduler.html">SystemScheduler</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

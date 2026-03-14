@@ -1,0 +1,25 @@
+\doxysection{SFW\+::One\+Of Concept Reference}
+\hypertarget{concept_s_f_w_1_1_one_of}{}\label{concept_s_f_w_1_1_one_of}\index{SFW::OneOf@{SFW::OneOf}}
+
+
+型 T が Allowed\+Types... のいずれかと一致するかをチェックするコンセプト  
+
+
+
+
+{\ttfamily \#include $<$Type\+Checker.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ AllowedTypes>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_one_of}{SFW::OneOf}}\ =\ \ (std::is\_same\_v<T,\ AllowedTypes>\ ||\ ...)}
+
+\end{DoxyCode}
+
+
+\doxysubsection{詳解}
+型 T が Allowed\+Types... のいずれかと一致するかをチェックするコンセプト 
+
+ \mbox{\hyperlink{_type_checker_8hpp_source}{Type\+Checker.\+hpp}} の \mbox{\hyperlink{_type_checker_8hpp_source_l00055}{55}} 行目に定義があります。
+

@@ -1,0 +1,50 @@
+\doxysection{Process\+Cpu\+Usage\+Win32.\+h}
+\hypertarget{_process_cpu_usage_win32_8h_source}{}\label{_process_cpu_usage_win32_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/ProcessCpuUsageWin32.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/ProcessCpuUsageWin32.h}}
+\mbox{\hyperlink{_process_cpu_usage_win32_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <windows.h>}}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00012}00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00013}00013\ \{}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00014}00014\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_debug}{Debug}}}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00015}00015\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00019}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_process_cpu_usage_win32}{00019}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_process_cpu_usage_win32}{ProcessCpuUsageWin32}}\ \{}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00025}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_process_cpu_usage_win32_a6c1f510a56705e6466940474080555c8}{00025}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_process_cpu_usage_win32_a6c1f510a56705e6466940474080555c8}{sample}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FILETIME\ c,\ e,\ k,\ u;}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!GetProcessTimes(GetCurrentProcess(),\ \&c,\ \&e,\ \&k,\ \&u))\ \textcolor{keywordflow}{return}\ -\/1.0;}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ to64\ =\ [](\textcolor{keyword}{const}\ FILETIME\&\ ft)-\/>uint64\_t\ \{}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (uint64\_t(ft.dwHighDateTime)\ <<\ 32)\ |\ ft.dwLowDateTime;}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ kernel\ =\ to64(k),\ user\ =\ to64(u);}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LARGE\_INTEGER\ now;}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QueryPerformanceCounter(\&now);}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!init\_)\ \{\ lastKU\_\ =\ kernel\ +\ user;\ lastTS\_\ =\ now.QuadPart;\ init\_\ =\ \textcolor{keyword}{true};\ \textcolor{keywordflow}{return}\ 0.0;\ \}}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LARGE\_INTEGER\ freq;\ QueryPerformanceFrequency(\&freq);}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ kuDiff\ =\ (kernel\ +\ user)\ -\/\ lastKU\_;}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \ \ sec\ =\ double(now.QuadPart\ -\/\ lastTS\_)\ /\ double(freq.QuadPart);}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lastKU\_\ =\ kernel\ +\ user;\ lastTS\_\ =\ now.QuadPart;}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SYSTEM\_INFO\ si;\ GetSystemInfo(\&si);}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ cpuSeconds\ =\ double(kuDiff)\ /\ 10'000'000.0;\ \textcolor{comment}{//\ FILETIME=100ns}}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ denom\ =\ sec\ *\ si.dwNumberOfProcessors;}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (denom\ >\ 0.0)\ ?\ (cpuSeconds\ /\ denom)\ :\ 0.0;\ \textcolor{comment}{//\ 0..1}}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ init\_\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ lastKU\_\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ lastTS\_\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00055}00055\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_process_cpu_usage_win32_8h_source_l00056}00056\ \}}
+
+\end{DoxyCode}

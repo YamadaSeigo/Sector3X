@@ -1,0 +1,119 @@
+\doxysection{gltf\+\_\+to\+\_\+shape.\+h}
+\hypertarget{gltf__to__shape_8h_source}{}\label{gltf__to__shape_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/gltf\_to\_shape.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/gltf\_to\_shape.h}}
+\mbox{\hyperlink{gltf__to__shape_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00007}00007\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_physics_types_8h}{PhysicsTypes.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}../external/cgltf/cgltf.h"{}}\ \textcolor{comment}{//\ 事前に\ cgltf\ を組み込み済みであること}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00015}00015\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00016}00016\ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00017}\mbox{\hyperlink{namespace_s_f_w_1_1_physics}{00017}}\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_physics}{Physics}}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00018}00018\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00025}\mbox{\hyperlink{namespace_s_f_w_1_1_physics_abb4a00ba5b0eab2356bb8bc5cc7d2658}{00025}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_abb4a00ba5b0eab2356bb8bc5cc7d2658}{ReadPositions}}(\textcolor{keyword}{const}\ cgltf\_accessor*\ acc,\ std::vector<Vec3f>\&\ out)\ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!acc\ ||\ acc-\/>type\ !=\ cgltf\_type\_vec3)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ out.resize((\textcolor{keywordtype}{size\_t})acc-\/>count);}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (cgltf\_size\ i\ =\ 0;\ i\ <\ acc-\/>count;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ v[3];}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cgltf\_accessor\_read\_float(acc,\ i,\ v,\ 3);}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out[i]\ =\ \{\ v[0],\ v[1],\ v[2]\ \};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00043}\mbox{\hyperlink{namespace_s_f_w_1_1_physics_aaeaee835e0bfb3c4d83ac4daf110f64b}{00043}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_aaeaee835e0bfb3c4d83ac4daf110f64b}{ReadIndices}}(\textcolor{keyword}{const}\ cgltf\_accessor*\ acc,\ std::vector<uint32\_t>\&\ out,\ uint32\_t\ baseVertex)\ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!acc)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ out.reserve(out.size()\ +\ (\textcolor{keywordtype}{size\_t})acc-\/>count);}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (cgltf\_size\ i\ =\ 0;\ i\ <\ acc-\/>count;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ idx\ =\ (uint32\_t)cgltf\_accessor\_read\_index(acc,\ i);}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back(baseVertex\ +\ idx);}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00059}\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ace4d337d2598fcb528801ae8a9d9b79d}{00059}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ace4d337d2598fcb528801ae8a9d9b79d}{BuildMeshDescFromGLTFMesh}}(\textcolor{keyword}{const}\ cgltf\_mesh*\ mesh,\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_desc}{MeshDesc}}\&\ out)\ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!mesh)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<Vec3f>\ allPos;}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\ allIdx;}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ baseVertex\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (cgltf\_size\ p\ =\ 0;\ p\ <\ mesh-\/>primitives\_count;\ ++p)\ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ cgltf\_primitive\&\ prim\ =\ mesh-\/>primitives[p];}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ triangles\ のみ対象（その他はスキップ\ or\ 変換）}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (prim.type\ !=\ cgltf\_primitive\_type\_triangles)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ POSITION}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ cgltf\_accessor*\ posAcc\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (cgltf\_size\ a\ =\ 0;\ a\ <\ prim.attributes\_count;\ ++a)\ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ cgltf\_attribute\&\ attr\ =\ prim.attributes[a];}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (attr.type\ ==\ cgltf\_attribute\_type\_position)\ \{\ posAcc\ =\ attr.data;\ \textcolor{keywordflow}{break};\ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!posAcc)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 頂点}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<Vec3f>\ localPos;}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespace_s_f_w_1_1_physics_abb4a00ba5b0eab2356bb8bc5cc7d2658}{ReadPositions}}(posAcc,\ localPos))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ indices（無ければ\ 0..N-\/1\ 連番）}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (prim.indices)\ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_aaeaee835e0bfb3c4d83ac4daf110f64b}{ReadIndices}}(prim.indices,\ allIdx,\ baseVertex);}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 連番}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ +\ 2\ <\ (uint32\_t)localPos.size();\ i\ +=\ 3)\ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ allIdx.push\_back(baseVertex\ +\ i\ +\ 0);}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ allIdx.push\_back(baseVertex\ +\ i\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ allIdx.push\_back(baseVertex\ +\ i\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 末尾に連結}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ allPos.insert(allPos.end(),\ localPos.begin(),\ localPos.end());}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ baseVertex\ +=\ (uint32\_t)localPos.size();}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allPos.empty()\ ||\ allIdx.empty())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_desc_a49c1e16233f83efba463aab76f0f1c5d}{vertices}}\ =\ std::move(allPos);}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_desc_a3da1071535d2f2577c05915dac1025b5}{indices}}\ =\ std::move(allIdx);}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00116}\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac85a8012eec8270475521ad43655557f}{00116}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac85a8012eec8270475521ad43655557f}{BuildShapeCreateDescFromGLTF}}(}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ cgltf\_data*\ data,}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ meshIndex,}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ asConvex,}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{ShapeScale}}\&\ scale,}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc}{ShapeCreateDesc}}\&\ out)}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00122}00122\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!data\ ||\ meshIndex\ >=\ data-\/>meshes\_count)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ cgltf\_mesh*\ mesh\ =\ \&data-\/>meshes[meshIndex];}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!asConvex)\ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_desc}{MeshDesc}}\ md;}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ace4d337d2598fcb528801ae8a9d9b79d}{BuildMeshDescFromGLTFMesh}}(mesh,\ md))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_ae044089b53424b6680ed7e222f77ae1d}{shape}}\ =\ std::move(md);}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_acb4c2dbe45c6170d9d555d5e48259353}{scale}}\ =\ scale;}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 凸包は“頂点集合のみ”で良い}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_desc}{MeshDesc}}\ md;}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ace4d337d2598fcb528801ae8a9d9b79d}{BuildMeshDescFromGLTFMesh}}(mesh,\ md))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_convex_hull_desc}{ConvexHullDesc}}\ ch;}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ch.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_convex_hull_desc_a95da8b578f539db815c364335022cd83}{points}}\ =\ std::move(md.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_desc_a49c1e16233f83efba463aab76f0f1c5d}{vertices}});\ \textcolor{comment}{//\ 全頂点を候補に投げる（Jolt\ が凸包化）}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ch.maxConvexRadius\ /\ ch.hullTolerance\ は必要に応じて調整}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_ae044089b53424b6680ed7e222f77ae1d}{shape}}\ =\ std::move(ch);}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_acb4c2dbe45c6170d9d555d5e48259353}{scale}}\ =\ scale;}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00145}00145\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{gltf__to__shape_8h_source_l00146}00146\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,482 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/ResouceManagerBase.hpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_resouce_manager_base_8hpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">ResouceManagerBase.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_resouce_manager_base_8hpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;mutex&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;shared_mutex&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="_copyable_atomic_8hpp.html">CopyableAtomic.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>{</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Derived, <span class="keyword">typename</span> HandleType, <span class="keyword">typename</span> CreateDescType, <span class="keyword">typename</span> ResourceType&gt;</div>
+<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html">   23</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_s_f_w_1_1_resource_manager_base.html">ResourceManagerBase</a> {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">template</span>&lt;<span class="keyword">class</span>&gt; <span class="keyword">class </span>Lock&gt;</div>
+<div class="foldopen" id="foldopen00029" data-start="{" data-end="};">
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html">   29</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ab86ae61c081ac50a5596095415c58ff2">LockedResource</a> {</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a639ea08b0ee11925913afa6ccd941068">   31</a></span>            <span class="keyword">using </span><a class="code hl_typedef" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a639ea08b0ee11925913afa6ccd941068">mutex_type</a> = std::shared_mutex;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            <span class="comment">// 共有ロックなら const T&amp;/const T*、それ以外は T&amp;/T*</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ac0c2af7acf0ff8d52906f475556e19f4">   34</a></span>            <span class="keyword">using </span><a class="code hl_typedef" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ac0c2af7acf0ff8d52906f475556e19f4">ref_type</a> = std::conditional_t&lt;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>                std::is_same_v&lt;Lock&lt;mutex_type&gt;, std::shared_lock&lt;mutex_type&gt;&gt;,</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                <span class="keyword">const</span> T&amp;, T&amp;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            &gt;;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a8b2d629a85d2a7a3a081afb77fd2a8dc">   38</a></span>            <span class="keyword">using </span><a class="code hl_typedef" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a8b2d629a85d2a7a3a081afb77fd2a8dc">ptr_type</a> = std::conditional_t&lt;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                std::is_same_v&lt;Lock&lt;mutex_type&gt;, std::shared_lock&lt;mutex_type&gt;&gt;,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                <span class="keyword">const</span> T*, T*</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            &gt;;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            <span class="comment">// ロックを取得してから呼ぶこと</span></div>
+<div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ab86ae61c081ac50a5596095415c58ff2">   44</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ab86ae61c081ac50a5596095415c58ff2">LockedResource</a>(<a class="code hl_typedef" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a8b2d629a85d2a7a3a081afb77fd2a8dc">ptr_type</a> p, Lock&lt;mutex_type&gt;&amp;&amp; lk)</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                : ptr_(p), lock_(<a class="code hl_namespace" href="namespacestd.html">std</a>::move(lk)) {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                assert(lock_.owns_lock());</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            }</div>
+</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <span class="comment">// ムーブのみ可</span></div>
+<div class="foldopen" id="foldopen00050" data-start="{" data-end="}">
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#acb1ec90c1374ae40b33e616e0767b2b5">   50</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#acb1ec90c1374ae40b33e616e0767b2b5">LockedResource</a>(<a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ab86ae61c081ac50a5596095415c58ff2">LockedResource</a>&amp;&amp; other) noexcept</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                : ptr_(other.ptr_), lock_(std::move(other.lock_)) {</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                other.ptr_ = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            }</div>
+</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            <span class="comment">//なかでムーブ代入を使う</span></div>
+<div class="foldopen" id="foldopen00055" data-start="{" data-end="}">
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ab32a720b5b553bee5e68ef0da6417e62">   55</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ab86ae61c081ac50a5596095415c58ff2">LockedResource</a>&amp; <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ab32a720b5b553bee5e68ef0da6417e62">operator=</a>(<a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ab86ae61c081ac50a5596095415c58ff2">LockedResource</a>&amp;&amp; other) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                <span class="keywordflow">if</span> (<span class="keyword">this</span> != &amp;other) {</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                    <span class="comment">// 先に自分のロックを解放（unique_lock/shared_lock はムーブ代入で自動でやってくれるが念のため順序を明確化）</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                    lock_ = LockTransfer(std::move(other.lock_));</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                    ptr_ = other.ptr_;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                    other.ptr_ = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                }</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            }</div>
+</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a8cde8e863c91e673a32c28c62f642eca">   65</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a8cde8e863c91e673a32c28c62f642eca">LockedResource</a>(<span class="keyword">const</span> <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ab86ae61c081ac50a5596095415c58ff2">LockedResource</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a1eada6421d60b87233ec42e3e881958d">   66</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ab86ae61c081ac50a5596095415c58ff2">LockedResource</a>&amp; <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a1eada6421d60b87233ec42e3e881958d">operator=</a>(<span class="keyword">const</span> <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ab86ae61c081ac50a5596095415c58ff2">LockedResource</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a3cb8c74800407de94f9e1eddede03b94">   68</a></span>            <span class="keyword">const</span> ResourceType&amp; <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a3cb8c74800407de94f9e1eddede03b94">operator*</a>() const&amp;&amp; = delete;      <span class="comment">// rvalueは不可</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a5e5691b84ceafdedf8bbfe27a29587e2">   69</a></span>            const ResourceType&amp; operator-&gt;() const&amp;&amp; = delete;      <span class="comment">// rvalueは不可</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#acdb9f9bb60f17925b4d618b05d136744">   70</a></span>            const ResourceType&amp; <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#acdb9f9bb60f17925b4d618b05d136744">ref</a>() const&amp;&amp; = delete;      <span class="comment">// rvalueは不可</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="comment">// アクセス</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a4d21eb240074a156cd136ae10b88591e">   73</a></span>            <a class="code hl_typedef" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ac0c2af7acf0ff8d52906f475556e19f4">ref_type</a> operator*() const&amp; noexcept { <span class="keywordflow">return</span> *ptr_; }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#adac886502be4168efac30f4c9b31813e">   74</a></span>            <a class="code hl_typedef" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a8b2d629a85d2a7a3a081afb77fd2a8dc">ptr_type</a> <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#adac886502be4168efac30f4c9b31813e">operator-&gt;</a>() const&amp; noexcept { <span class="keywordflow">return</span> ptr_; }</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="comment">// 明示的に参照を取りたい場合</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#aea7a164970a47237ca58dabf4ee3e2aa">   76</a></span>            <a class="code hl_typedef" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ac0c2af7acf0ff8d52906f475556e19f4">ref_type</a> <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#aea7a164970a47237ca58dabf4ee3e2aa">ref</a>() const&amp; noexcept { <span class="keywordflow">return</span> *ptr_; }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <span class="comment">// ロックを明示的に保持したままにしたい設計なら、unlock を出さない（RAII）</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            <span class="comment">// 必要なら lock を取り出す API を追加しても良い（非推奨）</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            <span class="comment">// lock_ のムーブ代入を式として切り出すだけの小道具</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <span class="keyword">static</span> Lock&lt;mutex_type&gt; LockTransfer(Lock&lt;mutex_type&gt;&amp;&amp; lk) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                <span class="keywordflow">return</span> std::move(lk);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            }</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            <a class="code hl_typedef" href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a8b2d629a85d2a7a3a081afb77fd2a8dc">ptr_type</a> ptr_ = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            Lock&lt;mutex_type&gt; lock_;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        };</div>
+</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span></div>
+<div class="foldopen" id="foldopen00093" data-start="{" data-end="};">
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html">   93</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html">Slot</a> {</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html#a145d0b7b0f5a156f32f0f143a54ea93c">   94</a></span>            ResourceType <a class="code hl_variable" href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html#a145d0b7b0f5a156f32f0f143a54ea93c">data</a>;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html#ad49869f4a813e61c424d36dd6d244bf4">   95</a></span>            uint32_t <a class="code hl_variable" href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html#ad49869f4a813e61c424d36dd6d244bf4">generation</a> = 0;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html#a8f09d743070f0b002c88e60c3ad3fa33">   96</a></span>            <span class="keywordtype">bool</span> <a class="code hl_variable" href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html#a8f09d743070f0b002c88e60c3ad3fa33">alive</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        };</div>
+</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span></div>
+<div class="foldopen" id="foldopen00105" data-start="{" data-end="}">
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#a04eedb5dbac041ec944a8dc0da60f7db">  105</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a04eedb5dbac041ec944a8dc0da60f7db">Add</a>(<span class="keyword">const</span> CreateDescType&amp; desc, HandleType&amp; out) {</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            <span class="keywordflow">if</span> (<span class="keyword">auto</span> h = <span class="keyword">static_cast&lt;</span>Derived*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;FindExisting(desc)) {</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                <span class="comment">// 既存を +1</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#ae15f0d5d2bed3eb6c9c6d7b6864d78f7">AddRef</a>(*h);</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                <span class="comment">// もし削除要求が入っていればキャンセル</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a0d85020d8eff2ffb1b33e7e24360a125">CancelPending</a>((*h).index);</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                out = *h;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            }</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            <span class="comment">// 新規確保(再利用できる場合はそのハンドルを返す)</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            HandleType h = <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a4fba9ec2f754f59999f3cc890bf8d3aa">AllocateHandle</a>();</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            <span class="comment">// リソースの実際の生成はロック外でやってもよい（重いので）</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            ResourceType res = <span class="keyword">static_cast&lt;</span>Derived*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;CreateResource(desc, h);</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            {</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>                std::unique_lock lk(<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">mapMutex</a>);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>                <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[h.index].data = std::move(res);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[h.index].alive = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>                <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a33a333a87b00d23717ff7e74c0e3bed2">refCount</a>[h.index].store(1, std::memory_order_relaxed);</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>            }</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>            <span class="keyword">static_cast&lt;</span>Derived*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;RegisterKey(desc, h);</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            out = h;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        }</div>
+</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span></div>
+<div class="foldopen" id="foldopen00138" data-start="{" data-end="}">
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#ae15f0d5d2bed3eb6c9c6d7b6864d78f7">  138</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#ae15f0d5d2bed3eb6c9c6d7b6864d78f7">AddRef</a>(HandleType h) {</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            assert(<a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a27c5b607075c0da3b758542764848b9b">IsValid</a>(h));</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a33a333a87b00d23717ff7e74c0e3bed2">refCount</a>[h.index].fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        }</div>
+</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span></div>
+<div class="foldopen" id="foldopen00147" data-start="{" data-end="}">
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#a88895bdec90c2a6a1ad0981d1ea37fc5">  147</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a88895bdec90c2a6a1ad0981d1ea37fc5">Release</a>(HandleType h, uint64_t deleteSync = 0) {</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>            assert(<a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a27c5b607075c0da3b758542764848b9b">IsValid</a>(h));</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>            uint32_t prev = <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a33a333a87b00d23717ff7e74c0e3bed2">refCount</a>[h.index].fetch_sub(1, std::memory_order_acq_rel);</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>            assert(prev &gt; 0 &amp;&amp; <span class="stringliteral">&quot;Release underflow&quot;</span>);</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>            <span class="keywordflow">if</span> (prev == 1) <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a73343b94d71c058a7d42f0df945a99ce">EnqueueDelete</a>(h.index, deleteSync);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        }</div>
+</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span></div>
+<div class="foldopen" id="foldopen00158" data-start="{" data-end="}">
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#a73343b94d71c058a7d42f0df945a99ce">  158</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a73343b94d71c058a7d42f0df945a99ce">EnqueueDelete</a>(uint32_t index, uint64_t deleteSync) {</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            std::lock_guard lk(pendingMutex_);</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            <span class="keywordflow">if</span> (<span class="keyword">auto</span> it = pendingByIndex.find(index); it == pendingByIndex.end()) {</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>                pendingDelete.push_back({ index, deleteSync });</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>                pendingByIndex[index] = pendingDelete.size() - 1;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>            }</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>            <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>                pendingDelete[it-&gt;second].deleteSync = deleteSync; <span class="comment">// 後ろへ延ばす</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>            }</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        }</div>
+</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span></div>
+<div class="foldopen" id="foldopen00172" data-start="{" data-end="}">
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#a0d85020d8eff2ffb1b33e7e24360a125">  172</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a0d85020d8eff2ffb1b33e7e24360a125">CancelPending</a>(uint32_t index) {</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>            std::lock_guard lk(pendingMutex_);</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>            <span class="keyword">auto</span> it = pendingByIndex.find(index);</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>            <span class="keywordflow">if</span> (it != pendingByIndex.end()) {</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                <span class="keyword">const</span> <span class="keywordtype">size_t</span> pos = it-&gt;second;</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                pendingDelete.erase(pendingDelete.begin() + pos);</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                pendingByIndex.erase(it);</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                <span class="comment">// pos 以降の位置がずれるので、必要なら詰め替え最適化を入れてもよい</span></div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>            }</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        }</div>
+</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span></div>
+<div class="foldopen" id="foldopen00187" data-start="{" data-end="}">
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#a21636b46b48c6f7e1948240a84cdd137">  187</a></span>        [[nodiscard]] LockedResource&lt;ResourceType, std::shared_lock&gt; <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a21636b46b48c6f7e1948240a84cdd137">Get</a>(HandleType h)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>            assert(<a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a27c5b607075c0da3b758542764848b9b">IsValid</a>(h));</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>            std::shared_lock lk(<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">mapMutex</a>); <span class="comment">// 先にロック</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>            <span class="keywordflow">return</span> { &amp;<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[h.index].data, std::move(lk) };</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        }</div>
+</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span></div>
+<div class="foldopen" id="foldopen00198" data-start="{" data-end="}">
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#ab7f43893189687e9557458e1561ac53b">  198</a></span>        [[nodiscard]] LockedResource&lt;ResourceType, std::unique_lock&gt; <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#ab7f43893189687e9557458e1561ac53b">GetWrite</a>(HandleType h) {</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>            assert(<a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a27c5b607075c0da3b758542764848b9b">IsValid</a>(h));</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>            std::unique_lock lk(<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">mapMutex</a>); <span class="comment">// 先にロック</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>            <span class="keywordflow">return</span> { &amp;<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[h.index].data, std::move(lk) };</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        }</div>
+</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span></div>
+<div class="foldopen" id="foldopen00208" data-start="{" data-end="}">
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#a58e70f715b1c75115a43136bff591499">  208</a></span>        [[nodiscard]] LockedResource&lt;ResourceType, std::shared_lock&gt; <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a58e70f715b1c75115a43136bff591499">GetDirect</a>(uint32_t idx)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>            std::shared_lock lk(<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">mapMutex</a>); <span class="comment">// 先にロック</span></div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>            <span class="keywordflow">return</span> { &amp;<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[idx].data, std::move(lk) };</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        }</div>
+</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span></div>
+<div class="foldopen" id="foldopen00217" data-start="{" data-end="}">
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#ae1be2923e2cc12d30597a2a883b4c870">  217</a></span>        [[nodiscard]] LockedResource&lt;ResourceType, std::unique_lock&gt; <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#ae1be2923e2cc12d30597a2a883b4c870">GetDirectWrite</a>(uint32_t idx) {</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>            std::unique_lock lk(<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">mapMutex</a>); <span class="comment">// 先にロック</span></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>            <span class="keywordflow">return</span> { &amp;<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[idx].data, std::move(lk) };</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        }</div>
+</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span></div>
+<div class="foldopen" id="foldopen00225" data-start="{" data-end="}">
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#a093db57dc6b50c4487114228c21f43eb">  225</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a093db57dc6b50c4487114228c21f43eb">ProcessDeferredDeletes</a>(uint64_t currentFrame) {</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>            std::lock_guard lk(pendingMutex_);</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>            <span class="keywordtype">size_t</span> i = 0;</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>            <span class="keywordflow">while</span> (i &lt; pendingDelete.size()) {</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>                <span class="keyword">auto</span>&amp; req = pendingDelete[i];</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>                <span class="keywordflow">if</span> (currentFrame &lt; req.deleteSync) { ++i; <span class="keywordflow">continue</span>; }</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>                <span class="keyword">const</span> uint32_t idx = req.index;</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a33a333a87b00d23717ff7e74c0e3bed2">refCount</a>[idx].load(std::memory_order_acquire) == 0) {</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>                    <span class="comment">// ここで初めて alive=false。以降は Derived の責務。</span></div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>                    <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[idx].alive = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>                    <span class="comment">// 登録済みキーや名前→handleなどを掃除</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>                    <span class="keyword">static_cast&lt;</span>Derived*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;RemoveFromCaches(idx);</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> </div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>                    <span class="comment">// 実体破棄（子の Release 連鎖などがあれば currentFrame を渡して遅延にも対応）</span></div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>                    <span class="keyword">static_cast&lt;</span>Derived*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;DestroyResource(idx, currentFrame);</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>                    <span class="comment">// スロット再利用</span></div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>                    <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#af242d92113df8594cc180534243e98a8">freeList</a>.push_back(idx);</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>                }</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>                <span class="comment">// 破棄済み or キャンセル、どちらでも要求は捨てる</span></div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>                pendingByIndex.erase(idx);</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                pendingDelete.erase(pendingDelete.begin() + i);</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>            }</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        }</div>
+</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span></div>
+<div class="foldopen" id="foldopen00256" data-start="{" data-end="}">
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#a3b45f3d62337fc9cab8535042c015c7c">  256</a></span>        [[nodiscard]] std::shared_lock&lt;std::shared_mutex&gt; <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a3b45f3d62337fc9cab8535042c015c7c">AcquireReadLock</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>            <span class="keywordflow">return</span> std::shared_lock&lt;std::shared_mutex&gt;(<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">mapMutex</a>);</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        }</div>
+</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span></div>
+<div class="foldopen" id="foldopen00263" data-start="{" data-end="}">
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#ae763873166f069f11652407b915cde4d">  263</a></span>        [[nodiscard]] std::unique_lock&lt;std::shared_mutex&gt; <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#ae763873166f069f11652407b915cde4d">AcquireWriteLock</a>() {</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>            <span class="keywordflow">return</span> std::unique_lock&lt;std::shared_mutex&gt;(<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">mapMutex</a>);</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        }</div>
+</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span></div>
+<div class="foldopen" id="foldopen00271" data-start="{" data-end="}">
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#ab962efb2490c3a8364ddee6d4d986db8">  271</a></span>        [[nodiscard]] <span class="keyword">const</span> ResourceType&amp; <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#ab962efb2490c3a8364ddee6d4d986db8">GetNoLock</a>(HandleType h)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>            assert(<a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a27c5b607075c0da3b758542764848b9b">IsValid</a>(h));</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[h.index].data;</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        }</div>
+</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span></div>
+<div class="foldopen" id="foldopen00280" data-start="{" data-end="}">
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#ad0e3f3458a61ff42eae76f90fe81fda4">  280</a></span>        [[nodiscard]] ResourceType&amp; <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#ad0e3f3458a61ff42eae76f90fe81fda4">GetNoLockWrite</a>(HandleType h) {</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>            assert(<a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a27c5b607075c0da3b758542764848b9b">IsValid</a>(h));</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[h.index].data;</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        }</div>
+</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span></div>
+<div class="foldopen" id="foldopen00289" data-start="{" data-end="}">
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#acd8921794ec5f4579cf8207b8fa788bb">  289</a></span>        [[nodiscard]] <span class="keyword">const</span> ResourceType&amp; <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#acd8921794ec5f4579cf8207b8fa788bb">GetDirectNoLock</a>(uint32_t idx)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[idx].data;</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        }</div>
+</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span></div>
+<div class="foldopen" id="foldopen00297" data-start="{" data-end="}">
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#ac24562d389854f09bca4eecd53a82f6d">  297</a></span>        [[nodiscard]] ResourceType&amp; <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#ac24562d389854f09bca4eecd53a82f6d">GetDirectNoLockWrite</a>(uint32_t idx) {</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[idx].data;</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>        }</div>
+</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span></div>
+<div class="foldopen" id="foldopen00306" data-start="{" data-end="}">
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#a27c5b607075c0da3b758542764848b9b">  306</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a27c5b607075c0da3b758542764848b9b">IsValid</a>(HandleType h) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>            <span class="keywordflow">return</span> h.index &lt; <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>.size() &amp;&amp;</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>                <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[h.index].generation == h.generation &amp;&amp;</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>                <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[h.index].alive;</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        }</div>
+</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    <span class="keyword">protected</span>:</div>
+<div class="foldopen" id="foldopen00316" data-start="{" data-end="}">
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#a4fba9ec2f754f59999f3cc890bf8d3aa">  316</a></span>        HandleType <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a4fba9ec2f754f59999f3cc890bf8d3aa">AllocateHandle</a>() {</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>            uint32_t idx;</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>            std::unique_lock lock(<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">mapMutex</a>);</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>            <span class="keywordflow">if</span> (!<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#af242d92113df8594cc180534243e98a8">freeList</a>.empty()) {</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>                idx = <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#af242d92113df8594cc180534243e98a8">freeList</a>.back();</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>                <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#af242d92113df8594cc180534243e98a8">freeList</a>.pop_back();</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>                <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[idx].generation++;</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>            }</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>            <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>                idx = <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>.size());</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>                <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>.push_back({});</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>                <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a33a333a87b00d23717ff7e74c0e3bed2">refCount</a>.push_back(0);</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>            }</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>            <span class="keywordflow">return</span> { idx, <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[idx].generation };</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>        }</div>
+</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span></div>
+<div class="foldopen" id="foldopen00336" data-start="{" data-end="}">
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#aa9555e8b96e02a75e848d470033541dd">  336</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#aa9555e8b96e02a75e848d470033541dd">MarkDead</a>(uint32_t index) {</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>            std::unique_lock lock(<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">mapMutex</a>);</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>            <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>[index].alive = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>        }</div>
+</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span></div>
+<div class="foldopen" id="foldopen00345" data-start="{" data-end="}">
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#ad8e12c82c8062899e2114e20d0bfcd5a">  345</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#ad8e12c82c8062899e2114e20d0bfcd5a">FreeIndex</a>(uint32_t index) {</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>            std::unique_lock lock(<a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">mapMutex</a>);</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>            <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#af242d92113df8594cc180534243e98a8">freeList</a>.push_back(index);</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>        }</div>
+</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span></div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">  352</a></span>        std::vector&lt;Slot&gt; <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">slots</a>;</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#a33a333a87b00d23717ff7e74c0e3bed2">  356</a></span>        std::vector&lt;CopyableAtomic&lt;uint32_t&gt;&gt; <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a33a333a87b00d23717ff7e74c0e3bed2">refCount</a>;</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#af242d92113df8594cc180534243e98a8">  360</a></span>        std::vector&lt;uint32_t&gt; <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#af242d92113df8594cc180534243e98a8">freeList</a>;</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span> </div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>    <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>        <span class="comment">//Get関数のためのmutable</span></div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">  364</a></span>        <span class="keyword">mutable</span> std::shared_mutex <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">mapMutex</a>;</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>        <span class="comment">// 削除要求キュー</span></div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>        <span class="keyword">struct </span>PendingDelete { uint32_t index; uint64_t deleteSync; };</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span> </div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>        std::vector&lt;PendingDelete&gt; pendingDelete;</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>        std::unordered_map&lt;uint32_t, size_t&gt; pendingByIndex; <span class="comment">// index -&gt; pendingDelete_ の位置</span></div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>        std::mutex pendingMutex_;</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>    };</div>
+</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span> </div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>    <span class="comment">//速度重視でハッシュで比較する。安全にするならmemcmpを使う。</span></div>
+<div class="foldopen" id="foldopen00375" data-start="{" data-end="}">
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno"><a class="line" href="namespace_s_f_w.html#ab8cb832ca884cf7f1a3ae8dd04491ffa">  375</a></span>    <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="namespace_s_f_w.html#ab8cb832ca884cf7f1a3ae8dd04491ffa">HashBufferContent</a>(<span class="keyword">const</span> <span class="keywordtype">void</span>* data, <span class="keywordtype">size_t</span> size) {</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        std::hash&lt;std::string_view&gt; hasher;</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>        <span class="keywordflow">return</span> hasher(std::string_view((<span class="keyword">const</span> <span class="keywordtype">char</span>*)data, size));</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>    }</div>
+</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>}</div>
+<div class="ttc" id="a_copyable_atomic_8hpp_html"><div class="ttname"><a href="_copyable_atomic_8hpp.html">CopyableAtomic.hpp</a></div><div class="ttdoc">コピー可能なatomicラッパークラス</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_1_1_locked_resource_html_a1eada6421d60b87233ec42e3e881958d"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a1eada6421d60b87233ec42e3e881958d">SFW::ResourceManagerBase::LockedResource::operator=</a></div><div class="ttdeci">LockedResource &amp; operator=(const LockedResource &amp;)=delete</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_1_1_locked_resource_html_a3cb8c74800407de94f9e1eddede03b94"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a3cb8c74800407de94f9e1eddede03b94">SFW::ResourceManagerBase::LockedResource::operator*</a></div><div class="ttdeci">const ResourceType &amp; operator*() const &amp;&amp;=delete</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_1_1_locked_resource_html_a639ea08b0ee11925913afa6ccd941068"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a639ea08b0ee11925913afa6ccd941068">SFW::ResourceManagerBase::LockedResource::mutex_type</a></div><div class="ttdeci">std::shared_mutex mutex_type</div><div class="ttdef"><b>Definition</b> <a href="#l00031">ResouceManagerBase.hpp:31</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_1_1_locked_resource_html_a8b2d629a85d2a7a3a081afb77fd2a8dc"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a8b2d629a85d2a7a3a081afb77fd2a8dc">SFW::ResourceManagerBase::LockedResource::ptr_type</a></div><div class="ttdeci">std::conditional_t&lt; std::is_same_v&lt; Lock&lt; mutex_type &gt;, std::shared_lock&lt; mutex_type &gt; &gt;, const T *, T * &gt; ptr_type</div><div class="ttdef"><b>Definition</b> <a href="#l00038">ResouceManagerBase.hpp:38</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_1_1_locked_resource_html_a8cde8e863c91e673a32c28c62f642eca"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#a8cde8e863c91e673a32c28c62f642eca">SFW::ResourceManagerBase::LockedResource::LockedResource</a></div><div class="ttdeci">LockedResource(const LockedResource &amp;)=delete</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_1_1_locked_resource_html_ab32a720b5b553bee5e68ef0da6417e62"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ab32a720b5b553bee5e68ef0da6417e62">SFW::ResourceManagerBase::LockedResource::operator=</a></div><div class="ttdeci">LockedResource &amp; operator=(LockedResource &amp;&amp;other) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00055">ResouceManagerBase.hpp:55</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_1_1_locked_resource_html_ab86ae61c081ac50a5596095415c58ff2"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ab86ae61c081ac50a5596095415c58ff2">SFW::ResourceManagerBase::LockedResource::LockedResource</a></div><div class="ttdeci">LockedResource(ptr_type p, Lock&lt; mutex_type &gt; &amp;&amp;lk)</div><div class="ttdef"><b>Definition</b> <a href="#l00044">ResouceManagerBase.hpp:44</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_1_1_locked_resource_html_ac0c2af7acf0ff8d52906f475556e19f4"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#ac0c2af7acf0ff8d52906f475556e19f4">SFW::ResourceManagerBase::LockedResource::ref_type</a></div><div class="ttdeci">std::conditional_t&lt; std::is_same_v&lt; Lock&lt; mutex_type &gt;, std::shared_lock&lt; mutex_type &gt; &gt;, const T &amp;, T &amp; &gt; ref_type</div><div class="ttdef"><b>Definition</b> <a href="#l00034">ResouceManagerBase.hpp:34</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_1_1_locked_resource_html_acb1ec90c1374ae40b33e616e0767b2b5"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#acb1ec90c1374ae40b33e616e0767b2b5">SFW::ResourceManagerBase::LockedResource::LockedResource</a></div><div class="ttdeci">LockedResource(LockedResource &amp;&amp;other) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00050">ResouceManagerBase.hpp:50</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_1_1_locked_resource_html_acdb9f9bb60f17925b4d618b05d136744"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#acdb9f9bb60f17925b4d618b05d136744">SFW::ResourceManagerBase::LockedResource::ref</a></div><div class="ttdeci">const ResourceType &amp; ref() const &amp;&amp;=delete</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_1_1_locked_resource_html_adac886502be4168efac30f4c9b31813e"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#adac886502be4168efac30f4c9b31813e">SFW::ResourceManagerBase::LockedResource::operator-&gt;</a></div><div class="ttdeci">ptr_type operator-&gt;() const &amp;noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00074">ResouceManagerBase.hpp:74</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_1_1_locked_resource_html_aea7a164970a47237ca58dabf4ee3e2aa"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base_1_1_locked_resource.html#aea7a164970a47237ca58dabf4ee3e2aa">SFW::ResourceManagerBase::LockedResource::ref</a></div><div class="ttdeci">ref_type ref() const &amp;noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00076">ResouceManagerBase.hpp:76</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a></div><div class="ttdoc">リソースマネージャーの基底クラス。主にRenderer系で使用する。</div><div class="ttdef"><b>Definition</b> <a href="#l00023">ResouceManagerBase.hpp:23</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_a04eedb5dbac041ec944a8dc0da60f7db"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#a04eedb5dbac041ec944a8dc0da60f7db">SFW::ResourceManagerBase::Add</a></div><div class="ttdeci">bool Add(const CreateDescType &amp;desc, HandleType &amp;out)</div><div class="ttdoc">Add: 既存があれば再利用(+1)＆削除要求が入っていればキャンセル</div><div class="ttdef"><b>Definition</b> <a href="#l00105">ResouceManagerBase.hpp:105</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_a093db57dc6b50c4487114228c21f43eb"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#a093db57dc6b50c4487114228c21f43eb">SFW::ResourceManagerBase::ProcessDeferredDeletes</a></div><div class="ttdeci">void ProcessDeferredDeletes(uint64_t currentFrame)</div><div class="ttdoc">期限到達で最終判断：ref == 0 なら破棄、&gt;0 なら削除キャンセル</div><div class="ttdef"><b>Definition</b> <a href="#l00225">ResouceManagerBase.hpp:225</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_a0d85020d8eff2ffb1b33e7e24360a125"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#a0d85020d8eff2ffb1b33e7e24360a125">SFW::ResourceManagerBase::CancelPending</a></div><div class="ttdeci">void CancelPending(uint32_t index)</div><div class="ttdoc">削除要求のキャンセル（Add での復活時など）</div><div class="ttdef"><b>Definition</b> <a href="#l00172">ResouceManagerBase.hpp:172</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_a21636b46b48c6f7e1948240a84cdd137"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#a21636b46b48c6f7e1948240a84cdd137">SFW::ResourceManagerBase::Get</a></div><div class="ttdeci">LockedResource&lt; ResourceType, std::shared_lock &gt; Get(HandleType h) const</div><div class="ttdoc">Get: 有効なハンドルなら Shared Lock 付きでリソースを返す</div><div class="ttdef"><b>Definition</b> <a href="#l00187">ResouceManagerBase.hpp:187</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_a27c5b607075c0da3b758542764848b9b"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#a27c5b607075c0da3b758542764848b9b">SFW::ResourceManagerBase::IsValid</a></div><div class="ttdeci">bool IsValid(HandleType h) const noexcept</div><div class="ttdoc">ハンドルが有効かどうかをチェックする関数</div><div class="ttdef"><b>Definition</b> <a href="#l00306">ResouceManagerBase.hpp:306</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_a2a05fb3cf3b0ea6767b836876caf0793"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">SFW::ResourceManagerBase&lt; PhysicsShapeManager, ShapeHandle, ShapeCreateDesc, JPH::RefConst&lt; JPH::Shape &gt; &gt;::mapMutex</a></div><div class="ttdeci">std::shared_mutex mapMutex</div><div class="ttdef"><b>Definition</b> <a href="#l00364">ResouceManagerBase.hpp:364</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_a33a333a87b00d23717ff7e74c0e3bed2"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#a33a333a87b00d23717ff7e74c0e3bed2">SFW::ResourceManagerBase&lt; PhysicsShapeManager, ShapeHandle, ShapeCreateDesc, JPH::RefConst&lt; JPH::Shape &gt; &gt;::refCount</a></div><div class="ttdeci">std::vector&lt; CopyableAtomic&lt; uint32_t &gt; &gt; refCount</div><div class="ttdef"><b>Definition</b> <a href="#l00356">ResouceManagerBase.hpp:356</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_a3b45f3d62337fc9cab8535042c015c7c"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#a3b45f3d62337fc9cab8535042c015c7c">SFW::ResourceManagerBase::AcquireReadLock</a></div><div class="ttdeci">std::shared_lock&lt; std::shared_mutex &gt; AcquireReadLock() const</div><div class="ttdoc">読み取り用ロックを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00256">ResouceManagerBase.hpp:256</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_a4fba9ec2f754f59999f3cc890bf8d3aa"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#a4fba9ec2f754f59999f3cc890bf8d3aa">SFW::ResourceManagerBase::AllocateHandle</a></div><div class="ttdeci">HandleType AllocateHandle()</div><div class="ttdoc">ハンドルを新規確保する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00316">ResouceManagerBase.hpp:316</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_a58e70f715b1c75115a43136bff591499"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#a58e70f715b1c75115a43136bff591499">SFW::ResourceManagerBase::GetDirect</a></div><div class="ttdeci">LockedResource&lt; ResourceType, std::shared_lock &gt; GetDirect(uint32_t idx) const</div><div class="ttdoc">GetDirect: インデックス直指定で Shared Lock 付きでリソースを返す（IsValid チェックなし）</div><div class="ttdef"><b>Definition</b> <a href="#l00208">ResouceManagerBase.hpp:208</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_a73343b94d71c058a7d42f0df945a99ce"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#a73343b94d71c058a7d42f0df945a99ce">SFW::ResourceManagerBase::EnqueueDelete</a></div><div class="ttdeci">void EnqueueDelete(uint32_t index, uint64_t deleteSync)</div><div class="ttdoc">削除要求の登録（重複を防いで期限更新）</div><div class="ttdef"><b>Definition</b> <a href="#l00158">ResouceManagerBase.hpp:158</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_a88895bdec90c2a6a1ad0981d1ea37fc5"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#a88895bdec90c2a6a1ad0981d1ea37fc5">SFW::ResourceManagerBase::Release</a></div><div class="ttdeci">void Release(HandleType h, uint64_t deleteSync=0)</div><div class="ttdoc">Release: 0 になったら削除要求を積む（alive はここでは落とさない）</div><div class="ttdef"><b>Definition</b> <a href="#l00147">ResouceManagerBase.hpp:147</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_aa9555e8b96e02a75e848d470033541dd"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#aa9555e8b96e02a75e848d470033541dd">SFW::ResourceManagerBase::MarkDead</a></div><div class="ttdeci">void MarkDead(uint32_t index)</div><div class="ttdoc">派生が使うユーティリティ</div><div class="ttdef"><b>Definition</b> <a href="#l00336">ResouceManagerBase.hpp:336</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ab06811456bf9d3e86d400be7459a91ca"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">SFW::ResourceManagerBase&lt; PhysicsShapeManager, ShapeHandle, ShapeCreateDesc, JPH::RefConst&lt; JPH::Shape &gt; &gt;::slots</a></div><div class="ttdeci">std::vector&lt; Slot &gt; slots</div><div class="ttdef"><b>Definition</b> <a href="#l00352">ResouceManagerBase.hpp:352</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ab7f43893189687e9557458e1561ac53b"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ab7f43893189687e9557458e1561ac53b">SFW::ResourceManagerBase::GetWrite</a></div><div class="ttdeci">LockedResource&lt; ResourceType, std::unique_lock &gt; GetWrite(HandleType h)</div><div class="ttdoc">Get: 有効なハンドルなら Shared Lock 付きでリソースを返す</div><div class="ttdef"><b>Definition</b> <a href="#l00198">ResouceManagerBase.hpp:198</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ab962efb2490c3a8364ddee6d4d986db8"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ab962efb2490c3a8364ddee6d4d986db8">SFW::ResourceManagerBase::GetNoLock</a></div><div class="ttdeci">const ResourceType &amp; GetNoLock(HandleType h) const</div><div class="ttdoc">ロック無しでリソースを取得する関数（IsValid チェック付き）</div><div class="ttdef"><b>Definition</b> <a href="#l00271">ResouceManagerBase.hpp:271</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ac24562d389854f09bca4eecd53a82f6d"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ac24562d389854f09bca4eecd53a82f6d">SFW::ResourceManagerBase::GetDirectNoLockWrite</a></div><div class="ttdeci">ResourceType &amp; GetDirectNoLockWrite(uint32_t idx)</div><div class="ttdoc">ロック無しでリソースを取得する関数（IsValid チェックなし）</div><div class="ttdef"><b>Definition</b> <a href="#l00297">ResouceManagerBase.hpp:297</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_acd8921794ec5f4579cf8207b8fa788bb"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#acd8921794ec5f4579cf8207b8fa788bb">SFW::ResourceManagerBase::GetDirectNoLock</a></div><div class="ttdeci">const ResourceType &amp; GetDirectNoLock(uint32_t idx) const</div><div class="ttdoc">ロック無しでリソースを取得する関数（IsValid チェックなし）</div><div class="ttdef"><b>Definition</b> <a href="#l00289">ResouceManagerBase.hpp:289</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ad0e3f3458a61ff42eae76f90fe81fda4"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ad0e3f3458a61ff42eae76f90fe81fda4">SFW::ResourceManagerBase::GetNoLockWrite</a></div><div class="ttdeci">ResourceType &amp; GetNoLockWrite(HandleType h)</div><div class="ttdoc">ロック無しでリソースを取得する関数（IsValid チェック付き）</div><div class="ttdef"><b>Definition</b> <a href="#l00280">ResouceManagerBase.hpp:280</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ad8e12c82c8062899e2114e20d0bfcd5a"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ad8e12c82c8062899e2114e20d0bfcd5a">SFW::ResourceManagerBase::FreeIndex</a></div><div class="ttdeci">void FreeIndex(uint32_t index)</div><div class="ttdoc">派生が使うユーティリティ</div><div class="ttdef"><b>Definition</b> <a href="#l00345">ResouceManagerBase.hpp:345</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ae15f0d5d2bed3eb6c9c6d7b6864d78f7"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ae15f0d5d2bed3eb6c9c6d7b6864d78f7">SFW::ResourceManagerBase::AddRef</a></div><div class="ttdeci">void AddRef(HandleType h)</div><div class="ttdoc">AddRef: 参照カウント +1</div><div class="ttdef"><b>Definition</b> <a href="#l00138">ResouceManagerBase.hpp:138</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ae1be2923e2cc12d30597a2a883b4c870"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ae1be2923e2cc12d30597a2a883b4c870">SFW::ResourceManagerBase::GetDirectWrite</a></div><div class="ttdeci">LockedResource&lt; ResourceType, std::unique_lock &gt; GetDirectWrite(uint32_t idx)</div><div class="ttdoc">GetDirect: インデックス直指定で Shared Lock 付きでリソースを返す（IsValid チェックなし）</div><div class="ttdef"><b>Definition</b> <a href="#l00217">ResouceManagerBase.hpp:217</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ae763873166f069f11652407b915cde4d"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ae763873166f069f11652407b915cde4d">SFW::ResourceManagerBase::AcquireWriteLock</a></div><div class="ttdeci">std::unique_lock&lt; std::shared_mutex &gt; AcquireWriteLock()</div><div class="ttdoc">書き込み用ロックを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00263">ResouceManagerBase.hpp:263</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_af242d92113df8594cc180534243e98a8"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#af242d92113df8594cc180534243e98a8">SFW::ResourceManagerBase&lt; PhysicsShapeManager, ShapeHandle, ShapeCreateDesc, JPH::RefConst&lt; JPH::Shape &gt; &gt;::freeList</a></div><div class="ttdeci">std::vector&lt; uint32_t &gt; freeList</div><div class="ttdef"><b>Definition</b> <a href="#l00360">ResouceManagerBase.hpp:360</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html_ab8cb832ca884cf7f1a3ae8dd04491ffa"><div class="ttname"><a href="namespace_s_f_w.html#ab8cb832ca884cf7f1a3ae8dd04491ffa">SFW::HashBufferContent</a></div><div class="ttdeci">size_t HashBufferContent(const void *data, size_t size)</div><div class="ttdef"><b>Definition</b> <a href="#l00375">ResouceManagerBase.hpp:375</a></div></div>
+<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdef"><b>Definition</b> <a href="entity_8h_source.html#l00051">entity.h:51</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_resource_manager_base_1_1_slot_html"><div class="ttname"><a href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html">SFW::ResourceManagerBase::Slot</a></div><div class="ttdoc">リソースが有効かどうかをチェックする関数</div><div class="ttdef"><b>Definition</b> <a href="#l00093">ResouceManagerBase.hpp:93</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_resource_manager_base_1_1_slot_html_a145d0b7b0f5a156f32f0f143a54ea93c"><div class="ttname"><a href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html#a145d0b7b0f5a156f32f0f143a54ea93c">SFW::ResourceManagerBase::Slot::data</a></div><div class="ttdeci">ResourceType data</div><div class="ttdef"><b>Definition</b> <a href="#l00094">ResouceManagerBase.hpp:94</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_resource_manager_base_1_1_slot_html_a8f09d743070f0b002c88e60c3ad3fa33"><div class="ttname"><a href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html#a8f09d743070f0b002c88e60c3ad3fa33">SFW::ResourceManagerBase::Slot::alive</a></div><div class="ttdeci">bool alive</div><div class="ttdef"><b>Definition</b> <a href="#l00096">ResouceManagerBase.hpp:96</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_resource_manager_base_1_1_slot_html_ad49869f4a813e61c424d36dd6d244bf4"><div class="ttname"><a href="struct_s_f_w_1_1_resource_manager_base_1_1_slot.html#ad49869f4a813e61c424d36dd6d244bf4">SFW::ResourceManagerBase::Slot::generation</a></div><div class="ttdeci">uint32_t generation</div><div class="ttdef"><b>Definition</b> <a href="#l00095">ResouceManagerBase.hpp:95</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_a38f029c1e896199722a8ae2b43dab78.html">Util</a></li><li class="navelem"><a href="_resouce_manager_base_8hpp.html">ResouceManagerBase.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

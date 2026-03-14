@@ -1,0 +1,290 @@
+\doxysection{SFW\+::Graphics\+::DX11\+::Per\+Camera3\+DService クラス}
+\hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service}{}\label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service}\index{SFW::Graphics::DX11::PerCamera3DService@{SFW::Graphics::DX11::PerCamera3DService}}
+
+
+Direct\+X11用の3\+Dカメラサービス。カメラの定数バッファを管理し、更新する。  
+
+
+
+
+{\ttfamily \#include $<$DX113\+DCamera\+Service.\+h$>$}
+
+SFW\+::Graphics\+::DX11\+::Per\+Camera3\+DService の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service_af6cb72946e70ac23b0ec27914e48b897}{Per\+Camera3\+DService}} (\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager}{Buffer\+Manager}} \texorpdfstring{$\ast$}{*}buffer\+Mgr, const uint32\+\_\+t width, const uint32\+\_\+t height)
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service_a45295359ab9e8f57b14eb6ef41d71d39}{Pre\+Update}} (double delta\+Time) override
+\begin{DoxyCompactList}\small\item\em カメラの更新関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service$<$ Projection\+Type\+::\+Perspective $>$}} に属する継承公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_afff2d1916859053e25eff9c3c9d5172b}{I3\+DCamera\+Service}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} buffer\+Handle) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7c6ed09db460b4922d8493783e54961c}{\texorpdfstring{$\sim$}{\string~}\+I3\+DCamera\+Service}} ()=default
+\begin{DoxyCompactList}\small\item\em デストラクタ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a86f06f07d76d4d189a28e34fe783aa34}{Move}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&vec) noexcept
+\begin{DoxyCompactList}\small\item\em カメラの移動 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae6f70c90d8f7b723579230dcc139d258}{Rotate}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \&q) noexcept
+\begin{DoxyCompactList}\small\item\em カメラの回転 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac3ba109be35b9efed618314a6ecff889}{Set\+Rotation}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \&q) noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a72b3b57efa69e1ec48476debcbe476f4}{Set\+Eye\+Pos}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&eye\+Pos) noexcept
+\begin{DoxyCompactList}\small\item\em カメラの位置を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a94dfcedac8f1f117baad2593b9749ae9}{Set\+Target}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&target\+Pos) noexcept
+\begin{DoxyCompactList}\small\item\em カメラの注視点を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7b428777038fc0ea7fcff57ed0c577e9}{Set\+FOV}} (float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a9b7a807da1f7fa2ee1e2de14ac4451dc}{fov\+Rad}}) noexcept
+\begin{DoxyCompactList}\small\item\em カメラの視野角を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a1823fcf7edba094167e5df74c4350e3c}{Set\+Aspect\+Ratio}} (float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a21b73d3f0e9d42a4b4951cbaa5c96b39}{aspect\+Ratio}}) noexcept
+\begin{DoxyCompactList}\small\item\em カメラのアスペクト比を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4907465ca6e7ce04138f9af3fb1f84f3}{Set\+Near\+Clip}} (float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_af8640ab289a3ff476e40dc0a44f9e926}{near\+Clip}}) noexcept
+\begin{DoxyCompactList}\small\item\em カメラのニアクリップ距離を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_abb4297b5ec58b8800222512d3efba1ee}{Set\+Far\+Clip}} (float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a563ff0ed093d82a05ca233b9daaaf0db}{far\+Clip}}) noexcept
+\begin{DoxyCompactList}\small\item\em カメラのファークリップ距離を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_adc766a174220b69580f1ed44e03d0234}{Set\+Focus\+Distance}} (float distance) noexcept
+\begin{DoxyCompactList}\small\item\em カメラの焦点距離を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4d0b13a40af8191337b65a5a36530690}{Set\+Mouse\+Delta}} (float deltaX, float deltaY) noexcept
+\begin{DoxyCompactList}\small\item\em マウスの移動量を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a8652aad2aff0d6a815baa5e63fb42429}{Set\+Mouse\+Sensitivity}} (float sensX, float sensY) noexcept
+\begin{DoxyCompactList}\small\item\em マウス感度を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a08e40022f3eb8d97a5fb66a70c721e03}{Set\+Rotate\+Mode}} (\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aa}{Rotate\+Mode}} mode) noexcept
+\begin{DoxyCompactList}\small\item\em カメラの回転モードを設定 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aa18926d235abb00236c1344e6919229a}{Get\+Eye\+Pos}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの位置を取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a6ebfa01c4d0a73727d85d2f98c2d3938}{Get\+Target}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの注視点を取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a961471074573710bb3a562d53923fef2}{Get\+Up}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの上方向ベクトルを取得 \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7f7159081774cc41465c9e810a513216}{Get\+FOV}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの視野角を取得 \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad4c10ec53bd610f645f95505466e3192}{Get\+Aspect\+Ratio}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラのアスペクト比を取得 \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a5917161acd7359a5e9f990e5e838e9ac}{Get\+Near\+Clip}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラのニアクリップ距離を取得 \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aa6e5274c815c57734febc89e3d9c6274}{Get\+Far\+Clip}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラのファークリップ距離を取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a6fbbaa783c53eee6a32773c32997ed73}{Get\+Rotation}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの回転を取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a67dd0b54c4ea5aedb5aaefaab248689b}{Get\+Forward}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの焦点距離を取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a77e3d3383a9ea6fc018da65c240724f9}{Get\+Backward}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの後方方向ベクトルを取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad1673672e37d59e4801b6bc1f164775d}{Get\+Right}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの右方向ベクトルを取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aff903fce1ba3b32abea17f1e31e49317}{Get\+Resolution}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの解像度を取得 \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a2347ffb9197be13f4618f46a04e1bbca}{Get\+Focus\+Distance}} () const noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4d3d76636c3d1e36bbc58e1f7605040c}{Get\+Sensitivity}} (float \&out\+SensX, float \&out\+SensY) const noexcept
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac468d845fb0b459c7b2eaead3f7fca01}{Get\+Pitch\+Accum}} () const noexcept
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aea31f3c1a1d8a790094adab229897146}{Make\+View\+Matrix}} () const
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a14ac7c1ed3a79102e5798eb9e263515f}{Make\+Projection\+Matrix}} () const noexcept
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac5314e15f419dc781568ce70fd817ffe}{Make\+View\+Proj\+Matrix}} () const
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aa9774a14c3a51f998e566fceee1c0950}{Make\+View\+Proj\+Matrix}} (float \+\_\+near\+Clip, float \+\_\+far\+Clip) const
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad8df687adce40f6fe84190bf0fc56055}{Make\+Basis}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&out\+Right, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&out\+Up, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&out\+Forward) const noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7182a9dc9273a5ed2d372b08df140c6d}{Make\+Frustum}} (bool normalize=false) const
+\begin{DoxyCompactList}\small\item\em ビュー行列を取得 \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_buffer}{Camera\+Buffer}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_abda226a0ee17d037ccc3e05277090983}{Get\+Camera\+Buffer\+Data\+No\+Lock}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラバッファのデータを取得 \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_buffer}{Camera\+Buffer}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a97485078c0fb3f9f0daa0ba5fbb27a8b}{Get\+Old\+Camera\+Buffer\+Data\+No\+Lock}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 遅延分前のカメラバッファのデータを取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad59d70f76e8fc1fd093162dd16297e63}{Get\+Camera\+Buffer\+Handle}} () const noexcept
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a57a1962c30f01a4075d77e834b49de22}{Is\+Update\+Buffer}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラバッファの更新が必要かどうかを取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a00f9a2daf461a5299ab6cf0601e77c67}{Calc\+Current\+Rotation}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 現在の回転を計算して取得する \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr char \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service_af7025811b02d0c7c287e4a3ce5cf3f64}{BUFFER\+\_\+\+NAME}} \mbox{[}$\,$\mbox{]} = "{}DX113\+DPer\+Camera"{}
+\begin{DoxyCompactList}\small\item\em カメラの定数バッファの名前 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a73744778bc5cc3113ed77db1b69e1fb1}{update\+Phase}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a9f0e8abd26ab30155b39e558f004ce42}{update\+Group}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a116ce546ab92eaf8f4282719b89a5165}{update\+Order}} = 0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{その他の継承メンバ}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service$<$ Projection\+Type\+::\+Perspective $>$}} に属する継承公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aa}{Rotate\+Mode}} 
+\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7}{Phase}} \+: uint16\+\_\+t \{ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}} = 0
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7}{NORMAL}} = 1
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9}{LATE}} = 2
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907}{PHASE\+\_\+\+MAX}}
+ \}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608}{Group}} \+: uint16\+\_\+t \{ \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b}{GROUP\+\_\+\+GRAPHICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda}{GROUP\+\_\+\+PHYSICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a}{GROUP\+\_\+\+INPUT}}
+, \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e}{GROUP\+\_\+\+AUDIO}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580}{GROUP\+\_\+\+AI}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90}{GROUP\+\_\+\+MAX}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service$<$ Projection\+Type\+::\+Perspective $>$}} に属する継承限定公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a6d1fbb49e8776fdef07f3967a27d656e}{Update\+Camera\+From\+Mouse}} ()
+\begin{DoxyCompactList}\small\item\em マウスの移動に基づいてカメラの回転を更新する \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service$<$ Projection\+Type\+::\+Perspective $>$}} に属する継承限定公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_af7f4c4bfb97177141741fc1f7d01876a}{camera\+Buffer\+Handle}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a305edbaa8054aaf07f021c8f95175ba5}{frame\+Idx}}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_buffer}{Camera\+Buffer}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae11a50f0fa711dada7d4bfca3445d904}{camera\+Buffer}} \mbox{[}RENDER\+\_\+\+BUFFER\+\_\+\+COUNT\mbox{]}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a05992c900a7affda3096a8d8c09640d7}{eye}}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a123df438186cb124e2160187f8a2017e}{target}}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a9b7a807da1f7fa2ee1e2de14ac4451dc}{fov\+Rad}}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a21b73d3f0e9d42a4b4951cbaa5c96b39}{aspect\+Ratio}}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_af8640ab289a3ff476e40dc0a44f9e926}{near\+Clip}}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a563ff0ed093d82a05ca233b9daaaf0db}{far\+Clip}}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a225bed5c11a089d140ce197e621102e4}{left}}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7915e95917125d8128129e27b1a908fa}{right}}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a2c2f99c4b6aceb72ee2127052768b026}{bottom}}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a701d921ec68c68a94fa58ad0a679fff4}{top}}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a07da00eda905d75ab3f2dee5a494ec93}{focus\+Dist}}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4e6bcb8d236c62c213190354fe9df39a}{move\+Vec}}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a51ed58422b038b122206b436b3c3efba}{pitch\+Accum}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac70f9951ed7681e226fb3af85a9708f4}{current\+Slot}}
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_afda51b0b333bc317fd8e2a7d5a3e60e4}{is\+Update\+Buffer}}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae16b494ca4eabb0b338046e2d81f4f8c}{rot}}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a139b36bbfb066d1b2a1502e0617ea373}{dx}}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a72be0c683c4c7ae8bc20769437b3e271}{dy}}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ab1a14f1baae18145d35bdf19f75ef344}{sens\+X\+\_\+rad\+\_\+per\+\_\+px}}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a84d697690c508a29d681a0694ce6add1}{sens\+Y\+\_\+rad\+\_\+per\+\_\+px}}
+\item 
+std\+::shared\+\_\+mutex \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_af8406bae0131b90375cb6a2b9b83839f}{shared\+Mutex}}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aa}{Rotate\+Mode}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aecd7bb74d64620d7839ffa4dfa663701}{rotate\+Mode}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Direct\+X11用の3\+Dカメラサービス。カメラの定数バッファを管理し、更新する。 
+
+ \mbox{\hyperlink{_d_x113_d_camera_service_8h_source}{DX113\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_d_x113_d_camera_service_8h_source_l00021}{21}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service_af6cb72946e70ac23b0ec27914e48b897}\index{SFW::Graphics::DX11::PerCamera3DService@{SFW::Graphics::DX11::PerCamera3DService}!PerCamera3DService@{PerCamera3DService}}
+\index{PerCamera3DService@{PerCamera3DService}!SFW::Graphics::DX11::PerCamera3DService@{SFW::Graphics::DX11::PerCamera3DService}}
+\doxysubsubsection{\texorpdfstring{PerCamera3DService()}{PerCamera3DService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service_af6cb72946e70ac23b0ec27914e48b897} 
+SFW\+::\+Graphics\+::\+DX11\+::\+Per\+Camera3\+DService\+::\+Per\+Camera3\+DService (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager}{Buffer\+Manager}} \texorpdfstring{$\ast$}{*}}]{buffer\+Mgr}{, }\item[{const uint32\+\_\+t}]{width}{, }\item[{const uint32\+\_\+t}]{height}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em buffer\+Mgr} & Buffer\+Managerのポインタ \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_d_x113_d_camera_service_8h_source}{DX113\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_d_x113_d_camera_service_8h_source_l00031}{31}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service_a45295359ab9e8f57b14eb6ef41d71d39}\index{SFW::Graphics::DX11::PerCamera3DService@{SFW::Graphics::DX11::PerCamera3DService}!PreUpdate@{PreUpdate}}
+\index{PreUpdate@{PreUpdate}!SFW::Graphics::DX11::PerCamera3DService@{SFW::Graphics::DX11::PerCamera3DService}}
+\doxysubsubsection{\texorpdfstring{PreUpdate()}{PreUpdate()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service_a45295359ab9e8f57b14eb6ef41d71d39} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Per\+Camera3\+DService\+::\+Pre\+Update (\begin{DoxyParamCaption}\item[{double}]{delta\+Time}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+カメラの更新関数 
+
+
+\begin{DoxyParams}{引数}
+{\em delta\+Time} & 前のフレームからの経過時間（秒） \\
+\hline
+\end{DoxyParams}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service$<$ Projection\+Type\+::\+Perspective $>$}}を再実装しています。
+
+
+
+ \mbox{\hyperlink{_d_x113_d_camera_service_8h_source}{DX113\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_d_x113_d_camera_service_8h_source_l00044}{44}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service_af7025811b02d0c7c287e4a3ce5cf3f64}\index{SFW::Graphics::DX11::PerCamera3DService@{SFW::Graphics::DX11::PerCamera3DService}!BUFFER\_NAME@{BUFFER\_NAME}}
+\index{BUFFER\_NAME@{BUFFER\_NAME}!SFW::Graphics::DX11::PerCamera3DService@{SFW::Graphics::DX11::PerCamera3DService}}
+\doxysubsubsection{\texorpdfstring{BUFFER\_NAME}{BUFFER\_NAME}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service_af7025811b02d0c7c287e4a3ce5cf3f64} 
+char SFW\+::\+Graphics\+::\+DX11\+::\+Per\+Camera3\+DService\+::\+BUFFER\+\_\+\+NAME\mbox{[}$\,$\mbox{]} = "{}DX113\+DPer\+Camera"{}\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+カメラの定数バッファの名前 
+
+
+
+ \mbox{\hyperlink{_d_x113_d_camera_service_8h_source}{DX113\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_d_x113_d_camera_service_8h_source_l00026}{26}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\mbox{\hyperlink{_d_x113_d_camera_service_8h}{DX113\+DCamera\+Service.\+h}}\end{DoxyCompactItemize}

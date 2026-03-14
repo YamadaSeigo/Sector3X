@@ -1,0 +1,158 @@
+\doxysection{SFW\+::Math\+::Planef 構造体}
+\hypertarget{struct_s_f_w_1_1_math_1_1_planef}{}\label{struct_s_f_w_1_1_math_1_1_planef}\index{SFW::Math::Planef@{SFW::Math::Planef}}
+
+
+{\ttfamily \#include $<$Frustum.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}{Planef}} ()=default
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_ae7943baf423b17cea232f20fbe0bee95}{Planef}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&normal, float dd)
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a7f97f81142af4416286e4667dcf78a52}{Normalize}} () noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_aee1975bbef4cff08a78a768060fd7505}{Normalized}} () const noexcept
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a99ba3e22bb33220c0cb45111348fe37d}{Signed\+Distance}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&p) const noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a059ed45049903891ba655238d8c99d54}{From\+Coefficients}} (float a, float b, float c, float \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{d}}, bool normalize=true) noexcept
+\item 
+static \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_aab94b5e276bb1844226f48f2f9f4db6a}{From\+Point\+Normal}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&point, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&normal, bool normalize=true) noexcept
+\item 
+static bool \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a024ddccebe5acd244c5094d9f7e3f4ac}{Intersect3\+Planes}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}} \&p1, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}} \&p2, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}} \&p3, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&out)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}{n}} \{ 0.f, 0.f, 1.f \}
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{d}} \{ 0.f \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00018}{18}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_planef_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}\index{SFW::Math::Planef@{SFW::Math::Planef}!Planef@{Planef}}
+\index{Planef@{Planef}!SFW::Math::Planef@{SFW::Math::Planef}}
+\doxysubsubsection{\texorpdfstring{Planef()}{Planef()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc} 
+SFW\+::\+Math\+::\+Planef\+::\+Planef (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_planef_ae7943baf423b17cea232f20fbe0bee95}\index{SFW::Math::Planef@{SFW::Math::Planef}!Planef@{Planef}}
+\index{Planef@{Planef}!SFW::Math::Planef@{SFW::Math::Planef}}
+\doxysubsubsection{\texorpdfstring{Planef()}{Planef()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_planef_ae7943baf423b17cea232f20fbe0bee95} 
+SFW\+::\+Math\+::\+Planef\+::\+Planef (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&}]{normal}{, }\item[{float}]{dd}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00023}{23}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_planef_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_planef_a059ed45049903891ba655238d8c99d54}\index{SFW::Math::Planef@{SFW::Math::Planef}!FromCoefficients@{FromCoefficients}}
+\index{FromCoefficients@{FromCoefficients}!SFW::Math::Planef@{SFW::Math::Planef}}
+\doxysubsubsection{\texorpdfstring{FromCoefficients()}{FromCoefficients()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_planef_a059ed45049903891ba655238d8c99d54} 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}} SFW\+::\+Math\+::\+Planef\+::\+From\+Coefficients (\begin{DoxyParamCaption}\item[{float}]{a}{, }\item[{float}]{b}{, }\item[{float}]{c}{, }\item[{float}]{d}{, }\item[{bool}]{normalize}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00026}{26}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_planef_aab94b5e276bb1844226f48f2f9f4db6a}\index{SFW::Math::Planef@{SFW::Math::Planef}!FromPointNormal@{FromPointNormal}}
+\index{FromPointNormal@{FromPointNormal}!SFW::Math::Planef@{SFW::Math::Planef}}
+\doxysubsubsection{\texorpdfstring{FromPointNormal()}{FromPointNormal()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_planef_aab94b5e276bb1844226f48f2f9f4db6a} 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}} SFW\+::\+Math\+::\+Planef\+::\+From\+Point\+Normal (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&}]{point}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&}]{normal}{, }\item[{bool}]{normalize}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00033}{33}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_planef_a024ddccebe5acd244c5094d9f7e3f4ac}\index{SFW::Math::Planef@{SFW::Math::Planef}!Intersect3Planes@{Intersect3Planes}}
+\index{Intersect3Planes@{Intersect3Planes}!SFW::Math::Planef@{SFW::Math::Planef}}
+\doxysubsubsection{\texorpdfstring{Intersect3Planes()}{Intersect3Planes()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_planef_a024ddccebe5acd244c5094d9f7e3f4ac} 
+bool SFW\+::\+Math\+::\+Planef\+::\+Intersect3\+Planes (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}} \&}]{p1}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}} \&}]{p2}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}} \&}]{p3}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{out}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00046}{46}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_planef_a7f97f81142af4416286e4667dcf78a52}\index{SFW::Math::Planef@{SFW::Math::Planef}!Normalize@{Normalize}}
+\index{Normalize@{Normalize}!SFW::Math::Planef@{SFW::Math::Planef}}
+\doxysubsubsection{\texorpdfstring{Normalize()}{Normalize()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_planef_a7f97f81142af4416286e4667dcf78a52} 
+void SFW\+::\+Math\+::\+Planef\+::\+Normalize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00073}{73}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_planef_aee1975bbef4cff08a78a768060fd7505}\index{SFW::Math::Planef@{SFW::Math::Planef}!Normalized@{Normalized}}
+\index{Normalized@{Normalized}!SFW::Math::Planef@{SFW::Math::Planef}}
+\doxysubsubsection{\texorpdfstring{Normalized()}{Normalized()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_planef_aee1975bbef4cff08a78a768060fd7505} 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef}{Planef}} SFW\+::\+Math\+::\+Planef\+::\+Normalized (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00080}{80}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_planef_a99ba3e22bb33220c0cb45111348fe37d}\index{SFW::Math::Planef@{SFW::Math::Planef}!SignedDistance@{SignedDistance}}
+\index{SignedDistance@{SignedDistance}!SFW::Math::Planef@{SFW::Math::Planef}}
+\doxysubsubsection{\texorpdfstring{SignedDistance()}{SignedDistance()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_planef_a99ba3e22bb33220c0cb45111348fe37d} 
+float SFW\+::\+Math\+::\+Planef\+::\+Signed\+Distance (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&}]{p}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00083}{83}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_planef_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}\index{SFW::Math::Planef@{SFW::Math::Planef}!d@{d}}
+\index{d@{d}!SFW::Math::Planef@{SFW::Math::Planef}}
+\doxysubsubsection{\texorpdfstring{d}{d}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d} 
+float SFW\+::\+Math\+::\+Planef\+::d \{ 0.f \}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00020}{20}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf}\index{SFW::Math::Planef@{SFW::Math::Planef}!n@{n}}
+\index{n@{n}!SFW::Math::Planef@{SFW::Math::Planef}}
+\doxysubsubsection{\texorpdfstring{n}{n}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_planef_a465623754e97422e4f996d3332bc73cf} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} SFW\+::\+Math\+::\+Planef\+::n \{ 0.f, 0.f, 1.f \}}
+
+
+
+ \mbox{\hyperlink{_frustum_8hpp_source}{Frustum.\+hpp}} の \mbox{\hyperlink{_frustum_8hpp_source_l00019}{19}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Math/\mbox{\hyperlink{_frustum_8hpp}{Frustum.\+hpp}}\end{DoxyCompactItemize}

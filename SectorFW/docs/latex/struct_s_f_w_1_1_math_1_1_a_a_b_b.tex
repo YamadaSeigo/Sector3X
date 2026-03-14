@@ -1,0 +1,383 @@
+\doxysection{SFW\+::Math\+::AABB\texorpdfstring{$<$}{<} T, VecT \texorpdfstring{$>$}{>} 構造体テンプレート}
+\hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b}{}\label{struct_s_f_w_1_1_math_1_1_a_a_b_b}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+
+
+{\ttfamily \#include $<$AABB.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_aed9d64f76aad6ddedfffb8cd1cce0d11}{AABB}} ()
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a61a4658fac6f77127512f2428856758c}{AABB}} (const VecT \&lower\+\_\+bound\+\_\+, const VecT \&upper\+\_\+bound\+\_\+)
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a7cae3d4017af283d882920222e8e1157}{operator+}} (const VecT \&v) const noexcept
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \& \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a940e3aead547ae2177f645553c6a828b}{operator+=}} (const VecT \&v) noexcept
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_aefe4055568a6b338061287eb6e5b2078}{operator-\/}} (const VecT \&v) const noexcept
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \& \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a6e1eb9081adaba6e91495d3ab9a671fb}{operator-\/=}} (const VecT \&v) noexcept
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a62bae20eb9b19477e53223081514fb48}{operator\texorpdfstring{$\ast$}{*}}} (const T \&s) const noexcept
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a0274ad6f75f760ab27861d957f1ff603}{operator\texorpdfstring{$\ast$}{*}}} (const VecT \&v) const noexcept
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \& \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ab3e210452fb6ce442fc92bafceb31e8d}{operator\texorpdfstring{$\ast$}{*}=}} (const T \&s) noexcept
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \& \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a0410805564c0bf4677978132c650d75e}{operator\texorpdfstring{$\ast$}{*}=}} (const VecT \&v) noexcept
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a6c8b1f1cb8e51fca14fed6a2b83632cb}{operator/}} (const T \&s) const noexcept
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a1e429eb6d86c255e04cf61553f1670c6}{operator/}} (const VecT \&v) const noexcept
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \& \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a73daca02c407b9bc9bd3c50de70e89a3}{operator/=}} (const T \&s) noexcept
+\item 
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \& \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a7669710d46c4b129da9e51b8b368d1ac}{operator/=}} (const VecT \&v) noexcept
+\item 
+constexpr VecT \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a486274ee475985dd4f6d30fa00c4cc51}{size}} () const noexcept
+\item 
+constexpr VecT \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a2490b9939529cdb77c6fd17b0bc86479}{center}} () const noexcept
+\item 
+constexpr VecT \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a5b0b721337222a053544b6b75e626447}{extent}} () const noexcept
+\item 
+constexpr bool \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ae222d552d57cbb84dc9956c36216d901}{contains}} (const VecT \&point) const noexcept
+\item 
+constexpr bool \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ab5ff6c3cd7264ddff590f3fac885c99c}{intersects}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \&other) const noexcept
+\item 
+constexpr void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_aaaa66c3ea5a2fa04bd2d961e28d6f89d}{expand\+To\+Include}} (const VecT \&point) noexcept
+\item 
+constexpr void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ab2514283c327dec29cd516dd1137ee89}{expand\+To\+Include}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \&other) noexcept
+\item 
+constexpr void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_aa6ec3fd36ff5640f34580e1e1dcd35c7}{shrink\+Extent}} (const T limit) noexcept
+\item 
+constexpr void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ad48bc28d3137bd015e774ea8e2980c18}{invalidate}} () noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T, typename VecT$>$ }\\static constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ T, VecT $>$ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a213acf06aaa1c44b58d9170f0d2e6d54}{Union}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ T, VecT $>$ \&a, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ T, VecT $>$ \&b) noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+VecT \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}}
+\item 
+VecT \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329}{ub}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename T, typename VecT$>$\newline
+struct SFW\+::\+Math\+::\+AABB$<$ T, Vec\+T $>$}
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00018}{18}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_aed9d64f76aad6ddedfffb8cd1cce0d11}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!AABB@{AABB}}
+\index{AABB@{AABB}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{AABB()}{AABB()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_aed9d64f76aad6ddedfffb8cd1cce0d11} 
+template$<$typename T, typename VecT$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::\+AABB (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00022}{22}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a61a4658fac6f77127512f2428856758c}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!AABB@{AABB}}
+\index{AABB@{AABB}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{AABB()}{AABB()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a61a4658fac6f77127512f2428856758c} 
+template$<$typename T, typename VecT$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::\+AABB (\begin{DoxyParamCaption}\item[{const VecT \&}]{lower\+\_\+bound\+\_\+}{, }\item[{const VecT \&}]{upper\+\_\+bound\+\_\+}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00023}{23}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a2490b9939529cdb77c6fd17b0bc86479}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!center@{center}}
+\index{center@{center}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{center()}{center()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a2490b9939529cdb77c6fd17b0bc86479} 
+template$<$typename T, typename VecT$>$ \\
+VecT \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::center (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00044}{44}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_ae222d552d57cbb84dc9956c36216d901}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!contains@{contains}}
+\index{contains@{contains}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{contains()}{contains()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_ae222d552d57cbb84dc9956c36216d901} 
+template$<$typename T, typename VecT$>$ \\
+bool \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::contains (\begin{DoxyParamCaption}\item[{const VecT \&}]{point}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00054}{54}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_ab2514283c327dec29cd516dd1137ee89}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!expandToInclude@{expandToInclude}}
+\index{expandToInclude@{expandToInclude}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{expandToInclude()}{expandToInclude()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_ab2514283c327dec29cd516dd1137ee89} 
+template$<$typename T, typename VecT$>$ \\
+void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::expand\+To\+Include (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ T, VecT $>$ \&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00078}{78}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_aaaa66c3ea5a2fa04bd2d961e28d6f89d}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!expandToInclude@{expandToInclude}}
+\index{expandToInclude@{expandToInclude}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{expandToInclude()}{expandToInclude()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_aaaa66c3ea5a2fa04bd2d961e28d6f89d} 
+template$<$typename T, typename VecT$>$ \\
+void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::expand\+To\+Include (\begin{DoxyParamCaption}\item[{const VecT \&}]{point}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00070}{70}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a5b0b721337222a053544b6b75e626447}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!extent@{extent}}
+\index{extent@{extent}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{extent()}{extent()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a5b0b721337222a053544b6b75e626447} 
+template$<$typename T, typename VecT$>$ \\
+VecT \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::extent (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00049}{49}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_ab5ff6c3cd7264ddff590f3fac885c99c}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!intersects@{intersects}}
+\index{intersects@{intersects}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{intersects()}{intersects()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_ab5ff6c3cd7264ddff590f3fac885c99c} 
+template$<$typename T, typename VecT$>$ \\
+bool \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::intersects (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ T, VecT $>$ \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00062}{62}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_ad48bc28d3137bd015e774ea8e2980c18}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!invalidate@{invalidate}}
+\index{invalidate@{invalidate}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{invalidate()}{invalidate()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_ad48bc28d3137bd015e774ea8e2980c18} 
+template$<$typename T, typename VecT$>$ \\
+void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::invalidate (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00109}{109}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a62bae20eb9b19477e53223081514fb48}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a62bae20eb9b19477e53223081514fb48} 
+template$<$typename T, typename VecT$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{const T \&}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00029}{29}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a0274ad6f75f760ab27861d957f1ff603}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a0274ad6f75f760ab27861d957f1ff603} 
+template$<$typename T, typename VecT$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{const VecT \&}]{v}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00030}{30}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_ab3e210452fb6ce442fc92bafceb31e8d}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!operator\texorpdfstring{$\ast$}{*}=@{operator\texorpdfstring{$\ast$}{*}=}}
+\index{operator\texorpdfstring{$\ast$}{*}=@{operator\texorpdfstring{$\ast$}{*}=}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}=()}{operator*=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_ab3e210452fb6ce442fc92bafceb31e8d} 
+template$<$typename T, typename VecT$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \& \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::operator\texorpdfstring{$\ast$}{*}= (\begin{DoxyParamCaption}\item[{const T \&}]{s}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00031}{31}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a0410805564c0bf4677978132c650d75e}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!operator\texorpdfstring{$\ast$}{*}=@{operator\texorpdfstring{$\ast$}{*}=}}
+\index{operator\texorpdfstring{$\ast$}{*}=@{operator\texorpdfstring{$\ast$}{*}=}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}=()}{operator*=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a0410805564c0bf4677978132c650d75e} 
+template$<$typename T, typename VecT$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \& \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::operator\texorpdfstring{$\ast$}{*}= (\begin{DoxyParamCaption}\item[{const VecT \&}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00032}{32}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a7cae3d4017af283d882920222e8e1157}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!operator+@{operator+}}
+\index{operator+@{operator+}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a7cae3d4017af283d882920222e8e1157} 
+template$<$typename T, typename VecT$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::operator+ (\begin{DoxyParamCaption}\item[{const VecT \&}]{v}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00025}{25}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a940e3aead547ae2177f645553c6a828b}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{operator+=()}{operator+=()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a940e3aead547ae2177f645553c6a828b} 
+template$<$typename T, typename VecT$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \& \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::operator+= (\begin{DoxyParamCaption}\item[{const VecT \&}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00026}{26}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_aefe4055568a6b338061287eb6e5b2078}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_aefe4055568a6b338061287eb6e5b2078} 
+template$<$typename T, typename VecT$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::operator-\/ (\begin{DoxyParamCaption}\item[{const VecT \&}]{v}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00027}{27}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a6e1eb9081adaba6e91495d3ab9a671fb}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!operator-\/=@{operator-\/=}}
+\index{operator-\/=@{operator-\/=}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{operator-\/=()}{operator-=()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a6e1eb9081adaba6e91495d3ab9a671fb} 
+template$<$typename T, typename VecT$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \& \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::operator-\/= (\begin{DoxyParamCaption}\item[{const VecT \&}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00028}{28}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a6c8b1f1cb8e51fca14fed6a2b83632cb}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!operator/@{operator/}}
+\index{operator/@{operator/}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a6c8b1f1cb8e51fca14fed6a2b83632cb} 
+template$<$typename T, typename VecT$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::operator/ (\begin{DoxyParamCaption}\item[{const T \&}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00033}{33}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a1e429eb6d86c255e04cf61553f1670c6}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!operator/@{operator/}}
+\index{operator/@{operator/}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a1e429eb6d86c255e04cf61553f1670c6} 
+template$<$typename T, typename VecT$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::operator/ (\begin{DoxyParamCaption}\item[{const VecT \&}]{v}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00034}{34}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a73daca02c407b9bc9bd3c50de70e89a3}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!operator/=@{operator/=}}
+\index{operator/=@{operator/=}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{operator/=()}{operator/=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a73daca02c407b9bc9bd3c50de70e89a3} 
+template$<$typename T, typename VecT$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \& \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::operator/= (\begin{DoxyParamCaption}\item[{const T \&}]{s}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00035}{35}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a7669710d46c4b129da9e51b8b368d1ac}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!operator/=@{operator/=}}
+\index{operator/=@{operator/=}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{operator/=()}{operator/=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a7669710d46c4b129da9e51b8b368d1ac} 
+template$<$typename T, typename VecT$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}} \& \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::operator/= (\begin{DoxyParamCaption}\item[{const VecT \&}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00036}{36}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_aa6ec3fd36ff5640f34580e1e1dcd35c7}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!shrinkExtent@{shrinkExtent}}
+\index{shrinkExtent@{shrinkExtent}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{shrinkExtent()}{shrinkExtent()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_aa6ec3fd36ff5640f34580e1e1dcd35c7} 
+template$<$typename T, typename VecT$>$ \\
+void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::shrink\+Extent (\begin{DoxyParamCaption}\item[{const T}]{limit}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00086}{86}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a486274ee475985dd4f6d30fa00c4cc51}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!size@{size}}
+\index{size@{size}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a486274ee475985dd4f6d30fa00c4cc51} 
+template$<$typename T, typename VecT$>$ \\
+VecT \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00039}{39}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a213acf06aaa1c44b58d9170f0d2e6d54}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!Union@{Union}}
+\index{Union@{Union}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{Union()}{Union()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a213acf06aaa1c44b58d9170f0d2e6d54} 
+template$<$typename T, typename VecT$>$ \\
+template$<$typename T, typename VecT$>$ \\
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ T, VecT $>$ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::\+Union (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ T, VecT $>$ \&}]{a}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ T, VecT $>$ \&}]{b}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00099}{99}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!lb@{lb}}
+\index{lb@{lb}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{lb}{lb}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143} 
+template$<$typename T, typename VecT$>$ \\
+VecT \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::lb}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00019}{19}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329}\index{SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}!ub@{ub}}
+\index{ub@{ub}!SFW::Math::AABB$<$ T, VecT $>$@{SFW::Math::AABB$<$ T, VecT $>$}}
+\doxysubsubsection{\texorpdfstring{ub}{ub}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329} 
+template$<$typename T, typename VecT$>$ \\
+VecT \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{SFW\+::\+Math\+::\+AABB}}$<$ T, VecT $>$\+::ub}
+
+
+
+ \mbox{\hyperlink{_a_a_b_b_8hpp_source}{AABB.\+hpp}} の \mbox{\hyperlink{_a_a_b_b_8hpp_source_l00020}{20}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Math/\mbox{\hyperlink{_a_a_b_b_8hpp}{AABB.\+hpp}}\end{DoxyCompactItemize}

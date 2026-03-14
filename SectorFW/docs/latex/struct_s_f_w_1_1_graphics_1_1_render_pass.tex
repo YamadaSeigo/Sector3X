@@ -1,0 +1,400 @@
+\doxysection{SFW\+::Graphics\+::Render\+Pass\texorpdfstring{$<$}{<} RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle \texorpdfstring{$>$}{>} 構造体テンプレート}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass}{}\label{struct_s_f_w_1_1_graphics_1_1_render_pass}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+
+
+描画するパスごとの設定を定義する構造体  
+
+
+
+
+{\ttfamily \#include $<$Render\+Pass.\+hpp$>$}
+
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a01995142a82dbb6f1debcdbd13b355e3}{RTVHandleT}} = RTVHandle
+\item 
+using \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a2981cfa3cc27327f8e75d54082c81202}{DSVHandleT}} = DSVHandle
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a435590e586235da31bcb93c2b7a3105e}{Render\+Pass}} ()=default
+\begin{DoxyCompactList}\small\item\em デフォルトコンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_aef9ac64e3ff0d953342af0fb31c2cafe}{Render\+Pass}} (const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a01995142a82dbb6f1debcdbd13b355e3}{RTVHandleT}} $>$ \&\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a562afd9cc103e0c82d91771348d0f95b}{rtvs}}, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a2981cfa3cc27327f8e75d54082c81202}{DSVHandleT}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_adccbaad3202fe5753b43921ac34949f9}{dsv}}, \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{Render\+Queue}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_aa771b981bfc41b360cc470337ffd9d0a}{queue}}, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0ed}{Primitive\+Topology}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a1b67fed9a132286fef9f2a24c21b95ff}{topology}}=\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0edaf5beeab7a1f452e5b0e9b03b44f0de92}{Primitive\+Topology\+::\+Triangle\+List}}, std\+::optional$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5}{Rasterizer\+State\+ID}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a20815f81fef10938bda59d02be2155fb}{rasterizer\+State}}=std\+::nullopt, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556b}{Blend\+State\+ID}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a53150a7b023c7d13c3edaf0802a5ce49}{blend\+State}}=\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556bafaa90538de35640e4b1e31ccf35b6eb5}{Blend\+State\+ID\+::\+Opaque}}, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3}{Depth\+Stencil\+State\+ID}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a87a271bd168f0a7d1663b1a56adc6da8}{depth\+Stencil\+State}}=\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3a7a1920d61156abc05a60135aefe8bc67}{Depth\+Stencil\+State\+ID\+::\+Default}}, std\+::optional$<$ std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_bind_slot_buffer}{Bind\+Slot\+Buffer}} $>$ $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a58ab7d38020c80e419ecc233cd23e02f}{cbvs}}=std\+::nullopt, std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport}{Viewport}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a022e9ff65b42c9b902124236c2de27a7}{viewport}}=std\+::nullopt, std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_aeae05e9c3c2a127182659e9ae16d6d52}{pso\+Override}}=std\+::nullopt, const std\+::vector$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a2689db17ff3c0424507f4a95b861b3ea}{Pass\+Custom\+Func\+Type}} $>$ \&\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a5214c30def0494951a677069b0a2535b}{custom\+Execute}}=\{\}, uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_ace4a80b961a248703b2c3e7cc3604d13}{stencil\+Ref}}=0, bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_aa3d2e552e7b74a6a63206a19fed00d9b}{rebind\+PSO}}=false)
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_aa2cb245bc8e962881e128b00adef4e4e}{Render\+Pass}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}} \&\&other) noexcept
+\begin{DoxyCompactList}\small\item\em ムーブコンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}} \& \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a2bf0ca532d28ebe7973c83450536c2db}{operator=}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}} \&\&other) noexcept
+\begin{DoxyCompactList}\small\item\em ムーブ代入演算子 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_ae82d162583aaef9082f1674eea59b0dc}{Render\+Pass}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}} \&)=delete
+\begin{DoxyCompactList}\small\item\em コピー禁止 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}} \& \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a9ec6c81b4426b22ebddbf45fa88a2400}{operator=}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}} \&)=delete
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a01995142a82dbb6f1debcdbd13b355e3}{RTVHandleT}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a562afd9cc103e0c82d91771348d0f95b}{rtvs}}
+\item 
+std\+::vector$<$ RTV $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a948b36a2cd5ca54c441133e77f9f9fb8}{rtvs\+Raw}}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a2981cfa3cc27327f8e75d54082c81202}{DSVHandleT}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_adccbaad3202fe5753b43921ac34949f9}{dsv}} = nullptr
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{Render\+Queue}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_aa771b981bfc41b360cc470337ffd9d0a}{queue}}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0ed}{Primitive\+Topology}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a1b67fed9a132286fef9f2a24c21b95ff}{topology}} = \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0edaf5beeab7a1f452e5b0e9b03b44f0de92}{Primitive\+Topology\+::\+Triangle\+List}}
+\item 
+std\+::optional$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5}{Rasterizer\+State\+ID}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a20815f81fef10938bda59d02be2155fb}{rasterizer\+State}} = std\+::nullopt
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556b}{Blend\+State\+ID}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a53150a7b023c7d13c3edaf0802a5ce49}{blend\+State}} = \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556bafaa90538de35640e4b1e31ccf35b6eb5}{Blend\+State\+ID\+::\+Opaque}}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3}{Depth\+Stencil\+State\+ID}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a87a271bd168f0a7d1663b1a56adc6da8}{depth\+Stencil\+State}} = \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3a7a1920d61156abc05a60135aefe8bc67}{Depth\+Stencil\+State\+ID\+::\+Default}}
+\item 
+std\+::optional$<$ std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_bind_slot_buffer}{Bind\+Slot\+Buffer}} $>$ $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a58ab7d38020c80e419ecc233cd23e02f}{cbvs}}
+\item 
+std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport}{Viewport}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a022e9ff65b42c9b902124236c2de27a7}{viewport}} = std\+::nullopt
+\item 
+std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_aeae05e9c3c2a127182659e9ae16d6d52}{pso\+Override}} = std\+::nullopt
+\item 
+std\+::vector$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a2689db17ff3c0424507f4a95b861b3ea}{Pass\+Custom\+Func\+Type}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a5214c30def0494951a677069b0a2535b}{custom\+Execute}} = \{\}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_ace4a80b961a248703b2c3e7cc3604d13}{stencil\+Ref}} = 0
+\item 
+uint16\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a5429763c713592670fe6edf8a6c69715}{view\+Bit}} = 0
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_aa3d2e552e7b74a6a63206a19fed00d9b}{rebind\+PSO}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$\newline
+struct SFW\+::\+Graphics\+::\+Render\+Pass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}
+描画するパスごとの設定を定義する構造体 
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00026}{26}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a2981cfa3cc27327f8e75d54082c81202}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!DSVHandleT@{DSVHandleT}}
+\index{DSVHandleT@{DSVHandleT}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{DSVHandleT}{DSVHandleT}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a2981cfa3cc27327f8e75d54082c81202} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+using \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::\+DSVHandleT = DSVHandle}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00029}{29}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a01995142a82dbb6f1debcdbd13b355e3}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!RTVHandleT@{RTVHandleT}}
+\index{RTVHandleT@{RTVHandleT}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{RTVHandleT}{RTVHandleT}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a01995142a82dbb6f1debcdbd13b355e3} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+using \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::\+RTVHandleT = RTVHandle}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00028}{28}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a435590e586235da31bcb93c2b7a3105e}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!RenderPass@{RenderPass}}
+\index{RenderPass@{RenderPass}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{RenderPass()}{RenderPass()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a435590e586235da31bcb93c2b7a3105e} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::\+Render\+Pass (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+デフォルトコンストラクタ 
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_aef9ac64e3ff0d953342af0fb31c2cafe}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!RenderPass@{RenderPass}}
+\index{RenderPass@{RenderPass}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{RenderPass()}{RenderPass()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_aef9ac64e3ff0d953342af0fb31c2cafe} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::\+Render\+Pass (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a01995142a82dbb6f1debcdbd13b355e3}{RTVHandleT}} $>$ \&}]{rtvs}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a2981cfa3cc27327f8e75d54082c81202}{DSVHandleT}}}]{dsv}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{Render\+Queue}} \texorpdfstring{$\ast$}{*}}]{queue}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0ed}{Primitive\+Topology}}}]{topology}{ = {\ttfamily \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0edaf5beeab7a1f452e5b0e9b03b44f0de92}{Primitive\+Topology\+::\+Triangle\+List}}}, }\item[{std\+::optional$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5}{Rasterizer\+State\+ID}} $>$}]{rasterizer\+State}{ = {\ttfamily std\+:\+:nullopt}, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556b}{Blend\+State\+ID}}}]{blend\+State}{ = {\ttfamily \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556bafaa90538de35640e4b1e31ccf35b6eb5}{Blend\+State\+ID\+::\+Opaque}}}, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3}{Depth\+Stencil\+State\+ID}}}]{depth\+Stencil\+State}{ = {\ttfamily \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3a7a1920d61156abc05a60135aefe8bc67}{Depth\+Stencil\+State\+ID\+::\+Default}}}, }\item[{std\+::optional$<$ std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_bind_slot_buffer}{Bind\+Slot\+Buffer}} $>$ $>$}]{cbvs}{ = {\ttfamily std\+:\+:nullopt}, }\item[{std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport}{Viewport}} $>$}]{viewport}{ = {\ttfamily std\+:\+:nullopt}, }\item[{std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}} $>$}]{pso\+Override}{ = {\ttfamily std\+:\+:nullopt}, }\item[{const std\+::vector$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a2689db17ff3c0424507f4a95b861b3ea}{Pass\+Custom\+Func\+Type}} $>$ \&}]{custom\+Execute}{ = {\ttfamily \{\}}, }\item[{uint32\+\_\+t}]{stencil\+Ref}{ = {\ttfamily 0}, }\item[{bool}]{rebind\+PSO}{ = {\ttfamily false}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em name} & パスの名前 \\
+\hline
+{\em rtv} & Render\+Target\+Viewハンドルのリスト \\
+\hline
+{\em dsv} & Depth\+Stencil\+Viewハンドル \\
+\hline
+{\em queue} & 描画キュー \\
+\hline
+{\em topology} & プリミティブトポロジ \\
+\hline
+{\em rasterizer\+State} & ラスタライザーステート\+ID \\
+\hline
+{\em blend\+State} & ブレンドステート\+ID \\
+\hline
+{\em depth\+Stencil\+State} & 深度ステンシルステート\+ID \\
+\hline
+{\em cbvs} & 定数バッファハンドルのリスト \\
+\hline
+{\em custom\+Execute} & カスタム描画関数（\+Fullscreen\+Quadなど） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00071}{71}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_aa2cb245bc8e962881e128b00adef4e4e}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!RenderPass@{RenderPass}}
+\index{RenderPass@{RenderPass}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{RenderPass()}{RenderPass()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_aa2cb245bc8e962881e128b00adef4e4e} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::\+Render\+Pass (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$ \&\&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ムーブコンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em other} & ムーブ元の\+Render\+Pass \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}\&\& ムーブされた\+Render\+Pass 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00109}{109}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_ae82d162583aaef9082f1674eea59b0dc}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!RenderPass@{RenderPass}}
+\index{RenderPass@{RenderPass}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{RenderPass()}{RenderPass()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_ae82d162583aaef9082f1674eea59b0dc} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::\+Render\+Pass (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$ \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+コピー禁止 
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a9ec6c81b4426b22ebddbf45fa88a2400}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a9ec6c81b4426b22ebddbf45fa88a2400} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}} \& \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$ \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a2bf0ca532d28ebe7973c83450536c2db}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a2bf0ca532d28ebe7973c83450536c2db} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}} \& \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$ \&\&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ムーブ代入演算子 
+
+
+\begin{DoxyParams}{引数}
+{\em other} & ムーブ元の\+Render\+Pass \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_graphics_1_1_render_pass}{Render\+Pass}\& ムーブされた\+Render\+Passの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00135}{135}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a53150a7b023c7d13c3edaf0802a5ce49}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!blendState@{blendState}}
+\index{blendState@{blendState}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{blendState}{blendState}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a53150a7b023c7d13c3edaf0802a5ce49} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556b}{Blend\+State\+ID}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::blend\+State = \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556bafaa90538de35640e4b1e31ccf35b6eb5}{Blend\+State\+ID\+::\+Opaque}}}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00040}{40}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a58ab7d38020c80e419ecc233cd23e02f}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!cbvs@{cbvs}}
+\index{cbvs@{cbvs}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{cbvs}{cbvs}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a58ab7d38020c80e419ecc233cd23e02f} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+std\+::optional$<$std\+::vector$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_bind_slot_buffer}{Bind\+Slot\+Buffer}}$>$ $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::cbvs}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00042}{42}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a5214c30def0494951a677069b0a2535b}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!customExecute@{customExecute}}
+\index{customExecute@{customExecute}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{customExecute}{customExecute}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a5214c30def0494951a677069b0a2535b} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+std\+::vector$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a2689db17ff3c0424507f4a95b861b3ea}{Pass\+Custom\+Func\+Type}}$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::custom\+Execute = \{\}}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00045}{45}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a87a271bd168f0a7d1663b1a56adc6da8}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!depthStencilState@{depthStencilState}}
+\index{depthStencilState@{depthStencilState}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{depthStencilState}{depthStencilState}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a87a271bd168f0a7d1663b1a56adc6da8} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3}{Depth\+Stencil\+State\+ID}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::depth\+Stencil\+State = \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3a7a1920d61156abc05a60135aefe8bc67}{Depth\+Stencil\+State\+ID\+::\+Default}}}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00041}{41}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_adccbaad3202fe5753b43921ac34949f9}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!dsv@{dsv}}
+\index{dsv@{dsv}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{dsv}{dsv}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_adccbaad3202fe5753b43921ac34949f9} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a2981cfa3cc27327f8e75d54082c81202}{DSVHandleT}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::dsv = nullptr}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00036}{36}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_aeae05e9c3c2a127182659e9ae16d6d52}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!psoOverride@{psoOverride}}
+\index{psoOverride@{psoOverride}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{psoOverride}{psoOverride}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_aeae05e9c3c2a127182659e9ae16d6d52} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+std\+::optional$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}}$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::pso\+Override = std\+::nullopt}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00044}{44}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_aa771b981bfc41b360cc470337ffd9d0a}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!queue@{queue}}
+\index{queue@{queue}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{queue}{queue}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_aa771b981bfc41b360cc470337ffd9d0a} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{Render\+Queue}}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::queue}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00037}{37}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a20815f81fef10938bda59d02be2155fb}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!rasterizerState@{rasterizerState}}
+\index{rasterizerState@{rasterizerState}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{rasterizerState}{rasterizerState}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a20815f81fef10938bda59d02be2155fb} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+std\+::optional$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5}{Rasterizer\+State\+ID}}$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::rasterizer\+State = std\+::nullopt}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00039}{39}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_aa3d2e552e7b74a6a63206a19fed00d9b}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!rebindPSO@{rebindPSO}}
+\index{rebindPSO@{rebindPSO}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{rebindPSO}{rebindPSO}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_aa3d2e552e7b74a6a63206a19fed00d9b} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::rebind\+PSO = false}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00052}{52}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a562afd9cc103e0c82d91771348d0f95b}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!rtvs@{rtvs}}
+\index{rtvs@{rtvs}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{rtvs}{rtvs}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a562afd9cc103e0c82d91771348d0f95b} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+std\+::vector$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass_a01995142a82dbb6f1debcdbd13b355e3}{RTVHandleT}}$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::rtvs}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00034}{34}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a948b36a2cd5ca54c441133e77f9f9fb8}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!rtvsRaw@{rtvsRaw}}
+\index{rtvsRaw@{rtvsRaw}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{rtvsRaw}{rtvsRaw}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a948b36a2cd5ca54c441133e77f9f9fb8} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+std\+::vector$<$RTV$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::rtvs\+Raw}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00035}{35}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_ace4a80b961a248703b2c3e7cc3604d13}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!stencilRef@{stencilRef}}
+\index{stencilRef@{stencilRef}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{stencilRef}{stencilRef}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_ace4a80b961a248703b2c3e7cc3604d13} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::stencil\+Ref = 0}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00047}{47}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a1b67fed9a132286fef9f2a24c21b95ff}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!topology@{topology}}
+\index{topology@{topology}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{topology}{topology}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a1b67fed9a132286fef9f2a24c21b95ff} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0ed}{Primitive\+Topology}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::topology = \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0edaf5beeab7a1f452e5b0e9b03b44f0de92}{Primitive\+Topology\+::\+Triangle\+List}}}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00038}{38}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a5429763c713592670fe6edf8a6c69715}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!viewBit@{viewBit}}
+\index{viewBit@{viewBit}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{viewBit}{viewBit}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a5429763c713592670fe6edf8a6c69715} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+uint16\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::view\+Bit = 0}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00050}{50}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_render_pass_a022e9ff65b42c9b902124236c2de27a7}\index{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}!viewport@{viewport}}
+\index{viewport@{viewport}!SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$@{SFW::Graphics::RenderPass$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$}}
+\doxysubsubsection{\texorpdfstring{viewport}{viewport}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_render_pass_a022e9ff65b42c9b902124236c2de27a7} 
+template$<$typename RTV, typename DSV, typename SRV, typename Buffer, typename RTVHandle = Default\+View\+Handle$<$\+RTV$>$, typename DSVHandle = Default\+View\+Handle$<$\+DSV$>$$>$ \\
+std\+::optional$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport}{Viewport}}$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_pass}{SFW\+::\+Graphics\+::\+Render\+Pass}}$<$ RTV, DSV, SRV, Buffer, RTVHandle, DSVHandle $>$\+::viewport = std\+::nullopt}
+
+
+
+ \mbox{\hyperlink{_render_pass_8hpp_source}{Render\+Pass.\+hpp}} の \mbox{\hyperlink{_render_pass_8hpp_source_l00043}{43}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_render_pass_8hpp}{Render\+Pass.\+hpp}}\end{DoxyCompactItemize}

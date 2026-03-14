@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/Level.hpp ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_level_8hpp.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Level.hpp ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>レベルを定義するクラス  
+<a href="#details">[詳解]</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="_component_type_registry_8h_source.html">ECS/ComponentTypeRegistry.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_system_scheduler_8hpp_source.html">ECS/SystemScheduler.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="partition_8hpp_source.html">partition.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_registry_types_8h_source.html">RegistryTypes.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_chunk_crossing_move_8hpp_source.html">ChunkCrossingMove.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_transform_8hpp_source.html">../Math/Transform.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="logger_8h_source.html">../Debug/logger.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="extract__type_8hpp_source.html">../Util/extract_type.hpp</a>&quot;</code><br />
+</div>
+<p><a href="_level_8hpp_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:SFW_3A_3ALevelContext_3C_20Partition_20_3E" id="r_SFW_3A_3ALevelContext_3C_20Partition_20_3E"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_level_context.html">SFW::LevelContext&lt; Partition &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Systemに渡すレベルの情報や操作を提供する構造体  <a href="struct_s_f_w_1_1_level_context.html#details">[詳解]</a><br /></td></tr>
+<tr class="memitem:SFW_3A_3ALevelContext_3C_20Partition_20_3E_3A_3AIRequestCommand" id="r_SFW_3A_3ALevelContext_3C_20Partition_20_3E_3A_3AIRequestCommand"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_level_context_1_1_i_request_command.html">SFW::LevelContext&lt; Partition &gt;::IRequestCommand</a></td></tr>
+<tr class="memitem:SFW_3A_3ALelveIDManager" id="r_SFW_3A_3ALelveIDManager"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_lelve_i_d_manager.html">SFW::LelveIDManager</a></td></tr>
+<tr class="memitem:SFW_3A_3ALevel_3C_20Partition_20_3E" id="r_SFW_3A_3ALevel_3C_20Partition_20_3E"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_level.html">SFW::Level&lt; Partition &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">レベル(シーン単位)を定義するクラス  <a href="class_s_f_w_1_1_level.html#details">[詳解]</a><br /></td></tr>
+<tr class="memitem:SFW_3A_3ALevel_3C_20Partition_20_3E_3A_3ASession" id="r_SFW_3A_3ALevel_3C_20Partition_20_3E_3A_3ASession"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_level_1_1_session.html">SFW::Level&lt; Partition &gt;::Session</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">レベルへの要求を管理するセッション構造体  <a href="struct_s_f_w_1_1_level_1_1_session.html#details">[詳解]</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+名前空間</h2></td></tr>
+<tr class="memitem:SFW" id="r_SFW"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html">SFW</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
+列挙型</h2></td></tr>
+<tr class="memitem:a7a3877c23db2b6428dfd8852c4644b53" id="r_a7a3877c23db2b6428dfd8852c4644b53"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">SFW::ELevelState</a> : uint32_t { <br />
+&#160;&#160;<a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53a6adf97f83acf6453d4a6a4b1070f3754">SFW::None</a> = 0
+, <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53aa02c83a7dbd96295beaefb72c2bee2de">SFW::Main</a> = 1u &lt;&lt; 0
+, <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53ae80155eceb940c89e2de63ad05868db2">SFW::Sub</a> = 1u &lt;&lt; 1
+, <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53a4d3d769b812b6faa6b76e1a8abaece2d">SFW::Active</a> = 1u &lt;&lt; 2
+, <br />
+&#160;&#160;<a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53a16bfbf9c462762cf1cba4134ec53c504">SFW::Loading</a> = 1u &lt;&lt; 3
+, <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53a7381d487d18845b379422325c0a768d6">SFW::Loaded</a> = 1u &lt;&lt; 4
+<br />
+ }</td></tr>
+<tr class="memdesc:a7a3877c23db2b6428dfd8852c4644b53"><td class="mdescLeft">&#160;</td><td class="mdescRight">レベルの状態を定義する列挙型  <a href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">[詳解]</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:a7ed2d08f1306b6c71786c93118c0fd74" id="r_a7ed2d08f1306b6c71786c93118c0fd74"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a7ed2d08f1306b6c71786c93118c0fd74">SFW::operator|</a> (<a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> a, <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> b)</td></tr>
+<tr class="memitem:ac2c3f02b6824740b27ca935150d68d8b" id="r_ac2c3f02b6824740b27ca935150d68d8b"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#ac2c3f02b6824740b27ca935150d68d8b">SFW::operator&amp;</a> (<a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> a, <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> b)</td></tr>
+<tr class="memitem:a9ac195ecef1ece06f0126c3191044508" id="r_a9ac195ecef1ece06f0126c3191044508"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a9ac195ecef1ece06f0126c3191044508">SFW::operator~</a> (<a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> a)</td></tr>
+<tr class="memitem:a7ff8c1b3e1ceb877fcb45cf48666fd65" id="r_a7ff8c1b3e1ceb877fcb45cf48666fd65"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a7ff8c1b3e1ceb877fcb45cf48666fd65">SFW::operator|=</a> (<a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> &amp;a, <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> b)</td></tr>
+<tr class="memitem:a5848d2a287d080ae019d98b92fb364a1" id="r_a5848d2a287d080ae019d98b92fb364a1"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a5848d2a287d080ae019d98b92fb364a1">SFW::operator&amp;=</a> (<a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> &amp;a, <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> b)</td></tr>
+<tr class="memitem:a82fdc34c030671aaa1a9bfd5a5051bcf" id="r_a82fdc34c030671aaa1a9bfd5a5051bcf"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a82fdc34c030671aaa1a9bfd5a5051bcf">SFW::HasAny</a> (<a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> v)</td></tr>
+<tr class="memitem:a7b3b32a24c161952206c3798fdd4706f" id="r_a7b3b32a24c161952206c3798fdd4706f"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a7b3b32a24c161952206c3798fdd4706f">SFW::HasAny</a> (<a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> v, <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> bits)</td></tr>
+<tr class="memitem:a978f030946d09d7e75529945f9d3f4f1" id="r_a978f030946d09d7e75529945f9d3f4f1"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a978f030946d09d7e75529945f9d3f4f1">SFW::HasAll</a> (<a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> v, <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> bits)</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>レベルを定義するクラス </p>
+<dl class="section author"><dt>著者</dt><dd>seigo_t03b63m </dd></dl>
+<dl class="section date"><dt>日付</dt><dd>June 2025 </dd></dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> に定義があります。</p>
+</div></div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_5ada393002ee7234dde4caf0d7998537.html">Core</a></li><li class="navelem"><a href="_level_8hpp.html">Level.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

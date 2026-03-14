@@ -1,0 +1,127 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Input/\+Input\+Device.hpp ファイル}
+\hypertarget{_input_device_8hpp}{}\label{_input_device_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Input/InputDevice.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Input/InputDevice.hpp}}
+
+
+入力デバイスの抽象クラスを定義するヘッダーファイル  
+
+
+{\ttfamily \#include "{}../\+Core/\+ECS/\+Service\+Context.\+hpp"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device}{SFW\+::\+Input\+::\+Input\+Device$<$ Derived $>$}}
+\begin{DoxyCompactList}\small\item\em 入力デバイスの抽象クラス。非環境依存のために抽象化。\+Service\+Locatorで管理される。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_input}{SFW\+::\+Input}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{SFW\+::\+Input\+::\+Key}} \+: uint16\+\_\+t \{ \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eadd32209cf932123ea5a103790cf75a45}{SFW\+::\+Input\+::\+LBUTTON}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea742cd9c8f9db1ab511c7c49e7a67e9b2}{SFW\+::\+Input\+::\+RBUTTON}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea2027c027133e22c8929e2874dc44dd36}{SFW\+::\+Input\+::\+CANCEL}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea64ac1904823470a2f38559f29eca5bb3}{SFW\+::\+Input\+::\+MBUTTON}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea88183b946cc5f0e8c96b2e66e1c74a7e}{SFW\+::\+Input\+::\+Unknown}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea7fc56270e7a70fa81a5935b72eacbe29}{SFW\+::\+Input\+::A}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea9d5ed678fe57bcca610140957afab571}{SFW\+::\+Input\+::B}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea0d61f8370cad1d412f80b84d143e1257}{SFW\+::\+Input\+::C}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eaf623e75af30e62bbd73d6df5b50bb7b5}{SFW\+::\+Input\+::D}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea3a3ea00cfc35332cedf6e5e9a32e94da}{SFW\+::\+Input\+::E}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea800618943025315f869e4e1f09471012}{SFW\+::\+Input\+::F}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eadfcf28d0734569a6a693bc8194de62bf}{SFW\+::\+Input\+::G}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eac1d9f50f86825a1a2302ec2449c17196}{SFW\+::\+Input\+::H}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eadd7536794b63bf90eccfd37f9b147d7f}{SFW\+::\+Input\+::I}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eaff44570aca8241914870afbc310cdb85}{SFW\+::\+Input\+::J}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eaa5f3c6a11b03839d46af9fb43c97c188}{SFW\+::\+Input\+::K}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ead20caec3b48a1eef164cb4ca81ba2587}{SFW\+::\+Input\+::L}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea69691c7bdcc3ce6d5d8a1361f22d04ac}{SFW\+::\+Input\+::M}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea8d9c307cb7f3c4a32822a51922d1ceaa}{SFW\+::\+Input\+::N}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eaf186217753c37b9b9f958d906208506e}{SFW\+::\+Input\+::O}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea44c29edb103a2872f519ad0c9a0fdaaa}{SFW\+::\+Input\+::P}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eaf09564c9ca56850d4cd6b3319e541aee}{SFW\+::\+Input\+::Q}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eae1e1d3d40573127e9ee0480caf1283d6}{SFW\+::\+Input\+::R}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea5dbc98dcc983a70728bd082d1a47546e}{SFW\+::\+Input\+::S}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3}{SFW\+::\+Input\+::T}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea4c614360da93c0a041b22e537de151eb}{SFW\+::\+Input\+::U}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea5206560a306a2e085a437fd258eb57ce}{SFW\+::\+Input\+::V}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea61e9c06ea9a85a5088a499df6458d276}{SFW\+::\+Input\+::W}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea02129bb861061d1a052c592e2dc6b383}{SFW\+::\+Input\+::X}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea57cec4137b614c87cb4e24a3d003a3e0}{SFW\+::\+Input\+::Y}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea21c2e59531c8710156d34a3c30ac81d5}{SFW\+::\+Input\+::Z}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea845787798a45b48e825e9b99a338537a}{SFW\+::\+Input\+::\+Num0}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eabacb69a042a9fdc268a672919052d1f2}{SFW\+::\+Input\+::\+Num1}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea72bd76d6e2b68a539c8d1a77b564ed72}{SFW\+::\+Input\+::\+Num2}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eaa3a965b443a13522aa59fbdea31d00ce}{SFW\+::\+Input\+::\+Num3}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eae0af89b5f83c670e4cc584c73c4732ca}{SFW\+::\+Input\+::\+Num4}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea7e89a79bbb017bfcaff80ff820a15d8a}{SFW\+::\+Input\+::\+Num5}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea0581cd1de881a0f697f3b46741fb326b}{SFW\+::\+Input\+::\+Num6}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea4911ceac5c68b5a3f1499d68b27b0938}{SFW\+::\+Input\+::\+Num7}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea894e7d9b7dcced78e8007ba2d38b8dd2}{SFW\+::\+Input\+::\+Num8}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ead7b1dbe22119bc7acf6e4a1afcc06e46}{SFW\+::\+Input\+::\+Num9}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea013ec032d3460d4be4431c6ab1f8f224}{SFW\+::\+Input\+::\+Escape}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eaf1851d5600eae616ee802a31ac74701b}{SFW\+::\+Input\+::\+Enter}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea5c6ba25104401c9ee0650230fc6ba413}{SFW\+::\+Input\+::\+Tab}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eacd7d13ceea728b08555f7c818cfb13ef}{SFW\+::\+Input\+::\+Backspace}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ead511f8439ecde36647437fbba67a4394}{SFW\+::\+Input\+::\+Space}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea945d5e233cf7d6240f6b783b36a374ff}{SFW\+::\+Input\+::\+Left}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea92b09c7c48c520c3c55e497875da437c}{SFW\+::\+Input\+::\+Right}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea258f49887ef8d14ac268c92b02503aaa}{SFW\+::\+Input\+::\+Up}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea08a38277b0309070706f6652eeae9a53}{SFW\+::\+Input\+::\+Down}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eae1dffc8709f31a4987c8a88334107e89}{SFW\+::\+Input\+::\+F1}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eafe5c3684dce76cdd9f7f42430868aa74}{SFW\+::\+Input\+::\+F2}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea4b6bf4b531770872d4328ce69bef5627}{SFW\+::\+Input\+::\+F3}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eae7e0e72401a9f2718ed0f39f2861d702}{SFW\+::\+Input\+::\+F4}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea37f438df6a6d5ba4c17ef8ca58562f00}{SFW\+::\+Input\+::\+F5}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea1faf42f2823f184eb2c9f0dffe5d73f2}{SFW\+::\+Input\+::\+F6}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea47489eb597b7db34caa24b1fc78fc839}{SFW\+::\+Input\+::\+F7}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea4787509ad9f9d747a81a30e9dde3d4a7}{SFW\+::\+Input\+::\+F8}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea892a245e287c163080b23db737d3c4c9}{SFW\+::\+Input\+::\+F9}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eab213ce22ca6ad4eda8db82966b9b6e5a}{SFW\+::\+Input\+::\+F10}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea643b0662422d1d0dffa3fca2e2bf28a8}{SFW\+::\+Input\+::\+F11}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eae902674982fc99aa343cdd94da7476c3}{SFW\+::\+Input\+::\+F12}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea667d08af6165c1cb6e72970036a9f7d7}{SFW\+::\+Input\+::\+LShift}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea8e707c0a523c7ec2179a6b6821d6eba8}{SFW\+::\+Input\+::\+RShift}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea692ed49ff2182a144044181274242db5}{SFW\+::\+Input\+::\+LCtrl}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea60e5d1d82b2d0c1287331bfca0ab0061}{SFW\+::\+Input\+::\+RCtrl}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eaab527e774a30bf52a69de316727ce4cd}{SFW\+::\+Input\+::\+LAlt}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1ea067967ae88a4f9ad8cf58e1bb88c32d8}{SFW\+::\+Input\+::\+RAlt}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eae93f994f01c537c4e2f7d8528c3eb5e9}{SFW\+::\+Input\+::\+Count}}
+ \}
+\begin{DoxyCompactList}\small\item\em Key Enum for Input\+Device \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+入力デバイスの抽象クラスを定義するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_input_device_8hpp_source}{Input\+Device.\+hpp}} に定義があります。
+

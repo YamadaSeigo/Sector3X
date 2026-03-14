@@ -1,0 +1,139 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\+Service\+Context.hpp ファイル}
+\hypertarget{_service_context_8hpp}{}\label{_service_context_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ServiceContext.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ServiceContext.hpp}}
+{\ttfamily \#include $<$typeindex$>$}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{SFW\+::\+ECS\+::\+Service\+Context$<$ Services $>$}}
+\begin{DoxyCompactList}\small\item\em Systemに注入されるサービスのコンテキストを定義するテンプレート \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}}
+\begin{DoxyCompactList}\small\item\em 更新サービスのインターフェース(Systemよりも前に更新) \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_commit_service}{SFW\+::\+ECS\+::\+ICommit\+Service}}
+\begin{DoxyCompactList}\small\item\em コミットサービスのインターフェース(Systemを更新した後に呼び出される) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{SFW\+::\+ECS}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_service_tag}{SFW\+::\+ECS\+::\+Has\+Service\+Tag}}
+\begin{DoxyCompactList}\small\item\em サービスの型にis\+Staticメンバーが存在するかをチェックするコンセプト \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{マクロ定義}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_service_context_8hpp_adbfb2947c9a06b367226fe228627154c}{STATIC\+\_\+\+SERVICE\+\_\+\+TAG}}~static constexpr bool is\+Static = true;
+\begin{DoxyCompactList}\small\item\em サービスの型を定義するマクロ \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_service_context_8hpp_a6c07cc6646a45ab51cbfe7b168e82a26}{DYNAMIC\+\_\+\+SERVICE\+\_\+\+TAG}}~static constexpr bool is\+Static = false;
+\begin{DoxyCompactList}\small\item\em 動的サービスの型を定義するマクロ \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_service_context_8hpp_a2bddacb472a636ca0aa134fe7fa73a79}{DEFINE\+\_\+\+UPDATESERVICE\+\_\+\+PHASE}}(Phase\+Enum)
+\item 
+\#define \mbox{\hyperlink{_service_context_8hpp_aba8d760b00a97c77ac318f63335ff1e2}{DEFINE\+\_\+\+UPDATESERVICE\+\_\+\+GROUP}}(Group\+Enum)
+\item 
+\#define \mbox{\hyperlink{_service_context_8hpp_a016a3200051dfac8a45dfcdf917b46fd}{DEFINE\+\_\+\+UPDATESERVICE\+\_\+\+ORDER}}(Order\+Value)
+\item 
+\#define \mbox{\hyperlink{_service_context_8hpp_a70dae4563c328fd2eee16d7a32a67cbc}{DEFINE\+\_\+\+UPDATESERVICE}}(Phase\+Enum,  Group\+Enum,  Order\+Value)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{変数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename... Services$>$ }\\constexpr bool \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a8aac419d65bb75ed8784b0ad269564ae}{SFW\+::\+ECS\+::\+All\+Static\+Services}} = (Services\+::is\+Static \&\& ...)
+\begin{DoxyCompactList}\small\item\em サービスの静的な型を定義するテンプレート \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{_service_context_8hpp_doc-define-members}
+\doxysubsection{マクロ定義詳解}
+\Hypertarget{_service_context_8hpp_a70dae4563c328fd2eee16d7a32a67cbc}\index{ServiceContext.hpp@{ServiceContext.hpp}!DEFINE\_UPDATESERVICE@{DEFINE\_UPDATESERVICE}}
+\index{DEFINE\_UPDATESERVICE@{DEFINE\_UPDATESERVICE}!ServiceContext.hpp@{ServiceContext.hpp}}
+\doxysubsubsection{\texorpdfstring{DEFINE\_UPDATESERVICE}{DEFINE\_UPDATESERVICE}}
+{\footnotesize\ttfamily \label{_service_context_8hpp_a70dae4563c328fd2eee16d7a32a67cbc} 
+\#define DEFINE\+\_\+\+UPDATESERVICE(\begin{DoxyParamCaption}\item[{}]{Phase\+Enum}{, }\item[{}]{Group\+Enum}{, }\item[{}]{Order\+Value}{}\end{DoxyParamCaption})}
+
+{\bfseries 値\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_service_context_8hpp_a2bddacb472a636ca0aa134fe7fa73a79}{DEFINE\_UPDATESERVICE\_PHASE}}(PhaseEnum)\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ DEFINE\_UPDATESERVICE\_GROUP(GroupEnum)\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ DEFINE\_UPDATESERVICE\_ORDER(OrderValue)}
+
+\end{DoxyCode}
+
+
+ \mbox{\hyperlink{_service_context_8hpp_source}{Service\+Context.\+hpp}} の \mbox{\hyperlink{_service_context_8hpp_source_l00120}{120}} 行目に定義があります。
+
+\Hypertarget{_service_context_8hpp_aba8d760b00a97c77ac318f63335ff1e2}\index{ServiceContext.hpp@{ServiceContext.hpp}!DEFINE\_UPDATESERVICE\_GROUP@{DEFINE\_UPDATESERVICE\_GROUP}}
+\index{DEFINE\_UPDATESERVICE\_GROUP@{DEFINE\_UPDATESERVICE\_GROUP}!ServiceContext.hpp@{ServiceContext.hpp}}
+\doxysubsubsection{\texorpdfstring{DEFINE\_UPDATESERVICE\_GROUP}{DEFINE\_UPDATESERVICE\_GROUP}}
+{\footnotesize\ttfamily \label{_service_context_8hpp_aba8d760b00a97c77ac318f63335ff1e2} 
+\#define DEFINE\+\_\+\+UPDATESERVICE\+\_\+\+GROUP(\begin{DoxyParamCaption}\item[{}]{Group\+Enum}{}\end{DoxyParamCaption})}
+
+{\bfseries 値\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ uint16\_t\ updateGroup\ =\ GroupEnum;}
+
+\end{DoxyCode}
+
+
+ \mbox{\hyperlink{_service_context_8hpp_source}{Service\+Context.\+hpp}} の \mbox{\hyperlink{_service_context_8hpp_source_l00113}{113}} 行目に定義があります。
+
+\Hypertarget{_service_context_8hpp_a016a3200051dfac8a45dfcdf917b46fd}\index{ServiceContext.hpp@{ServiceContext.hpp}!DEFINE\_UPDATESERVICE\_ORDER@{DEFINE\_UPDATESERVICE\_ORDER}}
+\index{DEFINE\_UPDATESERVICE\_ORDER@{DEFINE\_UPDATESERVICE\_ORDER}!ServiceContext.hpp@{ServiceContext.hpp}}
+\doxysubsubsection{\texorpdfstring{DEFINE\_UPDATESERVICE\_ORDER}{DEFINE\_UPDATESERVICE\_ORDER}}
+{\footnotesize\ttfamily \label{_service_context_8hpp_a016a3200051dfac8a45dfcdf917b46fd} 
+\#define DEFINE\+\_\+\+UPDATESERVICE\+\_\+\+ORDER(\begin{DoxyParamCaption}\item[{}]{Order\+Value}{}\end{DoxyParamCaption})}
+
+{\bfseries 値\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ uint16\_t\ updateOrder\ =\ OrderValue;}
+
+\end{DoxyCode}
+
+
+ \mbox{\hyperlink{_service_context_8hpp_source}{Service\+Context.\+hpp}} の \mbox{\hyperlink{_service_context_8hpp_source_l00116}{116}} 行目に定義があります。
+
+\Hypertarget{_service_context_8hpp_a2bddacb472a636ca0aa134fe7fa73a79}\index{ServiceContext.hpp@{ServiceContext.hpp}!DEFINE\_UPDATESERVICE\_PHASE@{DEFINE\_UPDATESERVICE\_PHASE}}
+\index{DEFINE\_UPDATESERVICE\_PHASE@{DEFINE\_UPDATESERVICE\_PHASE}!ServiceContext.hpp@{ServiceContext.hpp}}
+\doxysubsubsection{\texorpdfstring{DEFINE\_UPDATESERVICE\_PHASE}{DEFINE\_UPDATESERVICE\_PHASE}}
+{\footnotesize\ttfamily \label{_service_context_8hpp_a2bddacb472a636ca0aa134fe7fa73a79} 
+\#define DEFINE\+\_\+\+UPDATESERVICE\+\_\+\+PHASE(\begin{DoxyParamCaption}\item[{}]{Phase\+Enum}{}\end{DoxyParamCaption})}
+
+{\bfseries 値\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ uint16\_t\ updatePhase\ =\ PhaseEnum;}
+
+\end{DoxyCode}
+
+
+ \mbox{\hyperlink{_service_context_8hpp_source}{Service\+Context.\+hpp}} の \mbox{\hyperlink{_service_context_8hpp_source_l00110}{110}} 行目に定義があります。
+
+\Hypertarget{_service_context_8hpp_a6c07cc6646a45ab51cbfe7b168e82a26}\index{ServiceContext.hpp@{ServiceContext.hpp}!DYNAMIC\_SERVICE\_TAG@{DYNAMIC\_SERVICE\_TAG}}
+\index{DYNAMIC\_SERVICE\_TAG@{DYNAMIC\_SERVICE\_TAG}!ServiceContext.hpp@{ServiceContext.hpp}}
+\doxysubsubsection{\texorpdfstring{DYNAMIC\_SERVICE\_TAG}{DYNAMIC\_SERVICE\_TAG}}
+{\footnotesize\ttfamily \label{_service_context_8hpp_a6c07cc6646a45ab51cbfe7b168e82a26} 
+\#define DYNAMIC\+\_\+\+SERVICE\+\_\+\+TAG~static constexpr bool is\+Static = false;}
+
+
+
+動的サービスの型を定義するマクロ 
+
+動的サービスの型に対して、静的なis\+Staticメンバーを定義します。 
+
+ \mbox{\hyperlink{_service_context_8hpp_source}{Service\+Context.\+hpp}} の \mbox{\hyperlink{_service_context_8hpp_source_l00036}{36}} 行目に定義があります。
+
+\Hypertarget{_service_context_8hpp_adbfb2947c9a06b367226fe228627154c}\index{ServiceContext.hpp@{ServiceContext.hpp}!STATIC\_SERVICE\_TAG@{STATIC\_SERVICE\_TAG}}
+\index{STATIC\_SERVICE\_TAG@{STATIC\_SERVICE\_TAG}!ServiceContext.hpp@{ServiceContext.hpp}}
+\doxysubsubsection{\texorpdfstring{STATIC\_SERVICE\_TAG}{STATIC\_SERVICE\_TAG}}
+{\footnotesize\ttfamily \label{_service_context_8hpp_adbfb2947c9a06b367226fe228627154c} 
+\#define STATIC\+\_\+\+SERVICE\+\_\+\+TAG~static constexpr bool is\+Static = true;}
+
+
+
+サービスの型を定義するマクロ 
+
+サービスの型に対して、静的なis\+Staticメンバーを定義します。 
+
+ \mbox{\hyperlink{_service_context_8hpp_source}{Service\+Context.\+hpp}} の \mbox{\hyperlink{_service_context_8hpp_source_l00031}{31}} 行目に定義があります。
+

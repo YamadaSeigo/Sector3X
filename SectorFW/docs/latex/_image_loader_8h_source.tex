@@ -1,0 +1,52 @@
+\doxysection{Image\+Loader.\+h}
+\hypertarget{_image_loader_8h_source}{}\label{_image_loader_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/ImageLoader.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/ImageLoader.h}}
+\mbox{\hyperlink{_image_loader_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00013}00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW::Graphics}}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00014}00014\ \{}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00015}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_stb_image_deleter}{00015}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_stb_image_deleter}{StbImageDeleter}}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00016}00016\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00017}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_stb_image_deleter_a331efdcbf246208910ac19afe19af719}{00017}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_stb_image_deleter_a331efdcbf246208910ac19afe19af719}{operator()}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ ptr)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00018}00018\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00020}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data}{00020}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data}{ImageData}}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00021}00021\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00022}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data_aa4ecf35a8209f2efaea0b6e6a2c77ce2}{00022}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data_aa4ecf35a8209f2efaea0b6e6a2c77ce2}{width}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00023}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data_a9b1cd41354f0e00ffd0354d1a5a397fb}{00023}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data_a9b1cd41354f0e00ffd0354d1a5a397fb}{height}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00024}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data_aa6b5d24af855e5292045e8c2d45b7136}{00024}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data_aa6b5d24af855e5292045e8c2d45b7136}{channels}}\ =\ 0;\ \ \textcolor{comment}{//\ 元のチャネル数（3,4\ など）}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00025}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data_a01f743898328a9ea85393cfe642d05dd}{00025}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data_a01f743898328a9ea85393cfe642d05dd}{desiredChannels}}\ =\ 0;\ \textcolor{comment}{//\ 変換後のチャネル数（例:\ 4=RGBA）}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00027}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data_a5c711ebbebf1b518fd6f5a916824c83c}{00027}}\ \ \ \ \ \ \ \ \ std::unique\_ptr<unsigned\ char,\ StbImageDeleter>\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data_a5c711ebbebf1b518fd6f5a916824c83c}{pixels}};}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00029}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data_a7149454c84af0a686e041b7574a17482}{00029}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data_a7149454c84af0a686e041b7574a17482}{IsValid}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data_a5c711ebbebf1b518fd6f5a916824c83c}{pixels}}\ !=\ \textcolor{keyword}{nullptr};\ \}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00030}00030\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00032}00032\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00033}00033\ \textcolor{comment}{\ \ \ \ *\ @brief\ 画像ファイルを読み込み、RGBA8形式で返します。}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00034}00034\ \textcolor{comment}{\ \ \ \ *\ @param\ path\ ファイルのパス}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00035}00035\ \textcolor{comment}{\ \ \ \ *\ @param\ flipVertically\ 読み込み時に上下反転するかどうか}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00036}00036\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00037}\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a1d7ef4785c88353a9ecc125d5caeca6a}{00037}}\ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data}{ImageData}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a1d7ef4785c88353a9ecc125d5caeca6a}{LoadImageFromFileRGBA8}}(}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ path,}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ flipVertically\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00041}00041\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00042}00042\ \textcolor{comment}{\ \ \ \ *\ @brief\ 画像ファイルを読み込みます。}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00043}00043\ \textcolor{comment}{\ \ \ \ *\ @param\ path\ ファイルのパス}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00044}00044\ \textcolor{comment}{\ \ \ \ *\ @param\ desiredChannels\ 変換後のチャネル数。0\ の場合は元のチャネル数のまま。}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00045}00045\ \textcolor{comment}{\ \ \ \ *\ @param\ flipVertically\ 読み込み時に上下反転するかどうか}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00046}00046\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00047}\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_acd86d38bd031b9573c2f51a6626d17be}{00047}}\ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data}{ImageData}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_acd86d38bd031b9573c2f51a6626d17be}{LoadImageFromFile}}(}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ path,}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ desiredChannels\ =\ 0,\ \ \ \textcolor{comment}{//\ 0\ なら元のチャネル数のまま}}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ flipVertically\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_image_loader_8h_source_l00051}00051\ \}}
+
+\end{DoxyCode}

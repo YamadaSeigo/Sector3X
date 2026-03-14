@@ -1,0 +1,85 @@
+\doxysection{SFW\+::ECS\+::Component\+Access\texorpdfstring{$<$}{<} Access\+Types \texorpdfstring{$>$}{>} 構造体テンプレート}
+\hypertarget{struct_s_f_w_1_1_e_c_s_1_1_component_access}{}\label{struct_s_f_w_1_1_e_c_s_1_1_component_access}\index{SFW::ECS::ComponentAccess$<$ AccessTypes $>$@{SFW::ECS::ComponentAccess$<$ AccessTypes $>$}}
+
+
+コンポーネントアクセスの型を定義するテンプレート  
+
+
+
+
+{\ttfamily \#include $<$Accessor.\+hpp$>$}
+
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access_a8f66350e46c606c76276a62dbf658d4c}{Tuple}} = std\+::tuple$<$Access\+Types...$>$
+\begin{DoxyCompactList}\small\item\em アクセス情報を取得するための型 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_access_info}{Access\+Info}} \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access_a7411465b5b76c5677c25b57ae1ea444b}{Get\+Access\+Info}} ()
+\begin{DoxyCompactList}\small\item\em アクセス情報を取得するための関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename... Access\+Types$>$\newline
+struct SFW\+::\+ECS\+::\+Component\+Access$<$ Access\+Types $>$}
+コンポーネントアクセスの型を定義するテンプレート 
+
+
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em Access\+Types} & アクセスするコンポーネントの型リスト(Access\+Info.\+h参照) \\
+\hline
+\end{DoxyTemplParams}
+
+
+ \mbox{\hyperlink{_accessor_8hpp_source}{Accessor.\+hpp}} の \mbox{\hyperlink{_accessor_8hpp_source_l00022}{22}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_component_access_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_component_access_a8f66350e46c606c76276a62dbf658d4c}\index{SFW::ECS::ComponentAccess$<$ AccessTypes $>$@{SFW::ECS::ComponentAccess$<$ AccessTypes $>$}!Tuple@{Tuple}}
+\index{Tuple@{Tuple}!SFW::ECS::ComponentAccess$<$ AccessTypes $>$@{SFW::ECS::ComponentAccess$<$ AccessTypes $>$}}
+\doxysubsubsection{\texorpdfstring{Tuple}{Tuple}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_component_access_a8f66350e46c606c76276a62dbf658d4c} 
+template$<$typename... Access\+Types$>$ \\
+using \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{SFW\+::\+ECS\+::\+Component\+Access}}$<$ Access\+Types $>$\+::\+Tuple = std\+::tuple$<$Access\+Types...$>$}
+
+
+
+アクセス情報を取得するための型 
+
+
+
+ \mbox{\hyperlink{_accessor_8hpp_source}{Accessor.\+hpp}} の \mbox{\hyperlink{_accessor_8hpp_source_l00026}{26}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_component_access_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_component_access_a7411465b5b76c5677c25b57ae1ea444b}\index{SFW::ECS::ComponentAccess$<$ AccessTypes $>$@{SFW::ECS::ComponentAccess$<$ AccessTypes $>$}!GetAccessInfo@{GetAccessInfo}}
+\index{GetAccessInfo@{GetAccessInfo}!SFW::ECS::ComponentAccess$<$ AccessTypes $>$@{SFW::ECS::ComponentAccess$<$ AccessTypes $>$}}
+\doxysubsubsection{\texorpdfstring{GetAccessInfo()}{GetAccessInfo()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_component_access_a7411465b5b76c5677c25b57ae1ea444b} 
+template$<$typename... Access\+Types$>$ \\
+constexpr \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_access_info}{Access\+Info}} \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{SFW\+::\+ECS\+::\+Component\+Access}}$<$ Access\+Types $>$\+::\+Get\+Access\+Info (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+アクセス情報を取得するための関数 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_e_c_s_1_1_access_info}{Access\+Info} アクセス情報 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_accessor_8hpp_source}{Accessor.\+hpp}} の \mbox{\hyperlink{_accessor_8hpp_source_l00031}{31}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_accessor_8hpp}{Accessor.\+hpp}}\end{DoxyCompactItemize}

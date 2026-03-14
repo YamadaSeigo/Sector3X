@@ -1,0 +1,269 @@
+\doxysection{SFW\+::Debug\+::Debug\+Control 構造体}
+\hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control}{}\label{struct_s_f_w_1_1_debug_1_1_debug_control}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+
+
+{\ttfamily \#include $<$UIBus.\+h$>$}
+
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6e}{Debug\+Control\+Kind}} \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_ad4f8f0f1880224e53a4415f3b3453e6a}{kind}} \{\}
+\item 
+std\+::string \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a6c48205964e3b0ea4cb1bd7390483d3f}{category}} = "{}Default"{}
+\item 
+std\+::string \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a232416099550b6ab28c287bb054e11f6}{label}}
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_ad0984457538156fc9bf90a7e0ff2f420}{f\+\_\+value}} = 0.f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a453eb784044189c2da22b0064972997c}{f\+\_\+min}} = 0.f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a7dcd876ff5a6b92754be18c16e75286c}{f\+\_\+max}} = 1.f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_ab56743aa845bdb6056ff533e8f5cd02d}{f\+\_\+speed}} = 0.\+1f
+\item 
+int \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a84a4915d12d22a29e557d54f58205352}{i\+\_\+value}} = 0
+\item 
+int \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_aaca3648cebb0cdb20591356ed44c9f1a}{i\+\_\+min}} = 0
+\item 
+int \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_abe1063997e360e468a2a8bad8002e11b}{i\+\_\+max}} = 100
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_ae05b2525c10014f2c3acfbc3d625e4ad}{b\+\_\+value}} = false
+\item 
+float \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a6472465b46eb7b3b08b7f1050c0d11c8}{f\+\_\+target}} = nullptr
+\item 
+int \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a269014da6f7353590316177a91327137}{i\+\_\+target}} = nullptr
+\item 
+bool \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_ad587b63e5a17c7783fa37ccffa1e8ecc}{b\+\_\+target}} = nullptr
+\item 
+char \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a9208492b1dd6861f256f284a8537a2d0}{text\+Buf}} \mbox{[}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a800ac171cc7d6da155245ceb4c2fcfb5}{Text\+Buf\+Size}}\mbox{]} = \{\}
+\item 
+std\+::function$<$ void(float)$>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a38ebd73c2666beb5d620116a6ddcd230}{on\+ChangeF}}
+\item 
+std\+::function$<$ void(int)$>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a1fbf37605a2d4ca433430f9c414e1e55}{on\+ChangeI}}
+\item 
+std\+::function$<$ void(bool)$>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a2e4f0bdeb0b0d1a18570374885dafbee}{on\+ChangeB}}
+\item 
+std\+::function$<$ void(std\+::string)$>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a5d0074558b8ca4ad3c47280c8329ed1a}{on\+Change\+Text}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr size\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a800ac171cc7d6da155245ceb4c2fcfb5}{Text\+Buf\+Size}} = 256
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00201}{201}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_ad587b63e5a17c7783fa37ccffa1e8ecc}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!b\_target@{b\_target}}
+\index{b\_target@{b\_target}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{b\_target}{b\_target}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_ad587b63e5a17c7783fa37ccffa1e8ecc} 
+bool\texorpdfstring{$\ast$}{*} SFW\+::\+Debug\+::\+Debug\+Control\+::b\+\_\+target = nullptr}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00213}{213}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_ae05b2525c10014f2c3acfbc3d625e4ad}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!b\_value@{b\_value}}
+\index{b\_value@{b\_value}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{b\_value}{b\_value}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_ae05b2525c10014f2c3acfbc3d625e4ad} 
+bool SFW\+::\+Debug\+::\+Debug\+Control\+::b\+\_\+value = false}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00209}{209}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_a6c48205964e3b0ea4cb1bd7390483d3f}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!category@{category}}
+\index{category@{category}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{category}{category}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_a6c48205964e3b0ea4cb1bd7390483d3f} 
+std\+::string SFW\+::\+Debug\+::\+Debug\+Control\+::category = "{}Default"{}}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00203}{203}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_a7dcd876ff5a6b92754be18c16e75286c}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!f\_max@{f\_max}}
+\index{f\_max@{f\_max}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{f\_max}{f\_max}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_a7dcd876ff5a6b92754be18c16e75286c} 
+float SFW\+::\+Debug\+::\+Debug\+Control\+::f\+\_\+max = 1.f}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00207}{207}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_a453eb784044189c2da22b0064972997c}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!f\_min@{f\_min}}
+\index{f\_min@{f\_min}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{f\_min}{f\_min}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_a453eb784044189c2da22b0064972997c} 
+float SFW\+::\+Debug\+::\+Debug\+Control\+::f\+\_\+min = 0.f}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00207}{207}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_ab56743aa845bdb6056ff533e8f5cd02d}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!f\_speed@{f\_speed}}
+\index{f\_speed@{f\_speed}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{f\_speed}{f\_speed}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_ab56743aa845bdb6056ff533e8f5cd02d} 
+float SFW\+::\+Debug\+::\+Debug\+Control\+::f\+\_\+speed = 0.\+1f}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00207}{207}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_a6472465b46eb7b3b08b7f1050c0d11c8}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!f\_target@{f\_target}}
+\index{f\_target@{f\_target}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{f\_target}{f\_target}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_a6472465b46eb7b3b08b7f1050c0d11c8} 
+float\texorpdfstring{$\ast$}{*} SFW\+::\+Debug\+::\+Debug\+Control\+::f\+\_\+target = nullptr}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00211}{211}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_ad0984457538156fc9bf90a7e0ff2f420}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!f\_value@{f\_value}}
+\index{f\_value@{f\_value}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{f\_value}{f\_value}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_ad0984457538156fc9bf90a7e0ff2f420} 
+float SFW\+::\+Debug\+::\+Debug\+Control\+::f\+\_\+value = 0.f}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00207}{207}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_abe1063997e360e468a2a8bad8002e11b}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!i\_max@{i\_max}}
+\index{i\_max@{i\_max}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{i\_max}{i\_max}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_abe1063997e360e468a2a8bad8002e11b} 
+int SFW\+::\+Debug\+::\+Debug\+Control\+::i\+\_\+max = 100}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00208}{208}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_aaca3648cebb0cdb20591356ed44c9f1a}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!i\_min@{i\_min}}
+\index{i\_min@{i\_min}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{i\_min}{i\_min}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_aaca3648cebb0cdb20591356ed44c9f1a} 
+int SFW\+::\+Debug\+::\+Debug\+Control\+::i\+\_\+min = 0}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00208}{208}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_a269014da6f7353590316177a91327137}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!i\_target@{i\_target}}
+\index{i\_target@{i\_target}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{i\_target}{i\_target}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_a269014da6f7353590316177a91327137} 
+int\texorpdfstring{$\ast$}{*} SFW\+::\+Debug\+::\+Debug\+Control\+::i\+\_\+target = nullptr}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00212}{212}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_a84a4915d12d22a29e557d54f58205352}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!i\_value@{i\_value}}
+\index{i\_value@{i\_value}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{i\_value}{i\_value}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_a84a4915d12d22a29e557d54f58205352} 
+int SFW\+::\+Debug\+::\+Debug\+Control\+::i\+\_\+value = 0}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00208}{208}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_ad4f8f0f1880224e53a4415f3b3453e6a}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!kind@{kind}}
+\index{kind@{kind}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{kind}{kind}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_ad4f8f0f1880224e53a4415f3b3453e6a} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6e}{Debug\+Control\+Kind}} SFW\+::\+Debug\+::\+Debug\+Control\+::kind \{\}}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00202}{202}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_a232416099550b6ab28c287bb054e11f6}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!label@{label}}
+\index{label@{label}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{label}{label}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_a232416099550b6ab28c287bb054e11f6} 
+std\+::string SFW\+::\+Debug\+::\+Debug\+Control\+::label}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00204}{204}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_a2e4f0bdeb0b0d1a18570374885dafbee}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!onChangeB@{onChangeB}}
+\index{onChangeB@{onChangeB}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{onChangeB}{onChangeB}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_a2e4f0bdeb0b0d1a18570374885dafbee} 
+std\+::function$<$void(bool)$>$ SFW\+::\+Debug\+::\+Debug\+Control\+::on\+ChangeB}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00222}{222}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_a38ebd73c2666beb5d620116a6ddcd230}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!onChangeF@{onChangeF}}
+\index{onChangeF@{onChangeF}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{onChangeF}{onChangeF}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_a38ebd73c2666beb5d620116a6ddcd230} 
+std\+::function$<$void(float)$>$ SFW\+::\+Debug\+::\+Debug\+Control\+::on\+ChangeF}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00220}{220}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_a1fbf37605a2d4ca433430f9c414e1e55}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!onChangeI@{onChangeI}}
+\index{onChangeI@{onChangeI}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{onChangeI}{onChangeI}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_a1fbf37605a2d4ca433430f9c414e1e55} 
+std\+::function$<$void(int)$>$ SFW\+::\+Debug\+::\+Debug\+Control\+::on\+ChangeI}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00221}{221}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_a5d0074558b8ca4ad3c47280c8329ed1a}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!onChangeText@{onChangeText}}
+\index{onChangeText@{onChangeText}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{onChangeText}{onChangeText}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_a5d0074558b8ca4ad3c47280c8329ed1a} 
+std\+::function$<$void(std\+::string)$>$ SFW\+::\+Debug\+::\+Debug\+Control\+::on\+Change\+Text}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00223}{223}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_a9208492b1dd6861f256f284a8537a2d0}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!textBuf@{textBuf}}
+\index{textBuf@{textBuf}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{textBuf}{textBuf}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_a9208492b1dd6861f256f284a8537a2d0} 
+char SFW\+::\+Debug\+::\+Debug\+Control\+::text\+Buf\mbox{[}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a800ac171cc7d6da155245ceb4c2fcfb5}{Text\+Buf\+Size}}\mbox{]} = \{\}}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00217}{217}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_debug_control_a800ac171cc7d6da155245ceb4c2fcfb5}\index{SFW::Debug::DebugControl@{SFW::Debug::DebugControl}!TextBufSize@{TextBufSize}}
+\index{TextBufSize@{TextBufSize}!SFW::Debug::DebugControl@{SFW::Debug::DebugControl}}
+\doxysubsubsection{\texorpdfstring{TextBufSize}{TextBufSize}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_debug_control_a800ac171cc7d6da155245ceb4c2fcfb5} 
+size\+\_\+t SFW\+::\+Debug\+::\+Debug\+Control\+::\+Text\+Buf\+Size = 256\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00216}{216}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Debug/\mbox{\hyperlink{_u_i_bus_8h}{UIBus.\+h}}\end{DoxyCompactItemize}

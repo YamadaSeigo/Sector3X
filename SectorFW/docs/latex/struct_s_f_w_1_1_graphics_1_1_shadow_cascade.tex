@@ -1,0 +1,135 @@
+\doxysection{SFW\+::Graphics\+::Shadow\+Cascade\texorpdfstring{$<$}{<} N \texorpdfstring{$>$}{>} 構造体テンプレート}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{}\label{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}\index{SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}}
+
+
+{\ttfamily \#include $<$Light\+Shadow\+Service.\+h$>$}
+
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+std\+::array$<$ float, N $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_aa41d916a46496921f4c556f7ae6b0528}{split\+Near}} = \{ 0.\+0f \}
+\item 
+std\+::array$<$ float, N $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a6754ceba53e0a8d0053728a3caa7502d}{split\+Far}} = \{ 0.\+0f \}
+\item 
+std\+::array$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}}, N $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_aee2bb4962a266c4f0fced800c8457405}{light\+View}}
+\item 
+std\+::array$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}}, N $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a92af3a45cafe2461f3e9017ec262bff7}{light\+Proj}}
+\item 
+std\+::array$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}}, N $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a4b9affbb9228ef0b341b1fc960c0436b}{light\+View\+Proj}}
+\item 
+std\+::array$<$ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}}, N $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a4a1ba1f7c05d5bd2a66562020c25952b}{frustum\+WS}}
+\item 
+std\+::array$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}}, N $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a3fb16adea89911e56a4068d2d0111a72}{bounds\+WS}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a762879d5d176458af827371502a46feb}{k\+Num\+Cascades}} = N
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$uint32\+\_\+t N$>$\newline
+struct SFW\+::\+Graphics\+::\+Shadow\+Cascade$<$ N $>$}
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00062}{62}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a3fb16adea89911e56a4068d2d0111a72}\index{SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}!boundsWS@{boundsWS}}
+\index{boundsWS@{boundsWS}!SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}}
+\doxysubsubsection{\texorpdfstring{boundsWS}{boundsWS}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a3fb16adea89911e56a4068d2d0111a72} 
+template$<$uint32\+\_\+t N$>$ \\
+std\+::array$<$\mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}}, N$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{SFW\+::\+Graphics\+::\+Shadow\+Cascade}}$<$ N $>$\+::bounds\+WS}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00076}{76}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a4a1ba1f7c05d5bd2a66562020c25952b}\index{SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}!frustumWS@{frustumWS}}
+\index{frustumWS@{frustumWS}!SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}}
+\doxysubsubsection{\texorpdfstring{frustumWS}{frustumWS}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a4a1ba1f7c05d5bd2a66562020c25952b} 
+template$<$uint32\+\_\+t N$>$ \\
+std\+::array$<$\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}}, N$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{SFW\+::\+Graphics\+::\+Shadow\+Cascade}}$<$ N $>$\+::frustum\+WS}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00073}{73}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a762879d5d176458af827371502a46feb}\index{SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}!kNumCascades@{kNumCascades}}
+\index{kNumCascades@{kNumCascades}!SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}}
+\doxysubsubsection{\texorpdfstring{kNumCascades}{kNumCascades}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a762879d5d176458af827371502a46feb} 
+template$<$uint32\+\_\+t N$>$ \\
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{SFW\+::\+Graphics\+::\+Shadow\+Cascade}}$<$ N $>$\+::k\+Num\+Cascades = N\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00064}{64}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a92af3a45cafe2461f3e9017ec262bff7}\index{SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}!lightProj@{lightProj}}
+\index{lightProj@{lightProj}!SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}}
+\doxysubsubsection{\texorpdfstring{lightProj}{lightProj}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a92af3a45cafe2461f3e9017ec262bff7} 
+template$<$uint32\+\_\+t N$>$ \\
+std\+::array$<$\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}}, N$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{SFW\+::\+Graphics\+::\+Shadow\+Cascade}}$<$ N $>$\+::light\+Proj}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00070}{70}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_aee2bb4962a266c4f0fced800c8457405}\index{SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}!lightView@{lightView}}
+\index{lightView@{lightView}!SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}}
+\doxysubsubsection{\texorpdfstring{lightView}{lightView}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_aee2bb4962a266c4f0fced800c8457405} 
+template$<$uint32\+\_\+t N$>$ \\
+std\+::array$<$\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}}, N$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{SFW\+::\+Graphics\+::\+Shadow\+Cascade}}$<$ N $>$\+::light\+View}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00069}{69}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a4b9affbb9228ef0b341b1fc960c0436b}\index{SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}!lightViewProj@{lightViewProj}}
+\index{lightViewProj@{lightViewProj}!SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}}
+\doxysubsubsection{\texorpdfstring{lightViewProj}{lightViewProj}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a4b9affbb9228ef0b341b1fc960c0436b} 
+template$<$uint32\+\_\+t N$>$ \\
+std\+::array$<$\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}}, N$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{SFW\+::\+Graphics\+::\+Shadow\+Cascade}}$<$ N $>$\+::light\+View\+Proj}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00071}{71}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a6754ceba53e0a8d0053728a3caa7502d}\index{SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}!splitFar@{splitFar}}
+\index{splitFar@{splitFar}!SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}}
+\doxysubsubsection{\texorpdfstring{splitFar}{splitFar}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a6754ceba53e0a8d0053728a3caa7502d} 
+template$<$uint32\+\_\+t N$>$ \\
+std\+::array$<$float, N$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{SFW\+::\+Graphics\+::\+Shadow\+Cascade}}$<$ N $>$\+::split\+Far = \{ 0.\+0f \}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00067}{67}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_aa41d916a46496921f4c556f7ae6b0528}\index{SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}!splitNear@{splitNear}}
+\index{splitNear@{splitNear}!SFW::Graphics::ShadowCascade$<$ N $>$@{SFW::Graphics::ShadowCascade$<$ N $>$}}
+\doxysubsubsection{\texorpdfstring{splitNear}{splitNear}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_aa41d916a46496921f4c556f7ae6b0528} 
+template$<$uint32\+\_\+t N$>$ \\
+std\+::array$<$float, N$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{SFW\+::\+Graphics\+::\+Shadow\+Cascade}}$<$ N $>$\+::split\+Near = \{ 0.\+0f \}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00066}{66}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_light_shadow_service_8h}{Light\+Shadow\+Service.\+h}}\end{DoxyCompactItemize}

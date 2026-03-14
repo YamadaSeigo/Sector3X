@@ -1,0 +1,82 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+Chunk\+Crossing\+Move.hpp ファイル}
+\hypertarget{_chunk_crossing_move_8hpp}{}\label{_chunk_crossing_move_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ChunkCrossingMove.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ChunkCrossingMove.hpp}}
+
+
+チャンク跨ぎ検出とエンティティ移送のユーティリティ  
+
+
+{\ttfamily \#include $<$optional$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$deque$>$}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include "{}ECS/\+Entity\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}partition.\+hpp"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_chunk_handle}{SFW\+::\+Chunk\+Handle}}
+\begin{DoxyCompactList}\small\item\em 基本ハンドル（キー主・ポインタ従の二段構え） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_partition_traits}{SFW\+::\+Partition\+Traits$<$ Partition $>$}}
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_s_f_w_1_1_partition_traits}{Partition\+Traits}\+: ポインタ安定性で切替（デフォルトfalse） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_partition_traits_3_01_grid2_d_partition_01_4}{SFW\+::\+Partition\+Traits$<$ Grid2\+DPartition $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_partition_traits_3_01_grid3_d_partition_01_4}{SFW\+::\+Partition\+Traits$<$ Grid3\+DPartition $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_partition_traits_3_01_quad_tree_partition_01_4}{SFW\+::\+Partition\+Traits$<$ Quad\+Tree\+Partition $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_partition_traits_3_01_octree_partition_01_4}{SFW\+::\+Partition\+Traits$<$ Octree\+Partition $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_c_spatial_motion_tag}{SFW\+::\+CSpatial\+Motion\+Tag}}
+\begin{DoxyCompactList}\small\item\em 動的エンティティ用タグ（チャンク跨ぎ検出と\+EM間移送の状態管理） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_settle_rule}{SFW\+::\+Settle\+Rule}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_budget_mover}{SFW\+::\+Budget\+Mover}}
+\begin{DoxyCompactList}\small\item\em 予算付きバッチ移送クラス \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_budget_mover_1_1_pending_move}{SFW\+::\+Budget\+Mover\+::\+Pending\+Move}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_budget_mover_1_1_accessor}{SFW\+::\+Budget\+Mover\+::\+Accessor}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{SFW\+::\+Budget\+Mover\+::\+Local\+Batch}}
+\begin{DoxyCompactList}\small\item\em ローカル一時バッファ（thread\+\_\+local を使わない合意的バッチ） \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_a43279839ee6b550040804dc0f90c7544}{SFW\+::\+Spatial\+State}} \+: uint8\+\_\+t \{ \mbox{\hyperlink{namespace_s_f_w_a43279839ee6b550040804dc0f90c7544a41f0e4643baa1a38c319cb96c9deaa99}{SFW\+::\+Attached}}
+, \mbox{\hyperlink{namespace_s_f_w_a43279839ee6b550040804dc0f90c7544a41cc07ca5bb4a5988322245a665a16f8}{SFW\+::\+Detached}}
+ \}
+\begin{DoxyCompactList}\small\item\em 退避ステート（\+Float EM） \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_a5ccdb6e0d28dec6b3884c9e79ec57691}{SFW\+::\+Relocate\+Entity\+Between\+Managers}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} id, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \&src, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \&dst)
+\begin{DoxyCompactList}\small\item\em 低レベル：\+EM間 移送（非スパース→スパース） \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_s_f_w_a2d34c7c654f1a870027cfd74bac3803b}{SFW\+::\+Resolve\+Chunk}} (\mbox{\hyperlink{struct_s_f_w_1_1_chunk_handle}{Chunk\+Handle}} \&h, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg)
+\begin{DoxyCompactList}\small\item\em 低レベル：チャンクキーからチャンク取得 \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Partition$>$ }\\bool \mbox{\hyperlink{namespace_s_f_w_a69beaccede6ed2a37c94e9fbe5b9f088}{SFW\+::\+Move\+If\+Crossed}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} id, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&new\+Pos, Partition \&partition, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg, \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} level, \mbox{\hyperlink{struct_s_f_w_1_1_chunk_handle}{Chunk\+Handle}} \&handle, \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOut\+Of\+Bounds\+Policy}} policy=\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOut\+Of\+Bounds\+Policy\+::\+Clamp\+To\+Edge}})
+\begin{DoxyCompactList}\small\item\em 単体：チャンク跨ぎ検出 → 必要時のみ\+EM間移送 \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Partition, class Position\+Fn$>$ }\\size\+\_\+t \mbox{\hyperlink{namespace_s_f_w_a80a0b1f8bb61a1a47828f764011428ab}{SFW\+::\+Relocate\+Crossed\+Batch}} (Partition \&partition, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \&src\+Chunk, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg, \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} level, Position\+Fn position\+Fn)
+\begin{DoxyCompactList}\small\item\em バッチ：葉 / セル単位で一気に仕分け \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Partition$>$ }\\void \mbox{\hyperlink{namespace_s_f_w_a49b742b35308648d4d0404ccd955b775}{SFW\+::\+Update\+Spatial\+Attachment}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} id, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&pos, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&vel, Partition \&partition, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg, \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} level, \mbox{\hyperlink{struct_s_f_w_1_1_c_spatial_motion_tag}{CSpatial\+Motion\+Tag}} \&tag, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \&float\+EM, const \mbox{\hyperlink{struct_s_f_w_1_1_settle_rule}{Settle\+Rule}} \&rule)
+\item 
+{\footnotesize template$<$class Partition$>$ }\\bool \mbox{\hyperlink{namespace_s_f_w_a0357228ee4658658a7ad3c60b7efd058}{SFW\+::\+Move\+If\+Crossed\+\_\+\+Deferred}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} id, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&new\+Pos, Partition \&partition, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg, \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} level, \mbox{\hyperlink{struct_s_f_w_1_1_chunk_handle}{Chunk\+Handle}} \&handle, \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{Budget\+Mover\+::\+Local\+Batch}} \&mover\+Batch, \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOut\+Of\+Bounds\+Policy}} policy=\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOut\+Of\+Bounds\+Policy\+::\+Clamp\+To\+Edge}})
+\begin{DoxyCompactList}\small\item\em 即時→ディファード版 Move\+If\+Crossed（移送はキューへ） \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+チャンク跨ぎ検出とエンティティ移送のユーティリティ 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} に定義があります。
+

@@ -1,0 +1,160 @@
+\doxysection{SFW\+::Graphics\+::DX11\+::Texture\+Create\+Desc 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc}{}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc}\index{SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}}
+
+
+DirectX 11のテクスチャを作成するための構造体  
+
+
+
+
+{\ttfamily \#include $<$DX11\+Texture\+Manager.\+h$>$}
+
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54}{Memory\+Hint}} \{ \newline
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54a06b9281e396db002010bde1de57262eb}{Auto}}
+, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54a9b20752f14503be0510115d06d64bbdc}{DDS}}
+, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54a64efd9bcf7b83f22fe9796967255e103}{TGA}}
+, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54a6cad826248cd3f4e93da71e7b49928e3}{HDR}}
+, \newline
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54ac43752e05bc925aa4dbed1f498630ff6}{WIC}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a08eae0285a4525bdad3007cb5761b10c}{path}}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_recipe}{Texture\+Recipe}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a0927280b50442fa17e0368e958f4e25a}{recipe}} = nullptr
+\item 
+const void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a2ebc75c0beaeb8d7f78cd3e81a4e83f9}{memory}} = nullptr
+\item 
+size\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_aca44faad1661db0ddef4e663f51ca493}{memory\+Size}} = 0
+\item 
+enum \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54}{SFW\+::\+Graphics\+::\+DX11\+::\+Texture\+Create\+Desc\+::\+Memory\+Hint}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a7e950e9bc40ce49cf9b25c48a909819f}{memory\+Hint}} = \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54a06b9281e396db002010bde1de57262eb}{Memory\+Hint\+::\+Auto}}
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a332945c749110ff0348aafa86d4da468}{force\+SRGB}} = false
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a8df12364fd9899ce76afe38495c8321b}{convert\+DSS}} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+DirectX 11のテクスチャを作成するための構造体 
+
+ \mbox{\hyperlink{_d_x11_texture_manager_8h_source}{DX11\+Texture\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_texture_manager_8h_source_l00085}{85}} 行目に定義があります。
+
+
+
+\label{doc-enum-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_doc-enum-members}
+\doxysubsection{列挙型メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54}\index{SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}!MemoryHint@{MemoryHint}}
+\index{MemoryHint@{MemoryHint}!SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}}
+\doxysubsubsection{\texorpdfstring{MemoryHint}{MemoryHint}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54} 
+enum class \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54}{SFW\+::\+Graphics\+::\+DX11\+::\+Texture\+Create\+Desc\+::\+Memory\+Hint}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Auto@{Auto}!SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}}\index{SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}!Auto@{Auto}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54a06b9281e396db002010bde1de57262eb}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54a06b9281e396db002010bde1de57262eb} 
+Auto&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DDS@{DDS}!SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}}\index{SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}!DDS@{DDS}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54a9b20752f14503be0510115d06d64bbdc}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54a9b20752f14503be0510115d06d64bbdc} 
+DDS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TGA@{TGA}!SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}}\index{SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}!TGA@{TGA}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54a64efd9bcf7b83f22fe9796967255e103}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54a64efd9bcf7b83f22fe9796967255e103} 
+TGA&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HDR@{HDR}!SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}}\index{SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}!HDR@{HDR}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54a6cad826248cd3f4e93da71e7b49928e3}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54a6cad826248cd3f4e93da71e7b49928e3} 
+HDR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WIC@{WIC}!SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}}\index{SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}!WIC@{WIC}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54ac43752e05bc925aa4dbed1f498630ff6}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54ac43752e05bc925aa4dbed1f498630ff6} 
+WIC&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+ \mbox{\hyperlink{_d_x11_texture_manager_8h_source}{DX11\+Texture\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_texture_manager_8h_source_l00094}{94}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a8df12364fd9899ce76afe38495c8321b}\index{SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}!convertDSS@{convertDSS}}
+\index{convertDSS@{convertDSS}!SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}}
+\doxysubsubsection{\texorpdfstring{convertDSS}{convertDSS}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a8df12364fd9899ce76afe38495c8321b} 
+bool SFW\+::\+Graphics\+::\+DX11\+::\+Texture\+Create\+Desc\+::convert\+DSS = true}
+
+
+
+ \mbox{\hyperlink{_d_x11_texture_manager_8h_source}{DX11\+Texture\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_texture_manager_8h_source_l00099}{99}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a332945c749110ff0348aafa86d4da468}\index{SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}!forceSRGB@{forceSRGB}}
+\index{forceSRGB@{forceSRGB}!SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}}
+\doxysubsubsection{\texorpdfstring{forceSRGB}{forceSRGB}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a332945c749110ff0348aafa86d4da468} 
+bool SFW\+::\+Graphics\+::\+DX11\+::\+Texture\+Create\+Desc\+::force\+SRGB = false}
+
+
+
+ \mbox{\hyperlink{_d_x11_texture_manager_8h_source}{DX11\+Texture\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_texture_manager_8h_source_l00098}{98}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a2ebc75c0beaeb8d7f78cd3e81a4e83f9}\index{SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}!memory@{memory}}
+\index{memory@{memory}!SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}}
+\doxysubsubsection{\texorpdfstring{memory}{memory}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a2ebc75c0beaeb8d7f78cd3e81a4e83f9} 
+const void\texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+DX11\+::\+Texture\+Create\+Desc\+::memory = nullptr}
+
+
+
+ \mbox{\hyperlink{_d_x11_texture_manager_8h_source}{DX11\+Texture\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_texture_manager_8h_source_l00092}{92}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a7e950e9bc40ce49cf9b25c48a909819f}\index{SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}!memoryHint@{memoryHint}}
+\index{memoryHint@{memoryHint}!SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}}
+\doxysubsubsection{\texorpdfstring{memoryHint}{memoryHint}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a7e950e9bc40ce49cf9b25c48a909819f} 
+enum \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54}{SFW\+::\+Graphics\+::\+DX11\+::\+Texture\+Create\+Desc\+::\+Memory\+Hint}} SFW\+::\+Graphics\+::\+DX11\+::\+Texture\+Create\+Desc\+::memory\+Hint = \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_afcb768c32d58199dd0e075259ede5c54a06b9281e396db002010bde1de57262eb}{Memory\+Hint\+::\+Auto}}}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_aca44faad1661db0ddef4e663f51ca493}\index{SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}!memorySize@{memorySize}}
+\index{memorySize@{memorySize}!SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}}
+\doxysubsubsection{\texorpdfstring{memorySize}{memorySize}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_aca44faad1661db0ddef4e663f51ca493} 
+size\+\_\+t SFW\+::\+Graphics\+::\+DX11\+::\+Texture\+Create\+Desc\+::memory\+Size = 0}
+
+
+
+ \mbox{\hyperlink{_d_x11_texture_manager_8h_source}{DX11\+Texture\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_texture_manager_8h_source_l00093}{93}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a08eae0285a4525bdad3007cb5761b10c}\index{SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}!path@{path}}
+\index{path@{path}!SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}}
+\doxysubsubsection{\texorpdfstring{path}{path}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a08eae0285a4525bdad3007cb5761b10c} 
+std\+::string SFW\+::\+Graphics\+::\+DX11\+::\+Texture\+Create\+Desc\+::path}
+
+
+
+ \mbox{\hyperlink{_d_x11_texture_manager_8h_source}{DX11\+Texture\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_texture_manager_8h_source_l00086}{86}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a0927280b50442fa17e0368e958f4e25a}\index{SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}!recipe@{recipe}}
+\index{recipe@{recipe}!SFW::Graphics::DX11::TextureCreateDesc@{SFW::Graphics::DX11::TextureCreateDesc}}
+\doxysubsubsection{\texorpdfstring{recipe}{recipe}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc_a0927280b50442fa17e0368e958f4e25a} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_recipe}{Texture\+Recipe}}\texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+DX11\+::\+Texture\+Create\+Desc\+::recipe = nullptr}
+
+
+
+ \mbox{\hyperlink{_d_x11_texture_manager_8h_source}{DX11\+Texture\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_texture_manager_8h_source_l00089}{89}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\mbox{\hyperlink{_d_x11_texture_manager_8h}{DX11\+Texture\+Manager.\+h}}\end{DoxyCompactItemize}

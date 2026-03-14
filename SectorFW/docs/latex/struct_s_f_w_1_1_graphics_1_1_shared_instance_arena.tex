@@ -1,0 +1,128 @@
+\doxysection{SFW\+::Graphics\+::Shared\+Instance\+Arena 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena}{}\label{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena}\index{SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}}
+
+
+{\ttfamily \#include $<$Render\+Queue.\+h$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Instance\+Pool}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_a105f2a81154525009cd50c7535379e15}{Shared\+Instance\+Arena}} ()
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_a245ad166a211c7ba1d98992dcd8b5684}{Reset\+Slot}} (int slot) noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Instance\+Pool}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_abcd24a6faa440e95c7c8c45c12d4c4d3}{Data}} (int slot) noexcept
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_afb477b7394891d4751548756dd86ecad}{Size}} (int slot) const noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ae7c8f39ac78c64d5dcd8f50ac8661b0d}{capacity}}
+\item 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Instance\+Pool}}\mbox{[}$\,$\mbox{]}$>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ac4f2b3771bc504ea4567c55b4a7ae079}{pools}} \mbox{[}RENDER\+\_\+\+BUFFER\+\_\+\+COUNT\mbox{]}
+\item 
+std\+::atomic$<$ uint32\+\_\+t $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ad539e479b15e7fa44bf0c6e46378ab81}{head}} \mbox{[}RENDER\+\_\+\+BUFFER\+\_\+\+COUNT\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00067}{67}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_a105f2a81154525009cd50c7535379e15}\index{SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}!SharedInstanceArena@{SharedInstanceArena}}
+\index{SharedInstanceArena@{SharedInstanceArena}!SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}}
+\doxysubsubsection{\texorpdfstring{SharedInstanceArena()}{SharedInstanceArena()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_a105f2a81154525009cd50c7535379e15} 
+SFW\+::\+Graphics\+::\+Shared\+Instance\+Arena\+::\+Shared\+Instance\+Arena (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00086}{86}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_abcd24a6faa440e95c7c8c45c12d4c4d3}\index{SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}!Data@{Data}}
+\index{Data@{Data}!SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}}
+\doxysubsubsection{\texorpdfstring{Data()}{Data()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_abcd24a6faa440e95c7c8c45c12d4c4d3} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Instance\+Pool}} \texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+Shared\+Instance\+Arena\+::\+Data (\begin{DoxyParamCaption}\item[{int}]{slot}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00098}{98}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_a245ad166a211c7ba1d98992dcd8b5684}\index{SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}!ResetSlot@{ResetSlot}}
+\index{ResetSlot@{ResetSlot}!SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}}
+\doxysubsubsection{\texorpdfstring{ResetSlot()}{ResetSlot()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_a245ad166a211c7ba1d98992dcd8b5684} 
+void SFW\+::\+Graphics\+::\+Shared\+Instance\+Arena\+::\+Reset\+Slot (\begin{DoxyParamCaption}\item[{int}]{slot}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00097}{97}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_afb477b7394891d4751548756dd86ecad}\index{SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}!Size@{Size}}
+\index{Size@{Size}!SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}}
+\doxysubsubsection{\texorpdfstring{Size()}{Size()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_afb477b7394891d4751548756dd86ecad} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Shared\+Instance\+Arena\+::\+Size (\begin{DoxyParamCaption}\item[{int}]{slot}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00099}{99}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ae7c8f39ac78c64d5dcd8f50ac8661b0d}\index{SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}!capacity@{capacity}}
+\index{capacity@{capacity}!SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}}
+\doxysubsubsection{\texorpdfstring{capacity}{capacity}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ae7c8f39ac78c64d5dcd8f50ac8661b0d} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Shared\+Instance\+Arena\+::capacity}
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00093}{93}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ad539e479b15e7fa44bf0c6e46378ab81}\index{SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}!head@{head}}
+\index{head@{head}!SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}}
+\doxysubsubsection{\texorpdfstring{head}{head}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ad539e479b15e7fa44bf0c6e46378ab81} 
+std\+::atomic$<$uint32\+\_\+t$>$ SFW\+::\+Graphics\+::\+Shared\+Instance\+Arena\+::head\mbox{[}RENDER\+\_\+\+BUFFER\+\_\+\+COUNT\mbox{]}}
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00095}{95}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ac4f2b3771bc504ea4567c55b4a7ae079}\index{SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}!pools@{pools}}
+\index{pools@{pools}!SFW::Graphics::SharedInstanceArena@{SFW::Graphics::SharedInstanceArena}}
+\doxysubsubsection{\texorpdfstring{pools}{pools}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_ac4f2b3771bc504ea4567c55b4a7ae079} 
+std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Instance\+Pool}}\mbox{[}$\,$\mbox{]}$>$ SFW\+::\+Graphics\+::\+Shared\+Instance\+Arena\+::pools\mbox{[}RENDER\+\_\+\+BUFFER\+\_\+\+COUNT\mbox{]}}
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00094}{94}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_render_queue_8h}{Render\+Queue.\+h}}\end{DoxyCompactItemize}

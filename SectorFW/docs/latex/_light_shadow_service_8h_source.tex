@@ -1,0 +1,604 @@
+\doxysection{Light\+Shadow\+Service.\+h}
+\hypertarget{_light_shadow_service_8h_source}{}\label{_light_shadow_service_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/LightShadowService.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/LightShadowService.h}}
+\mbox{\hyperlink{_light_shadow_service_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <shared\_mutex>}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_vector_8hpp}{../Math/Vector.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_a_a_b_b_8hpp}{../Math/AABB.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_matrix_8hpp}{../Math/Matrix.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_frustum_8hpp}{../Math/Frustum.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sx__math_8h}{../Math/sx\_math.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{convert_8hpp}{../Math/convert.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_service_context_8hpp}{../Core/ECS/ServiceContext.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00021}00021\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00022}00022\ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00023}00023\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{Graphics}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00024}00024\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カスケード数はお好みで}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00026}\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{00026}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ std::uint32\_t\ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{kMaxShadowCascades}}\ =\ 3;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ライト定義}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00031}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light}{00031}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light}{DirectionalLight}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00033}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light_aed3654dc8a567dc7e007dad29d311412}{00033}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light_aed3654dc8a567dc7e007dad29d311412}{directionWS}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(0.0f,\ -\/sin(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87b63dc11850a6a5d5367b2f8fd87c03}{Math::Deg2Rad}}(45.0f)),\ -\/cos(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87b63dc11850a6a5d5367b2f8fd87c03}{Math::Deg2Rad}}(45.0f)));\ \textcolor{comment}{//\ ワールド空間}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00034}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light_ac7d29af62387b656b3294cde4a308fdf}{00034}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light_ac7d29af62387b656b3294cde4a308fdf}{color}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(1.0f,\ 1.0f,\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00035}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light_abdab8ec5dbe3c59af3c03e8756adddf3}{00035}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light_abdab8ec5dbe3c59af3c03e8756adddf3}{intensity}}\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00036}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light_aeb6e670d55852fd05ecbf458962c95a9}{00036}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light_aeb6e670d55852fd05ecbf458962c95a9}{castsShadow}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00039}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light}{00039}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light}{AmbientLight}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00041}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light_ae1e762be49b327ca583f37cd546f0dcd}{00041}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light_ae1e762be49b327ca583f37cd546f0dcd}{color}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(0.1f,\ 0.1f,\ 0.1f);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00042}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light_a925dd6e68a5107f72036842de9879ce6}{00042}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light_a925dd6e68a5107f72036842de9879ce6}{intensity}}\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カメラ情報（レンダリング側から渡す）}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00048}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params}{00048}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params}{CameraParams}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00050}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params_a939fe4d4b1ea8a42c8b1be37ada92cc1}{00050}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params_a939fe4d4b1ea8a42c8b1be37ada92cc1}{view}}\ =\ \{\};\ \ \textcolor{comment}{//\ カメラの\ View\ 行列}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00051}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params_a24c120e329a576fe354eda8fa051aca6}{00051}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params_a24c120e329a576fe354eda8fa051aca6}{position}}\ =\ \{\};\ \ \textcolor{comment}{//\ カメラ位置（World）}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00052}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params_a788486f24631c17c4b37742a1f69fe3b}{00052}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params_a788486f24631c17c4b37742a1f69fe3b}{nearPlane}}\ =\ 0.1f;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00053}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params_a7751826e3add85d1245ec124d6bfb8c2}{00053}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params_a7751826e3add85d1245ec124d6bfb8c2}{farPlane}}\ =\ 1000.0f;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00054}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params_acb3170fa85a57fed9b059086e5cd87a6}{00054}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params_acb3170fa85a57fed9b059086e5cd87a6}{fovY}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87b63dc11850a6a5d5367b2f8fd87c03}{Math::Deg2Rad}}(60.0f);\ \ \ \textcolor{comment}{//\ ラジアン}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00055}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params_a725a4e8511832c2a50980160a0744399}{00055}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params_a725a4e8511832c2a50980160a0744399}{aspect}}\ =\ 16.0f\ /\ 9.0f;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カスケード1つ分の情報}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<u\textcolor{keywordtype}{int}32\_t\ N>}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00062}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{00062}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{ShadowCascade}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00064}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a762879d5d176458af827371502a46feb}{00064}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a762879d5d176458af827371502a46feb}{kNumCascades}}\ =\ N;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00066}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_aa41d916a46496921f4c556f7ae6b0528}{00066}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<float,\ N>\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_aa41d916a46496921f4c556f7ae6b0528}{splitNear}}\ =\ \{\ 0.0f\ \};\ \ \textcolor{comment}{//\ カメラ視点の距離}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00067}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a6754ceba53e0a8d0053728a3caa7502d}{00067}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<float,\ N>\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a6754ceba53e0a8d0053728a3caa7502d}{splitFar}}\ =\ \{\ 0.0f\ \};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00069}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_aee2bb4962a266c4f0fced800c8457405}{00069}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Math::Matrix4x4f,\ N>\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_aee2bb4962a266c4f0fced800c8457405}{lightView}};\ \ \ \ \ \textcolor{comment}{//\ ライトの\ View\ 行列}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00070}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a92af3a45cafe2461f3e9017ec262bff7}{00070}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Math::Matrix4x4f,\ N>\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a92af3a45cafe2461f3e9017ec262bff7}{lightProj}};\ \ \ \ \ \textcolor{comment}{//\ ライトの\ Ortho\ 行列}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00071}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a4b9affbb9228ef0b341b1fc960c0436b}{00071}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Math::Matrix4x4f,\ N>\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a4b9affbb9228ef0b341b1fc960c0436b}{lightViewProj}};\ \textcolor{comment}{//\ lightProj\ *\ lightView（行列の並びはエンジンに合わせて）}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00073}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a4a1ba1f7c05d5bd2a66562020c25952b}{00073}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Math::Frustumf,\ N>\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a4a1ba1f7c05d5bd2a66562020c25952b}{frustumWS}};\ \ \ \textcolor{comment}{//\ カスケードのワールド空間フラスタム（CPU\ カリング用）}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 任意:\ カスケード領域の\ AABB\ /\ 球\ など}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00076}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a3fb16adea89911e56a4068d2d0111a72}{00076}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Math::AABB3f,\ N>\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a3fb16adea89911e56a4068d2d0111a72}{boundsWS}};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00079}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data}{00079}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\textcolor{keyword}{alignas}(16)\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data}{CPULightData}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Sun\ /\ directional}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00082}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_a8b7bab320bd2f1b1863dd2e95d7a5191}{00082}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_a8b7bab320bd2f1b1863dd2e95d7a5191}{gSunDirectionWS}};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00083}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_a35026ab3d1e6f5d42be1cf711dd39867}{00083}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_a35026ab3d1e6f5d42be1cf711dd39867}{gSunIntensity}};\ \textcolor{comment}{//\ 16B}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00084}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_aa3c2c1e8081aee56e5f5e3b84cf2a7cb}{00084}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_aa3c2c1e8081aee56e5f5e3b84cf2a7cb}{gSunColor}};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00085}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_a44e520c5e8cf1e2e0461cee91f0b08cc}{00085}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_a44e520c5e8cf1e2e0461cee91f0b08cc}{gAmbientIntensity}};\ \textcolor{comment}{//\ 16B}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Ambient\ +\ counts}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00088}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_aa98dae58e0fa1e2f0429b0325cf75570}{00088}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_aa98dae58e0fa1e2f0429b0325cf75570}{gAmbientColor}};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00090}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_a711697c632548e127223f82c3758f07a}{00090}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_a711697c632548e127223f82c3758f07a}{emissiveBoost}}\ =\ 3.0f;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00093}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service}{00093}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ad587fbefaf8eefa7a25deda32da62c17}{LightShadowService}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00095}00095\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00096}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config}{00096}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config}{CascadeConfig}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00098}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a777b1fe487e9cd3eee94c8209c0a3ff4}{00098}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a777b1fe487e9cd3eee94c8209c0a3ff4}{shadowMapResolution}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}(1920.0f,\ 1080.0f);\ \textcolor{comment}{//\ シャドウマップ解像度}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00099}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a7f2656da942392761c71ea9b3388c951}{00099}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::uint32\_t\ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a7f2656da942392761c71ea9b3388c951}{cascadeCount}}\ =\ 3;\ \ \ \textcolor{comment}{//\ 1〜kMaxShadowCascades}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00100}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a52b8cb848bd0a52ab13c895ed121eb8e}{00100}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a52b8cb848bd0a52ab13c895ed121eb8e}{shadowDistance}}\ =\ 200.0f;\ \textcolor{comment}{//\ カメラからの最大影距離}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00101}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_aad543f8db5b9b84e89737aed717706e6}{00101}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_aad543f8db5b9b84e89737aed717706e6}{lambda}}\ =\ 0.5f;\ \ \ \textcolor{comment}{//\ 0\ =\ 線形,\ 1\ =\ 対数,\ その中間}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00102}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a40a6fb8c26cbd09e2ac76745f93acf63}{00102}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a40a6fb8c26cbd09e2ac76745f93acf63}{maxWorldExtent}}\ =\ 1000.0f;\ \textcolor{comment}{//\ ライト正射影の最大サイズ（安全マージン）}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00103}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a66d2294a3f285f05ed1de2f36b9f92a7}{00103}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a66d2294a3f285f05ed1de2f36b9f92a7}{casterExtrusion}}\ =\ 100.0f;\ \textcolor{comment}{//\ 影キャスターをライト方向に押し出す距離}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00106}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ad587fbefaf8eefa7a25deda32da62c17}{00106}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ad587fbefaf8eefa7a25deda32da62c17}{LightShadowService}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00108}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aa3710c8c3f8f753e68f5f7fa196c3187}{00108}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aa3710c8c3f8f753e68f5f7fa196c3187}{SetEnvironment}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light}{DirectionalLight}}\&\ dirLight,}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light}{AmbientLight}}\&\ ambientLight,}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ emissiveBoost)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_directional\ =\ dirLight;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_ambient\ =\ ambientLight;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_emissiveBoost\ =\ emissiveBoost;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ライト設定}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00119}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a4cf5368a6bde5652bc2679c7cf892db6}{00119}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a4cf5368a6bde5652bc2679c7cf892db6}{SetDirectionalLight}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light}{DirectionalLight}}\&\ d)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_directional\ =\ d;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00125}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ad37eb8a51830d33d6c92c4137a7afcce}{00125}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ad37eb8a51830d33d6c92c4137a7afcce}{SetAmbientLight}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light}{AmbientLight}}\&\ a)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_ambient\ =\ a;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00131}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a04b004052a408e2cebc4f54b9a2a2fe6}{00131}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a04b004052a408e2cebc4f54b9a2a2fe6}{SetEmissiveBoost}}(\textcolor{keywordtype}{float}\ boost)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_emissiveBoost\ =\ boost;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00137}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_af72336d5166083c160fdc0641f9ea3c4}{00137}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light}{DirectionalLight}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_af72336d5166083c160fdc0641f9ea3c4}{GetDirectionalLight}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_directional;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00141}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ac25f9839a83530e4a3d47a6e1e927bce}{00141}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light}{AmbientLight}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ac25f9839a83530e4a3d47a6e1e927bce}{GetAmbientLight}}()\ \ \ \ \ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_ambient;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00146}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a1e75e793ebe3c43377b34f9779b702e1}{00146}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a1e75e793ebe3c43377b34f9779b702e1}{GetEmissiveBoost}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_emissiveBoost;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ポイントライトの数はここで管理しない}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00152}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a3dc36ad2fe38f4e8bff19f5871b54db9}{00152}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data}{CPULightData}}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a3dc36ad2fe38f4e8bff19f5871b54db9}{GetCPULightData}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00153}00153\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data}{CPULightData}}\ data\{\};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_a8b7bab320bd2f1b1863dd2e95d7a5191}{gSunDirectionWS}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a1a4a2760b8fb9407455f6252e17bc03f}{Math::NormalizeSafe}}(m\_directional.directionWS,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(0.0f,\ -\/1.0f,\ 0.0f));}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_aa3c2c1e8081aee56e5f5e3b84cf2a7cb}{gSunColor}}\ =\ m\_directional.color;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_a35026ab3d1e6f5d42be1cf711dd39867}{gSunIntensity}}\ =\ m\_directional.intensity;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_aa98dae58e0fa1e2f0429b0325cf75570}{gAmbientColor}}\ =\ m\_ambient.color;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_a44e520c5e8cf1e2e0461cee91f0b08cc}{gAmbientIntensity}}\ =\ m\_ambient.intensity;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data_a711697c632548e127223f82c3758f07a}{emissiveBoost}}\ =\ m\_emissiveBoost;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ data;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カスケード設定}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00166}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aa0e5179c5cf6d59745ff24ff705f228b}{00166}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aa0e5179c5cf6d59745ff24ff705f228b}{SetCascadeConfig}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config}{CascadeConfig}}\&\ cfg)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_cascadeCfg\ =\ cfg;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_cascadeCfg.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a7f2656da942392761c71ea9b3388c951}{cascadeCount}}\ =\ (std::max<std::uint32\_t>)(1,\ (std::min<std::uint32\_t>)(cfg.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a7f2656da942392761c71ea9b3388c951}{cascadeCount}},\ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{kMaxShadowCascades}}));}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00174}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aca330e5e88d0ea2c15a1f05fcc70464c}{00174}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config}{CascadeConfig}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aca330e5e88d0ea2c15a1f05fcc70464c}{GetCascadeConfig}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_cascadeCfg;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カスケード情報へのアクセス}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00180}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a20e29b21df3b7e98e6af1216e69467bc}{00180}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a20e29b21df3b7e98e6af1216e69467bc}{GetCascadeCount}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_cascadeCount;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00185}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aaf16c99b7defafacf372a38c5ceb2b6f}{00185}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{ShadowCascade<kMaxShadowCascades>}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aaf16c99b7defafacf372a38c5ceb2b6f}{GetCascades}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_cascades;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00190}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aaf4a9c3c1bf2b5d0509c1300746ff1e9}{00190}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::array<float,\ kMaxShadowCascades>\&\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aaf4a9c3c1bf2b5d0509c1300746ff1e9}{GetSplitDistances}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_splitDistances;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00195}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a521e0e3a987481665d48c172360a06fd}{00195}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a521e0e3a987481665d48c172360a06fd}{GetCascadeIndex}}(\textcolor{keywordtype}{float}\ viewDist)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00196}00196\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (std::uint32\_t\ i\ =\ 0;\ i\ <\ m\_cascadeCount;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (viewDist\ <\ m\_splitDistances[i])\ \textcolor{keywordflow}{return}\ i;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_cascadeCount\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00204}00204\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00205}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a3093c10de8e57b385a2610539f8afe48}{00205}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a3093c10de8e57b385a2610539f8afe48}{GetMaxShadowDistance}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00206}00206\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_cascadeCfg.shadowDistance;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00210}00210\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00211}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_adf6821713bd49610d384bb5e725f9335}{00211}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::pair<uint32\_t,\ uint32\_t>\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_adf6821713bd49610d384bb5e725f9335}{GetCascadeIndexRangeUnlock}}(\textcolor{keywordtype}{float}\ min,\ \textcolor{keywordtype}{float}\ max)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00212}00212\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_cascadeCount\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ 0,\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ max\ =\ (std::max)(max,\ min);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ first\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ last\ =\ m\_cascadeCount\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ i\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i;\ i\ <\ m\_cascadeCount;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (min\ <\ m\_splitDistances[i])}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ first\ =\ i;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i;\ i\ <\ m\_cascadeCount;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (max\ <\ m\_splitDistances[i])}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ last\ =\ i;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ first,\ last\ \};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00240}00240\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カスケード更新}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ -\/\ CameraParams\ とシーン\ AABB\ からカスケードを構築}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ -\/\ AABB\ は「シーン全体」または「このライトが影響する範囲」}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00246}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a08be4f4a330168acda97a7075708caf3}{00246}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a08be4f4a330168acda97a7075708caf3}{UpdateCascade}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params}{CameraParams}}\&\ cam,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\&\ sceneBounds)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lock(m\_updateMutex);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00249}00249\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_directional.castsShadow)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_cascadeCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00255}00255\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_cascadeCount\ =\ m\_cascadeCfg.cascadeCount;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_cascadeCount\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00259}00259\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ComputeCascadeSplits(cam);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BuildCascades(cam,\ sceneBounds);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00263}00263\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 内部ヘルパ}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00267}00267\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カメラ視点でのスプリット\ (near,\ far\ は\ CameraParams\ から)}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ComputeCascadeSplits(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params}{CameraParams}}\&\ cam)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ n\ =\ cam.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params_a788486f24631c17c4b37742a1f69fe3b}{nearPlane}};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ f\ =\ (std::min)(cam.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params_a7751826e3add85d1245ec124d6bfb8c2}{farPlane}},\ m\_cascadeCfg.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a52b8cb848bd0a52ab13c895ed121eb8e}{shadowDistance}});}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ lambda\ =\ m\_cascadeCfg.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_aad543f8db5b9b84e89737aed717706e6}{lambda}};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::uint32\_t\ N\ =\ m\_cascadeCount;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00275}00275\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (std::uint32\_t\ i\ =\ 0;\ i\ <\ N;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ si\ =\ (i\ +\ 1)\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(N);\ \textcolor{comment}{//\ 0..1}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00279}00279\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 対数スプリット}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ logSplit\ =\ n\ *\ std::pow(f\ /\ n,\ si);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 線形スプリット}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ linSplit\ =\ n\ +\ (f\ -\/\ n)\ *\ si;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ミックス}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ split\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aee67464c8d047a0a7ce050fbe60e583e}{Math::lerp}}(linSplit,\ logSplit,\ lambda);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00286}00286\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_splitDistances[i]\ =\ split;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00290}00290\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カメラ空間の距離をワールド空間の\ AABB/フラスタムに変換して}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ライト空間の正射影を合わせる}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ BuildCascades(\textcolor{keyword}{const}\ CameraParams\&\ cam,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\&\ sceneBounds)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }Math;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00296}00296\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ライト方向（正規化）}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vec3f\ lightDir\ =\ NormalizeSafe(m\_directional.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light_aed3654dc8a567dc7e007dad29d311412}{directionWS}},\ Vec3f(0.0f,\ -\/1.0f,\ 0.0f));}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00299}00299\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カスケードごとのワールド\ AABB}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Math::AABB3f,\ kMaxShadowCascades>\ cascadeBoundsWS;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00302}00302\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ prevSplit\ =\ cam.nearPlane;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00304}00304\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ View\ の逆行列を使ってワールドへ}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\ camWorldMtx\ =\ Inverse(cam.view);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00307}00307\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ キャスター押し出し量}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ maxCasterDist\ =\ m\_cascadeCfg.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a66d2294a3f285f05ed1de2f36b9f92a7}{casterExtrusion}};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vec3f\ pad\ =\ Vec3f(}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::fabs(lightDir.x),}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::fabs(lightDir.y),}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::fabs(lightDir.z)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )\ *\ maxCasterDist;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00315}00315\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ カスケードごとの\ WS\ AABB\ を計算}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (std::uint32\_t\ i\ =\ 0;\ i\ <\ m\_cascadeCount;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ splitDist\ =\ m\_splitDistances[i];}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00322}00322\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_cascades.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_aa41d916a46496921f4c556f7ae6b0528}{splitNear}}[i]\ =\ prevSplit;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_cascades.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade_a6754ceba53e0a8d0053728a3caa7502d}{splitFar}}[i]\ =\ splitDist;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00325}00325\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ このカスケードのカメラ視錐台スライスを\ WS\ AABB\ に}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\ cascadeAABBWS\ =}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ComputeCascadeSliceAABBWS(cam,\ camWorldMtx,\ prevSplit,\ splitDist);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00329}00329\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ シーン\ AABB\ との交差で少しタイトに}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\ tightWS\ =\ IntersectAABB(cascadeAABBWS,\ sceneBounds);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00332}00332\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 安全のためワールド最大サイズでクランプ}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tightWS.shrinkExtent(m\_cascadeCfg.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config_a40a6fb8c26cbd09e2ac76745f93acf63}{maxWorldExtent}});}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00335}00335\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cascadeBoundsWS[i]\ =\ tightWS;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00337}00337\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prevSplit\ =\ splitDist;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00340}00340\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ カスケードごとに独立したライトビュー\ /\ オルソを構築}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (std::uint32\_t\ i\ =\ 0;\ i\ <\ m\_cascadeCount;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\&\ recvBoundsWS\ =\ cascadeBoundsWS[i];}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00347}00347\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ まずは「受け側（レシーバ）の\ AABB」からライトビューを決める}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\ lightView;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BuildLightView(lightDir,\ recvBoundsWS,\ lightView);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00351}00351\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ ライト空間に変換してテクセルスナップ\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\ recvLS\ =\ lightView\ *\ recvBoundsWS;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00354}00354\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ centerLS\ =\ recvLS.center();}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ extentsLS\ =\ recvLS.extent();\ \textcolor{comment}{//\ half-\/size\ (x,y,z)}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00357}00357\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ XY\ だけスナップしたライト空間\ AABB（受け側）}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\ recvSnappedLS;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ recvSnappedLS.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}}\ =\ centerLS\ -\/\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(extentsLS.x,\ extentsLS.y,\ extentsLS.z);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ recvSnappedLS.ub\ =\ centerLS\ +\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(extentsLS.x,\ extentsLS.y,\ extentsLS.z);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00362}00362\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ キャスター用に\ Z\ だけ押し出す\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\ casterWS\ =\ recvBoundsWS;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ casterWS.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}}\ -\/=\ pad;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ casterWS.ub\ +=\ pad;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00367}00367\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\ casterTightWS\ =\ IntersectAABB(casterWS,\ sceneBounds);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\ casterLS\ =\ lightView\ *\ casterTightWS;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00370}00370\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 最終ライト空間\ AABB:}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ XY\ =\ スナップ済み受け側、Z\ =\ キャスターで決まった\ near/far}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\ finalLS;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ finalLS.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ recvSnappedLS.lb.x,}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ recvSnappedLS.lb.y,}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ casterLS.lb.z}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ finalLS.ub\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ recvSnappedLS.ub.x,}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ recvSnappedLS.ub.y,}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ casterLS.ub.z}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00384}00384\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ そのライト空間\ AABB\ をちょうど覆う\ Ortho}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\ lightProj;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BuildLightOrtho(finalLS,\ lightProj);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00388}00388\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ StabilizeShadowProjection\_TexelSnap(lightView,\ lightProj,}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00390}00390\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (uint32\_t)m\_cascadeCfg.shadowMapResolution.x,\ (uint32\_t)m\_cascadeCfg.shadowMapResolution.y);*/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00391}00391\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00392}00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 記録}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_cascades.lightView[i]\ =\ lightView;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_cascades.lightProj[i]\ =\ lightProj;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_cascades.lightViewProj[i]\ =\ lightProj\ *\ lightView;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00396}00396\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カリング用フラスタム\ \&\ WS\ Bounds\ を保存}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_cascades.frustumWS[i]\ =\ BuildFrustumFromMatrix(m\_cascades.lightViewProj[i]);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_cascades.boundsWS[i]\ =\ recvBoundsWS;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00402}00402\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00404}00404\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カスケードスライス\ AABB（ワールド）の計算}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00405}00405\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ -\/\ カメラの\ view/proj/fov/aspect/near/far\ から}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00406}00406\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ -\/\ [sliceNear,\ sliceFar]\ の範囲のフラスタム8頂点を計算し、}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ -\/\ それをワールドに戻して\ AABB\ を作る}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\ ComputeCascadeSliceAABBWS(\textcolor{keyword}{const}\ CameraParams\&\ cam,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\&\ camWorldMtx,\ \textcolor{keywordtype}{float}\ sliceNear,\ \textcolor{keywordtype}{float}\ sliceFar)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00410}00410\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }Math;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00412}00412\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カメラの視錐台コーナー（カメラ空間）}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Vec3f,\ 8>\ cornersVS;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BuildCameraFrustumCornersVS(cam,\ sliceNear,\ sliceFar,\ cornersVS);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00416}00416\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{AABB3f}}\ result;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ad48bc28d3137bd015e774ea8e2980c18}{invalidate}}();}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00419}00419\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ Vec3f\&\ pVS\ :\ cornersVS)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00421}00421\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}\ pWS\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a46dbd11b3f23607eeb85c734b81c58d0}{TransformPoint}}(camWorldMtx,\ pVS);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00423}00423\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result.expandToInclude(pWS);\ \textcolor{comment}{//\ AABB\ に点を追加}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00427}00427\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カメラ空間のフラスタム8頂点（Near/Far\ を\ sliceNear/sliceFar\ に差し替え）}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<Math::Handedness\ Hand\ =\ Math::Handedness::LH>}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00430}00430\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ BuildCameraFrustumCornersVS(\textcolor{keyword}{const}\ CameraParams\&\ cam,}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00431}00431\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ sliceNear,\ \textcolor{keywordtype}{float}\ sliceFar,}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Math::Vec3f,\ 8>\&\ outCornersVS)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00434}00434\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }Math;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00435}00435\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ fov\ =\ cam.fovY;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ aspect\ =\ cam.aspect;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00438}00438\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ tanHalfFov\ =\ std::tan(fov\ *\ 0.5f);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00440}00440\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ nh\ =\ sliceNear\ *\ tanHalfFov;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00442}00442\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ nw\ =\ nh\ *\ aspect;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ fh\ =\ sliceFar\ *\ tanHalfFov;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ fw\ =\ fh\ *\ aspect;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00445}00445\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00446}00446\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ zSign\ =\ (Hand\ ==\ Handedness::LH)\ ?\ 1.0f\ :\ -\/1.0f;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00447}00447\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sliceNear\ *=\ zSign;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00449}00449\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sliceFar\ *=\ zSign;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00450}00450\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00451}00451\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ カメラ空間でのフラスタムコーナー}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00452}00452\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Near}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00453}00453\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outCornersVS[0]\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}(-\/nw,\ nh,\ sliceNear);\ \textcolor{comment}{//\ left-\/top}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00454}00454\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outCornersVS[1]\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}(nw,\ nh,\ sliceNear);\ \textcolor{comment}{//\ right-\/top}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00455}00455\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outCornersVS[2]\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}(nw,\ -\/nh,\ sliceNear);\ \textcolor{comment}{//\ right-\/bottom}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outCornersVS[3]\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}(-\/nw,\ -\/nh,\ sliceNear);\ \textcolor{comment}{//\ left-\/bottom}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00457}00457\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Far}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outCornersVS[4]\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}(-\/fw,\ fh,\ sliceFar);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00459}00459\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outCornersVS[5]\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}(fw,\ fh,\ sliceFar);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00460}00460\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outCornersVS[6]\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}(fw,\ -\/fh,\ sliceFar);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00461}00461\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outCornersVS[7]\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}}(-\/fw,\ -\/fh,\ sliceFar);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00462}00462\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00463}00463\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00464}00464\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ カメラ方向の抽出\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Mat4f\ がどういうレイアウトかに合わせて書き換えてください。}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ここでは「行ベクトルが\ right/up/forward\ の\ transposed\ view」と仮定した仮実装です。}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00467}00467\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ ExtractCameraForward(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\&\ view)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ view\ =\ inverse(世界→カメラ)\ なので、forward\ は\ -\/Z\ の列/行など}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00470}00470\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ここでは「第3行の\ xyz\ を\ -\/forward」と仮定した例：}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00471}00471\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ forward(}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00472}00472\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/view.m[2][0],}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00473}00473\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/view.m[2][1],}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00474}00474\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/view.m[2][2]}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00475}00475\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00476}00476\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a1a4a2760b8fb9407455f6252e17bc03f}{NormalizeSafe}}(forward,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(0,\ 0,\ 1));}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00477}00477\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00478}00478\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00479}00479\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ ExtractCameraRight(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\&\ view)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00480}00480\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00481}00481\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ right(}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00482}00482\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ view.m[0][0],}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00483}00483\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ view.m[0][1],}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00484}00484\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ view.m[0][2]}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00485}00485\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00486}00486\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a1a4a2760b8fb9407455f6252e17bc03f}{NormalizeSafe}}(right,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(1,\ 0,\ 0));}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00487}00487\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00488}00488\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00489}00489\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ ExtractCameraUp(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\&\ view)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00491}00491\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ up(}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ view.m[1][0],}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00493}00493\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ view.m[1][1],}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00494}00494\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ view.m[1][2]}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a1a4a2760b8fb9407455f6252e17bc03f}{NormalizeSafe}}(up,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(0,\ 1,\ 0));}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00498}00498\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00499}00499\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00500}00500\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ライトビュー行列の構築}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00501}00501\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ -\/\ ライト方向\ +\ AABB\ 中心から「逆方向に少し離れた位置」から見る}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00502}00502\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ BuildLightView(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ lightDirWS,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\&\ boundsWS,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\&\ outView)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00505}00505\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ center\ =\ boundsWS.center();}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00506}00506\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00507}00507\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ eye\ =\ center\ -\/\ lightDirWS;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ target\ =\ center;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00509}00509\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ up(0.0f,\ 1.0f,\ 0.0f);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00510}00510\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00511}00511\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(lightDirWS.dot(up))\ >\ 0.99f)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ up\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(1.0f,\ 0.0f,\ 0.0f);\ \textcolor{comment}{//\ ライトが平行なら別の\ Up\ を使う}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00514}00514\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00515}00515\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 左手系\ /\ 右手系に合わせて\ LookAt\ 関数を呼んでください}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outView\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6218d334f18a3ba71b7f3b9789d0aa38}{Math::MakeLookAtMatrixLH}}(eye,\ target,\ up);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00518}00518\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00519}00519\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00521}00521\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ライト正射影行列の構築}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ -\/\ ライト空間の\ AABB\ をちょうど覆う\ OrthoOffCenter\ を作る}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ BuildLightOrtho(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\&\ lightSpaceAABB,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\&\ outProj)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00526}00526\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ min\ =\ lightSpaceAABB.lb;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00527}00527\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ max\ =\ lightSpaceAABB.ub;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00528}00528\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00529}00529\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 左手系\ /\ 右手系に合わせて\ Ortho\ 関数を呼んでください}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ outProj\ =\ Mat4f::CreateOrthoOffCenterLH(min.x,\ max.x,\ min.y,\ max.y,\ -\/max.z,\ -\/min.z);}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00531}00531\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outProj\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a40b0e6ba60461712ad4c81fbfd2e499b}{Math::MakeOrthographicT<Math::Handedness::LH,\ Math::ClipZRange::ZeroToOne>}}(min.x,\ max.x,\ min.y,\ max.y,\ min.z,\ max.z);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00532}00532\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00533}00533\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00534}00534\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00535}00535\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ViewProj\ から\ Frustum\ を作る}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00536}00536\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Math::Frustumf\ BuildFrustumFromMatrix(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\&\ viewProj)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Math::Frustumf\ fr\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a0346c8fb2d40bb8a846013229553227e}{Math::Frustumf::FromRowMajorMatrix}}(viewProj,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5a4b942544cb3e764bbb8d33f8a8744855}{Math::ClipZRange::ZeroToOne}},\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ fr;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00541}00541\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00542}00542\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00543}00543\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ StabilizeShadowProjection\_TexelSnap(}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00544}00544\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\&\ lightView,}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00545}00545\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\&\ lightProj,}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00546}00546\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ shadowResX,}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00547}00547\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ shadowResY)}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00548}00548\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00549}00549\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\ shadowVP\ =\ lightProj\ *\ lightView;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00550}00550\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00551}00551\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ワールド原点をシャドウクリップへ（原点でなく\ “カスケード中心”\ でもOK）}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00552}00552\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Math::Vec4f}}\ originWS(0.0f,\ 0.0f,\ 0.0f,\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00553}00553\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Math::Vec4f}}\ originCS\ =\ shadowVP\ *\ originWS;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00554}00554\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00555}00555\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 念のため}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00556}00556\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::abs(originCS.w)\ <\ 1e-\/6f)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00557}00557\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00558}00558\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ NDC}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00559}00559\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ originCS.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a3b73bc23b1366b9bb9fdd5c324eb89ca}{x}}\ /=\ originCS.w;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00560}00560\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ originCS.y\ /=\ originCS.w;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00561}00561\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00562}00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ NDC[-\/1..1]\ を\ “テクセル座標”\ に変換}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00563}00563\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ halfX\ =\ shadowResX\ *\ 0.5f;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00564}00564\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ halfY\ =\ shadowResY\ *\ 0.5f;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00565}00565\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00566}00566\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ texX\ =\ originCS.x\ *\ halfX;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00567}00567\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ texY\ =\ originCS.y\ *\ halfY;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00568}00568\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00569}00569\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ テクセル格子へ丸め}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00570}00570\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ snappedTexX\ =\ std::round(texX);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00571}00571\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ snappedTexY\ =\ std::round(texY);}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00572}00572\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00573}00573\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ どれだけズレているか（テクセル→NDCに戻す）}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00574}00574\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ offsetNdcX\ =\ (snappedTexX\ -\/\ texX)\ /\ halfX;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00575}00575\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ offsetNdcY\ =\ (snappedTexY\ -\/\ texY)\ /\ halfY;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00576}00576\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00577}00577\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ クリップ空間で平行移動をかける：T\ *\ P}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00578}00578\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math::Matrix4x4f}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix_a176732d2017915e26be58c2bfcf7c930}{Math::Matrix4x4f::Identity}}();}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00579}00579\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 「クリップで\ x,y\ を足す」成分に\ offset\ を入れるのが目的です}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00580}00580\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}.m30\ =\ offsetNdcX;\ \ \ \textcolor{comment}{//\ (row-\/major/col-\/majorでここは変わる可能性あり)}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00581}00581\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}.m31\ =\ offsetNdcY;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00582}00582\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00583}00583\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lightProj\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\ *\ lightProj;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00584}00584\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00585}00585\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00586}00586\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00587}00587\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::shared\_mutex\ m\_updateMutex;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00588}00588\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00589}00589\ \ \ \ \ \ \ \ \ \ \ \ \ DirectionalLight\ m\_directional\{\};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00590}00590\ \ \ \ \ \ \ \ \ \ \ \ \ AmbientLight\ \ \ \ \ m\_ambient\{\};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00591}00591\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00592}00592\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_emissiveBoost\ =\ 3.0f;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00593}00593\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00594}00594\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config}{CascadeConfig}}\ m\_cascadeCfg\{\};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00595}00595\ \ \ \ \ \ \ \ \ \ \ \ \ std::uint32\_t\ m\_cascadeCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00596}00596\ }
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00597}00597\ \ \ \ \ \ \ \ \ \ \ \ \ ShadowCascade<kMaxShadowCascades>\ m\_cascades\{\};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00598}00598\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<float,\ kMaxShadowCascades>\ \ \ \ \ \ \ \ \ m\_splitDistances\{\};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00599}00599\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00600}00600\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_service_context_8hpp_adbfb2947c9a06b367226fe228627154c}{STATIC\_SERVICE\_TAG}}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00601}00601\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00602}00602\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_light_shadow_service_8h_source_l00603}00603\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,965 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Level&lt; Partition &gt; クラステンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_level.html','','class_s_f_w_1_1_level-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Level&lt; Partition &gt; クラステンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>レベル(シーン単位)を定義するクラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_level_8hpp_source.html">Level.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:Session" id="r_Session"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_level_1_1_session.html">Session</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">レベルへの要求を管理するセッション構造体  <a href="struct_s_f_w_1_1_level_1_1_session.html#details">[詳解]</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:af121d6c47aa936403568199efa87de50" id="r_af121d6c47aa936403568199efa87de50"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af121d6c47aa936403568199efa87de50">Level</a> (const std::string &amp;name, <a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;reg, <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> _state=<a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53aa02c83a7dbd96295beaefb72c2bee2de">ELevelState::Main</a>, <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> originWS={ 0.0f, 0.0f, 0.0f }, <a class="el" href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">ChunkSizeType</a> _chunkWidth=DefaultChunkWidth, <a class="el" href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">ChunkSizeType</a> _chunkHeight=DefaultChunkHeight, float _chunkCellSize=DefaultChunkCellSize) noexcept</td></tr>
+<tr class="memdesc:af121d6c47aa936403568199efa87de50"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:a5f0fc5b69446cf7dca25d9d4210a0a8b" id="r_a5f0fc5b69446cf7dca25d9d4210a0a8b"><td class="memTemplParams" colspan="2">template&lt;class... Args&gt; <br />
+requires std::constructible_from&lt;Partition, Args...&gt; &amp;&amp; (!(std::same_as&lt;std::remove_cvref_t&lt;Args&gt;, <a class="el" href="class_s_f_w_1_1_level.html">Level</a>&gt; || ...))</td></tr>
+<tr class="memitem:a5f0fc5b69446cf7dca25d9d4210a0a8b template"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f0fc5b69446cf7dca25d9d4210a0a8b">explicit</a> (sizeof...(Args)==1) <a class="el" href="class_s_f_w_1_1_level.html">Level</a>(const std</td></tr>
+<tr class="memdesc:a5f0fc5b69446cf7dca25d9d4210a0a8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">T が Args... で構築可能なときだけ、このコンストラクタを有効化 @  <br /></td></tr>
+<tr class="memitem:a515a296039f5c2a28b716d8c6d426b23" id="r_a515a296039f5c2a28b716d8c6d426b23"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a515a296039f5c2a28b716d8c6d426b23">GetID</a> () const noexcept</td></tr>
+<tr class="memdesc:a515a296039f5c2a28b716d8c6d426b23"><td class="mdescLeft">&#160;</td><td class="mdescRight">LevelIDの取得関数  <br /></td></tr>
+<tr class="memitem:aa3016006d7145226409d98d2fb30da2f" id="r_aa3016006d7145226409d98d2fb30da2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa3016006d7145226409d98d2fb30da2f">Update</a> (const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ECS::ServiceLocator</a> &amp;serviceLocator, double deltaTime, <a class="el" href="struct_s_f_w_1_1_i_thread_executor.html">IThreadExecutor</a> *executor)</td></tr>
+<tr class="memdesc:aa3016006d7145226409d98d2fb30da2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">更新処理  <br /></td></tr>
+<tr class="memitem:a69bb3f35b3d7733bf0930e717d17f756" id="r_a69bb3f35b3d7733bf0930e717d17f756"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a69bb3f35b3d7733bf0930e717d17f756">Clean</a> (const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ECS::ServiceLocator</a> &amp;serviceLocator)</td></tr>
+<tr class="memdesc:a69bb3f35b3d7733bf0930e717d17f756"><td class="mdescLeft">&#160;</td><td class="mdescRight">終了処理  <br /></td></tr>
+<tr class="memitem:ab77413853ea076d61557053d71c6c6bc" id="r_ab77413853ea076d61557053d71c6c6bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab77413853ea076d61557053d71c6c6bc">UpdateLimited</a> (const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ECS::ServiceLocator</a> &amp;serviceLocator, double deltaTime, <a class="el" href="struct_s_f_w_1_1_i_thread_executor.html">IThreadExecutor</a> *executor)</td></tr>
+<tr class="memdesc:ab77413853ea076d61557053d71c6c6bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">限定的な更新処理  <br /></td></tr>
+<tr class="memitem:a29b848cbecad925f85b9dc69b3b650e7" id="r_a29b848cbecad925f85b9dc69b3b650e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29b848cbecad925f85b9dc69b3b650e7">RegisterAllChunks</a> (<a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;reg)</td></tr>
+<tr class="memdesc:a29b848cbecad925f85b9dc69b3b650e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">すべてのチャンクのEntityManagerをレジスターに登録する  <br /></td></tr>
+<tr class="memitem:a99c6b45fb1cc2e107d66ffde7a77ed7e" id="r_a99c6b45fb1cc2e107d66ffde7a77ed7e"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99c6b45fb1cc2e107d66ffde7a77ed7e">GetGlobalEntityManager</a> () noexcept</td></tr>
+<tr class="memdesc:a99c6b45fb1cc2e107d66ffde7a77ed7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">グローバルなエンティティマネージャーを取得する関数  <br /></td></tr>
+<tr class="memitem:a134b57117aef18aa98c5cebe8ec0bde1" id="r_a134b57117aef18aa98c5cebe8ec0bde1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_system_scheduler.html">SchedulerType</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a134b57117aef18aa98c5cebe8ec0bde1">GetScheduler</a> () noexcept</td></tr>
+<tr class="memdesc:a134b57117aef18aa98c5cebe8ec0bde1"><td class="mdescLeft">&#160;</td><td class="mdescRight">スケジューラを取得する関数  <br /></td></tr>
+<tr class="memitem:a4cebf531263e4cc764748a73e57acfb0" id="r_a4cebf531263e4cc764748a73e57acfb0"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4cebf531263e4cc764748a73e57acfb0">GetName</a> () const noexcept</td></tr>
+<tr class="memdesc:a4cebf531263e4cc764748a73e57acfb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">レベルの名前を取得する関数  <br /></td></tr>
+<tr class="memitem:ae77b647f6c5302bd2e4abddaf3cd7f58" id="r_ae77b647f6c5302bd2e4abddaf3cd7f58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae77b647f6c5302bd2e4abddaf3cd7f58">ChangeState</a> (<a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> bits, bool set=true, std::memory_order mo=std::memory_order_acq_rel)</td></tr>
+<tr class="memdesc:ae77b647f6c5302bd2e4abddaf3cd7f58"><td class="mdescLeft">&#160;</td><td class="mdescRight">レベルの状態を設定する関数  <br /></td></tr>
+<tr class="memitem:aa6903a92fc54d7b8b78ba22901154aba" id="r_aa6903a92fc54d7b8b78ba22901154aba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6903a92fc54d7b8b78ba22901154aba">UpdateState</a> (<a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> setBits, <a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> clearBits, std::memory_order success=std::memory_order_acq_rel, std::memory_order fail=std::memory_order_acquire)</td></tr>
+<tr class="memdesc:aa6903a92fc54d7b8b78ba22901154aba"><td class="mdescLeft">&#160;</td><td class="mdescRight">ビットを立てるのと落とすのを同時に行う関数  <br /></td></tr>
+<tr class="memitem:a029398fed9ae2f15c2a820034022c1a6" id="r_a029398fed9ae2f15c2a820034022c1a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a029398fed9ae2f15c2a820034022c1a6">GetState</a> (std::memory_order mo=std::memory_order_acquire) const</td></tr>
+<tr class="memdesc:a029398fed9ae2f15c2a820034022c1a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">レベルの状態を取得する関数  <br /></td></tr>
+<tr class="memitem:ab655fe3a3b1d7f088e56e9449f25a68c" id="r_ab655fe3a3b1d7f088e56e9449f25a68c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab655fe3a3b1d7f088e56e9449f25a68c">IsActive</a> (std::memory_order mo=std::memory_order_acquire) const</td></tr>
+<tr class="memdesc:ab655fe3a3b1d7f088e56e9449f25a68c"><td class="mdescLeft">&#160;</td><td class="mdescRight">レベルがアクティブ状態かどうかを取得する関数  <br /></td></tr>
+<tr class="memitem:a5f059d268722000c42a20faf7adf2c09" id="r_a5f059d268722000c42a20faf7adf2c09"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f059d268722000c42a20faf7adf2c09">IsLoading</a> (std::memory_order mo=std::memory_order_acquire) const</td></tr>
+<tr class="memdesc:a5f059d268722000c42a20faf7adf2c09"><td class="mdescLeft">&#160;</td><td class="mdescRight">レベルがローディング状態かどうかを取得する関数  <br /></td></tr>
+<tr class="memitem:a08aaadaec0651b93df14daca91e16b0b" id="r_a08aaadaec0651b93df14daca91e16b0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08aaadaec0651b93df14daca91e16b0b">SetActive</a> (bool active, std::memory_order mo=std::memory_order_acq_rel)</td></tr>
+<tr class="memdesc:a08aaadaec0651b93df14daca91e16b0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">レベルのアクティブ状態を設定する関数  <br /></td></tr>
+<tr class="memitem:ac6ad823ef201187a53b833228138ee7e" id="r_ac6ad823ef201187a53b833228138ee7e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6ad823ef201187a53b833228138ee7e">TryBeginLoading</a> (std::memory_order success=std::memory_order_acq_rel, std::memory_order fail=std::memory_order_acquire)</td></tr>
+<tr class="memdesc:ac6ad823ef201187a53b833228138ee7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">レベルのローディングを開始し、成功したかどうかを返す関数  <br /></td></tr>
+<tr class="memitem:a14f5e74e991ff4c0641c923cad9eaf4d" id="r_a14f5e74e991ff4c0641c923cad9eaf4d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a14f5e74e991ff4c0641c923cad9eaf4d">TryBeginClean</a> (std::memory_order success=std::memory_order_acq_rel, std::memory_order fail=std::memory_order_acquire)</td></tr>
+<tr class="memdesc:a14f5e74e991ff4c0641c923cad9eaf4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">レベルのクリーンを開始し、成功したかどうかを返す関数  <br /></td></tr>
+<tr class="memitem:aa11adee2de120e6e8083a5aa6e8b3ae2" id="r_aa11adee2de120e6e8083a5aa6e8b3ae2"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa11adee2de120e6e8083a5aa6e8b3ae2">GetChunk</a> (<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> location, <a class="el" href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1e">EOutOfBoundsPolicy</a> policy=<a class="el" href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134">EOutOfBoundsPolicy::ClampToEdge</a>) noexcept</td></tr>
+<tr class="memitem:a1dd68e8dacc69f758fc9bb70200a0494" id="r_a1dd68e8dacc69f758fc9bb70200a0494"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_level_1_1_session.html">Session</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1dd68e8dacc69f758fc9bb70200a0494">GetSession</a> ()</td></tr>
+<tr class="memdesc:a1dd68e8dacc69f758fc9bb70200a0494"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entityを更新するためのクラス取得  <br /></td></tr>
+<tr class="memitem:a5bc0fb54b56a15d7ff96e95ca963afcc" id="r_a5bc0fb54b56a15d7ff96e95ca963afcc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5bc0fb54b56a15d7ff96e95ca963afcc">ShowDebugInactiveLevelInfoUI</a> ()</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;PartitionConcept Partition&gt;<br />
+class SFW::Level&lt; Partition &gt;</div><p>レベル(シーン単位)を定義するクラス </p>
+<dl class="tparams"><dt>テンプレート引数</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Partition</td><td>パーティションの型 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00132">132</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="af121d6c47aa936403568199efa87de50" name="af121d6c47aa936403568199efa87de50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af121d6c47aa936403568199efa87de50">&#9670;&#160;</a></span>Level()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::Level </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>reg</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a></td>          <td class="paramname"><span class="paramname"><em>_state</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53aa02c83a7dbd96295beaefb72c2bee2de">ELevelState::Main</a></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>originWS</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{&#160;0.0f,0.0f,0.0f&#160;}</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">ChunkSizeType</a></td>          <td class="paramname"><span class="paramname"><em>_chunkWidth</em></span><span class="paramdefsep"> = </span><span class="paramdefval">DefaultChunkWidth</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">ChunkSizeType</a></td>          <td class="paramname"><span class="paramname"><em>_chunkHeight</em></span><span class="paramdefsep"> = </span><span class="paramdefval">DefaultChunkHeight</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>_chunkCellSize</em></span><span class="paramdefsep"> = </span><span class="paramdefval">DefaultChunkCellSize</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>レベルの名前 </td></tr>
+    <tr><td class="paramname">state</td><td>レベルの状態 </td></tr>
+    <tr><td class="paramname">_chunkWidth</td><td>チャンクの幅 </td></tr>
+    <tr><td class="paramname">_chunkHeight</td><td>チャンクの高さ </td></tr>
+    <tr><td class="paramname">_chunkCellSize</td><td>チャンクのセルサイズ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00324">324</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="ae77b647f6c5302bd2e4abddaf3cd7f58" name="ae77b647f6c5302bd2e4abddaf3cd7f58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae77b647f6c5302bd2e4abddaf3cd7f58">&#9670;&#160;</a></span>ChangeState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::ChangeState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a></td>          <td class="paramname"><span class="paramname"><em>bits</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>set</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::memory_order</td>          <td class="paramname"><span class="paramname"><em>mo</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::memory_order_acq_rel</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>レベルの状態を設定する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>レベルの状態 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00453">453</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a69bb3f35b3d7733bf0930e717d17f756" name="a69bb3f35b3d7733bf0930e717d17f756"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69bb3f35b3d7733bf0930e717d17f756">&#9670;&#160;</a></span>Clean()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::Clean </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ECS::ServiceLocator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>serviceLocator</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>終了処理 </p>
+<p>SystemSchedulerのSystemのEnd関数を呼び出す </p>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00393">393</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a5f0fc5b69446cf7dca25d9d4210a0a8b" name="a5f0fc5b69446cf7dca25d9d4210a0a8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f0fc5b69446cf7dca25d9d4210a0a8b">&#9670;&#160;</a></span>explicit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<div class="memtemplate">
+template&lt;class... Args&gt; <br />
+requires std::constructible_from&lt;Partition, Args...&gt; &amp;&amp; (!(std::same_as&lt;std::remove_cvref_t&lt;Args&gt;, <a class="el" href="class_s_f_w_1_1_level.html">Level</a>&gt; || ...))</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::explicit </td>
+          <td>(</td>
+          <td class="paramtype">sizeof...</td>          <td class="paramname"><span class="paramname"><em></em></span>Args<span class="paramdefsep"> = </span><span class="paramdefval">=&#160;1</span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>T が Args... で構築可能なときだけ、このコンストラクタを有効化 @ </p>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00344">344</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa11adee2de120e6e8083a5aa6e8b3ae2" name="aa11adee2de120e6e8083a5aa6e8b3ae2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa11adee2de120e6e8083a5aa6e8b3ae2">&#9670;&#160;</a></span>GetChunk()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt; <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::GetChunk </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>location</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1e">EOutOfBoundsPolicy</a></td>          <td class="paramname"><span class="paramname"><em>policy</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134">EOutOfBoundsPolicy::ClampToEdge</a></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00568">568</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a99c6b45fb1cc2e107d66ffde7a77ed7e" name="a99c6b45fb1cc2e107d66ffde7a77ed7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99c6b45fb1cc2e107d66ffde7a77ed7e">&#9670;&#160;</a></span>GetGlobalEntityManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp; <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::GetGlobalEntityManager </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>グローバルなエンティティマネージャーを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html" title="エンティティの生成と破棄、コンポーネントの追加・削除を管理するクラス">ECS::EntityManager</a>&amp; グローバルエンティティマネージャーへの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00438">438</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a515a296039f5c2a28b716d8c6d426b23" name="a515a296039f5c2a28b716d8c6d426b23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a515a296039f5c2a28b716d8c6d426b23">&#9670;&#160;</a></span>GetID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a> <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::GetID </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>LevelIDの取得関数 </p>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00359">359</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4cebf531263e4cc764748a73e57acfb0" name="a4cebf531263e4cc764748a73e57acfb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cebf531263e4cc764748a73e57acfb0">&#9670;&#160;</a></span>GetName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string &amp; <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::GetName </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>レベルの名前を取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>const std::string&amp; レベルの名前への参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00448">448</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a134b57117aef18aa98c5cebe8ec0bde1" name="a134b57117aef18aa98c5cebe8ec0bde1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a134b57117aef18aa98c5cebe8ec0bde1">&#9670;&#160;</a></span>GetScheduler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_system_scheduler.html">SchedulerType</a> &amp; <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::GetScheduler </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>スケジューラを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>SchedulerType&amp; スケジューラへの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00443">443</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a1dd68e8dacc69f758fc9bb70200a0494" name="a1dd68e8dacc69f758fc9bb70200a0494"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1dd68e8dacc69f758fc9bb70200a0494">&#9670;&#160;</a></span>GetSession()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_level_1_1_session.html">Session</a> <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::GetSession </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Entityを更新するためのクラス取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd>std::shared_mutex&amp; mutex </dd></dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00575">575</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a029398fed9ae2f15c2a820034022c1a6" name="a029398fed9ae2f15c2a820034022c1a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a029398fed9ae2f15c2a820034022c1a6">&#9670;&#160;</a></span>GetState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a> <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::GetState </td>
+          <td>(</td>
+          <td class="paramtype">std::memory_order</td>          <td class="paramname"><span class="paramname"><em>mo</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::memory_order_acquire</span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>レベルの状態を取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53" title="レベルの状態を定義する列挙型">ELevelState</a> レベルの状態 </dd></dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00484">484</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab655fe3a3b1d7f088e56e9449f25a68c" name="ab655fe3a3b1d7f088e56e9449f25a68c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab655fe3a3b1d7f088e56e9449f25a68c">&#9670;&#160;</a></span>IsActive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::IsActive </td>
+          <td>(</td>
+          <td class="paramtype">std::memory_order</td>          <td class="paramname"><span class="paramname"><em>mo</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::memory_order_acquire</span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>レベルがアクティブ状態かどうかを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>bool アクティブ状態の場合はtrue、そうでない場合はfalse </dd></dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00492">492</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a5f059d268722000c42a20faf7adf2c09" name="a5f059d268722000c42a20faf7adf2c09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f059d268722000c42a20faf7adf2c09">&#9670;&#160;</a></span>IsLoading()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::IsLoading </td>
+          <td>(</td>
+          <td class="paramtype">std::memory_order</td>          <td class="paramname"><span class="paramname"><em>mo</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::memory_order_acquire</span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>レベルがローディング状態かどうかを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>bool ローディング状態の場合はtrue、そうでない場合はfalse </dd></dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00499">499</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a29b848cbecad925f85b9dc69b3b650e7" name="a29b848cbecad925f85b9dc69b3b650e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29b848cbecad925f85b9dc69b3b650e7">&#9670;&#160;</a></span>RegisterAllChunks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::RegisterAllChunks </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>reg</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>すべてのチャンクのEntityManagerをレジスターに登録する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reg</td><td>EntityManagerRegistryの参照 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00430">430</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a08aaadaec0651b93df14daca91e16b0b" name="a08aaadaec0651b93df14daca91e16b0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08aaadaec0651b93df14daca91e16b0b">&#9670;&#160;</a></span>SetActive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::SetActive </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>active</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::memory_order</td>          <td class="paramname"><span class="paramname"><em>mo</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::memory_order_acq_rel</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>レベルのアクティブ状態を設定する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">active</td><td>アクティブ状態 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00507">507</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a5bc0fb54b56a15d7ff96e95ca963afcc" name="a5bc0fb54b56a15d7ff96e95ca963afcc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5bc0fb54b56a15d7ff96e95ca963afcc">&#9670;&#160;</a></span>ShowDebugInactiveLevelInfoUI()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::ShowDebugInactiveLevelInfoUI </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00580">580</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a14f5e74e991ff4c0641c923cad9eaf4d" name="a14f5e74e991ff4c0641c923cad9eaf4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14f5e74e991ff4c0641c923cad9eaf4d">&#9670;&#160;</a></span>TryBeginClean()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::TryBeginClean </td>
+          <td>(</td>
+          <td class="paramtype">std::memory_order</td>          <td class="paramname"><span class="paramname"><em>success</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::memory_order_acq_rel</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::memory_order</td>          <td class="paramname"><span class="paramname"><em>fail</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::memory_order_acquire</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>レベルのクリーンを開始し、成功したかどうかを返す関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>bool クリーンの開始に成功した場合はtrue、そうでない場合はfalse </dd></dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00548">548</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac6ad823ef201187a53b833228138ee7e" name="ac6ad823ef201187a53b833228138ee7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6ad823ef201187a53b833228138ee7e">&#9670;&#160;</a></span>TryBeginLoading()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::TryBeginLoading </td>
+          <td>(</td>
+          <td class="paramtype">std::memory_order</td>          <td class="paramname"><span class="paramname"><em>success</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::memory_order_acq_rel</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::memory_order</td>          <td class="paramname"><span class="paramname"><em>fail</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::memory_order_acquire</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>レベルのローディングを開始し、成功したかどうかを返す関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>bool ローディングの開始に成功した場合はtrue、そうでない場合はfalse </dd></dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00524">524</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa3016006d7145226409d98d2fb30da2f" name="aa3016006d7145226409d98d2fb30da2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3016006d7145226409d98d2fb30da2f">&#9670;&#160;</a></span>Update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::Update </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ECS::ServiceLocator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>serviceLocator</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>deltaTime</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_i_thread_executor.html">IThreadExecutor</a> *</td>          <td class="paramname"><span class="paramname"><em>executor</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>更新処理 </p>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00364">364</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab77413853ea076d61557053d71c6c6bc" name="ab77413853ea076d61557053d71c6c6bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab77413853ea076d61557053d71c6c6bc">&#9670;&#160;</a></span>UpdateLimited()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::UpdateLimited </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ECS::ServiceLocator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>serviceLocator</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>deltaTime</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_i_thread_executor.html">IThreadExecutor</a> *</td>          <td class="paramname"><span class="paramname"><em>executor</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>限定的な更新処理 </p>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00405">405</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa6903a92fc54d7b8b78ba22901154aba" name="aa6903a92fc54d7b8b78ba22901154aba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6903a92fc54d7b8b78ba22901154aba">&#9670;&#160;</a></span>UpdateState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;PartitionConcept Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_level.html">SFW::Level</a>&lt; Partition &gt;::UpdateState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a></td>          <td class="paramname"><span class="paramname"><em>setBits</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#a7a3877c23db2b6428dfd8852c4644b53">ELevelState</a></td>          <td class="paramname"><span class="paramname"><em>clearBits</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::memory_order</td>          <td class="paramname"><span class="paramname"><em>success</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::memory_order_acq_rel</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::memory_order</td>          <td class="paramname"><span class="paramname"><em>fail</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::memory_order_acquire</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ビットを立てるのと落とすのを同時に行う関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">setMask</td><td>立てるビットのマスク </td></tr>
+    <tr><td class="paramname">clearMask</td><td>落とすビットのマスク </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_level_8hpp_source.html">Level.hpp</a> の <a class="el" href="_level_8hpp_source.html#l00467">467</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/<a class="el" href="_level_8hpp_source.html">Level.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="class_s_f_w_1_1_level.html">Level</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

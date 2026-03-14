@@ -1,0 +1,146 @@
+\doxysection{SFW\+::SIMD 名前空間}
+\hypertarget{namespace_s_f_w_1_1_s_i_m_d}{}\label{namespace_s_f_w_1_1_s_i_m_d}\index{SFW::SIMD@{SFW::SIMD}}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a76c71a43b65418c603802d18bc8d22a4}{Update\+Scalar\+Lerp\+Fn}}
+\begin{DoxyCompactList}\small\item\em スカラー補間を行う関数ポインタの型定義 \end{DoxyCompactList}\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a003f6f5cc83500b45b60efb1ec2ceac4}{Update\+Quat\+Nlerp\+Shortest\+Fn}}
+\begin{DoxyCompactList}\small\item\em クォータニオンの最短経路補間を行う関数ポインタの型定義 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_ab531b011a04e0679fe103fe6c0ac8307}{Simd\+Init}} ()
+\begin{DoxyCompactList}\small\item\em SIMD初期化。起動時に呼ぶ \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a3ee4f230283e6345d5c8d4b282d0f7df}{cpu\+\_\+has\+\_\+avx\+\_\+os\+\_\+support}} ()
+\begin{DoxyCompactList}\small\item\em CPUが\+AVXをサポートしているかをチェックする関数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_af9e3f2eb660d563830289d0b83136d83}{cpu\+\_\+has\+\_\+avx2}} ()
+\begin{DoxyCompactList}\small\item\em CPUが\+AVX2をサポートしているかをチェックする関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{変数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a76c71a43b65418c603802d18bc8d22a4}{Update\+Scalar\+Lerp\+Fn}} \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a93cc363c4ebcd62c33c7c4f87d3ecf7b}{g\+Update\+Scalar\+Lerp}}
+\begin{DoxyCompactList}\small\item\em 実行時に差し替えるスカラー補間関数ポインタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a003f6f5cc83500b45b60efb1ec2ceac4}{Update\+Quat\+Nlerp\+Shortest\+Fn}} \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a7ddf8665238d2b3768cefa4da97cb25d}{g\+Update\+Quat\+Nlerp\+Shortest}}
+\begin{DoxyCompactList}\small\item\em 実行時に差し替えるクォータニオン補間関数ポインタ \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-typedef-members}
+\Hypertarget{namespace_s_f_w_1_1_s_i_m_d_doc-typedef-members}
+\doxysubsection{型定義詳解}
+\Hypertarget{namespace_s_f_w_1_1_s_i_m_d_a003f6f5cc83500b45b60efb1ec2ceac4}\index{SFW::SIMD@{SFW::SIMD}!UpdateQuatNlerpShortestFn@{UpdateQuatNlerpShortestFn}}
+\index{UpdateQuatNlerpShortestFn@{UpdateQuatNlerpShortestFn}!SFW::SIMD@{SFW::SIMD}}
+\doxysubsubsection{\texorpdfstring{UpdateQuatNlerpShortestFn}{UpdateQuatNlerpShortestFn}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_s_i_m_d_a003f6f5cc83500b45b60efb1ec2ceac4} 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a003f6f5cc83500b45b60efb1ec2ceac4}{SFW\+::\+SIMD\+::\+Update\+Quat\+Nlerp\+Shortest\+Fn}}}
+
+{\bfseries 初期値\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ void(*)(\textcolor{keywordtype}{float}*\ qx,\ \textcolor{keywordtype}{float}*\ qy,\ \textcolor{keywordtype}{float}*\ qz,\ \textcolor{keywordtype}{float}*\ qw,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ ax,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ ay,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ az,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ aw,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ bx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ by,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ bz,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ bw,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t*\ mask01,\ \textcolor{keywordtype}{size\_t}\ n,\ \textcolor{keywordtype}{float}\ alpha)}
+
+\end{DoxyCode}
+
+
+クォータニオンの最短経路補間を行う関数ポインタの型定義 
+
+
+
+ \mbox{\hyperlink{simd__api_8h_source}{simd\+\_\+api.\+h}} の \mbox{\hyperlink{simd__api_8h_source_l00023}{23}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_s_i_m_d_a76c71a43b65418c603802d18bc8d22a4}\index{SFW::SIMD@{SFW::SIMD}!UpdateScalarLerpFn@{UpdateScalarLerpFn}}
+\index{UpdateScalarLerpFn@{UpdateScalarLerpFn}!SFW::SIMD@{SFW::SIMD}}
+\doxysubsubsection{\texorpdfstring{UpdateScalarLerpFn}{UpdateScalarLerpFn}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_s_i_m_d_a76c71a43b65418c603802d18bc8d22a4} 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a76c71a43b65418c603802d18bc8d22a4}{SFW\+::\+SIMD\+::\+Update\+Scalar\+Lerp\+Fn}}}
+
+{\bfseries 初期値\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ void(*)(\textcolor{keywordtype}{float}*\ dst,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ a,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ b,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t*\ mask01,\ \textcolor{keywordtype}{size\_t}\ n,\ \textcolor{keywordtype}{float}\ alpha)}
+
+\end{DoxyCode}
+
+
+スカラー補間を行う関数ポインタの型定義 
+
+
+
+ \mbox{\hyperlink{simd__api_8h_source}{simd\+\_\+api.\+h}} の \mbox{\hyperlink{simd__api_8h_source_l00018}{18}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{namespace_s_f_w_1_1_s_i_m_d_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{namespace_s_f_w_1_1_s_i_m_d_af9e3f2eb660d563830289d0b83136d83}\index{SFW::SIMD@{SFW::SIMD}!cpu\_has\_avx2@{cpu\_has\_avx2}}
+\index{cpu\_has\_avx2@{cpu\_has\_avx2}!SFW::SIMD@{SFW::SIMD}}
+\doxysubsubsection{\texorpdfstring{cpu\_has\_avx2()}{cpu\_has\_avx2()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_s_i_m_d_af9e3f2eb660d563830289d0b83136d83} 
+bool SFW\+::\+SIMD\+::cpu\+\_\+has\+\_\+avx2 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+CPUが\+AVX2をサポートしているかをチェックする関数 
+
+\begin{DoxyReturn}{戻り値}
+bool AVX2サポートの有無 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{simd__detect_8h_source}{simd\+\_\+detect.\+h}} の \mbox{\hyperlink{simd__detect_8h_source_l00036}{36}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_s_i_m_d_a3ee4f230283e6345d5c8d4b282d0f7df}\index{SFW::SIMD@{SFW::SIMD}!cpu\_has\_avx\_os\_support@{cpu\_has\_avx\_os\_support}}
+\index{cpu\_has\_avx\_os\_support@{cpu\_has\_avx\_os\_support}!SFW::SIMD@{SFW::SIMD}}
+\doxysubsubsection{\texorpdfstring{cpu\_has\_avx\_os\_support()}{cpu\_has\_avx\_os\_support()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_s_i_m_d_a3ee4f230283e6345d5c8d4b282d0f7df} 
+bool SFW\+::\+SIMD\+::cpu\+\_\+has\+\_\+avx\+\_\+os\+\_\+support (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+CPUが\+AVXをサポートしているかをチェックする関数 
+
+\begin{DoxyReturn}{戻り値}
+bool AVXサポートの有無 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{simd__detect_8h_source}{simd\+\_\+detect.\+h}} の \mbox{\hyperlink{simd__detect_8h_source_l00019}{19}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_s_i_m_d_ab531b011a04e0679fe103fe6c0ac8307}\index{SFW::SIMD@{SFW::SIMD}!SimdInit@{SimdInit}}
+\index{SimdInit@{SimdInit}!SFW::SIMD@{SFW::SIMD}}
+\doxysubsubsection{\texorpdfstring{SimdInit()}{SimdInit()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_s_i_m_d_ab531b011a04e0679fe103fe6c0ac8307} 
+void SFW\+::\+SIMD\+::\+Simd\+Init (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+SIMD初期化。起動時に呼ぶ 
+
+
+
+\label{doc-var-members}
+\Hypertarget{namespace_s_f_w_1_1_s_i_m_d_doc-var-members}
+\doxysubsection{変数詳解}
+\Hypertarget{namespace_s_f_w_1_1_s_i_m_d_a7ddf8665238d2b3768cefa4da97cb25d}\index{SFW::SIMD@{SFW::SIMD}!gUpdateQuatNlerpShortest@{gUpdateQuatNlerpShortest}}
+\index{gUpdateQuatNlerpShortest@{gUpdateQuatNlerpShortest}!SFW::SIMD@{SFW::SIMD}}
+\doxysubsubsection{\texorpdfstring{gUpdateQuatNlerpShortest}{gUpdateQuatNlerpShortest}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_s_i_m_d_a7ddf8665238d2b3768cefa4da97cb25d} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a003f6f5cc83500b45b60efb1ec2ceac4}{Update\+Quat\+Nlerp\+Shortest\+Fn}} SFW\+::\+SIMD\+::g\+Update\+Quat\+Nlerp\+Shortest\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+実行時に差し替えるクォータニオン補間関数ポインタ 
+
+\Hypertarget{namespace_s_f_w_1_1_s_i_m_d_a93cc363c4ebcd62c33c7c4f87d3ecf7b}\index{SFW::SIMD@{SFW::SIMD}!gUpdateScalarLerp@{gUpdateScalarLerp}}
+\index{gUpdateScalarLerp@{gUpdateScalarLerp}!SFW::SIMD@{SFW::SIMD}}
+\doxysubsubsection{\texorpdfstring{gUpdateScalarLerp}{gUpdateScalarLerp}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_s_i_m_d_a93cc363c4ebcd62c33c7c4f87d3ecf7b} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_s_i_m_d_a76c71a43b65418c603802d18bc8d22a4}{Update\+Scalar\+Lerp\+Fn}} SFW\+::\+SIMD\+::g\+Update\+Scalar\+Lerp\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+実行時に差し替えるスカラー補間関数ポインタ 
+

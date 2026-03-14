@@ -1,0 +1,353 @@
+\doxysection{DX11\+Render\+Backend.\+h}
+\hypertarget{_d_x11_render_backend_8h_source}{}\label{_d_x11_render_backend_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11RenderBackend.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11RenderBackend.h}}
+\mbox{\hyperlink{_d_x11_render_backend_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <wrl/client.h>}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_render_backend_8hpp}{../RenderBackend.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_d_x11_mesh_manager_8h}{DX11MeshManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_d_x11_material_manager_8h}{DX11MaterialManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_d_x11_shader_manager_8h}{DX11ShaderManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_d_x11_p_s_o_manager_8h}{DX11PSOManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_d_x11_texture_manager_8h}{DX11TextureManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_d_x11_buffer_manager_8h}{DX11BufferManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_d_x11_sampler_manager_8h}{DX11SamplerManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_d_x11_model_asset_manager_8h}{DX11ModelAssetManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00023}00023\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00025}00025\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00026}00026\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00027}00027\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11}{Graphics::DX11}}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00028}00028\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00034}\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a8710f0a5811fcb5a438d6b9fb10f153a}{00034}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ D3D\_PRIMITIVE\_TOPOLOGY\ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a8710f0a5811fcb5a438d6b9fb10f153a}{ToD3DTopology}}(\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0ed}{PrimitiveTopology}}\ t)\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{__dx11inc_8h_a9b5d4db15283fee37fe1800fe97d6f7d}{D3DTopologyLUT}}[\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(t)];}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00040}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend}{00040}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a5d4fb546e7dc91c1e9c88951983f3e8b}{RenderBackend}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{RenderBackendBase}}<RenderBackend,\ ID3D11RenderTargetView*,\ ID3D11DepthStencilView*,\ ID3D11ShaderResourceView*,\ ID3D11Buffer*,\ ComPtr>\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00045}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a008e900bda388ae98c8f955845eae180}{00045}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a008e900bda388ae98c8f955845eae180}{MAX\_DRAW\_CALL\_INSTANCES\_NUM}}\ =\ 1024\ *\ 4;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00059}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a5d4fb546e7dc91c1e9c88951983f3e8b}{00059}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a5d4fb546e7dc91c1e9c88951983f3e8b}{RenderBackend}}(ID3D11Device*\ device,\ ID3D11DeviceContext*\ context,}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager}{MeshManager}}*\ meshMgr,\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager}{MaterialManager}}*\ matMgr,}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_manager}{ShaderManager}}*\ shaderMgr,\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager}{PSOManager}}*\ psoMgr,}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{TextureManager}}*\ textureMgr,\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager}{BufferManager}}*\ cbMgr,}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager}{SamplerManager}}*\ samplerMgr,\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_manager}{ModelAssetManager}}*\ modelAssetMgr);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00068}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_af2f14c85f7bbc1d0d74f65b5270ab039}{00068}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_af2f14c85f7bbc1d0d74f65b5270ab039}{AddResourceManagerToRenderServiceImpl}}(}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{RenderGraph<RenderBackend,\ ID3D11RenderTargetView*,\ ID3D11DepthStencilView*,\ ID3D11ShaderResourceView*,\ ID3D11Buffer*,\ ComPtr>}}\&\ graph);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00074}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a77c80093f1153e0feb1e3b5311a816c7}{00074}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a77c80093f1153e0feb1e3b5311a816c7}{SetPrimitiveTopologyImpl}}(\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0ed}{PrimitiveTopology}}\ topology)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>IASetPrimitiveTopology(\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a8710f0a5811fcb5a438d6b9fb10f153a}{ToD3DTopology}}(topology));}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00081}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_aca812ef0913993247c07a32912a73115}{00081}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_aca812ef0913993247c07a32912a73115}{SetBlendStateImpl}}(\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556b}{BlendStateID}}\ state)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00086}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_ada98ac1a98735c5d4dc083c1711e0a79}{00086}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_ada98ac1a98735c5d4dc083c1711e0a79}{SetRasterizerStateImpl}}(\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5}{RasterizerStateID}}\ state)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00091}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a602a53fc7b2187fe645f99d18a79af94}{00091}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a602a53fc7b2187fe645f99d18a79af94}{SetDepthStencilStateImpl}}(\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3}{DepthStencilStateID}}\ state,\ UINT\ stencilRef\ =\ 0)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>OMSetDepthStencilState(depthStencilStates[(\textcolor{keywordtype}{size\_t})state].Get(),\ stencilRef);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00099}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a1dbccf73dea2d24db0a3044c5e02b2f1}{00099}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a1dbccf73dea2d24db0a3044c5e02b2f1}{SetRenderTargetsImpl}}(\textcolor{keyword}{const}\ std::vector<ID3D11RenderTargetView*>\&\ rtvs,\ \textcolor{keywordtype}{void}*\ dsv)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>OMSetRenderTargets((UINT)rtvs.size(),\ rtvs.data(),\ (ID3D11DepthStencilView*)dsv);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00107}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a88f45fee9688292534c6c3dc0beafd5d}{00107}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a88f45fee9688292534c6c3dc0beafd5d}{BindPSSRVsImpl}}(\textcolor{keyword}{const}\ std::vector<ID3D11ShaderResourceView*>\&\ srvs,\ uint32\_t\ startSlot\ =\ 0)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>PSSetShaderResources(startSlot,\ (UINT)srvs.size(),\ srvs.data());}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00115}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a118cba78871b621c1b0c82620b0b120e}{00115}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a118cba78871b621c1b0c82620b0b120e}{BindVSCBVsImpl}}(\textcolor{keyword}{const}\ std::vector<ID3D11Buffer*>\&\ cbvs,\ uint32\_t\ startSlot\ =\ 0)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>VSSetConstantBuffers(startSlot,\ (UINT)cbvs.size(),\ cbvs.data());}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00123}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a7c6f7db6bc2ebf4c64f2be5e2fbd605c}{00123}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a7c6f7db6bc2ebf4c64f2be5e2fbd605c}{BindPSCBVsImpl}}(\textcolor{keyword}{const}\ std::vector<ID3D11Buffer*>\&\ cbvs,\ uint32\_t\ startSlot\ =\ 0)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>PSSetConstantBuffers(startSlot,\ (UINT)cbvs.size(),\ cbvs.data());}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00130}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_ad60763968788e2f6ad66b0442a6f8420}{00130}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_ad60763968788e2f6ad66b0442a6f8420}{BindGlobalVSCBVsImpl}}(\textcolor{keyword}{const}\ std::vector<BindSlotBuffer>\&\ cbvs)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ cb\ :\ cbvs)\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ d\ =\ cbManager-\/>Get(cb.handle);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>VSSetConstantBuffers(cb.slot,\ 1,\ d.ref().buffer.GetAddressOf());}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00137}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_accf862fa79e251c7aff5e45ecfb1d1db}{00137}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_accf862fa79e251c7aff5e45ecfb1d1db}{SetViewportImpl}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport}{Viewport}}\&\ vp)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D3D11\_VIEWPORT\ d3dvp\{\};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d3dvp.TopLeftX\ =\ vp.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport_a9490be4d00dd9b9c4c3bde4abd5b0fc2}{topLeftX}};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d3dvp.TopLeftY\ =\ vp.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport_a7a03e36418a251f371e5fcae7d8cae07}{topLeftY}};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d3dvp.Width\ =\ vp.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport_aa9207ee31221313776fe6a2114fb3c7b}{width}};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d3dvp.Height\ =\ vp.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport_a2ce7a6f601e7d8f3313108305bd322b0}{height}};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d3dvp.MinDepth\ =\ vp.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport_a8c650d0180665873466ea51d3a87a605}{minDepth}};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d3dvp.MaxDepth\ =\ vp.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport_a136d087317de49060b2667583c007058}{maxDepth}};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>RSSetViewports(1,\ \&d3dvp);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00153}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_ae52c80b211c7eab37068aa1f38997f3e}{00153}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_ae52c80b211c7eab37068aa1f38997f3e}{BeginFrameUploadImpl}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{SharedInstanceArena::InstancePool}}*\ framePool,\ uint32\_t\ instCount)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00154}00154\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D3D11\_MAPPED\_SUBRESOURCE\ m\{\};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>Map(m\_instanceSB.Get(),\ 0,\ D3D11\_MAP\_WRITE\_DISCARD,\ 0,\ \&m);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ memcpy(m.pData,\ framePool,\ instCount\ *\ \textcolor{keyword}{sizeof}(\textcolor{keyword}{decltype}(*framePool)));}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>Unmap(m\_instanceSB.Get(),\ 0);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ VecT>}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00166}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_aef6d591b82036569b5d86a299ed03d23}{00166}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_aef6d591b82036569b5d86a299ed03d23}{ExecuteDrawIndexedInstancedImpl}}(\textcolor{keyword}{const}\ VecT\&\ cmds,\ std::optional<PSOHandle>\ psoOverride,\ \textcolor{keywordtype}{bool}\ usePSORasterizer,\ \textcolor{keywordtype}{bool}\ rebindPSO)}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }DrawBatch\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ mesh;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ material;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ pso;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ base;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ instanceCount;\ \textcolor{comment}{//\ instances[idx]}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BeginIndexStream();}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ i\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ cmdCount\ =\ cmds.size();}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<DrawBatch>\ batches;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (psoOverride.has\_value())\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PSOオーバーライドがある場合、すべて同じPSOで描画する}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ overriddenPSO\ =\ psoOverride.value().index;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (i\ <\ cmdCount)\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ currentMat\ =\ cmds[i].material;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ currentMesh\ =\ cmds[i].mesh;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ instanceCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ base\ =\ m\_idxHead;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ このドローの\ index\ 先頭}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ 同PSO/Mat/Mesh\ を束ねつつ、index\ を\ SRV\ に“直接”書く}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ dst\ =\ \textcolor{keyword}{reinterpret\_cast<}uint32\_t*\textcolor{keyword}{>}(m\_idxMapped)\ +\ m\_idxHead;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 同じPSO\ +\ Material\ +\ Meshをまとめる}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (i\ <\ cmdCount\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds[i].material\ ==\ currentMat\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds[i].mesh\ ==\ currentMesh\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ instanceCount\ <\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a008e900bda388ae98c8f955845eae180}{MAX\_DRAW\_CALL\_INSTANCES\_NUM}})\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dst[instanceCount++]\ =\ cmds[i].instanceIndex.index;\ \textcolor{comment}{//\ ←\ 直接書く\ =\ instances[idx];}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++i;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_idxHead\ +=\ instanceCount;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00204}00204\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ batches.emplace\_back(currentMesh,\ currentMat,\ overriddenPSO,\ base,\ instanceCount);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (i\ <\ cmdCount)\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ currentPSO\ =\ cmds[i].pso;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ currentMat\ =\ cmds[i].material;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00213}00213\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ currentMesh\ =\ cmds[i].mesh;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ instanceCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00216}00216\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ base\ =\ m\_idxHead;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ このドローの\ index\ 先頭}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00218}00218\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ 同PSO/Mat/Mesh\ を束ねつつ、index\ を\ SRV\ に“直接”書く}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ dst\ =\ \textcolor{keyword}{reinterpret\_cast<}uint32\_t*\textcolor{keyword}{>}(m\_idxMapped)\ +\ m\_idxHead;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00221}00221\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 同じPSO\ +\ Material\ +\ Meshをまとめる}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (i\ <\ cmdCount\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds[i].pso\ ==\ currentPSO\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds[i].material\ ==\ currentMat\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds[i].mesh\ ==\ currentMesh\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ instanceCount\ <\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a008e900bda388ae98c8f955845eae180}{MAX\_DRAW\_CALL\_INSTANCES\_NUM}})\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dst[instanceCount++]\ =\ cmds[i].instanceIndex.index;\ \textcolor{comment}{//\ ←\ 直接書く\ =\ instances[idx];}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++i;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_idxHead\ +=\ instanceCount;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00232}00232\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ batches.emplace\_back(currentMesh,\ currentMat,\ currentPSO,\ base,\ instanceCount);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EndIndexStream();}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00238}00238\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>VSSetShaderResources(0,\ 1,\ m\_instanceSRV.GetAddressOf());\ \textcolor{comment}{//\ InstanceData\ (t0)}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>VSSetConstantBuffers(1,\ 1,\ m\_perDrawCB.GetAddressOf());\ \textcolor{comment}{//\ (b1)}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ b\ :\ batches)\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PerDraw\ CB\ に\ base\ と\ count\ を設定}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\{\ uint32\_t\ base,\ count,\ pad0,\ pad1;\ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ perDraw\{\ b.base,\ b.instanceCount,\ 0,\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D3D11\_MAPPED\_SUBRESOURCE\ m\{\};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>Map(m\_perDrawCB.Get(),\ 0,\ D3D11\_MAP\_WRITE\_DISCARD,\ 0,\ \&m);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ memcpy(m.pData,\ \&perDraw,\ \textcolor{keyword}{sizeof}(perDraw));}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>Unmap(m\_perDrawCB.Get(),\ 0);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00249}00249\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a8edfa4118648bf729d223af0cd6acaf6}{DrawInstanced}}(b.mesh,\ b.material,\ b.pso,\ b.instanceCount,\ usePSORasterizer,\ rebindPSO);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ VecT>}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00260}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a7519456b31b70a224f5706c9e8734c38}{00260}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a7519456b31b70a224f5706c9e8734c38}{ExecuteDrawIndexedInstancedImpl}}(\textcolor{keyword}{const}\ VecT\&\ cmds,\ std::span<const\ uint32\_t>\ indices,\ std::optional<PSOHandle>\ psoOverride,\ \textcolor{keywordtype}{bool}\ usePSORasterizer,\ \textcolor{keywordtype}{bool}\ rebindPSO)}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }DrawBatch\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ mesh;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ material;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ pso;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ base;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ instanceCount;\ \textcolor{comment}{//\ instances[idx]}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00269}00269\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BeginIndexStream();}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00271}00271\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ k\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ K\ =\ indices.size();}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<DrawBatch>\ batches;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rebindPSO)\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ overriddenPSO\ =\ psoOverride.value().index;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00277}00277\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ isRebindPSO\ =\ [](uint8\_t\ flags)\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (flags\ \&\ \textcolor{keyword}{static\_cast<}uint8\_t\textcolor{keyword}{>}(\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a03256a77eb0e81fa5cb7e058bdda478aa70cd1a75f7b214bb9434b440ccf549df}{DrawFlags::RebindPSONeeded}}))\ !=\ 0;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00281}00281\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (k\ <\ K)\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{DrawCommand}}\&\ first\ =\ cmds[indices[k]];}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ currentPSO\ =\ isRebindPSO(first.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a291fe71aa8186b036623dbd8585de447}{flags}})\ ?\ first.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a8082f0352f544054ac950d9fc3d71ae3}{pso}}\ :\ overriddenPSO;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ currentMat\ =\ first.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a61864b6ef9c1e0a5a2ab3a3f9f439b6d}{material}};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ currentMesh\ =\ first.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a808078e051cf7852fcff020f33d68336}{mesh}};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ instanceCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ base\ =\ m\_idxHead;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ dst\ =\ \textcolor{keyword}{reinterpret\_cast<}uint32\_t*\textcolor{keyword}{>}(m\_idxMapped)\ +\ m\_idxHead;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (k\ <\ K\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (isRebindPSO(first.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a291fe71aa8186b036623dbd8585de447}{flags}})\ ?\ cmds[indices[k]].pso\ :\ overriddenPSO)\ ==\ currentPSO\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds[indices[k]].material\ ==\ currentMat\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds[indices[k]].mesh\ ==\ currentMesh\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ instanceCount\ <\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a008e900bda388ae98c8f955845eae180}{MAX\_DRAW\_CALL\_INSTANCES\_NUM}})\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dst[instanceCount++]\ =\ cmds[indices[k]].instanceIndex.index;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++k;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_idxHead\ +=\ instanceCount;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ batches.push\_back(\{\ currentMesh,\ currentMat,\ currentPSO,\ base,\ instanceCount\ \});}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (psoOverride.has\_value())\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PSOオーバーライドがある場合、すべて同じPSOで描画する}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ overriddenPSO\ =\ psoOverride.value().index;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (k\ <\ K)\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{DrawCommand}}\&\ first\ =\ cmds[indices[k]];}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ currentMat\ =\ first.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a61864b6ef9c1e0a5a2ab3a3f9f439b6d}{material}};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ currentMesh\ =\ first.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a808078e051cf7852fcff020f33d68336}{mesh}};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ instanceCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ base\ =\ m\_idxHead;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ dst\ =\ \textcolor{keyword}{reinterpret\_cast<}uint32\_t*\textcolor{keyword}{>}(m\_idxMapped)\ +\ m\_idxHead;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (k\ <\ K\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds[indices[k]].material\ ==\ currentMat\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds[indices[k]].mesh\ ==\ currentMesh\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ instanceCount\ <\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a008e900bda388ae98c8f955845eae180}{MAX\_DRAW\_CALL\_INSTANCES\_NUM}})\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dst[instanceCount++]\ =\ cmds[indices[k]].instanceIndex.index;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++k;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_idxHead\ +=\ instanceCount;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ batches.push\_back(\{\ currentMesh,\ currentMat,\ overriddenPSO,\ base,\ instanceCount\ \});}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (k\ <\ K)\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{DrawCommand}}\&\ first\ =\ cmds[indices[k]];}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00326}00326\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ currentPSO\ =\ first.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a8082f0352f544054ac950d9fc3d71ae3}{pso}};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ currentMat\ =\ first.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a61864b6ef9c1e0a5a2ab3a3f9f439b6d}{material}};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ currentMesh\ =\ first.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a808078e051cf7852fcff020f33d68336}{mesh}};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ instanceCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00331}00331\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ base\ =\ m\_idxHead;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ dst\ =\ \textcolor{keyword}{reinterpret\_cast<}uint32\_t*\textcolor{keyword}{>}(m\_idxMapped)\ +\ m\_idxHead;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00334}00334\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (k\ <\ K\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds[indices[k]].pso\ ==\ currentPSO\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds[indices[k]].material\ ==\ currentMat\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmds[indices[k]].mesh\ ==\ currentMesh\ \&\&}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ instanceCount\ <\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a008e900bda388ae98c8f955845eae180}{MAX\_DRAW\_CALL\_INSTANCES\_NUM}})\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dst[instanceCount++]\ =\ cmds[indices[k]].instanceIndex.index;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++k;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_idxHead\ +=\ instanceCount;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00344}00344\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ batches.push\_back(\{\ currentMesh,\ currentMat,\ currentPSO,\ base,\ instanceCount\ \});}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00348}00348\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EndIndexStream();}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00350}00350\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>VSSetShaderResources(0,\ 1,\ m\_instanceSRV.GetAddressOf());\ \textcolor{comment}{//\ InstanceData\ (t0)}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>VSSetConstantBuffers(1,\ 1,\ m\_perDrawCB.GetAddressOf());\ \textcolor{comment}{//\ (b1)}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ b\ :\ batches)\ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PerDraw\ CB\ に\ base\ と\ count\ を設定}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\{\ uint32\_t\ base,\ count,\ pad0,\ pad1;\ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ perDraw\{\ b.base,\ b.instanceCount,\ 0,\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D3D11\_MAPPED\_SUBRESOURCE\ m\{\};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>Map(m\_perDrawCB.Get(),\ 0,\ D3D11\_MAP\_WRITE\_DISCARD,\ 0,\ \&m);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ memcpy(m.pData,\ \&perDraw,\ \textcolor{keyword}{sizeof}(perDraw));}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>Unmap(m\_perDrawCB.Get(),\ 0);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00361}00361\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a8edfa4118648bf729d223af0cd6acaf6}{DrawInstanced}}(b.mesh,\ b.material,\ b.pso,\ b.instanceCount,\ usePSORasterizer,\ rebindPSO);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00365}00365\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00370}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_acd247748d6f96be3e969f4039f5cdd89}{00370}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_acd247748d6f96be3e969f4039f5cdd89}{ProcessDeferredDeletesImpl}}(uint64\_t\ currentFrame);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00371}00371\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00372}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a1794c07524ef6be3948044aafb1b873d}{00372}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a1794c07524ef6be3948044aafb1b873d}{UpdateBufferDataImpl}}(ID3D11Buffer*\ buffer,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ dataSize)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D3D11\_MAPPED\_SUBRESOURCE\ m\{\};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>Map(buffer,\ 0,\ D3D11\_MAP\_WRITE\_DISCARD,\ 0,\ \&m);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ memcpy(m.pData,\ data,\ dataSize);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>Unmap(buffer,\ 0);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00378}00378\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00387}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a8edfa4118648bf729d223af0cd6acaf6}{00387}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a8edfa4118648bf729d223af0cd6acaf6}{DrawInstanced}}(uint32\_t\ meshIdx,\ uint32\_t\ matIdx,\ uint32\_t\ psoIdx,\ uint32\_t\ count,\ \textcolor{keywordtype}{bool}\ usePSORasterizer,\ \textcolor{keywordtype}{bool}\ rebindPSO)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00388}00388\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ BindMeshVertexStreamsForPSO(ShaderManager::LockedResource<ShaderData,\ std::shared\_lock>\&\ shader,\ MeshManager::LockedResource<MeshData,\ std::shared\_lock>\&\ mesh)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ BindMeshVertexStreamsFromOverrides(ShaderManager::LockedResource<ShaderData,\ std::shared\_lock>\&\ shader,\ MeshManager::LockedResource<MeshData,\ std::shared\_lock>\&\ mesh)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00391}00391\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ BindMeshVertexStreamsForLegacyPSO(ShaderManager::LockedResource<ShaderData,\ std::shared\_lock>\&\ shader,\ MeshManager::LockedResource<MeshData,\ std::shared\_lock>\&\ mesh)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00392}00392\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ HRESULT\ CreateInstanceBuffer();}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ HRESULT\ CreateRasterizerStates();}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ HRESULT\ CreateBlendStates();}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ HRESULT\ CreateDepthStencilStates();}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00397}00397\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//void\ UpdateInstanceBuffer(const\ void*\ pInstancesData,\ size\_t\ dataSize);}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00399}00399\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ BeginIndexStream()}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D3D11\_MAPPED\_SUBRESOURCE\ m\{\};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>Map(m\_instIndexSB.Get(),\ 0,\ D3D11\_MAP\_WRITE\_DISCARD,\ 0,\ \&m);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00404}00404\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_idxMapped\ =\ \textcolor{keyword}{static\_cast<}std::byte*\textcolor{keyword}{>}(m.pData);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00405}00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_idxHead\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00406}00406\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00407}00407\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ EndIndexStream()}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00410}00410\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>Unmap(m\_instIndexSB.Get(),\ 0);}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_idxMapped\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00412}00412\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context-\/>VSSetShaderResources(1,\ 1,\ m\_instIndexSRV.GetAddressOf());\ \textcolor{comment}{//\ t1\ を\ VS\ にセット}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00415}00415\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00416}00416\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ ID3D11Device*\ device;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ ID3D11DeviceContext*\ context;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00419}00419\ \ \ \ \ \ \ \ \ \ \ \ \ MeshManager*\ meshManager;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ MaterialManager*\ materialManager;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00421}00421\ \ \ \ \ \ \ \ \ \ \ \ \ ShaderManager*\ shaderManager;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ PSOManager*\ psoManager;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00423}00423\ \ \ \ \ \ \ \ \ \ \ \ \ TextureManager*\ textureManager;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ BufferManager*\ cbManager;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ SamplerManager*\ samplerManager;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ ModelAssetManager*\ modelAssetManager;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00427}00427\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ フレーム行列用\ StructuredBuffer\ (SRV)}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ ComPtr<ID3D11Buffer>\ \ \ \ \ \ \ \ \ \ \ \ m\_instanceSB;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00430}00430\ \ \ \ \ \ \ \ \ \ \ \ \ ComPtr<ID3D11ShaderResourceView>\ m\_instanceSRV;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00431}00431\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ インデックス列用\ StructuredBuffer\ (SRV)\ \ ※uint（4B/要素）}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ ComPtr<ID3D11Buffer>\ \ \ \ \ \ \ \ \ \ \ \ m\_instIndexSB;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00434}00434\ \ \ \ \ \ \ \ \ \ \ \ \ ComPtr<ID3D11ShaderResourceView>\ m\_instIndexSRV;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00435}00435\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PerDraw\ 定数バッファ（gIndexBase,\ gIndexCount）}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ ComPtr<ID3D11Buffer>\ \ \ \ \ \ \ \ \ \ \ \ m\_perDrawCB;}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00438}00438\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CPU書き込み用ポインタ（Mapした間だけ有効）}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00440}00440\ \ \ \ \ \ \ \ \ \ \ \ \ std::byte*\ m\_idxMapped\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \ \ \ m\_idxHead\ =\ 0;\ \ \textcolor{comment}{//\ 書き込みカーソル}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00442}00442\ }
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ ComPtr<ID3D11RasterizerState>\ rasterizerStates[(size\_t)\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5afd4487453885e6013ddea8e02030afb0}{RasterizerStateID::MAX\_COUNT}}];}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ ComPtr<ID3D11BlendState>\ blendStates[(size\_t)\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556bafd4487453885e6013ddea8e02030afb0}{BlendStateID::MAX\_COUNT}}];}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00445}00445\ \ \ \ \ \ \ \ \ \ \ \ \ ComPtr<ID3D11DepthStencilState>\ depthStencilStates[(size\_t)\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3afd4487453885e6013ddea8e02030afb0}{DepthStencilStateID::MAX\_COUNT}}];}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00446}00446\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00447}00447\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_d_x11_render_backend_8h_source_l00448}00448\ \}}
+
+\end{DoxyCode}

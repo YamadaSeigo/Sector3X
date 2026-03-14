@@ -1,0 +1,287 @@
+\doxysection{SFW\+::World\texorpdfstring{$<$}{<} Level\+Types \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_world}{}\label{class_s_f_w_1_1_world}\index{SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}}
+
+
+各レベルを管理し、更新するクラス。サービスロケーターを保持する。  
+
+
+
+
+{\ttfamily \#include $<$World.\+hpp$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_global_system_command}{Add\+Global\+System\+Command}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command}{Add\+Level\+Command}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_apply_level_system_command}{Apply\+Level\+System\+Command}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_clean_level_command}{Clean\+Level\+Command}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command}{Lambda\+Command}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_level_holder}{Level\+Holder}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_load_level_command}{Load\+Level\+Command}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_pause_resume_level_command}{Pause\+Resume\+Level\+Command}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service}{Request\+Service}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}} = std\+::function$<$void(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}\texorpdfstring{$\ast$}{*})$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World}} (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}} \&\&service\+Locator) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_world_a9bbef002ec82127c5cf4b8ab7b20c5d5}{World}} (\mbox{\hyperlink{class_s_f_w_1_1_world}{World}} \&\&other) noexcept
+\begin{DoxyCompactList}\small\item\em ムーブコンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_world}{World}} \& \mbox{\hyperlink{class_s_f_w_1_1_world_a7aa47194558209caaa669da62f6bbbdd}{operator=}} (\mbox{\hyperlink{class_s_f_w_1_1_world}{World}} \&\&other) noexcept
+\begin{DoxyCompactList}\small\item\em ムーブ代入演算子 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_world_a09a6b3093aefd0d4b848e8168ae18a01}{Register\+Request\+Service}} ()
+\begin{DoxyCompactList}\small\item\em ワールドリクエストサービスをサービスロケーターに登録する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_world_a6b458833add601c670ce4263ef74c155}{Update\+All\+Levels}} (double delta\+Time, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor)
+\begin{DoxyCompactList}\small\item\em すべてのレベルを更新する関数。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_world_a2b0b7ee5d20210bc59ec7e54370824cb}{Update\+Service\+Locator}} (double delta\+Time, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor)
+\begin{DoxyCompactList}\small\item\em サービスロケーターのサービスを更新する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_world_a3909f9f47b0757899f0d08e678410b7e}{Commit\+Service\+Locator}} (double delta\+Time)
+\begin{DoxyCompactList}\small\item\em サービスロケーターのサービスのコミットを行う関数 \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}} \& \mbox{\hyperlink{class_s_f_w_1_1_world_a9662586e00ed524b1ab6d15d9c05cb99}{Get\+Service\+Locator}} () const noexcept
+\begin{DoxyCompactList}\small\item\em サービスロケーターを取得する関数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service}{Request\+Service}} \& \mbox{\hyperlink{class_s_f_w_1_1_world_acdecf01d0515fc8b57e87935aa37400e}{Get\+Request\+Service\+No\+Lock}} ()
+\begin{DoxyCompactList}\small\item\em ワールドへの要求を管理するサービスの取得 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_world_a03d899d49d865d9c285851f3cdd7f6b9}{Load\+Level}} (const std\+::string level\+Name, bool async=false, bool active=true, \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}} custom\+Func=nullptr)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename... Level\+Types$>$\newline
+class SFW\+::\+World$<$ Level\+Types $>$}
+各レベルを管理し、更新するクラス。サービスロケーターを保持する。 
+
+コピー不可 
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00028}{28}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{class_s_f_w_1_1_world_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}\index{SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}!ExecutedCustomFunc@{ExecutedCustomFunc}}
+\index{ExecutedCustomFunc@{ExecutedCustomFunc}!SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{ExecutedCustomFunc}{ExecutedCustomFunc}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5} 
+template$<$typename... Level\+Types$>$ \\
+using \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Executed\+Custom\+Func = std\+::function$<$void(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}\texorpdfstring{$\ast$}{*})$>$}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00036}{36}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_world_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}\index{SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}!World@{World}}
+\index{World@{World}!SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{World()}{World()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763} 
+template$<$typename... Level\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+World (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}} \&\&}]{service\+Locator}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em service\+Locator} & サービスロケーター右辺値参照 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00527}{527}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_a9bbef002ec82127c5cf4b8ab7b20c5d5}\index{SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}!World@{World}}
+\index{World@{World}!SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{World()}{World()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_a9bbef002ec82127c5cf4b8ab7b20c5d5} 
+template$<$typename... Level\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+World (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_world}{World}}$<$ Level\+Types $>$ \&\&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ムーブコンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em other} & ムーブ元の\+Worldオブジェクト \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00535}{535}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_world_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_world_a3909f9f47b0757899f0d08e678410b7e}\index{SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}!CommitServiceLocator@{CommitServiceLocator}}
+\index{CommitServiceLocator@{CommitServiceLocator}!SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{CommitServiceLocator()}{CommitServiceLocator()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_a3909f9f47b0757899f0d08e678410b7e} 
+template$<$typename... Level\+Types$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Commit\+Service\+Locator (\begin{DoxyParamCaption}\item[{double}]{delta\+Time}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+サービスロケーターのサービスのコミットを行う関数 
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00664}{664}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_acdecf01d0515fc8b57e87935aa37400e}\index{SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}!GetRequestServiceNoLock@{GetRequestServiceNoLock}}
+\index{GetRequestServiceNoLock@{GetRequestServiceNoLock}!SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{GetRequestServiceNoLock()}{GetRequestServiceNoLock()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_acdecf01d0515fc8b57e87935aa37400e} 
+template$<$typename... Level\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service}{Request\+Service}} \& \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Get\+Request\+Service\+No\+Lock (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+ワールドへの要求を管理するサービスの取得 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_world_1_1_request_service}{Request\+Service}\& ワールドへの要求を管理するサービスへの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00679}{679}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_a9662586e00ed524b1ab6d15d9c05cb99}\index{SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}!GetServiceLocator@{GetServiceLocator}}
+\index{GetServiceLocator@{GetServiceLocator}!SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{GetServiceLocator()}{GetServiceLocator()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_a9662586e00ed524b1ab6d15d9c05cb99} 
+template$<$typename... Level\+Types$>$ \\
+const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}} \& \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Get\+Service\+Locator (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+サービスロケーターを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+const \doxylink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}\& サービスロケーターへの定数参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00672}{672}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_a03d899d49d865d9c285851f3cdd7f6b9}\index{SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}!LoadLevel@{LoadLevel}}
+\index{LoadLevel@{LoadLevel}!SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{LoadLevel()}{LoadLevel()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_a03d899d49d865d9c285851f3cdd7f6b9} 
+template$<$typename... Level\+Types$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Load\+Level (\begin{DoxyParamCaption}\item[{const std\+::string}]{level\+Name}{, }\item[{bool}]{async}{ = {\ttfamily false}, }\item[{bool}]{active}{ = {\ttfamily true}, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}}}]{custom\+Func}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00683}{683}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_a7aa47194558209caaa669da62f6bbbdd}\index{SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_a7aa47194558209caaa669da62f6bbbdd} 
+template$<$typename... Level\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_world}{World}} \& \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_world}{World}}$<$ Level\+Types $>$ \&\&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ムーブ代入演算子 
+
+
+\begin{DoxyParams}{引数}
+{\em other} & ムーブ元の\+Worldオブジェクト \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_world}{World}\& ムーブ後の\+Worldオブジェクトへの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00546}{546}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_a09a6b3093aefd0d4b848e8168ae18a01}\index{SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}!RegisterRequestService@{RegisterRequestService}}
+\index{RegisterRequestService@{RegisterRequestService}!SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{RegisterRequestService()}{RegisterRequestService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_a09a6b3093aefd0d4b848e8168ae18a01} 
+template$<$typename... Level\+Types$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Register\+Request\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ワールドリクエストサービスをサービスロケーターに登録する関数 
+
+Game\+Engineの初期化時に呼び出す 
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00559}{559}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_a6b458833add601c670ce4263ef74c155}\index{SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}!UpdateAllLevels@{UpdateAllLevels}}
+\index{UpdateAllLevels@{UpdateAllLevels}!SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{UpdateAllLevels()}{UpdateAllLevels()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_a6b458833add601c670ce4263ef74c155} 
+template$<$typename... Level\+Types$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Update\+All\+Levels (\begin{DoxyParamCaption}\item[{double}]{delta\+Time}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}}]{executor}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+すべてのレベルを更新する関数。 
+
+
+\begin{DoxyParams}{引数}
+{\em delta\+Time} & デルタタイム（秒） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00568}{568}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_a2b0b7ee5d20210bc59ec7e54370824cb}\index{SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}!UpdateServiceLocator@{UpdateServiceLocator}}
+\index{UpdateServiceLocator@{UpdateServiceLocator}!SFW::World$<$ LevelTypes $>$@{SFW::World$<$ LevelTypes $>$}}
+\doxysubsubsection{\texorpdfstring{UpdateServiceLocator()}{UpdateServiceLocator()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_a2b0b7ee5d20210bc59ec7e54370824cb} 
+template$<$typename... Level\+Types$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Update\+Service\+Locator (\begin{DoxyParamCaption}\item[{double}]{delta\+Time}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}}]{executor}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+サービスロケーターのサービスを更新する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em delta\+Time} & デルタタイム（秒） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00654}{654}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_service_locator_8h}{Service\+Locator.\+h}}\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_world_8hpp}{World.\+hpp}}\end{DoxyCompactItemize}

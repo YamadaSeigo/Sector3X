@@ -1,0 +1,153 @@
+\doxysection{SFW\+::Undeletable\+Ptr\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_undeletable_ptr}{}\label{class_s_f_w_1_1_undeletable_ptr}\index{SFW::UndeletablePtr$<$ T $>$@{SFW::UndeletablePtr$<$ T $>$}}
+
+
+deleteを防ぐためのポインタラッパークラス  
+
+
+
+
+{\ttfamily \#include $<$Undeletable\+Ptr.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a9460705739b676fd3aa4c0c8be946d4c}{Undeletable\+Ptr}} (T \texorpdfstring{$\ast$}{*}p) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a0cf3148a50ff495318cefa6db656453c}{operator-\/$>$}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 　実体化 \end{DoxyCompactList}\item 
+T \& \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a59bb4ccc812204ee36ab330873b5d2aa}{operator\texorpdfstring{$\ast$}{*}}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 参照演算子 \end{DoxyCompactList}\item 
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a0da7e9373630d798bac72841dcd9d298}{get}} () const noexcept
+\begin{DoxyCompactList}\small\item\em ポインタを取得する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a442fe79106ef2123372418a51f3e570c}{operator delete}} (void \texorpdfstring{$\ast$}{*})=delete
+\begin{DoxyCompactList}\small\item\em deleteを防ぐため、明示的なdeleteを禁止 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a5b2446d19687f6f6fc242f314948f50a}{Is\+Valid}} () const noexcept
+\begin{DoxyCompactList}\small\item\em ポインタが有効かどうか \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename T$>$\newline
+class SFW\+::\+Undeletable\+Ptr$<$ T $>$}
+deleteを防ぐためのポインタラッパークラス 
+
+ \mbox{\hyperlink{_undeletable_ptr_8hpp_source}{Undeletable\+Ptr.\+hpp}} の \mbox{\hyperlink{_undeletable_ptr_8hpp_source_l00016}{16}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_undeletable_ptr_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_undeletable_ptr_a9460705739b676fd3aa4c0c8be946d4c}\index{SFW::UndeletablePtr$<$ T $>$@{SFW::UndeletablePtr$<$ T $>$}!UndeletablePtr@{UndeletablePtr}}
+\index{UndeletablePtr@{UndeletablePtr}!SFW::UndeletablePtr$<$ T $>$@{SFW::UndeletablePtr$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{UndeletablePtr()}{UndeletablePtr()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_undeletable_ptr_a9460705739b676fd3aa4c0c8be946d4c} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr}{SFW\+::\+Undeletable\+Ptr}}$<$ T $>$\+::\+Undeletable\+Ptr (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{p}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em p} & ポインタ \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_undeletable_ptr_8hpp_source}{Undeletable\+Ptr.\+hpp}} の \mbox{\hyperlink{_undeletable_ptr_8hpp_source_l00026}{26}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_undeletable_ptr_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_undeletable_ptr_a0da7e9373630d798bac72841dcd9d298}\index{SFW::UndeletablePtr$<$ T $>$@{SFW::UndeletablePtr$<$ T $>$}!get@{get}}
+\index{get@{get}!SFW::UndeletablePtr$<$ T $>$@{SFW::UndeletablePtr$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_undeletable_ptr_a0da7e9373630d798bac72841dcd9d298} 
+template$<$typename T$>$ \\
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr}{SFW\+::\+Undeletable\+Ptr}}$<$ T $>$\+::get (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ポインタを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+T\texorpdfstring{$\ast$}{*} ポインタ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_undeletable_ptr_8hpp_source}{Undeletable\+Ptr.\+hpp}} の \mbox{\hyperlink{_undeletable_ptr_8hpp_source_l00041}{41}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_undeletable_ptr_a5b2446d19687f6f6fc242f314948f50a}\index{SFW::UndeletablePtr$<$ T $>$@{SFW::UndeletablePtr$<$ T $>$}!IsValid@{IsValid}}
+\index{IsValid@{IsValid}!SFW::UndeletablePtr$<$ T $>$@{SFW::UndeletablePtr$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{IsValid()}{IsValid()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_undeletable_ptr_a5b2446d19687f6f6fc242f314948f50a} 
+template$<$typename T$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr}{SFW\+::\+Undeletable\+Ptr}}$<$ T $>$\+::\+Is\+Valid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ポインタが有効かどうか 
+
+\begin{DoxyReturn}{戻り値}
+有効ならtrue 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_undeletable_ptr_8hpp_source}{Undeletable\+Ptr.\+hpp}} の \mbox{\hyperlink{_undeletable_ptr_8hpp_source_l00052}{52}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_undeletable_ptr_a442fe79106ef2123372418a51f3e570c}\index{SFW::UndeletablePtr$<$ T $>$@{SFW::UndeletablePtr$<$ T $>$}!operator delete@{operator delete}}
+\index{operator delete@{operator delete}!SFW::UndeletablePtr$<$ T $>$@{SFW::UndeletablePtr$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator delete()}{operator delete()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_undeletable_ptr_a442fe79106ef2123372418a51f3e570c} 
+template$<$typename T$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr}{SFW\+::\+Undeletable\+Ptr}}$<$ T $>$\+::operator delete (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+deleteを防ぐため、明示的なdeleteを禁止 
+
+\Hypertarget{class_s_f_w_1_1_undeletable_ptr_a59bb4ccc812204ee36ab330873b5d2aa}\index{SFW::UndeletablePtr$<$ T $>$@{SFW::UndeletablePtr$<$ T $>$}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!SFW::UndeletablePtr$<$ T $>$@{SFW::UndeletablePtr$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_undeletable_ptr_a59bb4ccc812204ee36ab330873b5d2aa} 
+template$<$typename T$>$ \\
+T \& \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr}{SFW\+::\+Undeletable\+Ptr}}$<$ T $>$\+::operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+参照演算子 
+
+\begin{DoxyReturn}{戻り値}
+T\& 参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_undeletable_ptr_8hpp_source}{Undeletable\+Ptr.\+hpp}} の \mbox{\hyperlink{_undeletable_ptr_8hpp_source_l00036}{36}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_undeletable_ptr_a0cf3148a50ff495318cefa6db656453c}\index{SFW::UndeletablePtr$<$ T $>$@{SFW::UndeletablePtr$<$ T $>$}!operator-\/$>$@{operator-\/$>$}}
+\index{operator-\/$>$@{operator-\/$>$}!SFW::UndeletablePtr$<$ T $>$@{SFW::UndeletablePtr$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator-\/$>$()}{operator->()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_undeletable_ptr_a0cf3148a50ff495318cefa6db656453c} 
+template$<$typename T$>$ \\
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr}{SFW\+::\+Undeletable\+Ptr}}$<$ T $>$\+::operator-\/$>$ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+　実体化 
+
+\begin{DoxyReturn}{戻り値}
+T\texorpdfstring{$\ast$}{*} ポインタ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_undeletable_ptr_8hpp_source}{Undeletable\+Ptr.\+hpp}} の \mbox{\hyperlink{_undeletable_ptr_8hpp_source_l00031}{31}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/\mbox{\hyperlink{_undeletable_ptr_8hpp}{Undeletable\+Ptr.\+hpp}}\end{DoxyCompactItemize}

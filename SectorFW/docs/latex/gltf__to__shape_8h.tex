@@ -1,0 +1,46 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Physics/gltf\+\_\+to\+\_\+shape.h ファイル}
+\hypertarget{gltf__to__shape_8h}{}\label{gltf__to__shape_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/gltf\_to\_shape.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/gltf\_to\_shape.h}}
+
+
+cgltf のメッシュデータから Physics\+::\+Shape\+Create\+Desc を構築するユーティリティ  
+
+
+{\ttfamily \#include "{}Physics\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}../external/cgltf/cgltf.\+h"{}}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_physics}{SFW\+::\+Physics}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_physics_abb4a00ba5b0eab2356bb8bc5cc7d2658}{SFW\+::\+Physics\+::\+Read\+Positions}} (const cgltf\+\_\+accessor \texorpdfstring{$\ast$}{*}acc, std\+::vector$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}} $>$ \&out)
+\begin{DoxyCompactList}\small\item\em アクセサから float3 を読み出す（位置専用、型は\+FLOAT / COUNT = 3を想定） \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_physics_aaeaee835e0bfb3c4d83ac4daf110f64b}{SFW\+::\+Physics\+::\+Read\+Indices}} (const cgltf\+\_\+accessor \texorpdfstring{$\ast$}{*}acc, std\+::vector$<$ uint32\+\_\+t $>$ \&out, uint32\+\_\+t base\+Vertex)
+\begin{DoxyCompactList}\small\item\em インデックス（\+U16 / U32）を取り出す（トライアングル前提） \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ace4d337d2598fcb528801ae8a9d9b79d}{SFW\+::\+Physics\+::\+Build\+Mesh\+Desc\+From\+GLTFMesh}} (const cgltf\+\_\+mesh \texorpdfstring{$\ast$}{*}mesh, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_desc}{Mesh\+Desc}} \&out)
+\begin{DoxyCompactList}\small\item\em 一つの cgltf\+\_\+mesh から \doxylink{struct_s_f_w_1_1_physics_1_1_mesh_desc}{Mesh\+Desc} を構築（すべての primitive を結合） \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac85a8012eec8270475521ad43655557f}{SFW\+::\+Physics\+::\+Build\+Shape\+Create\+Desc\+From\+GLTF}} (const cgltf\+\_\+data \texorpdfstring{$\ast$}{*}data, size\+\_\+t mesh\+Index, bool as\+Convex, const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{Shape\+Scale}} \&scale, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc}{Shape\+Create\+Desc}} \&out)
+\begin{DoxyCompactList}\small\item\em GLTF → Shape\+Create\+Desc（メッシュ or 凸包） \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+cgltf のメッシュデータから Physics\+::\+Shape\+Create\+Desc を構築するユーティリティ 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{gltf__to__shape_8h_source}{gltf\+\_\+to\+\_\+shape.\+h}} に定義があります。
+

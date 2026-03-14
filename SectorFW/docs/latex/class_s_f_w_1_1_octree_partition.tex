@@ -1,0 +1,730 @@
+\doxysection{SFW\+::Octree\+Partition クラス}
+\hypertarget{class_s_f_w_1_1_octree_partition}{}\label{class_s_f_w_1_1_octree_partition}\index{SFW::OctreePartition@{SFW::OctreePartition}}
+
+
+3D 八分木（\+Octree）による空間分割  
+
+
+
+
+{\ttfamily \#include $<$Octree\+Partition.\+h$>$}
+
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a66aa16e3db91d21bbf089f68048f8f68}{AABB}} = \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_octree_partition_aa5680482e46db8f7a4b6125af7bbfc06}{Octree\+Partition}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} origin\+WS, \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}} world\+BlocksX, \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}} world\+BlocksY, float min\+Leaf\+Size, \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}} world\+BlocksZ=0, uint32\+\_\+t max\+Entities\+Per\+Leaf=1024) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a05f950a43adeb9e5beda931e7d60df01}{Update}} (double delta\+Time)
+\begin{DoxyCompactList}\small\item\em 定期的に過小利用の下位葉を親へ統合して木を縮約 \end{DoxyCompactList}\item 
+std\+::optional$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_afc93c1ea2a6394e0c83e6182ad8bbc81}{Get\+Chunk}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} wp, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg, \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} level, \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOut\+Of\+Bounds\+Policy}} policy=\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOut\+Of\+Bounds\+Policy\+::\+Clamp\+To\+Edge}}) noexcept
+\begin{DoxyCompactList}\small\item\em 点 p を含む葉チャンク（\+Spatial\+Chunk）を取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \& \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_aefdb000f24308ff3902ab558a30150be}{Get\+Global\+Entity\+Manager}} () noexcept
+\begin{DoxyCompactList}\small\item\em 分割に依存しないグローバルな Entity\+Manager を取得 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a095f93b88ca667e7f114dd1e58312b8b}{Register\+All\+Chunks}} (\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg, \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} level)
+\begin{DoxyCompactList}\small\item\em すべての葉をレジストリへ登録 \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a99a53eddc23f45effa32dc785c02fa3a}{Get\+Entity\+Num}} () const noexcept
+\begin{DoxyCompactList}\small\item\em すべてのエンティティ数を取得（グローバル + 全葉チャンク） \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_ae10cc877dd28475f2e7d83683b986241}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr) noexcept
+\begin{DoxyCompactList}\small\item\em 3D フラスタム専用カリング（高さは八分木\+AABBからそのまま利用 \end{DoxyCompactList}\item 
+std\+::vector$<$ const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a2148238b78b0fa828581f9353556f9f0}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr) const noexcept
+\begin{DoxyCompactList}\small\item\em 3D フラスタム専用カリング（高さは八分木\+AABBからそのまま利用 \end{DoxyCompactList}\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_aee81e2cc2529200121f08d358ed66c67}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, F \&\&f) noexcept
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_ab64ca4144a59c400e29d7d0f467e85d7}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, F \&\&f) const noexcept
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a4c16b058dabb54ca6a18872d8fbea2fb}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, float ymin, float ymax) noexcept
+\item 
+std\+::vector$<$ const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a862b08f84de78f31aa01084dcbbc9e4b}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, float ymin, float ymax) const noexcept
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_af70115839ab84dc7a6d29033b84fc6bd}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, float ymin, float ymax, F \&\&f) noexcept
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_aa3e440a0e88945b91f9b3b6bb0084816}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, float ymin, float ymax, F \&\&f) const noexcept
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_acb0ad514ea6a72dc3ba17f5ab4813beb}{Cull\+Chunks}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&center, float radius) const noexcept
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a4f5328d4185ac71ddf60f36849e064be}{Cull\+Chunks\+Near}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&eye, size\+\_\+t max\+Count=(std\+::numeric\+\_\+limits$<$ size\+\_\+t $>$\+::max)()) const noexcept
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a34364ca8cda805485b4929e917a34548}{Cull\+Chunk\+Line}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&eye, float, \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug\+::\+Line\+Vertex}} \texorpdfstring{$\ast$}{*}out\+Line, uint32\+\_\+t capacity, uint32\+\_\+t display\+Count) const noexcept
+\begin{DoxyCompactList}\small\item\em チャンクのワイヤーフレームをフラスタムカリング付きで取得 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_aaa0eabd5c80014ab5cda7281bb107ea7}{Clean\+Chunk}} ()
+\begin{DoxyCompactList}\small\item\em チャンクのクリア \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a1a9fb42559e700e9d4186a9e8a8ca4ef}{Ensure\+Leaf\+For\+Point}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} p)
+\begin{DoxyCompactList}\small\item\em 指定点を含む葉を（必要なら分割しながら）必ず返す \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_aafc8eea38488266b076810bace443f11}{Subdivide\+If}} (std\+::function$<$ bool(const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \&)$>$ predicate, std\+::function$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}}, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \&)$>$ pos\+Fn)
+\begin{DoxyCompactList}\small\item\em predicate を満たす葉を分割＆再割り当て \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a3efd805ca0f6345e6a66dd47a3cfdeb0}{Subdivide\+If\+Over\+Capacity}} (std\+::function$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}}, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \&)$>$ pos\+Fn)
+\begin{DoxyCompactList}\small\item\em 過大利用の葉を分割＆再割り当て \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_ada1b3d5cb0ac8cc7d008a68182fd5541}{Reload\+Leaf\+By\+Point}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} p, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg, \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} level)
+\begin{DoxyCompactList}\small\item\em 指定座標の葉のキーを再発行してレジストリ更新（デバッグ用） \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_aa6df4751ae4ac772b93a52a96326b69e}{Get\+Chunks\+AABB}} (const \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a66aa16e3db91d21bbf089f68048f8f68}{AABB}} \&aabb)
+\begin{DoxyCompactList}\small\item\em \doxylink{class_s_f_w_1_1_octree_partition_a66aa16e3db91d21bbf089f68048f8f68}{AABB} / 交差検索 \end{DoxyCompactList}\item 
+std\+::vector$<$ const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a873176a76e87e183dda0c1234567476c}{Get\+Chunks\+AABB}} (const \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a66aa16e3db91d21bbf089f68048f8f68}{AABB}} \&aabb) const
+\begin{DoxyCompactList}\small\item\em \doxylink{class_s_f_w_1_1_octree_partition_a66aa16e3db91d21bbf089f68048f8f68}{AABB} / 交差検索 \end{DoxyCompactList}\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_af70a6e017e1d1c98c5ff96cb994d068e}{For\+Each\+Leaf}} (F \&\&f)
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a62d1ac72df1df49da25a72b7cbb86d4e}{For\+Each\+Leaf}} (F \&\&f) const
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a4f36faab5676c98149d7ec635471dd91}{For\+Each\+Leaf\+Chunk}} (F \&\&f)
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_ae110980ac76dd0e0751897ad1bf2e400}{For\+Each\+Leaf\+Chunk}} (F \&\&f) const
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a7d5458008c27873fbd2753cafe264dcb}{For\+Each\+Leaf\+EM}} (F \&\&f)
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a390fdfe72210928a913156efc5aa387a}{For\+Each\+Leaf\+EM}} (F \&\&f) const
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_acf4e9c599ae0e5c35200447e4263d554}{Leaf\+Count}} () const noexcept
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a0aa0722117a878bcdf08bcb47412b93c}{Min\+Leaf\+Size}} () const noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_ad46690a1deea6e20501c76f3de90a63a}{Set\+Max\+Per\+Leaf\+Count}} (uint32\+\_\+t v) noexcept
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_ac53df22ffc19386ad7f4a028d5357d41}{Get\+Max\+Per\+Leaf\+Count}} () const noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a9ff5944a58d9872b606c16a34ec52a81}{Set\+Min\+Per\+Leaf\+Count}} (uint32\+\_\+t v) noexcept
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a7e69758a408bd37e2ed95f9de3d7e6db}{Get\+Min\+Per\+Leaf\+Count}} () const noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+static float \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_af07d63c10d1d0f26c080a890bf276a50}{Dist2\+Point\+AABB3D}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&p, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&c, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&e)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr double \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a8fa31fed3c557de9dba2bfcf899ca478}{coalesce\+Interval}} = 10.\+0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+3D 八分木（\+Octree）による空間分割 
+
+
+\begin{DoxyItemize}
+\item X, Y, Z の 3 軸で均等分割
+\item 葉ノードには Spatial\+Chunk（= Entity\+Manager を保持）
+\item \doxylink{class_s_f_w_1_1_quad_tree_partition}{Quad\+Tree\+Partition} と同じ API/挙動を目指して実装
+\end{DoxyItemize}
+
+\doxylink{concept_s_f_w_1_1_partition_concept}{Partition\+Concept} は {\ttfamily Derived\{ size,size,chunk\+Size \}} を要求するため、 ここでは "{}size"{} を立方体の一辺（X=Y=Z）のブロック数として扱い、 min\+Leaf\+Size (= chunk\+Size) を 1 ブロックの実寸（ワールド単位）とみなします。 
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00039}{39}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{class_s_f_w_1_1_octree_partition_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_octree_partition_a66aa16e3db91d21bbf089f68048f8f68}\index{SFW::OctreePartition@{SFW::OctreePartition}!AABB@{AABB}}
+\index{AABB@{AABB}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{AABB}{AABB}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a66aa16e3db91d21bbf089f68048f8f68} 
+using \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a66aa16e3db91d21bbf089f68048f8f68}{SFW\+::\+Octree\+Partition\+::\+AABB}} = \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00042}{42}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_octree_partition_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_octree_partition_aa5680482e46db8f7a4b6125af7bbfc06}\index{SFW::OctreePartition@{SFW::OctreePartition}!OctreePartition@{OctreePartition}}
+\index{OctreePartition@{OctreePartition}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{OctreePartition()}{OctreePartition()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_aa5680482e46db8f7a4b6125af7bbfc06} 
+SFW\+::\+Octree\+Partition\+::\+Octree\+Partition (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{origin\+WS}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}}}]{world\+BlocksX}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}}}]{world\+BlocksY}{, }\item[{float}]{min\+Leaf\+Size}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}}}]{world\+BlocksZ}{ = {\ttfamily 0}, }\item[{uint32\+\_\+t}]{max\+Entities\+Per\+Leaf}{ = {\ttfamily 1024}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+Partition\+Conceptに合わせるためにworld\+Block\+Zを指定しない場合は\+Xと同じになる 
+\begin{DoxyParams}{引数}
+{\em world\+BlocksX} & X方向のブロックサイズ \\
+\hline
+{\em world\+BlocksY} & Y方向のブロックサイズ \\
+\hline
+{\em min\+Leaf\+Size} & 葉チャンク（\+Spatial\+Chunk）の最小サイズ（ワールド単位） \\
+\hline
+{\em max\+Entities\+Per\+Leaf} & 葉チャンク（\+Spatial\+Chunk）あたりの最大エンティティ数 \\
+\hline
+{\em world\+BlocksZ} & Z方向のブロックサイズ（省略時は\+Xと同じ） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00055}{55}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_octree_partition_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_octree_partition_aaa0eabd5c80014ab5cda7281bb107ea7}\index{SFW::OctreePartition@{SFW::OctreePartition}!CleanChunk@{CleanChunk}}
+\index{CleanChunk@{CleanChunk}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{CleanChunk()}{CleanChunk()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_aaa0eabd5c80014ab5cda7281bb107ea7} 
+void SFW\+::\+Octree\+Partition\+::\+Clean\+Chunk (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+チャンクのクリア 
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00375}{375}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a34364ca8cda805485b4929e917a34548}\index{SFW::OctreePartition@{SFW::OctreePartition}!CullChunkLine@{CullChunkLine}}
+\index{CullChunkLine@{CullChunkLine}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunkLine()}{CullChunkLine()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a34364ca8cda805485b4929e917a34548} 
+uint32\+\_\+t SFW\+::\+Octree\+Partition\+::\+Cull\+Chunk\+Line (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{eye}{, }\item[{float}]{}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug\+::\+Line\+Vertex}} \texorpdfstring{$\ast$}{*}}]{out\+Line}{, }\item[{uint32\+\_\+t}]{capacity}{, }\item[{uint32\+\_\+t}]{display\+Count}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+チャンクのワイヤーフレームをフラスタムカリング付きで取得 
+
+
+\begin{DoxyParams}{引数}
+{\em fr} & フラスタム \\
+\hline
+{\em eye} & 目線位置 \\
+\hline
+{\em dummy} & 未使用（\+Quad\+Tree\+Partition と同じシグネチャにするためのダミー） \\
+\hline
+{\em out\+Line} & ワイヤーフレーム頂点列の出力先 \\
+\hline
+{\em capacity} & out\+Line の頂点容量 \\
+\hline
+{\em display\+Count} & 最大表示チャンク数 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+ワイヤーフレーム頂点列 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00298}{298}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a2148238b78b0fa828581f9353556f9f0}\index{SFW::OctreePartition@{SFW::OctreePartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [1/9]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a2148238b78b0fa828581f9353556f9f0} 
+std\+::vector$<$ const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Octree\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+3D フラスタム専用カリング（高さは八分木\+AABBからそのまま利用 
+
+
+\begin{DoxyParams}{引数}
+{\em fr} & フラスタム \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+可視チャンクの配列 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00161}{161}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_ae10cc877dd28475f2e7d83683b986241}\index{SFW::OctreePartition@{SFW::OctreePartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [2/9]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_ae10cc877dd28475f2e7d83683b986241} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Octree\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+3D フラスタム専用カリング（高さは八分木\+AABBからそのまま利用 
+
+
+\begin{DoxyParams}{引数}
+{\em fr} & フラスタム \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+可視チャンクの配列 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00149}{149}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_ab64ca4144a59c400e29d7d0f467e85d7}\index{SFW::OctreePartition@{SFW::OctreePartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [3/9]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_ab64ca4144a59c400e29d7d0f467e85d7} 
+template$<$class F$>$ \\
+void SFW\+::\+Octree\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{F \&\&}]{f}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00177}{177}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_aee81e2cc2529200121f08d358ed66c67}\index{SFW::OctreePartition@{SFW::OctreePartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [4/9]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_aee81e2cc2529200121f08d358ed66c67} 
+template$<$class F$>$ \\
+void SFW\+::\+Octree\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{F \&\&}]{f}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00170}{170}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a862b08f84de78f31aa01084dcbbc9e4b}\index{SFW::OctreePartition@{SFW::OctreePartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [5/9]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a862b08f84de78f31aa01084dcbbc9e4b} 
+std\+::vector$<$ const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Octree\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{float}]{ymin}{, }\item[{float}]{ymax}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00191}{191}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a4c16b058dabb54ca6a18872d8fbea2fb}\index{SFW::OctreePartition@{SFW::OctreePartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [6/9]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a4c16b058dabb54ca6a18872d8fbea2fb} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Octree\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{float}]{ymin}{, }\item[{float}]{ymax}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00183}{183}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_aa3e440a0e88945b91f9b3b6bb0084816}\index{SFW::OctreePartition@{SFW::OctreePartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [7/9]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_aa3e440a0e88945b91f9b3b6bb0084816} 
+template$<$class F$>$ \\
+void SFW\+::\+Octree\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{float}]{ymin}{, }\item[{float}]{ymax}{, }\item[{F \&\&}]{f}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00205}{205}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_af70115839ab84dc7a6d29033b84fc6bd}\index{SFW::OctreePartition@{SFW::OctreePartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [8/9]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_af70115839ab84dc7a6d29033b84fc6bd} 
+template$<$class F$>$ \\
+void SFW\+::\+Octree\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{float}]{ymin}{, }\item[{float}]{ymax}{, }\item[{F \&\&}]{f}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00199}{199}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_acb0ad514ea6a72dc3ba17f5ab4813beb}\index{SFW::OctreePartition@{SFW::OctreePartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [9/9]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_acb0ad514ea6a72dc3ba17f5ab4813beb} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Octree\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{center}{, }\item[{float}]{radius}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00211}{211}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a4f5328d4185ac71ddf60f36849e064be}\index{SFW::OctreePartition@{SFW::OctreePartition}!CullChunksNear@{CullChunksNear}}
+\index{CullChunksNear@{CullChunksNear}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunksNear()}{CullChunksNear()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a4f5328d4185ac71ddf60f36849e064be} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Octree\+Partition\+::\+Cull\+Chunks\+Near (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{eye}{, }\item[{size\+\_\+t}]{max\+Count}{ = {\ttfamily (std\+:\+:numeric\+\_\+limits$<$size\+\_\+t$>$\+:\+:max)()}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00251}{251}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_af07d63c10d1d0f26c080a890bf276a50}\index{SFW::OctreePartition@{SFW::OctreePartition}!Dist2PointAABB3D@{Dist2PointAABB3D}}
+\index{Dist2PointAABB3D@{Dist2PointAABB3D}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{Dist2PointAABB3D()}{Dist2PointAABB3D()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_af07d63c10d1d0f26c080a890bf276a50} 
+float SFW\+::\+Octree\+Partition\+::\+Dist2\+Point\+AABB3D (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{p}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{c}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{e}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00238}{238}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a1a9fb42559e700e9d4186a9e8a8ca4ef}\index{SFW::OctreePartition@{SFW::OctreePartition}!EnsureLeafForPoint@{EnsureLeafForPoint}}
+\index{EnsureLeafForPoint@{EnsureLeafForPoint}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{EnsureLeafForPoint()}{EnsureLeafForPoint()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a1a9fb42559e700e9d4186a9e8a8ca4ef} 
+\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} SFW\+::\+Octree\+Partition\+::\+Ensure\+Leaf\+For\+Point (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{p}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+指定点を含む葉を（必要なら分割しながら）必ず返す 
+
+
+\begin{DoxyParams}{引数}
+{\em p} & ワールド座標系の点 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+点 p を含む葉チャンク（\+Spatial\+Chunk） 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00389}{389}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_af70a6e017e1d1c98c5ff96cb994d068e}\index{SFW::OctreePartition@{SFW::OctreePartition}!ForEachLeaf@{ForEachLeaf}}
+\index{ForEachLeaf@{ForEachLeaf}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{ForEachLeaf()}{ForEachLeaf()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_af70a6e017e1d1c98c5ff96cb994d068e} 
+template$<$class F$>$ \\
+void SFW\+::\+Octree\+Partition\+::\+For\+Each\+Leaf (\begin{DoxyParamCaption}\item[{F \&\&}]{f}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00473}{473}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a62d1ac72df1df49da25a72b7cbb86d4e}\index{SFW::OctreePartition@{SFW::OctreePartition}!ForEachLeaf@{ForEachLeaf}}
+\index{ForEachLeaf@{ForEachLeaf}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{ForEachLeaf()}{ForEachLeaf()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a62d1ac72df1df49da25a72b7cbb86d4e} 
+template$<$class F$>$ \\
+void SFW\+::\+Octree\+Partition\+::\+For\+Each\+Leaf (\begin{DoxyParamCaption}\item[{F \&\&}]{f}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00474}{474}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a4f36faab5676c98149d7ec635471dd91}\index{SFW::OctreePartition@{SFW::OctreePartition}!ForEachLeafChunk@{ForEachLeafChunk}}
+\index{ForEachLeafChunk@{ForEachLeafChunk}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{ForEachLeafChunk()}{ForEachLeafChunk()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a4f36faab5676c98149d7ec635471dd91} 
+template$<$class F$>$ \\
+void SFW\+::\+Octree\+Partition\+::\+For\+Each\+Leaf\+Chunk (\begin{DoxyParamCaption}\item[{F \&\&}]{f}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00475}{475}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_ae110980ac76dd0e0751897ad1bf2e400}\index{SFW::OctreePartition@{SFW::OctreePartition}!ForEachLeafChunk@{ForEachLeafChunk}}
+\index{ForEachLeafChunk@{ForEachLeafChunk}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{ForEachLeafChunk()}{ForEachLeafChunk()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_ae110980ac76dd0e0751897ad1bf2e400} 
+template$<$class F$>$ \\
+void SFW\+::\+Octree\+Partition\+::\+For\+Each\+Leaf\+Chunk (\begin{DoxyParamCaption}\item[{F \&\&}]{f}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00476}{476}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a7d5458008c27873fbd2753cafe264dcb}\index{SFW::OctreePartition@{SFW::OctreePartition}!ForEachLeafEM@{ForEachLeafEM}}
+\index{ForEachLeafEM@{ForEachLeafEM}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{ForEachLeafEM()}{ForEachLeafEM()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a7d5458008c27873fbd2753cafe264dcb} 
+template$<$class F$>$ \\
+void SFW\+::\+Octree\+Partition\+::\+For\+Each\+Leaf\+EM (\begin{DoxyParamCaption}\item[{F \&\&}]{f}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00477}{477}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a390fdfe72210928a913156efc5aa387a}\index{SFW::OctreePartition@{SFW::OctreePartition}!ForEachLeafEM@{ForEachLeafEM}}
+\index{ForEachLeafEM@{ForEachLeafEM}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{ForEachLeafEM()}{ForEachLeafEM()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a390fdfe72210928a913156efc5aa387a} 
+template$<$class F$>$ \\
+void SFW\+::\+Octree\+Partition\+::\+For\+Each\+Leaf\+EM (\begin{DoxyParamCaption}\item[{F \&\&}]{f}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00478}{478}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_afc93c1ea2a6394e0c83e6182ad8bbc81}\index{SFW::OctreePartition@{SFW::OctreePartition}!GetChunk@{GetChunk}}
+\index{GetChunk@{GetChunk}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{GetChunk()}{GetChunk()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_afc93c1ea2a6394e0c83e6182ad8bbc81} 
+std\+::optional$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Octree\+Partition\+::\+Get\+Chunk (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{wp}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&}]{reg}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}}}]{level}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOut\+Of\+Bounds\+Policy}}}]{policy}{ = {\ttfamily \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOut\+Of\+Bounds\+Policy\+::\+Clamp\+To\+Edge}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+点 p を含む葉チャンク（\+Spatial\+Chunk）を取得 
+
+
+\begin{DoxyParams}{引数}
+{\em wp} & ワールド座標系の点 \\
+\hline
+{\em reg} & チャンクレジストリ \\
+\hline
+{\em level} & レベル\+ID \\
+\hline
+{\em policy} & 範囲外ポリシー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+点 p を含む葉チャンク（\+Spatial\+Chunk）。範囲外でポリシーが Reject の場合は std\+::nullopt 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00096}{96}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_aa6df4751ae4ac772b93a52a96326b69e}\index{SFW::OctreePartition@{SFW::OctreePartition}!GetChunksAABB@{GetChunksAABB}}
+\index{GetChunksAABB@{GetChunksAABB}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{GetChunksAABB()}{GetChunksAABB()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_aa6df4751ae4ac772b93a52a96326b69e} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Octree\+Partition\+::\+Get\+Chunks\+AABB (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a66aa16e3db91d21bbf089f68048f8f68}{AABB}} \&}]{aabb}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxylink{class_s_f_w_1_1_octree_partition_a66aa16e3db91d21bbf089f68048f8f68}{AABB} / 交差検索 
+
+
+\begin{DoxyParams}{引数}
+{\em aabb} & 検索する\+AABB \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+交差するチャンクの配列 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00459}{459}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a873176a76e87e183dda0c1234567476c}\index{SFW::OctreePartition@{SFW::OctreePartition}!GetChunksAABB@{GetChunksAABB}}
+\index{GetChunksAABB@{GetChunksAABB}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{GetChunksAABB()}{GetChunksAABB()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a873176a76e87e183dda0c1234567476c} 
+std\+::vector$<$ const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Octree\+Partition\+::\+Get\+Chunks\+AABB (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_octree_partition_a66aa16e3db91d21bbf089f68048f8f68}{AABB}} \&}]{aabb}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxylink{class_s_f_w_1_1_octree_partition_a66aa16e3db91d21bbf089f68048f8f68}{AABB} / 交差検索 
+
+
+\begin{DoxyParams}{引数}
+{\em aabb} & 検索する\+AABB \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+交差するチャンクの配列 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00468}{468}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a99a53eddc23f45effa32dc785c02fa3a}\index{SFW::OctreePartition@{SFW::OctreePartition}!GetEntityNum@{GetEntityNum}}
+\index{GetEntityNum@{GetEntityNum}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{GetEntityNum()}{GetEntityNum()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a99a53eddc23f45effa32dc785c02fa3a} 
+size\+\_\+t SFW\+::\+Octree\+Partition\+::\+Get\+Entity\+Num (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+すべてのエンティティ数を取得（グローバル + 全葉チャンク） 
+
+\begin{DoxyReturn}{戻り値}
+エンティティ数 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00135}{135}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_aefdb000f24308ff3902ab558a30150be}\index{SFW::OctreePartition@{SFW::OctreePartition}!GetGlobalEntityManager@{GetGlobalEntityManager}}
+\index{GetGlobalEntityManager@{GetGlobalEntityManager}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{GetGlobalEntityManager()}{GetGlobalEntityManager()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_aefdb000f24308ff3902ab558a30150be} 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \& SFW\+::\+Octree\+Partition\+::\+Get\+Global\+Entity\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+分割に依存しないグローバルな Entity\+Manager を取得 
+
+\begin{DoxyReturn}{戻り値}
+グローバルな Entity\+Manager 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00116}{116}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_ac53df22ffc19386ad7f4a028d5357d41}\index{SFW::OctreePartition@{SFW::OctreePartition}!GetMaxPerLeafCount@{GetMaxPerLeafCount}}
+\index{GetMaxPerLeafCount@{GetMaxPerLeafCount}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{GetMaxPerLeafCount()}{GetMaxPerLeafCount()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_ac53df22ffc19386ad7f4a028d5357d41} 
+uint32\+\_\+t SFW\+::\+Octree\+Partition\+::\+Get\+Max\+Per\+Leaf\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00484}{484}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a7e69758a408bd37e2ed95f9de3d7e6db}\index{SFW::OctreePartition@{SFW::OctreePartition}!GetMinPerLeafCount@{GetMinPerLeafCount}}
+\index{GetMinPerLeafCount@{GetMinPerLeafCount}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{GetMinPerLeafCount()}{GetMinPerLeafCount()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a7e69758a408bd37e2ed95f9de3d7e6db} 
+uint32\+\_\+t SFW\+::\+Octree\+Partition\+::\+Get\+Min\+Per\+Leaf\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00486}{486}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_acf4e9c599ae0e5c35200447e4263d554}\index{SFW::OctreePartition@{SFW::OctreePartition}!LeafCount@{LeafCount}}
+\index{LeafCount@{LeafCount}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{LeafCount()}{LeafCount()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_acf4e9c599ae0e5c35200447e4263d554} 
+uint32\+\_\+t SFW\+::\+Octree\+Partition\+::\+Leaf\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00481}{481}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a0aa0722117a878bcdf08bcb47412b93c}\index{SFW::OctreePartition@{SFW::OctreePartition}!MinLeafSize@{MinLeafSize}}
+\index{MinLeafSize@{MinLeafSize}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{MinLeafSize()}{MinLeafSize()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a0aa0722117a878bcdf08bcb47412b93c} 
+float SFW\+::\+Octree\+Partition\+::\+Min\+Leaf\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00482}{482}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a095f93b88ca667e7f114dd1e58312b8b}\index{SFW::OctreePartition@{SFW::OctreePartition}!RegisterAllChunks@{RegisterAllChunks}}
+\index{RegisterAllChunks@{RegisterAllChunks}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{RegisterAllChunks()}{RegisterAllChunks()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a095f93b88ca667e7f114dd1e58312b8b} 
+void SFW\+::\+Octree\+Partition\+::\+Register\+All\+Chunks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&}]{reg}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}}}]{level}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+すべての葉をレジストリへ登録 
+
+
+\begin{DoxyParams}{引数}
+{\em reg} & チャンクレジストリ \\
+\hline
+{\em level} & レベル\+ID \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00122}{122}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_ada1b3d5cb0ac8cc7d008a68182fd5541}\index{SFW::OctreePartition@{SFW::OctreePartition}!ReloadLeafByPoint@{ReloadLeafByPoint}}
+\index{ReloadLeafByPoint@{ReloadLeafByPoint}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{ReloadLeafByPoint()}{ReloadLeafByPoint()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_ada1b3d5cb0ac8cc7d008a68182fd5541} 
+void SFW\+::\+Octree\+Partition\+::\+Reload\+Leaf\+By\+Point (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{p}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&}]{reg}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}}}]{level}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+指定座標の葉のキーを再発行してレジストリ更新（デバッグ用） 
+
+
+\begin{DoxyParams}{引数}
+{\em p} & ワールド座標系の点 \\
+\hline
+{\em reg} & チャンクレジストリ \\
+\hline
+{\em level} & レベル\+ID \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00434}{434}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_ad46690a1deea6e20501c76f3de90a63a}\index{SFW::OctreePartition@{SFW::OctreePartition}!SetMaxPerLeafCount@{SetMaxPerLeafCount}}
+\index{SetMaxPerLeafCount@{SetMaxPerLeafCount}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{SetMaxPerLeafCount()}{SetMaxPerLeafCount()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_ad46690a1deea6e20501c76f3de90a63a} 
+void SFW\+::\+Octree\+Partition\+::\+Set\+Max\+Per\+Leaf\+Count (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00483}{483}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a9ff5944a58d9872b606c16a34ec52a81}\index{SFW::OctreePartition@{SFW::OctreePartition}!SetMinPerLeafCount@{SetMinPerLeafCount}}
+\index{SetMinPerLeafCount@{SetMinPerLeafCount}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{SetMinPerLeafCount()}{SetMinPerLeafCount()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a9ff5944a58d9872b606c16a34ec52a81} 
+void SFW\+::\+Octree\+Partition\+::\+Set\+Min\+Per\+Leaf\+Count (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00485}{485}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_aafc8eea38488266b076810bace443f11}\index{SFW::OctreePartition@{SFW::OctreePartition}!SubdivideIf@{SubdivideIf}}
+\index{SubdivideIf@{SubdivideIf}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{SubdivideIf()}{SubdivideIf()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_aafc8eea38488266b076810bace443f11} 
+void SFW\+::\+Octree\+Partition\+::\+Subdivide\+If (\begin{DoxyParamCaption}\item[{std\+::function$<$ bool(const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \&)$>$}]{predicate}{, }\item[{std\+::function$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}}, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \&)$>$}]{pos\+Fn}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+predicate を満たす葉を分割＆再割り当て 
+
+
+\begin{DoxyParams}{引数}
+{\em predicate} & 分割条件 \\
+\hline
+{\em pos\+Fn} & エンティティの位置を取得する関数 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00409}{409}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a3efd805ca0f6345e6a66dd47a3cfdeb0}\index{SFW::OctreePartition@{SFW::OctreePartition}!SubdivideIfOverCapacity@{SubdivideIfOverCapacity}}
+\index{SubdivideIfOverCapacity@{SubdivideIfOverCapacity}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{SubdivideIfOverCapacity()}{SubdivideIfOverCapacity()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a3efd805ca0f6345e6a66dd47a3cfdeb0} 
+void SFW\+::\+Octree\+Partition\+::\+Subdivide\+If\+Over\+Capacity (\begin{DoxyParamCaption}\item[{std\+::function$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}}, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \&)$>$}]{pos\+Fn}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+過大利用の葉を分割＆再割り当て 
+
+
+\begin{DoxyParams}{引数}
+{\em pos\+Fn} & エンティティの位置を取得する関数 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00422}{422}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_octree_partition_a05f950a43adeb9e5beda931e7d60df01}\index{SFW::OctreePartition@{SFW::OctreePartition}!Update@{Update}}
+\index{Update@{Update}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a05f950a43adeb9e5beda931e7d60df01} 
+void SFW\+::\+Octree\+Partition\+::\+Update (\begin{DoxyParamCaption}\item[{double}]{delta\+Time}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+定期的に過小利用の下位葉を親へ統合して木を縮約 
+
+
+\begin{DoxyParams}{引数}
+{\em delta\+Time} & 前回呼び出しからの経過時間（秒） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00080}{80}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_s_f_w_1_1_octree_partition_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_octree_partition_a8fa31fed3c557de9dba2bfcf899ca478}\index{SFW::OctreePartition@{SFW::OctreePartition}!coalesceInterval@{coalesceInterval}}
+\index{coalesceInterval@{coalesceInterval}!SFW::OctreePartition@{SFW::OctreePartition}}
+\doxysubsubsection{\texorpdfstring{coalesceInterval}{coalesceInterval}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_octree_partition_a8fa31fed3c557de9dba2bfcf899ca478} 
+double SFW\+::\+Octree\+Partition\+::coalesce\+Interval = 10.\+0\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+ \mbox{\hyperlink{_octree_partition_8h_source}{Octree\+Partition.\+h}} の \mbox{\hyperlink{_octree_partition_8h_source_l00045}{45}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_octree_partition_8h}{Octree\+Partition.\+h}}\end{DoxyCompactItemize}

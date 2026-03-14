@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/Grid.hpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_grid_8hpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Grid.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_grid_8hpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Size = <span class="keywordtype">size_t</span>&gt;</div>
+<div class="foldopen" id="foldopen00020" data-start="{" data-end="};">
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid2_d.html">   20</a></span>    <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#a9798b73a229f393d35f6f4cd4e074530">Grid2D</a> {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00027" data-start="{" data-end="}">
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid2_d.html#a9798b73a229f393d35f6f4cd4e074530">   27</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#a9798b73a229f393d35f6f4cd4e074530">Grid2D</a>(Size <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#af8ddfedd049c49855b87d51597df1269">width</a>, Size <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#a2cab90f628f79b3c8484b943e799962d">height</a>) noexcept</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            : m_width(<a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#af8ddfedd049c49855b87d51597df1269">width</a>), m_height(<a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#a2cab90f628f79b3c8484b943e799962d">height</a>), m_data(<a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#af8ddfedd049c49855b87d51597df1269">width</a>* <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#a2cab90f628f79b3c8484b943e799962d">height</a>) {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        }</div>
+</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args&gt;</div>
+<div class="foldopen" id="foldopen00039" data-start="{" data-end="}">
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid2_d.html#af3485c40b0f1990a7dd8d5c76a7e74dd">   39</a></span>        <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#af3485c40b0f1990a7dd8d5c76a7e74dd">Grid2D</a>(Size <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#af8ddfedd049c49855b87d51597df1269">width</a>, Size <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#a2cab90f628f79b3c8484b943e799962d">height</a>, Args&amp;&amp;... args) noexcept</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            : m_width(<a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#af8ddfedd049c49855b87d51597df1269">width</a>), m_height(<a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#a2cab90f628f79b3c8484b943e799962d">height</a>), m_data(<a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#af8ddfedd049c49855b87d51597df1269">width</a>* <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#a2cab90f628f79b3c8484b943e799962d">height</a>, T(std::forward&lt;Args&gt;(args)...)) {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        }</div>
+</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span></div>
+<div class="foldopen" id="foldopen00049" data-start="{" data-end="}">
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid2_d.html#a72920bc1034a206cd77962e7b078a786">   49</a></span>        T&amp; <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#a72920bc1034a206cd77962e7b078a786">operator()</a>(Size x, Size y) {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="keywordflow">return</span> m_data[y * m_width + x];</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        }</div>
+</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span></div>
+<div class="foldopen" id="foldopen00058" data-start="{" data-end="}">
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid2_d.html#a05ddcf45fdd2d02eb5cf4b8e07c31f11">   58</a></span>        <span class="keyword">const</span> T&amp; <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#a05ddcf45fdd2d02eb5cf4b8e07c31f11">operator()</a>(Size x, Size y)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            <span class="keywordflow">return</span> m_data[y * m_width + x];</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        }</div>
+</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid2_d.html#af8ddfedd049c49855b87d51597df1269">   65</a></span>        Size <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#af8ddfedd049c49855b87d51597df1269">width</a>() const noexcept { <span class="keywordflow">return</span> m_width; }</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid2_d.html#a2cab90f628f79b3c8484b943e799962d">   70</a></span>        Size <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#a2cab90f628f79b3c8484b943e799962d">height</a>() const noexcept { <span class="keywordflow">return</span> m_height; }</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid2_d.html#ae6bc53609cf87a8758c10a7e16cb8afd">   75</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#ae6bc53609cf87a8758c10a7e16cb8afd">begin</a>() noexcept { <span class="keywordflow">return</span> m_data.begin(); }</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid2_d.html#aaa2c6d664427d4a81e177fce8ec843dc">   80</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#aaa2c6d664427d4a81e177fce8ec843dc">end</a>() noexcept { <span class="keywordflow">return</span> m_data.end(); }</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid2_d.html#aec19f49b9db90d90aff2e487a0fe7b78">   85</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#aec19f49b9db90d90aff2e487a0fe7b78">begin</a>() const noexcept { <span class="keywordflow">return</span> m_data.begin(); }</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid2_d.html#ac0e7d34a4ea33755eb847700b97957a4">   90</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#ac0e7d34a4ea33755eb847700b97957a4">end</a>() const noexcept { <span class="keywordflow">return</span> m_data.end(); }</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid2_d.html#a753d5bed1ecc8043dcfccae394ad0dee">   95</a></span>        Size <a class="code hl_function" href="class_s_f_w_1_1_grid2_d.html#a753d5bed1ecc8043dcfccae394ad0dee">size</a>() const noexcept { <span class="keywordflow">return</span> m_width * m_height; }</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        Size m_width, m_height;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        std::vector&lt;T&gt; m_data;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    };</div>
+</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Size = <span class="keywordtype">size_t</span>&gt;</div>
+<div class="foldopen" id="foldopen00113" data-start="{" data-end="};">
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html">  113</a></span>    <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a2c867bb33418899b1bd520556b1b6771">Grid3D</a> {</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00121" data-start="{" data-end="}">
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html#a2c867bb33418899b1bd520556b1b6771">  121</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a2c867bb33418899b1bd520556b1b6771">Grid3D</a>(Size <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#ae4c9969d03aebd71b0eb7231843949d7">width</a>, Size <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a404759ea36189c36936bb7778b950361">height</a>, Size <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a4f52e934aa9a051672b6b48a41ba6255">depth</a>) noexcept</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            : m_width(<a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#ae4c9969d03aebd71b0eb7231843949d7">width</a>), m_height(<a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a404759ea36189c36936bb7778b950361">height</a>), m_depth(<a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a4f52e934aa9a051672b6b48a41ba6255">depth</a>),</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            m_data(<span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#ae4c9969d03aebd71b0eb7231843949d7">width</a>)* <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a404759ea36189c36936bb7778b950361">height</a>)* <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a4f52e934aa9a051672b6b48a41ba6255">depth</a>)) {</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        }</div>
+</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args&gt;</div>
+<div class="foldopen" id="foldopen00135" data-start="{" data-end="}">
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html#a55aca72c7360b389ece197d42064f1cb">  135</a></span>        <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a55aca72c7360b389ece197d42064f1cb">Grid3D</a>(Size <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#ae4c9969d03aebd71b0eb7231843949d7">width</a>, Size <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a404759ea36189c36936bb7778b950361">height</a>, Size <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a4f52e934aa9a051672b6b48a41ba6255">depth</a>, Args&amp;&amp;... args) noexcept</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>            : m_width(<a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#ae4c9969d03aebd71b0eb7231843949d7">width</a>), m_height(<a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a404759ea36189c36936bb7778b950361">height</a>), m_depth(<a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a4f52e934aa9a051672b6b48a41ba6255">depth</a>),</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            m_data(<span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#ae4c9969d03aebd71b0eb7231843949d7">width</a>)* <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a404759ea36189c36936bb7778b950361">height</a>)* <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a4f52e934aa9a051672b6b48a41ba6255">depth</a>), T(std::forward&lt;Args&gt;(args)...)) {</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        }</div>
+</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span></div>
+<div class="foldopen" id="foldopen00147" data-start="{" data-end="}">
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html#a677d4628066bca914fa85d7760e5036b">  147</a></span>        T&amp; <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a677d4628066bca914fa85d7760e5036b">operator()</a>(Size x, Size y, Size z) {</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>            <span class="keywordflow">return</span> m_data[indexOf(x, y, z)];</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        }</div>
+</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span></div>
+<div class="foldopen" id="foldopen00158" data-start="{" data-end="}">
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html#af007c6533e37678695e317560afb38fc">  158</a></span>        <span class="keyword">const</span> T&amp; <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#af007c6533e37678695e317560afb38fc">operator()</a>(Size x, Size y, Size z)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            <span class="keywordflow">return</span> m_data[indexOf(x, y, z)];</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        }</div>
+</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html#ae4c9969d03aebd71b0eb7231843949d7">  163</a></span>        Size <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#ae4c9969d03aebd71b0eb7231843949d7">width</a>()  const noexcept { <span class="keywordflow">return</span> m_width; }</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html#a404759ea36189c36936bb7778b950361">  165</a></span>        Size <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a404759ea36189c36936bb7778b950361">height</a>() const noexcept { <span class="keywordflow">return</span> m_height; }</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html#a4f52e934aa9a051672b6b48a41ba6255">  167</a></span>        Size <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a4f52e934aa9a051672b6b48a41ba6255">depth</a>()  const noexcept { <span class="keywordflow">return</span> m_depth; }</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html#a01e4bc7c8228bfe1db97eee54d57a4cf">  170</a></span>        Size <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a01e4bc7c8228bfe1db97eee54d57a4cf">size</a>() const noexcept { <span class="keywordflow">return</span> m_width * m_height * m_depth; }</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html#abd338338ea59405020d9a7e6ed23670e">  173</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#abd338338ea59405020d9a7e6ed23670e">begin</a>() noexcept { <span class="keywordflow">return</span> m_data.begin(); }</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html#af6ca8de52bd85b3032a43a6ad23a4899">  174</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#af6ca8de52bd85b3032a43a6ad23a4899">end</a>()   noexcept { <span class="keywordflow">return</span> m_data.end(); }</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html#ada6ff2db787d8b351ceb40d21f292557">  177</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#ada6ff2db787d8b351ceb40d21f292557">begin</a>() const noexcept { <span class="keywordflow">return</span> m_data.begin(); }</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html#af3a2202babce7541f3adb4c9ba03ea20">  178</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#af3a2202babce7541f3adb4c9ba03ea20">end</a>()   const noexcept { <span class="keywordflow">return</span> m_data.end(); }</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html#adaa241732578f4c69f078020e5759a01">  181</a></span>        T* <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#adaa241732578f4c69f078020e5759a01">data</a>() noexcept { <span class="keywordflow">return</span> m_data.data(); }</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_grid3_d.html#a3c9f6428ee4fa1d3b7e62ab1726c2ba5">  182</a></span>        <span class="keyword">const</span> T* <a class="code hl_function" href="class_s_f_w_1_1_grid3_d.html#a3c9f6428ee4fa1d3b7e62ab1726c2ba5">data</a>() const noexcept { <span class="keywordflow">return</span> m_data.data(); }</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        <span class="comment">// 一次元インデックス計算：z*(w*h) + y*w + x</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        <span class="keywordtype">size_t</span> indexOf(Size x, Size y, Size z) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>            <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(z) * <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(m_width) * <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(m_height)</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>                + <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(y) * <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(m_width)</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>                + <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(x);</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        }</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        Size m_width, m_height, m_depth;</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        std::vector&lt;T&gt; m_data;</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    };</div>
+</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>}</div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid2_d_html_a05ddcf45fdd2d02eb5cf4b8e07c31f11"><div class="ttname"><a href="class_s_f_w_1_1_grid2_d.html#a05ddcf45fdd2d02eb5cf4b8e07c31f11">SFW::Grid2D::operator()</a></div><div class="ttdeci">const T &amp; operator()(Size x, Size y) const</div><div class="ttdoc">グリッドの要素にアクセスする演算子オーバーロード（const版）</div><div class="ttdef"><b>Definition</b> <a href="#l00058">Grid.hpp:58</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid2_d_html_a2cab90f628f79b3c8484b943e799962d"><div class="ttname"><a href="class_s_f_w_1_1_grid2_d.html#a2cab90f628f79b3c8484b943e799962d">SFW::Grid2D::height</a></div><div class="ttdeci">Size height() const noexcept</div><div class="ttdoc">グリッドの高さを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00070">Grid.hpp:70</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid2_d_html_a72920bc1034a206cd77962e7b078a786"><div class="ttname"><a href="class_s_f_w_1_1_grid2_d.html#a72920bc1034a206cd77962e7b078a786">SFW::Grid2D::operator()</a></div><div class="ttdeci">T &amp; operator()(Size x, Size y)</div><div class="ttdoc">グリッドの要素にアクセスする演算子オーバーロード</div><div class="ttdef"><b>Definition</b> <a href="#l00049">Grid.hpp:49</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid2_d_html_a753d5bed1ecc8043dcfccae394ad0dee"><div class="ttname"><a href="class_s_f_w_1_1_grid2_d.html#a753d5bed1ecc8043dcfccae394ad0dee">SFW::Grid2D::size</a></div><div class="ttdeci">Size size() const noexcept</div><div class="ttdoc">グリッドのサイズを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00095">Grid.hpp:95</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid2_d_html_a9798b73a229f393d35f6f4cd4e074530"><div class="ttname"><a href="class_s_f_w_1_1_grid2_d.html#a9798b73a229f393d35f6f4cd4e074530">SFW::Grid2D::Grid2D</a></div><div class="ttdeci">Grid2D(Size width, Size height) noexcept</div><div class="ttdoc">デフォルトコンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00027">Grid.hpp:27</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid2_d_html_aaa2c6d664427d4a81e177fce8ec843dc"><div class="ttname"><a href="class_s_f_w_1_1_grid2_d.html#aaa2c6d664427d4a81e177fce8ec843dc">SFW::Grid2D::end</a></div><div class="ttdeci">auto end() noexcept</div><div class="ttdoc">グリッドの要素をイテレートするためのend関数</div><div class="ttdef"><b>Definition</b> <a href="#l00080">Grid.hpp:80</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid2_d_html_ac0e7d34a4ea33755eb847700b97957a4"><div class="ttname"><a href="class_s_f_w_1_1_grid2_d.html#ac0e7d34a4ea33755eb847700b97957a4">SFW::Grid2D::end</a></div><div class="ttdeci">auto end() const noexcept</div><div class="ttdoc">グリッドの要素をイテレートするためのconst版end関数</div><div class="ttdef"><b>Definition</b> <a href="#l00090">Grid.hpp:90</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid2_d_html_ae6bc53609cf87a8758c10a7e16cb8afd"><div class="ttname"><a href="class_s_f_w_1_1_grid2_d.html#ae6bc53609cf87a8758c10a7e16cb8afd">SFW::Grid2D::begin</a></div><div class="ttdeci">auto begin() noexcept</div><div class="ttdoc">グリッドの要素をイテレートするためのbeginとend関数</div><div class="ttdef"><b>Definition</b> <a href="#l00075">Grid.hpp:75</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid2_d_html_aec19f49b9db90d90aff2e487a0fe7b78"><div class="ttname"><a href="class_s_f_w_1_1_grid2_d.html#aec19f49b9db90d90aff2e487a0fe7b78">SFW::Grid2D::begin</a></div><div class="ttdeci">auto begin() const noexcept</div><div class="ttdoc">グリッドの要素をイテレートするためのconst版beginとend関数</div><div class="ttdef"><b>Definition</b> <a href="#l00085">Grid.hpp:85</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid2_d_html_af3485c40b0f1990a7dd8d5c76a7e74dd"><div class="ttname"><a href="class_s_f_w_1_1_grid2_d.html#af3485c40b0f1990a7dd8d5c76a7e74dd">SFW::Grid2D::Grid2D</a></div><div class="ttdeci">Grid2D(Size width, Size height, Args &amp;&amp;... args) noexcept</div><div class="ttdoc">引数付きコンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00039">Grid.hpp:39</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid2_d_html_af8ddfedd049c49855b87d51597df1269"><div class="ttname"><a href="class_s_f_w_1_1_grid2_d.html#af8ddfedd049c49855b87d51597df1269">SFW::Grid2D::width</a></div><div class="ttdeci">Size width() const noexcept</div><div class="ttdoc">グリッドの幅を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00065">Grid.hpp:65</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid3_d_html_a01e4bc7c8228bfe1db97eee54d57a4cf"><div class="ttname"><a href="class_s_f_w_1_1_grid3_d.html#a01e4bc7c8228bfe1db97eee54d57a4cf">SFW::Grid3D::size</a></div><div class="ttdeci">Size size() const noexcept</div><div class="ttdoc">総要素数 = width * height * depth</div><div class="ttdef"><b>Definition</b> <a href="#l00170">Grid.hpp:170</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid3_d_html_a2c867bb33418899b1bd520556b1b6771"><div class="ttname"><a href="class_s_f_w_1_1_grid3_d.html#a2c867bb33418899b1bd520556b1b6771">SFW::Grid3D::Grid3D</a></div><div class="ttdeci">Grid3D(Size width, Size height, Size depth) noexcept</div><div class="ttdoc">コンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00121">Grid.hpp:121</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid3_d_html_a3c9f6428ee4fa1d3b7e62ab1726c2ba5"><div class="ttname"><a href="class_s_f_w_1_1_grid3_d.html#a3c9f6428ee4fa1d3b7e62ab1726c2ba5">SFW::Grid3D::data</a></div><div class="ttdeci">const T * data() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00182">Grid.hpp:182</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid3_d_html_a404759ea36189c36936bb7778b950361"><div class="ttname"><a href="class_s_f_w_1_1_grid3_d.html#a404759ea36189c36936bb7778b950361">SFW::Grid3D::height</a></div><div class="ttdeci">Size height() const noexcept</div><div class="ttdoc">高さ (y)</div><div class="ttdef"><b>Definition</b> <a href="#l00165">Grid.hpp:165</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid3_d_html_a4f52e934aa9a051672b6b48a41ba6255"><div class="ttname"><a href="class_s_f_w_1_1_grid3_d.html#a4f52e934aa9a051672b6b48a41ba6255">SFW::Grid3D::depth</a></div><div class="ttdeci">Size depth() const noexcept</div><div class="ttdoc">奥行 (z)</div><div class="ttdef"><b>Definition</b> <a href="#l00167">Grid.hpp:167</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid3_d_html_a55aca72c7360b389ece197d42064f1cb"><div class="ttname"><a href="class_s_f_w_1_1_grid3_d.html#a55aca72c7360b389ece197d42064f1cb">SFW::Grid3D::Grid3D</a></div><div class="ttdeci">Grid3D(Size width, Size height, Size depth, Args &amp;&amp;... args) noexcept</div><div class="ttdoc">引数付きコンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00135">Grid.hpp:135</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid3_d_html_a677d4628066bca914fa85d7760e5036b"><div class="ttname"><a href="class_s_f_w_1_1_grid3_d.html#a677d4628066bca914fa85d7760e5036b">SFW::Grid3D::operator()</a></div><div class="ttdeci">T &amp; operator()(Size x, Size y, Size z)</div><div class="ttdoc">要素アクセス（非const）</div><div class="ttdef"><b>Definition</b> <a href="#l00147">Grid.hpp:147</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid3_d_html_abd338338ea59405020d9a7e6ed23670e"><div class="ttname"><a href="class_s_f_w_1_1_grid3_d.html#abd338338ea59405020d9a7e6ed23670e">SFW::Grid3D::begin</a></div><div class="ttdeci">auto begin() noexcept</div><div class="ttdoc">イテレータ（非const）</div><div class="ttdef"><b>Definition</b> <a href="#l00173">Grid.hpp:173</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid3_d_html_ada6ff2db787d8b351ceb40d21f292557"><div class="ttname"><a href="class_s_f_w_1_1_grid3_d.html#ada6ff2db787d8b351ceb40d21f292557">SFW::Grid3D::begin</a></div><div class="ttdeci">auto begin() const noexcept</div><div class="ttdoc">イテレータ（const）</div><div class="ttdef"><b>Definition</b> <a href="#l00177">Grid.hpp:177</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid3_d_html_adaa241732578f4c69f078020e5759a01"><div class="ttname"><a href="class_s_f_w_1_1_grid3_d.html#adaa241732578f4c69f078020e5759a01">SFW::Grid3D::data</a></div><div class="ttdeci">T * data() noexcept</div><div class="ttdoc">データ先頭ポインタ（必要なら）</div><div class="ttdef"><b>Definition</b> <a href="#l00181">Grid.hpp:181</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid3_d_html_ae4c9969d03aebd71b0eb7231843949d7"><div class="ttname"><a href="class_s_f_w_1_1_grid3_d.html#ae4c9969d03aebd71b0eb7231843949d7">SFW::Grid3D::width</a></div><div class="ttdeci">Size width() const noexcept</div><div class="ttdoc">幅 (x)</div><div class="ttdef"><b>Definition</b> <a href="#l00163">Grid.hpp:163</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid3_d_html_af007c6533e37678695e317560afb38fc"><div class="ttname"><a href="class_s_f_w_1_1_grid3_d.html#af007c6533e37678695e317560afb38fc">SFW::Grid3D::operator()</a></div><div class="ttdeci">const T &amp; operator()(Size x, Size y, Size z) const</div><div class="ttdoc">要素アクセス（const）</div><div class="ttdef"><b>Definition</b> <a href="#l00158">Grid.hpp:158</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid3_d_html_af3a2202babce7541f3adb4c9ba03ea20"><div class="ttname"><a href="class_s_f_w_1_1_grid3_d.html#af3a2202babce7541f3adb4c9ba03ea20">SFW::Grid3D::end</a></div><div class="ttdeci">auto end() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00178">Grid.hpp:178</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_grid3_d_html_af6ca8de52bd85b3032a43a6ad23a4899"><div class="ttname"><a href="class_s_f_w_1_1_grid3_d.html#af6ca8de52bd85b3032a43a6ad23a4899">SFW::Grid3D::end</a></div><div class="ttdeci">auto end() noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00174">Grid.hpp:174</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_a38f029c1e896199722a8ae2b43dab78.html">Util</a></li><li class="navelem"><a href="_grid_8hpp.html">Grid.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

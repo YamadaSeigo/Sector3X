@@ -1,0 +1,755 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/EntityManager.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_entity_manager_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">EntityManager.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_entity_manager_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;queue&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;atomic&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="_archetype_manager_8h.html">ArchetypeManager.h</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="_sparse_component_store_8hpp.html">SparseComponentStore.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="_accessor_8hpp.html">Accessor.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="_type_checker_8hpp.html">../../Util/TypeChecker.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;<a class="code" href="_access_wrapper_8hpp.html">../../Util/AccessWrapper.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;<a class="code" href="_entity_i_d_allocator_8h.html">EntityIDAllocator.h</a>&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &lt;new&gt;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &lt;shared_mutex&gt;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>{</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_e_c_s.html">ECS</a></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    {</div>
+<div class="foldopen" id="foldopen00034" data-start="{" data-end="};">
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">   34</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a4d0341903c59ff6583abd2d5ea384c53">EntityManager</a> {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a4d0341903c59ff6583abd2d5ea384c53">   39</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a4d0341903c59ff6583abd2d5ea384c53">EntityManager</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Components&gt;</div>
+<div class="foldopen" id="foldopen00046" data-start="{" data-end="}">
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#acfb84437dc645adb705daf9ac7a7c0c7">   46</a></span>            [[nodiscard]] <a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#acfb84437dc645adb705daf9ac7a7c0c7">AddEntity</a>(<span class="keyword">const</span> Components&amp;... components) {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a> mask;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                (<a class="code hl_function" href="namespace_s_f_w_1_1_e_c_s.html#a446f4a52c3a534b0eb0a458956c5b04b">SetMask&lt;Components&gt;</a>(mask), ...);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span> = entityAllocator.Create();</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                <span class="keywordflow">if</span> (!<span class="keywordtype">id</span>.IsValid()) <span class="keywordflow">return</span> id;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html">Archetype</a>* arch = archetypeManager.GetOrCreate(mask);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a>* chunk = arch-&gt;<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#aa8c85b68e26631b775f75afc9fd82242">GetOrCreateChunk</a>();</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                <span class="keywordtype">size_t</span> index = chunk-&gt;<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a9ad9e5876edd7d3fe93b7ba84b2268c9">AddEntity</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                (..., StoreComponent(chunk, <span class="keywordtype">id</span>, index, components));</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                    std::unique_lock lock(locationsMutex);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                    locations[id] = <a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_location.html">EntityLocation</a>{ chunk, index };</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                }</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                <span class="keywordflow">return</span> id;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            }</div>
+</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Components&gt;</div>
+<div class="foldopen" id="foldopen00074" data-start="{" data-end="}">
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#aa745de0f28163065ac818f45132c52c6">   74</a></span>            [[nodiscard]] <a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#aa745de0f28163065ac818f45132c52c6">AddEntity</a>(<a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a> mask, <span class="keyword">const</span> Components&amp;... components) {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span> = entityAllocator.Create();</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                <span class="keywordflow">if</span> (!<span class="keywordtype">id</span>.IsValid()) [[unlikely]] <span class="keywordflow">return</span> id;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html">Archetype</a>* arch = archetypeManager.GetOrCreate(mask);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a>* chunk = arch-&gt;<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#aa8c85b68e26631b775f75afc9fd82242">GetOrCreateChunk</a>();</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                <span class="keywordtype">size_t</span> index = chunk-&gt;<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a9ad9e5876edd7d3fe93b7ba84b2268c9">AddEntity</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                (..., StoreComponent(chunk, <span class="keywordtype">id</span>, index, components));</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                {</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                    std::unique_lock lock(locationsMutex);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                    locations[id] = <a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_location.html">EntityLocation</a>{ chunk, index };</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                }</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                <span class="keywordflow">return</span> id;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            }</div>
+</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a41a39a172c7b77331ab96fdaac3be892">   96</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a41a39a172c7b77331ab96fdaac3be892">DestroyEntity</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a6aab877f81d89c16c00301c2f39d4939">  101</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a6aab877f81d89c16c00301c2f39d4939">CleanAllEntity</a>();</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00108" data-start="{" data-end="}">
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a413e1b9a5f4381593e0e4c66292f2609">  108</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a413e1b9a5f4381593e0e4c66292f2609">HasComponent</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span>) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a1127b2c8d467a6889c6cb2c41dea49c1">ComponentTypeID</a> typeID = <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a10187ecf92f955a8bbb8e6a5b25b8d47">ComponentTypeRegistry::GetID&lt;T&gt;</a>();</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                {</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                    std::shared_lock&lt;std::shared_mutex&gt; lock(locationsMutex);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                    <span class="keywordflow">if</span> (locations.contains(<span class="keywordtype">id</span>)) {</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>                        <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a>&amp; mask = <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae388a688fd1615210c7048b338e2fb43">GetMask</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                        <span class="keywordflow">return</span> mask.test(typeID);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>                    }</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>                }</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a797b24dee165d8c9966a18a8e2805805">ComponentTypeRegistry::IsSparse&lt;T&gt;</a>()) {</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>                    <span class="keywordflow">return</span> GetSparseStore&lt;T&gt;().Has(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>                }</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            }</div>
+</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00131" data-start="{" data-end="}">
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae228c9994a18ce223ec03982a435e4b9">  131</a></span>            std::optional&lt;T&gt; <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae228c9994a18ce223ec03982a435e4b9">ReadComponent</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span>) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>                <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a797b24dee165d8c9966a18a8e2805805">ComponentTypeRegistry::IsSparse&lt;T&gt;</a>()) {</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>                    <span class="keywordflow">if</span> (<span class="keyword">auto</span>* ptr = GetSparseStore&lt;T&gt;().Get(<span class="keywordtype">id</span>)) {</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>                        <span class="keywordflow">return</span> *ptr;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>                    }</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>                    <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>                }</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>                std::shared_lock lock(locationsMutex);</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                <span class="keyword">auto</span> it = locations.find(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                <span class="keywordflow">if</span> (it == locations.end()) [[unlikely]] {</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>                    <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>                }</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>                <span class="keyword">const</span> <span class="keyword">auto</span> loc = it-&gt;second;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                <span class="comment">// SoA コンポーネント</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>                <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_concept" href="concept_s_f_w_1_1_e_c_s_1_1_is_so_a_component.html">IsSoAComponent&lt;T&gt;</a>) {</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>                    <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_component_accessor.html">ComponentAccessor&lt;Read&lt;T&gt;</a>&gt; accessor(loc.chunk);</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                    <span class="keyword">auto</span> soaPtrOpt = accessor.<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_accessor.html#aaf512f8f4037db29c2806182c5254d47">Get</a>&lt;<a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_read.html">Read&lt;T&gt;</a>&gt;();</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>                    <span class="keywordflow">if</span> (!soaPtrOpt) [[unlikely]] {</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>                        <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>                    }</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                    <span class="keywordflow">return</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_accessor_base.html#af3183a034746d9f5ecab79b5a474daea">ComponentAccessorBase::ConvertSoAToAoSComponent&lt;T&gt;</a>(*soaPtrOpt, loc.index);</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>                }</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>                <span class="comment">// 通常 AoS</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>                <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>                    <span class="keyword">auto</span> col = loc.chunk-&gt;GetColumn&lt;T&gt;();</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>                    <span class="keywordflow">if</span> (!col) [[unlikely]] {</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>                        <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>                    }</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>                    <span class="keywordflow">return</span> col.value()[loc.index];</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>                }</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            }</div>
+</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00173" data-start="{" data-end="}">
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a0bd80e350df1bbaf14b67840a44c3f0f">  173</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a0bd80e350df1bbaf14b67840a44c3f0f">WriteComponent</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span>, <span class="keyword">const</span> T&amp; value) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>            {</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a797b24dee165d8c9966a18a8e2805805">ComponentTypeRegistry::IsSparse&lt;T&gt;</a>()) {</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                    <span class="keywordflow">if</span> (<span class="keyword">auto</span>* ptr = GetSparseStore&lt;T&gt;().Get(<span class="keywordtype">id</span>)) {</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                        *ptr = value;</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                    }</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                }</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                std::shared_lock lock(locationsMutex);</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>                <span class="keyword">auto</span> it = locations.find(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                <span class="keywordflow">if</span> (it == locations.end()) [[unlikely]] {</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>                }</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>                <span class="keyword">const</span> <span class="keyword">auto</span> loc = it-&gt;second;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                MemorySetChunk&lt;T&gt;(loc.chunk, loc.index, value);</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>            }</div>
+</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00194" data-start="{" data-end="}">
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a609ef9eef1fec06c51cb36962c969ddb">  194</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a609ef9eef1fec06c51cb36962c969ddb">ReadWriteComponent</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span>, std::function&lt;T(T)&gt;&amp;&amp; f)</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>            {</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a797b24dee165d8c9966a18a8e2805805">ComponentTypeRegistry::IsSparse&lt;T&gt;</a>()) {</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>                    <span class="keyword">auto</span>* ptr = GetSparseStore&lt;T&gt;().Get(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                    <span class="keywordflow">if</span> (ptr == <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>                        <a class="code hl_define" href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a>(<span class="stringliteral">&quot;EntityManager::ReadWriteComponent: Sparse component not found&quot;</span>);</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>                        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>                    }</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>                    *ptr = f(*ptr);</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>                }</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>                <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                    T readValue = {};</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> </div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>                    std::shared_lock lock(locationsMutex);</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                    <span class="keyword">auto</span> it = locations.find(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>                    <span class="keywordflow">if</span> (it == locations.end()) [[unlikely]] {</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>                        <a class="code hl_define" href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a>(<span class="stringliteral">&quot;EntityManager::ReadWriteComponent: Entity not found&quot;</span>);</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                    }</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>                    <span class="keyword">const</span> <span class="keyword">auto</span> loc = it-&gt;second;</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>                    <span class="comment">// SoA コンポーネント</span></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_concept" href="concept_s_f_w_1_1_e_c_s_1_1_is_so_a_component.html">IsSoAComponent&lt;T&gt;</a>) {</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>                        <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_component_accessor.html">ComponentAccessor&lt;Read&lt;T&gt;</a>&gt; accessor(loc.chunk);</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>                        <span class="keyword">auto</span> soaPtrOpt = accessor.<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_accessor.html#aaf512f8f4037db29c2806182c5254d47">Get</a>&lt;<a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_read.html">Read&lt;T&gt;</a>&gt;();</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>                        <span class="keywordflow">if</span> (!soaPtrOpt) [[unlikely]] {</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>                            <a class="code hl_define" href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a>(<span class="stringliteral">&quot;EntityManager::ReadWriteComponent: SoA component not found&quot;</span>);</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>                            <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                        }</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                        readValue = <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_accessor_base.html#af3183a034746d9f5ecab79b5a474daea">ComponentAccessorBase::ConvertSoAToAoSComponent&lt;T&gt;</a>(*soaPtrOpt, loc.index);</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                    }</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>                    <span class="comment">// 通常 AoS</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>                    <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>                        <span class="keyword">auto</span> col = loc.chunk-&gt;GetColumn&lt;T&gt;();</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>                        <span class="keywordflow">if</span> (!col) [[unlikely]] {</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>                            <a class="code hl_define" href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a>(<span class="stringliteral">&quot;EntityManager::ReadWriteComponent: AoS component not found&quot;</span>);</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>                            <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>                        }</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>                        readValue = col.value()[loc.index];</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>                    }</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>                    <span class="keyword">auto</span> writeValue = f(std::move(readValue));</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>                    MemorySetChunk&lt;T&gt;(loc.chunk, loc.index, writeValue);</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>                }</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>            }</div>
+</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00250" data-start="{" data-end="}">
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae0be59c244dd2340674ea89d2f7a0203">  250</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae0be59c244dd2340674ea89d2f7a0203">AddComponent</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span>, <span class="keyword">const</span> T&amp; value) {</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a797b24dee165d8c9966a18a8e2805805">ComponentTypeRegistry::IsSparse&lt;T&gt;</a>()) {</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                    GetSparseStore&lt;T&gt;().Add(<span class="keywordtype">id</span>, value);</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>                }</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> </div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>                <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a1127b2c8d467a6889c6cb2c41dea49c1">ComponentTypeID</a> typeID = <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a10187ecf92f955a8bbb8e6a5b25b8d47">ComponentTypeRegistry::GetID&lt;T&gt;</a>();</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>                <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a> currentMask = <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae388a688fd1615210c7048b338e2fb43">GetMask</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>                currentMask.set(typeID);</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>                <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html">Archetype</a>* newArch = archetypeManager.GetOrCreate(currentMask);</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>                <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a>* newChunk = newArch-&gt;<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#aa8c85b68e26631b775f75afc9fd82242">GetOrCreateChunk</a>();</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span> </div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>                <span class="comment">// 旧ロケーションは共有ロックで取得（重い移動処理はロック外で実行）</span></div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_location.html">EntityLocation</a> oldLoc;</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                {</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                    std::shared_lock&lt;std::shared_mutex&gt; rlock(locationsMutex);</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>                    oldLoc = locations.at(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                }</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>                <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a>* oldChunk = oldLoc.<a class="code hl_variable" href="struct_s_f_w_1_1_e_c_s_1_1_entity_location.html#a4bf9725e97b030ce6533fb5c2ab28a1b">chunk</a>;</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                <span class="keywordtype">size_t</span> oldIndex = oldLoc.<a class="code hl_variable" href="struct_s_f_w_1_1_e_c_s_1_1_entity_location.html#a2b59141b4fd2a9af6d7f26de1fde9031">index</a>;</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>                <span class="keywordtype">size_t</span> newIndex = newChunk-&gt;<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a9ad9e5876edd7d3fe93b7ba84b2268c9">AddEntity</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span> </div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                <span class="comment">// 必要なデータのみ移動</span></div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                <span class="keyword">auto</span>&amp; oldChunkLayout = ArchetypeChunk::Accessor::GetLayoutInfo(oldChunk);</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                <span class="keyword">auto</span>&amp; oldChunkLayoutIdx = ArchetypeChunk::Accessor::GetLayoutInfoIdx(oldChunk);</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                <span class="keyword">auto</span>&amp; newChunkLayout = ArchetypeChunk::Accessor::GetLayoutInfo(newChunk);</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>                <span class="keyword">auto</span>&amp; newChunkLayoutIdx = ArchetypeChunk::Accessor::GetLayoutInfoIdx(newChunk);</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [comp, idx] : oldChunkLayoutIdx) {</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                    <span class="keyword">auto</span>&amp; info = oldChunkLayout[idx];</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>                    <span class="keyword">auto</span>&amp; newInfo = newChunkLayout[newChunkLayoutIdx.at(comp)];</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>                    <span class="keywordtype">size_t</span> index = 0;</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>                    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; i : info)</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>                    {</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>                        <span class="keyword">auto</span> src = ArchetypeChunk::Accessor::GetBuffer(oldChunk) + i.offset;</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>                        <span class="keyword">auto</span> dst = ArchetypeChunk::Accessor::GetBuffer(newChunk) + newInfo.get(index).value().get().offset;</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>                        <span class="keyword">auto</span>* dstElem = <span class="keyword">static_cast&lt;</span>uint8_t*<span class="keyword">&gt;</span>(dst) + newIndex * i.stride;</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>                        <span class="keyword">auto</span>* srcElem = <span class="keyword">static_cast&lt;</span><span class="keyword">const </span>uint8_t*<span class="keyword">&gt;</span>(src) + oldIndex * i.stride;</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>                        <span class="comment">// i.stride 単位=1要素のサイズという前提</span></div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>                            <span class="comment">// メタに「列の element_size / trivial フラグ」が持てるならそれを使う。</span></div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>                        <span class="keywordflow">if</span> (<span class="comment">/* element is trivially copyable */</span> <span class="keyword">true</span>) {</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>                            std::memcpy(dstElem, srcElem, i.stride);</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>                        }</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>                        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>                            <span class="comment">// 要素型が分からない場合は、列側に「ムーブ/コピー関数ポインタ」を持たせる設計に寄せると安全</span></div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>                                <span class="comment">// new (dstElem) ElemType(*reinterpret_cast&lt;const ElemType*&gt;(srcElem));</span></div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                                <span class="comment">// reinterpret_cast&lt;const ElemType*&gt;(srcElem)-&gt;~ElemType(); // swap-pop側が破棄するなら不要</span></div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>                        }</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span> </div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                        index++;</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>                    }</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>                }</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span> </div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                newChunk-&gt;<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#aab9a33d52d74f38ed25da2bc7508d3ef">GetColumn</a>&lt;T&gt;()[newIndex] = value;</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>                <span class="comment">// スワップ相手のロケーション更新と自分の更新は「排他ロック」下で一気に</span></div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>                {</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>                    <span class="keyword">const</span> <span class="keywordtype">size_t</span> lastIndexBefore = oldChunk-&gt;<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#ad81af21258799c01aeddbc43abf9b6cf">GetEntityCount</a>() - 1;</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>                    std::unique_lock&lt;std::shared_mutex&gt; wlock(locationsMutex);</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>                    <span class="keywordflow">if</span> (oldIndex &lt; lastIndexBefore) {</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>                        <a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> swappedId = ArchetypeChunk::Accessor::GetEntityIDs(oldChunk)[lastIndexBefore];</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>                        <span class="keyword">auto</span> it = locations.find(swappedId);</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>                        <span class="keywordflow">if</span> (it != locations.end()) [[unlikely]] it-&gt;second = { oldChunk, oldIndex };</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>                    }</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>                    oldChunk-&gt;<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a47b5de191a4fb9bacfa346bd913814cb">RemoveEntitySwapPop</a>(oldIndex);</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>                    locations[id] = { newChunk, newIndex };</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>                }</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>            }</div>
+</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span></div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00326" data-start="{" data-end="}">
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a7db41cd8a8a95648d35552f4a472eb10">  326</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a7db41cd8a8a95648d35552f4a472eb10">RemoveComponent</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span>) {</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>                <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a1127b2c8d467a6889c6cb2c41dea49c1">ComponentTypeID</a> typeID = <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a10187ecf92f955a8bbb8e6a5b25b8d47">ComponentTypeRegistry::GetID&lt;T&gt;</a>();</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>                <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a> oldMask = <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae388a688fd1615210c7048b338e2fb43">GetMask</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>                <span class="keywordflow">if</span> (!oldMask.test(typeID)) <span class="keywordflow">return</span>; <span class="comment">// 持ってないなら何もしない</span></div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span> </div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>                <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a> newMask = oldMask;</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>                newMask.reset(typeID);</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span> </div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>                <span class="keywordflow">if</span> (ComponentTypeRegistry::IsSparseMask(<a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a>().set(typeID))) {</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>                    GetSparseStore&lt;T&gt;().Remove(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>                }</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span> </div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>                <span class="comment">// 旧ロケーションは共有ロックで取得</span></div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_location.html">EntityLocation</a> oldLoc;</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>                {</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>                    std::shared_lock&lt;std::shared_mutex&gt; rlock(locationsMutex);</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>                    oldLoc = locations.at(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>                }</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>                <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a>* oldChunk = oldLoc.<a class="code hl_variable" href="struct_s_f_w_1_1_e_c_s_1_1_entity_location.html#a4bf9725e97b030ce6533fb5c2ab28a1b">chunk</a>;</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>                <span class="keywordtype">size_t</span> oldIndex = oldLoc.<a class="code hl_variable" href="struct_s_f_w_1_1_e_c_s_1_1_entity_location.html#a2b59141b4fd2a9af6d7f26de1fde9031">index</a>;</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span> </div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>                <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html">Archetype</a>* newArch = archetypeManager.GetOrCreate(newMask);</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>                <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a>* newChunk = newArch-&gt;<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#aa8c85b68e26631b775f75afc9fd82242">GetOrCreateChunk</a>();</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>                <span class="keywordtype">size_t</span> newIndex = newChunk-&gt;<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a9ad9e5876edd7d3fe93b7ba84b2268c9">AddEntity</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span> </div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>                <span class="comment">// 必要なデータのみ移動</span></div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>                <span class="keyword">auto</span>&amp; oldChunkLayout = ArchetypeChunk::Accessor::GetLayoutInfo(oldChunk);</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>                <span class="keyword">auto</span>&amp; oldChunkLayoutIdx = ArchetypeChunk::Accessor::GetLayoutInfoIdx(oldChunk);</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>                <span class="keyword">auto</span>&amp; newChunkLayout = ArchetypeChunk::Accessor::GetLayoutInfo(newChunk);</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>                <span class="keyword">auto</span>&amp; newChunkLayoutIdx = ArchetypeChunk::Accessor::GetLayoutInfoIdx(newChunk);</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [comp, idx] : oldChunkLayout) {</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>                    <span class="keywordflow">if</span> (comp == typeID) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span> </div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>                    <span class="keyword">auto</span>&amp; info = oldChunkLayout[idx];</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>                    <span class="keyword">auto</span>&amp; newInfo = newChunkLayout[newChunkLayoutIdx.at(comp)];</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>                    <span class="keywordtype">size_t</span> index = 0;</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>                    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; i : info)</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>                    {</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>                        <span class="keyword">auto</span> src = ArchetypeChunk::Accessor::GetBuffer(oldChunk) + i.offset;</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>                        <span class="keyword">auto</span> dst = ArchetypeChunk::Accessor::GetBuffer(newChunk) + newInfo.get(index).value().get().offset;</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>                        std::memcpy(<span class="keyword">static_cast&lt;</span>uint8_t*<span class="keyword">&gt;</span>(dst) + newIndex * i.stride,</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>                            <span class="keyword">static_cast&lt;</span><span class="keyword">const </span>uint8_t*<span class="keyword">&gt;</span>(src) + oldIndex * i.stride,</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>                            i.stride);</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span> </div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>                        index++;</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>                    }</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>                }</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span> </div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>                {</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>                    <span class="keyword">const</span> <span class="keywordtype">size_t</span> lastIndexBefore = oldChunk-&gt;<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#ad81af21258799c01aeddbc43abf9b6cf">GetEntityCount</a>() - 1;</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>                    std::unique_lock&lt;std::shared_mutex&gt; wlock(locationsMutex);</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>                    <span class="keywordflow">if</span> (oldIndex &lt; lastIndexBefore) {</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>                        <a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> swappedId = ArchetypeChunk::Accessor::GetEntityIDs(oldChunk)[lastIndexBefore];</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>                        <span class="keyword">auto</span> it = locations.find(swappedId);</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>                        <span class="keywordflow">if</span> (it != locations.end()) it-&gt;second = { oldChunk, oldIndex };</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>                    }</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>                    oldChunk-&gt;<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a47b5de191a4fb9bacfa346bd913814cb">RemoveEntitySwapPop</a>(oldIndex);</div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>                    locations[id] = { newChunk, newIndex };</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>                }</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>            }</div>
+</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span></div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a8741afc591965b27b7ded1983ca637a1">  390</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a8741afc591965b27b7ded1983ca637a1">MoveAllSparseTo</a>(<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a4d0341903c59ff6583abd2d5ea384c53">EntityManager</a>&amp; dst);</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a713c9102af0b1271b674ca9868836027">  394</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a713c9102af0b1271b674ca9868836027">MoveSparseIDsTo</a>(<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a4d0341903c59ff6583abd2d5ea384c53">EntityManager</a>&amp; dst, <span class="keyword">const</span> std::vector&lt;EntityID&gt;&amp; ids);</div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span> </div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>            <span class="comment">// src の全エンティティを this へ統合。戻り値: 移送件数</span></div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>            <span class="comment">// 手順: 1) Sparse 全型を一括 move  2) 非スパースをチャンク列 memcpy で移送  3) src をローカル除去</span></div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a843a38ca9d1bbc6babb8dbeb095de3c8">  398</a></span>            <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a843a38ca9d1bbc6babb8dbeb095de3c8">MergeFromAll</a>(<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a4d0341903c59ff6583abd2d5ea384c53">EntityManager</a>&amp; src);</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span> </div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>            <span class="comment">// ルータ: router(EntityID id, const ComponentMask&amp; mask) -&gt; EntityManager&amp;</span></div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>            <span class="comment">// 返された宛先ごとに分割。戻り値: 移送件数</span></div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Router&gt;</div>
+<div class="foldopen" id="foldopen00403" data-start="{" data-end="}">
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a24623ec0fcad2a19030118ed26425d5a">  403</a></span>            <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a24623ec0fcad2a19030118ed26425d5a">SplitByAll</a>(Router&amp;&amp; router) {</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>                <span class="comment">// 1) 宛先ごとに ID をバケットしつつ、非スパースだけ先に移送</span></div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>                std::unordered_map&lt;EntityManager*, std::vector&lt;EntityID&gt;&gt; buckets;</div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>                <span class="keyword">const</span> <span class="keyword">auto</span> ids = <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a9ef664ba5532b7414726a4f6b36179d5">GetAllEntityIDs</a>(); <span class="comment">// スナップショット</span></div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>                <span class="keywordtype">size_t</span> moved = 0;</div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>                <span class="keywordflow">for</span> (<a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span> : ids) {</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>                    <span class="keyword">auto</span> locOpt = <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ab40b3d768f3d483b9df69e450412d488">TryGetLocation</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>                    <span class="keywordflow">if</span> (!locOpt) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>                    <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a4d0341903c59ff6583abd2d5ea384c53">EntityManager</a>* dst = router(<span class="keywordtype">id</span>, locOpt-&gt;chunk-&gt;GetComponentMask());</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>                    <span class="keywordflow">if</span> (dst == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>                    {</div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>                        <a class="code hl_define" href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a>(<span class="stringliteral">&quot;Router returned nullptr for EntityID { i: %d, g: %d }&quot;</span>, <span class="keywordtype">id</span>.index, <span class="keywordtype">id</span>.generation);</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>                        <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>                    }</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>                    <span class="keywordflow">if</span> (dst == <span class="keyword">this</span>) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>                    <span class="keywordflow">if</span> (<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a7fb5684e80545fe00492cae3fe531cb0">InsertWithID_ForManagerMove</a>(<span class="keywordtype">id</span>, *<span class="keyword">this</span>, *dst)) { buckets[dst].push_back(<span class="keywordtype">id</span>); ++moved; }</div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>                }</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>                <span class="comment">// 2) Sparse は宛先ごとに + ID バケットを使って一括 move</span></div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; [dst, idvec] : buckets) { <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a713c9102af0b1271b674ca9868836027">MoveSparseIDsTo</a>(*dst, idvec); }</div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>                <span class="keywordflow">return</span> moved;</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>            }</div>
+</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span> </div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>            <span class="comment">// すべてのエンティティIDを列挙（locations  全チャンクを補完）</span></div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a9ef664ba5532b7414726a4f6b36179d5">  426</a></span>            std::vector&lt;EntityID&gt; <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a9ef664ba5532b7414726a4f6b36179d5">GetAllEntityIDs</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span></div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>                <span class="keyword">requires</span> <a class="code hl_concept" href="concept_s_f_w_1_1_e_c_s_1_1_sparse_component.html">SparseComponent&lt;T&gt;</a></div>
+<div class="foldopen" id="foldopen00434" data-start="{" data-end="}">
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae1a31ba953c8e4609a06f606ba03ef75">  434</a></span>            <a class="code hl_class" href="class_s_f_w_1_1_read_write_view.html">ReadWriteView&lt;std::unordered_map&lt;EntityID, T&gt;</a>&gt; <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae1a31ba953c8e4609a06f606ba03ef75">GetSparseComponents</a>() {</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>                <a class="code hl_class" href="class_s_f_w_1_1_read_write_view.html">ReadWriteView&lt;std::unordered_map&lt;EntityID, T&gt;</a>&gt; components(GetSparseStore&lt;T&gt;().GetComponents());</div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>                <span class="keywordflow">return</span> components;</div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>            }</div>
+</div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span></div>
+<div class="line"><a id="l00443" name="l00443"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae388a688fd1615210c7048b338e2fb43">  443</a></span>            <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae388a688fd1615210c7048b338e2fb43">GetMask</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span>) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00448" name="l00448"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#addb50338b7958c516a5465725d56c972">  448</a></span>            <span class="keyword">const</span> <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_archetype_manager.html">ArchetypeManager</a>&amp; <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#addb50338b7958c516a5465725d56c972">GetArchetypeManager</a>() const noexcept { <span class="keywordflow">return</span> archetypeManager; }</div>
+<div class="line"><a id="l00453" name="l00453"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a46db8df58dca07d7201c30e4d4dde6cc">  453</a></span>            <span class="keyword">static</span> <span class="keyword">const</span> <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html">EntityIDAllocator</a>&amp; <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a46db8df58dca07d7201c30e4d4dde6cc">GetEntityAllocator</a>() noexcept { <span class="keywordflow">return</span> entityAllocator; }</div>
+<div class="foldopen" id="foldopen00457" data-start="{" data-end="}">
+<div class="line"><a id="l00457" name="l00457"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ab40b3d768f3d483b9df69e450412d488">  457</a></span>            std::optional&lt;EntityLocation&gt; <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ab40b3d768f3d483b9df69e450412d488">TryGetLocation</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span>) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span>                std::shared_lock&lt;std::shared_mutex&gt; rlock(locationsMutex);</div>
+<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>                <span class="keyword">auto</span> it = locations.find(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>                <span class="keywordflow">if</span> (it == locations.end()) <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>                <span class="keywordflow">return</span> it-&gt;second;</div>
+<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>            }</div>
+</div>
+<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span> </div>
+<div class="foldopen" id="foldopen00464" data-start="{" data-end="}">
+<div class="line"><a id="l00464" name="l00464"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a8df08b9c7042c6c3c05d4076591ee454">  464</a></span>            <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a8df08b9c7042c6c3c05d4076591ee454">GetEntityCount</a>() const noexcept {</div>
+<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>                std::shared_lock&lt;std::shared_mutex&gt; rlock(locationsMutex);</div>
+<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span>                <span class="keywordflow">return</span> locations.size();</div>
+<div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span>            }</div>
+</div>
+<div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span></div>
+<div class="line"><a id="l00475" name="l00475"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a7fb5684e80545fe00492cae3fe531cb0">  475</a></span>            <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a7fb5684e80545fe00492cae3fe531cb0">InsertWithID_ForManagerMove</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span>, <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a4d0341903c59ff6583abd2d5ea384c53">EntityManager</a>&amp; src, <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a4d0341903c59ff6583abd2d5ea384c53">EntityManager</a>&amp; dst);</div>
+<div class="line"><a id="l00476" name="l00476"></a><span class="lineno">  476</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00483" name="l00483"></a><span class="lineno">  483</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00484" name="l00484"></a><span class="lineno">  484</span>                <span class="keyword">requires</span> (!<span class="keyword">requires</span> { <span class="keyword">typename</span> T::soa_type; })</div>
+<div class="line"><a id="l00485" name="l00485"></a><span class="lineno">  485</span>            <span class="keywordtype">void</span> MemorySetChunk(<a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">ArchetypeChunk</a>* chunk, <span class="keywordtype">size_t</span> index, <span class="keyword">const</span> T&amp; value) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00486" name="l00486"></a><span class="lineno">  486</span>                <span class="keyword">auto</span> column = chunk-&gt;<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#aab9a33d52d74f38ed25da2bc7508d3ef">GetColumn</a>&lt;T&gt;();</div>
+<div class="line"><a id="l00487" name="l00487"></a><span class="lineno">  487</span>                <span class="keywordflow">if</span> (!column) [[unlikely]] {</div>
+<div class="line"><a id="l00488" name="l00488"></a><span class="lineno">  488</span>                    <a class="code hl_define" href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a>(<span class="stringliteral">&quot;コンポーネントタイプ{ %d }がアーキタイプチャンクに見つかりません&quot;</span>, <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a10187ecf92f955a8bbb8e6a5b25b8d47">ComponentTypeRegistry::GetID&lt;T&gt;</a>());</div>
+<div class="line"><a id="l00489" name="l00489"></a><span class="lineno">  489</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00490" name="l00490"></a><span class="lineno">  490</span>                }</div>
+<div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span> </div>
+<div class="line"><a id="l00492" name="l00492"></a><span class="lineno">  492</span>                <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_trivially_copyable_v&lt;T&gt;) {</div>
+<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span>                    std::memcpy(&amp;column.value()[index], &amp;value, <span class="keyword">sizeof</span>(T));</div>
+<div class="line"><a id="l00494" name="l00494"></a><span class="lineno">  494</span>                }</div>
+<div class="line"><a id="l00495" name="l00495"></a><span class="lineno">  495</span>                <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_move_constructible_v&lt;T&gt;) {</div>
+<div class="line"><a id="l00496" name="l00496"></a><span class="lineno">  496</span>                    <span class="comment">// 既存オブジェクトがある想定なら明示破棄 → プレースメントnew</span></div>
+<div class="line"><a id="l00497" name="l00497"></a><span class="lineno">  497</span>                    column.value()[index].~T();</div>
+<div class="line"><a id="l00498" name="l00498"></a><span class="lineno">  498</span>                    <span class="keyword">new</span> (&amp;column.value()[index]) T(value);</div>
+<div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span>                }</div>
+<div class="line"><a id="l00500" name="l00500"></a><span class="lineno">  500</span>                <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00501" name="l00501"></a><span class="lineno">  501</span>                    <span class="keyword">static_assert</span>(std::is_trivially_copyable_v&lt;T&gt;,</div>
+<div class="line"><a id="l00502" name="l00502"></a><span class="lineno">  502</span>                        <span class="stringliteral">&quot;Non-trivial T must be move/copy constructible for in-place placement.&quot;</span>);</div>
+<div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span>                }</div>
+<div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span>            }</div>
+<div class="line"><a id="l00511" name="l00511"></a><span class="lineno">  511</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00512" name="l00512"></a><span class="lineno">  512</span>                <span class="keyword">requires</span> IsSoAComponent&lt;T&gt;</div>
+<div class="line"><a id="l00513" name="l00513"></a><span class="lineno">  513</span>            <span class="keywordtype">void</span> MemorySetChunk(ArchetypeChunk* chunk, <span class="keywordtype">size_t</span> index, <span class="keyword">const</span> T&amp; value) {</div>
+<div class="line"><a id="l00514" name="l00514"></a><span class="lineno">  514</span>                <span class="keyword">auto</span> column = chunk-&gt;GetColumn&lt;<a class="code hl_enumvalue" href="namespace_s_f_w_1_1_input.html#a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3">T</a>&gt;();</div>
+<div class="line"><a id="l00515" name="l00515"></a><span class="lineno">  515</span>                <span class="keywordflow">if</span> (!column) [[unlikely]] {</div>
+<div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span>                    <a class="code hl_define" href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a>(<span class="stringliteral">&quot;コンポーネントタイプ{ %d }がアーキタイプチャンクに見つかりません&quot;</span>, <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a10187ecf92f955a8bbb8e6a5b25b8d47">ComponentTypeRegistry::GetID&lt;T&gt;</a>());</div>
+<div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span>                }</div>
+<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>                <span class="keywordtype">size_t</span> capacity = chunk-&gt;GetCapacity();</div>
+<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span>                MemorySetChunkSoA&lt;T, typename T::soa_type&gt;(</div>
+<div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span>                    column.value(), index, value, capacity,</div>
+<div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span>                    std::make_index_sequence&lt;std::tuple_size_v&lt;typename T::soa_type&gt;&gt;{}</div>
+<div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span>                );</div>
+<div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span>            }</div>
+<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Variant, <span class="keyword">typename</span> U, <span class="keywordtype">size_t</span> Index&gt;</div>
+<div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span>            <span class="keywordtype">void</span> ExpansionMemberImpl(std::vector&lt;Variant&gt;&amp; vec, U&amp; value) {</div>
+<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>                <span class="keyword">auto</span> ptr = std::get&lt;Index&gt;(U::member_ptr_tuple);</div>
+<div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>                <span class="keyword">static_assert</span>(std::is_member_object_pointer_v&lt;<span class="keyword">decltype</span>(ptr)&gt;);  <span class="comment">// メンバーオブジェクトポインタであることを確認</span></div>
+<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span>                <span class="keyword">auto</span>&amp; member = value.*ptr;</div>
+<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span> </div>
+<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>                <span class="keyword">using </span>MemberT = std::remove_cvref_t&lt;<span class="keyword">decltype</span>(member)&gt;; <span class="comment">//constと参照を除去した型</span></div>
+<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span> </div>
+<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span>                <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (IsSoAComponent&lt;MemberT&gt;) {</div>
+<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span>                    ExpansionMember&lt;Variant&gt;(vec, member, std::make_index_sequence&lt;std::tuple_size_v&lt;typename MemberT::tuple_type&gt;&gt;{});</div>
+<div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span>                }</div>
+<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span>                <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (IsPrimitive&lt;MemberT&gt;) {</div>
+<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span>                    vec.push_back(member);</div>
+<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>                }</div>
+<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span>                <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span>                    <span class="keyword">static_assert</span>(std::is_same_v&lt;MemberT, void&gt;, <span class="stringliteral">&quot;Unsupported member type: must be primitive or reflectable (HasMemberPtr)&quot;</span>);</div>
+<div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span>                }</div>
+<div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span>            }</div>
+<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Variant, <span class="keyword">typename</span> <a class="code hl_enumvalue" href="namespace_s_f_w_1_1_input.html#a6a6939d34261fa1488ae607d8b427c1ea4c614360da93c0a041b22e537de151eb">U</a>, <span class="keywordtype">size_t</span>... Is&gt;</div>
+<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>            <span class="keywordtype">void</span> ExpansionMember(std::vector&lt;Variant&gt;&amp; vec, U&amp; value, std::index_sequence&lt;Is...&gt;) {</div>
+<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span>                (ExpansionMemberImpl&lt;Variant, U, Is&gt;(vec, value), ...);</div>
+<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span>            }</div>
+<div class="line"><a id="l00563" name="l00563"></a><span class="lineno">  563</span>            <span class="keyword">template</span>&lt;IsSoAComponent T&gt;</div>
+<div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span>            <span class="keyword">auto</span> GetMember(T&amp; t) -&gt; std::vector&lt;typename T::variant_type&gt; {</div>
+<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span>                std::vector&lt;typename T::variant_type&gt; member_values;</div>
+<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>                ExpansionMember&lt;typename T::variant_type&gt;(member_values, t, std::make_index_sequence&lt;std::tuple_size_v&lt;typename T::tuple_type&gt;&gt;{});</div>
+<div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span>                <span class="keywordflow">return</span> member_values;</div>
+<div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span>            }</div>
+<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> <a class="code hl_enumvalue" href="namespace_s_f_w_1_1_input.html#a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3">T</a>, <span class="keyword">typename</span> SoATuple, std::size_t... Is&gt;</div>
+<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span>            <span class="keywordtype">void</span> MemorySetChunkSoA(T* base, <span class="keywordtype">size_t</span> index, <span class="keyword">const</span> T&amp; value, <span class="keywordtype">size_t</span> capacity, std::index_sequence&lt;Is...&gt;) {</div>
+<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>                <span class="keyword">auto</span> charBase = <span class="keyword">reinterpret_cast&lt;</span><a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a1fa083af926da159fc321773dbfc28c5">BufferType</a>*<span class="keyword">&gt;</span>(base);</div>
+<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span>                <span class="keywordtype">size_t</span> offset = 0;</div>
+<div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span>                <span class="keyword">auto</span> members = GetMember(value);</div>
+<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; v : members) {</div>
+<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span>                    std::visit([&amp;](<span class="keyword">auto</span>&amp;&amp; val) {</div>
+<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span>                        <span class="keyword">using </span>ValType = std::remove_cvref_t&lt;<span class="keyword">decltype</span>(val)&gt;;</div>
+<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span>                        offset = <a class="code hl_function" href="namespace_s_f_w.html#a00279ddf58f514d56177048d221b6328">AlignTo</a>(offset, <span class="keyword">alignof</span>(ValType));</div>
+<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span>                        *(<span class="keyword">reinterpret_cast&lt;</span>ValType*<span class="keyword">&gt;</span>(charBase + offset) + index) = val;</div>
+<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span>                        offset += <span class="keyword">sizeof</span>(ValType) * capacity;</div>
+<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span>                        }, v);</div>
+<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span>                }</div>
+<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>            }</div>
+<div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span>            <span class="keywordtype">void</span> StoreComponent(ArchetypeChunk* chunk, EntityID <span class="keywordtype">id</span>, <span class="keywordtype">size_t</span> index, <span class="keyword">const</span> T&amp; value) {</div>
+<div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span>                <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a797b24dee165d8c9966a18a8e2805805">ComponentTypeRegistry::IsSparse&lt;T&gt;</a>()) {</div>
+<div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span>                    GetSparseStore&lt;T&gt;().Add(<span class="keywordtype">id</span>, value);</div>
+<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span>                }</div>
+<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>                <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>                    MemorySetChunk&lt;T&gt;(chunk, index, value);</div>
+<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>                }</div>
+<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>            }</div>
+<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span></div>
+<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>            <span class="keywordtype">bool</span> EraseEntityLocalNoSparse(EntityID <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>            <span class="keyword">static</span> <span class="keywordtype">void</span> CopyEntityColumns(ArchetypeChunk* srcChunk, <span class="keywordtype">size_t</span> srcIndex,</div>
+<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>                ArchetypeChunk* dstChunk, <span class="keywordtype">size_t</span> dstIndex);</div>
+<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>            <span class="comment">//エンティティIDアロケータ</span></div>
+<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>            <span class="keyword">static</span> <span class="keyword">inline</span> EntityIDAllocator entityAllocator = EntityIDAllocator(MAX_ENTITY_NUM);</div>
+<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>            <span class="comment">//アーキタイプマネージャー</span></div>
+<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>            ArchetypeManager archetypeManager;</div>
+<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span>            std::unordered_map&lt;EntityID, EntityLocation&gt; locations;</div>
+<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>            <span class="comment">//locations の並行アクセスを守るロック（読取多数・書込少数を想定）</span></div>
+<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span>            <span class="keyword">mutable</span> std::shared_mutex locationsMutex;</div>
+<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>            <span class="keyword">struct </span>ISparseWrapper {</div>
+<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>                <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_enumvalue" href="namespace_s_f_w.html#a832b30f9bb9e1cb1a19a69701f3501bca1063e38cb53d94d386f21227fcd84717">Remove</a>(EntityID <span class="keywordtype">id</span>) = 0;</div>
+<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>                <span class="keyword">virtual</span> <span class="keywordtype">void</span> MoveAllTo(<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a4d0341903c59ff6583abd2d5ea384c53">EntityManager</a>&amp; dst) = 0;</div>
+<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>                <span class="keyword">virtual</span> <span class="keywordtype">void</span> MoveManyTo(<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a4d0341903c59ff6583abd2d5ea384c53">EntityManager</a>&amp; dst, <span class="keyword">const</span> EntityID* ids, <span class="keywordtype">size_t</span> n) = 0;</div>
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>                <span class="keyword">virtual</span> ~ISparseWrapper() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>            };</div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>            std::unordered_map&lt;ComponentTypeID, std::shared_ptr&lt;struct ISparseWrapper&gt;&gt; sparseStores;</div>
+<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>            <span class="keyword">struct </span>SparseWrapper : ISparseWrapper {</div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>                SparseComponentStore&lt;T&gt; store;</div>
+<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>                <span class="keywordtype">void</span> <a class="code hl_enumvalue" href="namespace_s_f_w.html#a832b30f9bb9e1cb1a19a69701f3501bca1063e38cb53d94d386f21227fcd84717">Remove</a>(EntityID <span class="keywordtype">id</span>)<span class="keyword"> override </span>{ store.Remove(<span class="keywordtype">id</span>); }</div>
+<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>                <span class="keywordtype">void</span> MoveAllTo(<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a4d0341903c59ff6583abd2d5ea384c53">EntityManager</a>&amp; dst)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>                    <span class="keyword">auto</span>&amp; srcMap = store.GetComponents();</div>
+<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>                    <span class="keyword">auto</span>&amp; dstMap = dst.GetSparseStore&lt;<a class="code hl_enumvalue" href="namespace_s_f_w_1_1_input.html#a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3">T</a>&gt;().GetComponents();</div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>                    dstMap.reserve(dstMap.size() + srcMap.size());</div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>                    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = srcMap.begin(); it != srcMap.end(); ++it) {</div>
+<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>                        dstMap.insert_or_assign(it-&gt;first, std::move(it-&gt;second));</div>
+<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>                    }</div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>                    srcMap.clear();</div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>                }</div>
+<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>                <span class="keywordtype">void</span> MoveManyTo(<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a4d0341903c59ff6583abd2d5ea384c53">EntityManager</a>&amp; dst, <span class="keyword">const</span> EntityID* ids, <span class="keywordtype">size_t</span> n)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>                    <span class="keyword">auto</span>&amp; srcMap = store.GetComponents();</div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>                    <span class="keyword">auto</span>&amp; dstMap = dst.GetSparseStore&lt;<a class="code hl_enumvalue" href="namespace_s_f_w_1_1_input.html#a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3">T</a>&gt;().GetComponents();</div>
+<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span>                    dstMap.reserve(dstMap.size() + n);</div>
+<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; n; ++i) {</div>
+<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>                        <span class="keyword">auto</span> it = srcMap.find(ids[i]);</div>
+<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>                        <span class="keywordflow">if</span> (it != srcMap.end()) {</div>
+<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>                            dstMap.insert_or_assign(it-&gt;first, std::move(it-&gt;second));</div>
+<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span>                            srcMap.erase(it);</div>
+<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span>                        }</div>
+<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>                    }</div>
+<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span>                }</div>
+<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>            };</div>
+<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span>            SparseComponentStore&lt;T&gt;&amp; GetSparseStore() noexcept {</div>
+<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span>                <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a1127b2c8d467a6889c6cb2c41dea49c1">ComponentTypeID</a> <span class="keywordtype">id</span> = <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a10187ecf92f955a8bbb8e6a5b25b8d47">ComponentTypeRegistry::GetID&lt;T&gt;</a>();</div>
+<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>                <span class="keywordflow">if</span> (!sparseStores.contains(<span class="keywordtype">id</span>)) {</div>
+<div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span>                    <span class="keyword">auto</span> wrapper = std::make_shared&lt;SparseWrapper&lt;T&gt;&gt;();</div>
+<div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span>                    sparseStores[id] = wrapper;</div>
+<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>                }</div>
+<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>SparseWrapper&lt;T&gt;*<span class="keyword">&gt;</span>(sparseStores[id].get())-&gt;store;</div>
+<div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span>            }</div>
+<div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span>        };</div>
+</div>
+<div class="line"><a id="l00701" name="l00701"></a><span class="lineno">  701</span>    }</div>
+<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span> </div>
+<div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_e_c_s.html">ECS</a></div>
+<div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span>    {</div>
+<div class="line"><a id="l00705" name="l00705"></a><span class="lineno">  705</span>        <span class="keyword">template</span>&lt;&gt;</div>
+<div class="foldopen" id="foldopen00706" data-start="{" data-end="}">
+<div class="line"><a id="l00706" name="l00706"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_query.html#a7b90b6e7b91ca9c827769c1cab9b5a56">  706</a></span>        <span class="keyword">inline</span> std::vector&lt;ArchetypeChunk*&gt; <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_query.html#ab30526a91aaa023239f86e62d1fc4e71">Query::MatchingChunks</a>(<a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a>&amp; em) <span class="keyword">const</span> <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span>        {</div>
+<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span>            std::vector&lt;ArchetypeChunk*&gt; result;</div>
+<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; all = em.GetArchetypeManager().GetAllData();</div>
+<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; arch : all) {</div>
+<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span>                <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a>&amp; mask = arch-&gt;GetMask();</div>
+<div class="line"><a id="l00712" name="l00712"></a><span class="lineno">  712</span>                <span class="keywordflow">if</span> ((mask &amp; required) == required &amp;&amp; (mask &amp; excluded).none()) {</div>
+<div class="line"><a id="l00713" name="l00713"></a><span class="lineno">  713</span>                    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; chunks = arch-&gt;GetChunks();</div>
+<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span>                    <span class="comment">// 先に必要分だけまとめて拡張（平均的に再確保を減らす）</span></div>
+<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span>                    result.reserve(result.size() + chunks.size());</div>
+<div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span>                    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; ch : chunks) {</div>
+<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span>                        result.push_back(ch.get());</div>
+<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span>                    }</div>
+<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span>                }</div>
+<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span>            }</div>
+<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span> </div>
+<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>            <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span>        }</div>
+</div>
+<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span>    }</div>
+<div class="line"><a id="l00725" name="l00725"></a><span class="lineno">  725</span>}</div>
+<div class="ttc" id="a_access_wrapper_8hpp_html"><div class="ttname"><a href="_access_wrapper_8hpp.html">AccessWrapper.hpp</a></div><div class="ttdoc">コンテナの読み書きビューを提供するクラス</div></div>
+<div class="ttc" id="a_accessor_8hpp_html"><div class="ttname"><a href="_accessor_8hpp.html">Accessor.hpp</a></div></div>
+<div class="ttc" id="a_archetype_manager_8h_html"><div class="ttname"><a href="_archetype_manager_8h.html">ArchetypeManager.h</a></div><div class="ttdoc">アーキタイプマネージャーを定義するクラス</div></div>
+<div class="ttc" id="a_entity_i_d_allocator_8h_html"><div class="ttname"><a href="_entity_i_d_allocator_8h.html">EntityIDAllocator.h</a></div><div class="ttdoc">エンティティIDを管理するクラス</div></div>
+<div class="ttc" id="a_sparse_component_store_8hpp_html"><div class="ttname"><a href="_sparse_component_store_8hpp.html">SparseComponentStore.hpp</a></div></div>
+<div class="ttc" id="a_type_checker_8hpp_html"><div class="ttname"><a href="_type_checker_8hpp.html">TypeChecker.hpp</a></div><div class="ttdoc">型チェックとコンセプトを定義するヘッダーファイル</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_chunk_html"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">SFW::ECS::ArchetypeChunk</a></div><div class="ttdoc">対象のアーキタイプのコンポーネントのデータを格納するクラス</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00040">ArchetypeChunk.h:40</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_chunk_html_a47b5de191a4fb9bacfa346bd913814cb"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a47b5de191a4fb9bacfa346bd913814cb">SFW::ECS::ArchetypeChunk::RemoveEntitySwapPop</a></div><div class="ttdeci">void RemoveEntitySwapPop(size_t index) noexcept</div><div class="ttdoc">エンティティを削除する関数(最後のエンティティと入れ替えて追放)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_chunk_html_a9ad9e5876edd7d3fe93b7ba84b2268c9"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a9ad9e5876edd7d3fe93b7ba84b2268c9">SFW::ECS::ArchetypeChunk::AddEntity</a></div><div class="ttdeci">size_t AddEntity(EntityID id)</div><div class="ttdoc">エンティティを追加する関数</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_chunk_html_aab9a33d52d74f38ed25da2bc7508d3ef"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#aab9a33d52d74f38ed25da2bc7508d3ef">SFW::ECS::ArchetypeChunk::GetColumn</a></div><div class="ttdeci">std::optional&lt; T * &gt; GetColumn() noexcept</div><div class="ttdoc">コンポーネントの列を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00057">ArchetypeChunk.h:57</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_chunk_html_ad81af21258799c01aeddbc43abf9b6cf"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#ad81af21258799c01aeddbc43abf9b6cf">SFW::ECS::ArchetypeChunk::GetEntityCount</a></div><div class="ttdeci">size_t GetEntityCount() const noexcept</div><div class="ttdoc">エンティティの数を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00087">ArchetypeChunk.h:87</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_html"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype.html">SFW::ECS::Archetype</a></div><div class="ttdoc">アーキタイプを表すクラス(マスクベースのコンポーネント管理)</div><div class="ttdef"><b>Definition</b> <a href="_archetype_8h_source.html#l00022">Archetype.h:22</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_html_aa8c85b68e26631b775f75afc9fd82242"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype.html#aa8c85b68e26631b775f75afc9fd82242">SFW::ECS::Archetype::GetOrCreateChunk</a></div><div class="ttdeci">ArchetypeChunk * GetOrCreateChunk()</div><div class="ttdoc">アーキタイプのチャンクを取得または作成する関数</div><div class="ttdef"><b>Definition</b> <a href="_archetype_8h_source.html#l00033">Archetype.h:33</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_manager_html"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_manager.html">SFW::ECS::ArchetypeManager</a></div><div class="ttdoc">各コンポーネントマスクごとのアーキタイプチャンクを管理するクラス</div><div class="ttdef"><b>Definition</b> <a href="_archetype_manager_8h_source.html#l00020">ArchetypeManager.h:20</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_component_accessor_base_html_af3183a034746d9f5ecab79b5a474daea"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_component_accessor_base.html#af3183a034746d9f5ecab79b5a474daea">SFW::ECS::ComponentAccessorBase::ConvertSoAToAoSComponent</a></div><div class="ttdeci">static T ConvertSoAToAoSComponent(const typename T::ToPtr &amp;p, size_t index) noexcept</div><div class="ttdoc">SoAコンポーネントをAoSコンポーネントに変換する関数</div><div class="ttdef"><b>Definition</b> <a href="_accessor_8hpp_source.html#l00097">Accessor.hpp:97</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_component_accessor_html"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_component_accessor.html">SFW::ECS::ComponentAccessor</a></div><div class="ttdoc">指定したアクセス型に基づいて、コンポーネントにアクセスするためのクラス</div><div class="ttdef"><b>Definition</b> <a href="_accessor_8hpp_source.html#l00204">Accessor.hpp:204</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_component_accessor_html_aaf512f8f4037db29c2806182c5254d47"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_component_accessor.html#aaf512f8f4037db29c2806182c5254d47">SFW::ECS::ComponentAccessor::Get</a></div><div class="ttdeci">std::optional&lt; typename AccessPolicy&lt; AccessType &gt;::PointerType &gt; Get() noexcept</div><div class="ttdoc">指定したアクセス型に対して、コンポーネントを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="_accessor_8hpp_source.html#l00218">Accessor.hpp:218</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_component_type_registry_html_a10187ecf92f955a8bbb8e6a5b25b8d47"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a10187ecf92f955a8bbb8e6a5b25b8d47">SFW::ECS::ComponentTypeRegistry::GetID</a></div><div class="ttdeci">static ComponentTypeID GetID() noexcept</div><div class="ttdoc">コンポーネントの型IDを取得します。</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00056">ComponentTypeRegistry.h:56</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_component_type_registry_html_a797b24dee165d8c9966a18a8e2805805"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a797b24dee165d8c9966a18a8e2805805">SFW::ECS::ComponentTypeRegistry::IsSparse</a></div><div class="ttdeci">static constexpr bool IsSparse() noexcept</div><div class="ttdoc">コンポーネントがまばらなコンポーネントかどうかを判定します。</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00181">ComponentTypeRegistry.h:181</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_html"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator.html">SFW::ECS::EntityIDAllocator</a></div><div class="ttdoc">エンティティIDを管理するクラス(スレッドセーフ)</div><div class="ttdef"><b>Definition</b> <a href="_entity_i_d_allocator_8h_source.html#l00025">EntityIDAllocator.h:25</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">SFW::ECS::EntityManager</a></div><div class="ttdoc">エンティティの生成と破棄、コンポーネントの追加・削除を管理するクラス</div><div class="ttdef"><b>Definition</b> <a href="#l00034">EntityManager.h:34</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a0bd80e350df1bbaf14b67840a44c3f0f"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a0bd80e350df1bbaf14b67840a44c3f0f">SFW::ECS::EntityManager::WriteComponent</a></div><div class="ttdeci">void WriteComponent(EntityID id, const T &amp;value) noexcept</div><div class="ttdoc">エンティティのコンポーネントを書き換える関数</div><div class="ttdef"><b>Definition</b> <a href="#l00173">EntityManager.h:173</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a24623ec0fcad2a19030118ed26425d5a"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a24623ec0fcad2a19030118ed26425d5a">SFW::ECS::EntityManager::SplitByAll</a></div><div class="ttdeci">size_t SplitByAll(Router &amp;&amp;router)</div><div class="ttdef"><b>Definition</b> <a href="#l00403">EntityManager.h:403</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a413e1b9a5f4381593e0e4c66292f2609"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a413e1b9a5f4381593e0e4c66292f2609">SFW::ECS::EntityManager::HasComponent</a></div><div class="ttdeci">bool HasComponent(EntityID id) const noexcept</div><div class="ttdoc">エンティティにコンポ―ネントがあるかどうかを確認する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00108">EntityManager.h:108</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a41a39a172c7b77331ab96fdaac3be892"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a41a39a172c7b77331ab96fdaac3be892">SFW::ECS::EntityManager::DestroyEntity</a></div><div class="ttdeci">void DestroyEntity(EntityID id)</div><div class="ttdoc">エンティティの削除</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a46db8df58dca07d7201c30e4d4dde6cc"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a46db8df58dca07d7201c30e4d4dde6cc">SFW::ECS::EntityManager::GetEntityAllocator</a></div><div class="ttdeci">static const EntityIDAllocator &amp; GetEntityAllocator() noexcept</div><div class="ttdoc">エンティティIDアロケータを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00453">EntityManager.h:453</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a4d0341903c59ff6583abd2d5ea384c53"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a4d0341903c59ff6583abd2d5ea384c53">SFW::ECS::EntityManager::EntityManager</a></div><div class="ttdeci">EntityManager()=default</div><div class="ttdoc">コンストラクタ</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a609ef9eef1fec06c51cb36962c969ddb"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a609ef9eef1fec06c51cb36962c969ddb">SFW::ECS::EntityManager::ReadWriteComponent</a></div><div class="ttdeci">void ReadWriteComponent(EntityID id, std::function&lt; T(T)&gt; &amp;&amp;f)</div><div class="ttdef"><b>Definition</b> <a href="#l00194">EntityManager.h:194</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a6aab877f81d89c16c00301c2f39d4939"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a6aab877f81d89c16c00301c2f39d4939">SFW::ECS::EntityManager::CleanAllEntity</a></div><div class="ttdeci">void CleanAllEntity()</div><div class="ttdoc">すべてのエンティティの削除</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a713c9102af0b1271b674ca9868836027"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a713c9102af0b1271b674ca9868836027">SFW::ECS::EntityManager::MoveSparseIDsTo</a></div><div class="ttdeci">void MoveSparseIDsTo(EntityManager &amp;dst, const std::vector&lt; EntityID &gt; &amp;ids)</div><div class="ttdoc">指定 ID 群の Sparse を this-&gt;dst に一括 move（型消去で処理）</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a7db41cd8a8a95648d35552f4a472eb10"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a7db41cd8a8a95648d35552f4a472eb10">SFW::ECS::EntityManager::RemoveComponent</a></div><div class="ttdeci">void RemoveComponent(EntityID id)</div><div class="ttdoc">エンティティからコンポーネントを削除する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00326">EntityManager.h:326</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a7fb5684e80545fe00492cae3fe531cb0"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a7fb5684e80545fe00492cae3fe531cb0">SFW::ECS::EntityManager::InsertWithID_ForManagerMove</a></div><div class="ttdeci">static bool InsertWithID_ForManagerMove(EntityID id, EntityManager &amp;src, EntityManager &amp;dst)</div><div class="ttdoc">IDを保持したまま dst 側に1行確保し、非スパースをコピー（manager間移送用）</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a843a38ca9d1bbc6babb8dbeb095de3c8"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a843a38ca9d1bbc6babb8dbeb095de3c8">SFW::ECS::EntityManager::MergeFromAll</a></div><div class="ttdeci">size_t MergeFromAll(EntityManager &amp;src)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a8741afc591965b27b7ded1983ca637a1"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a8741afc591965b27b7ded1983ca637a1">SFW::ECS::EntityManager::MoveAllSparseTo</a></div><div class="ttdeci">void MoveAllSparseTo(EntityManager &amp;dst)</div><div class="ttdoc">すべての Sparse を this-&gt;dst に一括 move（型消去で処理）</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a8df08b9c7042c6c3c05d4076591ee454"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a8df08b9c7042c6c3c05d4076591ee454">SFW::ECS::EntityManager::GetEntityCount</a></div><div class="ttdeci">size_t GetEntityCount() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00464">EntityManager.h:464</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_a9ef664ba5532b7414726a4f6b36179d5"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#a9ef664ba5532b7414726a4f6b36179d5">SFW::ECS::EntityManager::GetAllEntityIDs</a></div><div class="ttdeci">std::vector&lt; EntityID &gt; GetAllEntityIDs() const</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_aa745de0f28163065ac818f45132c52c6"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#aa745de0f28163065ac818f45132c52c6">SFW::ECS::EntityManager::AddEntity</a></div><div class="ttdeci">EntityID AddEntity(ComponentMask mask, const Components &amp;... components)</div><div class="ttdoc">エンティティの追加(コンポーネントマスクを指定)</div><div class="ttdef"><b>Definition</b> <a href="#l00074">EntityManager.h:74</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_ab40b3d768f3d483b9df69e450412d488"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ab40b3d768f3d483b9df69e450412d488">SFW::ECS::EntityManager::TryGetLocation</a></div><div class="ttdeci">std::optional&lt; EntityLocation &gt; TryGetLocation(EntityID id) const noexcept</div><div class="ttdoc">エンティティの現在位置（Chunk と行）を O(1) で取得（共有ロック）</div><div class="ttdef"><b>Definition</b> <a href="#l00457">EntityManager.h:457</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_acfb84437dc645adb705daf9ac7a7c0c7"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#acfb84437dc645adb705daf9ac7a7c0c7">SFW::ECS::EntityManager::AddEntity</a></div><div class="ttdeci">EntityID AddEntity(const Components &amp;... components)</div><div class="ttdoc">エンティティの追加</div><div class="ttdef"><b>Definition</b> <a href="#l00046">EntityManager.h:46</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_addb50338b7958c516a5465725d56c972"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#addb50338b7958c516a5465725d56c972">SFW::ECS::EntityManager::GetArchetypeManager</a></div><div class="ttdeci">const ArchetypeManager &amp; GetArchetypeManager() const noexcept</div><div class="ttdoc">アーキタイプマネージャーを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00448">EntityManager.h:448</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_ae0be59c244dd2340674ea89d2f7a0203"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae0be59c244dd2340674ea89d2f7a0203">SFW::ECS::EntityManager::AddComponent</a></div><div class="ttdeci">void AddComponent(EntityID id, const T &amp;value)</div><div class="ttdoc">エンティティにコンポーネントを追加する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00250">EntityManager.h:250</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_ae1a31ba953c8e4609a06f606ba03ef75"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae1a31ba953c8e4609a06f606ba03ef75">SFW::ECS::EntityManager::GetSparseComponents</a></div><div class="ttdeci">ReadWriteView&lt; std::unordered_map&lt; EntityID, T &gt; &gt; GetSparseComponents()</div><div class="ttdoc">まばらなコンポーネントを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00434">EntityManager.h:434</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_ae228c9994a18ce223ec03982a435e4b9"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae228c9994a18ce223ec03982a435e4b9">SFW::ECS::EntityManager::ReadComponent</a></div><div class="ttdeci">std::optional&lt; T &gt; ReadComponent(EntityID id) noexcept</div><div class="ttdoc">エンティティからコンポーネントを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00131">EntityManager.h:131</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html_ae388a688fd1615210c7048b338e2fb43"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html#ae388a688fd1615210c7048b338e2fb43">SFW::ECS::EntityManager::GetMask</a></div><div class="ttdeci">ComponentMask GetMask(EntityID id) const noexcept</div><div class="ttdoc">エンティティのコンポーネントマスクを取得する関数</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_query_html_ab30526a91aaa023239f86e62d1fc4e71"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_query.html#ab30526a91aaa023239f86e62d1fc4e71">SFW::ECS::Query::MatchingChunks</a></div><div class="ttdeci">std::vector&lt; ArchetypeChunk * &gt; MatchingChunks(T context) const noexcept</div><div class="ttdoc">クエリにマッチするアーキタイプチャンクを取得します。</div><div class="ttdef"><b>Definition</b> <a href="_query_8h_source.html#l00066">Query.h:66</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_read_write_view_html"><div class="ttname"><a href="class_s_f_w_1_1_read_write_view.html">SFW::ReadWriteView</a></div><div class="ttdoc">コンテナの読み書きビューを提供するクラス</div><div class="ttdef"><b>Definition</b> <a href="_access_wrapper_8hpp_source.html#l00016">AccessWrapper.hpp:16</a></div></div>
+<div class="ttc" id="aconcept_s_f_w_1_1_e_c_s_1_1_is_so_a_component_html"><div class="ttname"><a href="concept_s_f_w_1_1_e_c_s_1_1_is_so_a_component.html">SFW::ECS::IsSoAComponent</a></div><div class="ttdoc">SoAコンポーネントを識別するためのコンセプト</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00095">component.hpp:95</a></div></div>
+<div class="ttc" id="aconcept_s_f_w_1_1_e_c_s_1_1_sparse_component_html"><div class="ttname"><a href="concept_s_f_w_1_1_e_c_s_1_1_sparse_component.html">SFW::ECS::SparseComponent</a></div><div class="ttdoc">まばらなコンポーネントを識別するためのコンセプト</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00090">component.hpp:90</a></div></div>
+<div class="ttc" id="alogger_8h_html_ae6fc70e87e424e7083c63696b8fb9e78"><div class="ttname"><a href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a></div><div class="ttdeci">#define LOG_ERROR(fmt,...)</div><div class="ttdef"><b>Definition</b> <a href="logger_8h_source.html#l00197">logger.h:197</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html">SFW::ECS</a></div><div class="ttdef"><b>Definition</b> <a href="_access_info_8h_source.html#l00016">AccessInfo.h:17</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html_a1127b2c8d467a6889c6cb2c41dea49c1"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html#a1127b2c8d467a6889c6cb2c41dea49c1">SFW::ECS::ComponentTypeID</a></div><div class="ttdeci">uint32_t ComponentTypeID</div><div class="ttdoc">コンポーネントの型IDを定義する型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00038">component.hpp:38</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html_a1fa083af926da159fc321773dbfc28c5"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html#a1fa083af926da159fc321773dbfc28c5">SFW::ECS::BufferType</a></div><div class="ttdeci">uint8_t BufferType</div><div class="ttdoc">アーキタイプチャンクのバッファ型</div><div class="ttdef"><b>Definition</b> <a href="_archetype_chunk_8h_source.html#l00036">ArchetypeChunk.h:36</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html_a446f4a52c3a534b0eb0a458956c5b04b"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html#a446f4a52c3a534b0eb0a458956c5b04b">SFW::ECS::SetMask</a></div><div class="ttdeci">void SetMask(ComponentMask &amp;mask) noexcept</div><div class="ttdoc">コンポーネントマスクに指定されたコンポーネントをセットします。</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00201">ComponentTypeRegistry.h:201</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html_a801a8ddbf41707287f3fc0588d25ec8d"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">SFW::ECS::ComponentMask</a></div><div class="ttdeci">std::bitset&lt; MaxComponents &gt; ComponentMask</div><div class="ttdoc">コンポーネントマスクを定義するビットセット型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00042">component.hpp:42</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_input_html_a6a6939d34261fa1488ae607d8b427c1ea4c614360da93c0a041b22e537de151eb"><div class="ttname"><a href="namespace_s_f_w_1_1_input.html#a6a6939d34261fa1488ae607d8b427c1ea4c614360da93c0a041b22e537de151eb">SFW::Input::Key::U</a></div><div class="ttdeci">@ U</div><div class="ttdef"><b>Definition</b> <a href="_input_device_8hpp_source.html#l00045">InputDevice.hpp:45</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_input_html_a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3"><div class="ttname"><a href="namespace_s_f_w_1_1_input.html#a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3">SFW::Input::Key::T</a></div><div class="ttdeci">@ T</div><div class="ttdef"><b>Definition</b> <a href="_input_device_8hpp_source.html#l00044">InputDevice.hpp:44</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html_a00279ddf58f514d56177048d221b6328"><div class="ttname"><a href="namespace_s_f_w.html#a00279ddf58f514d56177048d221b6328">SFW::AlignTo</a></div><div class="ttdeci">size_t AlignTo(size_t offset, size_t alignment)</div><div class="ttdoc">指定したオフセットをアライメントに合わせて調整する関数</div><div class="ttdef"><b>Definition</b> <a href="alignment_8h_source.html#l00018">alignment.h:18</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html_a832b30f9bb9e1cb1a19a69701f3501bca1063e38cb53d94d386f21227fcd84717"><div class="ttname"><a href="namespace_s_f_w.html#a832b30f9bb9e1cb1a19a69701f3501bca1063e38cb53d94d386f21227fcd84717">SFW::EApplyLevelSystemOption::Remove</a></div><div class="ttdeci">@ Remove</div><div class="ttdef"><b>Definition</b> <a href="_world_8hpp_source.html#l00018">World.hpp:18</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_e_c_s_1_1_entity_i_d_html"><div class="ttname"><a href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">SFW::ECS::EntityID</a></div><div class="ttdoc">EntityのIDを表す構造体</div><div class="ttdef"><b>Definition</b> <a href="entity_8h_source.html#l00022">entity.h:22</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_e_c_s_1_1_entity_location_html"><div class="ttname"><a href="struct_s_f_w_1_1_e_c_s_1_1_entity_location.html">SFW::ECS::EntityLocation</a></div><div class="ttdoc">エンティティのアーキタイプの位置を表す構造体</div><div class="ttdef"><b>Definition</b> <a href="_archetype_manager_8h_source.html#l00056">ArchetypeManager.h:56</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_e_c_s_1_1_entity_location_html_a2b59141b4fd2a9af6d7f26de1fde9031"><div class="ttname"><a href="struct_s_f_w_1_1_e_c_s_1_1_entity_location.html#a2b59141b4fd2a9af6d7f26de1fde9031">SFW::ECS::EntityLocation::index</a></div><div class="ttdeci">size_t index</div><div class="ttdef"><b>Definition</b> <a href="_archetype_manager_8h_source.html#l00058">ArchetypeManager.h:58</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_e_c_s_1_1_entity_location_html_a4bf9725e97b030ce6533fb5c2ab28a1b"><div class="ttname"><a href="struct_s_f_w_1_1_e_c_s_1_1_entity_location.html#a4bf9725e97b030ce6533fb5c2ab28a1b">SFW::ECS::EntityLocation::chunk</a></div><div class="ttdeci">ArchetypeChunk * chunk</div><div class="ttdef"><b>Definition</b> <a href="_archetype_manager_8h_source.html#l00057">ArchetypeManager.h:57</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_e_c_s_1_1_read_html"><div class="ttname"><a href="struct_s_f_w_1_1_e_c_s_1_1_read.html">SFW::ECS::Read</a></div><div class="ttdoc">コンポーネントの読み取りアクセスを表すテンプレート</div><div class="ttdef"><b>Definition</b> <a href="_access_info_8h_source.html#l00028">AccessInfo.h:28</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_5ada393002ee7234dde4caf0d7998537.html">Core</a></li><li class="navelem"><a href="dir_424b27d9839eee089d4ee0e5359b7d45.html">ECS</a></li><li class="navelem"><a href="_entity_manager_8h.html">EntityManager.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Math/\+Quaternion.hpp ファイル}
+\hypertarget{_quaternion_8hpp}{}\label{_quaternion_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/Quaternion.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/Quaternion.hpp}}
+
+
+クォータニオンを定義するヘッダーファイル  
+
+
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include "{}Vector.\+hpp"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat$<$ T $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_basis}{SFW\+::\+Math\+::\+Basis$<$ T $>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_math}{SFW\+::\+Math}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{SFW\+::\+Math\+::\+Quatf}} = \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$float$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_basis}{Basis}}$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3547a79111d4407804ca6d571ec089ae}{SFW\+::\+Math\+::\+Fast\+Basis\+From\+Quat}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$ T $>$ \&q) noexcept
+\item 
+{\footnotesize template$<$typename T, typename Convention = RH\+\_\+\+ZBackward$>$ }\\void \mbox{\hyperlink{namespace_s_f_w_1_1_math_ac7bc3b8d7084839cbe72d9a75eeb4b7a}{SFW\+::\+Math\+::\+To\+Basis}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$ T $>$ \&q, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&out\+Right, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&out\+Up, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&out\+Forward) noexcept
+\item 
+{\footnotesize template$<$typename T, typename Convention = RH\+\_\+\+ZBackward$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5753b537c95f6bf679bc987c3bd3bd99}{SFW\+::\+Math\+::\+Quat\+Right}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$ T $>$ \&q) noexcept
+\item 
+{\footnotesize template$<$typename T, typename Convention = RH\+\_\+\+ZBackward$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_acf033858a4071baf473036cc3db2b4b6}{SFW\+::\+Math\+::\+Quat\+Up}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$ T $>$ \&q) noexcept
+\item 
+{\footnotesize template$<$typename T, typename Convention = RH\+\_\+\+ZBackward$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a64351b3997e2afa18252ec1e7062a0c1}{SFW\+::\+Math\+::\+Quat\+Forward}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$ T $>$ \&q) noexcept
+\item 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a1a4a2760b8fb9407455f6252e17bc03f}{SFW\+::\+Math\+::\+Normalize\+Safe}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&v) noexcept
+\item 
+{\footnotesize template$<$typename T$>$ }\\void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a961dc3e7453531f00a3d3153c424c9b2}{SFW\+::\+Math\+::\+Orthonormalize\+Basis}} (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_basis}{Basis}}$<$ T $>$ \&b) noexcept
+\item 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ac5871847de21fc69990d7e3ddfde6dfc}{SFW\+::\+Math\+::\+Quat\+From\+Basis\+PlusZ}} (\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_basis}{Basis}}$<$ T $>$ b) noexcept
+\item 
+{\footnotesize template$<$typename T, typename Convention = LH\+\_\+\+ZForward$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aa34e3c2a48642cca69fb77db0f0a082d}{SFW\+::\+Math\+::\+Quat\+From\+Basis}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&right, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&up, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&forward) noexcept
+\item 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_abe5951d41ff2b1fad5cd71030be5f7c8}{SFW\+::\+Math\+::\+Quat\+From\+Basis}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_basis}{Basis}}$<$ T $>$ \&basis\+PlusZ) noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+クォータニオンを定義するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+July 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} に定義があります。
+

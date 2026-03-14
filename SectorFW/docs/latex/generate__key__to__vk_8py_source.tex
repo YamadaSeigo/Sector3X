@@ -1,0 +1,106 @@
+\doxysection{generate\+\_\+key\+\_\+to\+\_\+vk.\+py}
+\hypertarget{generate__key__to__vk_8py_source}{}\label{generate__key__to__vk_8py_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Input/generate\_key\_to\_vk.py@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Input/generate\_key\_to\_vk.py}}
+\mbox{\hyperlink{generate__key__to__vk_8py}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00001}\mbox{\hyperlink{namespacegenerate__key__to__vk}{00001}}\ \textcolor{comment}{\#\ generate\_key\_to\_vk.py}}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00003}00003\ \textcolor{comment}{\#\ Key\ enum\ 順序（これに合わせて配列生成）}}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00004}\mbox{\hyperlink{namespacegenerate__key__to__vk_a89fb6422756fcae81b28e9cd8c0946a6}{00004}}\ key\_enum\_order\ =\ [}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00005}00005\ \ \ \ \ \textcolor{stringliteral}{"{}Unknown"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00006}00006\ \ \ \ \ \textcolor{stringliteral}{"{}A"{}},\ \textcolor{stringliteral}{"{}B"{}},\ \textcolor{stringliteral}{"{}C"{}},\ \textcolor{stringliteral}{"{}D"{}},\ \textcolor{stringliteral}{"{}E"{}},\ \textcolor{stringliteral}{"{}F"{}},\ \textcolor{stringliteral}{"{}G"{}},\ \textcolor{stringliteral}{"{}H"{}},\ \textcolor{stringliteral}{"{}I"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00007}00007\ \ \ \ \ \textcolor{stringliteral}{"{}J"{}},\ \textcolor{stringliteral}{"{}K"{}},\ \textcolor{stringliteral}{"{}L"{}},\ \textcolor{stringliteral}{"{}M"{}},\ \textcolor{stringliteral}{"{}N"{}},\ \textcolor{stringliteral}{"{}O"{}},\ \textcolor{stringliteral}{"{}P"{}},\ \textcolor{stringliteral}{"{}Q"{}},\ \textcolor{stringliteral}{"{}R"{}},\ \textcolor{stringliteral}{"{}S"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00008}00008\ \ \ \ \ \textcolor{stringliteral}{"{}T"{}},\ \textcolor{stringliteral}{"{}U"{}},\ \textcolor{stringliteral}{"{}V"{}},\ \textcolor{stringliteral}{"{}W"{}},\ \textcolor{stringliteral}{"{}X"{}},\ \textcolor{stringliteral}{"{}Y"{}},\ \textcolor{stringliteral}{"{}Z"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00009}00009\ \ \ \ \ \textcolor{stringliteral}{"{}Num0"{}},\ \textcolor{stringliteral}{"{}Num1"{}},\ \textcolor{stringliteral}{"{}Num2"{}},\ \textcolor{stringliteral}{"{}Num3"{}},\ \textcolor{stringliteral}{"{}Num4"{}},\ \textcolor{stringliteral}{"{}Num5"{}},\ \textcolor{stringliteral}{"{}Num6"{}},\ \textcolor{stringliteral}{"{}Num7"{}},\ \textcolor{stringliteral}{"{}Num8"{}},\ \textcolor{stringliteral}{"{}Num9"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00010}00010\ \ \ \ \ \textcolor{stringliteral}{"{}Escape"{}},\ \textcolor{stringliteral}{"{}Enter"{}},\ \textcolor{stringliteral}{"{}Tab"{}},\ \textcolor{stringliteral}{"{}Backspace"{}},\ \textcolor{stringliteral}{"{}Space"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00011}00011\ \ \ \ \ \textcolor{stringliteral}{"{}Left"{}},\ \textcolor{stringliteral}{"{}Right"{}},\ \textcolor{stringliteral}{"{}Up"{}},\ \textcolor{stringliteral}{"{}Down"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00012}00012\ \ \ \ \ \textcolor{stringliteral}{"{}LCtrl"{}},\ \textcolor{stringliteral}{"{}RCtrl"{}},\ \textcolor{stringliteral}{"{}LShift"{}},\ \textcolor{stringliteral}{"{}RShift"{}},\ \textcolor{stringliteral}{"{}LAlt"{}},\ \textcolor{stringliteral}{"{}RAlt"{}}}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00013}00013\ ]}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00015}00015\ \textcolor{comment}{\#\ Key\ →\ VKコード\ 対応表}}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00016}\mbox{\hyperlink{namespacegenerate__key__to__vk_a261842d9f72a0f6b693b7e7096b775bb}{00016}}\ key\_to\_vk\ =\ \{}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00017}00017\ \ \ \ \ \textcolor{stringliteral}{"{}A"{}}:\ \textcolor{stringliteral}{"{}0x41"{}},\ \ \textcolor{comment}{\#\ 'A'}}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00018}00018\ \ \ \ \ \textcolor{stringliteral}{"{}B"{}}:\ \textcolor{stringliteral}{"{}0x42"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00019}00019\ \ \ \ \ \textcolor{stringliteral}{"{}C"{}}:\ \textcolor{stringliteral}{"{}0x43"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00020}00020\ \ \ \ \ \textcolor{stringliteral}{"{}D"{}}:\ \textcolor{stringliteral}{"{}0x44"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00021}00021\ \ \ \ \ \textcolor{stringliteral}{"{}E"{}}:\ \textcolor{stringliteral}{"{}0x45"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00022}00022\ \ \ \ \ \textcolor{stringliteral}{"{}F"{}}:\ \textcolor{stringliteral}{"{}0x46"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00023}00023\ \ \ \ \ \textcolor{stringliteral}{"{}G"{}}:\ \textcolor{stringliteral}{"{}0x47"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00024}00024\ \ \ \ \ \textcolor{stringliteral}{"{}H"{}}:\ \textcolor{stringliteral}{"{}0x48"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00025}00025\ \ \ \ \ \textcolor{stringliteral}{"{}I"{}}:\ \textcolor{stringliteral}{"{}0x49"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00026}00026\ \ \ \ \ \textcolor{stringliteral}{"{}J"{}}:\ \textcolor{stringliteral}{"{}0x4A"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00027}00027\ \ \ \ \ \textcolor{stringliteral}{"{}K"{}}:\ \textcolor{stringliteral}{"{}0x4B"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00028}00028\ \ \ \ \ \textcolor{stringliteral}{"{}L"{}}:\ \textcolor{stringliteral}{"{}0x4C"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00029}00029\ \ \ \ \ \textcolor{stringliteral}{"{}M"{}}:\ \textcolor{stringliteral}{"{}0x4D"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00030}00030\ \ \ \ \ \textcolor{stringliteral}{"{}N"{}}:\ \textcolor{stringliteral}{"{}0x4E"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00031}00031\ \ \ \ \ \textcolor{stringliteral}{"{}O"{}}:\ \textcolor{stringliteral}{"{}0x4F"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00032}00032\ \ \ \ \ \textcolor{stringliteral}{"{}P"{}}:\ \textcolor{stringliteral}{"{}0x50"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00033}00033\ \ \ \ \ \textcolor{stringliteral}{"{}Q"{}}:\ \textcolor{stringliteral}{"{}0x51"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00034}00034\ \ \ \ \ \textcolor{stringliteral}{"{}R"{}}:\ \textcolor{stringliteral}{"{}0x52"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00035}00035\ \ \ \ \ \textcolor{stringliteral}{"{}S"{}}:\ \textcolor{stringliteral}{"{}0x53"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00036}00036\ \ \ \ \ \textcolor{stringliteral}{"{}T"{}}:\ \textcolor{stringliteral}{"{}0x54"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00037}00037\ \ \ \ \ \textcolor{stringliteral}{"{}U"{}}:\ \textcolor{stringliteral}{"{}0x55"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00038}00038\ \ \ \ \ \textcolor{stringliteral}{"{}V"{}}:\ \textcolor{stringliteral}{"{}0x56"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00039}00039\ \ \ \ \ \textcolor{stringliteral}{"{}W"{}}:\ \textcolor{stringliteral}{"{}0x57"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00040}00040\ \ \ \ \ \textcolor{stringliteral}{"{}X"{}}:\ \textcolor{stringliteral}{"{}0x58"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00041}00041\ \ \ \ \ \textcolor{stringliteral}{"{}Y"{}}:\ \textcolor{stringliteral}{"{}0x59"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00042}00042\ \ \ \ \ \textcolor{stringliteral}{"{}Z"{}}:\ \textcolor{stringliteral}{"{}0x5A"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00044}00044\ \ \ \ \ \textcolor{stringliteral}{"{}Num0"{}}:\ \textcolor{stringliteral}{"{}0x30"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00045}00045\ \ \ \ \ \textcolor{stringliteral}{"{}Num1"{}}:\ \textcolor{stringliteral}{"{}0x31"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00046}00046\ \ \ \ \ \textcolor{stringliteral}{"{}Num2"{}}:\ \textcolor{stringliteral}{"{}0x32"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00047}00047\ \ \ \ \ \textcolor{stringliteral}{"{}Num3"{}}:\ \textcolor{stringliteral}{"{}0x33"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00048}00048\ \ \ \ \ \textcolor{stringliteral}{"{}Num4"{}}:\ \textcolor{stringliteral}{"{}0x34"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00049}00049\ \ \ \ \ \textcolor{stringliteral}{"{}Num5"{}}:\ \textcolor{stringliteral}{"{}0x35"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00050}00050\ \ \ \ \ \textcolor{stringliteral}{"{}Num6"{}}:\ \textcolor{stringliteral}{"{}0x36"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00051}00051\ \ \ \ \ \textcolor{stringliteral}{"{}Num7"{}}:\ \textcolor{stringliteral}{"{}0x37"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00052}00052\ \ \ \ \ \textcolor{stringliteral}{"{}Num8"{}}:\ \textcolor{stringliteral}{"{}0x38"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00053}00053\ \ \ \ \ \textcolor{stringliteral}{"{}Num9"{}}:\ \textcolor{stringliteral}{"{}0x39"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00055}00055\ \ \ \ \ \textcolor{stringliteral}{"{}Escape"{}}:\ \textcolor{stringliteral}{"{}VK\_ESCAPE"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00056}00056\ \ \ \ \ \textcolor{stringliteral}{"{}Enter"{}}:\ \textcolor{stringliteral}{"{}VK\_RETURN"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00057}00057\ \ \ \ \ \textcolor{stringliteral}{"{}Tab"{}}:\ \textcolor{stringliteral}{"{}VK\_TAB"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00058}00058\ \ \ \ \ \textcolor{stringliteral}{"{}Backspace"{}}:\ \textcolor{stringliteral}{"{}VK\_BACK"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00059}00059\ \ \ \ \ \textcolor{stringliteral}{"{}Space"{}}:\ \textcolor{stringliteral}{"{}VK\_SPACE"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00061}00061\ \ \ \ \ \textcolor{stringliteral}{"{}Left"{}}:\ \textcolor{stringliteral}{"{}VK\_LEFT"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00062}00062\ \ \ \ \ \textcolor{stringliteral}{"{}Right"{}}:\ \textcolor{stringliteral}{"{}VK\_RIGHT"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00063}00063\ \ \ \ \ \textcolor{stringliteral}{"{}Up"{}}:\ \textcolor{stringliteral}{"{}VK\_UP"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00064}00064\ \ \ \ \ \textcolor{stringliteral}{"{}Down"{}}:\ \textcolor{stringliteral}{"{}VK\_DOWN"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00066}00066\ \ \ \ \ \textcolor{stringliteral}{"{}LCtrl"{}}:\ \textcolor{stringliteral}{"{}VK\_LCONTROL"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00067}00067\ \ \ \ \ \textcolor{stringliteral}{"{}RCtrl"{}}:\ \textcolor{stringliteral}{"{}VK\_RCONTROL"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00068}00068\ \ \ \ \ \textcolor{stringliteral}{"{}LShift"{}}:\ \textcolor{stringliteral}{"{}VK\_LSHIFT"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00069}00069\ \ \ \ \ \textcolor{stringliteral}{"{}RShift"{}}:\ \textcolor{stringliteral}{"{}VK\_RSHIFT"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00070}00070\ \ \ \ \ \textcolor{stringliteral}{"{}LAlt"{}}:\ \textcolor{stringliteral}{"{}VK\_LMENU"{}},}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00071}00071\ \ \ \ \ \textcolor{stringliteral}{"{}RAlt"{}}:\ \textcolor{stringliteral}{"{}VK\_RMENU"{}}}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00072}00072\ \}}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00074}\mbox{\hyperlink{namespacegenerate__key__to__vk_a6d5e5143c03459130b989d23646054af}{00074}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacegenerate__key__to__vk_a6d5e5143c03459130b989d23646054af}{generate\_key\_to\_vk\_array}}():}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00075}00075\ \ \ \ \ lines\ =\ []}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00076}00076\ \ \ \ \ lines.append(\textcolor{stringliteral}{"{}constexpr\ std::array<int,\ static\_cast<size\_t>(Key::Count)>\ KeyToVKMap\ =\ []\ \{"{}})}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00077}00077\ \ \ \ \ lines.append(\textcolor{stringliteral}{"{}\ \ \ \ std::array<int,\ static\_cast<size\_t>(Key::Count)>\ map\{\};"{}})}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00078}00078\ \ \ \ \ \textcolor{keywordflow}{for}\ key\ \textcolor{keywordflow}{in}\ key\_enum\_order:}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00079}00079\ \ \ \ \ \ \ \ \ vk\ =\ key\_to\_vk.get(key,\ \textcolor{stringliteral}{"{}0"{}})\ \ \textcolor{comment}{\#\ 未定義は\ 0（Unknown）}}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00080}00080\ \ \ \ \ \ \ \ \ lines.append(f\textcolor{stringliteral}{"{}\ \ \ \ map[static\_cast<size\_t>(Key::\{key\})]\ =\ \{vk\};"{}})}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00081}00081\ \ \ \ \ lines.append(\textcolor{stringliteral}{"{}\ \ \ \ return\ map;"{}})}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00082}00082\ \ \ \ \ lines.append(\textcolor{stringliteral}{"{}\}();"{}})}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00083}00083\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}.join(lines)}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00085}\mbox{\hyperlink{namespacegenerate__key__to__vk_a9c616af1b786b1cc9d8d0c7f9d4805b3}{00085}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacegenerate__key__to__vk_a9c616af1b786b1cc9d8d0c7f9d4805b3}{generate\_get\_function}}():}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00086}00086\ \ \ \ \ \textcolor{keywordflow}{return}\ (}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}inline\ int\ GetVKFromKey(Key\ key)\ \{\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ \ \ \ return\ KeyToVKMap[static\_cast<size\_t>(key)];\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\}"{}}}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00090}00090\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00092}\mbox{\hyperlink{namespacegenerate__key__to__vk_aebc7fd15017e3261886796c9eefa14ca}{00092}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacegenerate__key__to__vk_aebc7fd15017e3261886796c9eefa14ca}{main}}():}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00093}00093\ \ \ \ \ print(\textcolor{stringliteral}{"{}//\ -\/-\/-\/\ Key\ to\ WinAPI\ VK\ Mapping\ -\/-\/-\/"{}})}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00094}00094\ \ \ \ \ print(\mbox{\hyperlink{namespacegenerate__key__to__vk_a6d5e5143c03459130b989d23646054af}{generate\_key\_to\_vk\_array}}())}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00095}00095\ \ \ \ \ print()}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00096}00096\ \ \ \ \ print(\textcolor{stringliteral}{"{}//\ -\/-\/-\/\ Lookup\ Function\ -\/-\/-\/"{}})}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00097}00097\ \ \ \ \ print(\mbox{\hyperlink{namespacegenerate__key__to__vk_a9c616af1b786b1cc9d8d0c7f9d4805b3}{generate\_get\_function}}())}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00099}00099\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{generate__key__to__vk_8py_source_l00100}00100\ \ \ \ \ \mbox{\hyperlink{namespacegenerate__key__to__vk_aebc7fd15017e3261886796c9eefa14ca}{main}}()}
+
+\end{DoxyCode}

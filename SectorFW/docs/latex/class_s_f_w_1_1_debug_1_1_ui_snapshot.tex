@@ -1,0 +1,90 @@
+\doxysection{SFW\+::Debug\+::Ui\+Snapshot クラス}
+\hypertarget{class_s_f_w_1_1_debug_1_1_ui_snapshot}{}\label{class_s_f_w_1_1_debug_1_1_ui_snapshot}\index{SFW::Debug::UiSnapshot@{SFW::Debug::UiSnapshot}}
+
+
+\doxylink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{Ui\+Snapshot}\+: RAII 版  
+
+
+
+
+{\ttfamily \#include $<$UIBus.\+h$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}}
+\begin{DoxyCompactList}\small\item\em 書き込みガード（\+RAII でロック/アンロック） \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}} \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_a8012334274522b4eaa52a5b735ba3f59}{begin\+Write}} ()
+\begin{DoxyCompactList}\small\item\em 書き込み開始 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_a9cb511c1b1531c010e38e48052a16868}{swap}} ()
+\begin{DoxyCompactList}\small\item\em フロント/バックを入れ替え \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry}{Telemetry}} \& \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_a54809e73f41af8b3e1f1e4458f08257a}{read}} () const
+\begin{DoxyCompactList}\small\item\em フロントを読む \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\doxylink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{Ui\+Snapshot}\+: RAII 版 
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00068}{68}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_snapshot_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_snapshot_a8012334274522b4eaa52a5b735ba3f59}\index{SFW::Debug::UiSnapshot@{SFW::Debug::UiSnapshot}!beginWrite@{beginWrite}}
+\index{beginWrite@{beginWrite}!SFW::Debug::UiSnapshot@{SFW::Debug::UiSnapshot}}
+\doxysubsubsection{\texorpdfstring{beginWrite()}{beginWrite()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_ui_snapshot_a8012334274522b4eaa52a5b735ba3f59} 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard}} SFW\+::\+Debug\+::\+Ui\+Snapshot\+::begin\+Write (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+書き込み開始 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{Write\+Guard} 書き込みガード 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00092}{92}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_snapshot_a54809e73f41af8b3e1f1e4458f08257a}\index{SFW::Debug::UiSnapshot@{SFW::Debug::UiSnapshot}!read@{read}}
+\index{read@{read}!SFW::Debug::UiSnapshot@{SFW::Debug::UiSnapshot}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_ui_snapshot_a54809e73f41af8b3e1f1e4458f08257a} 
+const \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry}{Telemetry}} \& SFW\+::\+Debug\+::\+Ui\+Snapshot\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+フロントを読む 
+
+\begin{DoxyReturn}{戻り値}
+const \doxylink{struct_s_f_w_1_1_debug_1_1_telemetry}{Telemetry}\& フロントの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00105}{105}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_snapshot_a9cb511c1b1531c010e38e48052a16868}\index{SFW::Debug::UiSnapshot@{SFW::Debug::UiSnapshot}!swap@{swap}}
+\index{swap@{swap}!SFW::Debug::UiSnapshot@{SFW::Debug::UiSnapshot}}
+\doxysubsubsection{\texorpdfstring{swap()}{swap()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_ui_snapshot_a9cb511c1b1531c010e38e48052a16868} 
+void SFW\+::\+Debug\+::\+Ui\+Snapshot\+::swap (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+フロント/バックを入れ替え 
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00096}{96}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Debug/\mbox{\hyperlink{_u_i_bus_8h}{UIBus.\+h}}\end{DoxyCompactItemize}

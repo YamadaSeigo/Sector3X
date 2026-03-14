@@ -1,0 +1,435 @@
+\doxysection{SFW\+::Audio\+::Audio\+Service クラス}
+\hypertarget{class_s_f_w_1_1_audio_1_1_audio_service}{}\label{class_s_f_w_1_1_audio_1_1_audio_service}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+
+
+{\ttfamily \#include $<$Audio\+Service.\+h$>$}
+
+SFW\+::Audio\+::Audio\+Service の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_f_w_1_1_audio_1_1_audio_service}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd}{Audio\+Service}} ()
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a5e254e78c3b022b4386d51c825987f43}{\texorpdfstring{$\sim$}{\string~}\+Audio\+Service}} ()
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac6bf1cbf047f7a33f744ca5d09f8f9bd}{Audio\+Service}} (const \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service}{Audio\+Service}} \&)=delete
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service}{Audio\+Service}} \& \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a2aba3b2e6a26c4f46a864d6ac27c58a6}{operator=}} (const \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service}{Audio\+Service}} \&)=delete
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a7f607dc85d53b58ba154b7b218a0fe40}{Initialize}} ()
+\begin{DoxyCompactList}\small\item\em Audio\+Serviceを初期化します。\+So\+Loudエンジンをセットアップします。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a4c3b5a74f184e72f671d6744c8be9ab5}{Shutdown}} ()
+\begin{DoxyCompactList}\small\item\em Audio\+Serviceをシャットダウンします。すべてのサウンドを停止し、リソースを解放します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a81bef85766a94dca536e6d9f55c04590}{Pre\+Update}} (double delta\+Time) override
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{Sound\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_adf23f42929c404cd7a59d8c3c71fd432}{Enqueue\+Load\+Wav}} (const std\+::string \&path)
+\begin{DoxyCompactList}\small\item\em WAVファイルのロードをキューに追加します。実際のファイルのロードは\+Pump\+Commands()スレッドで行われます。 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{Sound\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ad6aacefd4a4f1e97f2de5f2977205b39}{Enqueue\+Load\+Stream}} (const std\+::string \&path)
+\begin{DoxyCompactList}\small\item\em ストリーミング(主に長尺\+BGM向け)で音声ファイルをロードするコマンドをキューに追加します。 実際のロードは\+Pump\+Commands()スレッドで行われます。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a5a0c1b325a1591390c4ab5840a91b244}{Enqueue\+Unload}} (\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{Sound\+Handle}} h)
+\begin{DoxyCompactList}\small\item\em サウンドのアンロードをキューに追加します。実際のアンロードは\+Pump\+Commands()スレッドで行われます。 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{Audio\+Ticket\+ID}} \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a6d6c49ede380e63d1267c3f7e5ca00c3}{Enqueue\+Play}} (\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{Sound\+Handle}} sound, const \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params}{Audio\+Play\+Params}} \&p=\{\})
+\begin{DoxyCompactList}\small\item\em サウンドの再生をキューに追加します。実際の再生は\+Pump\+Commands()スレッドで行われます。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac864ee95c54908710da5b183ba8078d0}{Enqueue\+Stop}} (\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{Voice\+ID}} v)
+\begin{DoxyCompactList}\small\item\em 指定されたボイス\+IDの再生を停止するコマンドをキューに追加します。実際の停止は\+Pump\+Commands()スレッドで行われます。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a97a936707f40f76c33ea46ecb8589ba9}{Enqueue\+Set\+Volume}} (\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{Voice\+ID}} v, float volume)
+\begin{DoxyCompactList}\small\item\em 指定されたボイス\+IDの音量を設定するコマンドをキューに追加します。実際の設定は\+Pump\+Commands()スレッドで行われます。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a01a3a172776f6256472d5c628e37d4c2}{Enqueue\+Set\+Pan}} (\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{Voice\+ID}} v, float pan)
+\begin{DoxyCompactList}\small\item\em 指定されたボイス\+IDのパンを設定するコマンドをキューに追加します。実際の設定は\+Pump\+Commands()スレッドで行われます。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a93eb42ff155580f7f9fdc62055870b6b}{Enqueue\+Set\+Pitch}} (\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{Voice\+ID}} v, float pitch)
+\begin{DoxyCompactList}\small\item\em 指定されたボイス\+IDのピッチを設定するコマンドをキューに追加します。実際の設定は\+Pump\+Commands()スレッドで行われます。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_aeeb0aec08af65209313fd0a40a0d2f01}{Enqueue\+Set3D}} (\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{Voice\+ID}} v, float x, float y, float z, float vx, float vy, float vz)
+\begin{DoxyCompactList}\small\item\em 指定されたボイス\+IDの3\+D位置と速度を設定するコマンドをキューに追加します。実際の設定は\+Pump\+Commands()スレッドで行われます。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a81cd2f4c2785115b79a5b084fc108488}{Enqueue\+Set\+Listener}} (float px, float py, float pz, float ax, float ay, float az, float ux, float uy, float uz, float vx, float vy, float vz)
+\begin{DoxyCompactList}\small\item\em リスナーの位置と向きを設定するコマンドをキューに追加します。実際の設定は\+Pump\+Commands()スレッドで行われます。 \end{DoxyCompactList}\item 
+std\+::optional$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{Voice\+ID}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a14ffdf6c832f6753b361fa624074d532}{Try\+Resolve}} (\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{Audio\+Ticket\+ID}} t) const noexcept
+\begin{DoxyCompactList}\small\item\em 指定されたオーディオチケット\+IDに対応するボイス\+IDを解決しようとします。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac617d107b748914cc42e62c04b912703}{Release\+Ticket}} (\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{Audio\+Ticket\+ID}} t) noexcept
+\begin{DoxyCompactList}\small\item\em 指定されたオーディオチケットを解放します。これにより、関連するリソースが解放されます。 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a9799567dd39e451bc4da0aad93e24c6c}{Is\+Voice\+Alive\+\_\+\+On\+Audio\+Thread}} (\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{Voice\+ID}} v) noexcept
+\begin{DoxyCompactList}\small\item\em 指定されたボイス\+IDが現在アクティブかどうかをオーディオスレッド上で確認します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a0c268bdf3a5cfa7acfde0be9860e31f8}{Pump\+Commands}} ()
+\begin{DoxyCompactList}\small\item\em キューに溜まったオーディオコマンドを処理します。これにはサウンドのロード、再生、停止、パラメータの設定などが含まれます。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{その他の継承メンバ}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7}{Phase}} \+: uint16\+\_\+t \{ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}} = 0
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7}{NORMAL}} = 1
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9}{LATE}} = 2
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907}{PHASE\+\_\+\+MAX}}
+ \}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608}{Group}} \+: uint16\+\_\+t \{ \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b}{GROUP\+\_\+\+GRAPHICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda}{GROUP\+\_\+\+PHYSICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a}{GROUP\+\_\+\+INPUT}}
+, \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e}{GROUP\+\_\+\+AUDIO}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580}{GROUP\+\_\+\+AI}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90}{GROUP\+\_\+\+MAX}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a73744778bc5cc3113ed77db1b69e1fb1}{update\+Phase}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a9f0e8abd26ab30155b39e558f004ce42}{update\+Group}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a116ce546ab92eaf8f4282719b89a5165}{update\+Order}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_audio_service_8h_source}{Audio\+Service.\+h}} の \mbox{\hyperlink{_audio_service_8h_source_l00035}{35}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!AudioService@{AudioService}}
+\index{AudioService@{AudioService}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{AudioService()}{AudioService()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd} 
+SFW\+::\+Audio\+::\+Audio\+Service\+::\+Audio\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_a5e254e78c3b022b4386d51c825987f43}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!````~AudioService@{\texorpdfstring{$\sim$}{\string~}AudioService}}
+\index{````~AudioService@{\texorpdfstring{$\sim$}{\string~}AudioService}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}AudioService()}{\string~AudioService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_a5e254e78c3b022b4386d51c825987f43} 
+SFW\+::\+Audio\+::\+Audio\+Service\+::\texorpdfstring{$\sim$}{\string~}\+Audio\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_ac6bf1cbf047f7a33f744ca5d09f8f9bd}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!AudioService@{AudioService}}
+\index{AudioService@{AudioService}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{AudioService()}{AudioService()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_ac6bf1cbf047f7a33f744ca5d09f8f9bd} 
+SFW\+::\+Audio\+::\+Audio\+Service\+::\+Audio\+Service (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service}{Audio\+Service}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_ad6aacefd4a4f1e97f2de5f2977205b39}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!EnqueueLoadStream@{EnqueueLoadStream}}
+\index{EnqueueLoadStream@{EnqueueLoadStream}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{EnqueueLoadStream()}{EnqueueLoadStream()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_ad6aacefd4a4f1e97f2de5f2977205b39} 
+\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{Sound\+Handle}} SFW\+::\+Audio\+::\+Audio\+Service\+::\+Enqueue\+Load\+Stream (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path}{}\end{DoxyParamCaption})}
+
+
+
+ストリーミング(主に長尺\+BGM向け)で音声ファイルをロードするコマンドをキューに追加します。 実際のロードは\+Pump\+Commands()スレッドで行われます。 
+
+
+\begin{DoxyParams}{引数}
+{\em path} & ロードする音声ファイルのパス（wav/oggなど） \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_audio_1_1_sound_handle}{Sound\+Handle} ロードされたサウンドのハンドル 
+\end{DoxyReturn}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_adf23f42929c404cd7a59d8c3c71fd432}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!EnqueueLoadWav@{EnqueueLoadWav}}
+\index{EnqueueLoadWav@{EnqueueLoadWav}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{EnqueueLoadWav()}{EnqueueLoadWav()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_adf23f42929c404cd7a59d8c3c71fd432} 
+\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{Sound\+Handle}} SFW\+::\+Audio\+::\+Audio\+Service\+::\+Enqueue\+Load\+Wav (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path}{}\end{DoxyParamCaption})}
+
+
+
+WAVファイルのロードをキューに追加します。実際のファイルのロードは\+Pump\+Commands()スレッドで行われます。 
+
+
+\begin{DoxyParams}{引数}
+{\em path} & ロードする\+WAVファイルのパス \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_audio_1_1_sound_handle}{Sound\+Handle} ロードされたサウンドのハンドル 
+\end{DoxyReturn}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_a6d6c49ede380e63d1267c3f7e5ca00c3}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!EnqueuePlay@{EnqueuePlay}}
+\index{EnqueuePlay@{EnqueuePlay}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{EnqueuePlay()}{EnqueuePlay()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_a6d6c49ede380e63d1267c3f7e5ca00c3} 
+\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{Audio\+Ticket\+ID}} SFW\+::\+Audio\+::\+Audio\+Service\+::\+Enqueue\+Play (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{Sound\+Handle}}}]{sound}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params}{Audio\+Play\+Params}} \&}]{p}{ = {\ttfamily \{\}}}\end{DoxyParamCaption})}
+
+
+
+サウンドの再生をキューに追加します。実際の再生は\+Pump\+Commands()スレッドで行われます。 
+
+
+\begin{DoxyParams}{引数}
+{\em sound} & 再生するサウンドのハンドル \\
+\hline
+{\em p} & 再生パラメータ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{Audio\+Ticket\+ID} 再生チケットの\+ID 
+\end{DoxyReturn}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_aeeb0aec08af65209313fd0a40a0d2f01}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!EnqueueSet3D@{EnqueueSet3D}}
+\index{EnqueueSet3D@{EnqueueSet3D}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{EnqueueSet3D()}{EnqueueSet3D()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_aeeb0aec08af65209313fd0a40a0d2f01} 
+void SFW\+::\+Audio\+::\+Audio\+Service\+::\+Enqueue\+Set3D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{Voice\+ID}}}]{v}{, }\item[{float}]{x}{, }\item[{float}]{y}{, }\item[{float}]{z}{, }\item[{float}]{vx}{, }\item[{float}]{vy}{, }\item[{float}]{vz}{}\end{DoxyParamCaption})}
+
+
+
+指定されたボイス\+IDの3\+D位置と速度を設定するコマンドをキューに追加します。実際の設定は\+Pump\+Commands()スレッドで行われます。 
+
+
+\begin{DoxyParams}{引数}
+{\em v} & 位置と速度を設定するボイス\+ID \\
+\hline
+{\em x} & 位置X \\
+\hline
+{\em y} & 位置Y \\
+\hline
+{\em z} & 位置Z \\
+\hline
+{\em vx} & 速度X \\
+\hline
+{\em vy} & 速度Y \\
+\hline
+{\em vz} & 速度Z \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_a81cd2f4c2785115b79a5b084fc108488}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!EnqueueSetListener@{EnqueueSetListener}}
+\index{EnqueueSetListener@{EnqueueSetListener}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{EnqueueSetListener()}{EnqueueSetListener()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_a81cd2f4c2785115b79a5b084fc108488} 
+void SFW\+::\+Audio\+::\+Audio\+Service\+::\+Enqueue\+Set\+Listener (\begin{DoxyParamCaption}\item[{float}]{px}{, }\item[{float}]{py}{, }\item[{float}]{pz}{, }\item[{float}]{ax}{, }\item[{float}]{ay}{, }\item[{float}]{az}{, }\item[{float}]{ux}{, }\item[{float}]{uy}{, }\item[{float}]{uz}{, }\item[{float}]{vx}{, }\item[{float}]{vy}{, }\item[{float}]{vz}{}\end{DoxyParamCaption})}
+
+
+
+リスナーの位置と向きを設定するコマンドをキューに追加します。実際の設定は\+Pump\+Commands()スレッドで行われます。 
+
+
+\begin{DoxyParams}{引数}
+{\em px} & 位置X \\
+\hline
+{\em py} & 位置Y \\
+\hline
+{\em pz} & 位置Z \\
+\hline
+{\em ax} & 向きX \\
+\hline
+{\em ay} & 向きY \\
+\hline
+{\em az} & 向きZ \\
+\hline
+{\em ux} & 上方向X \\
+\hline
+{\em uy} & 上方向Y \\
+\hline
+{\em uz} & 上方向Z \\
+\hline
+{\em vx} & 前方向X \\
+\hline
+{\em vy} & 前方向Y \\
+\hline
+{\em vz} & 前方向Z \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_a01a3a172776f6256472d5c628e37d4c2}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!EnqueueSetPan@{EnqueueSetPan}}
+\index{EnqueueSetPan@{EnqueueSetPan}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{EnqueueSetPan()}{EnqueueSetPan()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_a01a3a172776f6256472d5c628e37d4c2} 
+void SFW\+::\+Audio\+::\+Audio\+Service\+::\+Enqueue\+Set\+Pan (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{Voice\+ID}}}]{v}{, }\item[{float}]{pan}{}\end{DoxyParamCaption})}
+
+
+
+指定されたボイス\+IDのパンを設定するコマンドをキューに追加します。実際の設定は\+Pump\+Commands()スレッドで行われます。 
+
+
+\begin{DoxyParams}{引数}
+{\em v} & パンを設定するボイス\+ID \\
+\hline
+{\em pan} & 設定するパン（-\/1.0f = 左、0.0f = 中央、1.0f = 右） \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_a93eb42ff155580f7f9fdc62055870b6b}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!EnqueueSetPitch@{EnqueueSetPitch}}
+\index{EnqueueSetPitch@{EnqueueSetPitch}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{EnqueueSetPitch()}{EnqueueSetPitch()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_a93eb42ff155580f7f9fdc62055870b6b} 
+void SFW\+::\+Audio\+::\+Audio\+Service\+::\+Enqueue\+Set\+Pitch (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{Voice\+ID}}}]{v}{, }\item[{float}]{pitch}{}\end{DoxyParamCaption})}
+
+
+
+指定されたボイス\+IDのピッチを設定するコマンドをキューに追加します。実際の設定は\+Pump\+Commands()スレッドで行われます。 
+
+
+\begin{DoxyParams}{引数}
+{\em v} & ピッチを設定するボイス\+ID \\
+\hline
+{\em pitch} & 設定するピッチ（1.0f = デフォルトのピッチ、0.5f = 半分のピッチ、2.0f = 2倍のピッチなど） \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_a97a936707f40f76c33ea46ecb8589ba9}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!EnqueueSetVolume@{EnqueueSetVolume}}
+\index{EnqueueSetVolume@{EnqueueSetVolume}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{EnqueueSetVolume()}{EnqueueSetVolume()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_a97a936707f40f76c33ea46ecb8589ba9} 
+void SFW\+::\+Audio\+::\+Audio\+Service\+::\+Enqueue\+Set\+Volume (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{Voice\+ID}}}]{v}{, }\item[{float}]{volume}{}\end{DoxyParamCaption})}
+
+
+
+指定されたボイス\+IDの音量を設定するコマンドをキューに追加します。実際の設定は\+Pump\+Commands()スレッドで行われます。 
+
+
+\begin{DoxyParams}{引数}
+{\em v} & 音量を設定するボイス\+ID \\
+\hline
+{\em volume} & 設定する音量（0.0f = 無音、1.0f = デフォルト音量、2.0f = 2倍の音量など） \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_ac864ee95c54908710da5b183ba8078d0}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!EnqueueStop@{EnqueueStop}}
+\index{EnqueueStop@{EnqueueStop}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{EnqueueStop()}{EnqueueStop()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_ac864ee95c54908710da5b183ba8078d0} 
+void SFW\+::\+Audio\+::\+Audio\+Service\+::\+Enqueue\+Stop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{Voice\+ID}}}]{v}{}\end{DoxyParamCaption})}
+
+
+
+指定されたボイス\+IDの再生を停止するコマンドをキューに追加します。実際の停止は\+Pump\+Commands()スレッドで行われます。 
+
+
+\begin{DoxyParams}{引数}
+{\em v} & 停止するボイス\+ID \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_a5a0c1b325a1591390c4ab5840a91b244}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!EnqueueUnload@{EnqueueUnload}}
+\index{EnqueueUnload@{EnqueueUnload}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{EnqueueUnload()}{EnqueueUnload()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_a5a0c1b325a1591390c4ab5840a91b244} 
+void SFW\+::\+Audio\+::\+Audio\+Service\+::\+Enqueue\+Unload (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{Sound\+Handle}}}]{h}{}\end{DoxyParamCaption})}
+
+
+
+サウンドのアンロードをキューに追加します。実際のアンロードは\+Pump\+Commands()スレッドで行われます。 
+
+
+\begin{DoxyParams}{引数}
+{\em h} & アンロードするサウンドのハンドル \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_a7f607dc85d53b58ba154b7b218a0fe40}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_a7f607dc85d53b58ba154b7b218a0fe40} 
+bool SFW\+::\+Audio\+::\+Audio\+Service\+::\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Audio\+Serviceを初期化します。\+So\+Loudエンジンをセットアップします。 
+
+\begin{DoxyReturn}{戻り値}
+bool 初期化に成功した場合はtrue、失敗した場合はfalseを返します。 
+\end{DoxyReturn}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_a9799567dd39e451bc4da0aad93e24c6c}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!IsVoiceAlive\_OnAudioThread@{IsVoiceAlive\_OnAudioThread}}
+\index{IsVoiceAlive\_OnAudioThread@{IsVoiceAlive\_OnAudioThread}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{IsVoiceAlive\_OnAudioThread()}{IsVoiceAlive\_OnAudioThread()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_a9799567dd39e451bc4da0aad93e24c6c} 
+bool SFW\+::\+Audio\+::\+Audio\+Service\+::\+Is\+Voice\+Alive\+\_\+\+On\+Audio\+Thread (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{Voice\+ID}}}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+指定されたボイス\+IDが現在アクティブかどうかをオーディオスレッド上で確認します。 
+
+
+\begin{DoxyParams}{引数}
+{\em v} & チェックするボイス\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+bool ボイスがアクティブな場合はtrue、そうでない場合はfalseを返します。 
+\end{DoxyReturn}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_a2aba3b2e6a26c4f46a864d6ac27c58a6}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_a2aba3b2e6a26c4f46a864d6ac27c58a6} 
+\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service}{Audio\+Service}} \& SFW\+::\+Audio\+::\+Audio\+Service\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service}{Audio\+Service}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_a81bef85766a94dca536e6d9f55c04590}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!PreUpdate@{PreUpdate}}
+\index{PreUpdate@{PreUpdate}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{PreUpdate()}{PreUpdate()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_a81bef85766a94dca536e6d9f55c04590} 
+void SFW\+::\+Audio\+::\+Audio\+Service\+::\+Pre\+Update (\begin{DoxyParamCaption}\item[{double}]{delta\+Time}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}}を実装しています。
+
+
+
+ \mbox{\hyperlink{_audio_service_8h_source}{Audio\+Service.\+h}} の \mbox{\hyperlink{_audio_service_8h_source_l00056}{56}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_a0c268bdf3a5cfa7acfde0be9860e31f8}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!PumpCommands@{PumpCommands}}
+\index{PumpCommands@{PumpCommands}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{PumpCommands()}{PumpCommands()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_a0c268bdf3a5cfa7acfde0be9860e31f8} 
+void SFW\+::\+Audio\+::\+Audio\+Service\+::\+Pump\+Commands (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+キューに溜まったオーディオコマンドを処理します。これにはサウンドのロード、再生、停止、パラメータの設定などが含まれます。 
+
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_ac617d107b748914cc42e62c04b912703}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!ReleaseTicket@{ReleaseTicket}}
+\index{ReleaseTicket@{ReleaseTicket}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{ReleaseTicket()}{ReleaseTicket()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_ac617d107b748914cc42e62c04b912703} 
+void SFW\+::\+Audio\+::\+Audio\+Service\+::\+Release\+Ticket (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{Audio\+Ticket\+ID}}}]{t}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+指定されたオーディオチケットを解放します。これにより、関連するリソースが解放されます。 
+
+
+\begin{DoxyParams}{引数}
+{\em t} & 解放するオーディオチケット\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_a4c3b5a74f184e72f671d6744c8be9ab5}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!Shutdown@{Shutdown}}
+\index{Shutdown@{Shutdown}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{Shutdown()}{Shutdown()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_a4c3b5a74f184e72f671d6744c8be9ab5} 
+void SFW\+::\+Audio\+::\+Audio\+Service\+::\+Shutdown (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Audio\+Serviceをシャットダウンします。すべてのサウンドを停止し、リソースを解放します。 
+
+\Hypertarget{class_s_f_w_1_1_audio_1_1_audio_service_a14ffdf6c832f6753b361fa624074d532}\index{SFW::Audio::AudioService@{SFW::Audio::AudioService}!TryResolve@{TryResolve}}
+\index{TryResolve@{TryResolve}!SFW::Audio::AudioService@{SFW::Audio::AudioService}}
+\doxysubsubsection{\texorpdfstring{TryResolve()}{TryResolve()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_audio_1_1_audio_service_a14ffdf6c832f6753b361fa624074d532} 
+std\+::optional$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{Voice\+ID}} $>$ SFW\+::\+Audio\+::\+Audio\+Service\+::\+Try\+Resolve (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{Audio\+Ticket\+ID}}}]{t}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+指定されたオーディオチケット\+IDに対応するボイス\+IDを解決しようとします。 
+
+
+\begin{DoxyParams}{引数}
+{\em t} & 解決するオーディオチケット\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+std\+::optional$<$\+Voice\+ID$>$ チケットが有効でボイスが解決された場合は\+Voice\+IDを含むオプションを返し、そうでない場合はstd\+::nulloptを返します。 
+\end{DoxyReturn}
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Audio/\mbox{\hyperlink{_audio_service_8h}{Audio\+Service.\+h}}\end{DoxyCompactItemize}

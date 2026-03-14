@@ -1,0 +1,562 @@
+\doxysection{Grid2\+DPartition.\+h}
+\hypertarget{_grid2_d_partition_8h_source}{}\label{_grid2_d_partition_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/Grid2DPartition.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/Grid2DPartition.h}}
+\mbox{\hyperlink{_grid2_d_partition_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{partition_8hpp}{partition.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_spatial_chunk_registry_service_8h}{SpatialChunkRegistryService.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sx__math_8h}{../Math/sx\_math.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_morton_8h}{../Util/Morton.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_grid_8hpp}{../Util/Grid.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00018}00018\ \ \textcolor{comment}{//==========================================================================}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00019}00019\ \ \textcolor{comment}{//\ ※現状フラスタムカリングでとりあえずyminとymaxをchunkSizeにしているので誤判定をすることがある}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00020}00020\ \ \textcolor{comment}{//\ （本来はチャンクにEntityを加える際にAABBを更新しておき、そこから正確に判定するべき）}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00021}00021\ \ \textcolor{comment}{//==========================================================================}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00023}00023\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00024}00024\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00028}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition}{00028}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a41cedf2996e9a9d950f6f9f0c18eda43}{Grid2DPartition}}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00029}00029\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00030}00030\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00037}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a41cedf2996e9a9d950f6f9f0c18eda43}{00037}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a41cedf2996e9a9d950f6f9f0c18eda43}{Grid2DPartition}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ originWS,\ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\ chunkWidth,\ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\ chunkHeight,\ \textcolor{keywordtype}{float}\ chunkSize)\ noexcept\ :}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ levelOriginWS(originWS),\ grid(chunkWidth,\ chunkHeight),\ chunkSize(chunkSize)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00046}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a400c0c6dadd1cddeef51e71d1598a0fd}{00046}}\ \ \ \ \ \ \ \ \ std::optional<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a400c0c6dadd1cddeef51e71d1598a0fd}{GetChunk}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ wp,}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\&\ reg,\ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}\ level,}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOutOfBoundsPolicy}}\ policy\ =\ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOutOfBoundsPolicy::ClampToEdge}})\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ localPos\ =\ wp\ -\/\ levelOriginWS;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Signed\ =\ \textcolor{keywordtype}{long}\ long;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ cx\ =\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(std::floor(\textcolor{keywordtype}{double}(localPos.x)\ /\ \textcolor{keywordtype}{double}(chunkSize)));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ cz\ =\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(std::floor(\textcolor{keywordtype}{double}(localPos.z)\ /\ \textcolor{keywordtype}{double}(chunkSize)));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ w\ =\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(grid.width());\ \ \ \textcolor{comment}{//\ X方向セル数}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ d\ =\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(grid.height());\ \ \textcolor{comment}{//\ Z方向セル数（名はheightでも意味はDepth）}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (policy\ ==\ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOutOfBoundsPolicy::ClampToEdge}})\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ ix\ =\ std::clamp<Signed>(cx,\ 0,\ w\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ iz\ =\ std::clamp<Signed>(cz,\ 0,\ d\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&grid(\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\textcolor{keyword}{>}(ix),\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\textcolor{keyword}{>}(iz));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cx\ <\ 0\ ||\ cx\ >=\ w\ ||\ cz\ <\ 0\ ||\ cz\ >=\ d)\ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&grid(\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\textcolor{keyword}{>}(cx),\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\textcolor{keyword}{>}(cz));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00071}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_addb1842c8dd8f97efc2a966ca61ea428}{00071}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d}{Grid2D<SpatialChunk,\ ChunkSizeType>}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_addb1842c8dd8f97efc2a966ca61ea428}{GetGrid}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ grid;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00078}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_abfce9f5a7087f1b9a727a8e1e2a2b604}{00078}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS::EntityManager}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_abfce9f5a7087f1b9a727a8e1e2a2b604}{GetGlobalEntityManager}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ globalEntityManager;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00087}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_af4399f2dcebf7ef69eff608cf69c350f}{00087}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_af4399f2dcebf7ef69eff608cf69c350f}{RegisterAllChunks}}(\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\&\ reg,\ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}\ level)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (isRegistryChunk)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ isRegistryChunk\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ w\ =\ grid.width();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ h\ =\ grid.height();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ y\ =\ 0;\ y\ <\ h;\ ++y)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ x\ =\ 0;\ x\ <\ w;\ ++x)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}\&\ cell\ =\ grid(x,\ y);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{SpatialChunkKey}}\ key\ =\ MakeGrid2DKey(level,\ int32\_t(x),\ int32\_t(y),\ \textcolor{comment}{/*gen*/}0);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cell.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_abab8fbfd926eb617976eebcfe0500a55}{SetNodeKey}}(key);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reg.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_af16975058127298f906e43cb35489f8c}{RegisterOwner}}(key,\ \&cell);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00106}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_adde6f5cf632e3bf1596a23393ceaec29}{00106}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_adde6f5cf632e3bf1596a23393ceaec29}{GetEntityNum}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ num\ =\ globalEntityManager.GetEntityCount();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ w\ =\ grid.width();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ h\ =\ grid.height();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ y\ =\ 0;\ y\ <\ h;\ ++y)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ x\ =\ 0;\ x\ <\ w;\ ++x)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}\&\ cell\ =\ grid(x,\ y);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ num\ +=\ cell.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a2562539212bdebf93dff9bdb39ff43ec}{GetEntityManager}}().\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a8df08b9c7042c6c3c05d4076591ee454}{GetEntityCount}}();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ num;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00124}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_ad7fabf56ddbe300184454e3d088a4cd9}{00124}}\ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_ad7fabf56ddbe300184454e3d088a4cd9}{CullChunks}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&\ fr)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00125}00125\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ out;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ w\ =\ grid.width(),\ d\ =\ grid.height();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cell\ =\ float(chunkSize);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ exz\ =\ 0.5f\ *\ cell;\ \textcolor{comment}{//\ x,z\ extents\ (cell\ half\ size)}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ Coarse:\ frustum\ AABB\ -\/>\ candidate\ cell\ range\ (XZ)}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\ frAabb\ =\ ComputeFrustumAABB\_WS(fr);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Signed\ =\ \textcolor{keywordtype}{long}\ long;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ floor\_div\_x\ =\ [\&](\textcolor{keywordtype}{float}\ worldX)\ \textcolor{keyword}{noexcept}\ -\/>\ Signed\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(std::floor(\textcolor{keywordtype}{double}(worldX\ -\/\ levelOriginWS.x)\ /\ \textcolor{keywordtype}{double}(cell)));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ floor\_div\_z\ =\ [\&](\textcolor{keywordtype}{float}\ worldZ)\ \textcolor{keyword}{noexcept}\ -\/>\ Signed\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(std::floor(\textcolor{keywordtype}{double}(worldZ\ -\/\ levelOriginWS.z)\ /\ \textcolor{keywordtype}{double}(cell)));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ ix0\ =\ floor\_div\_x(frAabb.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ ix1\ =\ floor\_div\_x(frAabb.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329}{ub}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ iz0\ =\ floor\_div\_z(frAabb.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ iz1\ =\ floor\_div\_z(frAabb.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329}{ub}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ マージン：フラスタムのAABBはセル境界に対して誤差がある可能性があるため、少し余裕を持たせる}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ margin\ =\ 1;\ \textcolor{comment}{//\ まずは1セル。問題が残るなら増やす}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ ix0\ -\/=\ margin;\ ix1\ +=\ margin;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ iz0\ -\/=\ margin;\ iz1\ +=\ margin;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ W\ =\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(w);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ D\ =\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(d);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ix0\ >\ ix1)\ std::swap(ix0,\ ix1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (iz0\ >\ iz1)\ std::swap(iz0,\ iz1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ frustum\ AABB\ doesn't\ overlap\ this\ grid\ at\ all,\ early\ out.}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ix1\ <\ 0\ ||\ iz1\ <\ 0\ ||\ ix0\ >=\ W\ ||\ iz0\ >=\ D)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ ix0\ =\ std::clamp<Signed>(ix0,\ 0,\ W\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ ix1\ =\ std::clamp<Signed>(ix1,\ 0,\ W\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ iz0\ =\ std::clamp<Signed>(iz0,\ 0,\ D\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ iz1\ =\ std::clamp<Signed>(iz1,\ 0,\ D\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ Precise:\ per-\/chunk\ real\ AABB\ (if\ available).\ Otherwise\ fallback\ to\ cell\ AABB.}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (Signed\ z\ =\ iz0;\ z\ <=\ iz1;\ ++z)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (Signed\ x\ =\ ix0;\ x\ <=\ ix1;\ ++x)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ chunk\ =\ grid(\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\textcolor{keyword}{>}(x),\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\textcolor{keyword}{>}(z));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunk.GetEntityManager().GetEntityCount()\ ==\ 0)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 最終判定：チャンクの実AABBがあるならそれを使う}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunk.HasStaticBounds())\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fr.IntersectsAABB(chunk.GetStaticBoundsWS()))\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back(\textcolor{keyword}{const\_cast<}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\textcolor{keyword}{>}(\&chunk));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ フォールバック（実AABB無し）：従来のセルAABB\ +\ YOverlap}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cx\ =\ levelOriginWS.x\ +\ (float(x)\ +\ 0.5f)\ *\ cell;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cz\ =\ levelOriginWS.z\ +\ (float(z)\ +\ 0.5f)\ *\ cell;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cyEff,\ eyEff;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a806d47877b24616790a7fb569631f2cc}{Math::Frustumf::ComputeYOverlapAtXZ}}(fr,\ cx,\ cz,\ -\/chunkSize,\ chunkSize,\ cyEff,\ eyEff))\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ center\{\ cx,\ cyEff,\ cz\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ extent\{\ exz,\ eyEff,\ exz\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fr.IntersectsAABB(center,\ extent))\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back(\textcolor{keyword}{const\_cast<}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\textcolor{keyword}{>}(\&chunk));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ （任意）アロケーション回避のコールバック版}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00201}00201\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ F>}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00202}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a6f253ac1498ab288e37bf6af01893ed4}{00202}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a6f253ac1498ab288e37bf6af01893ed4}{CullChunks}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&\ fr,\ \textcolor{keywordtype}{float}\ ymin,\ \textcolor{keywordtype}{float}\ ymax,\ F\&\&\ f)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00203}00203\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ w\ =\ grid.width(),\ d\ =\ grid.height();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cell\ =\ float(chunkSize);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ exz\ =\ 0.5f\ *\ cell;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ Coarse:\ frustum\ AABB\ -\/>\ candidate\ cell\ range\ (XZ)}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\ frAabb\ =\ ComputeFrustumAABB\_WS(fr);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Signed\ =\ \textcolor{keywordtype}{long}\ long;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ floor\_div\_x\ =\ [\&](\textcolor{keywordtype}{float}\ worldX)\ \textcolor{keyword}{noexcept}\ -\/>\ Signed\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(std::floor(\textcolor{keywordtype}{double}(worldX\ -\/\ levelOriginWS.x)\ /\ \textcolor{keywordtype}{double}(cell)));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ floor\_div\_z\ =\ [\&](\textcolor{keywordtype}{float}\ worldZ)\ \textcolor{keyword}{noexcept}\ -\/>\ Signed\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(std::floor(\textcolor{keywordtype}{double}(worldZ\ -\/\ levelOriginWS.z)\ /\ \textcolor{keywordtype}{double}(cell)));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ ix0\ =\ floor\_div\_x(frAabb.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ ix1\ =\ floor\_div\_x(frAabb.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329}{ub}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ iz0\ =\ floor\_div\_z(frAabb.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ iz1\ =\ floor\_div\_z(frAabb.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329}{ub}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00222}00222\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ マージン：フラスタムのAABBはセル境界に対して誤差がある可能性があるため、少し余裕を持たせる}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ margin\ =\ 1;\ \textcolor{comment}{//\ まずは1セル。問題が残るなら増やす}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ ix0\ -\/=\ margin;\ ix1\ +=\ margin;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ iz0\ -\/=\ margin;\ iz1\ +=\ margin;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00228}00228\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ W\ =\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(w);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ D\ =\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(d);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ix0\ >\ ix1)\ std::swap(ix0,\ ix1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (iz0\ >\ iz1)\ std::swap(iz0,\ iz1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00233}00233\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ix1\ <\ 0\ ||\ iz1\ <\ 0\ ||\ ix0\ >=\ W\ ||\ iz0\ >=\ D)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ ix0\ =\ std::clamp<Signed>(ix0,\ 0,\ W\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ ix1\ =\ std::clamp<Signed>(ix1,\ 0,\ W\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ iz0\ =\ std::clamp<Signed>(iz0,\ 0,\ D\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ iz1\ =\ std::clamp<Signed>(iz1,\ 0,\ D\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00242}00242\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ Precise:\ per-\/chunk\ real\ AABB\ (if\ available).\ Otherwise\ fallback\ to\ cell\ AABB.}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (Signed\ z\ =\ iz0;\ z\ <=\ iz1;\ ++z)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (Signed\ x\ =\ ix0;\ x\ <=\ ix1;\ ++x)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ chunk\ =\ grid(\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\textcolor{keyword}{>}(x),\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\textcolor{keyword}{>}(z));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunk.GetEntityManager().GetEntityCount()\ ==\ 0)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00248}00248\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunk.HasStaticBounds())\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fr.IntersectsAABB(chunk.GetStaticBoundsWS()))\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f(\textcolor{keyword}{const\_cast<}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}\&\textcolor{keyword}{>}(chunk));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00255}00255\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cx\ =\ levelOriginWS.x\ +\ (float(x)\ +\ 0.5f)\ *\ cell;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cz\ =\ levelOriginWS.z\ +\ (float(z)\ +\ 0.5f)\ *\ cell;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00258}00258\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cyEff,\ eyEff;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a806d47877b24616790a7fb569631f2cc}{Math::Frustumf::ComputeYOverlapAtXZ}}(fr,\ cx,\ cz,\ ymin,\ ymax,\ cyEff,\ eyEff))\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00263}00263\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ center\{\ cx,\ cyEff,\ cz\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ extent\{\ exz,\ eyEff,\ exz\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fr.IntersectsAABB(center,\ extent))\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f(\textcolor{keyword}{const\_cast<}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}\&\textcolor{keyword}{>}(chunk));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00271}00271\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00272}00272\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00277}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a5be91eedcb64f96fdffb5219eea8da08}{00277}}\ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a5be91eedcb64f96fdffb5219eea8da08}{CullChunks}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ center,\ \textcolor{keywordtype}{float}\ radius)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ out;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!std::isfinite(radius)\ ||\ radius\ <=\ 0.0f)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ radius\ =\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ r\ =\ (radius\ <\ 0.0f)\ ?\ 0.0f\ :\ radius;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ r2\ =\ r\ *\ r;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00285}00285\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Signed\ =\ \textcolor{keywordtype}{long}\ long;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cell\ =\ float(chunkSize);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ e\ =\ 0.5f\ *\ cell;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00289}00289\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ floor\_div\ =\ [\&](\textcolor{keywordtype}{float}\ v)\ -\/>\ Signed\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(std::floor(\textcolor{keywordtype}{double}(v)\ /\ \textcolor{keywordtype}{double}(cell)));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00293}00293\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ ix0\ =\ floor\_div(center.x\ -\/\ r);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ iz0\ =\ floor\_div(center.z\ -\/\ r);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ ix1\ =\ floor\_div(center.x\ +\ r);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ iz1\ =\ floor\_div(center.z\ +\ r);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00298}00298\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ マージン：フラスタムのAABBはセル境界に対して誤差がある可能性があるため、少し余裕を持たせる}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ margin\ =\ 1;\ \textcolor{comment}{//\ まずは1セル。問題が残るなら増やす}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00301}00301\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ ix0\ -\/=\ margin;\ ix1\ +=\ margin;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ iz0\ -\/=\ margin;\ iz1\ +=\ margin;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00304}00304\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ w\ =\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(grid.width());}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ d\ =\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(grid.height());}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00307}00307\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ ix0\ =\ std::clamp<Signed>(ix0,\ 0,\ w\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ iz0\ =\ std::clamp<Signed>(iz0,\ 0,\ d\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ ix1\ =\ std::clamp<Signed>(ix1,\ 0,\ w\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ iz1\ =\ std::clamp<Signed>(iz1,\ 0,\ d\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00312}00312\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ out.reserve(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}((ix1\ -\/\ ix0\ +\ 1)\ *\ (iz1\ -\/\ iz0\ +\ 1)));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00314}00314\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ dist2\_point\_aabb\_xz\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ p,\ \textcolor{keywordtype}{float}\ cx,\ \textcolor{keywordtype}{float}\ cz,\ \textcolor{keywordtype}{float}\ ex,\ \textcolor{keywordtype}{float}\ ez)\ -\/>\ \textcolor{keywordtype}{float}\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ clamp\ =\ [](\textcolor{keywordtype}{float}\ v,\ \textcolor{keywordtype}{float}\ lo,\ \textcolor{keywordtype}{float}\ hi)\ \{\ \textcolor{keywordflow}{return}\ v\ <\ lo\ ?\ lo\ :\ (v\ >\ hi\ ?\ hi\ :\ v);\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ qx\ =\ clamp(p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ cx\ -\/\ ex,\ cx\ +\ ex);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ qz\ =\ clamp(p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}},\ cz\ -\/\ ez,\ cz\ +\ ez);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ dx\ =\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ -\/\ qx,\ dz\ =\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ -\/\ qz;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ dx\ *\ dx\ +\ dz\ *\ dz;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00322}00322\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (Signed\ z\ =\ iz0;\ z\ <=\ iz1;\ ++z)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (Signed\ x\ =\ ix0;\ x\ <=\ ix1;\ ++x)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cx\ =\ levelOriginWS.x\ +\ (x\ +\ 0.5f)\ *\ cell;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cz\ =\ levelOriginWS.z\ +\ (z\ +\ 0.5f)\ *\ cell;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00327}00327\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dist2\_point\_aabb\_xz(center,\ cx,\ cz,\ e,\ e)\ >\ r2)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00329}00329\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ chunk\ =\ grid(\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}(x),\ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}(z));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunk.GetEntityManager().GetEntityCount()\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.push\_back(\textcolor{keyword}{const\_cast<}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\textcolor{keyword}{>}(\&chunk));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00336}00336\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00337}00337\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00338}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a5dce8bf836a1d4aab2f8f234e38a1c33}{00338}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a5dce8bf836a1d4aab2f8f234e38a1c33}{Dist2PointAABB3D}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ p,}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ c,\ \textcolor{comment}{//\ AABB\ center}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ e)\ \textcolor{comment}{//\ AABB\ extent}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00341}00341\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ clamp\ =\ [](\textcolor{keywordtype}{float}\ v,\ \textcolor{keywordtype}{float}\ lo,\ \textcolor{keywordtype}{float}\ hi)\ \{\ \textcolor{keywordflow}{return}\ v\ <\ lo\ ?\ lo\ :\ (v\ >\ hi\ ?\ hi\ :\ v);\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ qx\ =\ clamp(p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ -\/\ e.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ +\ e.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ qy\ =\ clamp(p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ -\/\ e.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ +\ e.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ qz\ =\ clamp(p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}},\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ -\/\ e.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}},\ c.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ +\ e.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ dx\ =\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ -\/\ qx,\ dy\ =\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ -\/\ qy,\ dz\ =\ p.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ -\/\ qz;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ dx\ *\ dx\ +\ dy\ *\ dy\ +\ dz\ *\ dz;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00348}00348\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00349}00349\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00350}00350\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 可視チャンクを「カメラ位置から近い順」に上位K件返す}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00351}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a600ef2d842196a7d5e8e403d5713bcc6}{00351}}\ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a600ef2d842196a7d5e8e403d5713bcc6}{CullChunksNear}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&\ fr,}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ camPos,}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ maxCount\ =\ (std::numeric\_limits<size\_t>::max)())\ const\ noexcept}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00354}00354\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<SpatialChunk*>\ out;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00356}00356\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }Item\ \{\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\ sc;\ \textcolor{keywordtype}{float}\ d2;\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<Item>\ items;\ items.reserve(128);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00359}00359\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ w\ =\ grid.width(),\ d\ =\ grid.height();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cell\ =\ float(chunkSize);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ exz\ =\ 0.5f\ *\ cell;\ \textcolor{comment}{//\ x,z\ extents\ (cell\ half\ size)}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00363}00363\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ Coarse:\ frustum\ AABB\ -\/>\ candidate\ cell\ range\ (XZ)}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\ frAabb\ =\ ComputeFrustumAABB\_WS(fr);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Signed\ =\ \textcolor{keywordtype}{long}\ long;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ floor\_div\_x\ =\ [\&](\textcolor{keywordtype}{float}\ worldX)\ \textcolor{keyword}{noexcept}\ -\/>\ Signed\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(std::floor(\textcolor{keywordtype}{double}(worldX\ -\/\ levelOriginWS.x)\ /\ \textcolor{keywordtype}{double}(cell)));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ floor\_div\_z\ =\ [\&](\textcolor{keywordtype}{float}\ worldZ)\ \textcolor{keyword}{noexcept}\ -\/>\ Signed\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(std::floor(\textcolor{keywordtype}{double}(worldZ\ -\/\ levelOriginWS.z)\ /\ \textcolor{keywordtype}{double}(cell)));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00373}00373\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ ix0\ =\ floor\_div\_x(frAabb.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ ix1\ =\ floor\_div\_x(frAabb.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329}{ub}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ iz0\ =\ floor\_div\_z(frAabb.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ Signed\ iz1\ =\ floor\_div\_z(frAabb.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329}{ub}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00378}00378\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ マージン：フラスタムのAABBはセル境界に対して誤差がある可能性があるため、少し余裕を持たせる}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ margin\ =\ 1;\ \textcolor{comment}{//\ まずは1セル。問題が残るなら増やす}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00381}00381\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ ix0\ -\/=\ margin;\ ix1\ +=\ margin;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ iz0\ -\/=\ margin;\ iz1\ +=\ margin;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00384}00384\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ W\ =\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(w);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Signed\ D\ =\ \textcolor{keyword}{static\_cast<}Signed\textcolor{keyword}{>}(d);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ix0\ >\ ix1)\ std::swap(ix0,\ ix1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (iz0\ >\ iz1)\ std::swap(iz0,\ iz1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00389}00389\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ frustum\ AABB\ doesn't\ overlap\ this\ grid\ at\ all,\ early\ out.}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00391}00391\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ix1\ <\ 0\ ||\ iz1\ <\ 0\ ||\ ix0\ >=\ W\ ||\ iz0\ >=\ D)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00392}00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00394}00394\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ ix0\ =\ std::clamp<Signed>(ix0,\ 0,\ W\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ ix1\ =\ std::clamp<Signed>(ix1,\ 0,\ W\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ iz0\ =\ std::clamp<Signed>(iz0,\ 0,\ D\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ iz1\ =\ std::clamp<Signed>(iz1,\ 0,\ D\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00399}00399\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ Precise:\ per-\/chunk\ real\ AABB\ (if\ available).\ Otherwise\ fallback\ to\ cell\ AABB.}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (Signed\ z\ =\ iz0;\ z\ <=\ iz1;\ ++z)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (Signed\ x\ =\ ix0;\ x\ <=\ ix1;\ ++x)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ chunk\ =\ grid(\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\textcolor{keyword}{>}(x),\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\textcolor{keyword}{>}(z));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00404}00404\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunk.GetEntityManager().GetEntityCount()\ ==\ 0)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00405}00405\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00406}00406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 最終判定：チャンクの実AABBがあるならそれを使う}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunk.HasStaticBounds())\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ bounds\ =\ chunk.GetStaticBoundsWS();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a98e76d2faa1114777992553adf902702}{IntersectsAABB}}(bounds))\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00410}00410\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ d2\ =\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a5dce8bf836a1d4aab2f8f234e38a1c33}{Dist2PointAABB3D}}(camPos,\ bounds.center(),\ bounds.extent());}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunk.GetEntityManager().GetEntityCount()\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00412}00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ items.push\_back(\{\ \textcolor{keyword}{const\_cast<}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\textcolor{keyword}{>}(\&chunk),\ d2\ \});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00416}00416\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ フォールバック（実AABB無し）：従来のセルAABB\ +\ YOverlap}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cx\ =\ levelOriginWS.x\ +\ (float(x)\ +\ 0.5f)\ *\ cell;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00419}00419\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cz\ =\ levelOriginWS.z\ +\ (float(z)\ +\ 0.5f)\ *\ cell;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00420}00420\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00421}00421\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cyEff,\ eyEff;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a806d47877b24616790a7fb569631f2cc}{Math::Frustumf::ComputeYOverlapAtXZ}}(fr,\ cx,\ cz,\ -\/chunkSize,\ chunkSize,\ cyEff,\ eyEff))\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00423}00423\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00425}00425\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ center\{\ cx,\ cyEff,\ cz\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00427}00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ extent\{\ exz,\ eyEff,\ exz\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a98e76d2faa1114777992553adf902702}{IntersectsAABB}}(center,\ extent))\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ d2\ =\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a5dce8bf836a1d4aab2f8f234e38a1c33}{Dist2PointAABB3D}}(camPos,\ center,\ extent);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00430}00430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ items.push\_back(\{\ \textcolor{keyword}{const\_cast<}\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}*\textcolor{keyword}{>}(\&chunk),\ d2\ \});}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00431}00431\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00434}00434\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (items.empty())\ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ K\ =\ (std::min)(maxCount,\ items.size());}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00437}00437\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00438}00438\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ cmp\ =\ [](\textcolor{keyword}{const}\ Item\&\ a,\ \textcolor{keyword}{const}\ Item\&\ b)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.d2\ <\ b.d2;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00440}00440\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00441}00441\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00442}00442\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (items.size()\ >\ maxCount)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ K\ =\ maxCount;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::nth\_element(items.begin(),\ items.begin()\ +\ K,\ items.end(),\ cmp);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00445}00445\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ items.resize(K);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00446}00446\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00447}00447\ \ \ \ \ \ \ \ \ \ \ \ \ std::sort(items.begin(),\ items.end(),\ cmp);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00448}00448\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00449}00449\ \ \ \ \ \ \ \ \ \ \ \ \ out.reserve(K);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00450}00450\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ it\ :\ items)\ out.push\_back(it.sc);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00451}00451\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00452}00452\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00453}00453\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00464}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_add87c9aa5f4efe1ad798c1133194234c}{00464}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_add87c9aa5f4efe1ad798c1133194234c}{CullChunkLine}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&\ fr,}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ cp,\ \textcolor{keywordtype}{float}\ hy,\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug::LineVertex}}*\ outLine,}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ capacity,\ uint32\_t\ displayCount)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00467}00467\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 残りは従来のセルAABBで表示}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ w\ =\ grid.width(),\ d\ =\ grid.height();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00470}00470\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cell\ =\ float(chunkSize);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00471}00471\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ exz\ =\ 0.5f\ *\ cell;\ \textcolor{comment}{//\ x,z\ は各セルの半径}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00472}00472\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00473}00473\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ validCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00474}00474\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ maxLengthD2\ =\ std::pow(displayCount\ *\ chunkSize,\ 2.0f);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00475}00475\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00476}00476\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ localCamPos\ =\ cp\ -\/\ levelOriginWS;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00477}00477\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ centerX\ =\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(std::clamp<int32\_t>(\textcolor{keyword}{static\_cast<}int32\_t\textcolor{keyword}{>}(std::floor(localCamPos.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ /\ cell)),\ 0,\ \textcolor{keyword}{static\_cast<}int32\_t\textcolor{keyword}{>}(w\ -\/\ 1)));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00478}00478\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ centerZ\ =\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(std::clamp<int32\_t>(\textcolor{keyword}{static\_cast<}int32\_t\textcolor{keyword}{>}(std::floor(localCamPos.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ /\ cell)),\ 0,\ \textcolor{keyword}{static\_cast<}int32\_t\textcolor{keyword}{>}(d\ -\/\ 1)));}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00479}00479\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00480}00480\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ z\ =\ 0;\ z\ <\ d;\ ++z)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00481}00481\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ x\ =\ 0;\ x\ <\ w;\ ++x)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00482}00482\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cx\ =\ levelOriginWS.x\ +\ (x\ +\ 0.5f)\ *\ cell;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00483}00483\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cz\ =\ levelOriginWS.z\ +\ (z\ +\ 0.5f)\ *\ cell;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00484}00484\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00485}00485\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2}{Math::Vec2}}\ vec\ =\ \{\ cx\ -\/\ cp.x,\ cz\ -\/\ cp.z\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00486}00486\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ len\ =\ vec.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a815006ac266d8fb8c8a2b7158bf93c39}{lengthSquared}}();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00487}00487\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00488}00488\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (len\ >\ maxLengthD2)\ \textcolor{keywordflow}{continue};\ \textcolor{comment}{//\ 表示距離外}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00489}00489\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (capacity\ -\/\ validCount\ <\ 30)\ \textcolor{keywordflow}{break};\ \textcolor{comment}{//\ ラインバッファ不足}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00491}00491\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cyEff,\ eyEff;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00493}00493\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a806d47877b24616790a7fb569631f2cc}{Math::Frustumf::ComputeYOverlapAtXZ}}(fr,\ cx,\ cz,}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00494}00494\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::numeric\_limits<float>::lowest(),\ (std::numeric\_limits<float>::max)(),\ cyEff,\ eyEff))\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};\ \textcolor{comment}{//\ 縦に一切重ならない\ →\ 可視になり得ない}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00497}00497\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ center\{\ cx,\ cp.y,\ cz\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00499}00499\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ extent\{\ exz,\ hy,\ exz\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00500}00500\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00501}00501\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fr.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_a98e76d2faa1114777992553adf902702}{IntersectsAABB}}(center,\ extent))}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00502}00502\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ rgb\ =\ Math::LerpColor(0xFFFFFFFF,\ 0x000000FF,\ len\ /\ maxLengthD2);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00504}00504\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00505}00505\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[validCount++]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}),\ rgb\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00506}00506\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[validCount++]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}),\ rgb\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00507}00507\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[validCount++]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}),\ rgb\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[validCount++]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}),\ rgb\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00509}00509\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[validCount++]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}),\ rgb\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00510}00510\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[validCount++]\ =\ \{\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ -\/\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ +\ extent.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}),\ rgb\ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00511}00511\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ chunk\ =\ grid(x,\ z);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunk.HasStaticBounds())}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00514}00514\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00515}00515\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\ aabb\ =\ chunk.GetStaticBoundsWS();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00516}00516\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ baseColor\ =\ (x\ ==\ centerX\ \&\&\ z\ ==\ centerZ)\ ?}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00518}00518\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0xFF0000FF\ :\ 0x00FF00FF;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00519}00519\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ rgba\ =\ Math::LerpColor(baseColor,\ 0x000000FF,\ len\ /\ maxLengthD2);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00521}00521\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ lineVertices\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a6344d103705920b8aa103c99585967a6}{Debug::MakeAABBLineVertices}}(aabb,\ rgba);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ v\ :\ lineVertices)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outLine[validCount++]\ =\ v;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00526}00526\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00527}00527\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00528}00528\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00529}00529\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ validCount;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00531}00531\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00532}00532\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00539}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a33a886c140705f1e714b3616bac7bcad}{00539}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a33a886c140705f1e714b3616bac7bcad}{ReloadCell}}(uint32\_t\ cx,\ uint32\_t\ cy,\ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\&\ reg)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}\&\ cell\ =\ grid(cx,\ cy);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00541}00541\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 旧世代をアンレジスト}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ reg.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_affa7c775c9a8b17fd30d58741765845b}{UnregisterOwner}}(cell.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a560ec8ffd2070c9d83a739bd97ec0e44}{GetNodeKey}}());}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00543}00543\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 世代してキー更新・再登録}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00544}00544\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{SpatialChunk}}\ newCell\ =\ std::move(cell);\ \textcolor{comment}{//\ 生成し直す流儀でもOK}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00545}00545\ \ \ \ \ \ \ \ \ \ \ \ \ newCell.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a89ac46fa43e54ec774a30690b5b06794}{BumpGeneration}}();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00546}00546\ \ \ \ \ \ \ \ \ \ \ \ \ reg.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_af16975058127298f906e43cb35489f8c}{RegisterOwner}}(newCell.\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_a560ec8ffd2070c9d83a739bd97ec0e44}{GetNodeKey}}(),\ \&newCell);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00547}00547\ \ \ \ \ \ \ \ \ \ \ \ \ grid(cx,\ cy)\ =\ std::move(newCell);}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00548}00548\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00549}00549\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00550}00550\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @brief\ チャンクをリセットする}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00551}00551\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00552}\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a26103f46086ec27835aaa5a8d7311e4b}{00552}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition_a26103f46086ec27835aaa5a8d7311e4b}{CleanChunk}}()}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00553}00553\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00554}00554\ \ \ \ \ \ \ \ \ \ \ \ \ globalEntityManager.CleanAllEntity();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00555}00555\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00556}00556\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ cx\ =\ grid.width();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00557}00557\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ cy\ =\ grid.height();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00558}00558\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ it\ =\ grid.begin();\ it\ !=\ grid.end();\ ++it)}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00559}00559\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00560}00560\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>GetEntityManager().CleanAllEntity();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00561}00561\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00562}00562\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00563}00563\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00572}00572\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{SpatialChunkKey}}\ MakeGrid2DKey(\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}\ level,\ int32\_t\ gx,\ int32\_t\ gz,\ uint16\_t\ gen\ =\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00573}00573\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{SpatialChunkKey}}\ k\{\};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00574}00574\ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_ac6232af82d77e8ac51a31073efbdc193}{level}}\ =\ level;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00575}00575\ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_a709140dd173dccc65e5d56430f999af2}{scheme}}\ =\ \mbox{\hyperlink{namespace_s_f_w_a834dda392d6f71061e76b5b138ef43e6aea730ecd1f61168b907030ec96d79172}{PartitionScheme::Grid2D}};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00576}00576\ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_a68481121c1a141301ff49e3fab0c2a85}{depth}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00577}00577\ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_acf1ed43a3bc5adefa3ceca52a33ae6b1}{generation}}\ =\ gen;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00578}00578\ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key_ab609625f6088b097783303720df7f6d1}{code}}\ =\ Morton2D64(ZigZag64(gx),\ ZigZag64(gz));\ \textcolor{comment}{//\ ←\ X,Z}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00579}00579\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ k;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00580}00580\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00581}00581\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00582}00582\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00583}00583\ \ \ \ \ \ \ \ \ \textcolor{comment}{//グローバルエンティティマネージャー}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00584}00584\ \ \ \ \ \ \ \ \ ECS::EntityManager\ globalEntityManager;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00585}00585\ \ \ \ \ \ \ \ \ \textcolor{comment}{//2Dグリッド分割チャンクリスト}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00586}00586\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a834dda392d6f71061e76b5b138ef43e6aea730ecd1f61168b907030ec96d79172}{Grid2D<SpatialChunk,\ ChunkSizeType>}}\ grid;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00587}00587\ \ \ \ \ \ \ \ \ \textcolor{comment}{//レベルの原点(ワールド座標)}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00588}00588\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ levelOriginWS;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00589}00589\ \ \ \ \ \ \ \ \ \textcolor{comment}{//チャンクのサイズ}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00590}00590\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ chunkSize;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00591}00591\ \ \ \ \ \ \ \ \ \textcolor{comment}{//チャンクを登録したか}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00592}00592\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isRegistryChunk\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00593}00593\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00594}00594\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00595}00595\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00596}00596\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00602}00602\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00603}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_aa8511d4d90f72c61e0c602939b7d37d8}{00603}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::vector<ArchetypeChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_ab30526a91aaa023239f86e62d1fc4e71}{Query::MatchingChunks}}(\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_partition}{Grid2DPartition}}\&\ context)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00604}00604\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00605}00605\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<ArchetypeChunk*>\ result;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00606}00606\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ collect\_from\ =\ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS::EntityManager}}\&\ em)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00607}00607\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ all\ =\ em.GetArchetypeManager().GetAllData();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00608}00608\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ arch\ :\ all)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00609}00609\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\&\ mask\ =\ arch-\/>GetMask();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00610}00610\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((mask\ \&\ required)\ ==\ required\ \&\&\ (mask\ \&\ excluded).none())\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00611}00611\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ chunks\ =\ arch-\/>GetChunks();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00612}00612\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 先に必要分だけまとめて拡張（平均的に再確保を減らす）}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00613}00613\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result.reserve(result.size()\ +\ chunks.size());}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00614}00614\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ ch\ :\ chunks)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00615}00615\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result.push\_back(ch.get());}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00616}00616\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00617}00617\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00618}00618\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00619}00619\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00620}00620\ }
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00621}00621\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ グローバル}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00622}00622\ \ \ \ \ \ \ \ \ \ \ \ \ collect\_from(context.GetGlobalEntityManager());}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00623}00623\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 空間ごと}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00624}00624\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ grid\ =\ context.GetGrid();}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00625}00625\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ spatial\ :\ grid)\ \{}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00626}00626\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ collect\_from(spatial.GetEntityManager());}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00627}00627\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00628}00628\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00629}00629\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00630}00630\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_grid2_d_partition_8h_source_l00631}00631\ \}}
+
+\end{DoxyCode}

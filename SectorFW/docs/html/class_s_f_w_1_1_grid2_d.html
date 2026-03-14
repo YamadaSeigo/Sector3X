@@ -1,0 +1,569 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Grid2D&lt; T, Size &gt; クラステンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_grid2_d.html','','class_s_f_w_1_1_grid2_d-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Grid2D&lt; T, Size &gt; クラステンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>2Dグリッドを表すクラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_grid_8hpp_source.html">Grid.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a9798b73a229f393d35f6f4cd4e074530" id="r_a9798b73a229f393d35f6f4cd4e074530"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9798b73a229f393d35f6f4cd4e074530">Grid2D</a> (Size <a class="el" href="#af8ddfedd049c49855b87d51597df1269">width</a>, Size <a class="el" href="#a2cab90f628f79b3c8484b943e799962d">height</a>) noexcept</td></tr>
+<tr class="memdesc:a9798b73a229f393d35f6f4cd4e074530"><td class="mdescLeft">&#160;</td><td class="mdescRight">デフォルトコンストラクタ  <br /></td></tr>
+<tr class="memitem:af3485c40b0f1990a7dd8d5c76a7e74dd" id="r_af3485c40b0f1990a7dd8d5c76a7e74dd"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:af3485c40b0f1990a7dd8d5c76a7e74dd template"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af3485c40b0f1990a7dd8d5c76a7e74dd">Grid2D</a> (Size <a class="el" href="#af8ddfedd049c49855b87d51597df1269">width</a>, Size <a class="el" href="#a2cab90f628f79b3c8484b943e799962d">height</a>, Args &amp;&amp;... args) noexcept</td></tr>
+<tr class="memdesc:af3485c40b0f1990a7dd8d5c76a7e74dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">引数付きコンストラクタ  <br /></td></tr>
+<tr class="memitem:a72920bc1034a206cd77962e7b078a786" id="r_a72920bc1034a206cd77962e7b078a786"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72920bc1034a206cd77962e7b078a786">operator()</a> (Size x, Size y)</td></tr>
+<tr class="memdesc:a72920bc1034a206cd77962e7b078a786"><td class="mdescLeft">&#160;</td><td class="mdescRight">グリッドの要素にアクセスする演算子オーバーロード  <br /></td></tr>
+<tr class="memitem:a05ddcf45fdd2d02eb5cf4b8e07c31f11" id="r_a05ddcf45fdd2d02eb5cf4b8e07c31f11"><td class="memItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05ddcf45fdd2d02eb5cf4b8e07c31f11">operator()</a> (Size x, Size y) const</td></tr>
+<tr class="memdesc:a05ddcf45fdd2d02eb5cf4b8e07c31f11"><td class="mdescLeft">&#160;</td><td class="mdescRight">グリッドの要素にアクセスする演算子オーバーロード（const版）  <br /></td></tr>
+<tr class="memitem:af8ddfedd049c49855b87d51597df1269" id="r_af8ddfedd049c49855b87d51597df1269"><td class="memItemLeft" align="right" valign="top">Size&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8ddfedd049c49855b87d51597df1269">width</a> () const noexcept</td></tr>
+<tr class="memdesc:af8ddfedd049c49855b87d51597df1269"><td class="mdescLeft">&#160;</td><td class="mdescRight">グリッドの幅を取得する関数  <br /></td></tr>
+<tr class="memitem:a2cab90f628f79b3c8484b943e799962d" id="r_a2cab90f628f79b3c8484b943e799962d"><td class="memItemLeft" align="right" valign="top">Size&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cab90f628f79b3c8484b943e799962d">height</a> () const noexcept</td></tr>
+<tr class="memdesc:a2cab90f628f79b3c8484b943e799962d"><td class="mdescLeft">&#160;</td><td class="mdescRight">グリッドの高さを取得する関数  <br /></td></tr>
+<tr class="memitem:ae6bc53609cf87a8758c10a7e16cb8afd" id="r_ae6bc53609cf87a8758c10a7e16cb8afd"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6bc53609cf87a8758c10a7e16cb8afd">begin</a> () noexcept</td></tr>
+<tr class="memdesc:ae6bc53609cf87a8758c10a7e16cb8afd"><td class="mdescLeft">&#160;</td><td class="mdescRight">グリッドの要素をイテレートするためのbeginとend関数  <br /></td></tr>
+<tr class="memitem:aaa2c6d664427d4a81e177fce8ec843dc" id="r_aaa2c6d664427d4a81e177fce8ec843dc"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa2c6d664427d4a81e177fce8ec843dc">end</a> () noexcept</td></tr>
+<tr class="memdesc:aaa2c6d664427d4a81e177fce8ec843dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">グリッドの要素をイテレートするためのend関数  <br /></td></tr>
+<tr class="memitem:aec19f49b9db90d90aff2e487a0fe7b78" id="r_aec19f49b9db90d90aff2e487a0fe7b78"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec19f49b9db90d90aff2e487a0fe7b78">begin</a> () const noexcept</td></tr>
+<tr class="memdesc:aec19f49b9db90d90aff2e487a0fe7b78"><td class="mdescLeft">&#160;</td><td class="mdescRight">グリッドの要素をイテレートするためのconst版beginとend関数  <br /></td></tr>
+<tr class="memitem:ac0e7d34a4ea33755eb847700b97957a4" id="r_ac0e7d34a4ea33755eb847700b97957a4"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0e7d34a4ea33755eb847700b97957a4">end</a> () const noexcept</td></tr>
+<tr class="memdesc:ac0e7d34a4ea33755eb847700b97957a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">グリッドの要素をイテレートするためのconst版end関数  <br /></td></tr>
+<tr class="memitem:a753d5bed1ecc8043dcfccae394ad0dee" id="r_a753d5bed1ecc8043dcfccae394ad0dee"><td class="memItemLeft" align="right" valign="top">Size&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a753d5bed1ecc8043dcfccae394ad0dee">size</a> () const noexcept</td></tr>
+<tr class="memdesc:a753d5bed1ecc8043dcfccae394ad0dee"><td class="mdescLeft">&#160;</td><td class="mdescRight">グリッドのサイズを取得する関数  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T, typename Size = size_t&gt;<br />
+class SFW::Grid2D&lt; T, Size &gt;</div><p>2Dグリッドを表すクラス </p>
+<dl class="tparams"><dt>テンプレート引数</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>グリッドの要素の型 </td></tr>
+    <tr><td class="paramname">Size</td><td>サイズの型（デフォルトはsize_t） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_grid_8hpp_source.html">Grid.hpp</a> の <a class="el" href="_grid_8hpp_source.html#l00020">20</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="a9798b73a229f393d35f6f4cd4e074530" name="a9798b73a229f393d35f6f4cd4e074530"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9798b73a229f393d35f6f4cd4e074530">&#9670;&#160;</a></span>Grid2D() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Size = size_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_grid2_d.html">SFW::Grid2D</a>&lt; T, Size &gt;::Grid2D </td>
+          <td>(</td>
+          <td class="paramtype">Size</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Size</td>          <td class="paramname"><span class="paramname"><em>height</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>デフォルトコンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>グリッドの幅 </td></tr>
+    <tr><td class="paramname">height</td><td>グリッドの高さ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_grid_8hpp_source.html">Grid.hpp</a> の <a class="el" href="_grid_8hpp_source.html#l00027">27</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af3485c40b0f1990a7dd8d5c76a7e74dd" name="af3485c40b0f1990a7dd8d5c76a7e74dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3485c40b0f1990a7dd8d5c76a7e74dd">&#9670;&#160;</a></span>Grid2D() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Size = size_t&gt; </div>
+<div class="memtemplate">
+template&lt;typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_grid2_d.html">SFW::Grid2D</a>&lt; T, Size &gt;::Grid2D </td>
+          <td>(</td>
+          <td class="paramtype">Size</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Size</td>          <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>引数付きコンストラクタ </p>
+<dl class="tparams"><dt>テンプレート引数</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Args</td><td>可変長テンプレート引数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>グリッドの幅 </td></tr>
+    <tr><td class="paramname">height</td><td>グリッドの高さ </td></tr>
+    <tr><td class="paramname">args</td><td>要素の初期化に使用する引数 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_grid_8hpp_source.html">Grid.hpp</a> の <a class="el" href="_grid_8hpp_source.html#l00039">39</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="aec19f49b9db90d90aff2e487a0fe7b78" name="aec19f49b9db90d90aff2e487a0fe7b78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec19f49b9db90d90aff2e487a0fe7b78">&#9670;&#160;</a></span>begin() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Size = size_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="class_s_f_w_1_1_grid2_d.html">SFW::Grid2D</a>&lt; T, Size &gt;::begin </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>グリッドの要素をイテレートするためのconst版beginとend関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>イテレータのbeginとend </dd></dl>
+
+<p class="definition"> <a class="el" href="_grid_8hpp_source.html">Grid.hpp</a> の <a class="el" href="_grid_8hpp_source.html#l00085">85</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae6bc53609cf87a8758c10a7e16cb8afd" name="ae6bc53609cf87a8758c10a7e16cb8afd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6bc53609cf87a8758c10a7e16cb8afd">&#9670;&#160;</a></span>begin() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Size = size_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="class_s_f_w_1_1_grid2_d.html">SFW::Grid2D</a>&lt; T, Size &gt;::begin </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>グリッドの要素をイテレートするためのbeginとend関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>イテレータのbeginとend </dd></dl>
+
+<p class="definition"> <a class="el" href="_grid_8hpp_source.html">Grid.hpp</a> の <a class="el" href="_grid_8hpp_source.html#l00075">75</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac0e7d34a4ea33755eb847700b97957a4" name="ac0e7d34a4ea33755eb847700b97957a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0e7d34a4ea33755eb847700b97957a4">&#9670;&#160;</a></span>end() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Size = size_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="class_s_f_w_1_1_grid2_d.html">SFW::Grid2D</a>&lt; T, Size &gt;::end </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>グリッドの要素をイテレートするためのconst版end関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>イテレータのend </dd></dl>
+
+<p class="definition"> <a class="el" href="_grid_8hpp_source.html">Grid.hpp</a> の <a class="el" href="_grid_8hpp_source.html#l00090">90</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aaa2c6d664427d4a81e177fce8ec843dc" name="aaa2c6d664427d4a81e177fce8ec843dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa2c6d664427d4a81e177fce8ec843dc">&#9670;&#160;</a></span>end() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Size = size_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="class_s_f_w_1_1_grid2_d.html">SFW::Grid2D</a>&lt; T, Size &gt;::end </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>グリッドの要素をイテレートするためのend関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>イテレータのend </dd></dl>
+
+<p class="definition"> <a class="el" href="_grid_8hpp_source.html">Grid.hpp</a> の <a class="el" href="_grid_8hpp_source.html#l00080">80</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2cab90f628f79b3c8484b943e799962d" name="a2cab90f628f79b3c8484b943e799962d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cab90f628f79b3c8484b943e799962d">&#9670;&#160;</a></span>height()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Size = size_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Size <a class="el" href="class_s_f_w_1_1_grid2_d.html">SFW::Grid2D</a>&lt; T, Size &gt;::height </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>グリッドの高さを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>グリッドの高さ </dd></dl>
+
+<p class="definition"> <a class="el" href="_grid_8hpp_source.html">Grid.hpp</a> の <a class="el" href="_grid_8hpp_source.html#l00070">70</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a72920bc1034a206cd77962e7b078a786" name="a72920bc1034a206cd77962e7b078a786"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72920bc1034a206cd77962e7b078a786">&#9670;&#160;</a></span>operator()() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Size = size_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T &amp; <a class="el" href="class_s_f_w_1_1_grid2_d.html">SFW::Grid2D</a>&lt; T, Size &gt;::operator() </td>
+          <td>(</td>
+          <td class="paramtype">Size</td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Size</td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>グリッドの要素にアクセスする演算子オーバーロード </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>グリッドのx座標 </td></tr>
+    <tr><td class="paramname">y</td><td>グリッドのy座標 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>要素への参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_grid_8hpp_source.html">Grid.hpp</a> の <a class="el" href="_grid_8hpp_source.html#l00049">49</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a05ddcf45fdd2d02eb5cf4b8e07c31f11" name="a05ddcf45fdd2d02eb5cf4b8e07c31f11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05ddcf45fdd2d02eb5cf4b8e07c31f11">&#9670;&#160;</a></span>operator()() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Size = size_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const T &amp; <a class="el" href="class_s_f_w_1_1_grid2_d.html">SFW::Grid2D</a>&lt; T, Size &gt;::operator() </td>
+          <td>(</td>
+          <td class="paramtype">Size</td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Size</td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>グリッドの要素にアクセスする演算子オーバーロード（const版） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>グリッドのx座標 </td></tr>
+    <tr><td class="paramname">y</td><td>グリッドのy座標 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>要素への参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_grid_8hpp_source.html">Grid.hpp</a> の <a class="el" href="_grid_8hpp_source.html#l00058">58</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a753d5bed1ecc8043dcfccae394ad0dee" name="a753d5bed1ecc8043dcfccae394ad0dee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a753d5bed1ecc8043dcfccae394ad0dee">&#9670;&#160;</a></span>size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Size = size_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Size <a class="el" href="class_s_f_w_1_1_grid2_d.html">SFW::Grid2D</a>&lt; T, Size &gt;::size </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>グリッドのサイズを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>グリッドのサイズ（幅 * 高さ） </dd></dl>
+
+<p class="definition"> <a class="el" href="_grid_8hpp_source.html">Grid.hpp</a> の <a class="el" href="_grid_8hpp_source.html#l00095">95</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af8ddfedd049c49855b87d51597df1269" name="af8ddfedd049c49855b87d51597df1269"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8ddfedd049c49855b87d51597df1269">&#9670;&#160;</a></span>width()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Size = size_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Size <a class="el" href="class_s_f_w_1_1_grid2_d.html">SFW::Grid2D</a>&lt; T, Size &gt;::width </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>グリッドの幅を取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>グリッドの幅 </dd></dl>
+
+<p class="definition"> <a class="el" href="_grid_8hpp_source.html">Grid.hpp</a> の <a class="el" href="_grid_8hpp_source.html#l00065">65</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/<a class="el" href="_grid_8hpp_source.html">Grid.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="class_s_f_w_1_1_grid2_d.html">Grid2D</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

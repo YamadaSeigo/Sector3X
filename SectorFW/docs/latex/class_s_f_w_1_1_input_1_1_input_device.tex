@@ -1,0 +1,295 @@
+\doxysection{SFW\+::Input\+::Input\+Device\texorpdfstring{$<$}{<} Derived \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_input_1_1_input_device}{}\label{class_s_f_w_1_1_input_1_1_input_device}\index{SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}}
+
+
+入力デバイスの抽象クラス。非環境依存のために抽象化。\+Service\+Locatorで管理される。  
+
+
+
+
+{\ttfamily \#include $<$Input\+Device.\+hpp$>$}
+
+SFW\+::Input\+::Input\+Device\texorpdfstring{$<$}{<} Derived \texorpdfstring{$>$}{>} の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_f_w_1_1_input_1_1_input_device}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_aaab0286e0ffb22a33355abb993325adf}{Is\+Key\+Pressed}} (\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}} key) const
+\begin{DoxyCompactList}\small\item\em キーが押されているかどうかを取得します。 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a6a6896553e3b6e70e26f82ee0f11ee1e}{Is\+Key\+Released}} (\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}} key) const
+\begin{DoxyCompactList}\small\item\em キーが離されたかどうかを取得します。 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a1bf2b646f38868c943efabdd4cffde73}{Is\+Key\+Trigger}} (\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}} key) const
+\begin{DoxyCompactList}\small\item\em キーがトリガーされたかどうかを取得します。 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a87158bf9184328f06ee94b1bbea4f5b3}{Is\+LButton\+Pressed}} () const
+\begin{DoxyCompactList}\small\item\em 左ボタンが押されているかどうかを取得します。 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_acaf4b909d9637336f71a8af9cd4a42fa}{Is\+RButton\+Pressed}} () const
+\begin{DoxyCompactList}\small\item\em 右ボタンが押されているかどうかを取得します。 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a55cf97da8f02a0b0a3d38faa2f332688}{Is\+Mouse\+Captured}} () const
+\begin{DoxyCompactList}\small\item\em マウスの入力がキャプチャされているかどうかを取得します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a0055c8f367a226a83718dbd501e3d951}{Set\+Mouse\+Captured}} (bool captured)
+\begin{DoxyCompactList}\small\item\em マウスの入力をキャプチャするかどうかを設定します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a28306432dd59fb192a148d5db236aafc}{Get\+Mouse\+Delta}} (long \&out\+Dx, long \&out\+Dy) const noexcept
+\begin{DoxyCompactList}\small\item\em マウスの位置を取得します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a488b552ad1e6c3c1aa034a50c3bacb9c}{Get\+Mouse\+Wheel}} (int \&out\+WheelV, int \&out\+WheelH) const noexcept
+\begin{DoxyCompactList}\small\item\em マウスホイールの状態を取得します。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{フレンド}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device_a12a6623bafbade003505c9b236b749b4}{Service\+Locator}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{その他の継承メンバ}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7}{Phase}} \+: uint16\+\_\+t \{ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}} = 0
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7}{NORMAL}} = 1
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9}{LATE}} = 2
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907}{PHASE\+\_\+\+MAX}}
+ \}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608}{Group}} \+: uint16\+\_\+t \{ \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b}{GROUP\+\_\+\+GRAPHICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda}{GROUP\+\_\+\+PHYSICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a}{GROUP\+\_\+\+INPUT}}
+, \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e}{GROUP\+\_\+\+AUDIO}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580}{GROUP\+\_\+\+AI}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90}{GROUP\+\_\+\+MAX}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a73744778bc5cc3113ed77db1b69e1fb1}{update\+Phase}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a9f0e8abd26ab30155b39e558f004ce42}{update\+Group}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a116ce546ab92eaf8f4282719b89a5165}{update\+Order}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename Derived$>$\newline
+class SFW\+::\+Input\+::\+Input\+Device$<$ Derived $>$}
+入力デバイスの抽象クラス。非環境依存のために抽象化。\+Service\+Locatorで管理される。 
+
+ \mbox{\hyperlink{_input_device_8hpp_source}{Input\+Device.\+hpp}} の \mbox{\hyperlink{_input_device_8hpp_source_l00094}{94}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_input_1_1_input_device_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_input_1_1_input_device_a28306432dd59fb192a148d5db236aafc}\index{SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}!GetMouseDelta@{GetMouseDelta}}
+\index{GetMouseDelta@{GetMouseDelta}!SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}}
+\doxysubsubsection{\texorpdfstring{GetMouseDelta()}{GetMouseDelta()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_input_device_a28306432dd59fb192a148d5db236aafc} 
+template$<$typename Derived$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device}{SFW\+::\+Input\+::\+Input\+Device}}$<$ Derived $>$\+::\+Get\+Mouse\+Delta (\begin{DoxyParamCaption}\item[{long \&}]{out\+Dx}{, }\item[{long \&}]{out\+Dy}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+マウスの位置を取得します。 
+
+
+\begin{DoxyParams}{引数}
+{\em out\+Dx} & マウスの\+X座標 \\
+\hline
+{\em out\+Dy　マウスの\+Y座標} & \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_input_device_8hpp_source}{Input\+Device.\+hpp}} の \mbox{\hyperlink{_input_device_8hpp_source_l00156}{156}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_input_device_a488b552ad1e6c3c1aa034a50c3bacb9c}\index{SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}!GetMouseWheel@{GetMouseWheel}}
+\index{GetMouseWheel@{GetMouseWheel}!SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}}
+\doxysubsubsection{\texorpdfstring{GetMouseWheel()}{GetMouseWheel()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_input_device_a488b552ad1e6c3c1aa034a50c3bacb9c} 
+template$<$typename Derived$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device}{SFW\+::\+Input\+::\+Input\+Device}}$<$ Derived $>$\+::\+Get\+Mouse\+Wheel (\begin{DoxyParamCaption}\item[{int \&}]{out\+WheelV}{, }\item[{int \&}]{out\+WheelH}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+マウスホイールの状態を取得します。 
+
+
+\begin{DoxyParams}{引数}
+{\em out\+WheelV} & 垂直方向のホイールの状態 \\
+\hline
+{\em out\+WheelH} & 水平方向のホイールの状態 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_input_device_8hpp_source}{Input\+Device.\+hpp}} の \mbox{\hyperlink{_input_device_8hpp_source_l00164}{164}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_input_device_aaab0286e0ffb22a33355abb993325adf}\index{SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}!IsKeyPressed@{IsKeyPressed}}
+\index{IsKeyPressed@{IsKeyPressed}!SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}}
+\doxysubsubsection{\texorpdfstring{IsKeyPressed()}{IsKeyPressed()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_input_device_aaab0286e0ffb22a33355abb993325adf} 
+template$<$typename Derived$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device}{SFW\+::\+Input\+::\+Input\+Device}}$<$ Derived $>$\+::\+Is\+Key\+Pressed (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}}}]{key}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+キーが押されているかどうかを取得します。 
+
+
+\begin{DoxyParams}{引数}
+{\em key} & チェックするキー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+bool 押されている場合はtrue、そうでない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_input_device_8hpp_source}{Input\+Device.\+hpp}} の \mbox{\hyperlink{_input_device_8hpp_source_l00104}{104}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_input_device_a6a6896553e3b6e70e26f82ee0f11ee1e}\index{SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}!IsKeyReleased@{IsKeyReleased}}
+\index{IsKeyReleased@{IsKeyReleased}!SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}}
+\doxysubsubsection{\texorpdfstring{IsKeyReleased()}{IsKeyReleased()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_input_device_a6a6896553e3b6e70e26f82ee0f11ee1e} 
+template$<$typename Derived$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device}{SFW\+::\+Input\+::\+Input\+Device}}$<$ Derived $>$\+::\+Is\+Key\+Released (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}}}]{key}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+キーが離されたかどうかを取得します。 
+
+
+\begin{DoxyParams}{引数}
+{\em key} & チェックするキー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+bool 離された場合はtrue、そうでない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_input_device_8hpp_source}{Input\+Device.\+hpp}} の \mbox{\hyperlink{_input_device_8hpp_source_l00112}{112}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_input_device_a1bf2b646f38868c943efabdd4cffde73}\index{SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}!IsKeyTrigger@{IsKeyTrigger}}
+\index{IsKeyTrigger@{IsKeyTrigger}!SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}}
+\doxysubsubsection{\texorpdfstring{IsKeyTrigger()}{IsKeyTrigger()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_input_device_a1bf2b646f38868c943efabdd4cffde73} 
+template$<$typename Derived$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device}{SFW\+::\+Input\+::\+Input\+Device}}$<$ Derived $>$\+::\+Is\+Key\+Trigger (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1e}{Key}}}]{key}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+キーがトリガーされたかどうかを取得します。 
+
+
+\begin{DoxyParams}{引数}
+{\em key} & チェックするキー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+bool トリガーされた場合はtrue、そうでない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_input_device_8hpp_source}{Input\+Device.\+hpp}} の \mbox{\hyperlink{_input_device_8hpp_source_l00120}{120}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_input_device_a87158bf9184328f06ee94b1bbea4f5b3}\index{SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}!IsLButtonPressed@{IsLButtonPressed}}
+\index{IsLButtonPressed@{IsLButtonPressed}!SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}}
+\doxysubsubsection{\texorpdfstring{IsLButtonPressed()}{IsLButtonPressed()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_input_device_a87158bf9184328f06ee94b1bbea4f5b3} 
+template$<$typename Derived$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device}{SFW\+::\+Input\+::\+Input\+Device}}$<$ Derived $>$\+::\+Is\+LButton\+Pressed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+左ボタンが押されているかどうかを取得します。 
+
+\begin{DoxyReturn}{戻り値}
+bool 押されている場合はtrue、そうでない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_input_device_8hpp_source}{Input\+Device.\+hpp}} の \mbox{\hyperlink{_input_device_8hpp_source_l00127}{127}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_input_device_a55cf97da8f02a0b0a3d38faa2f332688}\index{SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}!IsMouseCaptured@{IsMouseCaptured}}
+\index{IsMouseCaptured@{IsMouseCaptured}!SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}}
+\doxysubsubsection{\texorpdfstring{IsMouseCaptured()}{IsMouseCaptured()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_input_device_a55cf97da8f02a0b0a3d38faa2f332688} 
+template$<$typename Derived$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device}{SFW\+::\+Input\+::\+Input\+Device}}$<$ Derived $>$\+::\+Is\+Mouse\+Captured (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+マウスの入力がキャプチャされているかどうかを取得します。 
+
+\begin{DoxyReturn}{戻り値}
+bool キャプチャされている場合はtrue、そうでない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_input_device_8hpp_source}{Input\+Device.\+hpp}} の \mbox{\hyperlink{_input_device_8hpp_source_l00141}{141}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_input_device_acaf4b909d9637336f71a8af9cd4a42fa}\index{SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}!IsRButtonPressed@{IsRButtonPressed}}
+\index{IsRButtonPressed@{IsRButtonPressed}!SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}}
+\doxysubsubsection{\texorpdfstring{IsRButtonPressed()}{IsRButtonPressed()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_input_device_acaf4b909d9637336f71a8af9cd4a42fa} 
+template$<$typename Derived$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device}{SFW\+::\+Input\+::\+Input\+Device}}$<$ Derived $>$\+::\+Is\+RButton\+Pressed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+右ボタンが押されているかどうかを取得します。 
+
+\begin{DoxyReturn}{戻り値}
+bool 押されている場合はtrue、そうでない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_input_device_8hpp_source}{Input\+Device.\+hpp}} の \mbox{\hyperlink{_input_device_8hpp_source_l00134}{134}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_input_device_a0055c8f367a226a83718dbd501e3d951}\index{SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}!SetMouseCaptured@{SetMouseCaptured}}
+\index{SetMouseCaptured@{SetMouseCaptured}!SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}}
+\doxysubsubsection{\texorpdfstring{SetMouseCaptured()}{SetMouseCaptured()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_input_device_a0055c8f367a226a83718dbd501e3d951} 
+template$<$typename Derived$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_input_device}{SFW\+::\+Input\+::\+Input\+Device}}$<$ Derived $>$\+::\+Set\+Mouse\+Captured (\begin{DoxyParamCaption}\item[{bool}]{captured}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+マウスの入力をキャプチャするかどうかを設定します。 
+
+
+\begin{DoxyParams}{引数}
+{\em captured} & キャプチャする場合はtrue、そうでない場合はfalse \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_input_device_8hpp_source}{Input\+Device.\+hpp}} の \mbox{\hyperlink{_input_device_8hpp_source_l00148}{148}} 行目に定義があります。
+
+
+
+\label{doc-related-members}
+\Hypertarget{class_s_f_w_1_1_input_1_1_input_device_doc-related-members}
+\doxysubsection{フレンドと関連関数の詳解}
+\Hypertarget{class_s_f_w_1_1_input_1_1_input_device_a12a6623bafbade003505c9b236b749b4}\index{SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}!ServiceLocator@{ServiceLocator}}
+\index{ServiceLocator@{ServiceLocator}!SFW::Input::InputDevice$<$ Derived $>$@{SFW::Input::InputDevice$<$ Derived $>$}}
+\doxysubsubsection{\texorpdfstring{ServiceLocator}{ServiceLocator}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_input_device_a12a6623bafbade003505c9b236b749b4} 
+template$<$typename Derived$>$ \\
+friend class Service\+Locator\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+ \mbox{\hyperlink{_input_device_8hpp_source}{Input\+Device.\+hpp}} の \mbox{\hyperlink{_input_device_8hpp_source_l00096}{96}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Input/\mbox{\hyperlink{_input_device_8hpp}{Input\+Device.\+hpp}}\end{DoxyCompactItemize}

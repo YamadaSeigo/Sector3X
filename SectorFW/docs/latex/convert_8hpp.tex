@@ -1,0 +1,50 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Math/convert.hpp ファイル}
+\hypertarget{convert_8hpp}{}\label{convert_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/convert.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/convert.hpp}}
+
+
+型変換を行うためのヘッダーファイル  
+
+
+{\ttfamily \#include $<$bit$>$}\newline
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$numbers$>$}\newline
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_math}{SFW\+::\+Math}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_math_1_1_bit_castable}{SFW\+::\+Math\+::\+Bit\+Castable}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T$>$ }\\T \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87b63dc11850a6a5d5367b2f8fd87c03}{SFW\+::\+Math\+::\+Deg2\+Rad}} (T degrees)
+\item 
+{\footnotesize template$<$typename T$>$ }\\T \mbox{\hyperlink{namespace_s_f_w_1_1_math_a614551429f64186226e47b1b91f2bbba}{SFW\+::\+Math\+::\+Rad2\+Deg}} (T radians)
+\item 
+{\footnotesize template$<$typename To, typename From$>$ }\\To \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab88c3f02388cc0fcb0b82e7247e54bf0}{SFW\+::\+Math\+::\+Convert}} (const From \&from)
+\item 
+{\footnotesize template$<$typename To, typename From$>$ \newline
+requires Bit\+Castable$<$To, From$>$}\\constexpr To \mbox{\hyperlink{namespace_s_f_w_1_1_math_a93b291c9700c7a6011a999381a975578}{SFW\+::\+Math\+::\+Bit\+Cast}} (const From \&from)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+型変換を行うためのヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+July 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{convert_8hpp_source}{convert.\+hpp}} に定義があります。
+

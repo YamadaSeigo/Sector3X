@@ -1,0 +1,51 @@
+\doxysection{Im\+Gui\+Backend\+DX11\+Win32.\+h}
+\hypertarget{_im_gui_backend_d_x11_win32_8h_source}{}\label{_im_gui_backend_d_x11_win32_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/ImGuiBackendDX11Win32.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/ImGuiBackendDX11Win32.h}}
+\mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_im_gui_backend_8h}{ImGuiBackend.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}../external/imgui/imgui.h"{}}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}../external/imgui/imgui\_impl\_win32.h"{}}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}../external/imgui/imgui\_impl\_dx11.h"{}}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00012}00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00013}00013\ \{}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00014}00014\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_debug}{Debug}}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00015}00015\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00019}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32}{00019}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32}{ImGuiBackendDX11Win32}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend}{IImGuiBackend}}\ \{}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00025}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a80176ebc68d04a6a8704bf4ed1d08beb}{00025}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::type\_info\&\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a80176ebc68d04a6a8704bf4ed1d08beb}{GetWindowType}}()\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{typeid}(HWND);}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00032}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_ab79009d63a307cfb281a66812950de72}{00032}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::type\_info\&\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_ab79009d63a307cfb281a66812950de72}{GetDeviceType}}()\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{typeid}(ID3D11Device*);}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00040}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a64458d0e84d04def313c92652028a02b}{00040}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a64458d0e84d04def313c92652028a02b}{Init}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info}{ImGuiInitInfo}}\&\ info)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ImGui\_ImplWin32\_Init(info.\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info_a699036fd33a456a52646216da594a2d6}{platform\_window}}))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ImGui\_ImplDX11\_Init((ID3D11Device*)info.\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info_ab376e48c59938c997573f82d1e5d5867}{device}},}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (ID3D11DeviceContext*)info.\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info_a6cc23419ad158f8d0be8d88f8fb1a8bf}{device\_context}}))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00049}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a46d72f5cf8db9e34400690b5adcdb07e}{00049}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a46d72f5cf8db9e34400690b5adcdb07e}{NewFrame}}()\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui\_ImplDX11\_NewFrame();}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui\_ImplWin32\_NewFrame();}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00056}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a66f1836dfac19b539c9226738f55546b}{00056}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a66f1836dfac19b539c9226738f55546b}{Render}}()\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui\_ImplDX11\_RenderDrawData(ImGui::GetDrawData());}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Viewports\ 有効なら}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ io\ =\ ImGui::GetIO();}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (io.ConfigFlags\ \&\ ImGuiConfigFlags\_ViewportsEnable)}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::UpdatePlatformWindows();}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::RenderPlatformWindowsDefault();}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00069}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a8b296fdb1534521a5074f0cfcff2c2f1}{00069}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a8b296fdb1534521a5074f0cfcff2c2f1}{Shutdown}}()\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui\_ImplDX11\_Shutdown();}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui\_ImplWin32\_Shutdown();}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00074}00074\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_im_gui_backend_d_x11_win32_8h_source_l00075}00075\ \}}
+
+\end{DoxyCode}

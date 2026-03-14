@@ -1,0 +1,164 @@
+\doxysection{Debug\+Type.\+h}
+\hypertarget{_debug_type_8h_source}{}\label{_debug_type_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/DebugType.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/DebugType.h}}
+\mbox{\hyperlink{_debug_type_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_a_a_b_b_8hpp}{../Math/AABB.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_frustum_8hpp}{../Math/Frustum.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00013}00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00014}00014\ \{}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00015}00015\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_debug}{Debug}}\ \{}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00019}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{00019}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{LineVertex}}\ \{}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00020}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex_a968a6dbb17fe9ba196e4812df44263df}{00020}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex_a968a6dbb17fe9ba196e4812df44263df}{pos}};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00021}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex_ab39dc7d8f85b0480ba56787921aea33a}{00021}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex_ab39dc7d8f85b0480ba56787921aea33a}{rgba}}\ =\ 0xFFFFFFFF;}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00026}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_vertex_p_n_u_v}{00026}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_vertex_p_n_u_v}{VertexPNUV}}\ \{}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00027}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_vertex_p_n_u_v_aa61acda2f89799f041037330e67a1558}{00027}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_vertex_p_n_u_v_aa61acda2f89799f041037330e67a1558}{pos}};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00028}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_vertex_p_n_u_v_add5969de575a494671eb59146fb9fc90}{00028}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_vertex_p_n_u_v_add5969de575a494671eb59146fb9fc90}{normal}};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00029}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_vertex_p_n_u_v_a369f6fafd47ea152cecdb976d852d298}{00029}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_vertex_p_n_u_v_a369f6fafd47ea152cecdb976d852d298}{uv}};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00033}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a6344d103705920b8aa103c99585967a6}{00033}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::array<Debug::LineVertex,\ 24>\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a6344d103705920b8aa103c99585967a6}{MakeAABBLineVertices}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\&\ box,\ uint32\_t\ rgba\ =\ 0xFFFFFFFF)}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_math}{Math}};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ lb\ =\ box.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}};\ \textcolor{comment}{//\ (minX,\ minY,\ minZ)}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ ub\ =\ box.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329}{ub}};\ \textcolor{comment}{//\ (maxX,\ maxY,\ maxZ)}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 8\ コーナー（XYZ\ =\ 0/1\ 組み合わせ）}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3f\ p000\{\ lb.x,\ lb.y,\ lb.z\ \};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3f\ p100\{\ ub.x,\ lb.y,\ lb.z\ \};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3f\ p110\{\ ub.x,\ ub.y,\ lb.z\ \};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3f\ p010\{\ lb.x,\ ub.y,\ lb.z\ \};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3f\ p001\{\ lb.x,\ lb.y,\ ub.z\ \};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3f\ p101\{\ ub.x,\ lb.y,\ ub.z\ \};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3f\ p111\{\ ub.x,\ ub.y,\ ub.z\ \};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3f\ p011\{\ lb.x,\ ub.y,\ ub.z\ \};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 12\ エッジを\ (from,\ to)\ の順に並べる}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Vec3f,\ 24>\ pts\ =\ \{}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 底面\ (Z\ =\ min)}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p000,\ p100,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p100,\ p110,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p110,\ p010,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p010,\ p000,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 上面\ (Z\ =\ max)}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p001,\ p101,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p101,\ p111,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p111,\ p011,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p011,\ p001,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 垂直\ 4\ 本}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p000,\ p001,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p100,\ p101,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p110,\ p111,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p010,\ p011}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Debug::LineVertex,\ 24>\ out\{\};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ out.size();\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out[i].pos\ =\ pts[i];}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out[i].rgba\ =\ rgba;}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00079}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a6d7ec86cc627f9d7309579d87f167658}{00079}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a6d7ec86cc627f9d7309579d87f167658}{AppendAABBLineListIndexed}}(std::vector<Debug::LineVertex>\&\ outVerts,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\&\ outIndices,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math::AABB3f}}\&\ box,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ rgba\ =\ 0xFFFFFFFF)}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_math}{Math}};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ base\ =\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(outVerts.size());}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ lb\ =\ box.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_ac095d3de4746158d4404f353e79ff143}{lb}};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ ub\ =\ box.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b_a9a57667be5229aa0721f9d4f9098d329}{ub}};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 頂点\ 8\ 個（固定順）}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Vec3f\ corners[8]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ lb.x,\ lb.y,\ lb.z\ \},\ \textcolor{comment}{//\ 0:\ p000}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ ub.x,\ lb.y,\ lb.z\ \},\ \textcolor{comment}{//\ 1:\ p100}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ ub.x,\ ub.y,\ lb.z\ \},\ \textcolor{comment}{//\ 2:\ p110}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ lb.x,\ ub.y,\ lb.z\ \},\ \textcolor{comment}{//\ 3:\ p010}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ lb.x,\ lb.y,\ ub.z\ \},\ \textcolor{comment}{//\ 4:\ p001}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ ub.x,\ lb.y,\ ub.z\ \},\ \textcolor{comment}{//\ 5:\ p101}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ ub.x,\ ub.y,\ ub.z\ \},\ \textcolor{comment}{//\ 6:\ p111}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ lb.x,\ ub.y,\ ub.z\ \}\ \ \textcolor{comment}{//\ 7:\ p011}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ outVerts.reserve(outVerts.size()\ +\ 8);}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 8;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outVerts.push\_back(\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug::LineVertex}}\{\ corners[i],\ rgba\ \});}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ラインリスト用インデックス（12\ エッジ\ ×\ 2\ =\ 24）}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 底面:\ 0-\/1,\ 1-\/2,\ 2-\/3,\ 3-\/0}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 上面:\ 4-\/5,\ 5-\/6,\ 6-\/7,\ 7-\/4}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 垂直:\ 0-\/4,\ 1-\/5,\ 2-\/6,\ 3-\/7}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ idx[]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0,1,\ \ 1,2,\ \ 2,3,\ \ 3,0,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 4,5,\ \ 5,6,\ \ 6,7,\ \ 7,4,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0,4,\ \ 1,5,\ \ 2,6,\ \ 3,7}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ outIndices.reserve(outIndices.size()\ +\ std::size(idx));}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ :\ idx)\ outIndices.push\_back(base\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00121}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ad69e3e2e767235fee5c818ac93353b81}{00121}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::array<Debug::LineVertex,\ 24>\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ad69e3e2e767235fee5c818ac93353b81}{MakeFrustumLineVertices}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\&\ frustum,\ uint32\_t\ rgba\ =\ 0xFFFFFFFF)}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00122}00122\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_math}{Math}};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ Left\ =\ frustum.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)FrustumPlane::Left];}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ Right\ =\ frustum.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)FrustumPlane::Right];}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ Top\ =\ frustum.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)FrustumPlane::Top];}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ Bottom\ =\ frustum.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)FrustumPlane::Bottom];}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ Near\ =\ frustum.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)FrustumPlane::Near];}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ Far\ =\ frustum.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf_aa4edc7b606cf0c104adac6f5edc95b37}{p}}[(int)FrustumPlane::Far];}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 8\ コーナー取得}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ Vec3f\ ntl,\ ntr,\ nbl,\ nbr;}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ Vec3f\ ftl,\ ftr,\ fbl,\ fbr;}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ Planef::Intersect3Planes(Near,\ Left,\ Top,\ ntl);}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ Planef::Intersect3Planes(Near,\ Right,\ Top,\ ntr);}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ Planef::Intersect3Planes(Near,\ Left,\ Bottom,\ nbl);}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ Planef::Intersect3Planes(Near,\ Right,\ Bottom,\ nbr);}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ Planef::Intersect3Planes(Far,\ Left,\ Top,\ ftl);}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ Planef::Intersect3Planes(Far,\ Right,\ Top,\ ftr);}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ Planef::Intersect3Planes(Far,\ Left,\ Bottom,\ fbl);}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ Planef::Intersect3Planes(Far,\ Right,\ Bottom,\ fbr);}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 12\ エッジを\ (from,\ to)\ の順に並べる}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Vec3f,\ 24>\ pts\ =\ \{}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 近クリップ面}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ntl,\ ntr,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ntr,\ nbr,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nbr,\ nbl,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nbl,\ ntl,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 遠クリップ面}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ftl,\ ftr,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ftr,\ fbr,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fbr,\ fbl,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fbl,\ ftl,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 接続エッジ\ 4\ 本}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ntl,\ ftl,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ntr,\ ftr,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nbr,\ fbr,}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nbl,\ fbl}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Debug::LineVertex,\ 24>\ out\{\};}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ out.size();\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out[i].pos\ =\ pts[i];}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out[i].rgba\ =\ rgba;}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00169}00169\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00170}00170\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_debug_type_8h_source_l00171}00171\ \}}
+
+\end{DoxyCode}

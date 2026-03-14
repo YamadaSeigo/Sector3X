@@ -1,0 +1,59 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+Light\+Shadow\+Service.h ファイル}
+\hypertarget{_light_shadow_service_8h}{}\label{_light_shadow_service_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/LightShadowService.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/LightShadowService.h}}
+
+
+ライトとシャドウの管理サービス。カスケードシャドウマップの計算もここで行う。  
+
+
+{\ttfamily \#include $<$shared\+\_\+mutex$>$}\newline
+{\ttfamily \#include "{}../\+Math/\+Vector.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Math/\+AABB.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Math/\+Matrix.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Math/\+Frustum.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Math/sx\+\_\+math.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Math/convert.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Core/\+ECS/\+Service\+Context.\+hpp"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light}{SFW\+::\+Graphics\+::\+Directional\+Light}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light}{SFW\+::\+Graphics\+::\+Ambient\+Light}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params}{SFW\+::\+Graphics\+::\+Camera\+Params}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{SFW\+::\+Graphics\+::\+Shadow\+Cascade$<$ N $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data}{SFW\+::\+Graphics\+::\+CPULight\+Data}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service}{SFW\+::\+Graphics\+::\+Light\+Shadow\+Service}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config}{SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Cascade\+Config}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW\+::\+Graphics}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{変数}
+\begin{DoxyCompactItemize}
+\item 
+constexpr std\+::uint32\+\_\+t \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{SFW\+::\+Graphics\+::k\+Max\+Shadow\+Cascades}} = 3
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+ライトとシャドウの管理サービス。カスケードシャドウマップの計算もここで行う。 
+
+\begin{DoxyAuthor}{著者}
+lenov 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+March 2026 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} に定義があります。
+

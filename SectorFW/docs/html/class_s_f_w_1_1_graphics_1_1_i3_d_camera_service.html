@@ -1,0 +1,2376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Graphics::I3DCameraService&lt; Type &gt; クラステンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html','','class_s_f_w_1_1_graphics_1_1_i3_d_camera_service-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Graphics::I3DCameraService&lt; Type &gt; クラステンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>3Dカメラサービスのインターフェース。カメラの操作、ビュー行列の計算、カメラバッファの管理を行う。  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a>&gt;</code></p>
+<div class="dynheader">
+SFW::Graphics::I3DCameraService&lt; Type &gt; の継承関係図</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.png" usemap="#SFW_3A_3AGraphics_3A_3AI3DCameraService_3C_20Type_20_3E_map" alt=""/>
+  <map id="SFW_3A_3AGraphics_3A_3AI3DCameraService_3C_20Type_20_3E_map" name="SFW_3A_3AGraphics_3A_3AI3DCameraService_3C_20Type_20_3E_map">
+<area href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html" title="更新サービスのインターフェース(Systemよりも前に更新)" alt="SFW::ECS::IUpdateService" shape="rect" coords="0,0,261,24"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+公開型</h2></td></tr>
+<tr class="memitem:ae451cac8864c5e3312c52d97394665aa" id="r_ae451cac8864c5e3312c52d97394665aa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae451cac8864c5e3312c52d97394665aa">RotateMode</a> : uint8_t { <a class="el" href="#ae451cac8864c5e3312c52d97394665aaa8bfb919d2b73adfb399aee77d80b043c">FPS</a>
+, <a class="el" href="#ae451cac8864c5e3312c52d97394665aaac70fac808ce7ae52fdfebf73aec35af5">Orbital</a>
+ }</td></tr>
+<tr class="inherit_header pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">SFW::ECS::IUpdateService</a> に属する継承公開型</td></tr>
+<tr class="memitem:ae5407b8ae7f6739250af397382f3f6c7 inherit pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_ae5407b8ae7f6739250af397382f3f6c7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7">Phase</a> : uint16_t { <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec">EALRY</a> = 0
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7">NORMAL</a> = 1
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9">LATE</a> = 2
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907">PHASE_MAX</a>
+ }</td></tr>
+<tr class="memitem:a0a2e8c399f89c675d9de722b706a8608 inherit pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a0a2e8c399f89c675d9de722b706a8608"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608">Group</a> : uint16_t { <br />
+&#160;&#160;<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9">GROUP_SERIAL</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b">GROUP_GRAPHICS</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda">GROUP_PHYSICS</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a">GROUP_INPUT</a>
+, <br />
+&#160;&#160;<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e">GROUP_AUDIO</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580">GROUP_AI</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90">GROUP_MAX</a>
+<br />
+ }</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:afff2d1916859053e25eff9c3c9d5172b" id="r_afff2d1916859053e25eff9c3c9d5172b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afff2d1916859053e25eff9c3c9d5172b">I3DCameraService</a> (<a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> bufferHandle) noexcept</td></tr>
+<tr class="memdesc:afff2d1916859053e25eff9c3c9d5172b"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:a7c6ed09db460b4922d8493783e54961c" id="r_a7c6ed09db460b4922d8493783e54961c"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c6ed09db460b4922d8493783e54961c">~I3DCameraService</a> ()=default</td></tr>
+<tr class="memdesc:a7c6ed09db460b4922d8493783e54961c"><td class="mdescLeft">&#160;</td><td class="mdescRight">デストラクタ  <br /></td></tr>
+<tr class="memitem:a86f06f07d76d4d189a28e34fe783aa34" id="r_a86f06f07d76d4d189a28e34fe783aa34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a86f06f07d76d4d189a28e34fe783aa34">Move</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;vec) noexcept</td></tr>
+<tr class="memdesc:a86f06f07d76d4d189a28e34fe783aa34"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの移動  <br /></td></tr>
+<tr class="memitem:ae6f70c90d8f7b723579230dcc139d258" id="r_ae6f70c90d8f7b723579230dcc139d258"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6f70c90d8f7b723579230dcc139d258">Rotate</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a> &amp;q) noexcept</td></tr>
+<tr class="memdesc:ae6f70c90d8f7b723579230dcc139d258"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの回転  <br /></td></tr>
+<tr class="memitem:ac3ba109be35b9efed618314a6ecff889" id="r_ac3ba109be35b9efed618314a6ecff889"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac3ba109be35b9efed618314a6ecff889">SetRotation</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a> &amp;q) noexcept</td></tr>
+<tr class="memitem:a72b3b57efa69e1ec48476debcbe476f4" id="r_a72b3b57efa69e1ec48476debcbe476f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72b3b57efa69e1ec48476debcbe476f4">SetEyePos</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;eyePos) noexcept</td></tr>
+<tr class="memdesc:a72b3b57efa69e1ec48476debcbe476f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの位置を設定  <br /></td></tr>
+<tr class="memitem:a94dfcedac8f1f117baad2593b9749ae9" id="r_a94dfcedac8f1f117baad2593b9749ae9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a94dfcedac8f1f117baad2593b9749ae9">SetTarget</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;targetPos) noexcept</td></tr>
+<tr class="memdesc:a94dfcedac8f1f117baad2593b9749ae9"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの注視点を設定  <br /></td></tr>
+<tr class="memitem:a7b428777038fc0ea7fcff57ed0c577e9" id="r_a7b428777038fc0ea7fcff57ed0c577e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b428777038fc0ea7fcff57ed0c577e9">SetFOV</a> (float <a class="el" href="#a9b7a807da1f7fa2ee1e2de14ac4451dc">fovRad</a>) noexcept</td></tr>
+<tr class="memdesc:a7b428777038fc0ea7fcff57ed0c577e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの視野角を設定  <br /></td></tr>
+<tr class="memitem:a1823fcf7edba094167e5df74c4350e3c" id="r_a1823fcf7edba094167e5df74c4350e3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1823fcf7edba094167e5df74c4350e3c">SetAspectRatio</a> (float <a class="el" href="#a21b73d3f0e9d42a4b4951cbaa5c96b39">aspectRatio</a>) noexcept</td></tr>
+<tr class="memdesc:a1823fcf7edba094167e5df74c4350e3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラのアスペクト比を設定  <br /></td></tr>
+<tr class="memitem:a4907465ca6e7ce04138f9af3fb1f84f3" id="r_a4907465ca6e7ce04138f9af3fb1f84f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4907465ca6e7ce04138f9af3fb1f84f3">SetNearClip</a> (float <a class="el" href="#af8640ab289a3ff476e40dc0a44f9e926">nearClip</a>) noexcept</td></tr>
+<tr class="memdesc:a4907465ca6e7ce04138f9af3fb1f84f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラのニアクリップ距離を設定  <br /></td></tr>
+<tr class="memitem:abb4297b5ec58b8800222512d3efba1ee" id="r_abb4297b5ec58b8800222512d3efba1ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abb4297b5ec58b8800222512d3efba1ee">SetFarClip</a> (float <a class="el" href="#a563ff0ed093d82a05ca233b9daaaf0db">farClip</a>) noexcept</td></tr>
+<tr class="memdesc:abb4297b5ec58b8800222512d3efba1ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラのファークリップ距離を設定  <br /></td></tr>
+<tr class="memitem:adc766a174220b69580f1ed44e03d0234" id="r_adc766a174220b69580f1ed44e03d0234"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adc766a174220b69580f1ed44e03d0234">SetFocusDistance</a> (float distance) noexcept</td></tr>
+<tr class="memdesc:adc766a174220b69580f1ed44e03d0234"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの焦点距離を設定  <br /></td></tr>
+<tr class="memitem:a4d0b13a40af8191337b65a5a36530690" id="r_a4d0b13a40af8191337b65a5a36530690"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d0b13a40af8191337b65a5a36530690">SetMouseDelta</a> (float deltaX, float deltaY) noexcept</td></tr>
+<tr class="memdesc:a4d0b13a40af8191337b65a5a36530690"><td class="mdescLeft">&#160;</td><td class="mdescRight">マウスの移動量を設定  <br /></td></tr>
+<tr class="memitem:a8652aad2aff0d6a815baa5e63fb42429" id="r_a8652aad2aff0d6a815baa5e63fb42429"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8652aad2aff0d6a815baa5e63fb42429">SetMouseSensitivity</a> (float sensX, float sensY) noexcept</td></tr>
+<tr class="memdesc:a8652aad2aff0d6a815baa5e63fb42429"><td class="mdescLeft">&#160;</td><td class="mdescRight">マウス感度を設定  <br /></td></tr>
+<tr class="memitem:a08e40022f3eb8d97a5fb66a70c721e03" id="r_a08e40022f3eb8d97a5fb66a70c721e03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08e40022f3eb8d97a5fb66a70c721e03">SetRotateMode</a> (<a class="el" href="#ae451cac8864c5e3312c52d97394665aa">RotateMode</a> mode) noexcept</td></tr>
+<tr class="memdesc:a08e40022f3eb8d97a5fb66a70c721e03"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの回転モードを設定  <br /></td></tr>
+<tr class="memitem:aa18926d235abb00236c1344e6919229a" id="r_aa18926d235abb00236c1344e6919229a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa18926d235abb00236c1344e6919229a">GetEyePos</a> () const noexcept</td></tr>
+<tr class="memdesc:aa18926d235abb00236c1344e6919229a"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの位置を取得  <br /></td></tr>
+<tr class="memitem:a6ebfa01c4d0a73727d85d2f98c2d3938" id="r_a6ebfa01c4d0a73727d85d2f98c2d3938"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ebfa01c4d0a73727d85d2f98c2d3938">GetTarget</a> () const noexcept</td></tr>
+<tr class="memdesc:a6ebfa01c4d0a73727d85d2f98c2d3938"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの注視点を取得  <br /></td></tr>
+<tr class="memitem:a961471074573710bb3a562d53923fef2" id="r_a961471074573710bb3a562d53923fef2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a961471074573710bb3a562d53923fef2">GetUp</a> () const noexcept</td></tr>
+<tr class="memdesc:a961471074573710bb3a562d53923fef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの上方向ベクトルを取得  <br /></td></tr>
+<tr class="memitem:a7f7159081774cc41465c9e810a513216" id="r_a7f7159081774cc41465c9e810a513216"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f7159081774cc41465c9e810a513216">GetFOV</a> () const noexcept</td></tr>
+<tr class="memdesc:a7f7159081774cc41465c9e810a513216"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの視野角を取得  <br /></td></tr>
+<tr class="memitem:ad4c10ec53bd610f645f95505466e3192" id="r_ad4c10ec53bd610f645f95505466e3192"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4c10ec53bd610f645f95505466e3192">GetAspectRatio</a> () const noexcept</td></tr>
+<tr class="memdesc:ad4c10ec53bd610f645f95505466e3192"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラのアスペクト比を取得  <br /></td></tr>
+<tr class="memitem:a5917161acd7359a5e9f990e5e838e9ac" id="r_a5917161acd7359a5e9f990e5e838e9ac"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5917161acd7359a5e9f990e5e838e9ac">GetNearClip</a> () const noexcept</td></tr>
+<tr class="memdesc:a5917161acd7359a5e9f990e5e838e9ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラのニアクリップ距離を取得  <br /></td></tr>
+<tr class="memitem:aa6e5274c815c57734febc89e3d9c6274" id="r_aa6e5274c815c57734febc89e3d9c6274"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6e5274c815c57734febc89e3d9c6274">GetFarClip</a> () const noexcept</td></tr>
+<tr class="memdesc:aa6e5274c815c57734febc89e3d9c6274"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラのファークリップ距離を取得  <br /></td></tr>
+<tr class="memitem:a6fbbaa783c53eee6a32773c32997ed73" id="r_a6fbbaa783c53eee6a32773c32997ed73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6fbbaa783c53eee6a32773c32997ed73">GetRotation</a> () const noexcept</td></tr>
+<tr class="memdesc:a6fbbaa783c53eee6a32773c32997ed73"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの回転を取得  <br /></td></tr>
+<tr class="memitem:a67dd0b54c4ea5aedb5aaefaab248689b" id="r_a67dd0b54c4ea5aedb5aaefaab248689b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67dd0b54c4ea5aedb5aaefaab248689b">GetForward</a> () const noexcept</td></tr>
+<tr class="memdesc:a67dd0b54c4ea5aedb5aaefaab248689b"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの焦点距離を取得  <br /></td></tr>
+<tr class="memitem:a77e3d3383a9ea6fc018da65c240724f9" id="r_a77e3d3383a9ea6fc018da65c240724f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a77e3d3383a9ea6fc018da65c240724f9">GetBackward</a> () const noexcept</td></tr>
+<tr class="memdesc:a77e3d3383a9ea6fc018da65c240724f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの後方方向ベクトルを取得  <br /></td></tr>
+<tr class="memitem:ad1673672e37d59e4801b6bc1f164775d" id="r_ad1673672e37d59e4801b6bc1f164775d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad1673672e37d59e4801b6bc1f164775d">GetRight</a> () const noexcept</td></tr>
+<tr class="memdesc:ad1673672e37d59e4801b6bc1f164775d"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの右方向ベクトルを取得  <br /></td></tr>
+<tr class="memitem:aff903fce1ba3b32abea17f1e31e49317" id="r_aff903fce1ba3b32abea17f1e31e49317"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff903fce1ba3b32abea17f1e31e49317">GetResolution</a> () const noexcept</td></tr>
+<tr class="memdesc:aff903fce1ba3b32abea17f1e31e49317"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラの解像度を取得  <br /></td></tr>
+<tr class="memitem:a2347ffb9197be13f4618f46a04e1bbca" id="r_a2347ffb9197be13f4618f46a04e1bbca"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2347ffb9197be13f4618f46a04e1bbca">GetFocusDistance</a> () const noexcept</td></tr>
+<tr class="memitem:a4d3d76636c3d1e36bbc58e1f7605040c" id="r_a4d3d76636c3d1e36bbc58e1f7605040c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d3d76636c3d1e36bbc58e1f7605040c">GetSensitivity</a> (float &amp;outSensX, float &amp;outSensY) const noexcept</td></tr>
+<tr class="memitem:ac468d845fb0b459c7b2eaead3f7fca01" id="r_ac468d845fb0b459c7b2eaead3f7fca01"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac468d845fb0b459c7b2eaead3f7fca01">GetPitchAccum</a> () const noexcept</td></tr>
+<tr class="memitem:aea31f3c1a1d8a790094adab229897146" id="r_aea31f3c1a1d8a790094adab229897146"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aea31f3c1a1d8a790094adab229897146">MakeViewMatrix</a> () const</td></tr>
+<tr class="memitem:a14ac7c1ed3a79102e5798eb9e263515f" id="r_a14ac7c1ed3a79102e5798eb9e263515f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a14ac7c1ed3a79102e5798eb9e263515f">MakeProjectionMatrix</a> () const noexcept</td></tr>
+<tr class="memitem:ac5314e15f419dc781568ce70fd817ffe" id="r_ac5314e15f419dc781568ce70fd817ffe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5314e15f419dc781568ce70fd817ffe">MakeViewProjMatrix</a> () const</td></tr>
+<tr class="memitem:aa9774a14c3a51f998e566fceee1c0950" id="r_aa9774a14c3a51f998e566fceee1c0950"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa9774a14c3a51f998e566fceee1c0950">MakeViewProjMatrix</a> (float _nearClip, float _farClip) const</td></tr>
+<tr class="memitem:ad8df687adce40f6fe84190bf0fc56055" id="r_ad8df687adce40f6fe84190bf0fc56055"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8df687adce40f6fe84190bf0fc56055">MakeBasis</a> (<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;outRight, <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;outUp, <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;outForward) const noexcept</td></tr>
+<tr class="memitem:a7182a9dc9273a5ed2d372b08df140c6d" id="r_a7182a9dc9273a5ed2d372b08df140c6d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7182a9dc9273a5ed2d372b08df140c6d">MakeFrustum</a> (bool normalize=false) const</td></tr>
+<tr class="memdesc:a7182a9dc9273a5ed2d372b08df140c6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ビュー行列を取得  <br /></td></tr>
+<tr class="memitem:abda226a0ee17d037ccc3e05277090983" id="r_abda226a0ee17d037ccc3e05277090983"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_camera_buffer.html">CameraBuffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abda226a0ee17d037ccc3e05277090983">GetCameraBufferDataNoLock</a> () const noexcept</td></tr>
+<tr class="memdesc:abda226a0ee17d037ccc3e05277090983"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラバッファのデータを取得  <br /></td></tr>
+<tr class="memitem:a97485078c0fb3f9f0daa0ba5fbb27a8b" id="r_a97485078c0fb3f9f0daa0ba5fbb27a8b"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_camera_buffer.html">CameraBuffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a97485078c0fb3f9f0daa0ba5fbb27a8b">GetOldCameraBufferDataNoLock</a> () const noexcept</td></tr>
+<tr class="memdesc:a97485078c0fb3f9f0daa0ba5fbb27a8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">遅延分前のカメラバッファのデータを取得  <br /></td></tr>
+<tr class="memitem:ad59d70f76e8fc1fd093162dd16297e63" id="r_ad59d70f76e8fc1fd093162dd16297e63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad59d70f76e8fc1fd093162dd16297e63">GetCameraBufferHandle</a> () const noexcept</td></tr>
+<tr class="memitem:a57a1962c30f01a4075d77e834b49de22" id="r_a57a1962c30f01a4075d77e834b49de22"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a57a1962c30f01a4075d77e834b49de22">IsUpdateBuffer</a> () const noexcept</td></tr>
+<tr class="memdesc:a57a1962c30f01a4075d77e834b49de22"><td class="mdescLeft">&#160;</td><td class="mdescRight">カメラバッファの更新が必要かどうかを取得  <br /></td></tr>
+<tr class="memitem:a00f9a2daf461a5299ab6cf0601e77c67" id="r_a00f9a2daf461a5299ab6cf0601e77c67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00f9a2daf461a5299ab6cf0601e77c67">CalcCurrentRotation</a> () const noexcept</td></tr>
+<tr class="memdesc:a00f9a2daf461a5299ab6cf0601e77c67"><td class="mdescLeft">&#160;</td><td class="mdescRight">現在の回転を計算して取得する  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+限定公開メンバ関数</h2></td></tr>
+<tr class="memitem:a6d1fbb49e8776fdef07f3967a27d656e" id="r_a6d1fbb49e8776fdef07f3967a27d656e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d1fbb49e8776fdef07f3967a27d656e">UpdateCameraFromMouse</a> ()</td></tr>
+<tr class="memdesc:a6d1fbb49e8776fdef07f3967a27d656e"><td class="mdescLeft">&#160;</td><td class="mdescRight">マウスの移動に基づいてカメラの回転を更新する  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+限定公開変数類</h2></td></tr>
+<tr class="memitem:af7f4c4bfb97177141741fc1f7d01876a" id="r_af7f4c4bfb97177141741fc1f7d01876a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7f4c4bfb97177141741fc1f7d01876a">cameraBufferHandle</a></td></tr>
+<tr class="memitem:a305edbaa8054aaf07f021c8f95175ba5" id="r_a305edbaa8054aaf07f021c8f95175ba5"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a305edbaa8054aaf07f021c8f95175ba5">frameIdx</a> = 0</td></tr>
+<tr class="memitem:ae11a50f0fa711dada7d4bfca3445d904" id="r_ae11a50f0fa711dada7d4bfca3445d904"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_camera_buffer.html">CameraBuffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae11a50f0fa711dada7d4bfca3445d904">cameraBuffer</a> [RENDER_BUFFER_COUNT] = {}</td></tr>
+<tr class="memitem:a05992c900a7affda3096a8d8c09640d7" id="r_a05992c900a7affda3096a8d8c09640d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05992c900a7affda3096a8d8c09640d7">eye</a> = { 0.0f, 0.0f, -5.0f }</td></tr>
+<tr class="memitem:a123df438186cb124e2160187f8a2017e" id="r_a123df438186cb124e2160187f8a2017e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a123df438186cb124e2160187f8a2017e">target</a> = { 0.0f, 0.0f, 0.0f }</td></tr>
+<tr class="memitem:a9b7a807da1f7fa2ee1e2de14ac4451dc" id="r_a9b7a807da1f7fa2ee1e2de14ac4451dc"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b7a807da1f7fa2ee1e2de14ac4451dc">fovRad</a> = <a class="el" href="namespace_s_f_w_1_1_math.html#a87b63dc11850a6a5d5367b2f8fd87c03">Math::Deg2Rad</a>(90.0f)</td></tr>
+<tr class="memitem:a21b73d3f0e9d42a4b4951cbaa5c96b39" id="r_a21b73d3f0e9d42a4b4951cbaa5c96b39"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a21b73d3f0e9d42a4b4951cbaa5c96b39">aspectRatio</a> = 16.0f / 9.0f</td></tr>
+<tr class="memitem:af8640ab289a3ff476e40dc0a44f9e926" id="r_af8640ab289a3ff476e40dc0a44f9e926"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8640ab289a3ff476e40dc0a44f9e926">nearClip</a> = 0.1f</td></tr>
+<tr class="memitem:a563ff0ed093d82a05ca233b9daaaf0db" id="r_a563ff0ed093d82a05ca233b9daaaf0db"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a563ff0ed093d82a05ca233b9daaaf0db">farClip</a> = 1000.0f</td></tr>
+<tr class="memitem:a225bed5c11a089d140ce197e621102e4" id="r_a225bed5c11a089d140ce197e621102e4"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a225bed5c11a089d140ce197e621102e4">left</a> = 0.0</td></tr>
+<tr class="memitem:a7915e95917125d8128129e27b1a908fa" id="r_a7915e95917125d8128129e27b1a908fa"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7915e95917125d8128129e27b1a908fa">right</a> = 1080.0f</td></tr>
+<tr class="memitem:a2c2f99c4b6aceb72ee2127052768b026" id="r_a2c2f99c4b6aceb72ee2127052768b026"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c2f99c4b6aceb72ee2127052768b026">bottom</a> = 1920.0f</td></tr>
+<tr class="memitem:a701d921ec68c68a94fa58ad0a679fff4" id="r_a701d921ec68c68a94fa58ad0a679fff4"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a701d921ec68c68a94fa58ad0a679fff4">top</a> = 0.0f</td></tr>
+<tr class="memitem:a07da00eda905d75ab3f2dee5a494ec93" id="r_a07da00eda905d75ab3f2dee5a494ec93"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07da00eda905d75ab3f2dee5a494ec93">focusDist</a> = 10.0f</td></tr>
+<tr class="memitem:a4e6bcb8d236c62c213190354fe9df39a" id="r_a4e6bcb8d236c62c213190354fe9df39a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e6bcb8d236c62c213190354fe9df39a">moveVec</a> = { 0.0f, 0.0f, 0.0f }</td></tr>
+<tr class="memitem:a51ed58422b038b122206b436b3c3efba" id="r_a51ed58422b038b122206b436b3c3efba"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a51ed58422b038b122206b436b3c3efba">pitchAccum</a> = 0.0f</td></tr>
+<tr class="memitem:ac70f9951ed7681e226fb3af85a9708f4" id="r_ac70f9951ed7681e226fb3af85a9708f4"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac70f9951ed7681e226fb3af85a9708f4">currentSlot</a> = 0</td></tr>
+<tr class="memitem:afda51b0b333bc317fd8e2a7d5a3e60e4" id="r_afda51b0b333bc317fd8e2a7d5a3e60e4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afda51b0b333bc317fd8e2a7d5a3e60e4">isUpdateBuffer</a> = true</td></tr>
+<tr class="memitem:ae16b494ca4eabb0b338046e2d81f4f8c" id="r_ae16b494ca4eabb0b338046e2d81f4f8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae16b494ca4eabb0b338046e2d81f4f8c">rot</a> = <a class="el" href="struct_s_f_w_1_1_math_1_1_quat.html#a545f1c95e57a52ec4e41565e3e02fef0">Math::Quatf::FromEuler</a>(0.0f, 0.0f, 0.0f)</td></tr>
+<tr class="memitem:a139b36bbfb066d1b2a1502e0617ea373" id="r_a139b36bbfb066d1b2a1502e0617ea373"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a139b36bbfb066d1b2a1502e0617ea373">dx</a> = 0.0f</td></tr>
+<tr class="memitem:a72be0c683c4c7ae8bc20769437b3e271" id="r_a72be0c683c4c7ae8bc20769437b3e271"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72be0c683c4c7ae8bc20769437b3e271">dy</a> = 0.0f</td></tr>
+<tr class="memitem:ab1a14f1baae18145d35bdf19f75ef344" id="r_ab1a14f1baae18145d35bdf19f75ef344"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab1a14f1baae18145d35bdf19f75ef344">sensX_rad_per_px</a> = std::numbers::pi_v&lt;float&gt; / 600.0f</td></tr>
+<tr class="memitem:a84d697690c508a29d681a0694ce6add1" id="r_a84d697690c508a29d681a0694ce6add1"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84d697690c508a29d681a0694ce6add1">sensY_rad_per_px</a> = std::numbers::pi_v&lt;float&gt; / 600.0f</td></tr>
+<tr class="memitem:af8406bae0131b90375cb6a2b9b83839f" id="r_af8406bae0131b90375cb6a2b9b83839f"><td class="memItemLeft" align="right" valign="top">std::shared_mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8406bae0131b90375cb6a2b9b83839f">sharedMutex</a></td></tr>
+<tr class="memitem:aecd7bb74d64620d7839ffa4dfa663701" id="r_aecd7bb74d64620d7839ffa4dfa663701"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#ae451cac8864c5e3312c52d97394665aa">RotateMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aecd7bb74d64620d7839ffa4dfa663701">rotateMode</a> = <a class="el" href="#ae451cac8864c5e3312c52d97394665aaac70fac808ce7ae52fdfebf73aec35af5">RotateMode::Orbital</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-friends" class="groupheader"><a id="friends" name="friends"></a>
+フレンド</h2></td></tr>
+<tr class="memitem:a4f48f4062bd3381abba782519439a61c" id="r_a4f48f4062bd3381abba782519439a61c"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4f48f4062bd3381abba782519439a61c">ECS::ServiceLocator</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
+その他の継承メンバ</h2></td></tr>
+<tr class="inherit_header pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">SFW::ECS::IUpdateService</a> に属する継承静的公開変数類</td></tr>
+<tr class="memitem:a73744778bc5cc3113ed77db1b69e1fb1 inherit pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a73744778bc5cc3113ed77db1b69e1fb1"><td class="memItemLeft" align="right" valign="top">static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a73744778bc5cc3113ed77db1b69e1fb1">updatePhase</a> = <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec">EALRY</a></td></tr>
+<tr class="memitem:a9f0e8abd26ab30155b39e558f004ce42 inherit pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a9f0e8abd26ab30155b39e558f004ce42"><td class="memItemLeft" align="right" valign="top">static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a9f0e8abd26ab30155b39e558f004ce42">updateGroup</a> = <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9">GROUP_SERIAL</a></td></tr>
+<tr class="memitem:a116ce546ab92eaf8f4282719b89a5165 inherit pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a116ce546ab92eaf8f4282719b89a5165"><td class="memItemLeft" align="right" valign="top">static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a116ce546ab92eaf8f4282719b89a5165">updateOrder</a> = 0</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt;<br />
+class SFW::Graphics::I3DCameraService&lt; Type &gt;</div><p>3Dカメラサービスのインターフェース。カメラの操作、ビュー行列の計算、カメラバッファの管理を行う。 </p>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00041">41</a> 行目に定義があります。</p>
+</div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">列挙型メンバ詳解</h2>
+<a id="ae451cac8864c5e3312c52d97394665aa" name="ae451cac8864c5e3312c52d97394665aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae451cac8864c5e3312c52d97394665aa">&#9670;&#160;</a></span>RotateMode</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#ae451cac8864c5e3312c52d97394665aa">SFW::Graphics::I3DCameraService::RotateMode</a> : uint8_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">列挙値</th></tr><tr><td class="fieldname"><a id="ae451cac8864c5e3312c52d97394665aaa8bfb919d2b73adfb399aee77d80b043c" name="ae451cac8864c5e3312c52d97394665aaa8bfb919d2b73adfb399aee77d80b043c"></a>FPS&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae451cac8864c5e3312c52d97394665aaac70fac808ce7ae52fdfebf73aec35af5" name="ae451cac8864c5e3312c52d97394665aaac70fac808ce7ae52fdfebf73aec35af5"></a>Orbital&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00044">44</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="afff2d1916859053e25eff9c3c9d5172b" name="afff2d1916859053e25eff9c3c9d5172b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afff2d1916859053e25eff9c3c9d5172b">&#9670;&#160;</a></span>I3DCameraService()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::I3DCameraService </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a></td>          <td class="paramname"><span class="paramname"><em>bufferHandle</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00052">52</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7c6ed09db460b4922d8493783e54961c" name="a7c6ed09db460b4922d8493783e54961c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c6ed09db460b4922d8493783e54961c">&#9670;&#160;</a></span>~I3DCameraService()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::~<a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">I3DCameraService</a> </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel virtual">virtual</span><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>デストラクタ </p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a00f9a2daf461a5299ab6cf0601e77c67" name="a00f9a2daf461a5299ab6cf0601e77c67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00f9a2daf461a5299ab6cf0601e77c67">&#9670;&#160;</a></span>CalcCurrentRotation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::CalcCurrentRotation </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>現在の回転を計算して取得する </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a> 現在の回転を表すクォータニオン </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00414">414</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad4c10ec53bd610f645f95505466e3192" name="ad4c10ec53bd610f645f95505466e3192"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4c10ec53bd610f645f95505466e3192">&#9670;&#160;</a></span>GetAspectRatio()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetAspectRatio </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラのアスペクト比を取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd>float アスペクト比（幅/高さ） </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00236">236</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a77e3d3383a9ea6fc018da65c240724f9" name="a77e3d3383a9ea6fc018da65c240724f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77e3d3383a9ea6fc018da65c240724f9">&#9670;&#160;</a></span>GetBackward()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetBackward </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの後方方向ベクトルを取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> カメラの後方方向ベクトル </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00280">280</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="abda226a0ee17d037ccc3e05277090983" name="abda226a0ee17d037ccc3e05277090983"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abda226a0ee17d037ccc3e05277090983">&#9670;&#160;</a></span>GetCameraBufferDataNoLock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_camera_buffer.html">CameraBuffer</a> &amp; <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetCameraBufferDataNoLock </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラバッファのデータを取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd>const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_camera_buffer.html" title="　カメラバッファの構造体">CameraBuffer</a>&amp; カメラバッファのデータ </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00386">386</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad59d70f76e8fc1fd093162dd16297e63" name="ad59d70f76e8fc1fd093162dd16297e63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad59d70f76e8fc1fd093162dd16297e63">&#9670;&#160;</a></span>GetCameraBufferHandle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetCameraBufferHandle </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00397">397</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa18926d235abb00236c1344e6919229a" name="aa18926d235abb00236c1344e6919229a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa18926d235abb00236c1344e6919229a">&#9670;&#160;</a></span>GetEyePos()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetEyePos </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの位置を取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> カメラの位置ベクトル </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00200">200</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa6e5274c815c57734febc89e3d9c6274" name="aa6e5274c815c57734febc89e3d9c6274"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6e5274c815c57734febc89e3d9c6274">&#9670;&#160;</a></span>GetFarClip()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetFarClip </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラのファークリップ距離を取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd>float ファークリップ距離 </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00254">254</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2347ffb9197be13f4618f46a04e1bbca" name="a2347ffb9197be13f4618f46a04e1bbca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2347ffb9197be13f4618f46a04e1bbca">&#9670;&#160;</a></span>GetFocusDistance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetFocusDistance </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00302">302</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a67dd0b54c4ea5aedb5aaefaab248689b" name="a67dd0b54c4ea5aedb5aaefaab248689b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67dd0b54c4ea5aedb5aaefaab248689b">&#9670;&#160;</a></span>GetForward()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetForward </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの焦点距離を取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd>float 焦点距離 </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00271">271</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7f7159081774cc41465c9e810a513216" name="a7f7159081774cc41465c9e810a513216"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f7159081774cc41465c9e810a513216">&#9670;&#160;</a></span>GetFOV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetFOV </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの視野角を取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd>float 視野角（ラジアン単位） </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00227">227</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a5917161acd7359a5e9f990e5e838e9ac" name="a5917161acd7359a5e9f990e5e838e9ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5917161acd7359a5e9f990e5e838e9ac">&#9670;&#160;</a></span>GetNearClip()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetNearClip </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラのニアクリップ距離を取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd>float ニアクリップ距離 </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00245">245</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a97485078c0fb3f9f0daa0ba5fbb27a8b" name="a97485078c0fb3f9f0daa0ba5fbb27a8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97485078c0fb3f9f0daa0ba5fbb27a8b">&#9670;&#160;</a></span>GetOldCameraBufferDataNoLock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_camera_buffer.html">CameraBuffer</a> &amp; <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetOldCameraBufferDataNoLock </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>遅延分前のカメラバッファのデータを取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd>const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_camera_buffer.html" title="　カメラバッファの構造体">CameraBuffer</a>&amp; カメラバッファのデータ </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00393">393</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac468d845fb0b459c7b2eaead3f7fca01" name="ac468d845fb0b459c7b2eaead3f7fca01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac468d845fb0b459c7b2eaead3f7fca01">&#9670;&#160;</a></span>GetPitchAccum()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetPitchAccum </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00313">313</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aff903fce1ba3b32abea17f1e31e49317" name="aff903fce1ba3b32abea17f1e31e49317"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff903fce1ba3b32abea17f1e31e49317">&#9670;&#160;</a></span>GetResolution()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetResolution </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの解像度を取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> カメラの解像度ベクトル (width, height) </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00297">297</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad1673672e37d59e4801b6bc1f164775d" name="ad1673672e37d59e4801b6bc1f164775d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1673672e37d59e4801b6bc1f164775d">&#9670;&#160;</a></span>GetRight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetRight </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの右方向ベクトルを取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> カメラの右方向ベクトル </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00289">289</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6fbbaa783c53eee6a32773c32997ed73" name="a6fbbaa783c53eee6a32773c32997ed73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fbbaa783c53eee6a32773c32997ed73">&#9670;&#160;</a></span>GetRotation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetRotation </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの回転を取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a> カメラの回転クォータニオン </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00263">263</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4d3d76636c3d1e36bbc58e1f7605040c" name="a4d3d76636c3d1e36bbc58e1f7605040c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d3d76636c3d1e36bbc58e1f7605040c">&#9670;&#160;</a></span>GetSensitivity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetSensitivity </td>
+          <td>(</td>
+          <td class="paramtype">float &amp;</td>          <td class="paramname"><span class="paramname"><em>outSensX</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;</td>          <td class="paramname"><span class="paramname"><em>outSensY</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00307">307</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6ebfa01c4d0a73727d85d2f98c2d3938" name="a6ebfa01c4d0a73727d85d2f98c2d3938"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ebfa01c4d0a73727d85d2f98c2d3938">&#9670;&#160;</a></span>GetTarget()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetTarget </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの注視点を取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> カメラの注視点ベクトル </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00209">209</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a961471074573710bb3a562d53923fef2" name="a961471074573710bb3a562d53923fef2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a961471074573710bb3a562d53923fef2">&#9670;&#160;</a></span>GetUp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::GetUp </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの上方向ベクトルを取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> カメラの上方向ベクトル </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00218">218</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a57a1962c30f01a4075d77e834b49de22" name="a57a1962c30f01a4075d77e834b49de22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57a1962c30f01a4075d77e834b49de22">&#9670;&#160;</a></span>IsUpdateBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::IsUpdateBuffer </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラバッファの更新が必要かどうかを取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd>bool 更新が必要な場合はtrue、そうでなければfalse </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00405">405</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad8df687adce40f6fe84190bf0fc56055" name="ad8df687adce40f6fe84190bf0fc56055"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8df687adce40f6fe84190bf0fc56055">&#9670;&#160;</a></span>MakeBasis()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::MakeBasis </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>outRight</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>outUp</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>outForward</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00367">367</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7182a9dc9273a5ed2d372b08df140c6d" name="a7182a9dc9273a5ed2d372b08df140c6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7182a9dc9273a5ed2d372b08df140c6d">&#9670;&#160;</a></span>MakeFrustum()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::MakeFrustum </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>normalize</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ビュー行列を取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a> ビュー行列 </dd></dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00376">376</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a14ac7c1ed3a79102e5798eb9e263515f" name="a14ac7c1ed3a79102e5798eb9e263515f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14ac7c1ed3a79102e5798eb9e263515f">&#9670;&#160;</a></span>MakeProjectionMatrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::MakeProjectionMatrix </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00325">325</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aea31f3c1a1d8a790094adab229897146" name="aea31f3c1a1d8a790094adab229897146"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea31f3c1a1d8a790094adab229897146">&#9670;&#160;</a></span>MakeViewMatrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::MakeViewMatrix </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00318">318</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac5314e15f419dc781568ce70fd817ffe" name="ac5314e15f419dc781568ce70fd817ffe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5314e15f419dc781568ce70fd817ffe">&#9670;&#160;</a></span>MakeViewProjMatrix() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::MakeViewProjMatrix </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00337">337</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa9774a14c3a51f998e566fceee1c0950" name="aa9774a14c3a51f998e566fceee1c0950"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9774a14c3a51f998e566fceee1c0950">&#9670;&#160;</a></span>MakeViewProjMatrix() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#a642b9cd5e3a97547b908d58a6c91f9b1">Math::Matrix4x4f</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::MakeViewProjMatrix </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>_nearClip</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>_farClip</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00352">352</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a86f06f07d76d4d189a28e34fe783aa34" name="a86f06f07d76d4d189a28e34fe783aa34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86f06f07d76d4d189a28e34fe783aa34">&#9670;&#160;</a></span>Move()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::Move </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>vec</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの移動 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vec</td><td>移動ベクトル </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00061">61</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae6f70c90d8f7b723579230dcc139d258" name="ae6f70c90d8f7b723579230dcc139d258"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6f70c90d8f7b723579230dcc139d258">&#9670;&#160;</a></span>Rotate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::Rotate </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>q</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの回転 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rotation</td><td>回転を表すクォータニオン </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00071">71</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a1823fcf7edba094167e5df74c4350e3c" name="a1823fcf7edba094167e5df74c4350e3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1823fcf7edba094167e5df74c4350e3c">&#9670;&#160;</a></span>SetAspectRatio()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::SetAspectRatio </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>aspectRatio</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラのアスペクト比を設定 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">aspectRatio</td><td>アスペクト比（幅/高さ） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00130">130</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a72b3b57efa69e1ec48476debcbe476f4" name="a72b3b57efa69e1ec48476debcbe476f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72b3b57efa69e1ec48476debcbe476f4">&#9670;&#160;</a></span>SetEyePos()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::SetEyePos </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>eyePos</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの位置を設定 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>新しい位置ベクトル </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00100">100</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="abb4297b5ec58b8800222512d3efba1ee" name="abb4297b5ec58b8800222512d3efba1ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb4297b5ec58b8800222512d3efba1ee">&#9670;&#160;</a></span>SetFarClip()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::SetFarClip </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>farClip</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラのファークリップ距離を設定 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">farClip</td><td>ファークリップ距離 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00150">150</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="adc766a174220b69580f1ed44e03d0234" name="adc766a174220b69580f1ed44e03d0234"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc766a174220b69580f1ed44e03d0234">&#9670;&#160;</a></span>SetFocusDistance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::SetFocusDistance </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>distance</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの焦点距離を設定 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">distance</td><td>焦点距離 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00160">160</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7b428777038fc0ea7fcff57ed0c577e9" name="a7b428777038fc0ea7fcff57ed0c577e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b428777038fc0ea7fcff57ed0c577e9">&#9670;&#160;</a></span>SetFOV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::SetFOV </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>fovRad</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの視野角を設定 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fovRad</td><td>視野角（ラジアン単位） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00120">120</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4d0b13a40af8191337b65a5a36530690" name="a4d0b13a40af8191337b65a5a36530690"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d0b13a40af8191337b65a5a36530690">&#9670;&#160;</a></span>SetMouseDelta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::SetMouseDelta </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>deltaX</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>deltaY</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>マウスの移動量を設定 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">deltaX</td><td>X方向の移動量 </td></tr>
+    <tr><td class="paramname">deltaY</td><td>Y方向の移動量 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00172">172</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8652aad2aff0d6a815baa5e63fb42429" name="a8652aad2aff0d6a815baa5e63fb42429"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8652aad2aff0d6a815baa5e63fb42429">&#9670;&#160;</a></span>SetMouseSensitivity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::SetMouseSensitivity </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>sensX</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>sensY</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>マウス感度を設定 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sensX</td><td>X方向の感度 </td></tr>
+    <tr><td class="paramname">sensY</td><td>Y方向の感度 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00183">183</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4907465ca6e7ce04138f9af3fb1f84f3" name="a4907465ca6e7ce04138f9af3fb1f84f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4907465ca6e7ce04138f9af3fb1f84f3">&#9670;&#160;</a></span>SetNearClip()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::SetNearClip </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>nearClip</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラのニアクリップ距離を設定 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nearClip</td><td>ニアクリップ距離 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00140">140</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a08e40022f3eb8d97a5fb66a70c721e03" name="a08e40022f3eb8d97a5fb66a70c721e03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08e40022f3eb8d97a5fb66a70c721e03">&#9670;&#160;</a></span>SetRotateMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::SetRotateMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#ae451cac8864c5e3312c52d97394665aa">RotateMode</a></td>          <td class="paramname"><span class="paramname"><em>mode</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの回転モードを設定 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mode</td><td>回転モード（FPSまたはOrbital） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00192">192</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac3ba109be35b9efed618314a6ecff889" name="ac3ba109be35b9efed618314a6ecff889"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3ba109be35b9efed618314a6ecff889">&#9670;&#160;</a></span>SetRotation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::SetRotation </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>q</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00090">90</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a94dfcedac8f1f117baad2593b9749ae9" name="a94dfcedac8f1f117baad2593b9749ae9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94dfcedac8f1f117baad2593b9749ae9">&#9670;&#160;</a></span>SetTarget()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::SetTarget </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>targetPos</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>カメラの注視点を設定 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">eyePosition</td><td>新しい注視点ベクトル </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00110">110</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6d1fbb49e8776fdef07f3967a27d656e" name="a6d1fbb49e8776fdef07f3967a27d656e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d1fbb49e8776fdef07f3967a27d656e">&#9670;&#160;</a></span>UpdateCameraFromMouse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::UpdateCameraFromMouse </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>マウスの移動に基づいてカメラの回転を更新する </p>
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00459">459</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-related-members" id="doc-related-members"></a><h2 id="header-doc-related-members" class="groupheader">フレンドと関連関数の詳解</h2>
+<a id="a4f48f4062bd3381abba782519439a61c" name="a4f48f4062bd3381abba782519439a61c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f48f4062bd3381abba782519439a61c">&#9670;&#160;</a></span>ECS::ServiceLocator</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ECS::ServiceLocator</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel friend">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00042">42</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<a id="a21b73d3f0e9d42a4b4951cbaa5c96b39" name="a21b73d3f0e9d42a4b4951cbaa5c96b39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21b73d3f0e9d42a4b4951cbaa5c96b39">&#9670;&#160;</a></span>aspectRatio</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::aspectRatio = 16.0f / 9.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00496">496</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2c2f99c4b6aceb72ee2127052768b026" name="a2c2f99c4b6aceb72ee2127052768b026"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c2f99c4b6aceb72ee2127052768b026">&#9670;&#160;</a></span>bottom</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::bottom = 1920.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00511">511</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae11a50f0fa711dada7d4bfca3445d904" name="ae11a50f0fa711dada7d4bfca3445d904"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae11a50f0fa711dada7d4bfca3445d904">&#9670;&#160;</a></span>cameraBuffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_camera_buffer.html">CameraBuffer</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::cameraBuffer[RENDER_BUFFER_COUNT] = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00488">488</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af7f4c4bfb97177141741fc1f7d01876a" name="af7f4c4bfb97177141741fc1f7d01876a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7f4c4bfb97177141741fc1f7d01876a">&#9670;&#160;</a></span>cameraBufferHandle</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::cameraBufferHandle</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00484">484</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac70f9951ed7681e226fb3af85a9708f4" name="ac70f9951ed7681e226fb3af85a9708f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac70f9951ed7681e226fb3af85a9708f4">&#9670;&#160;</a></span>currentSlot</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::currentSlot = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00522">522</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a139b36bbfb066d1b2a1502e0617ea373" name="a139b36bbfb066d1b2a1502e0617ea373"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a139b36bbfb066d1b2a1502e0617ea373">&#9670;&#160;</a></span>dx</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::dx = 0.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00528">528</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a72be0c683c4c7ae8bc20769437b3e271" name="a72be0c683c4c7ae8bc20769437b3e271"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72be0c683c4c7ae8bc20769437b3e271">&#9670;&#160;</a></span>dy</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::dy = 0.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00528">528</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a05992c900a7affda3096a8d8c09640d7" name="a05992c900a7affda3096a8d8c09640d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05992c900a7affda3096a8d8c09640d7">&#9670;&#160;</a></span>eye</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::eye = { 0.0f, 0.0f, -5.0f }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00490">490</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a563ff0ed093d82a05ca233b9daaaf0db" name="a563ff0ed093d82a05ca233b9daaaf0db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a563ff0ed093d82a05ca233b9daaaf0db">&#9670;&#160;</a></span>farClip</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::farClip = 1000.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00500">500</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a07da00eda905d75ab3f2dee5a494ec93" name="a07da00eda905d75ab3f2dee5a494ec93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07da00eda905d75ab3f2dee5a494ec93">&#9670;&#160;</a></span>focusDist</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::focusDist = 10.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00516">516</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9b7a807da1f7fa2ee1e2de14ac4451dc" name="a9b7a807da1f7fa2ee1e2de14ac4451dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b7a807da1f7fa2ee1e2de14ac4451dc">&#9670;&#160;</a></span>fovRad</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::fovRad = <a class="el" href="namespace_s_f_w_1_1_math.html#a87b63dc11850a6a5d5367b2f8fd87c03">Math::Deg2Rad</a>(90.0f)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00494">494</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a305edbaa8054aaf07f021c8f95175ba5" name="a305edbaa8054aaf07f021c8f95175ba5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a305edbaa8054aaf07f021c8f95175ba5">&#9670;&#160;</a></span>frameIdx</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::frameIdx = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00486">486</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="afda51b0b333bc317fd8e2a7d5a3e60e4" name="afda51b0b333bc317fd8e2a7d5a3e60e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afda51b0b333bc317fd8e2a7d5a3e60e4">&#9670;&#160;</a></span>isUpdateBuffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::isUpdateBuffer = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00524">524</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a225bed5c11a089d140ce197e621102e4" name="a225bed5c11a089d140ce197e621102e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a225bed5c11a089d140ce197e621102e4">&#9670;&#160;</a></span>left</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::left = 0.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00502">502</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4e6bcb8d236c62c213190354fe9df39a" name="a4e6bcb8d236c62c213190354fe9df39a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e6bcb8d236c62c213190354fe9df39a">&#9670;&#160;</a></span>moveVec</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::moveVec = { 0.0f, 0.0f, 0.0f }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00518">518</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af8640ab289a3ff476e40dc0a44f9e926" name="af8640ab289a3ff476e40dc0a44f9e926"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8640ab289a3ff476e40dc0a44f9e926">&#9670;&#160;</a></span>nearClip</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::nearClip = 0.1f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00498">498</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a51ed58422b038b122206b436b3c3efba" name="a51ed58422b038b122206b436b3c3efba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51ed58422b038b122206b436b3c3efba">&#9670;&#160;</a></span>pitchAccum</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::pitchAccum = 0.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00520">520</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7915e95917125d8128129e27b1a908fa" name="a7915e95917125d8128129e27b1a908fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7915e95917125d8128129e27b1a908fa">&#9670;&#160;</a></span>right</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::right = 1080.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00506">506</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae16b494ca4eabb0b338046e2d81f4f8c" name="ae16b494ca4eabb0b338046e2d81f4f8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae16b494ca4eabb0b338046e2d81f4f8c">&#9670;&#160;</a></span>rot</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#a87dd0ac5fb73d065f0315c5be2632a60">Math::Quatf</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::rot = <a class="el" href="struct_s_f_w_1_1_math_1_1_quat.html#a545f1c95e57a52ec4e41565e3e02fef0">Math::Quatf::FromEuler</a>(0.0f, 0.0f, 0.0f)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00526">526</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aecd7bb74d64620d7839ffa4dfa663701" name="aecd7bb74d64620d7839ffa4dfa663701"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecd7bb74d64620d7839ffa4dfa663701">&#9670;&#160;</a></span>rotateMode</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#ae451cac8864c5e3312c52d97394665aa">RotateMode</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::rotateMode = <a class="el" href="#ae451cac8864c5e3312c52d97394665aaac70fac808ce7ae52fdfebf73aec35af5">RotateMode::Orbital</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00535">535</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab1a14f1baae18145d35bdf19f75ef344" name="ab1a14f1baae18145d35bdf19f75ef344"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1a14f1baae18145d35bdf19f75ef344">&#9670;&#160;</a></span>sensX_rad_per_px</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::sensX_rad_per_px = std::numbers::pi_v&lt;float&gt; / 600.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00530">530</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a84d697690c508a29d681a0694ce6add1" name="a84d697690c508a29d681a0694ce6add1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84d697690c508a29d681a0694ce6add1">&#9670;&#160;</a></span>sensY_rad_per_px</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::sensY_rad_per_px = std::numbers::pi_v&lt;float&gt; / 600.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00530">530</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af8406bae0131b90375cb6a2b9b83839f" name="af8406bae0131b90375cb6a2b9b83839f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8406bae0131b90375cb6a2b9b83839f">&#9670;&#160;</a></span>sharedMutex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_mutex <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::sharedMutex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel mutable">mutable</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00532">532</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a123df438186cb124e2160187f8a2017e" name="a123df438186cb124e2160187f8a2017e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a123df438186cb124e2160187f8a2017e">&#9670;&#160;</a></span>target</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::target = { 0.0f, 0.0f, 0.0f }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00492">492</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a701d921ec68c68a94fa58ad0a679fff4" name="a701d921ec68c68a94fa58ad0a679fff4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a701d921ec68c68a94fa58ad0a679fff4">&#9670;&#160;</a></span>top</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a500ede552e352d789e5db496077d7046">ProjectionType</a> Type = ProjectionType::Perspective&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">SFW::Graphics::I3DCameraService</a>&lt; Type &gt;::top = 0.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a> の <a class="el" href="_i3_d_camera_service_8h_source.html#l00513">513</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/<a class="el" href="_i3_d_camera_service_8h_source.html">I3DCameraService.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics.html">Graphics</a></li><li class="navelem"><a href="class_s_f_w_1_1_graphics_1_1_i3_d_camera_service.html">I3DCameraService</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

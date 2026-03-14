@@ -1,0 +1,175 @@
+\doxysection{SFW\+::Debug\+::UIBus 構造体}
+\hypertarget{struct_s_f_w_1_1_debug_1_1_u_i_bus}{}\label{struct_s_f_w_1_1_debug_1_1_u_i_bus}\index{SFW::Debug::UIBus@{SFW::Debug::UIBus}}
+
+
+バス本体（ここだけをグローバルにする）  
+
+
+
+
+{\ttfamily \#include $<$UIBus.\+h$>$}
+
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+std\+::atomic$<$ bool $>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a5c3fbd4bbc2598f027ba0a964755e783}{alive}} \{ false \}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}$<$ float $>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_adb4d007993cf7bb4c50535b2da9e1da0}{cpu\+Load}}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}$<$ float $>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a98397eed68e5f5ef6024574eef286c41}{gpu\+Load}}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}$<$ float $>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a73d37eea5a1e49ae5359022506d8fbbb}{logic\+Ms}}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}$<$ float $>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a59530caeccfebe47b3dbc6174ffd53cd}{render\+Ms}}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}$<$ float $>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a0401685dc3024e083093c67d11a25296}{gpu\+Frame\+Ms}}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}$<$ std\+::string $>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a20673c6442f7584ab661202af2b84e4e}{status}}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue}{Ui\+Queue}}$<$ std\+::string $>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_af0e5090c90007e10031c2c9579e77b98}{logQ}}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{Ui\+Snapshot}} \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a0d6eb6b85211db2da8a33e5ce49585ed}{snap}}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot}{Ui\+Tree\+Snapshot}} \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_ab4aa964205b69e756462fd7b0a2d0534}{tree}}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue}{Ui\+Queue}}$<$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control}{Debug\+Control}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a3cf6f2af12b9ff132ade63d4b6cefc86}{debug\+Control\+RegisterQ}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control}{Debug\+Control}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_aeeeaedd6673cf6cfc3ce87e4bda2b9aa}{debug\+Controls}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+バス本体（ここだけをグローバルにする） 
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00229}{229}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_u_i_bus_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_u_i_bus_a5c3fbd4bbc2598f027ba0a964755e783}\index{SFW::Debug::UIBus@{SFW::Debug::UIBus}!alive@{alive}}
+\index{alive@{alive}!SFW::Debug::UIBus@{SFW::Debug::UIBus}}
+\doxysubsubsection{\texorpdfstring{alive}{alive}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_u_i_bus_a5c3fbd4bbc2598f027ba0a964755e783} 
+std\+::atomic$<$bool$>$ SFW\+::\+Debug\+::\+UIBus\+::alive \{ false \}}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00230}{230}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_u_i_bus_adb4d007993cf7bb4c50535b2da9e1da0}\index{SFW::Debug::UIBus@{SFW::Debug::UIBus}!cpuLoad@{cpuLoad}}
+\index{cpuLoad@{cpuLoad}!SFW::Debug::UIBus@{SFW::Debug::UIBus}}
+\doxysubsubsection{\texorpdfstring{cpuLoad}{cpuLoad}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_u_i_bus_adb4d007993cf7bb4c50535b2da9e1da0} 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}$<$float$>$ SFW\+::\+Debug\+::\+UIBus\+::cpu\+Load}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00231}{231}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_u_i_bus_a3cf6f2af12b9ff132ade63d4b6cefc86}\index{SFW::Debug::UIBus@{SFW::Debug::UIBus}!debugControlRegisterQ@{debugControlRegisterQ}}
+\index{debugControlRegisterQ@{debugControlRegisterQ}!SFW::Debug::UIBus@{SFW::Debug::UIBus}}
+\doxysubsubsection{\texorpdfstring{debugControlRegisterQ}{debugControlRegisterQ}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_u_i_bus_a3cf6f2af12b9ff132ade63d4b6cefc86} 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue}{Ui\+Queue}}$<$\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control}{Debug\+Control}}$>$ SFW\+::\+Debug\+::\+UIBus\+::debug\+Control\+RegisterQ}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00242}{242}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_u_i_bus_aeeeaedd6673cf6cfc3ce87e4bda2b9aa}\index{SFW::Debug::UIBus@{SFW::Debug::UIBus}!debugControls@{debugControls}}
+\index{debugControls@{debugControls}!SFW::Debug::UIBus@{SFW::Debug::UIBus}}
+\doxysubsubsection{\texorpdfstring{debugControls}{debugControls}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_u_i_bus_aeeeaedd6673cf6cfc3ce87e4bda2b9aa} 
+std\+::vector$<$\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control}{Debug\+Control}}$>$ SFW\+::\+Debug\+::\+UIBus\+::debug\+Controls}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00243}{243}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_u_i_bus_a0401685dc3024e083093c67d11a25296}\index{SFW::Debug::UIBus@{SFW::Debug::UIBus}!gpuFrameMs@{gpuFrameMs}}
+\index{gpuFrameMs@{gpuFrameMs}!SFW::Debug::UIBus@{SFW::Debug::UIBus}}
+\doxysubsubsection{\texorpdfstring{gpuFrameMs}{gpuFrameMs}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_u_i_bus_a0401685dc3024e083093c67d11a25296} 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}$<$float$>$ SFW\+::\+Debug\+::\+UIBus\+::gpu\+Frame\+Ms}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00235}{235}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_u_i_bus_a98397eed68e5f5ef6024574eef286c41}\index{SFW::Debug::UIBus@{SFW::Debug::UIBus}!gpuLoad@{gpuLoad}}
+\index{gpuLoad@{gpuLoad}!SFW::Debug::UIBus@{SFW::Debug::UIBus}}
+\doxysubsubsection{\texorpdfstring{gpuLoad}{gpuLoad}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_u_i_bus_a98397eed68e5f5ef6024574eef286c41} 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}$<$float$>$ SFW\+::\+Debug\+::\+UIBus\+::gpu\+Load}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00231}{231}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_u_i_bus_a73d37eea5a1e49ae5359022506d8fbbb}\index{SFW::Debug::UIBus@{SFW::Debug::UIBus}!logicMs@{logicMs}}
+\index{logicMs@{logicMs}!SFW::Debug::UIBus@{SFW::Debug::UIBus}}
+\doxysubsubsection{\texorpdfstring{logicMs}{logicMs}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_u_i_bus_a73d37eea5a1e49ae5359022506d8fbbb} 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}$<$float$>$ SFW\+::\+Debug\+::\+UIBus\+::logic\+Ms}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00233}{233}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_u_i_bus_af0e5090c90007e10031c2c9579e77b98}\index{SFW::Debug::UIBus@{SFW::Debug::UIBus}!logQ@{logQ}}
+\index{logQ@{logQ}!SFW::Debug::UIBus@{SFW::Debug::UIBus}}
+\doxysubsubsection{\texorpdfstring{logQ}{logQ}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_u_i_bus_af0e5090c90007e10031c2c9579e77b98} 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue}{Ui\+Queue}}$<$std\+::string$>$ SFW\+::\+Debug\+::\+UIBus\+::logQ}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00238}{238}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_u_i_bus_a59530caeccfebe47b3dbc6174ffd53cd}\index{SFW::Debug::UIBus@{SFW::Debug::UIBus}!renderMs@{renderMs}}
+\index{renderMs@{renderMs}!SFW::Debug::UIBus@{SFW::Debug::UIBus}}
+\doxysubsubsection{\texorpdfstring{renderMs}{renderMs}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_u_i_bus_a59530caeccfebe47b3dbc6174ffd53cd} 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}$<$float$>$ SFW\+::\+Debug\+::\+UIBus\+::render\+Ms}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00234}{234}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_u_i_bus_a0d6eb6b85211db2da8a33e5ce49585ed}\index{SFW::Debug::UIBus@{SFW::Debug::UIBus}!snap@{snap}}
+\index{snap@{snap}!SFW::Debug::UIBus@{SFW::Debug::UIBus}}
+\doxysubsubsection{\texorpdfstring{snap}{snap}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_u_i_bus_a0d6eb6b85211db2da8a33e5ce49585ed} 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{Ui\+Snapshot}} SFW\+::\+Debug\+::\+UIBus\+::snap}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00239}{239}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_u_i_bus_a20673c6442f7584ab661202af2b84e4e}\index{SFW::Debug::UIBus@{SFW::Debug::UIBus}!status@{status}}
+\index{status@{status}!SFW::Debug::UIBus@{SFW::Debug::UIBus}}
+\doxysubsubsection{\texorpdfstring{status}{status}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_u_i_bus_a20673c6442f7584ab661202af2b84e4e} 
+\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}$<$std\+::string$>$ SFW\+::\+Debug\+::\+UIBus\+::status}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00237}{237}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_debug_1_1_u_i_bus_ab4aa964205b69e756462fd7b0a2d0534}\index{SFW::Debug::UIBus@{SFW::Debug::UIBus}!tree@{tree}}
+\index{tree@{tree}!SFW::Debug::UIBus@{SFW::Debug::UIBus}}
+\doxysubsubsection{\texorpdfstring{tree}{tree}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_debug_1_1_u_i_bus_ab4aa964205b69e756462fd7b0a2d0534} 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot}{Ui\+Tree\+Snapshot}} SFW\+::\+Debug\+::\+UIBus\+::tree}
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00240}{240}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Debug/\mbox{\hyperlink{_u_i_bus_8h}{UIBus.\+h}}\end{DoxyCompactItemize}

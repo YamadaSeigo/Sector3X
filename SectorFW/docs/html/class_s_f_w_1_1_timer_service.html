@@ -1,0 +1,384 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::TimerService クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_timer_service.html','','class_s_f_w_1_1_timer_service-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::TimerService クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_timer_service_8h_source.html">TimerService.h</a>&gt;</code></p>
+<div class="dynheader">
+SFW::TimerService の継承関係図</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_s_f_w_1_1_timer_service.png" usemap="#SFW_3A_3ATimerService_map" alt=""/>
+  <map id="SFW_3A_3ATimerService_map" name="SFW_3A_3ATimerService_map">
+<area href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html" title="更新サービスのインターフェース(Systemよりも前に更新)" alt="SFW::ECS::IUpdateService" shape="rect" coords="0,0,162,24"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a9ed4d88f310acf1ce46ede8d939c34f7" id="r_a9ed4d88f310acf1ce46ede8d939c34f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ed4d88f310acf1ce46ede8d939c34f7">PreUpdate</a> (double rawDtSeconds) override</td></tr>
+<tr class="memitem:aff57bcd46278a6d6f50c37d173573152" id="r_aff57bcd46278a6d6f50c37d173573152"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff57bcd46278a6d6f50c37d173573152">GetDeltaTime</a> () const</td></tr>
+<tr class="memitem:adf1d8af530afb18d23e706de02356766" id="r_adf1d8af530afb18d23e706de02356766"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adf1d8af530afb18d23e706de02356766">GetUnscaledDeltaTime</a> () const</td></tr>
+<tr class="memitem:aacbbe7e749853bb823993c215ad7d5b6" id="r_aacbbe7e749853bb823993c215ad7d5b6"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aacbbe7e749853bb823993c215ad7d5b6">GetTimeScale</a> () const</td></tr>
+<tr class="memitem:a995d15ce5723f852c6d0b41990cb1ac4" id="r_a995d15ce5723f852c6d0b41990cb1ac4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a995d15ce5723f852c6d0b41990cb1ac4">SetTimeScale</a> (float s)</td></tr>
+<tr class="memitem:acf3e918c332d017f1e13eb60bac3a6f1" id="r_acf3e918c332d017f1e13eb60bac3a6f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf3e918c332d017f1e13eb60bac3a6f1">SetPaused</a> (bool p)</td></tr>
+<tr class="memitem:a9ab864024c20604c8a7daf52ee2f07db" id="r_a9ab864024c20604c8a7daf52ee2f07db"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ab864024c20604c8a7daf52ee2f07db">GetGameTime</a> () const</td></tr>
+<tr class="memitem:ade15828fa8026ce306b294fff66df0b4" id="r_ade15828fa8026ce306b294fff66df0b4"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade15828fa8026ce306b294fff66df0b4">GetRealTime</a> () const</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
+その他の継承メンバ</h2></td></tr>
+<tr class="inherit_header pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">SFW::ECS::IUpdateService</a> に属する継承公開型</td></tr>
+<tr class="memitem:ae5407b8ae7f6739250af397382f3f6c7 inherit pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_ae5407b8ae7f6739250af397382f3f6c7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7">Phase</a> : uint16_t { <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec">EALRY</a> = 0
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7">NORMAL</a> = 1
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9">LATE</a> = 2
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907">PHASE_MAX</a>
+ }</td></tr>
+<tr class="memitem:a0a2e8c399f89c675d9de722b706a8608 inherit pub_types_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a0a2e8c399f89c675d9de722b706a8608"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608">Group</a> : uint16_t { <br />
+&#160;&#160;<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9">GROUP_SERIAL</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b">GROUP_GRAPHICS</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda">GROUP_PHYSICS</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a">GROUP_INPUT</a>
+, <br />
+&#160;&#160;<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e">GROUP_AUDIO</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580">GROUP_AI</a>
+, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90">GROUP_MAX</a>
+<br />
+ }</td></tr>
+<tr class="inherit_header pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">SFW::ECS::IUpdateService</a> に属する継承静的公開変数類</td></tr>
+<tr class="memitem:a73744778bc5cc3113ed77db1b69e1fb1 inherit pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a73744778bc5cc3113ed77db1b69e1fb1"><td class="memItemLeft" align="right" valign="top">static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a73744778bc5cc3113ed77db1b69e1fb1">updatePhase</a> = <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec">EALRY</a></td></tr>
+<tr class="memitem:a9f0e8abd26ab30155b39e558f004ce42 inherit pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a9f0e8abd26ab30155b39e558f004ce42"><td class="memItemLeft" align="right" valign="top">static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a9f0e8abd26ab30155b39e558f004ce42">updateGroup</a> = <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9">GROUP_SERIAL</a></td></tr>
+<tr class="memitem:a116ce546ab92eaf8f4282719b89a5165 inherit pub_static_attribs_class_s_f_w_1_1_e_c_s_1_1_i_update_service" id="r_a116ce546ab92eaf8f4282719b89a5165"><td class="memItemLeft" align="right" valign="top">static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html#a116ce546ab92eaf8f4282719b89a5165">updateOrder</a> = 0</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock">
+<p class="definition"> <a class="el" href="_timer_service_8h_source.html">TimerService.h</a> の <a class="el" href="_timer_service_8h_source.html#l00014">14</a> 行目に定義があります。</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="aff57bcd46278a6d6f50c37d173573152" name="aff57bcd46278a6d6f50c37d173573152"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff57bcd46278a6d6f50c37d173573152">&#9670;&#160;</a></span>GetDeltaTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TimerService::GetDeltaTime </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_timer_service_8h_source.html">TimerService.h</a> の <a class="el" href="_timer_service_8h_source.html#l00030">30</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9ab864024c20604c8a7daf52ee2f07db" name="a9ab864024c20604c8a7daf52ee2f07db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ab864024c20604c8a7daf52ee2f07db">&#9670;&#160;</a></span>GetGameTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TimerService::GetGameTime </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_timer_service_8h_source.html">TimerService.h</a> の <a class="el" href="_timer_service_8h_source.html#l00039">39</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ade15828fa8026ce306b294fff66df0b4" name="ade15828fa8026ce306b294fff66df0b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade15828fa8026ce306b294fff66df0b4">&#9670;&#160;</a></span>GetRealTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TimerService::GetRealTime </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_timer_service_8h_source.html">TimerService.h</a> の <a class="el" href="_timer_service_8h_source.html#l00040">40</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aacbbe7e749853bb823993c215ad7d5b6" name="aacbbe7e749853bb823993c215ad7d5b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacbbe7e749853bb823993c215ad7d5b6">&#9670;&#160;</a></span>GetTimeScale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TimerService::GetTimeScale </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_timer_service_8h_source.html">TimerService.h</a> の <a class="el" href="_timer_service_8h_source.html#l00035">35</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="adf1d8af530afb18d23e706de02356766" name="adf1d8af530afb18d23e706de02356766"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf1d8af530afb18d23e706de02356766">&#9670;&#160;</a></span>GetUnscaledDeltaTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::TimerService::GetUnscaledDeltaTime </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_timer_service_8h_source.html">TimerService.h</a> の <a class="el" href="_timer_service_8h_source.html#l00033">33</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9ed4d88f310acf1ce46ede8d939c34f7" name="a9ed4d88f310acf1ce46ede8d939c34f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ed4d88f310acf1ce46ede8d939c34f7">&#9670;&#160;</a></span>PreUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::TimerService::PreUpdate </td>
+          <td>(</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>rawDtSeconds</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">SFW::ECS::IUpdateService</a>を実装しています。</p>
+
+<p class="definition"> <a class="el" href="_timer_service_8h_source.html">TimerService.h</a> の <a class="el" href="_timer_service_8h_source.html#l00017">17</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="acf3e918c332d017f1e13eb60bac3a6f1" name="acf3e918c332d017f1e13eb60bac3a6f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf3e918c332d017f1e13eb60bac3a6f1">&#9670;&#160;</a></span>SetPaused()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::TimerService::SetPaused </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>p</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_timer_service_8h_source.html">TimerService.h</a> の <a class="el" href="_timer_service_8h_source.html#l00037">37</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a995d15ce5723f852c6d0b41990cb1ac4" name="a995d15ce5723f852c6d0b41990cb1ac4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a995d15ce5723f852c6d0b41990cb1ac4">&#9670;&#160;</a></span>SetTimeScale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::TimerService::SetTimeScale </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>s</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_timer_service_8h_source.html">TimerService.h</a> の <a class="el" href="_timer_service_8h_source.html#l00036">36</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/<a class="el" href="_timer_service_8h_source.html">TimerService.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="class_s_f_w_1_1_timer_service.html">TimerService</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

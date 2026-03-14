@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11BlockRevertHelper.h ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_d_x11_block_revert_helper_8h.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">DX11BlockRevertHelper.h ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>TerrainClustered のブロックリバート（クラスタリング前の状態に戻す）を支援するユーティリティ  
+<a href="#details">[詳解]</a></p>
+<div class="textblock"><code>#include &lt;d3d11.h&gt;</code><br />
+<code>#include &lt;d3dcompiler.h&gt;</code><br />
+<code>#include &lt;wrl/client.h&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;cstring&gt;</code><br />
+<code>#include &lt;algorithm&gt;</code><br />
+<code>#include &lt;execution&gt;</code><br />
+<code>#include &quot;<a class="el" href="_terrain_clustered_8h_source.html">../TerrainClustered.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_render_types_8h_source.html">../RenderTypes.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_d_x11_buffer_manager_8h_source.html">DX11BufferManager.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_a_a_b_b_8hpp_source.html">../../Math/AABB.hpp</a>&quot;</code><br />
+<code>#include &quot;../third_party/meshoptimizer/MDx64/include/meshoptimizer.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="_light_shadow_service_8h_source.html">../LightShadowService.h</a>&quot;</code><br />
+</div>
+<p><a href="_d_x11_block_revert_helper_8h_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3AClusterRangeU32" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3AClusterRangeU32"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_range_u32.html">SFW::Graphics::DX11::ClusterRangeU32</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3AClusterLodRange" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3AClusterLodRange"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_lod_range.html">SFW::Graphics::DX11::ClusterLodRange</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3ASplatArrayResources" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3ASplatArrayResources"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_array_resources.html">SFW::Graphics::DX11::SplatArrayResources</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3ASplatArrayResources_3A_3APerCluster" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3ASplatArrayResources_3A_3APerCluster"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_array_resources_1_1_per_cluster.html">SFW::Graphics::DX11::SplatArrayResources::PerCluster</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3ASplatCBData" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3ASplatCBData"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_c_b_data.html">SFW::Graphics::DX11::SplatCBData</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3ACommonMaterialResources" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3ACommonMaterialResources"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_common_material_resources.html">SFW::Graphics::DX11::CommonMaterialResources</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3AClusterParam" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3AClusterParam"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_param.html">SFW::Graphics::DX11::ClusterParam</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3ATerrainGridCB" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3ATerrainGridCB"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_terrain_grid_c_b.html">SFW::Graphics::DX11::TerrainGridCB</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3ATerrainPatchCB" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3ATerrainPatchCB"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_terrain_patch_c_b.html">SFW::Graphics::DX11::TerrainPatchCB</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3AClusterParamsGPU" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3AClusterParamsGPU"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_params_g_p_u.html">SFW::Graphics::DX11::ClusterParamsGPU</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3ABlockReservedContext" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3ABlockReservedContext"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context.html">SFW::Graphics::DX11::BlockReservedContext</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3ABlockReservedContext_3A_3ACSParamsShadowCombined" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3ABlockReservedContext_3A_3ACSParamsShadowCombined"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_c_s_params_shadow_combined.html">SFW::Graphics::DX11::BlockReservedContext::CSParamsShadowCombined</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3ABlockReservedContext_3A_3AVSParams" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3ABlockReservedContext_3A_3AVSParams"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_v_s_params.html">SFW::Graphics::DX11::BlockReservedContext::VSParams</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3ABlockReservedContext_3A_3ACSParamsCB" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3ABlockReservedContext_3A_3ACSParamsCB"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_c_s_params_c_b.html">SFW::Graphics::DX11::BlockReservedContext::CSParamsCB</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3ABlockReservedContext_3A_3AVSDepthParams" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3ABlockReservedContext_3A_3AVSDepthParams"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_v_s_depth_params.html">SFW::Graphics::DX11::BlockReservedContext::VSDepthParams</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3ABlockReservedContext_3A_3AShadowDepthParams" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3ABlockReservedContext_3A_3AShadowDepthParams"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params.html">SFW::Graphics::DX11::BlockReservedContext::ShadowDepthParams</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11_3A_3ALayerTiling" id="r_SFW_3A_3AGraphics_3A_3ADX11_3A_3ALayerTiling"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_layer_tiling.html">SFW::Graphics::DX11::LayerTiling</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+名前空間</h2></td></tr>
+<tr class="memitem:SFW" id="r_SFW"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html">SFW</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics" id="r_SFW_3A_3AGraphics"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html">SFW::Graphics</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ADX11" id="r_SFW_3A_3AGraphics_3A_3ADX11"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">SFW::Graphics::DX11</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+マクロ定義</h2></td></tr>
+<tr class="memitem:acda3ab65ee665d8929cc87669a6f40b5" id="r_acda3ab65ee665d8929cc87669a6f40b5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acda3ab65ee665d8929cc87669a6f40b5">SFW_USE_SIMPLIFY_SLOPPY</a>&#160;&#160;&#160;1</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+型定義</h2></td></tr>
+<tr class="memitem:a0affdb226eb1a6d3a99eefd76a6a788a" id="r_a0affdb226eb1a6d3a99eefd76a6a788a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a0affdb226eb1a6d3a99eefd76a6a788a">SFW::Graphics::DX11::ResolveTexturePathFn</a> = bool(*)(uint32_t id, std::string&amp; path, bool&amp; forceSRGB)</td></tr>
+<tr class="memitem:a528c6029d84bf954a4c3b98d59550da5" id="r_a528c6029d84bf954a4c3b98d59550da5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a528c6029d84bf954a4c3b98d59550da5">SFW::Graphics::DX11::AllocateSplatIdFn</a> = uint32_t(*)(<a class="el" href="struct_s_f_w_1_1_graphics_1_1_texture_handle.html">TextureHandle</a> h, uint32_t cx, uint32_t cz, uint32_t cid)</td></tr>
+<tr class="memitem:a64ef67bc9cc82f559367ca4615a50bb5" id="r_a64ef67bc9cc82f559367ca4615a50bb5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a64ef67bc9cc82f559367ca4615a50bb5">SFW::Graphics::DX11::QueryLayerTilingFn</a> = <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_layer_tiling.html">LayerTiling</a>(*)(uint32_t layerIndex, uint32_t cx, uint32_t cz, uint32_t cid)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:a974e8dae1a1561f63f604e525531b0e7" id="r_a974e8dae1a1561f63f604e525531b0e7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a974e8dae1a1561f63f604e525531b0e7">SFW::Graphics::DX11::CreateRawUAV</a> (ID3D11Device *dev, UINT byteSize, ComPtr&lt; ID3D11Buffer &gt; &amp;buf, ComPtr&lt; ID3D11UnorderedAccessView &gt; &amp;uav)</td></tr>
+<tr class="memitem:ac334a3e4fd5d3b1c7c6d50fb0f1b7bc0" id="r_ac334a3e4fd5d3b1c7c6d50fb0f1b7bc0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#ac334a3e4fd5d3b1c7c6d50fb0f1b7bc0">SFW::Graphics::DX11::CreateIndirectArgs</a> (ID3D11Device *dev, ComPtr&lt; ID3D11Buffer &gt; &amp;buf, UINT width)</td></tr>
+<tr class="memitem:a38bd9907fc34339601a9bfbd9d98515d" id="r_a38bd9907fc34339601a9bfbd9d98515d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a38bd9907fc34339601a9bfbd9d98515d">SFW::Graphics::DX11::CreateStructuredUInt</a> (ID3D11Device *dev, UINT count, bool asUAV, ComPtr&lt; ID3D11Buffer &gt; &amp;buf, ComPtr&lt; ID3D11ShaderResourceView &gt; &amp;srv, ComPtr&lt; ID3D11UnorderedAccessView &gt; &amp;uav)</td></tr>
+<tr class="memitem:a9ea5e70c23e3d9dbfd76643071605f96" id="r_a9ea5e70c23e3d9dbfd76643071605f96"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a9ea5e70c23e3d9dbfd76643071605f96">SFW::Graphics::DX11::CreateStructuredUInt</a> (ID3D11Device *dev, UINT count, bool asUAV, ComPtr&lt; ID3D11Buffer &gt; &amp;buf, ComPtr&lt; ID3D11ShaderResourceView &gt; *srv, ComPtr&lt; ID3D11UnorderedAccessView &gt; &amp;uav, UINT cascadeSize)</td></tr>
+<tr class="memitem:aae57f04aa790c9d418201d16c20c366d" id="r_aae57f04aa790c9d418201d16c20c366d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#aae57f04aa790c9d418201d16c20c366d">SFW::Graphics::DX11::CreateStructured</a> (ID3D11Device *dev, UINT count, UINT stride, UINT bindFlags, const void *initData, ComPtr&lt; ID3D11Buffer &gt; &amp;buf, ComPtr&lt; ID3D11ShaderResourceView &gt; &amp;srv, ComPtr&lt; ID3D11UnorderedAccessView &gt; &amp;uav)</td></tr>
+<tr class="memitem:a1087cfe2d2cdf1421a7550ce7fc9187a" id="r_a1087cfe2d2cdf1421a7550ce7fc9187a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a1087cfe2d2cdf1421a7550ce7fc9187a">SFW::Graphics::DX11::BuildFromTerrainClustered</a> (ID3D11Device *dev, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_terrain_clustered.html">TerrainClustered</a> &amp;t, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context.html">BlockReservedContext</a> &amp;out)</td></tr>
+<tr class="memitem:aebe611e8799b4bd62c01c11ef102ee88" id="r_aebe611e8799b4bd62c01c11ef102ee88"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#aebe611e8799b4bd62c01c11ef102ee88">SFW::Graphics::DX11::BuildCommonMaterialSRVs</a> (ID3D11Device *dev, <a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager.html">SFW::Graphics::DX11::TextureManager</a> &amp;texMgr, const uint32_t materialIds[4], const uint32_t materialNormalIds[4], <a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a0affdb226eb1a6d3a99eefd76a6a788a">ResolveTexturePathFn</a> resolve, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_common_material_resources.html">CommonMaterialResources</a> &amp;out)</td></tr>
+<tr class="memitem:acbe4eea105b2cd68e9a3a0a8c06bc326" id="r_acbe4eea105b2cd68e9a3a0a8c06bc326"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#acbe4eea105b2cd68e9a3a0a8c06bc326">SFW::Graphics::DX11::BindCommonMaterials</a> (ID3D11DeviceContext *ctx, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_common_material_resources.html">CommonMaterialResources</a> &amp;R)</td></tr>
+<tr class="memitem:ae17faf13d92b9700a360fd403306f15a" id="r_ae17faf13d92b9700a360fd403306f15a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#ae17faf13d92b9700a360fd403306f15a">SFW::Graphics::DX11::InitSplatArrayResources</a> (ID3D11Device *dev, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_array_resources.html">SplatArrayResources</a> &amp;out, size_t clusterCount)</td></tr>
+<tr class="memitem:a962ce4e57aea6727ca9420087c13d9b9" id="r_a962ce4e57aea6727ca9420087c13d9b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a962ce4e57aea6727ca9420087c13d9b9">SFW::Graphics::DX11::CollectUniqueSplatIds</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_terrain_clustered.html">TerrainClustered</a> &amp;terrain, std::vector&lt; uint32_t &gt; &amp;outUnique)</td></tr>
+<tr class="memitem:aaa92f7a7fc6434766f5fe4129995e2fa" id="r_aaa92f7a7fc6434766f5fe4129995e2fa"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; uint32_t, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#aaa92f7a7fc6434766f5fe4129995e2fa">SFW::Graphics::DX11::BuildSliceTable</a> (const std::vector&lt; uint32_t &gt; &amp;uniqueIds)</td></tr>
+<tr class="memitem:af464098a52ec9fa432cba104672e7292" id="r_af464098a52ec9fa432cba104672e7292"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#af464098a52ec9fa432cba104672e7292">SFW::Graphics::DX11::BuildSplatArrayTexture</a> (ID3D11Device *dev, ID3D11DeviceContext *ctx, <a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager.html">TextureManager</a> &amp;texMgr, const std::vector&lt; uint32_t &gt; &amp;uniqueSplatIds, <a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a0affdb226eb1a6d3a99eefd76a6a788a">ResolveTexturePathFn</a> resolve, ComPtr&lt; ID3D11ShaderResourceView &gt; &amp;outArraySRV)</td></tr>
+<tr class="memitem:a253df16cdbb960a686b1d780e21a943a" id="r_a253df16cdbb960a686b1d780e21a943a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a253df16cdbb960a686b1d780e21a943a">SFW::Graphics::DX11::BuildClusterSplatArrayResources</a> (ID3D11Device *dev, ID3D11DeviceContext *ctx, <a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager.html">TextureManager</a> &amp;texMgr, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_terrain_clustered.html">TerrainClustered</a> &amp;terrain, <a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a0affdb226eb1a6d3a99eefd76a6a788a">ResolveTexturePathFn</a> resolve, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_array_resources.html">SplatArrayResources</a> &amp;io, std::vector&lt; uint32_t &gt; *outUniqueIds=nullptr)</td></tr>
+<tr class="memitem:abdf4a4217bef4d49edaab285bcf31eee" id="r_abdf4a4217bef4d49edaab285bcf31eee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#abdf4a4217bef4d49edaab285bcf31eee">SFW::Graphics::DX11::BindSplatArrayForCluster</a> (ID3D11DeviceContext *ctx, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_array_resources.html">SplatArrayResources</a> &amp;R, uint32_t cid)</td></tr>
+<tr class="memitem:a97620880d55a8bb1a5a5dd6d220bf64e" id="r_a97620880d55a8bb1a5a5dd6d220bf64e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a97620880d55a8bb1a5a5dd6d220bf64e">SFW::Graphics::DX11::BuildOrUpdateClusterParamsSB</a> (ID3D11Device *dev, ID3D11DeviceContext *ctx, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_params_g_p_u.html">ClusterParamsGPU</a> &amp;out)</td></tr>
+<tr class="memitem:a8c7722facfda2e137b435b7593c8982c" id="r_a8c7722facfda2e137b435b7593c8982c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a8c7722facfda2e137b435b7593c8982c">SFW::Graphics::DX11::BuildOrUpdateTerrainGridCB</a> (ID3D11Device *dev, ID3D11DeviceContext *ctx, <a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html">BufferManager</a> *bufferMgr, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_params_g_p_u.html">ClusterParamsGPU</a> &amp;out)</td></tr>
+<tr class="memitem:a10650c2c15bb39698d92136d723ef5a5" id="r_a10650c2c15bb39698d92136d723ef5a5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a10650c2c15bb39698d92136d723ef5a5">SFW::Graphics::DX11::FillClusterParamsCPU</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_terrain_clustered.html">SFW::Graphics::TerrainClustered</a> &amp;terrain, const std::unordered_map&lt; uint32_t, int &gt; &amp;id2slice, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_params_g_p_u.html">ClusterParamsGPU</a> &amp;out)</td></tr>
+<tr class="memitem:a0fff7427c6a72253266b2f6cc1e56d34" id="r_a0fff7427c6a72253266b2f6cc1e56d34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a0fff7427c6a72253266b2f6cc1e56d34">SFW::Graphics::DX11::SetupTerrainGridCB</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_terrain_build_params.html">TerrainBuildParams</a> &amp;p, uint32_t dimX, uint32_t dimZ, ComPtr&lt; ID3D11Texture2D &gt; splatSheetTex, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_params_g_p_u.html">ClusterParamsGPU</a> &amp;out)</td></tr>
+<tr class="memitem:a122966bf4ae759f40997c64ad27637a5" id="r_a122966bf4ae759f40997c64ad27637a5"><td class="memItemLeft" align="right" valign="top">ComPtr&lt; ID3D11Texture2D &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a122966bf4ae759f40997c64ad27637a5">SFW::Graphics::DX11::LoadSheetAsTex2D</a> (<a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager.html">TextureManager</a> &amp;texMgr, uint32_t sheetId, <a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a0affdb226eb1a6d3a99eefd76a6a788a">ResolveTexturePathFn</a> resolve, bool forceSRGB)</td></tr>
+<tr class="memitem:a7a5ba13f8ef6027afc71ab7ce106b634" id="r_a7a5ba13f8ef6027afc71ab7ce106b634"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_texture_handle.html">TextureHandle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a7a5ba13f8ef6027afc71ab7ce106b634">SFW::Graphics::DX11::BuildClusterSplatTexturesFromSingleSheet</a> (ID3D11Device *dev, ID3D11DeviceContext *ctx, <a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager.html">TextureManager</a> &amp;texMgr, ComPtr&lt; ID3D11Texture2D &gt; &amp;sheet, uint32_t clustersX, uint32_t clustersZ, uint32_t sheetId, <a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a0affdb226eb1a6d3a99eefd76a6a788a">ResolveTexturePathFn</a> resolve, bool sheetIsSRGB=false)</td></tr>
+<tr class="memitem:abfce525fdecae950460d0b43e73c2607" id="r_abfce525fdecae950460d0b43e73c2607"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_texture_handle.html">TextureHandle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#abfce525fdecae950460d0b43e73c2607">SFW::Graphics::DX11::BuildClusterSplatTexturesFromSingleSheet</a> (ID3D11Device *dev, ID3D11DeviceContext *ctx, <a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager.html">TextureManager</a> &amp;texMgr, uint32_t clustersX, uint32_t clustersZ, uint32_t sheetId, <a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a0affdb226eb1a6d3a99eefd76a6a788a">ResolveTexturePathFn</a> resolve, bool sheetIsSRGB=false)</td></tr>
+<tr class="memitem:abcc5aa0018f812177892ab2a5a250c1b" id="r_abcc5aa0018f812177892ab2a5a250c1b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#abcc5aa0018f812177892ab2a5a250c1b">SFW::Graphics::DX11::BuildSplatArrayFromHandles</a> (ID3D11Device *dev, ID3D11DeviceContext *ctx, <a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager.html">TextureManager</a> &amp;texMgr, const std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_texture_handle.html">TextureHandle</a> &gt; &amp;handles, ComPtr&lt; ID3D11ShaderResourceView &gt; &amp;outArraySRV)</td></tr>
+<tr class="memitem:a51efe8bcbf346e177beefb7313682ee7" id="r_a51efe8bcbf346e177beefb7313682ee7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a51efe8bcbf346e177beefb7313682ee7">SFW::Graphics::DX11::AssignClusterSplatsFromHandles</a> (<a class="el" href="struct_s_f_w_1_1_graphics_1_1_terrain_clustered.html">TerrainClustered</a> &amp;terrain, uint32_t clustersX, uint32_t clustersZ, const std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_texture_handle.html">TextureHandle</a> &gt; &amp;handles, <a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a528c6029d84bf954a4c3b98d59550da5">AllocateSplatIdFn</a> allocId, <a class="el" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a64ef67bc9cc82f559367ca4615a50bb5">QueryLayerTilingFn</a> queryLayer=nullptr)</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>TerrainClustered のブロックリバート（クラスタリング前の状態に戻す）を支援するユーティリティ </p>
+<dl class="section author"><dt>著者</dt><dd>seigo </dd></dl>
+<dl class="section date"><dt>日付</dt><dd>December 2025 </dd></dl>
+
+<p class="definition"> <a class="el" href="_d_x11_block_revert_helper_8h_source.html">DX11BlockRevertHelper.h</a> に定義があります。</p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">マクロ定義詳解</h2>
+<a id="acda3ab65ee665d8929cc87669a6f40b5" name="acda3ab65ee665d8929cc87669a6f40b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acda3ab65ee665d8929cc87669a6f40b5">&#9670;&#160;</a></span>SFW_USE_SIMPLIFY_SLOPPY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SFW_USE_SIMPLIFY_SLOPPY&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_block_revert_helper_8h_source.html">DX11BlockRevertHelper.h</a> の <a class="el" href="_d_x11_block_revert_helper_8h_source.html#l00038">38</a> 行目に定義があります。</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="dir_b1727ce268e62d033d50a1c50b50897f.html">DX11</a></li><li class="navelem"><a href="_d_x11_block_revert_helper_8h.html">DX11BlockRevertHelper.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

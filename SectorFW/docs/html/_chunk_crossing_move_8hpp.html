@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ChunkCrossingMove.hpp ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_chunk_crossing_move_8hpp.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">ChunkCrossingMove.hpp ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>チャンク跨ぎ検出とエンティティ移送のユーティリティ  
+<a href="#details">[詳解]</a></p>
+<div class="textblock"><code>#include &lt;optional&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;deque&gt;</code><br />
+<code>#include &lt;cassert&gt;</code><br />
+<code>#include &quot;<a class="el" href="_entity_manager_8h_source.html">ECS/EntityManager.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="partition_8hpp_source.html">partition.hpp</a>&quot;</code><br />
+</div>
+<p><a href="_chunk_crossing_move_8hpp_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:SFW_3A_3AChunkHandle" id="r_SFW_3A_3AChunkHandle"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_chunk_handle.html">SFW::ChunkHandle</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">基本ハンドル（キー主・ポインタ従の二段構え）  <a href="struct_s_f_w_1_1_chunk_handle.html#details">[詳解]</a><br /></td></tr>
+<tr class="memitem:SFW_3A_3APartitionTraits_3C_20Partition_20_3E" id="r_SFW_3A_3APartitionTraits_3C_20Partition_20_3E"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_partition_traits.html">SFW::PartitionTraits&lt; Partition &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="struct_s_f_w_1_1_partition_traits.html" title="PartitionTraits: ポインタ安定性で切替（デフォルトfalse）">PartitionTraits</a>: ポインタ安定性で切替（デフォルトfalse）  <a href="struct_s_f_w_1_1_partition_traits.html#details">[詳解]</a><br /></td></tr>
+<tr class="memitem:SFW_3A_3APartitionTraits_3C_20Grid2DPartition_20_3E" id="r_SFW_3A_3APartitionTraits_3C_20Grid2DPartition_20_3E"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_partition_traits_3_01_grid2_d_partition_01_4.html">SFW::PartitionTraits&lt; Grid2DPartition &gt;</a></td></tr>
+<tr class="memitem:SFW_3A_3APartitionTraits_3C_20Grid3DPartition_20_3E" id="r_SFW_3A_3APartitionTraits_3C_20Grid3DPartition_20_3E"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_partition_traits_3_01_grid3_d_partition_01_4.html">SFW::PartitionTraits&lt; Grid3DPartition &gt;</a></td></tr>
+<tr class="memitem:SFW_3A_3APartitionTraits_3C_20QuadTreePartition_20_3E" id="r_SFW_3A_3APartitionTraits_3C_20QuadTreePartition_20_3E"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_partition_traits_3_01_quad_tree_partition_01_4.html">SFW::PartitionTraits&lt; QuadTreePartition &gt;</a></td></tr>
+<tr class="memitem:SFW_3A_3APartitionTraits_3C_20OctreePartition_20_3E" id="r_SFW_3A_3APartitionTraits_3C_20OctreePartition_20_3E"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_partition_traits_3_01_octree_partition_01_4.html">SFW::PartitionTraits&lt; OctreePartition &gt;</a></td></tr>
+<tr class="memitem:SFW_3A_3ACSpatialMotionTag" id="r_SFW_3A_3ACSpatialMotionTag"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_c_spatial_motion_tag.html">SFW::CSpatialMotionTag</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">動的エンティティ用タグ（チャンク跨ぎ検出とEM間移送の状態管理）  <a href="struct_s_f_w_1_1_c_spatial_motion_tag.html#details">[詳解]</a><br /></td></tr>
+<tr class="memitem:SFW_3A_3ASettleRule" id="r_SFW_3A_3ASettleRule"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_settle_rule.html">SFW::SettleRule</a></td></tr>
+<tr class="memitem:SFW_3A_3ABudgetMover" id="r_SFW_3A_3ABudgetMover"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_budget_mover.html">SFW::BudgetMover</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">予算付きバッチ移送クラス  <a href="class_s_f_w_1_1_budget_mover.html#details">[詳解]</a><br /></td></tr>
+<tr class="memitem:SFW_3A_3ABudgetMover_3A_3APendingMove" id="r_SFW_3A_3ABudgetMover_3A_3APendingMove"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_budget_mover_1_1_pending_move.html">SFW::BudgetMover::PendingMove</a></td></tr>
+<tr class="memitem:SFW_3A_3ABudgetMover_3A_3AAccessor" id="r_SFW_3A_3ABudgetMover_3A_3AAccessor"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_budget_mover_1_1_accessor.html">SFW::BudgetMover::Accessor</a></td></tr>
+<tr class="memitem:SFW_3A_3ABudgetMover_3A_3ALocalBatch" id="r_SFW_3A_3ABudgetMover_3A_3ALocalBatch"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_budget_mover_1_1_local_batch.html">SFW::BudgetMover::LocalBatch</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ローカル一時バッファ（thread_local を使わない合意的バッチ）  <a href="class_s_f_w_1_1_budget_mover_1_1_local_batch.html#details">[詳解]</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+名前空間</h2></td></tr>
+<tr class="memitem:SFW" id="r_SFW"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html">SFW</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
+列挙型</h2></td></tr>
+<tr class="memitem:a43279839ee6b550040804dc0f90c7544" id="r_a43279839ee6b550040804dc0f90c7544"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a43279839ee6b550040804dc0f90c7544">SFW::SpatialState</a> : uint8_t { <a class="el" href="namespace_s_f_w.html#a43279839ee6b550040804dc0f90c7544a41f0e4643baa1a38c319cb96c9deaa99">SFW::Attached</a>
+, <a class="el" href="namespace_s_f_w.html#a43279839ee6b550040804dc0f90c7544a41cc07ca5bb4a5988322245a665a16f8">SFW::Detached</a>
+ }</td></tr>
+<tr class="memdesc:a43279839ee6b550040804dc0f90c7544"><td class="mdescLeft">&#160;</td><td class="mdescRight">退避ステート（Float EM）  <a href="namespace_s_f_w.html#a43279839ee6b550040804dc0f90c7544">[詳解]</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:a5ccdb6e0d28dec6b3884c9e79ec57691" id="r_a5ccdb6e0d28dec6b3884c9e79ec57691"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a5ccdb6e0d28dec6b3884c9e79ec57691">SFW::RelocateEntityBetweenManagers</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> id, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp;src, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp;dst)</td></tr>
+<tr class="memdesc:a5ccdb6e0d28dec6b3884c9e79ec57691"><td class="mdescLeft">&#160;</td><td class="mdescRight">低レベル：EM間 移送（非スパース→スパース）  <br /></td></tr>
+<tr class="memitem:a2d34c7c654f1a870027cfd74bac3803b" id="r_a2d34c7c654f1a870027cfd74bac3803b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a2d34c7c654f1a870027cfd74bac3803b">SFW::ResolveChunk</a> (<a class="el" href="struct_s_f_w_1_1_chunk_handle.html">ChunkHandle</a> &amp;h, <a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;reg)</td></tr>
+<tr class="memdesc:a2d34c7c654f1a870027cfd74bac3803b"><td class="mdescLeft">&#160;</td><td class="mdescRight">低レベル：チャンクキーからチャンク取得  <br /></td></tr>
+<tr class="memitem:a69beaccede6ed2a37c94e9fbe5b9f088" id="r_a69beaccede6ed2a37c94e9fbe5b9f088"><td class="memTemplParams" colspan="2">template&lt;class Partition&gt; </td></tr>
+<tr class="memitem:a69beaccede6ed2a37c94e9fbe5b9f088 template"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a69beaccede6ed2a37c94e9fbe5b9f088">SFW::MoveIfCrossed</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> id, const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;newPos, Partition &amp;partition, <a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;reg, <a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a> level, <a class="el" href="struct_s_f_w_1_1_chunk_handle.html">ChunkHandle</a> &amp;handle, <a class="el" href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1e">EOutOfBoundsPolicy</a> policy=<a class="el" href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134">EOutOfBoundsPolicy::ClampToEdge</a>)</td></tr>
+<tr class="memdesc:a69beaccede6ed2a37c94e9fbe5b9f088"><td class="mdescLeft">&#160;</td><td class="mdescRight">単体：チャンク跨ぎ検出 → 必要時のみEM間移送  <br /></td></tr>
+<tr class="memitem:a80a0b1f8bb61a1a47828f764011428ab" id="r_a80a0b1f8bb61a1a47828f764011428ab"><td class="memTemplParams" colspan="2">template&lt;class Partition, class PositionFn&gt; </td></tr>
+<tr class="memitem:a80a0b1f8bb61a1a47828f764011428ab template"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a80a0b1f8bb61a1a47828f764011428ab">SFW::RelocateCrossedBatch</a> (Partition &amp;partition, <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> &amp;srcChunk, <a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;reg, <a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a> level, PositionFn positionFn)</td></tr>
+<tr class="memdesc:a80a0b1f8bb61a1a47828f764011428ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">バッチ：葉 / セル単位で一気に仕分け  <br /></td></tr>
+<tr class="memitem:a49b742b35308648d4d0404ccd955b775" id="r_a49b742b35308648d4d0404ccd955b775"><td class="memTemplParams" colspan="2">template&lt;class Partition&gt; </td></tr>
+<tr class="memitem:a49b742b35308648d4d0404ccd955b775 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a49b742b35308648d4d0404ccd955b775">SFW::UpdateSpatialAttachment</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> id, const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;pos, const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;vel, Partition &amp;partition, <a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;reg, <a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a> level, <a class="el" href="struct_s_f_w_1_1_c_spatial_motion_tag.html">CSpatialMotionTag</a> &amp;tag, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp;floatEM, const <a class="el" href="struct_s_f_w_1_1_settle_rule.html">SettleRule</a> &amp;rule)</td></tr>
+<tr class="memitem:a0357228ee4658658a7ad3c60b7efd058" id="r_a0357228ee4658658a7ad3c60b7efd058"><td class="memTemplParams" colspan="2">template&lt;class Partition&gt; </td></tr>
+<tr class="memitem:a0357228ee4658658a7ad3c60b7efd058 template"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html#a0357228ee4658658a7ad3c60b7efd058">SFW::MoveIfCrossed_Deferred</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> id, const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;newPos, Partition &amp;partition, <a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;reg, <a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a> level, <a class="el" href="struct_s_f_w_1_1_chunk_handle.html">ChunkHandle</a> &amp;handle, <a class="el" href="class_s_f_w_1_1_budget_mover_1_1_local_batch.html">BudgetMover::LocalBatch</a> &amp;moverBatch, <a class="el" href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1e">EOutOfBoundsPolicy</a> policy=<a class="el" href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134">EOutOfBoundsPolicy::ClampToEdge</a>)</td></tr>
+<tr class="memdesc:a0357228ee4658658a7ad3c60b7efd058"><td class="mdescLeft">&#160;</td><td class="mdescRight">即時→ディファード版 MoveIfCrossed（移送はキューへ）  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>チャンク跨ぎ検出とエンティティ移送のユーティリティ </p>
+<dl class="section author"><dt>著者</dt><dd>seigo_t03b63m </dd></dl>
+<dl class="section date"><dt>日付</dt><dd>September 2025 </dd></dl>
+
+<p class="definition"> <a class="el" href="_chunk_crossing_move_8hpp_source.html">ChunkCrossingMove.hpp</a> に定義があります。</p>
+</div></div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_5ada393002ee7234dde4caf0d7998537.html">Core</a></li><li class="navelem"><a href="_chunk_crossing_move_8hpp.html">ChunkCrossingMove.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

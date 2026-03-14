@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/ImGuiLayer.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_im_gui_layer_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">ImGuiLayer.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_im_gui_layer_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#if _DEBUG</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> <span class="comment">// デバッグビルド時は ImGui を有効化</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#define _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#endif </span><span class="comment">// _DEBUG</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="_im_gui_backend_8h.html">ImGuiBackend.h</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>{</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_debug.html">Debug</a> {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="comment">//前方定義</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keyword">class </span><a class="code hl_class" href="class_s_f_w_1_1_debug_1_1_i_im_gui_backend.html">IImGuiBackend</a>;</div>
+<div class="foldopen" id="foldopen00026" data-start="{" data-end="};">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html">   26</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a4b63c5c694ee0c37d850deeb7a0702d5">ImGuiLayer</a> {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a4b63c5c694ee0c37d850deeb7a0702d5">   34</a></span>            <span class="keyword">explicit</span> <a class="code hl_function" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a4b63c5c694ee0c37d850deeb7a0702d5">ImGuiLayer</a>(std::unique_ptr&lt;IImGuiBackend&gt; backend);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#abcba63143610036ed397ded8b23dfe76">   35</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#abcba63143610036ed397ded8b23dfe76">~ImGuiLayer</a>();</div>
+<div class="foldopen" id="foldopen00040" data-start="{" data-end="}">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a33d586d946e3d8e78df25735fcea706d">   40</a></span>            <span class="keyword">const</span> std::type_info&amp; <a class="code hl_function" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a33d586d946e3d8e78df25735fcea706d">GetWindowType</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                <span class="keywordflow">return</span> backend_-&gt;GetWindowType();</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            }</div>
+</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span></div>
+<div class="foldopen" id="foldopen00047" data-start="{" data-end="}">
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a763579230940049386d8484a5f78240b">   47</a></span>            <span class="keyword">const</span> std::type_info&amp; <a class="code hl_function" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a763579230940049386d8484a5f78240b">GetDeviceType</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                <span class="keywordflow">return</span> backend_-&gt;GetDeviceType();</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            }</div>
+</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a03b3fb6a2f3796cc22fe4faf692141bf">   55</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a03b3fb6a2f3796cc22fe4faf692141bf">Init</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html">ImGuiInitInfo</a>&amp; info);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#ac81ea621f1f9a68cb5192fe794366773">   59</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#ac81ea621f1f9a68cb5192fe794366773">BeginFrame</a>();</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a1de9389c3e2371806584d832803c4aa0">   63</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a1de9389c3e2371806584d832803c4aa0">DrawUI</a>(<span class="keywordtype">float</span> frameSec);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a35b6cdd027f79af2c5a17ea918c1df66">   67</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a35b6cdd027f79af2c5a17ea918c1df66">EndFrame</a>();</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a34c1d3801ffe23e2ee12157acfee451b">   71</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a34c1d3801ffe23e2ee12157acfee451b">Render</a>();</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            std::unique_ptr&lt;IImGuiBackend&gt; backend_;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        };</div>
+</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>}</div>
+<div class="ttc" id="a_im_gui_backend_8h_html"><div class="ttname"><a href="_im_gui_backend_8h.html">ImGuiBackend.h</a></div><div class="ttdoc">ImGuiのバックエンドインターフェースを定義するヘッダーファイル</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_debug_1_1_i_im_gui_backend_html"><div class="ttname"><a href="class_s_f_w_1_1_debug_1_1_i_im_gui_backend.html">SFW::Debug::IImGuiBackend</a></div><div class="ttdoc">ImGuiのバックエンドインターフェース(抽象クラス)</div><div class="ttdef"><b>Definition</b> <a href="_im_gui_backend_8h_source.html#l00027">ImGuiBackend.h:27</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_debug_1_1_im_gui_layer_html_a03b3fb6a2f3796cc22fe4faf692141bf"><div class="ttname"><a href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a03b3fb6a2f3796cc22fe4faf692141bf">SFW::Debug::ImGuiLayer::Init</a></div><div class="ttdeci">bool Init(const ImGuiInitInfo &amp;info)</div><div class="ttdoc">ImGuiの初期化を行う関数</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_debug_1_1_im_gui_layer_html_a1de9389c3e2371806584d832803c4aa0"><div class="ttname"><a href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a1de9389c3e2371806584d832803c4aa0">SFW::Debug::ImGuiLayer::DrawUI</a></div><div class="ttdeci">void DrawUI(float frameSec)</div><div class="ttdoc">UIの描画を行う関数.UIBus.cppで実装</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_debug_1_1_im_gui_layer_html_a33d586d946e3d8e78df25735fcea706d"><div class="ttname"><a href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a33d586d946e3d8e78df25735fcea706d">SFW::Debug::ImGuiLayer::GetWindowType</a></div><div class="ttdeci">const std::type_info &amp; GetWindowType() const</div><div class="ttdoc">ウィンドウの型情報を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00040">ImGuiLayer.h:40</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_debug_1_1_im_gui_layer_html_a34c1d3801ffe23e2ee12157acfee451b"><div class="ttname"><a href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a34c1d3801ffe23e2ee12157acfee451b">SFW::Debug::ImGuiLayer::Render</a></div><div class="ttdeci">void Render()</div><div class="ttdoc">描画コマンドの発行を行う関数。 ImGui::Render() の後に呼ぶ</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_debug_1_1_im_gui_layer_html_a35b6cdd027f79af2c5a17ea918c1df66"><div class="ttname"><a href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a35b6cdd027f79af2c5a17ea918c1df66">SFW::Debug::ImGuiLayer::EndFrame</a></div><div class="ttdeci">void EndFrame()</div><div class="ttdoc">フレームの終了を行う関数。 ImGui::Render() まで</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_debug_1_1_im_gui_layer_html_a4b63c5c694ee0c37d850deeb7a0702d5"><div class="ttname"><a href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a4b63c5c694ee0c37d850deeb7a0702d5">SFW::Debug::ImGuiLayer::ImGuiLayer</a></div><div class="ttdeci">ImGuiLayer(std::unique_ptr&lt; IImGuiBackend &gt; backend)</div><div class="ttdoc">コンストラクタ</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_debug_1_1_im_gui_layer_html_a763579230940049386d8484a5f78240b"><div class="ttname"><a href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#a763579230940049386d8484a5f78240b">SFW::Debug::ImGuiLayer::GetDeviceType</a></div><div class="ttdeci">const std::type_info &amp; GetDeviceType() const</div><div class="ttdoc">デバイスの型情報を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00047">ImGuiLayer.h:47</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_debug_1_1_im_gui_layer_html_abcba63143610036ed397ded8b23dfe76"><div class="ttname"><a href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#abcba63143610036ed397ded8b23dfe76">SFW::Debug::ImGuiLayer::~ImGuiLayer</a></div><div class="ttdeci">~ImGuiLayer()</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_debug_1_1_im_gui_layer_html_ac81ea621f1f9a68cb5192fe794366773"><div class="ttname"><a href="class_s_f_w_1_1_debug_1_1_im_gui_layer.html#ac81ea621f1f9a68cb5192fe794366773">SFW::Debug::ImGuiLayer::BeginFrame</a></div><div class="ttdeci">void BeginFrame()</div><div class="ttdoc">フレームの開始を行う関数。 ImGui::NewFrame() を含む</div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_debug_html"><div class="ttname"><a href="namespace_s_f_w_1_1_debug.html">SFW::Debug</a></div><div class="ttdef"><b>Definition</b> <a href="assert__config_8h_source.html#l00013">assert_config.h:13</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_debug_1_1_im_gui_init_info_html"><div class="ttname"><a href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html">SFW::Debug::ImGuiInitInfo</a></div><div class="ttdoc">ImGuiの初期化情報を格納する構造体</div><div class="ttdef"><b>Definition</b> <a href="_im_gui_backend_8h_source.html#l00017">ImGuiBackend.h:17</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_c1abe28f93f3ef878b731f1ef206637c.html">Debug</a></li><li class="navelem"><a href="_im_gui_layer_8h.html">ImGuiLayer.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

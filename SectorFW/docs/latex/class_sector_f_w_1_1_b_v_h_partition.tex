@@ -1,0 +1,255 @@
+\doxysection{Sector\+FW\+::BVHPartition クラス}
+\hypertarget{class_sector_f_w_1_1_b_v_h_partition}{}\label{class_sector_f_w_1_1_b_v_h_partition}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+
+
+{\ttfamily \#include $<$BVHPartition.\+h$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_sector_f_w_1_1_b_v_h_partition_1_1_leaf}{Leaf}}
+\item 
+struct \mbox{\hyperlink{struct_sector_f_w_1_1_b_v_h_partition_1_1_node}{Node}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_aab13fbf31509efc1cc46fd45275d43eb}{AABB}} = Math\+::\+AABB3f
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_a3895d20ae8038392dbc932fd40b4adc0}{BVHPartition}} () noexcept=default
+\item 
+Spatial\+Chunk \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_a54e58a400f05e66a6098780ab85609f9}{Create\+Leaf}} (const \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_aab13fbf31509efc1cc46fd45275d43eb}{AABB}} \&box) noexcept
+\begin{DoxyCompactList}\small\item\em 葉ノード(\+Spatial\+Chunk)を追加し、その参照を返す \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_a504bc051aa7a5f230b500b4fb21e5984}{Update\+Leaf\+Bounds}} (uint32\+\_\+t leaf\+Index, const \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_aab13fbf31509efc1cc46fd45275d43eb}{AABB}} \&new\+Box) noexcept
+\begin{DoxyCompactList}\small\item\em 葉の\+AABBを更新（\+Refitは Build/\+Refit 時に行う） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_aa242e06dfdaf09dea741c0f11d2ec819}{Build}} () noexcept
+\begin{DoxyCompactList}\small\item\em すべての葉から\+BVHを再構築（トップダウン・中央値分割の簡易\+SAH） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_ade47ac7a0b8d64fb57c980092d7f508f}{Refit}} () noexcept
+\begin{DoxyCompactList}\small\item\em 葉が増減していない前提で\+AABBを親方向に再計算（軽い） \end{DoxyCompactList}\item 
+std\+::optional$<$ Spatial\+Chunk \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_a0d5a42799997ca395a6c831d5b759443}{Get\+Chunk}} (Math\+::\+Vec3f p, EOut\+Of\+Bounds\+Policy=EOut\+Of\+Bounds\+Policy\+::\+Clamp\+To\+Edge) noexcept
+\begin{DoxyCompactList}\small\item\em 位置（点）を含む葉(\+Spatial\+Chunk)を返す \end{DoxyCompactList}\item 
+ECS\+::\+Entity\+Manager \& \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_a3aea880d4a9a11b6c0596616c0772b7b}{Get\+Global\+Entity\+Manager}} () noexcept
+\begin{DoxyCompactList}\small\item\em グローバル\+EM（\+BVH外の共通レイヤ） \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_a439d0da46396ad9db607db54cdb22970}{Get\+Entity\+Num}} ()
+\begin{DoxyCompactList}\small\item\em 全エンティティ数（グローバル＋各葉） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_a83a3000c6587b6635adbfcfe1220ba9f}{Register\+All\+Chunks}} (Entity\+Manager\+Registry \&reg, Level\+ID level)
+\begin{DoxyCompactList}\small\item\em Registry登録（各葉に Partition\+Scheme\+::\+BVH のキーを付与） \end{DoxyCompactList}\item 
+std\+::vector$<$ Spatial\+Chunk \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_ac7a4635735031996917689ac6fc5b313}{Cull\+Chunks}} (const Math\+::\+Frustumf \&fr) const noexcept
+\begin{DoxyCompactList}\small\item\em Frustumカリング：交差する葉(\+Spatial\+Chunk)を列挙 \end{DoxyCompactList}\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_a6daef3ed6e6cb62f7fe37c49cd0d473b}{Cull\+Chunks}} (const Math\+::\+Frustumf \&fr, F \&\&f) const noexcept
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_a6f9f2e9e9665e936eea976866ab4f744}{Cull\+Chunk\+Line}} (const Math\+::\+Frustumf \&fr, Math\+::\+Vec3f cp, Debug\+::\+Line\+Vertex \texorpdfstring{$\ast$}{*}out\+Line, uint32\+\_\+t capacity, uint32\+\_\+t display\+Count) const noexcept
+\begin{DoxyCompactList}\small\item\em デバッグ用：葉\+AABBのワイヤーフレーム（12辺 x 2頂点）を出力 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_ae10da1cc19b7c4b6bf206d8f8e21f4ba}{Reload\+Leaf}} (uint32\+\_\+t leaf\+Index, Entity\+Manager\+Registry \&reg)
+\begin{DoxyCompactList}\small\item\em 葉の再ロード（世代進行 → 再登録） \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00029}{29}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_aab13fbf31509efc1cc46fd45275d43eb}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}!AABB@{AABB}}
+\index{AABB@{AABB}!SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+\doxysubsubsection{\texorpdfstring{AABB}{AABB}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_b_v_h_partition_aab13fbf31509efc1cc46fd45275d43eb} 
+using \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_aab13fbf31509efc1cc46fd45275d43eb}{Sector\+FW\+::\+BVHPartition\+::\+AABB}} = Math\+::\+AABB3f}
+
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00032}{32}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_a3895d20ae8038392dbc932fd40b4adc0}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}!BVHPartition@{BVHPartition}}
+\index{BVHPartition@{BVHPartition}!SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+\doxysubsubsection{\texorpdfstring{BVHPartition()}{BVHPartition()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_b_v_h_partition_a3895d20ae8038392dbc932fd40b4adc0} 
+Sector\+FW\+::\+BVHPartition\+::\+BVHPartition (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}, {\ttfamily [noexcept]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_aa242e06dfdaf09dea741c0f11d2ec819}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}!Build@{Build}}
+\index{Build@{Build}!SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+\doxysubsubsection{\texorpdfstring{Build()}{Build()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_b_v_h_partition_aa242e06dfdaf09dea741c0f11d2ec819} 
+void Sector\+FW\+::\+BVHPartition\+::\+Build (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+すべての葉から\+BVHを再構築（トップダウン・中央値分割の簡易\+SAH） 
+
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00079}{79}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_a54e58a400f05e66a6098780ab85609f9}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}!CreateLeaf@{CreateLeaf}}
+\index{CreateLeaf@{CreateLeaf}!SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+\doxysubsubsection{\texorpdfstring{CreateLeaf()}{CreateLeaf()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_b_v_h_partition_a54e58a400f05e66a6098780ab85609f9} 
+Spatial\+Chunk \texorpdfstring{$\ast$}{*} Sector\+FW\+::\+BVHPartition\+::\+Create\+Leaf (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_aab13fbf31509efc1cc46fd45275d43eb}{AABB}} \&}]{box}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+葉ノード(\+Spatial\+Chunk)を追加し、その参照を返す 
+
+追加後は \doxylink{class_sector_f_w_1_1_b_v_h_partition_aa242e06dfdaf09dea741c0f11d2ec819}{Build()} または Incremental\+Insert() を呼んで木に反映 
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00057}{57}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_a6f9f2e9e9665e936eea976866ab4f744}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}!CullChunkLine@{CullChunkLine}}
+\index{CullChunkLine@{CullChunkLine}!SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunkLine()}{CullChunkLine()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_b_v_h_partition_a6f9f2e9e9665e936eea976866ab4f744} 
+uint32\+\_\+t Sector\+FW\+::\+BVHPartition\+::\+Cull\+Chunk\+Line (\begin{DoxyParamCaption}\item[{const Math\+::\+Frustumf \&}]{fr}{, }\item[{Math\+::\+Vec3f}]{cp}{, }\item[{Debug\+::\+Line\+Vertex \texorpdfstring{$\ast$}{*}}]{out\+Line}{, }\item[{uint32\+\_\+t}]{capacity}{, }\item[{uint32\+\_\+t}]{display\+Count}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+デバッグ用：葉\+AABBのワイヤーフレーム（12辺 x 2頂点）を出力 
+
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00176}{176}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_ac7a4635735031996917689ac6fc5b313}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_b_v_h_partition_ac7a4635735031996917689ac6fc5b313} 
+std\+::vector$<$ Spatial\+Chunk \texorpdfstring{$\ast$}{*} $>$ Sector\+FW\+::\+BVHPartition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const Math\+::\+Frustumf \&}]{fr}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Frustumカリング：交差する葉(\+Spatial\+Chunk)を列挙 
+
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00158}{158}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_a6daef3ed6e6cb62f7fe37c49cd0d473b}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_b_v_h_partition_a6daef3ed6e6cb62f7fe37c49cd0d473b} 
+template$<$class F$>$ \\
+void Sector\+FW\+::\+BVHPartition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const Math\+::\+Frustumf \&}]{fr}{, }\item[{F \&\&}]{f}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00167}{167}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_a0d5a42799997ca395a6c831d5b759443}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}!GetChunk@{GetChunk}}
+\index{GetChunk@{GetChunk}!SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+\doxysubsubsection{\texorpdfstring{GetChunk()}{GetChunk()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_b_v_h_partition_a0d5a42799997ca395a6c831d5b759443} 
+std\+::optional$<$ Spatial\+Chunk \texorpdfstring{$\ast$}{*} $>$ Sector\+FW\+::\+BVHPartition\+::\+Get\+Chunk (\begin{DoxyParamCaption}\item[{Math\+::\+Vec3f}]{p}{, }\item[{EOut\+Of\+Bounds\+Policy}]{}{ = {\ttfamily EOutOfBoundsPolicy\+:\+:ClampToEdge}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+位置（点）を含む葉(\+Spatial\+Chunk)を返す 
+
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00105}{105}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_a439d0da46396ad9db607db54cdb22970}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}!GetEntityNum@{GetEntityNum}}
+\index{GetEntityNum@{GetEntityNum}!SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+\doxysubsubsection{\texorpdfstring{GetEntityNum()}{GetEntityNum()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_b_v_h_partition_a439d0da46396ad9db607db54cdb22970} 
+size\+\_\+t Sector\+FW\+::\+BVHPartition\+::\+Get\+Entity\+Num (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+全エンティティ数（グローバル＋各葉） 
+
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00130}{130}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_a3aea880d4a9a11b6c0596616c0772b7b}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}!GetGlobalEntityManager@{GetGlobalEntityManager}}
+\index{GetGlobalEntityManager@{GetGlobalEntityManager}!SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+\doxysubsubsection{\texorpdfstring{GetGlobalEntityManager()}{GetGlobalEntityManager()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_b_v_h_partition_a3aea880d4a9a11b6c0596616c0772b7b} 
+ECS\+::\+Entity\+Manager \& Sector\+FW\+::\+BVHPartition\+::\+Get\+Global\+Entity\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+グローバル\+EM（\+BVH外の共通レイヤ） 
+
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00127}{127}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_ade47ac7a0b8d64fb57c980092d7f508f}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}!Refit@{Refit}}
+\index{Refit@{Refit}!SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+\doxysubsubsection{\texorpdfstring{Refit()}{Refit()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_b_v_h_partition_ade47ac7a0b8d64fb57c980092d7f508f} 
+void Sector\+FW\+::\+BVHPartition\+::\+Refit (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+葉が増減していない前提で\+AABBを親方向に再計算（軽い） 
+
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00095}{95}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_a83a3000c6587b6635adbfcfe1220ba9f}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}!RegisterAllChunks@{RegisterAllChunks}}
+\index{RegisterAllChunks@{RegisterAllChunks}!SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+\doxysubsubsection{\texorpdfstring{RegisterAllChunks()}{RegisterAllChunks()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_b_v_h_partition_a83a3000c6587b6635adbfcfe1220ba9f} 
+void Sector\+FW\+::\+BVHPartition\+::\+Register\+All\+Chunks (\begin{DoxyParamCaption}\item[{Entity\+Manager\+Registry \&}]{reg}{, }\item[{Level\+ID}]{level}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Registry登録（各葉に Partition\+Scheme\+::\+BVH のキーを付与） 
+
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00140}{140}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_ae10da1cc19b7c4b6bf206d8f8e21f4ba}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}!ReloadLeaf@{ReloadLeaf}}
+\index{ReloadLeaf@{ReloadLeaf}!SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+\doxysubsubsection{\texorpdfstring{ReloadLeaf()}{ReloadLeaf()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_b_v_h_partition_ae10da1cc19b7c4b6bf206d8f8e21f4ba} 
+void Sector\+FW\+::\+BVHPartition\+::\+Reload\+Leaf (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{leaf\+Index}{, }\item[{Entity\+Manager\+Registry \&}]{reg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+葉の再ロード（世代進行 → 再登録） 
+
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00234}{234}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_b_v_h_partition_a504bc051aa7a5f230b500b4fb21e5984}\index{SectorFW::BVHPartition@{SectorFW::BVHPartition}!UpdateLeafBounds@{UpdateLeafBounds}}
+\index{UpdateLeafBounds@{UpdateLeafBounds}!SectorFW::BVHPartition@{SectorFW::BVHPartition}}
+\doxysubsubsection{\texorpdfstring{UpdateLeafBounds()}{UpdateLeafBounds()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_b_v_h_partition_a504bc051aa7a5f230b500b4fb21e5984} 
+void Sector\+FW\+::\+BVHPartition\+::\+Update\+Leaf\+Bounds (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{leaf\+Index}{, }\item[{const \mbox{\hyperlink{class_sector_f_w_1_1_b_v_h_partition_aab13fbf31509efc1cc46fd45275d43eb}{AABB}} \&}]{new\+Box}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+葉の\+AABBを更新（\+Refitは Build/\+Refit 時に行う） 
+
+
+
+ \mbox{\hyperlink{_b_v_h_partition_8h_source}{BVHPartition.\+h}} の \mbox{\hyperlink{_b_v_h_partition_8h_source_l00070}{70}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_b_v_h_partition_8h}{BVHPartition.\+h}}\end{DoxyCompactItemize}

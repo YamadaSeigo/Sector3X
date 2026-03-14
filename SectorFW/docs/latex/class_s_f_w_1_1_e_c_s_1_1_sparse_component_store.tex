@@ -1,0 +1,153 @@
+\doxysection{SFW\+::ECS\+::Sparse\+Component\+Store\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store}{}\label{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store}\index{SFW::ECS::SparseComponentStore$<$ T $>$@{SFW::ECS::SparseComponentStore$<$ T $>$}}
+
+
+まばらなコンポーネントを管理するクラス  
+
+
+
+
+{\ttfamily \#include $<$Sparse\+Component\+Store.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a2d471c8ede6906e9a5ac81b4435af1d1}{Add}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id, const T \&value)
+\begin{DoxyCompactList}\small\item\em エンティティの\+IDをキーにして、まばらなコンポーネントを追加 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a21aae3dfc3b2b44ff1b67b5207b52885}{Has}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id) const noexcept
+\begin{DoxyCompactList}\small\item\em エンティティの\+IDをキーにして、まばらなコンポーネントが存在するか確認 \end{DoxyCompactList}\item 
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a5ce7f8750a885f49d2fcbc8bed61efd0}{Get}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id) const noexcept
+\begin{DoxyCompactList}\small\item\em エンティティの\+IDをキーにして、まばらなコンポーネントを取得 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a755cd63addb941c0f97abe6f27e90c0f}{Remove}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id)
+\begin{DoxyCompactList}\small\item\em エンティティの\+IDをキーにして、まばらなコンポーネントを削除 \end{DoxyCompactList}\item 
+std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}, T $>$ \& \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a6cc412995b91015c5a0d13c977d9279c}{Get\+Components}} () noexcept
+\begin{DoxyCompactList}\small\item\em まばらなコンポーネントの全てを取得 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename T$>$\newline
+class SFW\+::\+ECS\+::\+Sparse\+Component\+Store$<$ T $>$}
+まばらなコンポーネントを管理するクラス 
+
+
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em T} & コンポーネントの型\\
+\hline
+\end{DoxyTemplParams}
+Entity\+IDをキーにして、まばらなコンポーネントを管理します。 
+
+ \mbox{\hyperlink{_sparse_component_store_8hpp_source}{Sparse\+Component\+Store.\+hpp}} の \mbox{\hyperlink{_sparse_component_store_8hpp_source_l00022}{22}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a2d471c8ede6906e9a5ac81b4435af1d1}\index{SFW::ECS::SparseComponentStore$<$ T $>$@{SFW::ECS::SparseComponentStore$<$ T $>$}!Add@{Add}}
+\index{Add@{Add}!SFW::ECS::SparseComponentStore$<$ T $>$@{SFW::ECS::SparseComponentStore$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Add()}{Add()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a2d471c8ede6906e9a5ac81b4435af1d1} 
+template$<$typename T$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store}{SFW\+::\+ECS\+::\+Sparse\+Component\+Store}}$<$ T $>$\+::\+Add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{, }\item[{const T \&}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+エンティティの\+IDをキーにして、まばらなコンポーネントを追加 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & エンティティの\+ID \\
+\hline
+{\em value} & コンポーネントの値 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_sparse_component_store_8hpp_source}{Sparse\+Component\+Store.\+hpp}} の \mbox{\hyperlink{_sparse_component_store_8hpp_source_l00029}{29}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a5ce7f8750a885f49d2fcbc8bed61efd0}\index{SFW::ECS::SparseComponentStore$<$ T $>$@{SFW::ECS::SparseComponentStore$<$ T $>$}!Get@{Get}}
+\index{Get@{Get}!SFW::ECS::SparseComponentStore$<$ T $>$@{SFW::ECS::SparseComponentStore$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a5ce7f8750a885f49d2fcbc8bed61efd0} 
+template$<$typename T$>$ \\
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store}{SFW\+::\+ECS\+::\+Sparse\+Component\+Store}}$<$ T $>$\+::\+Get (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+エンティティの\+IDをキーにして、まばらなコンポーネントを取得 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & エンティティの\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+T\texorpdfstring{$\ast$}{*} コンポーネントのポインタ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_sparse_component_store_8hpp_source}{Sparse\+Component\+Store.\+hpp}} の \mbox{\hyperlink{_sparse_component_store_8hpp_source_l00041}{41}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a6cc412995b91015c5a0d13c977d9279c}\index{SFW::ECS::SparseComponentStore$<$ T $>$@{SFW::ECS::SparseComponentStore$<$ T $>$}!GetComponents@{GetComponents}}
+\index{GetComponents@{GetComponents}!SFW::ECS::SparseComponentStore$<$ T $>$@{SFW::ECS::SparseComponentStore$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{GetComponents()}{GetComponents()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a6cc412995b91015c5a0d13c977d9279c} 
+template$<$typename T$>$ \\
+std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}, T $>$ \& \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store}{SFW\+::\+ECS\+::\+Sparse\+Component\+Store}}$<$ T $>$\+::\+Get\+Components (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+まばらなコンポーネントの全てを取得 
+
+\begin{DoxyReturn}{戻り値}
+std\+::unordered\+\_\+map$<$\+Entity\+ID, T$>$\& 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_sparse_component_store_8hpp_source}{Sparse\+Component\+Store.\+hpp}} の \mbox{\hyperlink{_sparse_component_store_8hpp_source_l00054}{54}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a21aae3dfc3b2b44ff1b67b5207b52885}\index{SFW::ECS::SparseComponentStore$<$ T $>$@{SFW::ECS::SparseComponentStore$<$ T $>$}!Has@{Has}}
+\index{Has@{Has}!SFW::ECS::SparseComponentStore$<$ T $>$@{SFW::ECS::SparseComponentStore$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Has()}{Has()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a21aae3dfc3b2b44ff1b67b5207b52885} 
+template$<$typename T$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store}{SFW\+::\+ECS\+::\+Sparse\+Component\+Store}}$<$ T $>$\+::\+Has (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+エンティティの\+IDをキーにして、まばらなコンポーネントが存在するか確認 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & エンティティの\+ID return 存在する場合はtrue、存在しない場合はfalse \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_sparse_component_store_8hpp_source}{Sparse\+Component\+Store.\+hpp}} の \mbox{\hyperlink{_sparse_component_store_8hpp_source_l00035}{35}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a755cd63addb941c0f97abe6f27e90c0f}\index{SFW::ECS::SparseComponentStore$<$ T $>$@{SFW::ECS::SparseComponentStore$<$ T $>$}!Remove@{Remove}}
+\index{Remove@{Remove}!SFW::ECS::SparseComponentStore$<$ T $>$@{SFW::ECS::SparseComponentStore$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Remove()}{Remove()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store_a755cd63addb941c0f97abe6f27e90c0f} 
+template$<$typename T$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store}{SFW\+::\+ECS\+::\+Sparse\+Component\+Store}}$<$ T $>$\+::\+Remove (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+エンティティの\+IDをキーにして、まばらなコンポーネントを削除 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & エンティティの\+ID \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_sparse_component_store_8hpp_source}{Sparse\+Component\+Store.\+hpp}} の \mbox{\hyperlink{_sparse_component_store_8hpp_source_l00049}{49}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_sparse_component_store_8hpp}{Sparse\+Component\+Store.\+hpp}}\end{DoxyCompactItemize}

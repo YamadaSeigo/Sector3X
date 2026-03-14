@@ -1,0 +1,1487 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::QuadTreePartition クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_quad_tree_partition.html','','class_s_f_w_1_1_quad_tree_partition-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::QuadTreePartition クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>クアッドツリー(x-z)パーティションを管理するクラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:Circle" id="r_Circle"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_quad_tree_partition_1_1_circle.html">Circle</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+公開型</h2></td></tr>
+<tr class="memitem:a84044fc582e79824a66f3b6dccc76c38" id="r_a84044fc582e79824a66f3b6dccc76c38"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84044fc582e79824a66f3b6dccc76c38">ZPositive</a> { <a class="el" href="#a84044fc582e79824a66f3b6dccc76c38a601560b94fbb188919dd1d36c8ab70a4">North</a>
+, <a class="el" href="#a84044fc582e79824a66f3b6dccc76c38a263d7b2cf53802c9ed127b718c0bf9fd">South</a>
+ }</td></tr>
+<tr class="memitem:a46b19848fdbda79729b7daad4476a1ca" id="r_a46b19848fdbda79729b7daad4476a1ca"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a46b19848fdbda79729b7daad4476a1ca">AABB</a> = <a class="el" href="namespace_s_f_w_1_1_math.html#acaea690eaef2927454b6001b882799e8">Math::AABB2f</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:af76e927022bbd8022cb10cfae6f4cc80" id="r_af76e927022bbd8022cb10cfae6f4cc80"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af76e927022bbd8022cb10cfae6f4cc80">QuadTreePartition</a> (<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> originWS, <a class="el" href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">ChunkSizeType</a> worldW, <a class="el" href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">ChunkSizeType</a> worldH, float minLeafSize, uint32_t maxEntitiesPerLeaf=1024) noexcept</td></tr>
+<tr class="memdesc:af76e927022bbd8022cb10cfae6f4cc80"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:a3eafe2fa7358f20d2817dbaadb04ad9b" id="r_a3eafe2fa7358f20d2817dbaadb04ad9b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3eafe2fa7358f20d2817dbaadb04ad9b">Update</a> (double deltaTime)</td></tr>
+<tr class="memdesc:a3eafe2fa7358f20d2817dbaadb04ad9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">エンティティの数が少ない葉を統合ために更新  <br /></td></tr>
+<tr class="memitem:a07a549b625d374ba201009d95f0c3ef1" id="r_a07a549b625d374ba201009d95f0c3ef1"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07a549b625d374ba201009d95f0c3ef1">GetChunk</a> (<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> wp, <a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;reg, <a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a> level, <a class="el" href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1e">EOutOfBoundsPolicy</a> policy=<a class="el" href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134">EOutOfBoundsPolicy::ClampToEdge</a>) noexcept</td></tr>
+<tr class="memdesc:a07a549b625d374ba201009d95f0c3ef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">指定した位置にあるチャンクを取得する関数  <br /></td></tr>
+<tr class="memitem:a4addc717d3493a91bc69dcdf2699a770" id="r_a4addc717d3493a91bc69dcdf2699a770"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4addc717d3493a91bc69dcdf2699a770">GetGlobalEntityManager</a> () noexcept</td></tr>
+<tr class="memdesc:a4addc717d3493a91bc69dcdf2699a770"><td class="mdescLeft">&#160;</td><td class="mdescRight">グローバルエンティティマネージャーを取得する関数  <br /></td></tr>
+<tr class="memitem:a5d6312787b2a17d088378457e0909276" id="r_a5d6312787b2a17d088378457e0909276"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d6312787b2a17d088378457e0909276">RegisterAllChunks</a> (<a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;reg, <a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a> level)</td></tr>
+<tr class="memdesc:a5d6312787b2a17d088378457e0909276"><td class="mdescLeft">&#160;</td><td class="mdescRight">すべてのチャンクをレジストリに登録する関数  <br /></td></tr>
+<tr class="memitem:a3c205d857c8df14f27a9176f07f96ad4" id="r_a3c205d857c8df14f27a9176f07f96ad4"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c205d857c8df14f27a9176f07f96ad4">GetEntityNum</a> () const noexcept</td></tr>
+<tr class="memdesc:a3c205d857c8df14f27a9176f07f96ad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">すべてのエンティティ数を取得する関数  <br /></td></tr>
+<tr class="memitem:a7f37de7e6aa4254a37f1b371cc28a525" id="r_a7f37de7e6aa4254a37f1b371cc28a525"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f37de7e6aa4254a37f1b371cc28a525">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr) noexcept</td></tr>
+<tr class="memdesc:a7f37de7e6aa4254a37f1b371cc28a525"><td class="mdescLeft">&#160;</td><td class="mdescRight">指定した視錐台に含まれるチャンクを列挙する関数  <br /></td></tr>
+<tr class="memitem:a0736e807c6117fbd82703308dd7578e1" id="r_a0736e807c6117fbd82703308dd7578e1"><td class="memItemLeft" align="right" valign="top">std::vector&lt; const <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0736e807c6117fbd82703308dd7578e1">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr) const noexcept</td></tr>
+<tr class="memitem:afd3621e82bfb79a9816bcf0bd8db3f39" id="r_afd3621e82bfb79a9816bcf0bd8db3f39"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd3621e82bfb79a9816bcf0bd8db3f39">CullChunks</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;center, float radius) const noexcept</td></tr>
+<tr class="memitem:ad755e1e3a1449de322a68df7225b8769" id="r_ad755e1e3a1449de322a68df7225b8769"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad755e1e3a1449de322a68df7225b8769">CullChunksNear</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;camPos, size_t maxCount=(std::numeric_limits&lt; size_t &gt;::max)()) const noexcept</td></tr>
+<tr class="memitem:a14aff56bbeea7af3c19c7afdc2420cb8" id="r_a14aff56bbeea7af3c19c7afdc2420cb8"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
+<tr class="memitem:a14aff56bbeea7af3c19c7afdc2420cb8 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a14aff56bbeea7af3c19c7afdc2420cb8">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, float ymin, float ymax, F &amp;&amp;f) noexcept</td></tr>
+<tr class="memitem:ad969039352094b580fc794ff11c3058d" id="r_ad969039352094b580fc794ff11c3058d"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
+<tr class="memitem:ad969039352094b580fc794ff11c3058d template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad969039352094b580fc794ff11c3058d">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, float ymin, float ymax, F &amp;&amp;f) const noexcept</td></tr>
+<tr class="memitem:a85ea5848721774fbaf9ec9424f9691cc" id="r_a85ea5848721774fbaf9ec9424f9691cc"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85ea5848721774fbaf9ec9424f9691cc">CullChunkLine</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> cp, float hy, <a class="el" href="struct_s_f_w_1_1_debug_1_1_line_vertex.html">Debug::LineVertex</a> *outLine, uint32_t capacity, uint32_t displayCount) const noexcept</td></tr>
+<tr class="memdesc:a85ea5848721774fbaf9ec9424f9691cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">チャンクの境界線をデバッグ描画する関数  <br /></td></tr>
+<tr class="memitem:afef29579e0c9ff3ff21c069be9261488" id="r_afef29579e0c9ff3ff21c069be9261488"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afef29579e0c9ff3ff21c069be9261488">CleanChunk</a> ()</td></tr>
+<tr class="memdesc:afef29579e0c9ff3ff21c069be9261488"><td class="mdescLeft">&#160;</td><td class="mdescRight">チャンクのクリア  <br /></td></tr>
+<tr class="memitem:aee48ca1f0ff8b60feda78898bc2bec87" id="r_aee48ca1f0ff8b60feda78898bc2bec87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee48ca1f0ff8b60feda78898bc2bec87">EnsureLeafForPoint</a> (<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> p)</td></tr>
+<tr class="memitem:ac01c07e9becd154c9580e37828e10ab7" id="r_ac01c07e9becd154c9580e37828e10ab7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac01c07e9becd154c9580e37828e10ab7">SubdivideIf</a> (std::function&lt; bool(const <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> &amp;)&gt; predicate, std::function&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>(<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a>, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp;)&gt; posFn)</td></tr>
+<tr class="memitem:a1169d7765018285240a6d68431fca397" id="r_a1169d7765018285240a6d68431fca397"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1169d7765018285240a6d68431fca397">SubdivideIfOverCapacity</a> (std::function&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>(<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a>, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp;)&gt; posFn)</td></tr>
+<tr class="memitem:a40764c85e5e534dea8cb395c5c374ed9" id="r_a40764c85e5e534dea8cb395c5c374ed9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40764c85e5e534dea8cb395c5c374ed9">ReloadLeafByPoint</a> (<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> p, <a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;reg, <a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a> level)</td></tr>
+<tr class="memitem:a4c232d93692a7526024a2c8ed8fd9ddb" id="r_a4c232d93692a7526024a2c8ed8fd9ddb"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c232d93692a7526024a2c8ed8fd9ddb">GetChunksAABB</a> (const <a class="el" href="#a46b19848fdbda79729b7daad4476a1ca">AABB</a> &amp;aabb)</td></tr>
+<tr class="memitem:ab6e245ef19ceb857223e154389791776" id="r_ab6e245ef19ceb857223e154389791776"><td class="memItemLeft" align="right" valign="top">std::vector&lt; const <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6e245ef19ceb857223e154389791776">GetChunksAABB</a> (const <a class="el" href="#a46b19848fdbda79729b7daad4476a1ca">AABB</a> &amp;aabb) const</td></tr>
+<tr class="memitem:a4953b7073e2817b658d56cf0b5aade4e" id="r_a4953b7073e2817b658d56cf0b5aade4e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4953b7073e2817b658d56cf0b5aade4e">GetChunksCircle</a> (const <a class="el" href="struct_s_f_w_1_1_quad_tree_partition_1_1_circle.html">Circle</a> &amp;c)</td></tr>
+<tr class="memitem:a27b60188f4887ca808d213dd9a61c765" id="r_a27b60188f4887ca808d213dd9a61c765"><td class="memItemLeft" align="right" valign="top">std::vector&lt; const <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a27b60188f4887ca808d213dd9a61c765">GetChunksCircle</a> (const <a class="el" href="struct_s_f_w_1_1_quad_tree_partition_1_1_circle.html">Circle</a> &amp;c) const</td></tr>
+<tr class="memitem:a9d3ef34acdbf8a651eea0fd5e7ddb09b" id="r_a9d3ef34acdbf8a651eea0fd5e7ddb09b"><td class="memTemplParams" colspan="2">template&lt;class PosFn&gt; </td></tr>
+<tr class="memitem:a9d3ef34acdbf8a651eea0fd5e7ddb09b template"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d3ef34acdbf8a651eea0fd5e7ddb09b">GetChunkForInsert</a> (<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> p, PosFn &amp;&amp;posFn)</td></tr>
+<tr class="memitem:a20c9ab34cf58f03741e0324b75006c35" id="r_a20c9ab34cf58f03741e0324b75006c35"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
+<tr class="memitem:a20c9ab34cf58f03741e0324b75006c35 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20c9ab34cf58f03741e0324b75006c35">ForEachLeaf</a> (F &amp;&amp;f)</td></tr>
+<tr class="memitem:ad45f143ae7313da1cb886d07c3ff8264" id="r_ad45f143ae7313da1cb886d07c3ff8264"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
+<tr class="memitem:ad45f143ae7313da1cb886d07c3ff8264 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad45f143ae7313da1cb886d07c3ff8264">ForEachLeaf</a> (F &amp;&amp;f) const</td></tr>
+<tr class="memitem:ad059fb3fc34a4de03ddd3fa8e9b9ab9e" id="r_ad059fb3fc34a4de03ddd3fa8e9b9ab9e"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
+<tr class="memitem:ad059fb3fc34a4de03ddd3fa8e9b9ab9e template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad059fb3fc34a4de03ddd3fa8e9b9ab9e">ForEachLeafChunk</a> (F &amp;&amp;f)</td></tr>
+<tr class="memitem:a6fc21c281358165acf8387a96b7623c4" id="r_a6fc21c281358165acf8387a96b7623c4"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
+<tr class="memitem:a6fc21c281358165acf8387a96b7623c4 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6fc21c281358165acf8387a96b7623c4">ForEachLeafChunk</a> (F &amp;&amp;f) const</td></tr>
+<tr class="memitem:a3aec2ed7dd1c44ce6c04adf8e469f333" id="r_a3aec2ed7dd1c44ce6c04adf8e469f333"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
+<tr class="memitem:a3aec2ed7dd1c44ce6c04adf8e469f333 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3aec2ed7dd1c44ce6c04adf8e469f333">ForEachLeafEM</a> (F &amp;&amp;f)</td></tr>
+<tr class="memitem:a4dfa57995d586436e20fe6571e920382" id="r_a4dfa57995d586436e20fe6571e920382"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
+<tr class="memitem:a4dfa57995d586436e20fe6571e920382 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4dfa57995d586436e20fe6571e920382">ForEachLeafEM</a> (F &amp;&amp;f) const</td></tr>
+<tr class="memitem:a08ed9d44b5a29ac93f848566beb02b86" id="r_a08ed9d44b5a29ac93f848566beb02b86"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08ed9d44b5a29ac93f848566beb02b86">LeafCount</a> () const noexcept</td></tr>
+<tr class="memitem:a17d2f2c6c4858f1de834a12af6d26f16" id="r_a17d2f2c6c4858f1de834a12af6d26f16"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a17d2f2c6c4858f1de834a12af6d26f16">MinLeafSize</a> () const noexcept</td></tr>
+<tr class="memitem:a5583bf5c09adf4e566ca31088255e514" id="r_a5583bf5c09adf4e566ca31088255e514"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5583bf5c09adf4e566ca31088255e514">SetMaxPerLeafCount</a> (uint32_t v) noexcept</td></tr>
+<tr class="memitem:ae9aeb695d593953a8a65a09c596de581" id="r_ae9aeb695d593953a8a65a09c596de581"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae9aeb695d593953a8a65a09c596de581">GetMaxPerLeafCount</a> () const noexcept</td></tr>
+<tr class="memitem:ab6a9ef452ceff078d4c3da68722785d8" id="r_ab6a9ef452ceff078d4c3da68722785d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6a9ef452ceff078d4c3da68722785d8">SetMinPerLeafCount</a> (uint32_t v) noexcept</td></tr>
+<tr class="memitem:afe0200eb96ded201f0674e0106e26885" id="r_afe0200eb96ded201f0674e0106e26885"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe0200eb96ded201f0674e0106e26885">GetMinPerLeafCount</a> () const noexcept</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:aa8eb9b49e33a173d18a95119d8937fbf" id="r_aa8eb9b49e33a173d18a95119d8937fbf"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8eb9b49e33a173d18a95119d8937fbf">Dist2PointAABB3D</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;p, const <a class="el" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> &amp;c, const <a class="el" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> &amp;e)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+静的公開変数類</h2></td></tr>
+<tr class="memitem:a7750e1edb9d139a1963b3a80e9053bc6" id="r_a7750e1edb9d139a1963b3a80e9053bc6"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="#a84044fc582e79824a66f3b6dccc76c38">ZPositive</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7750e1edb9d139a1963b3a80e9053bc6">kZPositive</a> = <a class="el" href="#a84044fc582e79824a66f3b6dccc76c38a601560b94fbb188919dd1d36c8ab70a4">ZPositive::North</a></td></tr>
+<tr class="memitem:a2abe4e9e406dc7fafa366139fb0a7e8f" id="r_a2abe4e9e406dc7fafa366139fb0a7e8f"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2abe4e9e406dc7fafa366139fb0a7e8f">coalesceInterval</a> = 10.0</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>クアッドツリー(x-z)パーティションを管理するクラス </p>
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00030">30</a> 行目に定義があります。</p>
+</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">型定義メンバ詳解</h2>
+<a id="a46b19848fdbda79729b7daad4476a1ca" name="a46b19848fdbda79729b7daad4476a1ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46b19848fdbda79729b7daad4476a1ca">&#9670;&#160;</a></span>AABB</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a46b19848fdbda79729b7daad4476a1ca">SFW::QuadTreePartition::AABB</a> = <a class="el" href="namespace_s_f_w_1_1_math.html#acaea690eaef2927454b6001b882799e8">Math::AABB2f</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00033">33</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">列挙型メンバ詳解</h2>
+<a id="a84044fc582e79824a66f3b6dccc76c38" name="a84044fc582e79824a66f3b6dccc76c38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84044fc582e79824a66f3b6dccc76c38">&#9670;&#160;</a></span>ZPositive</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#a84044fc582e79824a66f3b6dccc76c38">SFW::QuadTreePartition::ZPositive</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel strong">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">列挙値</th></tr><tr><td class="fieldname"><a id="a84044fc582e79824a66f3b6dccc76c38a601560b94fbb188919dd1d36c8ab70a4" name="a84044fc582e79824a66f3b6dccc76c38a601560b94fbb188919dd1d36c8ab70a4"></a>North&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a84044fc582e79824a66f3b6dccc76c38a263d7b2cf53802c9ed127b718c0bf9fd" name="a84044fc582e79824a66f3b6dccc76c38a263d7b2cf53802c9ed127b718c0bf9fd"></a>South&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00036">36</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="af76e927022bbd8022cb10cfae6f4cc80" name="af76e927022bbd8022cb10cfae6f4cc80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af76e927022bbd8022cb10cfae6f4cc80">&#9670;&#160;</a></span>QuadTreePartition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::QuadTreePartition::QuadTreePartition </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>originWS</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">ChunkSizeType</a></td>          <td class="paramname"><span class="paramname"><em>worldW</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">ChunkSizeType</a></td>          <td class="paramname"><span class="paramname"><em>worldH</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>minLeafSize</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>maxEntitiesPerLeaf</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1024</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">worldW</td><td>X方向の最小葉の数 </td></tr>
+    <tr><td class="paramname">worldH</td><td>Z方向の最小葉の数 </td></tr>
+    <tr><td class="paramname">minLeafSize</td><td>最小葉のサイズ(ワールドサイズに対する比率、0.0~1.0) </td></tr>
+    <tr><td class="paramname">maxEntitiesPerLeaf</td><td>1つの葉に格納できるエンティティの最大数 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00051">51</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="afef29579e0c9ff3ff21c069be9261488" name="afef29579e0c9ff3ff21c069be9261488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afef29579e0c9ff3ff21c069be9261488">&#9670;&#160;</a></span>CleanChunk()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::CleanChunk </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>チャンクのクリア </p>
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00327">327</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a85ea5848721774fbaf9ec9424f9691cc" name="a85ea5848721774fbaf9ec9424f9691cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85ea5848721774fbaf9ec9424f9691cc">&#9670;&#160;</a></span>CullChunkLine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::QuadTreePartition::CullChunkLine </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>fr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>cp</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>hy</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_debug_1_1_line_vertex.html">Debug::LineVertex</a> *</td>          <td class="paramname"><span class="paramname"><em>outLine</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>displayCount</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>チャンクの境界線をデバッグ描画する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fr</td><td>視錐台 </td></tr>
+    <tr><td class="paramname">cp</td><td>カメラ位置 </td></tr>
+    <tr><td class="paramname">hy</td><td>カメラ高さからの上下の伸び </td></tr>
+    <tr><td class="paramname">outLine</td><td>出力先のラインバッファ </td></tr>
+    <tr><td class="paramname">capacity</td><td>出力先のラインバッファの容量(頂点数) </td></tr>
+    <tr><td class="paramname">displayCount</td><td>表示するチャンクの最大数(0の場合は表示しない) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>書き込んだ頂点数 </dd></dl>
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00263">263</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0736e807c6117fbd82703308dd7578e1" name="a0736e807c6117fbd82703308dd7578e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0736e807c6117fbd82703308dd7578e1">&#9670;&#160;</a></span>CullChunks() <span class="overload">[1/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; const <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt; SFW::QuadTreePartition::CullChunks </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>fr</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00148">148</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7f37de7e6aa4254a37f1b371cc28a525" name="a7f37de7e6aa4254a37f1b371cc28a525"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f37de7e6aa4254a37f1b371cc28a525">&#9670;&#160;</a></span>CullChunks() <span class="overload">[2/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt; SFW::QuadTreePartition::CullChunks </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>fr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>指定した視錐台に含まれるチャンクを列挙する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fr</td><td>視錐台 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>チャンクのポインタ配列 </dd></dl>
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00139">139</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad969039352094b580fc794ff11c3058d" name="ad969039352094b580fc794ff11c3058d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad969039352094b580fc794ff11c3058d">&#9670;&#160;</a></span>CullChunks() <span class="overload">[3/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class F&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::CullChunks </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>fr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>ymin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>ymax</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">F &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>f</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00248">248</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a14aff56bbeea7af3c19c7afdc2420cb8" name="a14aff56bbeea7af3c19c7afdc2420cb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14aff56bbeea7af3c19c7afdc2420cb8">&#9670;&#160;</a></span>CullChunks() <span class="overload">[4/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class F&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::CullChunks </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>fr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>ymin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>ymax</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">F &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>f</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00241">241</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="afd3621e82bfb79a9816bcf0bd8db3f39" name="afd3621e82bfb79a9816bcf0bd8db3f39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd3621e82bfb79a9816bcf0bd8db3f39">&#9670;&#160;</a></span>CullChunks() <span class="overload">[5/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt; SFW::QuadTreePartition::CullChunks </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>center</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>radius</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00157">157</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad755e1e3a1449de322a68df7225b8769" name="ad755e1e3a1449de322a68df7225b8769"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad755e1e3a1449de322a68df7225b8769">&#9670;&#160;</a></span>CullChunksNear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt; SFW::QuadTreePartition::CullChunksNear </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>fr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camPos</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>maxCount</em></span><span class="paramdefsep"> = </span><span class="paramdefval">(std::numeric_limits&lt;size_t&gt;::max)()</span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00201">201</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa8eb9b49e33a173d18a95119d8937fbf" name="aa8eb9b49e33a173d18a95119d8937fbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8eb9b49e33a173d18a95119d8937fbf">&#9670;&#160;</a></span>Dist2PointAABB3D()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::QuadTreePartition::Dist2PointAABB3D </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>c</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>e</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00190">190</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aee48ca1f0ff8b60feda78898bc2bec87" name="aee48ca1f0ff8b60feda78898bc2bec87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee48ca1f0ff8b60feda78898bc2bec87">&#9670;&#160;</a></span>EnsureLeafForPoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * SFW::QuadTreePartition::EnsureLeafForPoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>p</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00336">336</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a20c9ab34cf58f03741e0324b75006c35" name="a20c9ab34cf58f03741e0324b75006c35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20c9ab34cf58f03741e0324b75006c35">&#9670;&#160;</a></span>ForEachLeaf() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class F&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::ForEachLeaf </td>
+          <td>(</td>
+          <td class="paramtype">F &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>f</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00443">443</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad45f143ae7313da1cb886d07c3ff8264" name="ad45f143ae7313da1cb886d07c3ff8264"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad45f143ae7313da1cb886d07c3ff8264">&#9670;&#160;</a></span>ForEachLeaf() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class F&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::ForEachLeaf </td>
+          <td>(</td>
+          <td class="paramtype">F &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>f</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00444">444</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad059fb3fc34a4de03ddd3fa8e9b9ab9e" name="ad059fb3fc34a4de03ddd3fa8e9b9ab9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad059fb3fc34a4de03ddd3fa8e9b9ab9e">&#9670;&#160;</a></span>ForEachLeafChunk() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class F&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::ForEachLeafChunk </td>
+          <td>(</td>
+          <td class="paramtype">F &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>f</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00446">446</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6fc21c281358165acf8387a96b7623c4" name="a6fc21c281358165acf8387a96b7623c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fc21c281358165acf8387a96b7623c4">&#9670;&#160;</a></span>ForEachLeafChunk() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class F&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::ForEachLeafChunk </td>
+          <td>(</td>
+          <td class="paramtype">F &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>f</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00449">449</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3aec2ed7dd1c44ce6c04adf8e469f333" name="a3aec2ed7dd1c44ce6c04adf8e469f333"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aec2ed7dd1c44ce6c04adf8e469f333">&#9670;&#160;</a></span>ForEachLeafEM() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class F&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::ForEachLeafEM </td>
+          <td>(</td>
+          <td class="paramtype">F &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>f</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00453">453</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4dfa57995d586436e20fe6571e920382" name="a4dfa57995d586436e20fe6571e920382"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dfa57995d586436e20fe6571e920382">&#9670;&#160;</a></span>ForEachLeafEM() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class F&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::ForEachLeafEM </td>
+          <td>(</td>
+          <td class="paramtype">F &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>f</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00456">456</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a07a549b625d374ba201009d95f0c3ef1" name="a07a549b625d374ba201009d95f0c3ef1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07a549b625d374ba201009d95f0c3ef1">&#9670;&#160;</a></span>GetChunk()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt; SFW::QuadTreePartition::GetChunk </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>wp</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>reg</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a></td>          <td class="paramname"><span class="paramname"><em>level</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1e">EOutOfBoundsPolicy</a></td>          <td class="paramname"><span class="paramname"><em>policy</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134">EOutOfBoundsPolicy::ClampToEdge</a></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>指定した位置にあるチャンクを取得する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wp</td><td>ワールド位置(x,z) </td></tr>
+    <tr><td class="paramname">reg</td><td>チャンクレジストリ </td></tr>
+    <tr><td class="paramname">level</td><td>レベルID </td></tr>
+    <tr><td class="paramname">policy</td><td>範囲外ポリシー </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>チャンクへのポインタ(存在しない場合はstd::nullopt) </dd></dl>
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00087">87</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9d3ef34acdbf8a651eea0fd5e7ddb09b" name="a9d3ef34acdbf8a651eea0fd5e7ddb09b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d3ef34acdbf8a651eea0fd5e7ddb09b">&#9670;&#160;</a></span>GetChunkForInsert()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class PosFn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * SFW::QuadTreePartition::GetChunkForInsert </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PosFn &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>posFn</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00422">422</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4c232d93692a7526024a2c8ed8fd9ddb" name="a4c232d93692a7526024a2c8ed8fd9ddb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c232d93692a7526024a2c8ed8fd9ddb">&#9670;&#160;</a></span>GetChunksAABB() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt; SFW::QuadTreePartition::GetChunksAABB </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a46b19848fdbda79729b7daad4476a1ca">AABB</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>aabb</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00391">391</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab6e245ef19ceb857223e154389791776" name="ab6e245ef19ceb857223e154389791776"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6e245ef19ceb857223e154389791776">&#9670;&#160;</a></span>GetChunksAABB() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; const <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt; SFW::QuadTreePartition::GetChunksAABB </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a46b19848fdbda79729b7daad4476a1ca">AABB</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>aabb</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00398">398</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4953b7073e2817b658d56cf0b5aade4e" name="a4953b7073e2817b658d56cf0b5aade4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4953b7073e2817b658d56cf0b5aade4e">&#9670;&#160;</a></span>GetChunksCircle() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt; SFW::QuadTreePartition::GetChunksCircle </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_quad_tree_partition_1_1_circle.html">Circle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00406">406</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a27b60188f4887ca808d213dd9a61c765" name="a27b60188f4887ca808d213dd9a61c765"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27b60188f4887ca808d213dd9a61c765">&#9670;&#160;</a></span>GetChunksCircle() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; const <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt; SFW::QuadTreePartition::GetChunksCircle </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_quad_tree_partition_1_1_circle.html">Circle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00413">413</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3c205d857c8df14f27a9176f07f96ad4" name="a3c205d857c8df14f27a9176f07f96ad4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c205d857c8df14f27a9176f07f96ad4">&#9670;&#160;</a></span>GetEntityNum()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SFW::QuadTreePartition::GetEntityNum </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>すべてのエンティティ数を取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>エンティティ数 </dd></dl>
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00126">126</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4addc717d3493a91bc69dcdf2699a770" name="a4addc717d3493a91bc69dcdf2699a770"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4addc717d3493a91bc69dcdf2699a770">&#9670;&#160;</a></span>GetGlobalEntityManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp; SFW::QuadTreePartition::GetGlobalEntityManager </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>グローバルエンティティマネージャーを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>グローバルエンティティマネージャーへの参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00107">107</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae9aeb695d593953a8a65a09c596de581" name="ae9aeb695d593953a8a65a09c596de581"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9aeb695d593953a8a65a09c596de581">&#9670;&#160;</a></span>GetMaxPerLeafCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::QuadTreePartition::GetMaxPerLeafCount </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00465">465</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="afe0200eb96ded201f0674e0106e26885" name="afe0200eb96ded201f0674e0106e26885"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe0200eb96ded201f0674e0106e26885">&#9670;&#160;</a></span>GetMinPerLeafCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::QuadTreePartition::GetMinPerLeafCount </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00468">468</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a08ed9d44b5a29ac93f848566beb02b86" name="a08ed9d44b5a29ac93f848566beb02b86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08ed9d44b5a29ac93f848566beb02b86">&#9670;&#160;</a></span>LeafCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::QuadTreePartition::LeafCount </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00461">461</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a17d2f2c6c4858f1de834a12af6d26f16" name="a17d2f2c6c4858f1de834a12af6d26f16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17d2f2c6c4858f1de834a12af6d26f16">&#9670;&#160;</a></span>MinLeafSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::QuadTreePartition::MinLeafSize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00462">462</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a5d6312787b2a17d088378457e0909276" name="a5d6312787b2a17d088378457e0909276"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d6312787b2a17d088378457e0909276">&#9670;&#160;</a></span>RegisterAllChunks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::RegisterAllChunks </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>reg</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a></td>          <td class="paramname"><span class="paramname"><em>level</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>すべてのチャンクをレジストリに登録する関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reg</td><td>チャンクレジストリ </td></tr>
+    <tr><td class="paramname">level</td><td>レベルID </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00113">113</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a40764c85e5e534dea8cb395c5c374ed9" name="a40764c85e5e534dea8cb395c5c374ed9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40764c85e5e534dea8cb395c5c374ed9">&#9670;&#160;</a></span>ReloadLeafByPoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::ReloadLeafByPoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a></td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>reg</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a></td>          <td class="paramname"><span class="paramname"><em>level</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00369">369</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a5583bf5c09adf4e566ca31088255e514" name="a5583bf5c09adf4e566ca31088255e514"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5583bf5c09adf4e566ca31088255e514">&#9670;&#160;</a></span>SetMaxPerLeafCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::SetMaxPerLeafCount </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00464">464</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab6a9ef452ceff078d4c3da68722785d8" name="ab6a9ef452ceff078d4c3da68722785d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6a9ef452ceff078d4c3da68722785d8">&#9670;&#160;</a></span>SetMinPerLeafCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::SetMinPerLeafCount </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00467">467</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac01c07e9becd154c9580e37828e10ab7" name="ac01c07e9becd154c9580e37828e10ab7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac01c07e9becd154c9580e37828e10ab7">&#9670;&#160;</a></span>SubdivideIf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::SubdivideIf </td>
+          <td>(</td>
+          <td class="paramtype">std::function&lt; bool(const <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> &amp;)&gt;</td>          <td class="paramname"><span class="paramname"><em>predicate</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>(<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a>, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp;)&gt;</td>          <td class="paramname"><span class="paramname"><em>posFn</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00352">352</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a1169d7765018285240a6d68431fca397" name="a1169d7765018285240a6d68431fca397"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1169d7765018285240a6d68431fca397">&#9670;&#160;</a></span>SubdivideIfOverCapacity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::SubdivideIfOverCapacity </td>
+          <td>(</td>
+          <td class="paramtype">std::function&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>(<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a>, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp;)&gt;</td>          <td class="paramname"><span class="paramname"><em>posFn</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00362">362</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3eafe2fa7358f20d2817dbaadb04ad9b" name="a3eafe2fa7358f20d2817dbaadb04ad9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3eafe2fa7358f20d2817dbaadb04ad9b">&#9670;&#160;</a></span>Update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::QuadTreePartition::Update </td>
+          <td>(</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>deltaTime</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エンティティの数が少ない葉を統合ために更新 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">deltaTime</td><td>前回の更新からの経過時間(秒) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00072">72</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<a id="a2abe4e9e406dc7fafa366139fb0a7e8f" name="a2abe4e9e406dc7fafa366139fb0a7e8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2abe4e9e406dc7fafa366139fb0a7e8f">&#9670;&#160;</a></span>coalesceInterval</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double SFW::QuadTreePartition::coalesceInterval = 10.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00043">43</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7750e1edb9d139a1963b3a80e9053bc6" name="a7750e1edb9d139a1963b3a80e9053bc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7750e1edb9d139a1963b3a80e9053bc6">&#9670;&#160;</a></span>kZPositive</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a84044fc582e79824a66f3b6dccc76c38">ZPositive</a> SFW::QuadTreePartition::kZPositive = <a class="el" href="#a84044fc582e79824a66f3b6dccc76c38a601560b94fbb188919dd1d36c8ab70a4">ZPositive::North</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a> の <a class="el" href="_quad_tree_partition_8h_source.html#l00039">39</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/<a class="el" href="_quad_tree_partition_8h_source.html">QuadTreePartition.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="class_s_f_w_1_1_quad_tree_partition.html">QuadTreePartition</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

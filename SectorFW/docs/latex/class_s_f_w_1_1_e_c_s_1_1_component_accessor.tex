@@ -1,0 +1,143 @@
+\doxysection{SFW\+::ECS\+::Component\+Accessor\texorpdfstring{$<$}{<} Access\+Types \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_accessor}{}\label{class_s_f_w_1_1_e_c_s_1_1_component_accessor}\index{SFW::ECS::ComponentAccessor$<$ AccessTypes $>$@{SFW::ECS::ComponentAccessor$<$ AccessTypes $>$}}
+
+
+指定したアクセス型に基づいて、コンポーネントにアクセスするためのクラス  
+
+
+
+
+{\ttfamily \#include $<$Accessor.\+hpp$>$}
+
+SFW\+::ECS\+::Component\+Accessor\texorpdfstring{$<$}{<} Access\+Types \texorpdfstring{$>$}{>} の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_f_w_1_1_e_c_s_1_1_component_accessor}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_ae78851ac5d4ebd20175ad26ab38235a3}{Component\+Accessor}} (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*}chunk) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Access\+Type$>$ \newline
+requires One\+Of$<$Access\+Type, Access\+Types...$>$}\\std\+::optional$<$ typename \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_access_policy}{Access\+Policy}}$<$ Access\+Type $>$\+::\+Pointer\+Type $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_aaf512f8f4037db29c2806182c5254d47}{Get}} () noexcept
+\begin{DoxyCompactList}\small\item\em 指定したアクセス型に対して、コンポーネントを取得する関数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Access\+Type$>$ }\\std\+::optional$<$ void $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_a1b114976b52106b9dd4a7689bbe03bb9}{Get}} () noexcept
+\begin{DoxyCompactList}\small\item\em requiresに一致しなかったときのフォールバック定義 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base}{SFW\+::\+ECS\+::\+Component\+Accessor\+Base}} に属する継承公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base_a467e7d8742a77ef0848d03ca997ae928}{Component\+Accessor\+Base}} (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*}chunk) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base_afa4177a3a632eceff21603e05b339164}{Get\+Capacity}} () const noexcept
+\begin{DoxyCompactList}\small\item\em チャンクの容量を取得する関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{その他の継承メンバ}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base}{SFW\+::\+ECS\+::\+Component\+Accessor\+Base}} に属する継承静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T$>$ \newline
+requires ECS\+::\+Is\+So\+AComponent$<$T$>$}\\static T \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base_af3183a034746d9f5ecab79b5a474daea}{Convert\+So\+ATo\+Ao\+SComponent}} (const typename T\+::\+To\+Ptr \&p, size\+\_\+t index) noexcept
+\begin{DoxyCompactList}\small\item\em So\+Aコンポーネントを\+Ao\+Sコンポーネントに変換する関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base}{SFW\+::\+ECS\+::\+Component\+Accessor\+Base}} に属する継承限定公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Access\+Type, typename Ptr\+Type, typename Component\+Type$>$ }\\std\+::optional$<$ typename \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_access_policy}{Access\+Policy}}$<$ Access\+Type $>$\+::\+Pointer\+Type $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base_af7b6e7bbf3372de2af9cd846e20d817e}{Get\+Component}} ()
+\item 
+{\footnotesize template$<$typename Ptr\+Type, size\+\_\+t Index$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base_abff4e323707bf5ad2336ce048d93b4a2}{Get\+Member\+Start\+Ptr\+Impl}} (\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1fa083af926da159fc321773dbfc28c5}{Buffer\+Type}} \texorpdfstring{$\ast$}{*}base, size\+\_\+t capacity, size\+\_\+t \&offset, Ptr\+Type \&value) noexcept
+\begin{DoxyCompactList}\small\item\em So\+Aコンポーネントのメンバーの開始ポインタを取得する関数の実装 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Ptr\+Type, size\+\_\+t... Is$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base_aece30059ab312ef987bea62a0e3c1517}{Get\+Member\+Start\+Ptr}} (\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1fa083af926da159fc321773dbfc28c5}{Buffer\+Type}} \texorpdfstring{$\ast$}{*}base, size\+\_\+t capacity, size\+\_\+t \&offset, Ptr\+Type \&value, std\+::index\+\_\+sequence$<$ Is... $>$) noexcept
+\begin{DoxyCompactList}\small\item\em So\+Aコンポーネントのメンバーの開始ポインタを取得する関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base}{SFW\+::\+ECS\+::\+Component\+Accessor\+Base}} に属する継承静的限定公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T, std\+::size\+\_\+t... Is$>$ }\\static void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base_aa04b1bca383abf5e8b61c131e5ecaeb1}{Store\+So\+ATo\+Ao\+SImpl}} (const typename T\+::\+To\+Ptr \&p, size\+\_\+t index, T \&out, std\+::index\+\_\+sequence$<$ Is... $>$) noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename... Access\+Types$>$\newline
+class SFW\+::\+ECS\+::\+Component\+Accessor$<$ Access\+Types $>$}
+指定したアクセス型に基づいて、コンポーネントにアクセスするためのクラス 
+
+ \mbox{\hyperlink{_accessor_8hpp_source}{Accessor.\+hpp}} の \mbox{\hyperlink{_accessor_8hpp_source_l00204}{204}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_accessor_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_accessor_ae78851ac5d4ebd20175ad26ab38235a3}\index{SFW::ECS::ComponentAccessor$<$ AccessTypes $>$@{SFW::ECS::ComponentAccessor$<$ AccessTypes $>$}!ComponentAccessor@{ComponentAccessor}}
+\index{ComponentAccessor@{ComponentAccessor}!SFW::ECS::ComponentAccessor$<$ AccessTypes $>$@{SFW::ECS::ComponentAccessor$<$ AccessTypes $>$}}
+\doxysubsubsection{\texorpdfstring{ComponentAccessor()}{ComponentAccessor()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_accessor_ae78851ac5d4ebd20175ad26ab38235a3} 
+template$<$typename... Access\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor}{SFW\+::\+ECS\+::\+Component\+Accessor}}$<$ Access\+Types $>$\+::\+Component\+Accessor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*}}]{chunk}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em chunk} & アクセスするアーキタイプチャンク \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_accessor_8hpp_source}{Accessor.\+hpp}} の \mbox{\hyperlink{_accessor_8hpp_source_l00210}{210}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_accessor_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_accessor_aaf512f8f4037db29c2806182c5254d47}\index{SFW::ECS::ComponentAccessor$<$ AccessTypes $>$@{SFW::ECS::ComponentAccessor$<$ AccessTypes $>$}!Get@{Get}}
+\index{Get@{Get}!SFW::ECS::ComponentAccessor$<$ AccessTypes $>$@{SFW::ECS::ComponentAccessor$<$ AccessTypes $>$}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_accessor_aaf512f8f4037db29c2806182c5254d47} 
+template$<$typename... Access\+Types$>$ \\
+template$<$typename Access\+Type$>$ \newline
+requires One\+Of$<$Access\+Type, Access\+Types...$>$\\
+std\+::optional$<$ typename \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_access_policy}{Access\+Policy}}$<$ Access\+Type $>$\+::\+Pointer\+Type $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor}{SFW\+::\+ECS\+::\+Component\+Accessor}}$<$ Access\+Types $>$\+::\+Get (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+指定したアクセス型に対して、コンポーネントを取得する関数 
+
+
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em Access\+Type} & アクセスするコンポーネントの型(Access\+Info.\+h参照) \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{戻り値}
+　std\+::optional$<$\+Pointer\+Type$>$ コンポーネントのポインタ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_accessor_8hpp_source}{Accessor.\+hpp}} の \mbox{\hyperlink{_accessor_8hpp_source_l00218}{218}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_accessor_a1b114976b52106b9dd4a7689bbe03bb9}\index{SFW::ECS::ComponentAccessor$<$ AccessTypes $>$@{SFW::ECS::ComponentAccessor$<$ AccessTypes $>$}!Get@{Get}}
+\index{Get@{Get}!SFW::ECS::ComponentAccessor$<$ AccessTypes $>$@{SFW::ECS::ComponentAccessor$<$ AccessTypes $>$}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_accessor_a1b114976b52106b9dd4a7689bbe03bb9} 
+template$<$typename... Access\+Types$>$ \\
+template$<$typename Access\+Type$>$ \\
+std\+::optional$<$ void $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_accessor}{SFW\+::\+ECS\+::\+Component\+Accessor}}$<$ Access\+Types $>$\+::\+Get (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+requiresに一致しなかったときのフォールバック定義 
+
+\begin{DoxyReturn}{戻り値}
+std\+::optional$<$void$>$ 空のオプション 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_accessor_8hpp_source}{Accessor.\+hpp}} の \mbox{\hyperlink{_accessor_8hpp_source_l00229}{229}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_accessor_8hpp}{Accessor.\+hpp}}\end{DoxyCompactItemize}

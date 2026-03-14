@@ -1,0 +1,300 @@
+\doxysection{SFW\+::Graphics\+::Render\+Queue\+::Producer\+Session\+External クラス}
+\hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{}\label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+
+
+生産者セッション-\/ユーザーに渡す用（thread\+\_\+localを使わない）  
+
+
+
+
+{\ttfamily \#include $<$Render\+Queue.\+h$>$}
+
+SFW\+::Graphics\+::Render\+Queue\+::Producer\+Session\+External の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}
+\end{center}
+\end{figure}
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}{Small\+Buf}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a4990fc2a08040d643ac4dd9de631dd8e}{Producer\+Session\+External}} (\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{Render\+Queue}} \&owner, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}{Small\+Buf}} \&buf) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a85b9ec0b9c9ad1ecb238c43fce01b225}{Producer\+Session\+External}} (const \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}} \&)=delete
+\begin{DoxyCompactList}\small\item\em コピー禁止 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a645708f64198823d50f44b1c90a24384}{operator=}} (const \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}} \&)=delete
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aa88dd21008ec8d6f7783044a91e47f18}{Producer\+Session\+External}} (\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}} \&\&other) noexcept
+\begin{DoxyCompactList}\small\item\em ムーブは可 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a11167714e954f89140458ebd2e4756ab}{operator=}} (\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}} \&\&other) noexcept
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a8225ffc3544cc8a72d495851602bc29d}{\texorpdfstring{$\sim$}{\string~}\+Producer\+Session\+External}} ()
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a208b3164e835d24532f0ea68d69f2b34}{Push}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{Draw\+Command}} cmd)
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_s_f_w_1_1_graphics_1_1_draw_command}{Draw\+Command} を 1 件プールへ書き込み \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_abc678eebcf697d6b0ecbd90ce87cdbfb}{Alloc\+Instance}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data}{Instance\+Data}} \&inst)
+\begin{DoxyCompactList}\small\item\em インスタンスを 1 件プールへ書き込み、\+Index を返す \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a676ec1e5f136a22af0335284099c4d96}{Alloc\+Instance}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data}{Instance\+Data}} \&\&inst)
+\begin{DoxyCompactList}\small\item\em インスタンスを 1 件プールへ書き込み、\+Index を返す（ムーブ版） \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aabce60fecbbec79912c1700860df8ce5}{Alloc\+Instance}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Instance\+Pool}} \&inst)
+\begin{DoxyCompactList}\small\item\em インスタンスを 1 件プールへ書き込み、\+Index を返す \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a03a5a8adc2b87f3a66862de7c0d4b0e7}{Alloc\+Instance}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Instance\+Pool}} \&\&inst)
+\begin{DoxyCompactList}\small\item\em インスタンスを 1 件プールへ書き込み、\+Index を返す（ムーブ版） \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a73fc07b95267231e77a4d77f192a3fd9}{Alloc\+Instances\+From\+World\+SoA}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a}{Math\+::\+Matrix3x4f\+SoA}} \&w\+Soa, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} \texorpdfstring{$\ast$}{*}out\+Idx=nullptr)
+\begin{DoxyCompactList}\small\item\em World\+SoA からまとめて Instance を確保・書き込み \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aba32bf5aa7875f7a48fc7ef2ca6a7efe}{Alloc\+Instances\+From\+World\+Color\+SoA}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a}{Math\+::\+Matrix3x4f\+SoA}} \&w\+Soa, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Math\+::\+Vec4f}} \texorpdfstring{$\ast$}{*}c\+Soa, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} \texorpdfstring{$\ast$}{*}out\+Idx=nullptr)
+\begin{DoxyCompactList}\small\item\em World\+SoA と Color\+SoA からまとめて Instance を確保・書き込み \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a61f3124166e815a89bcdb90931f51070}{Next\+Instance\+Index}} ()
+\begin{DoxyCompactList}\small\item\em 次に割り当てられるインスタンスインデックス \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_af033992f66ef4be28c4ff102168312d7}{Memset\+Instance\+Pool}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} index, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Instance\+Pool}} \&inst) noexcept
+\begin{DoxyCompactList}\small\item\em 　インスタンスプールを 1 件分 memset で埋める \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_ad7f42262109e12fcf721b9a78b7a2266}{Flush\+All}} ()
+\begin{DoxyCompactList}\small\item\em 全バッファをキューへフラッシュ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aa5eef23167db2c3345fa338323c85d00}{k\+Chunk}} = 128
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+生産者セッション-\/ユーザーに渡す用（thread\+\_\+localを使わない） 
+
+外部からバッファを渡す 
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00396}{396}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a4990fc2a08040d643ac4dd9de631dd8e}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!ProducerSessionExternal@{ProducerSessionExternal}}
+\index{ProducerSessionExternal@{ProducerSessionExternal}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{ProducerSessionExternal()}{ProducerSessionExternal()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a4990fc2a08040d643ac4dd9de631dd8e} 
+SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\+Producer\+Session\+External (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue}{Render\+Queue}} \&}]{owner}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}{Small\+Buf}} \&}]{buf}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em owner} & このセッションが属する \doxylink{class_s_f_w_1_1_graphics_1_1_render_queue}{Render\+Queue} への参照 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00413}{413}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a85b9ec0b9c9ad1ecb238c43fce01b225}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!ProducerSessionExternal@{ProducerSessionExternal}}
+\index{ProducerSessionExternal@{ProducerSessionExternal}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{ProducerSessionExternal()}{ProducerSessionExternal()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a85b9ec0b9c9ad1ecb238c43fce01b225} 
+SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\+Producer\+Session\+External (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+コピー禁止 
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aa88dd21008ec8d6f7783044a91e47f18}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!ProducerSessionExternal@{ProducerSessionExternal}}
+\index{ProducerSessionExternal@{ProducerSessionExternal}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{ProducerSessionExternal()}{ProducerSessionExternal()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aa88dd21008ec8d6f7783044a91e47f18} 
+SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\+Producer\+Session\+External (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}} \&\&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ムーブは可 
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00424}{424}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a8225ffc3544cc8a72d495851602bc29d}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!````~ProducerSessionExternal@{\texorpdfstring{$\sim$}{\string~}ProducerSessionExternal}}
+\index{````~ProducerSessionExternal@{\texorpdfstring{$\sim$}{\string~}ProducerSessionExternal}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ProducerSessionExternal()}{\string~ProducerSessionExternal()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a8225ffc3544cc8a72d495851602bc29d} 
+SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\texorpdfstring{$\sim$}{\string~}\+Producer\+Session\+External (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00446}{446}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_abc678eebcf697d6b0ecbd90ce87cdbfb}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!AllocInstance@{AllocInstance}}
+\index{AllocInstance@{AllocInstance}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{AllocInstance()}{AllocInstance()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_abc678eebcf697d6b0ecbd90ce87cdbfb} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\+Alloc\+Instance (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data}{Instance\+Data}} \&}]{inst}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [nodiscard]}}
+
+
+
+インスタンスを 1 件プールへ書き込み、\+Index を返す 
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aabce60fecbbec79912c1700860df8ce5}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!AllocInstance@{AllocInstance}}
+\index{AllocInstance@{AllocInstance}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{AllocInstance()}{AllocInstance()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aabce60fecbbec79912c1700860df8ce5} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\+Alloc\+Instance (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Instance\+Pool}} \&}]{inst}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [nodiscard]}}
+
+
+
+インスタンスを 1 件プールへ書き込み、\+Index を返す 
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a676ec1e5f136a22af0335284099c4d96}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!AllocInstance@{AllocInstance}}
+\index{AllocInstance@{AllocInstance}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{AllocInstance()}{AllocInstance()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a676ec1e5f136a22af0335284099c4d96} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\+Alloc\+Instance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_data}{Instance\+Data}} \&\&}]{inst}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [nodiscard]}}
+
+
+
+インスタンスを 1 件プールへ書き込み、\+Index を返す（ムーブ版） 
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a03a5a8adc2b87f3a66862de7c0d4b0e7}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!AllocInstance@{AllocInstance}}
+\index{AllocInstance@{AllocInstance}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{AllocInstance()}{AllocInstance()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a03a5a8adc2b87f3a66862de7c0d4b0e7} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\+Alloc\+Instance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Instance\+Pool}} \&\&}]{inst}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [nodiscard]}}
+
+
+
+インスタンスを 1 件プールへ書き込み、\+Index を返す（ムーブ版） 
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aba32bf5aa7875f7a48fc7ef2ca6a7efe}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!AllocInstancesFromWorldColorSoA@{AllocInstancesFromWorldColorSoA}}
+\index{AllocInstancesFromWorldColorSoA@{AllocInstancesFromWorldColorSoA}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{AllocInstancesFromWorldColorSoA()}{AllocInstancesFromWorldColorSoA()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aba32bf5aa7875f7a48fc7ef2ca6a7efe} 
+size\+\_\+t SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\+Alloc\+Instances\+From\+World\+Color\+SoA (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a}{Math\+::\+Matrix3x4f\+SoA}} \&}]{w\+Soa}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_aba1dfa36baa96e43434532113c99dae7}{Math\+::\+Vec4f}} \texorpdfstring{$\ast$}{*}}]{c\+Soa}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} \texorpdfstring{$\ast$}{*}}]{out\+Idx}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+
+
+World\+SoA と Color\+SoA からまとめて Instance を確保・書き込み 
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a73fc07b95267231e77a4d77f192a3fd9}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!AllocInstancesFromWorldSoA@{AllocInstancesFromWorldSoA}}
+\index{AllocInstancesFromWorldSoA@{AllocInstancesFromWorldSoA}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{AllocInstancesFromWorldSoA()}{AllocInstancesFromWorldSoA()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a73fc07b95267231e77a4d77f192a3fd9} 
+size\+\_\+t SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\+Alloc\+Instances\+From\+World\+SoA (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a}{Math\+::\+Matrix3x4f\+SoA}} \&}]{w\+Soa}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} \texorpdfstring{$\ast$}{*}}]{out\+Idx}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+
+
+World\+SoA からまとめて Instance を確保・書き込み 
+
+
+\begin{DoxyParams}{引数}
+{\em w\+Soa} & 3x4 行列の SoA \\
+\hline
+{\em out\+Idx} & null でなければ、確保した \doxylink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index} を count 個だけ書き出す \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+実際に確保・書き込んだ件数（プール残量で小さくなる可能性あり） 
+\end{DoxyReturn}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_ad7f42262109e12fcf721b9a78b7a2266}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!FlushAll@{FlushAll}}
+\index{FlushAll@{FlushAll}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{FlushAll()}{FlushAll()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_ad7f42262109e12fcf721b9a78b7a2266} 
+void SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\+Flush\+All (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+全バッファをキューへフラッシュ 
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00502}{502}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_af033992f66ef4be28c4ff102168312d7}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!MemsetInstancePool@{MemsetInstancePool}}
+\index{MemsetInstancePool@{MemsetInstancePool}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{MemsetInstancePool()}{MemsetInstancePool()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_af033992f66ef4be28c4ff102168312d7} 
+void SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\+Memset\+Instance\+Pool (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}}}]{index}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Instance\+Pool}} \&}]{inst}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+　インスタンスプールを 1 件分 memset で埋める 
+
+
+\begin{DoxyParams}{引数}
+{\em index} & 対象のインスタンスインデックス \\
+\hline
+{\em inst} & 埋めるデータ \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a61f3124166e815a89bcdb90931f51070}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!NextInstanceIndex@{NextInstanceIndex}}
+\index{NextInstanceIndex@{NextInstanceIndex}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{NextInstanceIndex()}{NextInstanceIndex()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a61f3124166e815a89bcdb90931f51070} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\+Next\+Instance\+Index (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [nodiscard]}}
+
+
+
+次に割り当てられるインスタンスインデックス 
+
+実際にフレーム当たりのインスタンス数が増える \Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a645708f64198823d50f44b1c90a24384}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a645708f64198823d50f44b1c90a24384} 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}} \& SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a11167714e954f89140458ebd2e4756ab}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a11167714e954f89140458ebd2e4756ab} 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}} \& SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}{Producer\+Session\+External}} \&\&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00431}{431}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a208b3164e835d24532f0ea68d69f2b34}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!Push@{Push}}
+\index{Push@{Push}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{Push()}{Push()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_a208b3164e835d24532f0ea68d69f2b34} 
+void SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::\+Push (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{Draw\+Command}}}]{cmd}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxylink{struct_s_f_w_1_1_graphics_1_1_draw_command}{Draw\+Command} を 1 件プールへ書き込み 
+
+
+\begin{DoxyParams}{引数}
+{\em cmd} & 書き込む \doxylink{struct_s_f_w_1_1_graphics_1_1_draw_command}{Draw\+Command} インスタンス \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00452}{452}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aa5eef23167db2c3345fa338323c85d00}\index{SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}!kChunk@{kChunk}}
+\index{kChunk@{kChunk}!SFW::Graphics::RenderQueue::ProducerSessionExternal@{SFW::Graphics::RenderQueue::ProducerSessionExternal}}
+\doxysubsubsection{\texorpdfstring{kChunk}{kChunk}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_aa5eef23167db2c3345fa338323c85d00} 
+size\+\_\+t SFW\+::\+Graphics\+::\+Render\+Queue\+::\+Producer\+Session\+External\+::k\+Chunk = 128\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+ \mbox{\hyperlink{_render_queue_8h_source}{Render\+Queue.\+h}} の \mbox{\hyperlink{_render_queue_8h_source_l00399}{399}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_render_queue_8h}{Render\+Queue.\+h}}\end{DoxyCompactItemize}

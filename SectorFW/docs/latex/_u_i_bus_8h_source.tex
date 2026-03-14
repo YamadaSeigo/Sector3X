@@ -1,0 +1,350 @@
+\doxysection{UIBus.\+h}
+\hypertarget{_u_i_bus_8h_source}{}\label{_u_i_bus_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/UIBus.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/UIBus.h}}
+\mbox{\hyperlink{_u_i_bus_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <deque>}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00016}00016\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00017}00017\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00018}00018\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_debug}{Debug}}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00019}00019\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00024}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{00024}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00025}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_ae08fbf99bc40f66b45b77836a4e72ee4}{00025}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::atomic<T>\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_ae08fbf99bc40f66b45b77836a4e72ee4}{v}}\{\};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00026}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_aec564f1a4653a285fbd3c48b08d0cd22}{00026}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_aec564f1a4653a285fbd3c48b08d0cd22}{publish}}(T\ x)\ \textcolor{keyword}{noexcept}\ \{\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_ae08fbf99bc40f66b45b77836a4e72ee4}{v}}.store(x,\ std::memory\_order\_release);\ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00027}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_a43fcc1ee7ac9f105b5aeebeca599157e}{00027}}\ \ \ \ \ \ \ \ \ \ \ \ \ T\ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_a43fcc1ee7ac9f105b5aeebeca599157e}{consume}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_ae08fbf99bc40f66b45b77836a4e72ee4}{v}}.load(std::memory\_order\_acquire);\ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00033}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_3_01std_1_1string_01_4}{00033}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest}}<\mbox{\hyperlink{namespacestd}{std}}::string>\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00034}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_3_01std_1_1string_01_4_a16c9c00cde5578fd7c8de8fe0f013047}{00034}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_3_01std_1_1string_01_4_a16c9c00cde5578fd7c8de8fe0f013047}{publish}}(std::string\ s)\ \{\ std::lock\_guard<std::mutex>\ lk(m);\ v\ =\ std::move(s);\ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00035}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_3_01std_1_1string_01_4_a3e129c9cdc673cd3dd5cc08809e07472}{00035}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_3_01std_1_1string_01_4_a3e129c9cdc673cd3dd5cc08809e07472}{consume}}()\textcolor{keyword}{\ const\ }\{\ std::lock\_guard<std::mutex>\ lk(m);\ \textcolor{keywordflow}{return}\ v;\ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m;}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest_ae08fbf99bc40f66b45b77836a4e72ee4}{v}};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00044}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue}{00044}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue}{UiQueue}}\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00046}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue_a34de98be850de42f0753fb3360bb20f8}{00046}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue_a34de98be850de42f0753fb3360bb20f8}{push}}(T\ x)\ \{\ std::lock\_guard<std::mutex>\ lk(m\_);\ q\_.push\_back(std::move(x));\ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00047}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue_af7b010997b62a418232b2d283d7fb5c9}{00047}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<T>\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue_af7b010997b62a418232b2d283d7fb5c9}{drain}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lk(m\_);}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<T>\ out;\ out.reserve(q\_.size());}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!q\_.empty())\ \{\ out.push\_back(std::move(q\_.front()));\ q\_.pop\_front();\ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ std::mutex\ m\_;}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ std::deque<T>\ q\_;}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00061}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry}{00061}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry}{Telemetry}}\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00062}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry_a17f5710d4d410eaa1a711d5da2d60f80}{00062}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry_a17f5710d4d410eaa1a711d5da2d60f80}{cpu}}\ =\ 0.f,\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry_af433bf2e640981e67a0566724a962f5a}{gpu}}\ =\ 0.f;}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00063}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry_a45fc99fed56d99b0b974d80c0b0bc5a7}{00063}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<float>\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry_a45fc99fed56d99b0b974d80c0b0bc5a7}{frameTimes}};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00068}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{00068}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{UiSnapshot}}\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00073}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{00073}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a5ac8f3556c57d92874aecde2dbea2429}{WriteGuard}}\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00075}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a5ac8f3556c57d92874aecde2dbea2429}{00075}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a5ac8f3556c57d92874aecde2dbea2429}{WriteGuard}}(\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{UiSnapshot}}\&\ s)}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ snap\_(s),\ lock\_(s.m\_)\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ここで\ lock}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00078}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a4948fbcae3d80a7cac7a54e95d4e3ebe}{00078}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry}{Telemetry}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a4948fbcae3d80a7cac7a54e95d4e3ebe}{data}}()\ noexcept\ \{\ \textcolor{keywordflow}{return}\ snap\_.back\_;\ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ コピー禁止・ムーブOK}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00080}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a59e5a9479da6e6175e00e47dc6b7323a}{00080}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a59e5a9479da6e6175e00e47dc6b7323a}{WriteGuard}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a5ac8f3556c57d92874aecde2dbea2429}{WriteGuard}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00081}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_aee552941099605c8b4fe815ab351bbde}{00081}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a5ac8f3556c57d92874aecde2dbea2429}{WriteGuard}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_aee552941099605c8b4fe815ab351bbde}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a5ac8f3556c57d92874aecde2dbea2429}{WriteGuard}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00082}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_af8022bbff52fabf6bcba99033ec80479}{00082}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_af8022bbff52fabf6bcba99033ec80479}{WriteGuard}}(\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a5ac8f3556c57d92874aecde2dbea2429}{WriteGuard}}\&\&)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00083}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a2d5446ac93788293021cf1342a201e67}{00083}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a5ac8f3556c57d92874aecde2dbea2429}{WriteGuard}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a2d5446ac93788293021cf1342a201e67}{operator=}}(\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard_a5ac8f3556c57d92874aecde2dbea2429}{WriteGuard}}\&\&)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{UiSnapshot}}\&\ snap\_;}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock<std::mutex>\ lock\_;\ \ \ \ \ \textcolor{comment}{//\ ここがスコープで自動\ unlock}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00092}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_a8012334274522b4eaa52a5b735ba3f59}{00092}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{WriteGuard}}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_a8012334274522b4eaa52a5b735ba3f59}{beginWrite}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{WriteGuard}}(*\textcolor{keyword}{this});\ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00096}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_a9cb511c1b1531c010e38e48052a16868}{00096}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_a9cb511c1b1531c010e38e48052a16868}{swap}}()\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ UIスレッド側}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lk(m\_);}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }std::swap;}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_a9cb511c1b1531c010e38e48052a16868}{swap}}(front\_,\ back\_);}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00105}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_a54809e73f41af8b3e1f1e4458f08257a}{00105}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry}{Telemetry}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_a54809e73f41af8b3e1f1e4458f08257a}{read}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ front\_;\ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_;}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_telemetry}{Telemetry}}\ front\_\{\},\ back\_\{\};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00114}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7}{00114}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7}{WorldTreeDepth}}\ :\ uint32\_t\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00115}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a2b45a029635465d690236b2cc1cbad60}{00115}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a2b45a029635465d690236b2cc1cbad60}{TREEDEPTH\_WORLD}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00116}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a04b592d815dcee98bfcf032e71dc71da}{00116}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a04b592d815dcee98bfcf032e71dc71da}{TREEDEPTH\_LEVEL}}\ =\ 1,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00117}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{00117}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{TREEDEPTH\_LEVELNODE}}\ =\ 2,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00118}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7ab0b6eb4ee39bfc02a41160ee04491bf3}{00118}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7ab0b6eb4ee39bfc02a41160ee04491bf3}{TREEDEPTH\_SYSTEM}}\ =\ 3,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00119}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a51a97141f1708d6abe7f1503a50d1390}{00119}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a51a97141f1708d6abe7f1503a50d1390}{TREEDEPTH\_RENDERGRAPH}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00120}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a4e911bdeaf47d5d831614e65d4ce4b0c}{00120}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a4e911bdeaf47d5d831614e65d4ce4b0c}{TREEDEPTH\_GROUP}}\ =\ 1,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00121}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a31d454798115b8615b2e41760c95a52a}{00121}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a31d454798115b8615b2e41760c95a52a}{TREEDEPTH\_DRAWCOMMAND}}\ =\ 2,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00122}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a50745519cbf5e21c2aac8cb11f4fc3fb}{00122}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a50745519cbf5e21c2aac8cb11f4fc3fb}{TREEDEPTH\_MAX}}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00123}00123\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00128}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item}{00128}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_a4624739bf3eb42b301cdaba72112cc19}{TreeItem}}\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00129}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_a21e44264821410beeadccd093782b951}{00129}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_a21e44264821410beeadccd093782b951}{id}};\ \ \ \ \ \ \ \textcolor{comment}{//\ 安定したID（ImGuiの開閉状態が保持される）}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00130}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_a5077f41b6602523d71e8ada5726c4ee0}{00130}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_a5077f41b6602523d71e8ada5726c4ee0}{depth}};\ \ \ \ \textcolor{comment}{//\ 0\ =\ root,\ 1\ =\ child,\ ...}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00131}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_a4cd3cb291899d57f13e67c62c82c4824}{00131}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_a4cd3cb291899d57f13e67c62c82c4824}{leaf}};\ \ \ \ \ \textcolor{comment}{//\ 子なしなら\ true}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00132}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_acb9944d65f5178ad90272804e8c3b76b}{00132}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_acb9944d65f5178ad90272804e8c3b76b}{label}};\ \textcolor{comment}{//\ 表示テキスト}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00134}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_a4624739bf3eb42b301cdaba72112cc19}{00134}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_a4624739bf3eb42b301cdaba72112cc19}{TreeItem}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00135}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_aace2810bb79cd7b300825ca44b35bf14}{00135}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_aace2810bb79cd7b300825ca44b35bf14}{TreeItem}}(uint64\_t\ i,\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7}{WorldTreeDepth}}\ d,\ \textcolor{keywordtype}{bool}\ l,\ \textcolor{keyword}{const}\ std::string\&\ lbl)}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_a21e44264821410beeadccd093782b951}{id}}(i),\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_a5077f41b6602523d71e8ada5726c4ee0}{depth}}(static\_cast<uint32\_t>(d)),\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_a4cd3cb291899d57f13e67c62c82c4824}{leaf}}(l),\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_item_acb9944d65f5178ad90272804e8c3b76b}{label}}(lbl)\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00142}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_frame}{00142}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_frame}{TreeFrame}}\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00143}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_frame_aa9e04c4d13e35b21d5eb25250aec570b}{00143}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<TreeItem>\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_frame_aa9e04c4d13e35b21d5eb25250aec570b}{items}};\ \textcolor{comment}{//\ 前順（プリオーダ）で\ depth\ 付き}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00148}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot}{00148}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot}{UiTreeSnapshot}}\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00149}00149\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00153}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard}{00153}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_a0ee4522893f3cb7d9069e211a5b6a09f}{WriteGuard}}\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00155}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_a0ee4522893f3cb7d9069e211a5b6a09f}{00155}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_a0ee4522893f3cb7d9069e211a5b6a09f}{WriteGuard}}(\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot}{UiTreeSnapshot}}\&\ s)}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ snap\_(s),\ lock\_(s.m\_)\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00158}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_ad3ba14ee21d437977e09db105c8518e9}{00158}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_frame}{TreeFrame}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_ad3ba14ee21d437977e09db105c8518e9}{data}}()\ noexcept\ \{\ \textcolor{keywordflow}{return}\ snap\_.back\_;\ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00159}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_aa58b986595ebfa108d0ab7faae0dbb52}{00159}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_aa58b986595ebfa108d0ab7faae0dbb52}{WriteGuard}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_a0ee4522893f3cb7d9069e211a5b6a09f}{WriteGuard}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00160}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_aaa2ad1ff9cffeb4e36c607c8054177ec}{00160}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_a0ee4522893f3cb7d9069e211a5b6a09f}{WriteGuard}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_aaa2ad1ff9cffeb4e36c607c8054177ec}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_a0ee4522893f3cb7d9069e211a5b6a09f}{WriteGuard}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00161}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_ac5afe99f60dd208603915056fc41acec}{00161}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_ac5afe99f60dd208603915056fc41acec}{WriteGuard}}(\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_a0ee4522893f3cb7d9069e211a5b6a09f}{WriteGuard}}\&\&)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00162}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_a94b3db8735c510a9cf3814fde779afca}{00162}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_a0ee4522893f3cb7d9069e211a5b6a09f}{WriteGuard}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_a94b3db8735c510a9cf3814fde779afca}{operator=}}(\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard_a0ee4522893f3cb7d9069e211a5b6a09f}{WriteGuard}}\&\&)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot}{UiTreeSnapshot}}\&\ snap\_;}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock<std::mutex>\ lock\_;}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00171}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_ad6bff303ac173e98081def0381937f7b}{00171}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard}{WriteGuard}}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_ad6bff303ac173e98081def0381937f7b}{beginWrite}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard}{WriteGuard}}(*\textcolor{keyword}{this});\ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00175}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_a926d488f20c3b5ef7c78cc436168f73b}{00175}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_a926d488f20c3b5ef7c78cc436168f73b}{swap}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lk(m\_);}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }std::swap;\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_a926d488f20c3b5ef7c78cc436168f73b}{swap}}(front\_,\ back\_);}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00183}\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_a99beeafe206378c056a87d4be9953664}{00183}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_frame}{TreeFrame}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_a99beeafe206378c056a87d4be9953664}{read}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ front\_;\ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_;}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_frame}{TreeFrame}}\ front\_\{\},\ back\_\{\};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00189}00189\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ================================}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ デバッグコントロール用の定義}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ================================}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00192}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6e}{00192}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6e}{DebugControlKind}}\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00193}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea17a2005227b5091b43b18b95f1a0d878}{00193}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea17a2005227b5091b43b18b95f1a0d878}{DC\_SLIDERFLOAT}},}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00194}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6eac2113140649de9a385e390d6e9702dbb}{00194}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6eac2113140649de9a385e390d6e9702dbb}{DC\_SLIDERINT}},}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00195}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ead2c909ffc1aeb322b9c749f17e5a0aa1}{00195}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ead2c909ffc1aeb322b9c749f17e5a0aa1}{DC\_CHECKBOX}},}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00196}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea06f85ad35ec8764cf3b1f69b2b3050c5}{00196}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea06f85ad35ec8764cf3b1f69b2b3050c5}{DC\_BUTTON}},}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00197}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea9dcd4833f6f2f107094ae561b9aad64f}{00197}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea9dcd4833f6f2f107094ae561b9aad64f}{DC\_STRING}},}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00198}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea59cf1d5848281d090de6ca134575e7ea}{00198}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6ea59cf1d5848281d090de6ca134575e7ea}{DC\_MAX}}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00200}00200\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00201}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control}{00201}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control}{DebugControl}}\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00202}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_ad4f8f0f1880224e53a4415f3b3453e6a}{00202}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3393e430d09ce4d78cffb70635eb7f6e}{DebugControlKind}}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_ad4f8f0f1880224e53a4415f3b3453e6a}{kind}}\{\};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00203}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a6c48205964e3b0ea4cb1bd7390483d3f}{00203}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a6c48205964e3b0ea4cb1bd7390483d3f}{category}}\ =\ \textcolor{stringliteral}{"{}Default"{}};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00204}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a232416099550b6ab28c287bb054e11f6}{00204}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a232416099550b6ab28c287bb054e11f6}{label}};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 現在値（UI側で保持）}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00207}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a7dcd876ff5a6b92754be18c16e75286c}{00207}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_ad0984457538156fc9bf90a7e0ff2f420}{f\_value}}\ =\ 0.f,\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a453eb784044189c2da22b0064972997c}{f\_min}}\ =\ 0.f,\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a7dcd876ff5a6b92754be18c16e75286c}{f\_max}}\ =\ 1.f,\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_ab56743aa845bdb6056ff533e8f5cd02d}{f\_speed}}\ =\ 0.1f;}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00208}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_abe1063997e360e468a2a8bad8002e11b}{00208}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a84a4915d12d22a29e557d54f58205352}{i\_value}}\ =\ 0,\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_aaca3648cebb0cdb20591356ed44c9f1a}{i\_min}}\ =\ 0,\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_abe1063997e360e468a2a8bad8002e11b}{i\_max}}\ =\ 100;}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00209}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_ae05b2525c10014f2c3acfbc3d625e4ad}{00209}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_ae05b2525c10014f2c3acfbc3d625e4ad}{b\_value}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00210}00210\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00211}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a6472465b46eb7b3b08b7f1050c0d11c8}{00211}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a6472465b46eb7b3b08b7f1050c0d11c8}{f\_target}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00212}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a269014da6f7353590316177a91327137}{00212}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}*\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a269014da6f7353590316177a91327137}{i\_target}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00213}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_ad587b63e5a17c7783fa37ccffa1e8ecc}{00213}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}*\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_ad587b63e5a17c7783fa37ccffa1e8ecc}{b\_target}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00214}00214\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 文字列用のバッファ（簡単のため固定長）}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00216}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a800ac171cc7d6da155245ceb4c2fcfb5}{00216}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a800ac171cc7d6da155245ceb4c2fcfb5}{TextBufSize}}\ =\ 256;}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00217}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a9208492b1dd6861f256f284a8537a2d0}{00217}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a9208492b1dd6861f256f284a8537a2d0}{textBuf}}[\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a800ac171cc7d6da155245ceb4c2fcfb5}{TextBufSize}}]\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00218}00218\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 値変更時に呼ばれるコールバック}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00220}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a38ebd73c2666beb5d620116a6ddcd230}{00220}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<void(\textcolor{keywordtype}{float})>\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a38ebd73c2666beb5d620116a6ddcd230}{onChangeF}};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00221}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a1fbf37605a2d4ca433430f9c414e1e55}{00221}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<void(\textcolor{keywordtype}{int})>\ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a1fbf37605a2d4ca433430f9c414e1e55}{onChangeI}};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00222}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a2e4f0bdeb0b0d1a18570374885dafbee}{00222}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<void(\textcolor{keywordtype}{bool})>\ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a2e4f0bdeb0b0d1a18570374885dafbee}{onChangeB}};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00223}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a5d0074558b8ca4ad3c47280c8329ed1a}{00223}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<void(std::string)>\ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_debug_control_a5d0074558b8ca4ad3c47280c8329ed1a}{onChangeText}};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00224}00224\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00229}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus}{00229}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus}{UIBus}}\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00230}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a5c3fbd4bbc2598f027ba0a964755e783}{00230}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::atomic<bool>\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a5c3fbd4bbc2598f027ba0a964755e783}{alive}}\{\ \textcolor{keyword}{false}\ \};\ \textcolor{comment}{//\ 生存フラグ}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00231}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_adb4d007993cf7bb4c50535b2da9e1da0}{00231}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest<float>}}\ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_adb4d007993cf7bb4c50535b2da9e1da0}{cpuLoad}},\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a98397eed68e5f5ef6024574eef286c41}{gpuLoad}};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00232}00232\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00233}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a73d37eea5a1e49ae5359022506d8fbbb}{00233}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest<float>}}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a73d37eea5a1e49ae5359022506d8fbbb}{logicMs}};\ \ \ \textcolor{comment}{//\ ロジックスレッド1frameの処理時間}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00234}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a59530caeccfebe47b3dbc6174ffd53cd}{00234}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest<float>}}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a59530caeccfebe47b3dbc6174ffd53cd}{renderMs}};\ \ \textcolor{comment}{//\ レンダースレッド1frameの処理時間}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00235}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a0401685dc3024e083093c67d11a25296}{00235}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest<float>}}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a0401685dc3024e083093c67d11a25296}{gpuFrameMs}};\ \textcolor{comment}{//\ GPUフレーム時間(ms)（Queryやtimestampから）}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00237}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a20673c6442f7584ab661202af2b84e4e}{00237}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_latest}{Latest<std::string>}}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a20673c6442f7584ab661202af2b84e4e}{status}};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00238}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_af0e5090c90007e10031c2c9579e77b98}{00238}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue}{UiQueue<std::string>}}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_af0e5090c90007e10031c2c9579e77b98}{logQ}};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00239}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a0d6eb6b85211db2da8a33e5ce49585ed}{00239}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{UiSnapshot}}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a0d6eb6b85211db2da8a33e5ce49585ed}{snap}};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00240}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_ab4aa964205b69e756462fd7b0a2d0534}{00240}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot}{UiTreeSnapshot}}\ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_ab4aa964205b69e756462fd7b0a2d0534}{tree}};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00241}00241\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00242}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a3cf6f2af12b9ff132ade63d4b6cefc86}{00242}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_queue}{UiQueue<DebugControl>}}\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_a3cf6f2af12b9ff132ade63d4b6cefc86}{debugControlRegisterQ}};\ \textcolor{comment}{//\ 登録キュー}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00243}\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_aeeeaedd6673cf6cfc3ce87e4bda2b9aa}{00243}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<DebugControl>\ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus_aeeeaedd6673cf6cfc3ce87e4bda2b9aa}{debugControls}};\ \ \ \ \ \textcolor{comment}{//\ UIスレッド側で保持}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00244}00244\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00248}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d0bba14e83fddcf055f0f5882ef1d20}{00248}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_u_i_bus}{UIBus}}\&\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d0bba14e83fddcf055f0f5882ef1d20}{GetUIBus}}();}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00249}00249\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00258}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3a2550c44f664296d2cb5964d84b8371}{00258}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3a2550c44f664296d2cb5964d84b8371}{RegisterDebugSliderFloat}}(}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ category,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ label,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ initialValue,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ minValue,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ maxValue,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ speed,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{void}(\textcolor{keywordtype}{float})>\ onChange,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ bound\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00267}00267\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00276}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_aab4c10e135d3458cd168dd0cd6d67ceb}{00276}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_aab4c10e135d3458cd168dd0cd6d67ceb}{BindDebugSliderFloat}}(}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ category,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ label,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ target,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ minValue,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ maxValue,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ speed\ =\ 0.1f)}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!target)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a3a2550c44f664296d2cb5964d84b8371}{RegisterDebugSliderFloat}}(}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ category,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *target,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ minValue,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maxValue,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ speed,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [target](\textcolor{keywordtype}{float}\ v)\ \{\ *target\ =\ v;\ \},\ \textcolor{comment}{//\ ここで代入}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ target}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00296}00296\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00297}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a5fa99aa82d281e8132a3425db5bc380c}{00297}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a5fa99aa82d281e8132a3425db5bc380c}{RegisterDebugSliderInt}}(}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ category,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ label,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ initialValue,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ minValue,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ maxValue,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{void}(\textcolor{keywordtype}{int})>\ onChange,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}*\ bound\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00305}00305\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00306}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a943a25648edcc118fbdde28001b97e71}{00306}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a943a25648edcc118fbdde28001b97e71}{BindDebugSliderInt}}(}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ category,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ label,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}*\ target,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ minValue,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ maxValue)}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00312}00312\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!target)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a5fa99aa82d281e8132a3425db5bc380c}{RegisterDebugSliderInt}}(}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ category,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *target,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ minValue,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maxValue,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [target](\textcolor{keywordtype}{int}\ v)\ \{\ *target\ =\ v;\ \},}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ target}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00323}00323\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00324}00324\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00325}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a01a7201fbf0ff09ad1cb9aec2bb776cc}{00325}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a01a7201fbf0ff09ad1cb9aec2bb776cc}{RegisterDebugCheckBox}}(}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ category,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ label,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ initialValue,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{void}(\textcolor{keywordtype}{bool})>\ onChange,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}*\ bound\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00331}00331\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00332}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ab0d1c9a03e298b6aa90e3ba7c9015cef}{00332}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ab0d1c9a03e298b6aa90e3ba7c9015cef}{BindDebugCheckBox}}(}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ category,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ label,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}*\ target)}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00336}00336\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!target)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a01a7201fbf0ff09ad1cb9aec2bb776cc}{RegisterDebugCheckBox}}(}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ category,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *target,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [target](\textcolor{keywordtype}{bool}\ v)\ \{\ *target\ =\ v;\ \},}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ target}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00345}00345\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00346}00346\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00347}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_aedcb688663a956ee879675fbb6aeb92b}{00347}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_aedcb688663a956ee879675fbb6aeb92b}{RegisterDebugButton}}(}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ category,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ label,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{void}(\textcolor{keywordtype}{bool})>\ onChange);}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00351}00351\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00352}00352\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 例:\ UIBus.h}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00353}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a2c8e0a8d4e63206d4cae287d01ee46e6}{00353}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a2c8e0a8d4e63206d4cae287d01ee46e6}{RegisterDebugText}}(}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ category,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ label,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ initial,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{void}(std::string)>\ onChange);}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00358}00358\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00359}00359\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 変数ポインタを直接バインドする簡易版}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00360}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ad07e49b18e66359e5a6b7eff8f478fbf}{00360}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ad07e49b18e66359e5a6b7eff8f478fbf}{BindDebugText}}(}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ category,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ label,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ std::string*\ target)}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00364}00364\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!target)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a2c8e0a8d4e63206d4cae287d01ee46e6}{RegisterDebugText}}(}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ category,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *target,}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [target](std::string\ v)\ \{\ *target\ =\ std::move(v);\ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00372}00372\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00373}00373\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00377}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a52ff234b5d6e40bcef2b394ae7999cc8}{00377}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a52ff234b5d6e40bcef2b394ae7999cc8}{StartUIBus}}();}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00381}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae2759b232b15cacfdc131ee5c9ec0585}{00381}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae2759b232b15cacfdc131ee5c9ec0585}{StopUIBus}}();}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00385}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae62b8d5feb3160cf83ad7102867c899e}{00385}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae62b8d5feb3160cf83ad7102867c899e}{PublishCpu}}(\textcolor{keywordtype}{float}\ v);}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00389}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_adad758e341c01e05d1143fbaa3fed49d}{00389}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_adad758e341c01e05d1143fbaa3fed49d}{PublishGpu}}(\textcolor{keywordtype}{float}\ v);}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00390}00390\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00394}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_aa600d63fbaac812f9054d99e9771d555}{00394}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_aa600d63fbaac812f9054d99e9771d555}{PublishLogicMs}}(\textcolor{keywordtype}{float}\ ms);}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00398}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a414fa917af9d755a3555b5209873c24e}{00398}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a414fa917af9d755a3555b5209873c24e}{PublishRenderMs}}(\textcolor{keywordtype}{float}\ ms);}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00402}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a9e1a99f1084579cbeab606452559bafe}{00402}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a9e1a99f1084579cbeab606452559bafe}{PublishGpuFrameMs}}(\textcolor{keywordtype}{float}\ ms);}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00403}00403\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00407}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a4f848186328195747e7e0164bdf74d87}{00407}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a4f848186328195747e7e0164bdf74d87}{PublishStatus}}(std::string\ s);}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00411}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_aedec323da1ec660d4b9776b7f93a8b6b}{00411}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_aedec323da1ec660d4b9776b7f93a8b6b}{PushLog}}(std::string\ s);}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00415}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a8f49bf39cb26ca3db5ed6a01fb989e56}{00415}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}{UiSnapshot::WriteGuard}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a8f49bf39cb26ca3db5ed6a01fb989e56}{BeginTelemetryWrite}}();}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00419}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48}{00419}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard}{UiTreeSnapshot::WriteGuard}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48}{BeginTreeWrite}}();}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00420}00420\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00421}00421\ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00422}00422\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00423}00423\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00424}00424\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00425}00425\ \textcolor{preprocessor}{\#define\ REGISTER\_DEBUG\_SLIDER\_FLOAT(category,\ label,\ initialValue,\ minValue,\ maxValue,\ speed,\ onChange)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00426}00426\ \textcolor{preprocessor}{\ \ \ \ SFW::Debug::RegisterDebugSliderFloat(category,\ label,\ initialValue,\ minValue,\ maxValue,\ speed,\ onChange)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00427}00427\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00428}00428\ \textcolor{preprocessor}{\#define\ REGISTER\_DEBUG\_BOUND\_SLIDER\_FLOAT(category,\ label,\ initialValue,\ minValue,\ maxValue,\ speed,\ onChange,\ bound)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00429}00429\ \textcolor{preprocessor}{\ \ \ \ SFW::Debug::RegisterDebugSliderFloat(category,\ label,\ initialValue,\ minValue,\ maxValue,\ speed,\ onChange,\ bound)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00430}00430\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00431}00431\ \textcolor{preprocessor}{\#define\ BIND\_DEBUG\_SLIDER\_INT(category,\ label,\ target,\ minValue,\ maxValue)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00432}00432\ \textcolor{preprocessor}{\ \ \ \ SFW::Debug::BindDebugSliderInt(category,\ label,\ target,\ minValue,\ maxValue)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00433}00433\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00434}00434\ \textcolor{preprocessor}{\#define\ BIND\_DEBUG\_SLIDER\_FLOAT(category,\ label,\ target,\ minValue,\ maxValue,\ speed)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00435}00435\ \textcolor{preprocessor}{\ \ \ \ SFW::Debug::BindDebugSliderFloat(category,\ label,\ target,\ minValue,\ maxValue,\ speed)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00436}00436\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00437}00437\ \textcolor{preprocessor}{\#define\ REGISTER\_DEBUG\_CHECKBOX(category,\ label,\ initialValue,\ onChange)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00438}00438\ \textcolor{preprocessor}{\ \ \ \ SFW::Debug::RegisterDebugCheckBox(category,\ label,\ initialValue,\ onChange)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00439}00439\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00440}00440\ \textcolor{preprocessor}{\#define\ BIND\_DEBUG\_CHECKBOX(category,\ label,\ target)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00441}00441\ \textcolor{preprocessor}{\ \ \ \ SFW::Debug::BindDebugCheckBox(category,\ label,\ target)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00442}00442\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00443}00443\ \textcolor{preprocessor}{\#define\ REGISTER\_DEBUG\_BUTTON(category,\ label,\ onChange)\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00444}00444\ \textcolor{preprocessor}{\ \ \ \ SFW::Debug::RegisterDebugButton(category,\ label,\ onChange)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00445}00445\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00446}00446\ \textcolor{preprocessor}{\#define\ BIND\_DEBUG\_TEXT(category,\ label,\ target)\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00447}00447\ \textcolor{preprocessor}{\ \ \ \ SFW::Debug::BindDebugText(category,\ label,\ target);}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00448}00448\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00449}00449\ \textcolor{preprocessor}{\#else\ }}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00450}00450\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00451}\mbox{\hyperlink{_u_i_bus_8h_ac6407c7259a34d037a2ce58d3f141129}{00451}}\ \textcolor{preprocessor}{\#define\ REGISTER\_DEBUG\_SLIDER\_FLOAT(category,\ label,\ initialValue,\ minValue,\ maxValue,\ speed,\ onChange)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00452}\mbox{\hyperlink{_u_i_bus_8h_a019566125f0979d439115272105f02aa}{00452}}\ \textcolor{preprocessor}{\#define\ REGISTER\_DEBUG\_BOUND\_SLIDER\_FLOAT(category,\ label,\ initialValue,\ minValue,\ maxValue,\ speed,\ onChange,\ bound)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00453}\mbox{\hyperlink{_u_i_bus_8h_a41a82dc527c10ee03c545f5685a60f3b}{00453}}\ \textcolor{preprocessor}{\#define\ BIND\_DEBUG\_SLIDER\_FLOAT(category,\ label,\ target,\ minValue,\ maxValue,\ speed)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00454}\mbox{\hyperlink{_u_i_bus_8h_aa6e43d3d7b1ae94b0f671428aab429f0}{00454}}\ \textcolor{preprocessor}{\#define\ REGISTER\_DEBUG\_CHECKBOX(category,\ label,\ initialValue,\ onChange)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00455}\mbox{\hyperlink{_u_i_bus_8h_a12e37285283b97e1ffa79055445e42c7}{00455}}\ \textcolor{preprocessor}{\#define\ BIND\_DEBUG\_CHECKBOX(category,\ label,\ target)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00456}\mbox{\hyperlink{_u_i_bus_8h_aa4ceab994694d395a3fce3e8b9b59294}{00456}}\ \textcolor{preprocessor}{\#define\ REGISTER\_DEBUG\_BUTTON(category,\ label,\ onChange)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00457}\mbox{\hyperlink{_u_i_bus_8h_a27008ebc4145b0faff8852b9b9dcbfbc}{00457}}\ \textcolor{preprocessor}{\#define\ BIND\_DEBUG\_TEXT(category,\ label,\ target)}}
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00458}00458\ }
+\DoxyCodeLine{\Hypertarget{_u_i_bus_8h_source_l00459}00459\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_ENABLE\_IMGUI}}
+
+\end{DoxyCode}

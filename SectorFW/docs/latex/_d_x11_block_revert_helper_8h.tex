@@ -1,0 +1,160 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\+DX11\+Block\+Revert\+Helper.h ファイル}
+\hypertarget{_d_x11_block_revert_helper_8h}{}\label{_d_x11_block_revert_helper_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11BlockRevertHelper.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11BlockRevertHelper.h}}
+
+
+Terrain\+Clustered のブロックリバート（クラスタリング前の状態に戻す）を支援するユーティリティ  
+
+
+{\ttfamily \#include $<$d3d11.\+h$>$}\newline
+{\ttfamily \#include $<$d3dcompiler.\+h$>$}\newline
+{\ttfamily \#include $<$wrl/client.\+h$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$execution$>$}\newline
+{\ttfamily \#include "{}../\+Terrain\+Clustered.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Render\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}DX11\+Buffer\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}../../\+Math/\+AABB.\+hpp"{}}\newline
+{\ttfamily \#include "{}../third\+\_\+party/meshoptimizer/\+MDx64/include/meshoptimizer.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Light\+Shadow\+Service.\+h"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_range_u32}{SFW\+::\+Graphics\+::\+DX11\+::\+Cluster\+Range\+U32}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_lod_range}{SFW\+::\+Graphics\+::\+DX11\+::\+Cluster\+Lod\+Range}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_array_resources}{SFW\+::\+Graphics\+::\+DX11\+::\+Splat\+Array\+Resources}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_array_resources_1_1_per_cluster}{SFW\+::\+Graphics\+::\+DX11\+::\+Splat\+Array\+Resources\+::\+Per\+Cluster}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_c_b_data}{SFW\+::\+Graphics\+::\+DX11\+::\+Splat\+CBData}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_common_material_resources}{SFW\+::\+Graphics\+::\+DX11\+::\+Common\+Material\+Resources}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_param}{SFW\+::\+Graphics\+::\+DX11\+::\+Cluster\+Param}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_terrain_grid_c_b}{SFW\+::\+Graphics\+::\+DX11\+::\+Terrain\+Grid\+CB}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_terrain_patch_c_b}{SFW\+::\+Graphics\+::\+DX11\+::\+Terrain\+Patch\+CB}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_params_g_p_u}{SFW\+::\+Graphics\+::\+DX11\+::\+Cluster\+Params\+GPU}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context}{SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_c_s_params_shadow_combined}{SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+CSParams\+Shadow\+Combined}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_v_s_params}{SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+VSParams}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_c_s_params_c_b}{SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+CSParams\+CB}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_v_s_depth_params}{SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+VSDepth\+Params}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params}{SFW\+::\+Graphics\+::\+DX11\+::\+Block\+Reserved\+Context\+::\+Shadow\+Depth\+Params}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_layer_tiling}{SFW\+::\+Graphics\+::\+DX11\+::\+Layer\+Tiling}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW\+::\+Graphics}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11}{SFW\+::\+Graphics\+::\+DX11}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{マクロ定義}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_d_x11_block_revert_helper_8h_acda3ab65ee665d8929cc87669a6f40b5}{SFW\+\_\+\+USE\+\_\+\+SIMPLIFY\+\_\+\+SLOPPY}}~1
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0affdb226eb1a6d3a99eefd76a6a788a}{SFW\+::\+Graphics\+::\+DX11\+::\+Resolve\+Texture\+Path\+Fn}} = bool(\texorpdfstring{$\ast$}{*})(uint32\+\_\+t id, std\+::string\& path, bool\& force\+SRGB)
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a528c6029d84bf954a4c3b98d59550da5}{SFW\+::\+Graphics\+::\+DX11\+::\+Allocate\+Splat\+Id\+Fn}} = uint32\+\_\+t(\texorpdfstring{$\ast$}{*})(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{Texture\+Handle}} h, uint32\+\_\+t cx, uint32\+\_\+t cz, uint32\+\_\+t cid)
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a64ef67bc9cc82f559367ca4615a50bb5}{SFW\+::\+Graphics\+::\+DX11\+::\+Query\+Layer\+Tiling\+Fn}} = \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_layer_tiling}{Layer\+Tiling}}(\texorpdfstring{$\ast$}{*})(uint32\+\_\+t layer\+Index, uint32\+\_\+t cx, uint32\+\_\+t cz, uint32\+\_\+t cid)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a974e8dae1a1561f63f604e525531b0e7}{SFW\+::\+Graphics\+::\+DX11\+::\+Create\+Raw\+UAV}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, UINT byte\+Size, Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \&buf, Com\+Ptr$<$ ID3\+D11\+Unordered\+Access\+View $>$ \&uav)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_ac334a3e4fd5d3b1c7c6d50fb0f1b7bc0}{SFW\+::\+Graphics\+::\+DX11\+::\+Create\+Indirect\+Args}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \&buf, UINT width)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a38bd9907fc34339601a9bfbd9d98515d}{SFW\+::\+Graphics\+::\+DX11\+::\+Create\+Structured\+UInt}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, UINT count, bool as\+UAV, Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \&buf, Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \&srv, Com\+Ptr$<$ ID3\+D11\+Unordered\+Access\+View $>$ \&uav)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a9ea5e70c23e3d9dbfd76643071605f96}{SFW\+::\+Graphics\+::\+DX11\+::\+Create\+Structured\+UInt}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, UINT count, bool as\+UAV, Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \&buf, Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \texorpdfstring{$\ast$}{*}srv, Com\+Ptr$<$ ID3\+D11\+Unordered\+Access\+View $>$ \&uav, UINT cascade\+Size)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_aae57f04aa790c9d418201d16c20c366d}{SFW\+::\+Graphics\+::\+DX11\+::\+Create\+Structured}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, UINT count, UINT stride, UINT bind\+Flags, const void \texorpdfstring{$\ast$}{*}init\+Data, Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \&buf, Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \&srv, Com\+Ptr$<$ ID3\+D11\+Unordered\+Access\+View $>$ \&uav)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a1087cfe2d2cdf1421a7550ce7fc9187a}{SFW\+::\+Graphics\+::\+DX11\+::\+Build\+From\+Terrain\+Clustered}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} \&t, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context}{Block\+Reserved\+Context}} \&out)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_aebe611e8799b4bd62c01c11ef102ee88}{SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Common\+Material\+SRVs}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{SFW\+::\+Graphics\+::\+DX11\+::\+Texture\+Manager}} \&tex\+Mgr, const uint32\+\_\+t material\+Ids\mbox{[}4\mbox{]}, const uint32\+\_\+t material\+Normal\+Ids\mbox{[}4\mbox{]}, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0affdb226eb1a6d3a99eefd76a6a788a}{Resolve\+Texture\+Path\+Fn}} resolve, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_common_material_resources}{Common\+Material\+Resources}} \&out)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_acbe4eea105b2cd68e9a3a0a8c06bc326}{SFW\+::\+Graphics\+::\+DX11\+::\+Bind\+Common\+Materials}} (ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}ctx, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_common_material_resources}{Common\+Material\+Resources}} \&R)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_ae17faf13d92b9700a360fd403306f15a}{SFW\+::\+Graphics\+::\+DX11\+::\+Init\+Splat\+Array\+Resources}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_array_resources}{Splat\+Array\+Resources}} \&out, size\+\_\+t cluster\+Count)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a962ce4e57aea6727ca9420087c13d9b9}{SFW\+::\+Graphics\+::\+DX11\+::\+Collect\+Unique\+Splat\+Ids}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} \&terrain, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Unique)
+\item 
+std\+::unordered\+\_\+map$<$ uint32\+\_\+t, int $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_aaa92f7a7fc6434766f5fe4129995e2fa}{SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Slice\+Table}} (const std\+::vector$<$ uint32\+\_\+t $>$ \&unique\+Ids)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_af464098a52ec9fa432cba104672e7292}{SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Splat\+Array\+Texture}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}ctx, \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{Texture\+Manager}} \&tex\+Mgr, const std\+::vector$<$ uint32\+\_\+t $>$ \&unique\+Splat\+Ids, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0affdb226eb1a6d3a99eefd76a6a788a}{Resolve\+Texture\+Path\+Fn}} resolve, Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \&out\+Array\+SRV)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a253df16cdbb960a686b1d780e21a943a}{SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Cluster\+Splat\+Array\+Resources}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}ctx, \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{Texture\+Manager}} \&tex\+Mgr, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} \&terrain, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0affdb226eb1a6d3a99eefd76a6a788a}{Resolve\+Texture\+Path\+Fn}} resolve, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_array_resources}{Splat\+Array\+Resources}} \&io, std\+::vector$<$ uint32\+\_\+t $>$ \texorpdfstring{$\ast$}{*}out\+Unique\+Ids=nullptr)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_abdf4a4217bef4d49edaab285bcf31eee}{SFW\+::\+Graphics\+::\+DX11\+::\+Bind\+Splat\+Array\+For\+Cluster}} (ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}ctx, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_array_resources}{Splat\+Array\+Resources}} \&R, uint32\+\_\+t cid)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a97620880d55a8bb1a5a5dd6d220bf64e}{SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Or\+Update\+Cluster\+Params\+SB}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}ctx, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_params_g_p_u}{Cluster\+Params\+GPU}} \&out)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a8c7722facfda2e137b435b7593c8982c}{SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Or\+Update\+Terrain\+Grid\+CB}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}ctx, \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager}{Buffer\+Manager}} \texorpdfstring{$\ast$}{*}buffer\+Mgr, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_params_g_p_u}{Cluster\+Params\+GPU}} \&out)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a10650c2c15bb39698d92136d723ef5a5}{SFW\+::\+Graphics\+::\+DX11\+::\+Fill\+Cluster\+Params\+CPU}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{SFW\+::\+Graphics\+::\+Terrain\+Clustered}} \&terrain, const std\+::unordered\+\_\+map$<$ uint32\+\_\+t, int $>$ \&id2slice, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_params_g_p_u}{Cluster\+Params\+GPU}} \&out)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0fff7427c6a72253266b2f6cc1e56d34}{SFW\+::\+Graphics\+::\+DX11\+::\+Setup\+Terrain\+Grid\+CB}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_build_params}{Terrain\+Build\+Params}} \&p, uint32\+\_\+t dimX, uint32\+\_\+t dimZ, Com\+Ptr$<$ ID3\+D11\+Texture2D $>$ splat\+Sheet\+Tex, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_params_g_p_u}{Cluster\+Params\+GPU}} \&out)
+\item 
+Com\+Ptr$<$ ID3\+D11\+Texture2D $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a122966bf4ae759f40997c64ad27637a5}{SFW\+::\+Graphics\+::\+DX11\+::\+Load\+Sheet\+As\+Tex2D}} (\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{Texture\+Manager}} \&tex\+Mgr, uint32\+\_\+t sheet\+Id, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0affdb226eb1a6d3a99eefd76a6a788a}{Resolve\+Texture\+Path\+Fn}} resolve, bool force\+SRGB)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{Texture\+Handle}} $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a7a5ba13f8ef6027afc71ab7ce106b634}{SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Cluster\+Splat\+Textures\+From\+Single\+Sheet}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}ctx, \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{Texture\+Manager}} \&tex\+Mgr, Com\+Ptr$<$ ID3\+D11\+Texture2D $>$ \&sheet, uint32\+\_\+t clustersX, uint32\+\_\+t clustersZ, uint32\+\_\+t sheet\+Id, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0affdb226eb1a6d3a99eefd76a6a788a}{Resolve\+Texture\+Path\+Fn}} resolve, bool sheet\+Is\+SRGB=false)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{Texture\+Handle}} $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_abfce525fdecae950460d0b43e73c2607}{SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Cluster\+Splat\+Textures\+From\+Single\+Sheet}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}ctx, \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{Texture\+Manager}} \&tex\+Mgr, uint32\+\_\+t clustersX, uint32\+\_\+t clustersZ, uint32\+\_\+t sheet\+Id, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0affdb226eb1a6d3a99eefd76a6a788a}{Resolve\+Texture\+Path\+Fn}} resolve, bool sheet\+Is\+SRGB=false)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_abcc5aa0018f812177892ab2a5a250c1b}{SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Splat\+Array\+From\+Handles}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}ctx, \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{Texture\+Manager}} \&tex\+Mgr, const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{Texture\+Handle}} $>$ \&handles, Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \&out\+Array\+SRV)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a51efe8bcbf346e177beefb7313682ee7}{SFW\+::\+Graphics\+::\+DX11\+::\+Assign\+Cluster\+Splats\+From\+Handles}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} \&terrain, uint32\+\_\+t clustersX, uint32\+\_\+t clustersZ, const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{Texture\+Handle}} $>$ \&handles, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a528c6029d84bf954a4c3b98d59550da5}{Allocate\+Splat\+Id\+Fn}} alloc\+Id, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a64ef67bc9cc82f559367ca4615a50bb5}{Query\+Layer\+Tiling\+Fn}} query\+Layer=nullptr)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Terrain\+Clustered のブロックリバート（クラスタリング前の状態に戻す）を支援するユーティリティ 
+
+\begin{DoxyAuthor}{著者}
+seigo 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+December 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} に定義があります。
+
+
+
+\label{doc-define-members}
+\Hypertarget{_d_x11_block_revert_helper_8h_doc-define-members}
+\doxysubsection{マクロ定義詳解}
+\Hypertarget{_d_x11_block_revert_helper_8h_acda3ab65ee665d8929cc87669a6f40b5}\index{DX11BlockRevertHelper.h@{DX11BlockRevertHelper.h}!SFW\_USE\_SIMPLIFY\_SLOPPY@{SFW\_USE\_SIMPLIFY\_SLOPPY}}
+\index{SFW\_USE\_SIMPLIFY\_SLOPPY@{SFW\_USE\_SIMPLIFY\_SLOPPY}!DX11BlockRevertHelper.h@{DX11BlockRevertHelper.h}}
+\doxysubsubsection{\texorpdfstring{SFW\_USE\_SIMPLIFY\_SLOPPY}{SFW\_USE\_SIMPLIFY\_SLOPPY}}
+{\footnotesize\ttfamily \label{_d_x11_block_revert_helper_8h_acda3ab65ee665d8929cc87669a6f40b5} 
+\#define SFW\+\_\+\+USE\+\_\+\+SIMPLIFY\+\_\+\+SLOPPY~1}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00038}{38}} 行目に定義があります。
+

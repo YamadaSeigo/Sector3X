@@ -1,0 +1,162 @@
+\doxysection{SFW\+::Timer\+Service クラス}
+\hypertarget{class_s_f_w_1_1_timer_service}{}\label{class_s_f_w_1_1_timer_service}\index{SFW::TimerService@{SFW::TimerService}}
+
+
+{\ttfamily \#include $<$Timer\+Service.\+h$>$}
+
+SFW\+::Timer\+Service の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_f_w_1_1_timer_service}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_timer_service_a9ed4d88f310acf1ce46ede8d939c34f7}{Pre\+Update}} (double raw\+Dt\+Seconds) override
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_timer_service_aff57bcd46278a6d6f50c37d173573152}{Get\+Delta\+Time}} () const
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_timer_service_adf1d8af530afb18d23e706de02356766}{Get\+Unscaled\+Delta\+Time}} () const
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_timer_service_aacbbe7e749853bb823993c215ad7d5b6}{Get\+Time\+Scale}} () const
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_timer_service_a995d15ce5723f852c6d0b41990cb1ac4}{Set\+Time\+Scale}} (float s)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_timer_service_acf3e918c332d017f1e13eb60bac3a6f1}{Set\+Paused}} (bool p)
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_timer_service_a9ab864024c20604c8a7daf52ee2f07db}{Get\+Game\+Time}} () const
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_timer_service_ade15828fa8026ce306b294fff66df0b4}{Get\+Real\+Time}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{その他の継承メンバ}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7}{Phase}} \+: uint16\+\_\+t \{ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}} = 0
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7}{NORMAL}} = 1
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9}{LATE}} = 2
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907}{PHASE\+\_\+\+MAX}}
+ \}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608}{Group}} \+: uint16\+\_\+t \{ \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b}{GROUP\+\_\+\+GRAPHICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda}{GROUP\+\_\+\+PHYSICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a}{GROUP\+\_\+\+INPUT}}
+, \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e}{GROUP\+\_\+\+AUDIO}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580}{GROUP\+\_\+\+AI}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90}{GROUP\+\_\+\+MAX}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a73744778bc5cc3113ed77db1b69e1fb1}{update\+Phase}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a9f0e8abd26ab30155b39e558f004ce42}{update\+Group}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a116ce546ab92eaf8f4282719b89a5165}{update\+Order}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_timer_service_8h_source}{Timer\+Service.\+h}} の \mbox{\hyperlink{_timer_service_8h_source_l00014}{14}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_timer_service_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_timer_service_aff57bcd46278a6d6f50c37d173573152}\index{SFW::TimerService@{SFW::TimerService}!GetDeltaTime@{GetDeltaTime}}
+\index{GetDeltaTime@{GetDeltaTime}!SFW::TimerService@{SFW::TimerService}}
+\doxysubsubsection{\texorpdfstring{GetDeltaTime()}{GetDeltaTime()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_timer_service_aff57bcd46278a6d6f50c37d173573152} 
+float SFW\+::\+Timer\+Service\+::\+Get\+Delta\+Time (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_timer_service_8h_source}{Timer\+Service.\+h}} の \mbox{\hyperlink{_timer_service_8h_source_l00030}{30}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_timer_service_a9ab864024c20604c8a7daf52ee2f07db}\index{SFW::TimerService@{SFW::TimerService}!GetGameTime@{GetGameTime}}
+\index{GetGameTime@{GetGameTime}!SFW::TimerService@{SFW::TimerService}}
+\doxysubsubsection{\texorpdfstring{GetGameTime()}{GetGameTime()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_timer_service_a9ab864024c20604c8a7daf52ee2f07db} 
+float SFW\+::\+Timer\+Service\+::\+Get\+Game\+Time (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_timer_service_8h_source}{Timer\+Service.\+h}} の \mbox{\hyperlink{_timer_service_8h_source_l00039}{39}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_timer_service_ade15828fa8026ce306b294fff66df0b4}\index{SFW::TimerService@{SFW::TimerService}!GetRealTime@{GetRealTime}}
+\index{GetRealTime@{GetRealTime}!SFW::TimerService@{SFW::TimerService}}
+\doxysubsubsection{\texorpdfstring{GetRealTime()}{GetRealTime()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_timer_service_ade15828fa8026ce306b294fff66df0b4} 
+float SFW\+::\+Timer\+Service\+::\+Get\+Real\+Time (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_timer_service_8h_source}{Timer\+Service.\+h}} の \mbox{\hyperlink{_timer_service_8h_source_l00040}{40}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_timer_service_aacbbe7e749853bb823993c215ad7d5b6}\index{SFW::TimerService@{SFW::TimerService}!GetTimeScale@{GetTimeScale}}
+\index{GetTimeScale@{GetTimeScale}!SFW::TimerService@{SFW::TimerService}}
+\doxysubsubsection{\texorpdfstring{GetTimeScale()}{GetTimeScale()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_timer_service_aacbbe7e749853bb823993c215ad7d5b6} 
+float SFW\+::\+Timer\+Service\+::\+Get\+Time\+Scale (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_timer_service_8h_source}{Timer\+Service.\+h}} の \mbox{\hyperlink{_timer_service_8h_source_l00035}{35}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_timer_service_adf1d8af530afb18d23e706de02356766}\index{SFW::TimerService@{SFW::TimerService}!GetUnscaledDeltaTime@{GetUnscaledDeltaTime}}
+\index{GetUnscaledDeltaTime@{GetUnscaledDeltaTime}!SFW::TimerService@{SFW::TimerService}}
+\doxysubsubsection{\texorpdfstring{GetUnscaledDeltaTime()}{GetUnscaledDeltaTime()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_timer_service_adf1d8af530afb18d23e706de02356766} 
+float SFW\+::\+Timer\+Service\+::\+Get\+Unscaled\+Delta\+Time (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_timer_service_8h_source}{Timer\+Service.\+h}} の \mbox{\hyperlink{_timer_service_8h_source_l00033}{33}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_timer_service_a9ed4d88f310acf1ce46ede8d939c34f7}\index{SFW::TimerService@{SFW::TimerService}!PreUpdate@{PreUpdate}}
+\index{PreUpdate@{PreUpdate}!SFW::TimerService@{SFW::TimerService}}
+\doxysubsubsection{\texorpdfstring{PreUpdate()}{PreUpdate()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_timer_service_a9ed4d88f310acf1ce46ede8d939c34f7} 
+void SFW\+::\+Timer\+Service\+::\+Pre\+Update (\begin{DoxyParamCaption}\item[{double}]{raw\+Dt\+Seconds}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}}を実装しています。
+
+
+
+ \mbox{\hyperlink{_timer_service_8h_source}{Timer\+Service.\+h}} の \mbox{\hyperlink{_timer_service_8h_source_l00017}{17}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_timer_service_acf3e918c332d017f1e13eb60bac3a6f1}\index{SFW::TimerService@{SFW::TimerService}!SetPaused@{SetPaused}}
+\index{SetPaused@{SetPaused}!SFW::TimerService@{SFW::TimerService}}
+\doxysubsubsection{\texorpdfstring{SetPaused()}{SetPaused()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_timer_service_acf3e918c332d017f1e13eb60bac3a6f1} 
+void SFW\+::\+Timer\+Service\+::\+Set\+Paused (\begin{DoxyParamCaption}\item[{bool}]{p}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_timer_service_8h_source}{Timer\+Service.\+h}} の \mbox{\hyperlink{_timer_service_8h_source_l00037}{37}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_timer_service_a995d15ce5723f852c6d0b41990cb1ac4}\index{SFW::TimerService@{SFW::TimerService}!SetTimeScale@{SetTimeScale}}
+\index{SetTimeScale@{SetTimeScale}!SFW::TimerService@{SFW::TimerService}}
+\doxysubsubsection{\texorpdfstring{SetTimeScale()}{SetTimeScale()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_timer_service_a995d15ce5723f852c6d0b41990cb1ac4} 
+void SFW\+::\+Timer\+Service\+::\+Set\+Time\+Scale (\begin{DoxyParamCaption}\item[{float}]{s}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_timer_service_8h_source}{Timer\+Service.\+h}} の \mbox{\hyperlink{_timer_service_8h_source_l00036}{36}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_timer_service_8h}{Timer\+Service.\+h}}\end{DoxyCompactItemize}

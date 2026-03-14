@@ -1,0 +1,53 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Physics/\+Physics\+Component.h ファイル}
+\hypertarget{_physics_component_8h}{}\label{_physics_component_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsComponent.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsComponent.h}}
+
+
+物理コンポーネントを定義するヘッダーファイル  
+
+
+{\ttfamily \#include "{}../\+Math/\+Vector.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Math/\+Quaternion.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Core/\+ECS/component.\+hpp"{}}\newline
+{\ttfamily \#include $<$Jolt/\+Jolt.\+h$>$}\newline
+{\ttfamily \#include $<$Jolt/\+Physics/\+Body/\+Body\+ID.\+h$>$}\newline
+{\ttfamily \#include "{}../\+Util/\+Type\+Checker.\+hpp"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1user__primitive_3_01_j_p_h_1_1_body_i_d_01_4}{SFW\+::user\+\_\+primitive$<$ JPH\+::\+Body\+ID $>$}}
+\begin{DoxyCompactList}\small\item\em JPH\+::\+Body\+IDをプリミティブ型として扱うための特殊化 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation}{SFW\+::\+Physics\+::\+Physics\+Interpolation}}
+\begin{DoxyCompactList}\small\item\em 物理補間コンポーネント \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_c_phy_body}{SFW\+::\+Physics\+::\+CPhy\+Body}}
+\begin{DoxyCompactList}\small\item\em 物理ボディコンポーネント \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims}{SFW\+::\+Physics\+::\+Shape\+Dims}}
+\begin{DoxyCompactList}\small\item\em 形状寸法コンポーネント \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_physics}{SFW\+::\+Physics}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ab2ff9f22bb305c48a1eda2cd170dad4a}{SFW\+::\+Physics\+::\+Body\+Type}} \+: uint8\+\_\+t \{ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ab2ff9f22bb305c48a1eda2cd170dad4aa84a8921b25f505d0d2077aeb5db4bc16}{SFW\+::\+Physics\+::\+Static}} = 1
+, \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ab2ff9f22bb305c48a1eda2cd170dad4aa971fd8cc345d8bd9f92e9f7d88fdf20c}{SFW\+::\+Physics\+::\+Dynamic}} = 0
+ \}
+\begin{DoxyCompactList}\small\item\em 物理ボディのタイプ \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+物理コンポーネントを定義するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_physics_component_8h_source}{Physics\+Component.\+h}} に定義があります。
+

@@ -1,0 +1,56 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\+Archetype\+Chunk.h ファイル}
+\hypertarget{_archetype_chunk_8h}{}\label{_archetype_chunk_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ArchetypeChunk.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ArchetypeChunk.h}}
+
+
+アーキタイプチャンクを定義するクラス  
+
+
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$bit$>$}\newline
+{\ttfamily \#include "{}entity.\+h"{}}\newline
+{\ttfamily \#include "{}Component\+Type\+Registry.\+h"{}}\newline
+{\ttfamily \#include "{}Component\+Layout\+Registry.\+h"{}}\newline
+{\ttfamily \#include "{}Util/alignment.\+h"{}}\newline
+{\ttfamily \#include "{}Debug/logger.\+h"{}}\newline
+{\ttfamily \#include "{}Debug/assert\+\_\+config.\+h"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{SFW\+::\+ECS\+::\+Archetype\+Chunk}}
+\begin{DoxyCompactList}\small\item\em 対象のアーキタイプのコンポーネントのデータを格納するクラス \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor}{SFW\+::\+ECS\+::\+Archetype\+Chunk\+::\+Accessor}}
+\begin{DoxyCompactList}\small\item\em アーキタイプチャンクのアクセサークラス \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{SFW\+::\+ECS}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1fa083af926da159fc321773dbfc28c5}{SFW\+::\+ECS\+::\+Buffer\+Type}} = uint8\+\_\+t
+\begin{DoxyCompactList}\small\item\em アーキタイプチャンクのバッファ型 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{変数}
+\begin{DoxyCompactItemize}
+\item 
+constexpr size\+\_\+t \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a2e93fe0a9759446633f84df6d7867ecb}{SFW\+::\+ECS\+::\+Chunk\+Size\+Bytes}} = 32 \texorpdfstring{$\ast$}{*} 1024
+\begin{DoxyCompactList}\small\item\em アーキタイプチャンクのサイズ（バイト単位） \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+アーキタイプチャンクを定義するクラス 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+June 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_archetype_chunk_8h_source}{Archetype\+Chunk.\+h}} に定義があります。
+

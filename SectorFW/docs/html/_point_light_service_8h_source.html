@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/PointLightService.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_point_light_service_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">PointLightService.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_point_light_service_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;shared_mutex&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;cassert&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="_service_context_8hpp.html">../Core/ECS/ServiceContext.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="_render_types_8h.html">RenderTypes.h</a>&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_graphics.html">SFW::Graphics</a></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>{</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="comment">// 世代付きハンドル（refcount無し）</span></div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="};">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html">   22</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html">PointLightHandle</a></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html#a5b3fbe099278bc9d2181dc19b995ee64">   24</a></span>        uint32_t <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html#a5b3fbe099278bc9d2181dc19b995ee64">index</a> = 0xFFFFFFFFu;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html#a9ea161156a5c59342ce0f0300aebeefd">   25</a></span>        uint32_t <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html#a9ea161156a5c59342ce0f0300aebeefd">generation</a> = 0;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html#a64e27f01cf5427ca2281c9603d1ba831">   27</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html#a64e27f01cf5427ca2281c9603d1ba831">IsValid</a>() const noexcept { <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html#a5b3fbe099278bc9d2181dc19b995ee64">index</a> != 0xFFFFFFFFu; }</div>
+<div class="foldopen" id="foldopen00028" data-start="{" data-end="}">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html#a2ed5af2ba5ed2a213aeef83b96452c53">   28</a></span>        <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code hl_friend" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html#a2ed5af2ba5ed2a213aeef83b96452c53">operator==</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html">PointLightHandle</a>&amp; a, <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html">PointLightHandle</a>&amp; b) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            <span class="keywordflow">return</span> a.index == b.index &amp;&amp; a.generation == b.generation;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        }</div>
+</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    };</div>
+</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="comment">// ゲーム側のライトパラメータ</span></div>
+<div class="foldopen" id="foldopen00034" data-start="{" data-end="};">
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html">   34</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html">PointLightDesc</a></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    {</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#aabc2a8b3bbce8bfdda1b28a0236ad2b0">   36</a></span>        <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#aabc2a8b3bbce8bfdda1b28a0236ad2b0">offsetWS</a> = { 0,0,0 };</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#a4076fcaff2f1a3d9dfadee411c844ec2">   37</a></span>        <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#a4076fcaff2f1a3d9dfadee411c844ec2">color</a> = { 1,1,1 };</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#a7dd96f6113ba212e4018f284aa7c2ba9">   38</a></span>        <span class="keywordtype">float</span>  <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#a7dd96f6113ba212e4018f284aa7c2ba9">intensity</a> = 1.0f;   <span class="comment">// 明るさ</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#a84e4b0bb5ebc7f26163467d284ab2c1a">   39</a></span>        <span class="keywordtype">float</span>  <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#a84e4b0bb5ebc7f26163467d284ab2c1a">range</a> = 10.0f;  <span class="comment">// 影響距離</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#a14726fd6fcce40f3ee9b1206a90789fb">   40</a></span>        <span class="keywordtype">bool</span>   <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#a14726fd6fcce40f3ee9b1206a90789fb">castsShadow</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    };</div>
+</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="comment">// GPU転送用（例：StructuredBuffer向け）</span></div>
+<div class="foldopen" id="foldopen00044" data-start="{" data-end="};">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html">   44</a></span>    <span class="keyword">struct </span><a class="code hl_function" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#ab0708541e208c792624e86658bfb257c">GpuPointLight</a></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#ab0708541e208c792624e86658bfb257c">   46</a></span>        <a class="code hl_function" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#ab0708541e208c792624e86658bfb257c">GpuPointLight</a>() = <span class="keywordflow">default</span>;</div>
+<div class="foldopen" id="foldopen00047" data-start="{" data-end="}">
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a404bfcde381858c741d5b1f3fd5f779b">   47</a></span>        <a class="code hl_function" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a404bfcde381858c741d5b1f3fd5f779b">GpuPointLight</a>(</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&amp; posWS,</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <span class="keywordtype">float</span> range_,</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&amp; color_,</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            <span class="keywordtype">float</span> intensity_,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            uint32_t flags_)</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            : <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a03c3f863c1cceb00c75a2c95e674dfae">offsetWS</a>(posWS)</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            , <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a4301c3cab739846362a1b8382c56cf51">range</a>(range_)</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            , <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a2570587f910140da3085fbf5e79d9350">color</a>(color_)</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            , <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a54ecd46e3673a61e4413c8912d8f83ab">intensity</a>(intensity_)</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            , <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a33ba040b8788e42fe29092a9d7857f7f">invRange</a>(1.0f / <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a4301c3cab739846362a1b8382c56cf51">range</a>)</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            , <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#af6c6baf550d690e007f981e093b88fdc">flags</a>(flags_)</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        }</div>
+</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a03c3f863c1cceb00c75a2c95e674dfae">   62</a></span>        <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a03c3f863c1cceb00c75a2c95e674dfae">offsetWS</a> = {}; <span class="keywordtype">float</span> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a4301c3cab739846362a1b8382c56cf51">range</a> = {};</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a2570587f910140da3085fbf5e79d9350">   63</a></span>        <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a2570587f910140da3085fbf5e79d9350">color</a> = {};      <span class="keywordtype">float</span> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a54ecd46e3673a61e4413c8912d8f83ab">intensity</a> = {};</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a33ba040b8788e42fe29092a9d7857f7f">   64</a></span>        <span class="keywordtype">float</span> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a33ba040b8788e42fe29092a9d7857f7f">invRange</a> = {};</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#af6c6baf550d690e007f981e093b88fdc">   65</a></span>        uint32_t <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#af6c6baf550d690e007f981e093b88fdc">flags</a> = {};</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="comment">// flags bit0: castsShadow など</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    };</div>
+</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="foldopen" id="foldopen00069" data-start="{" data-end="};">
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html">   69</a></span>    <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a07316ad67e4787b576924d2164b7d6e5">PointLightService</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">ECS::IUpdateService</a></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a24b7963e027e88fc9d7f3b7636ec7847">   72</a></span>        <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">constexpr</span> uint32_t <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a24b7963e027e88fc9d7f3b7636ec7847">MAX_FRAME_POINTLIGHT</a> = 1u &lt;&lt; 9;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a07316ad67e4787b576924d2164b7d6e5">   74</a></span>        <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a07316ad67e4787b576924d2164b7d6e5">PointLightService</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#aa37673bcef058b8876d9a1bc70ca2008">   76</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#aa37673bcef058b8876d9a1bc70ca2008">PreUpdate</a>(<span class="keywordtype">double</span> deltaTime) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="comment">// 予約（オープンワールドは事前reserveが効く）</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a701c39231bacecd7c9f911599301c1d5">   79</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a701c39231bacecd7c9f911599301c1d5">Reserve</a>(uint32_t capacity);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="comment">// 生成/破棄</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a7928c08b7e64d36e258f20ae59c47a2b">   82</a></span>        <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html">PointLightHandle</a> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a7928c08b7e64d36e258f20ae59c47a2b">Create</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html">PointLightDesc</a>&amp; desc);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#ade8f15c78ee80788885a7e28b34d083d">   83</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#ade8f15c78ee80788885a7e28b34d083d">Destroy</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html">PointLightHandle</a> h);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="comment">// 検証</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#ae82a529139ad0737148ffdc885a52ca9">   86</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#ae82a529139ad0737148ffdc885a52ca9">IsValid</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html">PointLightHandle</a> h) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="comment">// 更新（dirtyを立てる）</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#acaf149c8248d0fdcbac6c5b1dc97b3ca">   89</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#acaf149c8248d0fdcbac6c5b1dc97b3ca">SetPosition</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html">PointLightHandle</a> h, <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&amp; posWS);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a9df4127ea37090e51e55ef85e8052b8f">   90</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a9df4127ea37090e51e55ef85e8052b8f">SetParams</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html">PointLightHandle</a> h, <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>&amp; color, <span class="keywordtype">float</span> intensity, <span class="keywordtype">float</span> range, <span class="keywordtype">bool</span> castsShadow);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        <span class="comment">// 取得（読み取り）</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#adca1369520f4c52b9c508eee278d813b">   93</a></span>        <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html">PointLightDesc</a> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#adca1369520f4c52b9c508eee278d813b">Get</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html">PointLightHandle</a> h) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span></div>
+<div class="foldopen" id="foldopen00099" data-start="{" data-end="}">
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a2c527529c43d91e79fe54a121ce24649">   99</a></span>        [[nodiscard]] std::shared_lock&lt;std::shared_mutex&gt; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a2c527529c43d91e79fe54a121ce24649">AcquireReadLock</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            <span class="keywordflow">return</span> std::shared_lock&lt;std::shared_mutex&gt;(m_mtx);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        }</div>
+</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span></div>
+<div class="foldopen" id="foldopen00106" data-start="{" data-end="}">
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a94155a66921b9b826ed12dd42a6859e8">  106</a></span>        [[nodiscard]] std::unique_lock&lt;std::shared_mutex&gt; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a94155a66921b9b826ed12dd42a6859e8">AcquireWriteLock</a>() {</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            <span class="keywordflow">return</span> std::unique_lock&lt;std::shared_mutex&gt;(m_mtx);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        }</div>
+</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        <span class="comment">// 取得（読み取り）</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a67073fabbd255340e65793cad7656995">  111</a></span>        <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html">PointLightDesc</a> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a67073fabbd255340e65793cad7656995">GetNoLock</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html">PointLightHandle</a> h) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#ab4e52f21642b9c45cf2674693b246e87">  118</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#ab4e52f21642b9c45cf2674693b246e87">PushShowHandle</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html">PointLightHandle</a> h, <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> pos);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a3ef9d1ef896f83c851f1a80c6a4d4501">  120</a></span>        <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html">GpuPointLight</a>* <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a3ef9d1ef896f83c851f1a80c6a4d4501">BuildGpuLights</a>(uint32_t&amp; outCount) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a201fc2cada08110e0008a3bd43c68a1c">  122</a></span>        uint32_t <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a201fc2cada08110e0008a3bd43c68a1c">AliveCount</a>() const noexcept { <span class="keywordflow">return</span> m_aliveCount; }</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#adbc5bb1940e43062f81a7adeb4b716bc">  123</a></span>        uint32_t <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#adbc5bb1940e43062f81a7adeb4b716bc">Capacity</a>()  const noexcept { <span class="keywordflow">return</span> (uint32_t)m_alive.size(); }</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="foldopen" id="foldopen00125" data-start="{" data-end="}">
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#aaddc5b9ff13f0f2110955670949f1a91">  125</a></span>        uint32_t <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#aaddc5b9ff13f0f2110955670949f1a91">GetLightCount</a>(<span class="keywordtype">size_t</span> frameSlot) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>            assert(frameSlot &lt; RENDER_BUFFER_COUNT);</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>            <span class="keywordflow">return</span> m_lightCount[frameSlot].load(std::memory_order_acquire);</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        }</div>
+</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        <span class="keyword">struct </span>Slot</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        {</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html">PointLightDesc</a> desc{};</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            <span class="keywordtype">bool</span> alive = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        };</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        <span class="comment">// 内部ユーティリティ（ロック済み前提）</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        <span class="keywordtype">bool</span> isValidNoLock(PointLightHandle h) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        <span class="keyword">mutable</span> std::shared_mutex m_mtx;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        std::vector&lt;Slot&gt;     m_slots;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        std::vector&lt;uint32_t&gt; m_generation; <span class="comment">// indexごとの世代</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        std::vector&lt;uint32_t&gt; m_freeList;   <span class="comment">// 空きスロット</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        std::vector&lt;uint8_t&gt;  m_alive;      <span class="comment">// aliveフラグ（Slotにもあるが簡易参照用）</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        uint32_t m_aliveCount = 0;</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="keywordtype">size_t</span> m_frameIndex = 0;</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        uint32_t m_showIndex[2][<a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a24b7963e027e88fc9d7f3b7636ec7847">MAX_FRAME_POINTLIGHT</a>] = {};</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> m_showPos[2][<a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a24b7963e027e88fc9d7f3b7636ec7847">MAX_FRAME_POINTLIGHT</a>] = {};</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        std::atomic&lt;uint32_t &gt; m_showCount[2] = { 0,0 };</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        GpuPointLight m_gpuLights[RENDER_BUFFER_COUNT][<a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a24b7963e027e88fc9d7f3b7636ec7847">MAX_FRAME_POINTLIGHT</a>] = {};</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        std::atomic&lt;uint32_t&gt; m_lightCount[RENDER_BUFFER_COUNT] = {};</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        <a class="code hl_define" href="_service_context_8hpp.html#adbfb2947c9a06b367226fe228627154c">STATIC_SERVICE_TAG</a></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    };</div>
+</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>}</div>
+<div class="ttc" id="a_render_types_8h_html"><div class="ttname"><a href="_render_types_8h.html">RenderTypes.h</a></div><div class="ttdoc">レンダー関連の基本的な型と定数を定義するヘッダーファイル</div></div>
+<div class="ttc" id="a_service_context_8hpp_html"><div class="ttname"><a href="_service_context_8hpp.html">ServiceContext.hpp</a></div></div>
+<div class="ttc" id="a_service_context_8hpp_html_adbfb2947c9a06b367226fe228627154c"><div class="ttname"><a href="_service_context_8hpp.html#adbfb2947c9a06b367226fe228627154c">STATIC_SERVICE_TAG</a></div><div class="ttdeci">#define STATIC_SERVICE_TAG</div><div class="ttdoc">サービスの型を定義するマクロ</div><div class="ttdef"><b>Definition</b> <a href="_service_context_8hpp_source.html#l00031">ServiceContext.hpp:31</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_i_update_service_html"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_i_update_service.html">SFW::ECS::IUpdateService</a></div><div class="ttdoc">更新サービスのインターフェース(Systemよりも前に更新)</div><div class="ttdef"><b>Definition</b> <a href="_service_context_8hpp_source.html#l00054">ServiceContext.hpp:54</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_a07316ad67e4787b576924d2164b7d6e5"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a07316ad67e4787b576924d2164b7d6e5">SFW::Graphics::PointLightService::PointLightService</a></div><div class="ttdeci">PointLightService()=default</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_a201fc2cada08110e0008a3bd43c68a1c"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a201fc2cada08110e0008a3bd43c68a1c">SFW::Graphics::PointLightService::AliveCount</a></div><div class="ttdeci">uint32_t AliveCount() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00122">PointLightService.h:122</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_a24b7963e027e88fc9d7f3b7636ec7847"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a24b7963e027e88fc9d7f3b7636ec7847">SFW::Graphics::PointLightService::MAX_FRAME_POINTLIGHT</a></div><div class="ttdeci">static constexpr uint32_t MAX_FRAME_POINTLIGHT</div><div class="ttdef"><b>Definition</b> <a href="#l00072">PointLightService.h:72</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_a2c527529c43d91e79fe54a121ce24649"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a2c527529c43d91e79fe54a121ce24649">SFW::Graphics::PointLightService::AcquireReadLock</a></div><div class="ttdeci">std::shared_lock&lt; std::shared_mutex &gt; AcquireReadLock() const</div><div class="ttdoc">読み取り用ロックを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00099">PointLightService.h:99</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_a3ef9d1ef896f83c851f1a80c6a4d4501"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a3ef9d1ef896f83c851f1a80c6a4d4501">SFW::Graphics::PointLightService::BuildGpuLights</a></div><div class="ttdeci">const GpuPointLight * BuildGpuLights(uint32_t &amp;outCount) noexcept</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_a67073fabbd255340e65793cad7656995"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a67073fabbd255340e65793cad7656995">SFW::Graphics::PointLightService::GetNoLock</a></div><div class="ttdeci">PointLightDesc GetNoLock(PointLightHandle h) const</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_a701c39231bacecd7c9f911599301c1d5"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a701c39231bacecd7c9f911599301c1d5">SFW::Graphics::PointLightService::Reserve</a></div><div class="ttdeci">void Reserve(uint32_t capacity)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_a7928c08b7e64d36e258f20ae59c47a2b"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a7928c08b7e64d36e258f20ae59c47a2b">SFW::Graphics::PointLightService::Create</a></div><div class="ttdeci">PointLightHandle Create(const PointLightDesc &amp;desc)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_a94155a66921b9b826ed12dd42a6859e8"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a94155a66921b9b826ed12dd42a6859e8">SFW::Graphics::PointLightService::AcquireWriteLock</a></div><div class="ttdeci">std::unique_lock&lt; std::shared_mutex &gt; AcquireWriteLock()</div><div class="ttdoc">書き込み用ロックを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00106">PointLightService.h:106</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_a9df4127ea37090e51e55ef85e8052b8f"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#a9df4127ea37090e51e55ef85e8052b8f">SFW::Graphics::PointLightService::SetParams</a></div><div class="ttdeci">void SetParams(PointLightHandle h, const Math::Vec3f &amp;color, float intensity, float range, bool castsShadow)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_aa37673bcef058b8876d9a1bc70ca2008"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#aa37673bcef058b8876d9a1bc70ca2008">SFW::Graphics::PointLightService::PreUpdate</a></div><div class="ttdeci">void PreUpdate(double deltaTime) override</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_aaddc5b9ff13f0f2110955670949f1a91"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#aaddc5b9ff13f0f2110955670949f1a91">SFW::Graphics::PointLightService::GetLightCount</a></div><div class="ttdeci">uint32_t GetLightCount(size_t frameSlot) const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00125">PointLightService.h:125</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_ab4e52f21642b9c45cf2674693b246e87"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#ab4e52f21642b9c45cf2674693b246e87">SFW::Graphics::PointLightService::PushShowHandle</a></div><div class="ttdeci">bool PushShowHandle(PointLightHandle h, Math::Vec3f pos)</div><div class="ttdoc">指定した点光源を表示リストに追加する</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_acaf149c8248d0fdcbac6c5b1dc97b3ca"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#acaf149c8248d0fdcbac6c5b1dc97b3ca">SFW::Graphics::PointLightService::SetPosition</a></div><div class="ttdeci">void SetPosition(PointLightHandle h, const Math::Vec3f &amp;posWS)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_adbc5bb1940e43062f81a7adeb4b716bc"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#adbc5bb1940e43062f81a7adeb4b716bc">SFW::Graphics::PointLightService::Capacity</a></div><div class="ttdeci">uint32_t Capacity() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00123">PointLightService.h:123</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_adca1369520f4c52b9c508eee278d813b"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#adca1369520f4c52b9c508eee278d813b">SFW::Graphics::PointLightService::Get</a></div><div class="ttdeci">PointLightDesc Get(PointLightHandle h) const</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_ade8f15c78ee80788885a7e28b34d083d"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#ade8f15c78ee80788885a7e28b34d083d">SFW::Graphics::PointLightService::Destroy</a></div><div class="ttdeci">void Destroy(PointLightHandle h)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_point_light_service_html_ae82a529139ad0737148ffdc885a52ca9"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_point_light_service.html#ae82a529139ad0737148ffdc885a52ca9">SFW::Graphics::PointLightService::IsValid</a></div><div class="ttdeci">bool IsValid(PointLightHandle h) const</div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html">SFW::Graphics</a></div><div class="ttdef"><b>Definition</b> <a href="_d_x11_graphics_8h_source.html#l00034">DX11Graphics.h:35</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_afea45e91c6313bb6dd5c60690ff82019"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">SFW::Math::Vec3f</a></div><div class="ttdeci">Vec3&lt; float &gt; Vec3f</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00354">Vector.hpp:354</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_gpu_point_light_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html">SFW::Graphics::GpuPointLight</a></div><div class="ttdef"><b>Definition</b> <a href="#l00044">PointLightService.h:45</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_gpu_point_light_html_a03c3f863c1cceb00c75a2c95e674dfae"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a03c3f863c1cceb00c75a2c95e674dfae">SFW::Graphics::GpuPointLight::offsetWS</a></div><div class="ttdeci">Math::Vec3f offsetWS</div><div class="ttdef"><b>Definition</b> <a href="#l00062">PointLightService.h:62</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_gpu_point_light_html_a2570587f910140da3085fbf5e79d9350"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a2570587f910140da3085fbf5e79d9350">SFW::Graphics::GpuPointLight::color</a></div><div class="ttdeci">Math::Vec3f color</div><div class="ttdef"><b>Definition</b> <a href="#l00063">PointLightService.h:63</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_gpu_point_light_html_a33ba040b8788e42fe29092a9d7857f7f"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a33ba040b8788e42fe29092a9d7857f7f">SFW::Graphics::GpuPointLight::invRange</a></div><div class="ttdeci">float invRange</div><div class="ttdef"><b>Definition</b> <a href="#l00064">PointLightService.h:64</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_gpu_point_light_html_a404bfcde381858c741d5b1f3fd5f779b"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a404bfcde381858c741d5b1f3fd5f779b">SFW::Graphics::GpuPointLight::GpuPointLight</a></div><div class="ttdeci">GpuPointLight(const Math::Vec3f &amp;posWS, float range_, const Math::Vec3f &amp;color_, float intensity_, uint32_t flags_)</div><div class="ttdef"><b>Definition</b> <a href="#l00047">PointLightService.h:47</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_gpu_point_light_html_a4301c3cab739846362a1b8382c56cf51"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a4301c3cab739846362a1b8382c56cf51">SFW::Graphics::GpuPointLight::range</a></div><div class="ttdeci">float range</div><div class="ttdef"><b>Definition</b> <a href="#l00062">PointLightService.h:62</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_gpu_point_light_html_a54ecd46e3673a61e4413c8912d8f83ab"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#a54ecd46e3673a61e4413c8912d8f83ab">SFW::Graphics::GpuPointLight::intensity</a></div><div class="ttdeci">float intensity</div><div class="ttdef"><b>Definition</b> <a href="#l00063">PointLightService.h:63</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_gpu_point_light_html_ab0708541e208c792624e86658bfb257c"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#ab0708541e208c792624e86658bfb257c">SFW::Graphics::GpuPointLight::GpuPointLight</a></div><div class="ttdeci">GpuPointLight()=default</div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_gpu_point_light_html_af6c6baf550d690e007f981e093b88fdc"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_gpu_point_light.html#af6c6baf550d690e007f981e093b88fdc">SFW::Graphics::GpuPointLight::flags</a></div><div class="ttdeci">uint32_t flags</div><div class="ttdef"><b>Definition</b> <a href="#l00065">PointLightService.h:65</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_point_light_desc_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html">SFW::Graphics::PointLightDesc</a></div><div class="ttdef"><b>Definition</b> <a href="#l00034">PointLightService.h:35</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_point_light_desc_html_a14726fd6fcce40f3ee9b1206a90789fb"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#a14726fd6fcce40f3ee9b1206a90789fb">SFW::Graphics::PointLightDesc::castsShadow</a></div><div class="ttdeci">bool castsShadow</div><div class="ttdef"><b>Definition</b> <a href="#l00040">PointLightService.h:40</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_point_light_desc_html_a4076fcaff2f1a3d9dfadee411c844ec2"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#a4076fcaff2f1a3d9dfadee411c844ec2">SFW::Graphics::PointLightDesc::color</a></div><div class="ttdeci">Math::Vec3f color</div><div class="ttdef"><b>Definition</b> <a href="#l00037">PointLightService.h:37</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_point_light_desc_html_a7dd96f6113ba212e4018f284aa7c2ba9"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#a7dd96f6113ba212e4018f284aa7c2ba9">SFW::Graphics::PointLightDesc::intensity</a></div><div class="ttdeci">float intensity</div><div class="ttdef"><b>Definition</b> <a href="#l00038">PointLightService.h:38</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_point_light_desc_html_a84e4b0bb5ebc7f26163467d284ab2c1a"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#a84e4b0bb5ebc7f26163467d284ab2c1a">SFW::Graphics::PointLightDesc::range</a></div><div class="ttdeci">float range</div><div class="ttdef"><b>Definition</b> <a href="#l00039">PointLightService.h:39</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_point_light_desc_html_aabc2a8b3bbce8bfdda1b28a0236ad2b0"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_point_light_desc.html#aabc2a8b3bbce8bfdda1b28a0236ad2b0">SFW::Graphics::PointLightDesc::offsetWS</a></div><div class="ttdeci">Math::Vec3f offsetWS</div><div class="ttdef"><b>Definition</b> <a href="#l00036">PointLightService.h:36</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_point_light_handle_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html">SFW::Graphics::PointLightHandle</a></div><div class="ttdef"><b>Definition</b> <a href="#l00022">PointLightService.h:23</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_point_light_handle_html_a2ed5af2ba5ed2a213aeef83b96452c53"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html#a2ed5af2ba5ed2a213aeef83b96452c53">SFW::Graphics::PointLightHandle::operator==</a></div><div class="ttdeci">friend bool operator==(const PointLightHandle &amp;a, const PointLightHandle &amp;b) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00028">PointLightService.h:28</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_point_light_handle_html_a5b3fbe099278bc9d2181dc19b995ee64"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html#a5b3fbe099278bc9d2181dc19b995ee64">SFW::Graphics::PointLightHandle::index</a></div><div class="ttdeci">uint32_t index</div><div class="ttdef"><b>Definition</b> <a href="#l00024">PointLightService.h:24</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_point_light_handle_html_a64e27f01cf5427ca2281c9603d1ba831"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html#a64e27f01cf5427ca2281c9603d1ba831">SFW::Graphics::PointLightHandle::IsValid</a></div><div class="ttdeci">bool IsValid() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00027">PointLightService.h:27</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_point_light_handle_html_a9ea161156a5c59342ce0f0300aebeefd"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_point_light_handle.html#a9ea161156a5c59342ce0f0300aebeefd">SFW::Graphics::PointLightHandle::generation</a></div><div class="ttdeci">uint32_t generation</div><div class="ttdef"><b>Definition</b> <a href="#l00025">PointLightService.h:25</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="_point_light_service_8h.html">PointLightService.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

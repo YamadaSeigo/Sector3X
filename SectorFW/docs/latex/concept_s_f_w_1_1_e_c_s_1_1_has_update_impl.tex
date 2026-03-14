@@ -1,0 +1,44 @@
+\doxysection{SFW\+::ECS\+::Has\+Update\+Impl Concept Reference}
+\hypertarget{concept_s_f_w_1_1_e_c_s_1_1_has_update_impl}{}\label{concept_s_f_w_1_1_e_c_s_1_1_has_update_impl}\index{SFW::ECS::HasUpdateImpl@{SFW::ECS::HasUpdateImpl}}
+
+
+{\ttfamily \#include $<$IType\+System.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Derived,\ \textcolor{keyword}{typename}\ Partition,\ \textcolor{keyword}{typename}...\ Services>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_update_impl}{SFW::ECS::HasUpdateImpl}}\ =\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ (Derived\ \&\ t,\ \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr}{UndeletablePtr<Services>}}...\ services)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ t.UpdateImpl(services...)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ ||}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ (Derived\ \&\ t,\ Partition\ \&\ partition,\ \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr}{UndeletablePtr<Services>}}...\ services)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ t.UpdateImpl(partition,\ services...)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ ||}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ (Derived\ \&\ t,\ LevelContext<Partition>\&ctx,\ UndeletablePtr<Services>...\ services)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ t.UpdateImpl(ctx,\ services...)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ ||}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ (Derived\ \&\ t,\ Partition\ \&\ partition,\ LevelContext<Partition>\&ctx,\ UndeletablePtr<Services>...\ services)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ t.UpdateImpl(partition,\ ctx,\ services...)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ ||}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ (Derived\ \&\ t,\ UndeletablePtr<IThreadExecutor>\ exe,\ UndeletablePtr<Services>...\ services)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ t.UpdateImpl(exe,\ services...)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ ||}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ (Derived\ \&\ t,\ Partition\ \&\ partition,\ UndeletablePtr<IThreadExecutor>\ exe,\ UndeletablePtr<Services>...\ services)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ t.UpdateImpl(partition,\ exe,\ services...)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ ||}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ (Derived\ \&\ t,\ LevelContext<Partition>\ \&ctx,\ UndeletablePtr<IThreadExecutor>\ exe,\ UndeletablePtr<Services>...\ services)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ t.UpdateImpl(ctx,\ exe,\ services...)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ ||}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ (Derived\ \&\ t,\ Partition\ \&\ partition,\ LevelContext<Partition>\ \&ctx,\ UndeletablePtr<IThreadExecutor>\ exe,\ UndeletablePtr<Services>...\ services)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ t.UpdateImpl(partition,\ ctx,\ exe,\ services...)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_i_type_system_8hpp_source}{IType\+System.\+hpp}} の \mbox{\hyperlink{_i_type_system_8hpp_source_l00043}{43}} 行目に定義があります。
+

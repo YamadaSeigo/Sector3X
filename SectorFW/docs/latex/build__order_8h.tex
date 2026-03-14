@@ -1,0 +1,71 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/build\+\_\+order.h ファイル}
+\hypertarget{build__order_8h}{}\label{build__order_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/build\_order.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/build\_order.h}}
+
+
+カメラからの距離に基づいてエンティティの描画順序を構築するためのユーティリティ関数  
+
+
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include "{}ECS/\+Archetype\+Chunk.\+h"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions}{SFW\+::\+So\+APositions}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_key_row}{SFW\+::\+Key\+Row}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{マクロ定義}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{build__order_8h_a44204c13832879c517fd7b4a0e8345cc}{SFW\+\_\+\+HAS\+\_\+\+AVX2}}~0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$int B = 32$>$ }\\int \mbox{\hyperlink{namespace_s_f_w_a4062efd69103d94c9a6e508a995f3e05}{SFW\+::\+Distance\+Bin}} (float d2, float near2, float far2) noexcept
+\item 
+float \mbox{\hyperlink{namespace_s_f_w_a2a43150e83a5812c4a819a81f78cd0fa}{SFW\+::\+Dist2}} (const \mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions}{So\+APositions}} \&T, uint32\+\_\+t i, float cx, float cy, float cz) noexcept
+\item 
+{\footnotesize template$<$int B = 32$>$ }\\void \mbox{\hyperlink{namespace_s_f_w_ae2d88f62b34da9b423c0ba5ee46ca2f0}{SFW\+::\+Build\+Near\+To\+Far\+\_\+\+Order\+\_\+\+Buckets}} (const \mbox{\hyperlink{struct_s_f_w_1_1_so_a_positions}{So\+APositions}} \&T, float cx, float cy, float cz, float near2, float far2, std\+::vector$<$ uint32\+\_\+t $>$ \&order)
+\item 
+uint16\+\_\+t \mbox{\hyperlink{namespace_s_f_w_afeddd23a62f7ccc7bccdbecfec4133e1}{SFW\+::\+Quantize\+D2}} (float d2, float near2, float far2) noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+カメラからの距離に基づいてエンティティの描画順序を構築するためのユーティリティ関数 
+
+\begin{DoxyAuthor}{著者}
+lenov 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+March 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{build__order_8h_source}{build\+\_\+order.\+h}} に定義があります。
+
+
+
+\label{doc-define-members}
+\Hypertarget{build__order_8h_doc-define-members}
+\doxysubsection{マクロ定義詳解}
+\Hypertarget{build__order_8h_a44204c13832879c517fd7b4a0e8345cc}\index{build\_order.h@{build\_order.h}!SFW\_HAS\_AVX2@{SFW\_HAS\_AVX2}}
+\index{SFW\_HAS\_AVX2@{SFW\_HAS\_AVX2}!build\_order.h@{build\_order.h}}
+\doxysubsubsection{\texorpdfstring{SFW\_HAS\_AVX2}{SFW\_HAS\_AVX2}}
+{\footnotesize\ttfamily \label{build__order_8h_a44204c13832879c517fd7b4a0e8345cc} 
+\#define SFW\+\_\+\+HAS\+\_\+\+AVX2~0}
+
+
+
+ \mbox{\hyperlink{build__order_8h_source}{build\+\_\+order.\+h}} の \mbox{\hyperlink{build__order_8h_source_l00020}{20}} 行目に定義があります。
+

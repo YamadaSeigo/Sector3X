@@ -1,0 +1,108 @@
+\doxysection{Frame\+Timer.\+h}
+\hypertarget{_frame_timer_8h_source}{}\label{_frame_timer_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/FrameTimer.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/FrameTimer.h}}
+\mbox{\hyperlink{_frame_timer_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <thread>}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00015}\mbox{\hyperlink{class_frame_timer}{00015}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_frame_timer_aa2ac0cee560c4996e6b688b83079c0ba}{FrameTimer}}\ \{}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00016}00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00017}\mbox{\hyperlink{class_frame_timer_a3217946eb0acbe1bc79ac90f6f8144e1}{00017}}\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_frame_timer_a3217946eb0acbe1bc79ac90f6f8144e1}{clock}}\ =\ std::chrono::steady\_clock;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00018}\mbox{\hyperlink{class_frame_timer_ac5742bb027cf48a1bc48baef2e59fab8}{00018}}\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_frame_timer_ac5742bb027cf48a1bc48baef2e59fab8}{time\_point}}\ =\ std::chrono::time\_point<clock>;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00023}\mbox{\hyperlink{class_frame_timer_aa2ac0cee560c4996e6b688b83079c0ba}{00023}}\ \ \ \ \ \mbox{\hyperlink{class_frame_timer_aa2ac0cee560c4996e6b688b83079c0ba}{FrameTimer}}()\ noexcept}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ :\ startTime(\mbox{\hyperlink{class_frame_timer_a3217946eb0acbe1bc79ac90f6f8144e1}{clock}}::now()),}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ lastTime(\mbox{\hyperlink{class_frame_timer_a3217946eb0acbe1bc79ac90f6f8144e1}{clock}}::now()),}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ deltaTime(0.0),}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ frameCount(0),}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ fps(0.0),}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ timeSinceLastFPSUpdate(0.0),}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ maxFrameRate(0.0)\ \{}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00031}00031\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00035}\mbox{\hyperlink{class_frame_timer_a9d85f6d41e3706c74c4c6ad764651b7e}{00035}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_frame_timer_a9d85f6d41e3706c74c4c6ad764651b7e}{Reset}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ startTime\ =\ clock::now();}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ lastTime\ =\ startTime;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ deltaTime\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ frameCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ fps\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ timeSinceLastFPSUpdate\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00042}00042\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00046}\mbox{\hyperlink{class_frame_timer_aa3786a8b83778be5b59e106f04456d47}{00046}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_frame_timer_aa3786a8b83778be5b59e106f04456d47}{Tick}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }std::chrono;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ limit\ =\ (maxFrameRate\ >\ 0.0);}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ duration<double>\ minFrameTime\ =\ limit\ ?\ duration<double>(1.0\ /\ maxFrameRate)}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ :\ duration<double>(0.0);}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ now\ =\ clock::now();}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (limit)\ \{}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 前回\ tick\ からの理想的な次フレーム時刻を決める}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_frame_timer_ac5742bb027cf48a1bc48baef2e59fab8}{time\_point}}\ nextTick\ =\ lastTime\ +\ duration\_cast<clock::duration>(minFrameTime);}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 余裕があるなら\ until\ で寝る（丸めロスなし）}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (now\ <\ nextTick)\ \{}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 大半は\ sleep\_until\ で待ち、最後のわずかな差だけ軽くスピン}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ （OS\ 粒度が粗い環境に配慮）}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ spinThreshold\ =\ microseconds(200);\ \textcolor{comment}{//\ 調整ポイント}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ sleepUntilTime\ =\ nextTick\ -\/\ spinThreshold;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (now\ <\ sleepUntilTime)\ \{}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::this\_thread::sleep\_until(sleepUntilTime);}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 小さくスピン（or\ yield）}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\ \{}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::this\_thread::yield();}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ now\ =\ clock::now();}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (now\ <\ nextTick);}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ すでに遅れている場合は何もしない（追いつく）}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 経過時間を計算}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ duration<double>\ frameDuration\ =\ now\ -\/\ lastTime;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ dt\ =\ frameDuration.count();}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ スパイク対策のクランプ（必要に応じて調整）}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ MIN\_DT\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ MAX\_DT\ =\ 1.0\ /\ 15.0;\ \textcolor{comment}{//\ 15\ FPS\ 以下の巨大\ dt\ は抑制}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dt\ <\ MIN\_DT)\ dt\ =\ MIN\_DT;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00087}00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dt\ >\ MAX\_DT)\ dt\ =\ MAX\_DT;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ deltaTime\ =\ dt;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ lastTime\ =\ now;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ FPS\ 計測（移動平均の例）}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ frameCount++;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ timeSinceLastFPSUpdate\ +=\ deltaTime;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 0.25\ 秒ごとに更新し、EMA\ で滑らかに}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ UPDATE\_INTERVAL\ =\ 0.25;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (timeSinceLastFPSUpdate\ >=\ UPDATE\_INTERVAL)\ \{}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ instFPS\ =\ frameCount\ /\ timeSinceLastFPSUpdate;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 係数\ 0.25（お好みで）}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ fps\ =\ (fps\ ==\ 0.0)\ ?\ instFPS\ :\ (fps\ *\ 0.75\ +\ instFPS\ *\ 0.25);}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ frameCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ timeSinceLastFPSUpdate\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00105}00105\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00110}\mbox{\hyperlink{class_frame_timer_a29cf3680664b7783fab3331dbd6176fb}{00110}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_frame_timer_a29cf3680664b7783fab3331dbd6176fb}{GetDeltaTime}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ deltaTime;\ \}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00115}\mbox{\hyperlink{class_frame_timer_adeb483d987cd3d30e6a3fcff6c3f1040}{00115}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_frame_timer_adeb483d987cd3d30e6a3fcff6c3f1040}{GetTotalTime}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::chrono::duration<double>(clock::now()\ -\/\ startTime).count();}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00117}00117\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00122}\mbox{\hyperlink{class_frame_timer_a2ed250232f00bfe334a420b94791b4b2}{00122}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_frame_timer_a2ed250232f00bfe334a420b94791b4b2}{GetFPS}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ fps;\ \}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00127}\mbox{\hyperlink{class_frame_timer_a40826a4a33433071b9fc00d4fb5f6176}{00127}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_frame_timer_a40826a4a33433071b9fc00d4fb5f6176}{SetMaxFrameRate}}(\textcolor{keywordtype}{double}\ fpsLimit)\ \textcolor{keyword}{noexcept}\ \{\ maxFrameRate\ =\ fpsLimit;\ \}}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00128}00128\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00132}00132\ \ \ \ \ \mbox{\hyperlink{class_frame_timer_ac5742bb027cf48a1bc48baef2e59fab8}{time\_point}}\ startTime;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00136}00136\ \ \ \ \ \mbox{\hyperlink{class_frame_timer_ac5742bb027cf48a1bc48baef2e59fab8}{time\_point}}\ lastTime;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00140}00140\ \ \ \ \ \textcolor{keywordtype}{double}\ deltaTime;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00144}00144\ \ \ \ \ \textcolor{keywordtype}{int}\ frameCount;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00148}00148\ \ \ \ \ \textcolor{keywordtype}{double}\ timeSinceLastFPSUpdate;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00152}00152\ \ \ \ \ \textcolor{keywordtype}{double}\ fps;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00156}00156\ \ \ \ \ \textcolor{keywordtype}{double}\ maxFrameRate;}
+\DoxyCodeLine{\Hypertarget{_frame_timer_8h_source_l00157}00157\ \};}
+
+\end{DoxyCode}

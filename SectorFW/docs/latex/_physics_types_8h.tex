@@ -1,0 +1,124 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Physics/\+Physics\+Types.h ファイル}
+\hypertarget{_physics_types_8h}{}\label{_physics_types_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsTypes.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsTypes.h}}
+
+
+Physics\+Deviceで使う型を定義するヘッダーファイル  
+
+
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$variant$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$atomic$>$}\newline
+{\ttfamily \#include $<$optional$>$}\newline
+{\ttfamily \#include "{}../\+Core/\+ECS/entity.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Math/\+Quaternion.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Core/\+Registry\+Types.\+h"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{SFW\+::\+Physics\+::\+Shape\+Handle}}
+\begin{DoxyCompactList}\small\item\em 形状ハンドル（\+Shape\+Handle） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mat34f}{SFW\+::\+Physics\+::\+Mat34f}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_create_body_cmd}{SFW\+::\+Physics\+::\+Create\+Body\+Cmd}}
+\begin{DoxyCompactList}\small\item\em 剛体生成コマンド(\+Create\+Body\+Cmd) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_destroy_body_cmd}{SFW\+::\+Physics\+::\+Destroy\+Body\+Cmd}}
+\begin{DoxyCompactList}\small\item\em 剛体破棄コマンド(\+Destroy\+Body\+Cmd) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_teleport_cmd}{SFW\+::\+Physics\+::\+Teleport\+Cmd}}
+\begin{DoxyCompactList}\small\item\em テレポートコマンド（強制ワープ） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_set_linear_velocity_cmd}{SFW\+::\+Physics\+::\+Set\+Linear\+Velocity\+Cmd}}
+\begin{DoxyCompactList}\small\item\em 速度設定 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_set_angular_velocity_cmd}{SFW\+::\+Physics\+::\+Set\+Angular\+Velocity\+Cmd}}
+\begin{DoxyCompactList}\small\item\em 角速度設定 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_add_force_cmd}{SFW\+::\+Physics\+::\+Add\+Force\+Cmd}}
+\begin{DoxyCompactList}\small\item\em 力付与 (at\+World\+Pos 指定はオプション) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_add_impulse_cmd}{SFW\+::\+Physics\+::\+Add\+Impulse\+Cmd}}
+\begin{DoxyCompactList}\small\item\em インパルス付与 (at\+World\+Pos 指定はオプション) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_set_kinematic_target_cmd}{SFW\+::\+Physics\+::\+Set\+Kinematic\+Target\+Cmd}}
+\begin{DoxyCompactList}\small\item\em キネマティック目標姿勢（運動学主体） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_set_collision_mask_cmd}{SFW\+::\+Physics\+::\+Set\+Collision\+Mask\+Cmd}}
+\begin{DoxyCompactList}\small\item\em 衝突マスクやレイヤ \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_set_object_layer_cmd}{SFW\+::\+Physics\+::\+Set\+Object\+Layer\+Cmd}}
+\begin{DoxyCompactList}\small\item\em オブジェクトレイヤ（衝突グループ）変更 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_ray_cast_cmd}{SFW\+::\+Physics\+::\+Ray\+Cast\+Cmd}}
+\begin{DoxyCompactList}\small\item\em Ray\+Cast（結果はイベントで返す想定） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_create_character_cmd}{SFW\+::\+Physics\+::\+Create\+Character\+Cmd}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_set_character_velocity_cmd}{SFW\+::\+Physics\+::\+Set\+Character\+Velocity\+Cmd}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_set_character_rotation_cmd}{SFW\+::\+Physics\+::\+Set\+Character\+Rotation\+Cmd}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_teleport_character_cmd}{SFW\+::\+Physics\+::\+Teleport\+Character\+Cmd}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_destroy_character_cmd}{SFW\+::\+Physics\+::\+Destroy\+Character\+Cmd}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_box_desc}{SFW\+::\+Physics\+::\+Box\+Desc}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_sphere_desc}{SFW\+::\+Physics\+::\+Sphere\+Desc}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_capsule_desc}{SFW\+::\+Physics\+::\+Capsule\+Desc}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_desc}{SFW\+::\+Physics\+::\+Mesh\+Desc}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_file_desc}{SFW\+::\+Physics\+::\+Mesh\+File\+Desc}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_height_field_desc}{SFW\+::\+Physics\+::\+Height\+Field\+Desc}}
+\begin{DoxyCompactList}\small\item\em 高さマップ \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_convex_hull_desc}{SFW\+::\+Physics\+::\+Convex\+Hull\+Desc}}
+\begin{DoxyCompactList}\small\item\em 凸包 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_v_h_a_c_d_hull}{SFW\+::\+Physics\+::\+VHACDHull}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_convex_compound_desc}{SFW\+::\+Physics\+::\+Convex\+Compound\+Desc}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_convex_compound_file_desc}{SFW\+::\+Physics\+::\+Convex\+Compound\+File\+Desc}}
+\begin{DoxyCompactList}\small\item\em VHACD バイナリから Static\+Compound\+Shape を作る用の記述子 1ファイル → 1 形状 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale}{SFW\+::\+Physics\+::\+Shape\+Scale}}
+\begin{DoxyCompactList}\small\item\em 非一様スケールに対応したいときに使う \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc}{SFW\+::\+Physics\+::\+Shape\+Create\+Desc}}
+\begin{DoxyCompactList}\small\item\em 形状生成記述子(\+Shape\+Create\+Desc) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_physics}{SFW\+::\+Physics}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{SFW\+::\+Physics\+::\+Entity}}
+\item 
+typedef \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{SFW\+::\+Physics\+::\+Vec3f}}
+\item 
+typedef \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a1fdfe70e25b6445560f443d0e054477d}{SFW\+::\+Physics\+::\+Quatf}}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ab301d5658d2f5f5d4a4d78c48a6decff}{SFW\+::\+Physics\+::\+Broad\+Phase\+Layer\+Mask}} = uint16\+\_\+t
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a6a23e6ee03cf8316ed4b5e7352b80c0b}{SFW\+::\+Physics\+::\+Object\+Layer\+Mask}} = uint32\+\_\+t
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a29fd7d529ecbee3870e0d6ba19322289}{SFW\+::\+Physics\+::\+Physics\+Command}}
+\begin{DoxyCompactList}\small\item\em Physics\+Command（コマンド総合型） \end{DoxyCompactList}\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a4205f43e3da4213334170b53e59e5311}{SFW\+::\+Physics\+::\+Shape\+Desc}}
+\begin{DoxyCompactList}\small\item\em Shape\+Desc（形状記述子総合型） \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a0ca6456af0a64ba559b6918e35bd4a57}{SFW\+::\+Physics\+::\+Triangle\+Winding}} \+: uint8\+\_\+t \{ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a0ca6456af0a64ba559b6918e35bd4a57a59ec5d573abd014f3ae2c26ca962e8cf}{SFW\+::\+Physics\+::\+CCW}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a0ca6456af0a64ba559b6918e35bd4a57a9af3107a066f6b0defb1cafc0499f6ed}{SFW\+::\+Physics\+::\+CW}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Physics\+Deviceで使う型を定義するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_physics_types_8h_source}{Physics\+Types.\+h}} に定義があります。
+

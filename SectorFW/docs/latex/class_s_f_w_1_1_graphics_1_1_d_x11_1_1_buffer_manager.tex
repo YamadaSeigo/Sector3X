@@ -1,0 +1,413 @@
+\doxysection{SFW\+::Graphics\+::DX11\+::Buffer\+Manager クラス}
+\hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager}{}\label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+
+
+バッファの管理クラス。\+DirectX 11のバッファを作成、キャッシュ、更新する機能を提供する。  
+
+
+
+
+{\ttfamily \#include $<$DX11\+Buffer\+Manager.\+h$>$}
+
+SFW\+::Graphics\+::DX11\+::Buffer\+Manager の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.996435cm]{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a5f95be5589a2dcbc3d3f2f0509655e4e}{Buffer\+Manager}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}device, ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}context) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a0ff85419cdd578bf66853139a806e9a5}{\texorpdfstring{$\sim$}{\string~}\+Buffer\+Manager}} ()
+\begin{DoxyCompactList}\small\item\em デストラクタ \end{DoxyCompactList}\item 
+std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a94358915d5d48424d358af19bc44ce25}{Find\+Existing}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc}{Buffer\+Create\+Desc}} \&desc) noexcept
+\begin{DoxyCompactList}\small\item\em 既存検索（名前ベース） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a57099632f662a03a5a6b277473128cd7}{Register\+Key}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc}{Buffer\+Create\+Desc}} \&desc, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} h)
+\begin{DoxyCompactList}\small\item\em キー登録 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data}{Buffer\+Data}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a84be09c9b8a573c04e7fe2f52be4eec4}{Create\+Resource}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc}{Buffer\+Create\+Desc}} \&desc, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} h)
+\begin{DoxyCompactList}\small\item\em リソース作成 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_acfc7f943801e3d719e85d859ce6fcaaa}{Find\+By\+Name}} (const std\+::string \&name) const noexcept
+\begin{DoxyCompactList}\small\item\em 名前でバッファを検索 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a65748b131df27c1bbe129bc9406ec661}{Acquire\+With\+Content}} (const void \texorpdfstring{$\ast$}{*}data, uint32\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em 自動\+CB(内容キャッシュ)は Acquire\+API で \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a92337ceb4a904e2e9151755b9b12689d}{Update\+Buffer}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc}{Buffer\+Update\+Desc}} \&desc, uint16\+\_\+t slot) noexcept
+\begin{DoxyCompactList}\small\item\em バッファの内容を遅延で更新するためにキューに追加 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_ac196325f92d5a473fb5073e39558c772}{Pending\+Updates}} (size\+\_\+t frame\+Index)
+\begin{DoxyCompactList}\small\item\em 保留中のバッファ更新を処理 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_afcae0aebe1fb1d3ed9213c5aeed5a0b4}{Remove\+From\+Caches}} (uint32\+\_\+t idx)
+\begin{DoxyCompactList}\small\item\em Remove\+From\+Caches\+: 名前表 / 内容キャッシュを掃除 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a96378e35af3add1fd6e68939eaf7440a}{Destroy\+Resource}} (uint32\+\_\+t idx, uint64\+\_\+t)
+\begin{DoxyCompactList}\small\item\em Destroy\+Resource\+: GPU 解放 \end{DoxyCompactList}\item 
+Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a6310a6c87bce345496102a464a82b59a}{Create\+SRV}} (Com\+Ptr$<$ ID3\+D11\+Buffer $>$ buffer, D3\+D11\+\_\+\+SHADER\+\_\+\+RESOURCE\+\_\+\+VIEW\+\_\+\+DESC desc) const
+\begin{DoxyCompactList}\small\item\em Create\+SRV\+: バッファ用のシェーダーリソースビューを作成する関数 \end{DoxyCompactList}\item 
+Com\+Ptr$<$ ID3\+D11\+Unordered\+Access\+View $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a489437c94da155d2673ac94fb0ede6ef}{Create\+UAV}} (Com\+Ptr$<$ ID3\+D11\+Buffer $>$ buffer, D3\+D11\+\_\+\+UNORDERED\+\_\+\+ACCESS\+\_\+\+VIEW\+\_\+\+DESC desc) const
+\begin{DoxyCompactList}\small\item\em Create\+UAV\+: バッファ用のアンオーダードアクセスビューを作成する関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base}{SFW\+::\+Resource\+Manager\+Base$<$ Buffer\+Manager, Buffer\+Handle, Buffer\+Create\+Desc, Buffer\+Data $>$}} に属する継承公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a04eedb5dbac041ec944a8dc0da60f7db}{Add}} (const Buffer\+Create\+Desc \&desc, Buffer\+Handle \&out)
+\begin{DoxyCompactList}\small\item\em Add\+: 既存があれば再利用(+1)＆削除要求が入っていればキャンセル \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ae15f0d5d2bed3eb6c9c6d7b6864d78f7}{Add\+Ref}} (Buffer\+Handle h)
+\begin{DoxyCompactList}\small\item\em Add\+Ref\+: 参照カウント +1 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a88895bdec90c2a6a1ad0981d1ea37fc5}{Release}} (Buffer\+Handle h, uint64\+\_\+t delete\+Sync=0)
+\begin{DoxyCompactList}\small\item\em Release\+: 0 になったら削除要求を積む（alive はここでは落とさない） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a73343b94d71c058a7d42f0df945a99ce}{Enqueue\+Delete}} (uint32\+\_\+t index, uint64\+\_\+t delete\+Sync)
+\begin{DoxyCompactList}\small\item\em 削除要求の登録（重複を防いで期限更新） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a0d85020d8eff2ffb1b33e7e24360a125}{Cancel\+Pending}} (uint32\+\_\+t index)
+\begin{DoxyCompactList}\small\item\em 削除要求のキャンセル（\+Add での復活時など） \end{DoxyCompactList}\item 
+Locked\+Resource$<$ Buffer\+Data, std\+::shared\+\_\+lock $>$ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a21636b46b48c6f7e1948240a84cdd137}{Get}} (Buffer\+Handle h) const
+\begin{DoxyCompactList}\small\item\em Get\+: 有効なハンドルなら Shared Lock 付きでリソースを返す \end{DoxyCompactList}\item 
+Locked\+Resource$<$ Buffer\+Data, std\+::unique\+\_\+lock $>$ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab7f43893189687e9557458e1561ac53b}{Get\+Write}} (Buffer\+Handle h)
+\begin{DoxyCompactList}\small\item\em Get\+: 有効なハンドルなら Shared Lock 付きでリソースを返す \end{DoxyCompactList}\item 
+Locked\+Resource$<$ Buffer\+Data, std\+::shared\+\_\+lock $>$ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a58e70f715b1c75115a43136bff591499}{Get\+Direct}} (uint32\+\_\+t idx) const
+\begin{DoxyCompactList}\small\item\em Get\+Direct\+: インデックス直指定で Shared Lock 付きでリソースを返す（\+Is\+Valid チェックなし） \end{DoxyCompactList}\item 
+Locked\+Resource$<$ Buffer\+Data, std\+::unique\+\_\+lock $>$ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ae1be2923e2cc12d30597a2a883b4c870}{Get\+Direct\+Write}} (uint32\+\_\+t idx)
+\begin{DoxyCompactList}\small\item\em Get\+Direct\+: インデックス直指定で Shared Lock 付きでリソースを返す（\+Is\+Valid チェックなし） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a093db57dc6b50c4487114228c21f43eb}{Process\+Deferred\+Deletes}} (uint64\+\_\+t current\+Frame)
+\begin{DoxyCompactList}\small\item\em 期限到達で最終判断：ref == 0 なら破棄、\texorpdfstring{$>$}{>}0 なら削除キャンセル \end{DoxyCompactList}\item 
+std\+::shared\+\_\+lock$<$ std\+::shared\+\_\+mutex $>$ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a3b45f3d62337fc9cab8535042c015c7c}{Acquire\+Read\+Lock}} () const
+\begin{DoxyCompactList}\small\item\em 読み取り用ロックを取得する関数 \end{DoxyCompactList}\item 
+std\+::unique\+\_\+lock$<$ std\+::shared\+\_\+mutex $>$ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ae763873166f069f11652407b915cde4d}{Acquire\+Write\+Lock}} ()
+\begin{DoxyCompactList}\small\item\em 書き込み用ロックを取得する関数 \end{DoxyCompactList}\item 
+const Buffer\+Data \& \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab962efb2490c3a8364ddee6d4d986db8}{Get\+No\+Lock}} (Buffer\+Handle h) const
+\begin{DoxyCompactList}\small\item\em ロック無しでリソースを取得する関数（\+Is\+Valid チェック付き） \end{DoxyCompactList}\item 
+Buffer\+Data \& \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ad0e3f3458a61ff42eae76f90fe81fda4}{Get\+No\+Lock\+Write}} (Buffer\+Handle h)
+\begin{DoxyCompactList}\small\item\em ロック無しでリソースを取得する関数（\+Is\+Valid チェック付き） \end{DoxyCompactList}\item 
+const Buffer\+Data \& \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_acd8921794ec5f4579cf8207b8fa788bb}{Get\+Direct\+No\+Lock}} (uint32\+\_\+t idx) const
+\begin{DoxyCompactList}\small\item\em ロック無しでリソースを取得する関数（\+Is\+Valid チェックなし） \end{DoxyCompactList}\item 
+Buffer\+Data \& \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ac24562d389854f09bca4eecd53a82f6d}{Get\+Direct\+No\+Lock\+Write}} (uint32\+\_\+t idx)
+\begin{DoxyCompactList}\small\item\em ロック無しでリソースを取得する関数（\+Is\+Valid チェックなし） \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a27c5b607075c0da3b758542764848b9b}{Is\+Valid}} (Buffer\+Handle h) const noexcept
+\begin{DoxyCompactList}\small\item\em ハンドルが有効かどうかをチェックする関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a37262fb5f172ce3dbc15c399f870eeb7}{MAX\+\_\+\+PENDING\+\_\+\+UPDATE\+\_\+\+NUM}} = 1024
+\end{DoxyCompactItemize}
+\doxysubsubsection*{その他の継承メンバ}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base}{SFW\+::\+Resource\+Manager\+Base$<$ Buffer\+Manager, Buffer\+Handle, Buffer\+Create\+Desc, Buffer\+Data $>$}} に属する継承限定公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+Buffer\+Handle \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a4fba9ec2f754f59999f3cc890bf8d3aa}{Allocate\+Handle}} ()
+\begin{DoxyCompactList}\small\item\em ハンドルを新規確保する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_aa9555e8b96e02a75e848d470033541dd}{Mark\+Dead}} (uint32\+\_\+t index)
+\begin{DoxyCompactList}\small\item\em 派生が使うユーティリティ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ad8e12c82c8062899e2114e20d0bfcd5a}{Free\+Index}} (uint32\+\_\+t index)
+\begin{DoxyCompactList}\small\item\em 派生が使うユーティリティ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base}{SFW\+::\+Resource\+Manager\+Base$<$ Buffer\+Manager, Buffer\+Handle, Buffer\+Create\+Desc, Buffer\+Data $>$}} に属する継承限定公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ Slot $>$ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}
+\begin{DoxyCompactList}\small\item\em スロット情報のリスト \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{Copyable\+Atomic}}$<$ uint32\+\_\+t $>$ $>$ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a33a333a87b00d23717ff7e74c0e3bed2}{ref\+Count}}
+\begin{DoxyCompactList}\small\item\em 参照カウントのリスト \end{DoxyCompactList}\item 
+std\+::vector$<$ uint32\+\_\+t $>$ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_af242d92113df8594cc180534243e98a8}{free\+List}}
+\begin{DoxyCompactList}\small\item\em 空きスロットインデックスのリスト \end{DoxyCompactList}\item 
+std\+::shared\+\_\+mutex \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a2a05fb3cf3b0ea6767b836876caf0793}{map\+Mutex}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+バッファの管理クラス。\+DirectX 11のバッファを作成、キャッシュ、更新する機能を提供する。 
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00088}{88}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a5f95be5589a2dcbc3d3f2f0509655e4e}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}!BufferManager@{BufferManager}}
+\index{BufferManager@{BufferManager}!SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+\doxysubsubsection{\texorpdfstring{BufferManager()}{BufferManager()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a5f95be5589a2dcbc3d3f2f0509655e4e} 
+SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Manager\+::\+Buffer\+Manager (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device \texorpdfstring{$\ast$}{*}}]{device}{, }\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{context}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em device} & DX11のデバイス \\
+\hline
+{\em context　\+DX11のデバイスコンテキスト} & \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00099}{99}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a0ff85419cdd578bf66853139a806e9a5}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}!````~BufferManager@{\texorpdfstring{$\sim$}{\string~}BufferManager}}
+\index{````~BufferManager@{\texorpdfstring{$\sim$}{\string~}BufferManager}!SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}BufferManager()}{\string~BufferManager()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a0ff85419cdd578bf66853139a806e9a5} 
+SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Manager\+::\texorpdfstring{$\sim$}{\string~}\+Buffer\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+デストラクタ 
+
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00105}{105}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a65748b131df27c1bbe129bc9406ec661}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}!AcquireWithContent@{AcquireWithContent}}
+\index{AcquireWithContent@{AcquireWithContent}!SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+\doxysubsubsection{\texorpdfstring{AcquireWithContent()}{AcquireWithContent()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a65748b131df27c1bbe129bc9406ec661} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Manager\+::\+Acquire\+With\+Content (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{uint32\+\_\+t}]{size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+自動\+CB(内容キャッシュ)は Acquire\+API で 
+
+
+\begin{DoxyParams}{引数}
+{\em data} & データのポインタ \\
+\hline
+{\em size} & データのサイズ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle} 取得したバッファハンドル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00238}{238}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a84be09c9b8a573c04e7fe2f52be4eec4}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}!CreateResource@{CreateResource}}
+\index{CreateResource@{CreateResource}!SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+\doxysubsubsection{\texorpdfstring{CreateResource()}{CreateResource()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a84be09c9b8a573c04e7fe2f52be4eec4} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data}{Buffer\+Data}} SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Manager\+::\+Create\+Resource (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc}{Buffer\+Create\+Desc}} \&}]{desc}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}}}]{h}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+リソース作成 
+
+
+\begin{DoxyParams}{引数}
+{\em desc} & バッファ作成記述子 \\
+\hline
+{\em h} & 登録するバッファハンドル \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+DX11\+Buffer\+Data 作成されたバッファデータ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00138}{138}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a6310a6c87bce345496102a464a82b59a}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}!CreateSRV@{CreateSRV}}
+\index{CreateSRV@{CreateSRV}!SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+\doxysubsubsection{\texorpdfstring{CreateSRV()}{CreateSRV()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a6310a6c87bce345496102a464a82b59a} 
+Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Manager\+::\+Create\+SRV (\begin{DoxyParamCaption}\item[{Com\+Ptr$<$ ID3\+D11\+Buffer $>$}]{buffer}{, }\item[{D3\+D11\+\_\+\+SHADER\+\_\+\+RESOURCE\+\_\+\+VIEW\+\_\+\+DESC}]{desc}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Create\+SRV\+: バッファ用のシェーダーリソースビューを作成する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em buffer} & バッファの\+Com\+Ptr \\
+\hline
+{\em desc} & シェーダーリソースビューの記述子 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+ID3\+D11\+Shader\+Resource\+Viewの\+Com\+Ptr 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00335}{335}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a489437c94da155d2673ac94fb0ede6ef}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}!CreateUAV@{CreateUAV}}
+\index{CreateUAV@{CreateUAV}!SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+\doxysubsubsection{\texorpdfstring{CreateUAV()}{CreateUAV()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a489437c94da155d2673ac94fb0ede6ef} 
+Com\+Ptr$<$ ID3\+D11\+Unordered\+Access\+View $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Manager\+::\+Create\+UAV (\begin{DoxyParamCaption}\item[{Com\+Ptr$<$ ID3\+D11\+Buffer $>$}]{buffer}{, }\item[{D3\+D11\+\_\+\+UNORDERED\+\_\+\+ACCESS\+\_\+\+VIEW\+\_\+\+DESC}]{desc}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Create\+UAV\+: バッファ用のアンオーダードアクセスビューを作成する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em buffer} & バッファの\+Com\+Ptr \\
+\hline
+{\em desc} & アンオーダードアクセスビューの記述子 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+ID3\+D11\+Unordered\+Access\+Viewの\+Com\+Ptr 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00349}{349}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a96378e35af3add1fd6e68939eaf7440a}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}!DestroyResource@{DestroyResource}}
+\index{DestroyResource@{DestroyResource}!SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+\doxysubsubsection{\texorpdfstring{DestroyResource()}{DestroyResource()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a96378e35af3add1fd6e68939eaf7440a} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Manager\+::\+Destroy\+Resource (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{idx}{, }\item[{uint64\+\_\+t}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Destroy\+Resource\+: GPU 解放 
+
+
+\begin{DoxyParams}{引数}
+{\em idx} & ハンドルのインデックス \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00326}{326}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_acfc7f943801e3d719e85d859ce6fcaaa}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}!FindByName@{FindByName}}
+\index{FindByName@{FindByName}!SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+\doxysubsubsection{\texorpdfstring{FindByName()}{FindByName()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_acfc7f943801e3d719e85d859ce6fcaaa} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Manager\+::\+Find\+By\+Name (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+名前でバッファを検索 
+
+
+\begin{DoxyParams}{引数}
+{\em name} & 検索するバッファの名前 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle} 見つかったバッファハンドル、見つからなかった場合は空のハンドル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00226}{226}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a94358915d5d48424d358af19bc44ce25}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}!FindExisting@{FindExisting}}
+\index{FindExisting@{FindExisting}!SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+\doxysubsubsection{\texorpdfstring{FindExisting()}{FindExisting()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a94358915d5d48424d358af19bc44ce25} 
+std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Manager\+::\+Find\+Existing (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc}{Buffer\+Create\+Desc}} \&}]{desc}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+既存検索（名前ベース） 
+
+
+\begin{DoxyParams}{引数}
+{\em desc} & バッファ作成記述子 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+std\+::optional$<$\+Buffer\+Handle$>$ 既存のバッファハンドル、存在しない場合は std\+::nullopt 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00119}{119}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_ac196325f92d5a473fb5073e39558c772}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}!PendingUpdates@{PendingUpdates}}
+\index{PendingUpdates@{PendingUpdates}!SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+\doxysubsubsection{\texorpdfstring{PendingUpdates()}{PendingUpdates()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_ac196325f92d5a473fb5073e39558c772} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Manager\+::\+Pending\+Updates (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{frame\+Index}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+保留中のバッファ更新を処理 
+
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00275}{275}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a57099632f662a03a5a6b277473128cd7}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}!RegisterKey@{RegisterKey}}
+\index{RegisterKey@{RegisterKey}!SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+\doxysubsubsection{\texorpdfstring{RegisterKey()}{RegisterKey()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a57099632f662a03a5a6b277473128cd7} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Manager\+::\+Register\+Key (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc}{Buffer\+Create\+Desc}} \&}]{desc}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}}}]{h}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+キー登録 
+
+
+\begin{DoxyParams}{引数}
+{\em desc} & バッファ作成記述子 \\
+\hline
+{\em h} & 登録するバッファハンドル \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00129}{129}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_afcae0aebe1fb1d3ed9213c5aeed5a0b4}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}!RemoveFromCaches@{RemoveFromCaches}}
+\index{RemoveFromCaches@{RemoveFromCaches}!SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+\doxysubsubsection{\texorpdfstring{RemoveFromCaches()}{RemoveFromCaches()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_afcae0aebe1fb1d3ed9213c5aeed5a0b4} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Manager\+::\+Remove\+From\+Caches (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{idx}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Remove\+From\+Caches\+: 名前表 / 内容キャッシュを掃除 
+
+
+\begin{DoxyParams}{引数}
+{\em idx} & ハンドルのインデックス \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00314}{314}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a92337ceb4a904e2e9151755b9b12689d}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}!UpdateBuffer@{UpdateBuffer}}
+\index{UpdateBuffer@{UpdateBuffer}!SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+\doxysubsubsection{\texorpdfstring{UpdateBuffer()}{UpdateBuffer()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a92337ceb4a904e2e9151755b9b12689d} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Manager\+::\+Update\+Buffer (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc}{Buffer\+Update\+Desc}} \&}]{desc}{, }\item[{uint16\+\_\+t}]{slot}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+バッファの内容を遅延で更新するためにキューに追加 
+
+
+\begin{DoxyParams}{引数}
+{\em desc} & バッファ作成記述子 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00263}{263}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a37262fb5f172ce3dbc15c399f870eeb7}\index{SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}!MAX\_PENDING\_UPDATE\_NUM@{MAX\_PENDING\_UPDATE\_NUM}}
+\index{MAX\_PENDING\_UPDATE\_NUM@{MAX\_PENDING\_UPDATE\_NUM}!SFW::Graphics::DX11::BufferManager@{SFW::Graphics::DX11::BufferManager}}
+\doxysubsubsection{\texorpdfstring{MAX\_PENDING\_UPDATE\_NUM}{MAX\_PENDING\_UPDATE\_NUM}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_a37262fb5f172ce3dbc15c399f870eeb7} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+DX11\+::\+Buffer\+Manager\+::\+MAX\+\_\+\+PENDING\+\_\+\+UPDATE\+\_\+\+NUM = 1024\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_buffer_manager_8h_source}{DX11\+Buffer\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_buffer_manager_8h_source_l00092}{92}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\mbox{\hyperlink{_d_x11_buffer_manager_8h}{DX11\+Buffer\+Manager.\+h}}\end{DoxyCompactItemize}

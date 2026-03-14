@@ -1,0 +1,178 @@
+\doxysection{SFW\+::Debug\+::Im\+Gui\+Backend\+DX11\+Win32 クラス}
+\hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32}{}\label{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32}\index{SFW::Debug::ImGuiBackendDX11Win32@{SFW::Debug::ImGuiBackendDX11Win32}}
+
+
+Im\+Guiの\+Direct\+X11と\+Win32のバックエンドを実装するクラス  
+
+
+
+
+{\ttfamily \#include $<$Im\+Gui\+Backend\+DX11\+Win32.\+h$>$}
+
+SFW\+::Debug\+::Im\+Gui\+Backend\+DX11\+Win32 の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+const std\+::type\+\_\+info \& \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a80176ebc68d04a6a8704bf4ed1d08beb}{Get\+Window\+Type}} () const override
+\begin{DoxyCompactList}\small\item\em ウィンドウの型情報を取得します。 \end{DoxyCompactList}\item 
+const std\+::type\+\_\+info \& \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_ab79009d63a307cfb281a66812950de72}{Get\+Device\+Type}} () const override
+\begin{DoxyCompactList}\small\item\em デバイスの型情報を取得します。 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a64458d0e84d04def313c92652028a02b}{Init}} (const \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info}{Im\+Gui\+Init\+Info}} \&info) override
+\begin{DoxyCompactList}\small\item\em デバイスコンテキストの型情報を取得します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a46d72f5cf8db9e34400690b5adcdb07e}{New\+Frame}} () override
+\begin{DoxyCompactList}\small\item\em 新しいフレームを開始します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a66f1836dfac19b539c9226738f55546b}{Render}} () override
+\begin{DoxyCompactList}\small\item\em 描画コマンドを実行します。 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a8b296fdb1534521a5074f0cfcff2c2f1}{Shutdown}} () override
+\begin{DoxyCompactList}\small\item\em バックエンドをシャットダウンします。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend}{SFW\+::\+Debug\+::\+IIm\+Gui\+Backend}} に属する継承公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_afa7fa7db81948159b415dfd1e877aa98}{\texorpdfstring{$\sim$}{\string~}\+IIm\+Gui\+Backend}} ()=default
+\item 
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_add2602c2fb1e1dc7ba5bddfd7e0c15f6}{On\+Resize}} (int w, int h)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Im\+Guiの\+Direct\+X11と\+Win32のバックエンドを実装するクラス 
+
+ \mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h_source}{Im\+Gui\+Backend\+DX11\+Win32.\+h}} の \mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h_source_l00019}{19}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_ab79009d63a307cfb281a66812950de72}\index{SFW::Debug::ImGuiBackendDX11Win32@{SFW::Debug::ImGuiBackendDX11Win32}!GetDeviceType@{GetDeviceType}}
+\index{GetDeviceType@{GetDeviceType}!SFW::Debug::ImGuiBackendDX11Win32@{SFW::Debug::ImGuiBackendDX11Win32}}
+\doxysubsubsection{\texorpdfstring{GetDeviceType()}{GetDeviceType()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_ab79009d63a307cfb281a66812950de72} 
+const std\+::type\+\_\+info \& SFW\+::\+Debug\+::\+Im\+Gui\+Backend\+DX11\+Win32\+::\+Get\+Device\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+デバイスの型情報を取得します。 
+
+\begin{DoxyReturn}{戻り値}
+const std\+::type\+\_\+info\& デバイスの型情報 
+\end{DoxyReturn}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_af81dc0735eaebc982ab8787532faa41a}{SFW\+::\+Debug\+::\+IIm\+Gui\+Backend}}を実装しています。
+
+
+
+ \mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h_source}{Im\+Gui\+Backend\+DX11\+Win32.\+h}} の \mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h_source_l00032}{32}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a80176ebc68d04a6a8704bf4ed1d08beb}\index{SFW::Debug::ImGuiBackendDX11Win32@{SFW::Debug::ImGuiBackendDX11Win32}!GetWindowType@{GetWindowType}}
+\index{GetWindowType@{GetWindowType}!SFW::Debug::ImGuiBackendDX11Win32@{SFW::Debug::ImGuiBackendDX11Win32}}
+\doxysubsubsection{\texorpdfstring{GetWindowType()}{GetWindowType()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a80176ebc68d04a6a8704bf4ed1d08beb} 
+const std\+::type\+\_\+info \& SFW\+::\+Debug\+::\+Im\+Gui\+Backend\+DX11\+Win32\+::\+Get\+Window\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+ウィンドウの型情報を取得します。 
+
+\begin{DoxyReturn}{戻り値}
+const std\+::type\+\_\+info\& ウィンドウの型情報 
+\end{DoxyReturn}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_aff7f5d7ce448fb1b2b3382f4b7cc9a21}{SFW\+::\+Debug\+::\+IIm\+Gui\+Backend}}を実装しています。
+
+
+
+ \mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h_source}{Im\+Gui\+Backend\+DX11\+Win32.\+h}} の \mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h_source_l00025}{25}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a64458d0e84d04def313c92652028a02b}\index{SFW::Debug::ImGuiBackendDX11Win32@{SFW::Debug::ImGuiBackendDX11Win32}!Init@{Init}}
+\index{Init@{Init}!SFW::Debug::ImGuiBackendDX11Win32@{SFW::Debug::ImGuiBackendDX11Win32}}
+\doxysubsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a64458d0e84d04def313c92652028a02b} 
+bool SFW\+::\+Debug\+::\+Im\+Gui\+Backend\+DX11\+Win32\+::\+Init (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info}{Im\+Gui\+Init\+Info}} \&}]{info}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+デバイスコンテキストの型情報を取得します。 
+
+
+\begin{DoxyParams}{引数}
+{\em info} & 初期化情報 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+成功ならtrue、失敗ならfalse 
+\end{DoxyReturn}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_a7fe9c61756210d87117918f87dcae86d}{SFW\+::\+Debug\+::\+IIm\+Gui\+Backend}}を実装しています。
+
+
+
+ \mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h_source}{Im\+Gui\+Backend\+DX11\+Win32.\+h}} の \mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h_source_l00040}{40}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a46d72f5cf8db9e34400690b5adcdb07e}\index{SFW::Debug::ImGuiBackendDX11Win32@{SFW::Debug::ImGuiBackendDX11Win32}!NewFrame@{NewFrame}}
+\index{NewFrame@{NewFrame}!SFW::Debug::ImGuiBackendDX11Win32@{SFW::Debug::ImGuiBackendDX11Win32}}
+\doxysubsubsection{\texorpdfstring{NewFrame()}{NewFrame()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a46d72f5cf8db9e34400690b5adcdb07e} 
+void SFW\+::\+Debug\+::\+Im\+Gui\+Backend\+DX11\+Win32\+::\+New\+Frame (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+新しいフレームを開始します。 
+
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_aa78cd71cf45626743bfa8a79ac0918df}{SFW\+::\+Debug\+::\+IIm\+Gui\+Backend}}を実装しています。
+
+
+
+ \mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h_source}{Im\+Gui\+Backend\+DX11\+Win32.\+h}} の \mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h_source_l00049}{49}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a66f1836dfac19b539c9226738f55546b}\index{SFW::Debug::ImGuiBackendDX11Win32@{SFW::Debug::ImGuiBackendDX11Win32}!Render@{Render}}
+\index{Render@{Render}!SFW::Debug::ImGuiBackendDX11Win32@{SFW::Debug::ImGuiBackendDX11Win32}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a66f1836dfac19b539c9226738f55546b} 
+void SFW\+::\+Debug\+::\+Im\+Gui\+Backend\+DX11\+Win32\+::\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+描画コマンドを実行します。 
+
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_a1fb090d993ec9ac37ba8a6bc8de1ca32}{SFW\+::\+Debug\+::\+IIm\+Gui\+Backend}}を実装しています。
+
+
+
+ \mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h_source}{Im\+Gui\+Backend\+DX11\+Win32.\+h}} の \mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h_source_l00056}{56}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a8b296fdb1534521a5074f0cfcff2c2f1}\index{SFW::Debug::ImGuiBackendDX11Win32@{SFW::Debug::ImGuiBackendDX11Win32}!Shutdown@{Shutdown}}
+\index{Shutdown@{Shutdown}!SFW::Debug::ImGuiBackendDX11Win32@{SFW::Debug::ImGuiBackendDX11Win32}}
+\doxysubsubsection{\texorpdfstring{Shutdown()}{Shutdown()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a8b296fdb1534521a5074f0cfcff2c2f1} 
+void SFW\+::\+Debug\+::\+Im\+Gui\+Backend\+DX11\+Win32\+::\+Shutdown (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+バックエンドをシャットダウンします。 
+
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_a83dd46ac507fdba7559c7d77919d5321}{SFW\+::\+Debug\+::\+IIm\+Gui\+Backend}}を実装しています。
+
+
+
+ \mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h_source}{Im\+Gui\+Backend\+DX11\+Win32.\+h}} の \mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h_source_l00069}{69}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Debug/\mbox{\hyperlink{_im_gui_backend_d_x11_win32_8h}{Im\+Gui\+Backend\+DX11\+Win32.\+h}}\end{DoxyCompactItemize}

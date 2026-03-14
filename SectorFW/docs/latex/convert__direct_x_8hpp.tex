@@ -1,0 +1,51 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/convert\+\_\+directX.hpp ファイル}
+\hypertarget{convert__direct_x_8hpp}{}\label{convert__direct_x_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/convert\_directX.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/convert\_directX.hpp}}
+
+
+Direct\+XMathと\+Sector\+FWの数学ライブラリ間の変換を提供するヘッダーファイル  
+
+
+{\ttfamily \#include $<$Direct\+XMath.\+h$>$}\newline
+{\ttfamily \#include "{}Math/convert.\+hpp"{}}\newline
+{\ttfamily \#include "{}Math/\+Matrix.\+hpp"{}}\newline
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_math}{SFW\+::\+Math}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+template$<$$>$ Direct\+X\+::\+XMFLOAT2 \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab58ad5b52dbf63bd9112a990d1971661}{SFW\+::\+Math\+::\+Convert$<$ Direct\+X\+::\+XMFLOAT2, Vec2f $>$}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Vec2f}} \&v)
+\begin{DoxyCompactList}\small\item\em Vector2 → XMFLOAT2 \end{DoxyCompactList}\item 
+template$<$$>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Vec2f}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_ac294994588c7ab040fcf07f6dced3027}{SFW\+::\+Math\+::\+Convert$<$ Vec2f, Direct\+X\+::\+XMFLOAT2 $>$}} (const Direct\+X\+::\+XMFLOAT2 \&v)
+\begin{DoxyCompactList}\small\item\em XMFLOAT2 → \doxylink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Vec2f} \end{DoxyCompactList}\item 
+template$<$$>$ Direct\+X\+::\+XMVECTOR \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90d1ff78e63fd0a5db8ec375c0d0f59e}{SFW\+::\+Math\+::\+Convert$<$ Direct\+X\+::\+XMVECTOR, Vec3f $>$}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \&v)
+\begin{DoxyCompactList}\small\item\em \doxylink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f} → XMVECTOR \end{DoxyCompactList}\item 
+template$<$$>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_a10fe8542a8eb4eeca644633523f1f9a5}{SFW\+::\+Math\+::\+Convert$<$ Vec3f, Direct\+X\+::\+XMVECTOR $>$}} (const Direct\+X\+::\+XMVECTOR \&v)
+\begin{DoxyCompactList}\small\item\em XMVECTOR → \doxylink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Vec3f} \end{DoxyCompactList}\item 
+template$<$$>$ Direct\+X\+::\+XMVECTOR \mbox{\hyperlink{namespace_s_f_w_1_1_math_a16e99287e9769a9c4bc98320876e9c33}{SFW\+::\+Math\+::\+Convert$<$ Direct\+X\+::\+XMVECTOR, Quatf $>$}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Quatf}} \&q)
+\begin{DoxyCompactList}\small\item\em \doxylink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Quatf} → XMVECTOR \end{DoxyCompactList}\item 
+template$<$$>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Quatf}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_a0484b8ca4812f7e53afa8f993cef0f3c}{SFW\+::\+Math\+::\+Convert$<$ Quatf, Direct\+X\+::\+XMVECTOR $>$}} (const Direct\+X\+::\+XMVECTOR \&v)
+\item 
+template$<$$>$ Direct\+X\+::\+XMMATRIX \mbox{\hyperlink{namespace_s_f_w_1_1_math_a126b326c039a9f6908edd8ac9eace7e3}{SFW\+::\+Math\+::\+Convert$<$ Direct\+X\+::\+XMMATRIX, Matrix4x4f $>$}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&m)
+\begin{DoxyCompactList}\small\item\em \doxylink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f} → XMMATRIX \end{DoxyCompactList}\item 
+template$<$$>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_a596ab3e2fca7a08efa4053bfd878d90f}{SFW\+::\+Math\+::\+Convert$<$ Matrix4x4f, Direct\+X\+::\+XMMATRIX $>$}} (const Direct\+X\+::\+XMMATRIX \&mat)
+\begin{DoxyCompactList}\small\item\em XMMATRIX → \doxylink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f} \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Direct\+XMathと\+Sector\+FWの数学ライブラリ間の変換を提供するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{convert__direct_x_8hpp_source}{convert\+\_\+direct\+X.\+hpp}} に定義があります。
+

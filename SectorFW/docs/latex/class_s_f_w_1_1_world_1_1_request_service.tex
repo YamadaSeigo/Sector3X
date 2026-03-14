@@ -1,0 +1,256 @@
+\doxysection{SFW\+::World\texorpdfstring{$<$}{<} Level\+Types \texorpdfstring{$>$}{>}\+::Request\+Service クラス}
+\hypertarget{class_s_f_w_1_1_world_1_1_request_service}{}\label{class_s_f_w_1_1_world_1_1_request_service}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+
+
+{\ttfamily \#include $<$World.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}{Request\+Service}} ()
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a6a6082a6b2f2bf7b96a1cfd80edd3d2b}{Request\+Service}} (\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service}{Request\+Service}} \&\&other) noexcept
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service}{Request\+Service}} \& \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a1fafae3b87909364e2d82c2aab6de13b}{operator=}} (\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service}{Request\+Service}} \&\&other)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9a84bc9c1cfecbd6247a4274eb66de16}{Push\+Command}} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ cmd)
+\item 
+{\footnotesize template$<$typename T$>$ }\\std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a1338a1b0d2f6a80180e8f830fe2be160}{Create\+Add\+Level\+Command}} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_level}{Level}}$<$ T $>$ $>$ level) const noexcept
+\item 
+{\footnotesize template$<$typename T, typename... Func$>$ }\\std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_ad27cda1145e33b189b6cc45390d95389}{Create\+Add\+Level\+Command}} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_level}{Level}}$<$ T $>$ $>$ level, Func \&\&... custom\+Func) const noexcept
+\item 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_aee25791b71685a8dde3f815c195f9353}{Create\+Load\+Level\+Command}} (const std\+::string \&name, bool is\+Async=false, bool active=true, \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}} custom\+Func=nullptr) const noexcept
+\item 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9b813cf8db5ea065b8e3e631bbdad6d5}{Create\+Clean\+Level\+Command}} (const std\+::string \&name, \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}} custom\+Func=nullptr) const noexcept
+\item 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_ad0c13cd685d33c681bad955e46cfd1d4}{Create\+Pause\+Resume\+Level\+Command}} (const std\+::string \&name, bool pause, \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}} custom\+Func=nullptr) const noexcept
+\item 
+{\footnotesize template$<$template$<$ typename $>$ class System$>$ }\\std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a67d16bbbbc91ce3cb8fddc2a06820535}{Create\+Add\+Global\+System\+Command}} () const noexcept
+\item 
+{\footnotesize template$<$template$<$ typename $>$ class System$>$ }\\std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a63682feeea3322b4c2bc55be2d326454}{Create\+Apply\+Level\+System\+Command}} (const std\+::string \&level\+Name, \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bc}{EApply\+Level\+System\+Option}} option) const noexcept
+\item 
+{\footnotesize template$<$template$<$ typename $>$ class System$>$ }\\std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a7795e0bf7e794e19e178fbe53d6643ef}{Create\+Add\+System\+Command}} (const std\+::string \&level\+Name) const noexcept
+\item 
+{\footnotesize template$<$template$<$ typename $>$ class System$>$ }\\std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_af5c7d6e96334665959d6cd72661b1bf1}{Create\+Remove\+System\+Command}} (const std\+::string \&level\+Name) const noexcept
+\item 
+{\footnotesize template$<$template$<$ typename $>$ class System$>$ }\\std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9fae09c2da0d257b7659fac2bfa7f2ef}{Create\+Pause\+Resume\+System\+Command}} (const std\+::string \&level\+Name, bool pause=true) const noexcept
+\item 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_af8f70f420f09edc0efaa0961129fed29}{Create\+Lambda\+Command}} (std\+::function$<$ void(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}} \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*})$>$ fn) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{フレンド}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a220e3aee8be7040cd192c68a0f8b5b93}{World$<$ Level\+Types... $>$}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename... Level\+Types$>$\newline
+class SFW\+::\+World$<$ Level\+Types $>$\+::\+Request\+Service}
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00412}{412}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!RequestService@{RequestService}}
+\index{RequestService@{RequestService}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{RequestService()}{RequestService()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4} 
+template$<$typename... Level\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Request\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00416}{416}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a6a6082a6b2f2bf7b96a1cfd80edd3d2b}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!RequestService@{RequestService}}
+\index{RequestService@{RequestService}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{RequestService()}{RequestService()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_a6a6082a6b2f2bf7b96a1cfd80edd3d2b} 
+template$<$typename... Level\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Request\+Service (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service}{Request\+Service}} \&\&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00418}{418}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a67d16bbbbc91ce3cb8fddc2a06820535}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateAddGlobalSystemCommand@{CreateAddGlobalSystemCommand}}
+\index{CreateAddGlobalSystemCommand@{CreateAddGlobalSystemCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{CreateAddGlobalSystemCommand()}{CreateAddGlobalSystemCommand()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_a67d16bbbbc91ce3cb8fddc2a06820535} 
+template$<$typename... Level\+Types$>$ \\
+template$<$template$<$ typename $>$ class System$>$ \\
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Create\+Add\+Global\+System\+Command (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00463}{463}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a1338a1b0d2f6a80180e8f830fe2be160}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateAddLevelCommand@{CreateAddLevelCommand}}
+\index{CreateAddLevelCommand@{CreateAddLevelCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{CreateAddLevelCommand()}{CreateAddLevelCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_a1338a1b0d2f6a80180e8f830fe2be160} 
+template$<$typename... Level\+Types$>$ \\
+template$<$typename T$>$ \\
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Create\+Add\+Level\+Command (\begin{DoxyParamCaption}\item[{std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_level}{Level}}$<$ T $>$ $>$}]{level}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00440}{440}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_ad27cda1145e33b189b6cc45390d95389}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateAddLevelCommand@{CreateAddLevelCommand}}
+\index{CreateAddLevelCommand@{CreateAddLevelCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{CreateAddLevelCommand()}{CreateAddLevelCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_ad27cda1145e33b189b6cc45390d95389} 
+template$<$typename... Level\+Types$>$ \\
+template$<$typename T, typename... Func$>$ \\
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Create\+Add\+Level\+Command (\begin{DoxyParamCaption}\item[{std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_level}{Level}}$<$ T $>$ $>$}]{level}{, }\item[{Func \&\&...}]{custom\+Func}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00446}{446}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a7795e0bf7e794e19e178fbe53d6643ef}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateAddSystemCommand@{CreateAddSystemCommand}}
+\index{CreateAddSystemCommand@{CreateAddSystemCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{CreateAddSystemCommand()}{CreateAddSystemCommand()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_a7795e0bf7e794e19e178fbe53d6643ef} 
+template$<$typename... Level\+Types$>$ \\
+template$<$template$<$ typename $>$ class System$>$ \\
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Create\+Add\+System\+Command (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{level\+Name}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00473}{473}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a63682feeea3322b4c2bc55be2d326454}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateApplyLevelSystemCommand@{CreateApplyLevelSystemCommand}}
+\index{CreateApplyLevelSystemCommand@{CreateApplyLevelSystemCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{CreateApplyLevelSystemCommand()}{CreateApplyLevelSystemCommand()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_a63682feeea3322b4c2bc55be2d326454} 
+template$<$typename... Level\+Types$>$ \\
+template$<$template$<$ typename $>$ class System$>$ \\
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Create\+Apply\+Level\+System\+Command (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{level\+Name}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bc}{EApply\+Level\+System\+Option}}}]{option}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00468}{468}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a9b813cf8db5ea065b8e3e631bbdad6d5}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateCleanLevelCommand@{CreateCleanLevelCommand}}
+\index{CreateCleanLevelCommand@{CreateCleanLevelCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{CreateCleanLevelCommand()}{CreateCleanLevelCommand()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_a9b813cf8db5ea065b8e3e631bbdad6d5} 
+template$<$typename... Level\+Types$>$ \\
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Create\+Clean\+Level\+Command (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}}}]{custom\+Func}{ = {\ttfamily nullptr}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00454}{454}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_af8f70f420f09edc0efaa0961129fed29}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateLambdaCommand@{CreateLambdaCommand}}
+\index{CreateLambdaCommand@{CreateLambdaCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{CreateLambdaCommand()}{CreateLambdaCommand()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_af8f70f420f09edc0efaa0961129fed29} 
+template$<$typename... Level\+Types$>$ \\
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Create\+Lambda\+Command (\begin{DoxyParamCaption}\item[{std\+::function$<$ void(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}} \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*})$>$}]{fn}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00489}{489}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_aee25791b71685a8dde3f815c195f9353}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateLoadLevelCommand@{CreateLoadLevelCommand}}
+\index{CreateLoadLevelCommand@{CreateLoadLevelCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{CreateLoadLevelCommand()}{CreateLoadLevelCommand()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_aee25791b71685a8dde3f815c195f9353} 
+template$<$typename... Level\+Types$>$ \\
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Create\+Load\+Level\+Command (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{bool}]{is\+Async}{ = {\ttfamily false}, }\item[{bool}]{active}{ = {\ttfamily true}, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}}}]{custom\+Func}{ = {\ttfamily nullptr}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00450}{450}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_ad0c13cd685d33c681bad955e46cfd1d4}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreatePauseResumeLevelCommand@{CreatePauseResumeLevelCommand}}
+\index{CreatePauseResumeLevelCommand@{CreatePauseResumeLevelCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{CreatePauseResumeLevelCommand()}{CreatePauseResumeLevelCommand()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_ad0c13cd685d33c681bad955e46cfd1d4} 
+template$<$typename... Level\+Types$>$ \\
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Create\+Pause\+Resume\+Level\+Command (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{bool}]{pause}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}}}]{custom\+Func}{ = {\ttfamily nullptr}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00458}{458}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a9fae09c2da0d257b7659fac2bfa7f2ef}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreatePauseResumeSystemCommand@{CreatePauseResumeSystemCommand}}
+\index{CreatePauseResumeSystemCommand@{CreatePauseResumeSystemCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{CreatePauseResumeSystemCommand()}{CreatePauseResumeSystemCommand()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_a9fae09c2da0d257b7659fac2bfa7f2ef} 
+template$<$typename... Level\+Types$>$ \\
+template$<$template$<$ typename $>$ class System$>$ \\
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Create\+Pause\+Resume\+System\+Command (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{level\+Name}{, }\item[{bool}]{pause}{ = {\ttfamily true}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00483}{483}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_af5c7d6e96334665959d6cd72661b1bf1}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateRemoveSystemCommand@{CreateRemoveSystemCommand}}
+\index{CreateRemoveSystemCommand@{CreateRemoveSystemCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{CreateRemoveSystemCommand()}{CreateRemoveSystemCommand()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_af5c7d6e96334665959d6cd72661b1bf1} 
+template$<$typename... Level\+Types$>$ \\
+template$<$template$<$ typename $>$ class System$>$ \\
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Create\+Remove\+System\+Command (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{level\+Name}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00478}{478}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a1fafae3b87909364e2d82c2aab6de13b}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_a1fafae3b87909364e2d82c2aab6de13b} 
+template$<$typename... Level\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service}{Request\+Service}} \& \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service}{Request\+Service}} \&\&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00423}{423}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a9a84bc9c1cfecbd6247a4274eb66de16}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!PushCommand@{PushCommand}}
+\index{PushCommand@{PushCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{PushCommand()}{PushCommand()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_a9a84bc9c1cfecbd6247a4274eb66de16} 
+template$<$typename... Level\+Types$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Push\+Command (\begin{DoxyParamCaption}\item[{std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$}]{cmd}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00434}{434}} 行目に定義があります。
+
+
+
+\label{doc-related-members}
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_doc-related-members}
+\doxysubsection{フレンドと関連関数の詳解}
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a220e3aee8be7040cd192c68a0f8b5b93}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!World$<$ LevelTypes... $>$@{World$<$ LevelTypes... $>$}}
+\index{World$<$ LevelTypes... $>$@{World$<$ LevelTypes... $>$}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{World$<$ LevelTypes... $>$}{World< LevelTypes... >}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_a220e3aee8be7040cd192c68a0f8b5b93} 
+template$<$typename... Level\+Types$>$ \\
+friend class \mbox{\hyperlink{class_s_f_w_1_1_world}{World}}$<$ Level\+Types... $>$\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00406}{406}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_world_8hpp}{World.\+hpp}}\end{DoxyCompactItemize}

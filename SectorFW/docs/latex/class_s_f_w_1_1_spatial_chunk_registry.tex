@@ -1,0 +1,123 @@
+\doxysection{SFW\+::Spatial\+Chunk\+Registry クラス}
+\hypertarget{class_s_f_w_1_1_spatial_chunk_registry}{}\label{class_s_f_w_1_1_spatial_chunk_registry}\index{SFW::SpatialChunkRegistry@{SFW::SpatialChunkRegistry}}
+
+
+Spatial\+Chunkをキーで登録・取得するサービス  
+
+
+
+
+{\ttfamily \#include $<$Spatial\+Chunk\+Registry\+Service.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_af16975058127298f906e43cb35489f8c}{Register\+Owner}} (const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&key, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*}sp)
+\begin{DoxyCompactList}\small\item\em 登録（レベル / 区画ロード時） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_affa7c775c9a8b17fd30d58741765845b}{Unregister\+Owner}} (const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&key)
+\begin{DoxyCompactList}\small\item\em 解除（レベル / 区画アンロード時） \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_a44d0e0d4f1ee861ba71c34522ac02407}{Resolve\+Owner}} (const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&key) const noexcept
+\begin{DoxyCompactList}\small\item\em キーからチャンクの取得（生存していれば Spatial\+Chunk\texorpdfstring{$\ast$}{*} を返す） \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry_aca7ef55a3ef220e01eb8a71fc2e0ae89}{Resolve\+Owner\+EM}} (const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&key) const noexcept
+\begin{DoxyCompactList}\small\item\em 指定したキーのチャンクの\+EMの取得（生存していれば EM\texorpdfstring{$\ast$}{*} を返す） \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Spatial\+Chunkをキーで登録・取得するサービス 
+
+ \mbox{\hyperlink{_spatial_chunk_registry_service_8h_source}{Spatial\+Chunk\+Registry\+Service.\+h}} の \mbox{\hyperlink{_spatial_chunk_registry_service_8h_source_l00019}{19}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_registry_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_registry_af16975058127298f906e43cb35489f8c}\index{SFW::SpatialChunkRegistry@{SFW::SpatialChunkRegistry}!RegisterOwner@{RegisterOwner}}
+\index{RegisterOwner@{RegisterOwner}!SFW::SpatialChunkRegistry@{SFW::SpatialChunkRegistry}}
+\doxysubsubsection{\texorpdfstring{RegisterOwner()}{RegisterOwner()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_registry_af16975058127298f906e43cb35489f8c} 
+void SFW\+::\+Spatial\+Chunk\+Registry\+::\+Register\+Owner (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&}]{key}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*}}]{sp}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+登録（レベル / 区画ロード時） 
+
+
+\begin{DoxyParams}{引数}
+{\em key} & 登録するキー \\
+\hline
+{\em sp} & 登録する \doxylink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk} へのポインタ \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_spatial_chunk_registry_service_8h_source}{Spatial\+Chunk\+Registry\+Service.\+h}} の \mbox{\hyperlink{_spatial_chunk_registry_service_8h_source_l00037}{37}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_registry_a44d0e0d4f1ee861ba71c34522ac02407}\index{SFW::SpatialChunkRegistry@{SFW::SpatialChunkRegistry}!ResolveOwner@{ResolveOwner}}
+\index{ResolveOwner@{ResolveOwner}!SFW::SpatialChunkRegistry@{SFW::SpatialChunkRegistry}}
+\doxysubsubsection{\texorpdfstring{ResolveOwner()}{ResolveOwner()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_registry_a44d0e0d4f1ee861ba71c34522ac02407} 
+\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} SFW\+::\+Spatial\+Chunk\+Registry\+::\+Resolve\+Owner (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&}]{key}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+キーからチャンクの取得（生存していれば Spatial\+Chunk\texorpdfstring{$\ast$}{*} を返す） 
+
+
+\begin{DoxyParams}{引数}
+{\em key} & 解決するキー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+Spatial\+Chunk\texorpdfstring{$\ast$}{*} 解決した \doxylink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk} へのポインタ（存在しない場合は nullptr） 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_spatial_chunk_registry_service_8h_source}{Spatial\+Chunk\+Registry\+Service.\+h}} の \mbox{\hyperlink{_spatial_chunk_registry_service_8h_source_l00054}{54}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_registry_aca7ef55a3ef220e01eb8a71fc2e0ae89}\index{SFW::SpatialChunkRegistry@{SFW::SpatialChunkRegistry}!ResolveOwnerEM@{ResolveOwnerEM}}
+\index{ResolveOwnerEM@{ResolveOwnerEM}!SFW::SpatialChunkRegistry@{SFW::SpatialChunkRegistry}}
+\doxysubsubsection{\texorpdfstring{ResolveOwnerEM()}{ResolveOwnerEM()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_registry_aca7ef55a3ef220e01eb8a71fc2e0ae89} 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \texorpdfstring{$\ast$}{*} SFW\+::\+Spatial\+Chunk\+Registry\+::\+Resolve\+Owner\+EM (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&}]{key}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+指定したキーのチャンクの\+EMの取得（生存していれば EM\texorpdfstring{$\ast$}{*} を返す） 
+
+
+\begin{DoxyParams}{引数}
+{\em key} & 取得するキー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}\texorpdfstring{$\ast$}{*} 解決した Entity\+Manager へのポインタ（存在しない場合は nullptr） 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_spatial_chunk_registry_service_8h_source}{Spatial\+Chunk\+Registry\+Service.\+h}} の \mbox{\hyperlink{_spatial_chunk_registry_service_8h_source_l00064}{64}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_spatial_chunk_registry_affa7c775c9a8b17fd30d58741765845b}\index{SFW::SpatialChunkRegistry@{SFW::SpatialChunkRegistry}!UnregisterOwner@{UnregisterOwner}}
+\index{UnregisterOwner@{UnregisterOwner}!SFW::SpatialChunkRegistry@{SFW::SpatialChunkRegistry}}
+\doxysubsubsection{\texorpdfstring{UnregisterOwner()}{UnregisterOwner()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_spatial_chunk_registry_affa7c775c9a8b17fd30d58741765845b} 
+void SFW\+::\+Spatial\+Chunk\+Registry\+::\+Unregister\+Owner (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+解除（レベル / 区画アンロード時） 
+
+
+\begin{DoxyParams}{引数}
+{\em key} & 解除するキー \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_spatial_chunk_registry_service_8h_source}{Spatial\+Chunk\+Registry\+Service.\+h}} の \mbox{\hyperlink{_spatial_chunk_registry_service_8h_source_l00045}{45}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_spatial_chunk_registry_service_8h}{Spatial\+Chunk\+Registry\+Service.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ArchetypeChunk.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_archetype_chunk_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">ArchetypeChunk.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_archetype_chunk_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;bit&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="entity_8h.html">entity.h</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="_component_type_registry_8h.html">ComponentTypeRegistry.h</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="_component_layout_registry_8h.html">ComponentLayoutRegistry.h</a>&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;<a class="code" href="alignment_8h.html">Util/alignment.h</a>&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;<a class="code" href="logger_8h.html">Debug/logger.h</a>&quot;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;<a class="code" href="assert__config_8h.html">Debug/assert_config.h</a>&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>{</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_e_c_s.html">ECS</a></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    {</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_e_c_s.html#a2e93fe0a9759446633f84df6d7867ecb">   30</a></span>        <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="namespace_s_f_w_1_1_e_c_s.html#a2e93fe0a9759446633f84df6d7867ecb">ChunkSizeBytes</a> = 32 * 1024;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="comment">//前方定義</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keyword">class </span><a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html">ComponentTypeRegistry</a>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_e_c_s.html#a1fa083af926da159fc321773dbfc28c5">   36</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a1fa083af926da159fc321773dbfc28c5">BufferType</a> = uint8_t;</div>
+<div class="foldopen" id="foldopen00040" data-start="{" data-end="};">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html">   40</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a22b8504419ed0ded4fac7e291066b18a">ArchetypeChunk</a> {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00047" data-start="{" data-end="}">
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a22b8504419ed0ded4fac7e291066b18a">   47</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a22b8504419ed0ded4fac7e291066b18a">ArchetypeChunk</a>(<a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a> mask) : layout(<a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_component_layout_registry.html">ComponentLayoutRegistry</a>::GetLayout(mask)),</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                componentMask(mask) {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                <a class="code hl_define" href="assert__config_8h.html#a7c360e1bd29ee4fa83ec85935d37dbeb">SFW_ASSERT</a>(layout.capacity &gt; 0 &amp;&amp; <span class="stringliteral">&quot;Chunk capacity must be greater than 0&quot;</span>);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                entities.resize(layout.capacity);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            }</div>
+</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00057" data-start="{" data-end="}">
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#aab9a33d52d74f38ed25da2bc7508d3ef">   57</a></span>            std::optional&lt;T*&gt; <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#aab9a33d52d74f38ed25da2bc7508d3ef">GetColumn</a>() noexcept {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a1127b2c8d467a6889c6cb2c41dea49c1">ComponentTypeID</a> <span class="keywordtype">id</span> = <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a10187ecf92f955a8bbb8e6a5b25b8d47">ComponentTypeRegistry::GetID&lt;T&gt;</a>();</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                <span class="keyword">auto</span> it = layout.infoIdx.find(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                <span class="keywordflow">if</span> (it == layout.infoIdx.end()) [[unlikely]] {</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                    <a class="code hl_define" href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a>(<span class="stringliteral">&quot;コンポーネントID{ %d }がレイアウトに見つかりません&quot;</span>, <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                    <span class="keywordflow">return</span> std::nullopt; <span class="comment">// or throw an exception</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                }</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                <span class="keyword">auto</span> info = layout.info[it-&gt;second].get(0);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                <span class="keywordflow">if</span> (!info) [[unlikely]] {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                    <a class="code hl_define" href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a>(<span class="stringliteral">&quot;コンポーネントID{ %d }がレイアウト情報に見つかりません&quot;</span>, <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                    <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                }</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                <span class="keywordflow">return</span> <span class="keyword">reinterpret_cast&lt;</span>T*<span class="keyword">&gt;</span>(&amp;buffer[info.value().get().offset]);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            }</div>
+</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a9ad9e5876edd7d3fe93b7ba84b2268c9">   77</a></span>            <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a9ad9e5876edd7d3fe93b7ba84b2268c9">AddEntity</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">EntityID</a> <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a47b5de191a4fb9bacfa346bd913814cb">   82</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a47b5de191a4fb9bacfa346bd913814cb">RemoveEntitySwapPop</a>(<span class="keywordtype">size_t</span> index) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#ad81af21258799c01aeddbc43abf9b6cf">   87</a></span>            <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#ad81af21258799c01aeddbc43abf9b6cf">GetEntityCount</a>() const noexcept { <span class="keywordflow">return</span> entityCount; }</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a0b63cd7ab0e1261bfcb3b76403f35a0e">   92</a></span>            <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a0b63cd7ab0e1261bfcb3b76403f35a0e">GetCapacity</a>() const noexcept { <span class="keywordflow">return</span> layout.capacity; }</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a8f9b996de36d1a844a007e669c1ae199">   97</a></span>            <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a> <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a8f9b996de36d1a844a007e669c1ae199">GetComponentMask</a>() const noexcept { <span class="keywordflow">return</span> componentMask; }</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a05574939cc84e36af21c08212d1a2007">  102</a></span>            <span class="keyword">const</span> std::vector&lt;EntityID&gt;&amp; <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a05574939cc84e36af21c08212d1a2007">GetEntityIDs</a>() const noexcept { <span class="keywordflow">return</span> entities; }</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <span class="comment">//アーキタイプチャンクのバッファ</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a1fa083af926da159fc321773dbfc28c5">BufferType</a> buffer[<a class="code hl_variable" href="namespace_s_f_w_1_1_e_c_s.html#a2e93fe0a9759446633f84df6d7867ecb">ChunkSizeBytes</a>] = {};</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            <span class="comment">//エンティティの数</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            <span class="keywordtype">size_t</span> entityCount = 0;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            <span class="comment">//エンティティのIDを格納するベクター</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            std::vector&lt;EntityID&gt; entities;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="comment">//コンポーネントマスク</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a> componentMask;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            <span class="comment">//コンポーネントレイアウト</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            <span class="keyword">const</span> ComponentLayout&amp; layout;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00118" data-start="{" data-end="};">
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html">  118</a></span>            <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html">Accessor</a></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            {</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>                <span class="keyword">static</span> <span class="keyword">auto</span> GetBuffer(<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a22b8504419ed0ded4fac7e291066b18a">ArchetypeChunk</a>* chunk) <span class="keyword">noexcept</span> { <span class="keywordflow">return</span> chunk-&gt;buffer; }</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>                <span class="keyword">static</span> <span class="keyword">const</span> std::vector&lt;EntityID&gt;&amp; <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a05574939cc84e36af21c08212d1a2007">GetEntityIDs</a>(<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a22b8504419ed0ded4fac7e291066b18a">ArchetypeChunk</a>* chunk) <span class="keyword">noexcept</span> { <span class="keywordflow">return</span> chunk-&gt;entities; }</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>                <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">decltype</span>(<a class="code hl_variable" href="struct_s_f_w_1_1_e_c_s_1_1_component_layout.html#a3d7b7770b3ccf40851c113417bd24de7">ComponentLayout::info</a>)&amp; GetLayoutInfo(<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a22b8504419ed0ded4fac7e291066b18a">ArchetypeChunk</a>* chunk) <span class="keyword">noexcept</span> { <span class="keywordflow">return</span> chunk-&gt;layout.<a class="code hl_variable" href="struct_s_f_w_1_1_e_c_s_1_1_component_layout.html#a3d7b7770b3ccf40851c113417bd24de7">info</a>; }</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>                <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">decltype</span>(<a class="code hl_variable" href="struct_s_f_w_1_1_e_c_s_1_1_component_layout.html#a88343f1ee39dfe0d56941f26292e7cdd">ComponentLayout::infoIdx</a>)&amp; GetLayoutInfoIdx(<a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a22b8504419ed0ded4fac7e291066b18a">ArchetypeChunk</a>* chunk) <span class="keyword">noexcept</span> { <span class="keywordflow">return</span> chunk-&gt;layout.<a class="code hl_variable" href="struct_s_f_w_1_1_e_c_s_1_1_component_layout.html#a88343f1ee39dfe0d56941f26292e7cdd">infoIdx</a>; }</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a6f579cda6059d102e9074e11a27e0282">  146</a></span>                <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_friend" href="struct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a6f579cda6059d102e9074e11a27e0282">EntityManager</a>;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>            };</div>
+</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        };</div>
+</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    }</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>}</div>
+<div class="ttc" id="a_component_layout_registry_8h_html"><div class="ttname"><a href="_component_layout_registry_8h.html">ComponentLayoutRegistry.h</a></div><div class="ttdoc">コンポーネントレイアウトレジストリを定義するクラス</div></div>
+<div class="ttc" id="a_component_type_registry_8h_html"><div class="ttname"><a href="_component_type_registry_8h.html">ComponentTypeRegistry.h</a></div><div class="ttdoc">コンポーネントの型IDとメタ情報を管理するクラス</div></div>
+<div class="ttc" id="aalignment_8h_html"><div class="ttname"><a href="alignment_8h.html">alignment.h</a></div><div class="ttdoc">アライメントを計算するヘッダーファイル</div></div>
+<div class="ttc" id="aassert__config_8h_html"><div class="ttname"><a href="assert__config_8h.html">assert_config.h</a></div><div class="ttdoc">デバッグ用アサート設定ヘッダ</div></div>
+<div class="ttc" id="aassert__config_8h_html_a7c360e1bd29ee4fa83ec85935d37dbeb"><div class="ttname"><a href="assert__config_8h.html#a7c360e1bd29ee4fa83ec85935d37dbeb">SFW_ASSERT</a></div><div class="ttdeci">#define SFW_ASSERT(expr)</div><div class="ttdef"><b>Definition</b> <a href="assert__config_8h_source.html#l00033">assert_config.h:33</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_chunk_html_a05574939cc84e36af21c08212d1a2007"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a05574939cc84e36af21c08212d1a2007">SFW::ECS::ArchetypeChunk::GetEntityIDs</a></div><div class="ttdeci">const std::vector&lt; EntityID &gt; &amp; GetEntityIDs() const noexcept</div><div class="ttdoc">エンティティIDの配列を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00102">ArchetypeChunk.h:102</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_chunk_html_a0b63cd7ab0e1261bfcb3b76403f35a0e"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a0b63cd7ab0e1261bfcb3b76403f35a0e">SFW::ECS::ArchetypeChunk::GetCapacity</a></div><div class="ttdeci">size_t GetCapacity() const noexcept</div><div class="ttdoc">チャンクの容量を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00092">ArchetypeChunk.h:92</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_chunk_html_a22b8504419ed0ded4fac7e291066b18a"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a22b8504419ed0ded4fac7e291066b18a">SFW::ECS::ArchetypeChunk::ArchetypeChunk</a></div><div class="ttdeci">ArchetypeChunk(ComponentMask mask)</div><div class="ttdoc">コンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00047">ArchetypeChunk.h:47</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_chunk_html_a47b5de191a4fb9bacfa346bd913814cb"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a47b5de191a4fb9bacfa346bd913814cb">SFW::ECS::ArchetypeChunk::RemoveEntitySwapPop</a></div><div class="ttdeci">void RemoveEntitySwapPop(size_t index) noexcept</div><div class="ttdoc">エンティティを削除する関数(最後のエンティティと入れ替えて追放)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_chunk_html_a8f9b996de36d1a844a007e669c1ae199"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a8f9b996de36d1a844a007e669c1ae199">SFW::ECS::ArchetypeChunk::GetComponentMask</a></div><div class="ttdeci">ComponentMask GetComponentMask() const noexcept</div><div class="ttdoc">コンポーネントマスクを取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00097">ArchetypeChunk.h:97</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_chunk_html_a9ad9e5876edd7d3fe93b7ba84b2268c9"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#a9ad9e5876edd7d3fe93b7ba84b2268c9">SFW::ECS::ArchetypeChunk::AddEntity</a></div><div class="ttdeci">size_t AddEntity(EntityID id)</div><div class="ttdoc">エンティティを追加する関数</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_chunk_html_aab9a33d52d74f38ed25da2bc7508d3ef"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#aab9a33d52d74f38ed25da2bc7508d3ef">SFW::ECS::ArchetypeChunk::GetColumn</a></div><div class="ttdeci">std::optional&lt; T * &gt; GetColumn() noexcept</div><div class="ttdoc">コンポーネントの列を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00057">ArchetypeChunk.h:57</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_archetype_chunk_html_ad81af21258799c01aeddbc43abf9b6cf"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_archetype_chunk.html#ad81af21258799c01aeddbc43abf9b6cf">SFW::ECS::ArchetypeChunk::GetEntityCount</a></div><div class="ttdeci">size_t GetEntityCount() const noexcept</div><div class="ttdoc">エンティティの数を取得する関数</div><div class="ttdef"><b>Definition</b> <a href="#l00087">ArchetypeChunk.h:87</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_component_layout_registry_html"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_component_layout_registry.html">SFW::ECS::ComponentLayoutRegistry</a></div><div class="ttdoc">コンポーネントレイアウトを一元的に管理するクラス（ComponentMaskごとに共通!）</div><div class="ttdef"><b>Definition</b> <a href="_component_layout_registry_8h_source.html#l00033">ComponentLayoutRegistry.h:34</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_component_type_registry_html"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html">SFW::ECS::ComponentTypeRegistry</a></div><div class="ttdoc">コンポーネントの型IDとそれに対応するメタ情報を登録、管理するクラス</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00048">ComponentTypeRegistry.h:48</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_component_type_registry_html_a10187ecf92f955a8bbb8e6a5b25b8d47"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_component_type_registry.html#a10187ecf92f955a8bbb8e6a5b25b8d47">SFW::ECS::ComponentTypeRegistry::GetID</a></div><div class="ttdeci">static ComponentTypeID GetID() noexcept</div><div class="ttdoc">コンポーネントの型IDを取得します。</div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00056">ComponentTypeRegistry.h:56</a></div></div>
+<div class="ttc" id="aentity_8h_html"><div class="ttname"><a href="entity_8h.html">entity.h</a></div><div class="ttdoc">エンティティIDを定義するヘッダーファイル</div></div>
+<div class="ttc" id="alogger_8h_html"><div class="ttname"><a href="logger_8h.html">logger.h</a></div></div>
+<div class="ttc" id="alogger_8h_html_ae6fc70e87e424e7083c63696b8fb9e78"><div class="ttname"><a href="logger_8h.html#ae6fc70e87e424e7083c63696b8fb9e78">LOG_ERROR</a></div><div class="ttdeci">#define LOG_ERROR(fmt,...)</div><div class="ttdef"><b>Definition</b> <a href="logger_8h_source.html#l00197">logger.h:197</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html">SFW::ECS</a></div><div class="ttdef"><b>Definition</b> <a href="_access_info_8h_source.html#l00016">AccessInfo.h:17</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html_a1127b2c8d467a6889c6cb2c41dea49c1"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html#a1127b2c8d467a6889c6cb2c41dea49c1">SFW::ECS::ComponentTypeID</a></div><div class="ttdeci">uint32_t ComponentTypeID</div><div class="ttdoc">コンポーネントの型IDを定義する型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00038">component.hpp:38</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html_a1fa083af926da159fc321773dbfc28c5"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html#a1fa083af926da159fc321773dbfc28c5">SFW::ECS::BufferType</a></div><div class="ttdeci">uint8_t BufferType</div><div class="ttdoc">アーキタイプチャンクのバッファ型</div><div class="ttdef"><b>Definition</b> <a href="#l00036">ArchetypeChunk.h:36</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html_a2e93fe0a9759446633f84df6d7867ecb"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html#a2e93fe0a9759446633f84df6d7867ecb">SFW::ECS::ChunkSizeBytes</a></div><div class="ttdeci">constexpr size_t ChunkSizeBytes</div><div class="ttdoc">アーキタイプチャンクのサイズ（バイト単位）</div><div class="ttdef"><b>Definition</b> <a href="#l00030">ArchetypeChunk.h:30</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html_a801a8ddbf41707287f3fc0588d25ec8d"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">SFW::ECS::ComponentMask</a></div><div class="ttdeci">std::bitset&lt; MaxComponents &gt; ComponentMask</div><div class="ttdoc">コンポーネントマスクを定義するビットセット型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00042">component.hpp:42</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor_html"><div class="ttname"><a href="struct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html">SFW::ECS::ArchetypeChunk::Accessor</a></div><div class="ttdoc">アーキタイプチャンクのアクセサークラス</div><div class="ttdef"><b>Definition</b> <a href="#l00118">ArchetypeChunk.h:119</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor_html_a6f579cda6059d102e9074e11a27e0282"><div class="ttname"><a href="struct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor.html#a6f579cda6059d102e9074e11a27e0282">SFW::ECS::ArchetypeChunk::Accessor::EntityManager</a></div><div class="ttdeci">friend class EntityManager</div><div class="ttdef"><b>Definition</b> <a href="#l00146">ArchetypeChunk.h:146</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_e_c_s_1_1_component_layout_html_a3d7b7770b3ccf40851c113417bd24de7"><div class="ttname"><a href="struct_s_f_w_1_1_e_c_s_1_1_component_layout.html#a3d7b7770b3ccf40851c113417bd24de7">SFW::ECS::ComponentLayout::info</a></div><div class="ttdeci">std::vector&lt; OneOrMore&lt; ComponentInfo &gt; &gt; info</div><div class="ttdef"><b>Definition</b> <a href="_component_layout_registry_8h_source.html#l00027">ComponentLayoutRegistry.h:27</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_e_c_s_1_1_component_layout_html_a88343f1ee39dfe0d56941f26292e7cdd"><div class="ttname"><a href="struct_s_f_w_1_1_e_c_s_1_1_component_layout.html#a88343f1ee39dfe0d56941f26292e7cdd">SFW::ECS::ComponentLayout::infoIdx</a></div><div class="ttdeci">std::unordered_map&lt; ComponentTypeID, uint32_t &gt; infoIdx</div><div class="ttdef"><b>Definition</b> <a href="_component_layout_registry_8h_source.html#l00026">ComponentLayoutRegistry.h:26</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_e_c_s_1_1_entity_i_d_html"><div class="ttname"><a href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">SFW::ECS::EntityID</a></div><div class="ttdoc">EntityのIDを表す構造体</div><div class="ttdef"><b>Definition</b> <a href="entity_8h_source.html#l00022">entity.h:22</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_5ada393002ee7234dde4caf0d7998537.html">Core</a></li><li class="navelem"><a href="dir_424b27d9839eee089d4ee0e5359b7d45.html">ECS</a></li><li class="navelem"><a href="_archetype_chunk_8h.html">ArchetypeChunk.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,286 @@
+\doxysection{sx\+\_\+math.\+h}
+\hypertarget{sx__math_8h_source}{}\label{sx__math_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/sx\_math.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/sx\_math.h}}
+\mbox{\hyperlink{sx__math_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00007}00007\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <bit>}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00015}00015\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_math}{SFW::Math}}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00016}00016\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00017}00017\ \ \ \ \ \textcolor{comment}{//\ 基本コンセプト}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00018}00018\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00019}00019\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00020}\mbox{\hyperlink{concept_s_f_w_1_1_math_1_1_arithmetic}{00020}}\ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_math_1_1_arithmetic}{Arithmetic}}\ =\ std::is\_arithmetic\_v<T>;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00022}00022\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00023}\mbox{\hyperlink{concept_s_f_w_1_1_math_1_1_unsigned_int}{00023}}\ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_math_1_1_unsigned_int}{UnsignedInt}}\ =\ std::is\_unsigned\_v<T>\ \&\&\ std::is\_integral\_v<T>;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00025}00025\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00026}00026\ \ \ \ \ \textcolor{comment}{//\ 定数}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00027}00027\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00028}00028\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ std::is\_floating\_point\_v<T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00030}\mbox{\hyperlink{namespace_s_f_w_1_1_math_afb53d4eea9f78548805a3bf2dd5644e6}{00030}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ T\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afb53d4eea9f78548805a3bf2dd5644e6}{pi\_v}}\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(3.141592653589793238462643383279502884L);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00031}00031\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ std::is\_floating\_point\_v<T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00033}\mbox{\hyperlink{namespace_s_f_w_1_1_math_ab77bfce2d71e02eaf7ab1434d99b2585}{00033}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ T\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab77bfce2d71e02eaf7ab1434d99b2585}{tau\_v}}\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(6.283185307179586476925286766559005768L);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00034}00034\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ std::is\_floating\_point\_v<T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00036}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a447997829e4e73bf1ba706c4b7988336}{00036}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ T\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a447997829e4e73bf1ba706c4b7988336}{half\_pi\_v}}\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(1.570796326794896619231321691639751442L);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00038}00038\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00039}00039\ \ \ \ \ \textcolor{comment}{//\ 角度変換}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00040}00040\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00041}00041\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ T,\ \textcolor{keyword}{class}\ R\ =\ std::conditional\_t<std::is\_\textcolor{keywordtype}{int}egral\_v<T>,\ \textcolor{keywordtype}{double},\ T>>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00042}\mbox{\hyperlink{namespace_s_f_w_1_1_math_ac2884a43b39f0fbf516983950f3c613b}{00042}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ R\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ac2884a43b39f0fbf516983950f3c613b}{deg2rad}}(T\ deg)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(deg)\ *\ (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afb53d4eea9f78548805a3bf2dd5644e6}{pi\_v<R>}}\ /\ R(180));}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00044}00044\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00045}00045\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ T,\ \textcolor{keyword}{class}\ R\ =\ std::conditional\_t<std::is\_\textcolor{keywordtype}{int}egral\_v<T>,\ \textcolor{keywordtype}{double},\ T>>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00046}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a60ca2ea01e84e32793d1476e337f38a3}{00046}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ R\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a60ca2ea01e84e32793d1476e337f38a3}{rad2deg}}(T\ rad)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(rad)\ *\ (R(180)\ /\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afb53d4eea9f78548805a3bf2dd5644e6}{pi\_v<R>}});}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00048}00048\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00050}00050\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00051}00051\ \ \ \ \ \textcolor{comment}{//\ 比較・判定}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00052}00052\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00053}00053\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00054}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a68c517a6d496926dcab807159f3eba9a}{00054}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a68c517a6d496926dcab807159f3eba9a}{is\_finite}}(T\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_floating\_point\_v<T>)\ \textcolor{keywordflow}{return}\ std::isfinite(x);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00057}00057\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00059}00059\ \ \ \ \ \textcolor{comment}{//\ 近似等価:\ |a-\/b|\ <=\ max(abs\_tol,\ rel\_tol\ *\ max(|a|,|b|))}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00060}00060\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ T,\ \textcolor{keyword}{class}\ R\ =\ std::conditional\_t<std::is\_\textcolor{keywordtype}{int}egral\_v<T>,\ \textcolor{keywordtype}{double},\ T>>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00061}\mbox{\hyperlink{namespace_s_f_w_1_1_math_af9e7154689bb37d5a41eb9719b577e36}{00061}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_af9e7154689bb37d5a41eb9719b577e36}{approx\_equal}}(T\ a,\ T\ b,}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ R\ rel\_tol\ =\ R(1e-\/6),}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ R\ abs\_tol\ =\ R(0))\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ R\ ar\ =\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(a),\ br\ =\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(b);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ R\ diff\ =\ std::abs(ar\ -\/\ br);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ R\ limit\ =\ (std::max)(abs\_tol,\ rel\_tol\ *\ (std::max)(std::abs(ar),\ std::abs(br)));}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ diff\ <=\ limit;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00068}00068\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00070}00070\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00071}00071\ \ \ \ \ \textcolor{comment}{//\ クランプ・補間・再マップ}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00072}00072\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00073}00073\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00074}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6da573157f3c186ebd2979ad7ec3da2f}{00074}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ T\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6da573157f3c186ebd2979ad7ec3da2f}{clamp}}(T\ x,\ T\ lo,\ T\ hi)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (x\ <\ lo)\ ?\ lo\ :\ ((x\ >\ hi)\ ?\ hi\ :\ x);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00076}00076\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00077}00077\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00078}\mbox{\hyperlink{namespace_s_f_w_1_1_math_ac0685ec91e2cf95f7e80f565798bc8fc}{00078}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ T\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ac0685ec91e2cf95f7e80f565798bc8fc}{clamp01}}(T\ x)\ \textcolor{keyword}{noexcept}\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6da573157f3c186ebd2979ad7ec3da2f}{clamp<T>}}(x,\ T(0),\ T(1));\ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00080}00080\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00081}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a5ff11ef932c9d6a411a6bf4c5facbada}{00081}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ T\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5ff11ef932c9d6a411a6bf4c5facbada}{saturate}}(T\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_floating\_point\_v<T>)\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6da573157f3c186ebd2979ad7ec3da2f}{clamp<T>}}(x,\ T(0),\ T(1));}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6da573157f3c186ebd2979ad7ec3da2f}{clamp<T>}}(x,\ T(0),\ T(1));}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00084}00084\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00086}00086\ \ \ \ \ \textcolor{comment}{//\ 線形補間（非クランプ）。浮動小数はFMAを使用}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00087}00087\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ A,\ Arithmetic\ B,\ Arithmetic\ U>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00088}\mbox{\hyperlink{namespace_s_f_w_1_1_math_aee67464c8d047a0a7ce050fbe60e583e}{00088}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aee67464c8d047a0a7ce050fbe60e583e}{lerp}}(A\ a,\ B\ b,\ U\ t)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }R\ =\ std::common\_type\_t<A,\ B,\ U>;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ R\ ar\ =\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(a),\ br\ =\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(b),\ tr\ =\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(t);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_floating\_point\_v<R>)\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::fma(tr,\ (br\ -\/\ ar),\ ar);\ \textcolor{comment}{//\ ar\ +\ (br\ -\/\ ar)\ *\ tr}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ar\ +\ (br\ -\/\ ar)\ *\ tr;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00097}00097\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00099}00099\ \ \ \ \ \textcolor{comment}{//\ クランプ付\ lerp}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00100}00100\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ A,\ Arithmetic\ B,\ Arithmetic\ U>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00101}\mbox{\hyperlink{namespace_s_f_w_1_1_math_aef029c5a2d8331e1a6de2fa526fc2f15}{00101}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aef029c5a2d8331e1a6de2fa526fc2f15}{lerp\_clamped}}(A\ a,\ B\ b,\ U\ t)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }R\ =\ std::common\_type\_t<A,\ B,\ U>;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aee67464c8d047a0a7ce050fbe60e583e}{lerp}}(a,\ b,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ac0685ec91e2cf95f7e80f565798bc8fc}{clamp01}}(\textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(t)));}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00104}00104\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00106}00106\ \ \ \ \ \textcolor{comment}{//\ (a..b)\ →\ t\ \ 逆補間}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00107}00107\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ A,\ Arithmetic\ B,\ Arithmetic\ X>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00108}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a4b5edcef2023bf1b1869596453fe1a1b}{00108}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4b5edcef2023bf1b1869596453fe1a1b}{inverse\_lerp}}(A\ a,\ B\ b,\ X\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }R\ =\ std::common\_type\_t<A,\ B,\ X>;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ R\ ar\ =\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(a),\ br\ =\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(b),\ xr\ =\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(x);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ R\ denom\ =\ br\ -\/\ ar;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (denom\ ==\ R(0))\ \textcolor{keywordflow}{return}\ R(0);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (xr\ -\/\ ar)\ /\ denom;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00114}00114\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00116}00116\ \ \ \ \ \textcolor{comment}{//\ 区間再マップ\ (in0..in1)→(out0..out1)}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00117}00117\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ X,\ Arithmetic\ A,\ Arithmetic\ B,\ Arithmetic\ C,\ Arithmetic\ D>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00118}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a5280d7836d045724131976b7315270f0}{00118}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5280d7836d045724131976b7315270f0}{remap}}(X\ x,\ A\ in0,\ B\ in1,\ C\ out0,\ D\ out1)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }R\ =\ std::common\_type\_t<X,\ A,\ B,\ C,\ D>;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00120}00120\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aee67464c8d047a0a7ce050fbe60e583e}{lerp}}(\textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(out0),\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(out1),}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a4b5edcef2023bf1b1869596453fe1a1b}{inverse\_lerp}}(\textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(in0),\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(in1),\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(x)));}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00122}00122\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00123}00123\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ X,\ Arithmetic\ A,\ Arithmetic\ B>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00124}\mbox{\hyperlink{namespace_s_f_w_1_1_math_aeb1f6697f3acf28f55a98d1b4f982866}{00124}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aeb1f6697f3acf28f55a98d1b4f982866}{remap01}}(X\ x,\ A\ in0,\ B\ in1)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00125}00125\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }R\ =\ std::common\_type\_t<X,\ A,\ B>;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00126}00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ac0685ec91e2cf95f7e80f565798bc8fc}{clamp01}}(\mbox{\hyperlink{namespace_s_f_w_1_1_math_a4b5edcef2023bf1b1869596453fe1a1b}{inverse\_lerp}}(\textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(in0),\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(in1),\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(x)));}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00127}00127\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00129}00129\ \ \ \ \ \textcolor{comment}{//\ ステップ・スムーズステップ}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00130}00130\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ E,\ Arithmetic\ X>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00131}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a0d4c404e27ed746cbfcf90079d4665de}{00131}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a0d4c404e27ed746cbfcf90079d4665de}{step}}(E\ edge,\ X\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }R\ =\ std::common\_type\_t<E,\ X>;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(x)\ <\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(edge))\ ?\ R(0)\ :\ R(1);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00134}00134\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00135}00135\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ E0,\ Arithmetic\ E1,\ Arithmetic\ X>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00136}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a60b65ad8124f4271f3d9eb83f616ef3d}{00136}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a60b65ad8124f4271f3d9eb83f616ef3d}{smoothstep}}(E0\ e0,\ E1\ e1,\ X\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }R\ =\ std::common\_type\_t<E0,\ E1,\ X>;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ R\ t\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aeb1f6697f3acf28f55a98d1b4f982866}{remap01}}(\textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(x),\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(e0),\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(e1));}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ t\ *\ t\ *\ (R(3)\ -\/\ R(2)\ *\ t);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00140}00140\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00141}00141\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ E0,\ Arithmetic\ E1,\ Arithmetic\ X>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00142}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a73a597f555ce07332220385e2597b38a}{00142}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a73a597f555ce07332220385e2597b38a}{smootherstep}}(E0\ e0,\ E1\ e1,\ X\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }R\ =\ std::common\_type\_t<E0,\ E1,\ X>;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ R\ t\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aeb1f6697f3acf28f55a98d1b4f982866}{remap01}}(\textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(x),\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(e0),\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(e1));}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00145}00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ t\ *\ t\ *\ t\ *\ (t\ *\ (t\ *\ R(6)\ -\/\ R(15))\ +\ R(10));\ \textcolor{comment}{//\ 6t\string^5\ -\/\ 15t\string^4\ +\ 10t\string^3}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00146}00146\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00148}00148\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00149}00149\ \ \ \ \ \textcolor{comment}{//\ ラップ・モジュロ}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00150}00150\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00151}00151\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ X,\ Arithmetic\ A,\ Arithmetic\ B>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00152}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a9320eda62af49b8ec164cd6bbe771e4f}{00152}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a9320eda62af49b8ec164cd6bbe771e4f}{wrap}}(X\ x,\ A\ lo,\ B\ hi)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }R\ =\ std::common\_type\_t<X,\ A,\ B>;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ R\ l\ =\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(lo),\ h\ =\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(hi);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00155}00155\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ R\ w\ =\ h\ -\/\ l;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00156}00156\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_floating\_point\_v<R>)\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ R\ m\ =\ std::fmod(\textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(x)\ -\/\ l,\ w);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\ <\ R(0))\ m\ +=\ w;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\ +\ l;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00160}00160\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ R\ v\ =\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(x)\ -\/\ l;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ R\ m\ =\ v\ \%\ w;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\ <\ R(0))\ m\ +=\ w;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\ +\ l;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00166}00166\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00167}00167\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00168}00168\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ X>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00169}\mbox{\hyperlink{namespace_s_f_w_1_1_math_aa9524f783eda489919dcfae71133e00e}{00169}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aa9524f783eda489919dcfae71133e00e}{wrap01}}(X\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00170}00170\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a9320eda62af49b8ec164cd6bbe771e4f}{wrap}}(x,\ X(0),\ X(1));}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00171}00171\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00173}00173\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00174}00174\ \ \ \ \ \textcolor{comment}{//\ 角度ユーティリティ（ラジアン）}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00175}00175\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00176}00176\ \ \ \ \ \textcolor{keyword}{template}<std::\textcolor{keywordtype}{float}ing\_po\textcolor{keywordtype}{int}\ T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00177}\mbox{\hyperlink{namespace_s_f_w_1_1_math_af57aebe73c0bdb08d36b68fa17e02fd5}{00177}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ T\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_af57aebe73c0bdb08d36b68fa17e02fd5}{wrap\_angle\_pi}}(T\ a)\ \textcolor{keyword}{noexcept}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ (-\/π,\ π]}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a9320eda62af49b8ec164cd6bbe771e4f}{wrap}}(a,\ -\/\mbox{\hyperlink{namespace_s_f_w_1_1_math_afb53d4eea9f78548805a3bf2dd5644e6}{pi\_v<T>}},\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afb53d4eea9f78548805a3bf2dd5644e6}{pi\_v<T>}});}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00179}00179\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00180}00180\ \ \ \ \ \textcolor{keyword}{template}<std::\textcolor{keywordtype}{float}ing\_po\textcolor{keywordtype}{int}\ T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00181}\mbox{\hyperlink{namespace_s_f_w_1_1_math_ae0e21ca4096dfbb464e856319e128bdf}{00181}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ T\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ae0e21ca4096dfbb464e856319e128bdf}{shortest\_angle\_delta}}(T\ from,\ T\ to)\ \textcolor{keyword}{noexcept}\ \{\ \textcolor{comment}{//\ [-\/π,\ π]}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_af57aebe73c0bdb08d36b68fa17e02fd5}{wrap\_angle\_pi<T>}}(to\ -\/\ from);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00183}00183\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00185}00185\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00186}00186\ \ \ \ \ \textcolor{comment}{//\ 符号・その他}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00187}00187\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00188}00188\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00189}\mbox{\hyperlink{namespace_s_f_w_1_1_math_aaa6ead6c3194e314cdd7156616f70892}{00189}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aaa6ead6c3194e314cdd7156616f70892}{sign}}(T\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_signed\_v<T>\ ||\ std::is\_floating\_point\_v<T>)\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (x\ >\ T(0))\ -\/\ (x\ <\ T(0));}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x\ ==\ T(0)\ ?\ 0\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00196}00196\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00197}00197\ \ \ \ \ \textcolor{keyword}{template}<Arithmetic\ T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00198}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a9986d4d1c2f3a2053d4ceaf802bb851f}{00198}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ T\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a9986d4d1c2f3a2053d4ceaf802bb851f}{absdiff}}(T\ a,\ T\ b)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }R\ =\ std::common\_type\_t<T>;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}R\textcolor{keyword}{>}(a\ >\ b\ ?\ a\ -\/\ b\ :\ b\ -\/\ a);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00201}00201\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00202}00202\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00203}00203\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00204}00204\ \ \ \ \ \textcolor{comment}{//\ べき・ビット系}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00205}00205\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00206}00206\ \ \ \ \ \textcolor{keyword}{template}<Un\textcolor{keywordtype}{signed}Int\ U>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00207}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a064589bad2a658bed9c85f0d34b09a5b}{00207}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a064589bad2a658bed9c85f0d34b09a5b}{is\_power\_of\_two}}(U\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x\ \&\&\ ((x\ \&\ (x\ -\/\ 1))\ ==\ 0);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00209}00209\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00210}00210\ \ \ \ \ \textcolor{keyword}{template}<Un\textcolor{keywordtype}{signed}Int\ U>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00211}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a2da8d020d41e1a6ce298b9208abe8aeb}{00211}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ U\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2da8d020d41e1a6ce298b9208abe8aeb}{ceil\_pow2}}(U\ v)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00212}00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (v\ <=\ 1)\ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00213}00213\ \ \ \ \ \ \ \ \ v-\/-\/;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ s\ =\ 1;\ s\ <\ std::numeric\_limits<U>::digits;\ s\ <<=\ 1)\ v\ |=\ (v\ >>\ s);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ v\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00216}00216\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00217}00217\ \ \ \ \ \textcolor{keyword}{template}<Un\textcolor{keywordtype}{signed}Int\ U>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00218}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a5a5265b3352630c97926d5958a305cc5}{00218}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ U\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5a5265b3352630c97926d5958a305cc5}{floor\_pow2}}(U\ v)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (v\ ==\ 0)\ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00220}00220\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ U(1)\ <<\ (std::bit\_width(v)\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00221}00221\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00222}00222\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00223}00223\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00224}00224\ \ \ \ \ \textcolor{comment}{//\ アライン}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00225}00225\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00226}00226\ \ \ \ \ \textcolor{comment}{//\ 任意整列}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00227}00227\ \ \ \ \ \textcolor{keyword}{template}<Un\textcolor{keywordtype}{signed}Int\ U>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00228}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a6d2f2cca0eab3fb0956deebf5f85d876}{00228}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ U\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6d2f2cca0eab3fb0956deebf5f85d876}{align\_up}}(U\ value,\ U\ alignment)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00229}00229\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (alignment\ ==\ 0)\ \textcolor{keywordflow}{return}\ value;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00230}00230\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (value\ +\ (alignment\ -\/\ 1))\ /\ alignment\ *\ alignment;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00231}00231\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00232}00232\ \ \ \ \ \textcolor{keyword}{template}<Un\textcolor{keywordtype}{signed}Int\ U>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00233}\mbox{\hyperlink{namespace_s_f_w_1_1_math_aeb67007b73e0ec4790c708b317a1657b}{00233}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ U\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aeb67007b73e0ec4790c708b317a1657b}{align\_down}}(U\ value,\ U\ alignment)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00234}00234\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (alignment\ ==\ 0)\ \textcolor{keywordflow}{return}\ value;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00235}00235\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (value\ /\ alignment)\ *\ alignment;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00236}00236\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00237}00237\ \ \ \ \ \textcolor{comment}{//\ 2の冪整列（高速）}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00238}00238\ \ \ \ \ \textcolor{keyword}{template}<Un\textcolor{keywordtype}{signed}Int\ U>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00239}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a8ccee36bb7a7d2b2d194d57108a4ec40}{00239}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ U\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a8ccee36bb7a7d2b2d194d57108a4ec40}{align\_up\_pow2}}(U\ value,\ U\ alignment\_pow2)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00240}00240\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (value\ +\ (alignment\_pow2\ -\/\ 1))\ \&\ \string~(alignment\_pow2\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00241}00241\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00242}00242\ \ \ \ \ \textcolor{keyword}{template}<Un\textcolor{keywordtype}{signed}Int\ U>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00243}\mbox{\hyperlink{namespace_s_f_w_1_1_math_ab5373efd982025e5706b2518fb1141a4}{00243}}\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ U\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab5373efd982025e5706b2518fb1141a4}{align\_down\_pow2}}(U\ value,\ U\ alignment\_pow2)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00244}00244\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ value\ \&\ \string~(alignment\_pow2\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00245}00245\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00246}00246\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00247}00247\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00248}00248\ \ \ \ \ \textcolor{comment}{//\ 安全な逆平方根（精度優先）}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00249}00249\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00250}00250\ \ \ \ \ \textcolor{keyword}{template}<std::\textcolor{keywordtype}{float}ing\_po\textcolor{keywordtype}{int}\ T>}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00251}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a0afb6bbaa6af8409b739ec5d5385a19f}{00251}}\ \ \ \ \ \textcolor{keyword}{inline}\ T\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a0afb6bbaa6af8409b739ec5d5385a19f}{rsqrt}}(T\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00252}00252\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x\ <=\ T(0))\ \textcolor{keywordflow}{return}\ std::numeric\_limits<T>::infinity();\ \textcolor{comment}{//\ もしくは\ 0,\ または小さなepsilonで保護}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00253}00253\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ T(1)\ /\ std::sqrt(x);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00254}00254\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00255}00255\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00256}00256\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint32\_t\ LerpColor(uint32\_t\ nearColor,\ uint32\_t\ farColor,\ \textcolor{keywordtype}{float}\ t)}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00257}00257\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00258}00258\ \ \ \ \ \ \ \ \ t\ =\ std::clamp(t,\ 0.0f,\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00259}00259\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00260}00260\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ extract\ =\ [](uint32\_t\ c,\ \textcolor{keywordtype}{int}\ shift)\ -\/>\ uint8\_t\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (c\ >>\ shift)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00263}00263\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ uint8\_t\ nr\ =\ extract(nearColor,\ 24);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00265}00265\ \ \ \ \ \ \ \ \ uint8\_t\ ng\ =\ extract(nearColor,\ 16);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ uint8\_t\ nb\ =\ extract(nearColor,\ 8);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00267}00267\ \ \ \ \ \ \ \ \ uint8\_t\ na\ =\ extract(nearColor,\ 0);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00268}00268\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00269}00269\ \ \ \ \ \ \ \ \ uint8\_t\ fr\ =\ extract(farColor,\ 24);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00270}00270\ \ \ \ \ \ \ \ \ uint8\_t\ fg\ =\ extract(farColor,\ 16);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00271}00271\ \ \ \ \ \ \ \ \ uint8\_t\ fb\ =\ extract(farColor,\ 8);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00272}00272\ \ \ \ \ \ \ \ \ uint8\_t\ fa\ =\ extract(farColor,\ 0);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00273}00273\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aee67464c8d047a0a7ce050fbe60e583e}{lerp}}\ =\ [t](uint8\_t\ a,\ uint8\_t\ b)\ -\/>\ uint8\_t\ \{}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}uint8\_t\textcolor{keyword}{>}(a\ +\ (b\ -\/\ a)\ *\ t);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00277}00277\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ uint8\_t\ r\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aee67464c8d047a0a7ce050fbe60e583e}{lerp}}(nr,\ fr);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ uint8\_t\ g\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aee67464c8d047a0a7ce050fbe60e583e}{lerp}}(ng,\ fg);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ uint8\_t\ b\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aee67464c8d047a0a7ce050fbe60e583e}{lerp}}(nb,\ fb);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ uint8\_t\ a\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aee67464c8d047a0a7ce050fbe60e583e}{lerp}}(na,\ fa);}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00282}00282\ }
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (r\ <<\ 24)\ |\ (g\ <<\ 16)\ |\ (b\ <<\ 8)\ |\ a;}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00284}00284\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sx__math_8h_source_l00285}00285\ \}\ \textcolor{comment}{//\ namespace\ sx::math}}
+
+\end{DoxyCode}

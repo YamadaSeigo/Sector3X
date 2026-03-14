@@ -1,0 +1,671 @@
+\doxysection{SFW\+::Quad\+Tree\+Partition クラス}
+\hypertarget{class_s_f_w_1_1_quad_tree_partition}{}\label{class_s_f_w_1_1_quad_tree_partition}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+
+
+クアッドツリー(x-\/z)パーティションを管理するクラス  
+
+
+
+
+{\ttfamily \#include $<$Quad\+Tree\+Partition.\+h$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle}{Circle}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38}{ZPositive}} \{ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38a601560b94fbb188919dd1d36c8ab70a4}{North}}
+, \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38a263d7b2cf53802c9ed127b718c0bf9fd}{South}}
+ \}
+\item 
+using \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}} = \mbox{\hyperlink{namespace_s_f_w_1_1_math_acaea690eaef2927454b6001b882799e8}{Math\+::\+AABB2f}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_af76e927022bbd8022cb10cfae6f4cc80}{Quad\+Tree\+Partition}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} origin\+WS, \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}} worldW, \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}} worldH, float min\+Leaf\+Size, uint32\+\_\+t max\+Entities\+Per\+Leaf=1024) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a3eafe2fa7358f20d2817dbaadb04ad9b}{Update}} (double delta\+Time)
+\begin{DoxyCompactList}\small\item\em エンティティの数が少ない葉を統合ために更新 \end{DoxyCompactList}\item 
+std\+::optional$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a07a549b625d374ba201009d95f0c3ef1}{Get\+Chunk}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} wp, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg, \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} level, \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOut\+Of\+Bounds\+Policy}} policy=\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOut\+Of\+Bounds\+Policy\+::\+Clamp\+To\+Edge}}) noexcept
+\begin{DoxyCompactList}\small\item\em 指定した位置にあるチャンクを取得する関数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \& \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a4addc717d3493a91bc69dcdf2699a770}{Get\+Global\+Entity\+Manager}} () noexcept
+\begin{DoxyCompactList}\small\item\em グローバルエンティティマネージャーを取得する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a5d6312787b2a17d088378457e0909276}{Register\+All\+Chunks}} (\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg, \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} level)
+\begin{DoxyCompactList}\small\item\em すべてのチャンクをレジストリに登録する関数 \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a3c205d857c8df14f27a9176f07f96ad4}{Get\+Entity\+Num}} () const noexcept
+\begin{DoxyCompactList}\small\item\em すべてのエンティティ数を取得する関数 \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a7f37de7e6aa4254a37f1b371cc28a525}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr) noexcept
+\begin{DoxyCompactList}\small\item\em 指定した視錐台に含まれるチャンクを列挙する関数 \end{DoxyCompactList}\item 
+std\+::vector$<$ const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a0736e807c6117fbd82703308dd7578e1}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr) const noexcept
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_afd3621e82bfb79a9816bcf0bd8db3f39}{Cull\+Chunks}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&center, float radius) const noexcept
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ad755e1e3a1449de322a68df7225b8769}{Cull\+Chunks\+Near}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&cam\+Pos, size\+\_\+t max\+Count=(std\+::numeric\+\_\+limits$<$ size\+\_\+t $>$\+::max)()) const noexcept
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a14aff56bbeea7af3c19c7afdc2420cb8}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, float ymin, float ymax, F \&\&f) noexcept
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ad969039352094b580fc794ff11c3058d}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, float ymin, float ymax, F \&\&f) const noexcept
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a85ea5848721774fbaf9ec9424f9691cc}{Cull\+Chunk\+Line}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&fr, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} cp, float hy, \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug\+::\+Line\+Vertex}} \texorpdfstring{$\ast$}{*}out\+Line, uint32\+\_\+t capacity, uint32\+\_\+t display\+Count) const noexcept
+\begin{DoxyCompactList}\small\item\em チャンクの境界線をデバッグ描画する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_afef29579e0c9ff3ff21c069be9261488}{Clean\+Chunk}} ()
+\begin{DoxyCompactList}\small\item\em チャンクのクリア \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_aee48ca1f0ff8b60feda78898bc2bec87}{Ensure\+Leaf\+For\+Point}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} p)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ac01c07e9becd154c9580e37828e10ab7}{Subdivide\+If}} (std\+::function$<$ bool(const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \&)$>$ predicate, std\+::function$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}}, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \&)$>$ pos\+Fn)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a1169d7765018285240a6d68431fca397}{Subdivide\+If\+Over\+Capacity}} (std\+::function$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}}, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \&)$>$ pos\+Fn)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a40764c85e5e534dea8cb395c5c374ed9}{Reload\+Leaf\+By\+Point}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} p, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg, \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} level)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a4c232d93692a7526024a2c8ed8fd9ddb}{Get\+Chunks\+AABB}} (const \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}} \&aabb)
+\item 
+std\+::vector$<$ const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ab6e245ef19ceb857223e154389791776}{Get\+Chunks\+AABB}} (const \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}} \&aabb) const
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a4953b7073e2817b658d56cf0b5aade4e}{Get\+Chunks\+Circle}} (const \mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle}{Circle}} \&c)
+\item 
+std\+::vector$<$ const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a27b60188f4887ca808d213dd9a61c765}{Get\+Chunks\+Circle}} (const \mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle}{Circle}} \&c) const
+\item 
+{\footnotesize template$<$class Pos\+Fn$>$ }\\\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a9d3ef34acdbf8a651eea0fd5e7ddb09b}{Get\+Chunk\+For\+Insert}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} p, Pos\+Fn \&\&pos\+Fn)
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a20c9ab34cf58f03741e0324b75006c35}{For\+Each\+Leaf}} (F \&\&f)
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ad45f143ae7313da1cb886d07c3ff8264}{For\+Each\+Leaf}} (F \&\&f) const
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ad059fb3fc34a4de03ddd3fa8e9b9ab9e}{For\+Each\+Leaf\+Chunk}} (F \&\&f)
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a6fc21c281358165acf8387a96b7623c4}{For\+Each\+Leaf\+Chunk}} (F \&\&f) const
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a3aec2ed7dd1c44ce6c04adf8e469f333}{For\+Each\+Leaf\+EM}} (F \&\&f)
+\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a4dfa57995d586436e20fe6571e920382}{For\+Each\+Leaf\+EM}} (F \&\&f) const
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a08ed9d44b5a29ac93f848566beb02b86}{Leaf\+Count}} () const noexcept
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a17d2f2c6c4858f1de834a12af6d26f16}{Min\+Leaf\+Size}} () const noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a5583bf5c09adf4e566ca31088255e514}{Set\+Max\+Per\+Leaf\+Count}} (uint32\+\_\+t v) noexcept
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ae9aeb695d593953a8a65a09c596de581}{Get\+Max\+Per\+Leaf\+Count}} () const noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_ab6a9ef452ceff078d4c3da68722785d8}{Set\+Min\+Per\+Leaf\+Count}} (uint32\+\_\+t v) noexcept
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_afe0200eb96ded201f0674e0106e26885}{Get\+Min\+Per\+Leaf\+Count}} () const noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+static float \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_aa8eb9b49e33a173d18a95119d8937fbf}{Dist2\+Point\+AABB3D}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&p, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \&c, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \&e)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38}{ZPositive}} \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a7750e1edb9d139a1963b3a80e9053bc6}{k\+ZPositive}} = \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38a601560b94fbb188919dd1d36c8ab70a4}{ZPositive\+::\+North}}
+\item 
+static constexpr double \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a2abe4e9e406dc7fafa366139fb0a7e8f}{coalesce\+Interval}} = 10.\+0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+クアッドツリー(x-\/z)パーティションを管理するクラス 
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00030}{30}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!AABB@{AABB}}
+\index{AABB@{AABB}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{AABB}{AABB}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca} 
+using \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{SFW\+::\+Quad\+Tree\+Partition\+::\+AABB}} = \mbox{\hyperlink{namespace_s_f_w_1_1_math_acaea690eaef2927454b6001b882799e8}{Math\+::\+AABB2f}}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00033}{33}} 行目に定義があります。
+
+
+
+\label{doc-enum-members}
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_doc-enum-members}
+\doxysubsection{列挙型メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!ZPositive@{ZPositive}}
+\index{ZPositive@{ZPositive}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{ZPositive}{ZPositive}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38} 
+enum class \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38}{SFW\+::\+Quad\+Tree\+Partition\+::\+ZPositive}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{North@{North}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!North@{North}}}\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38a601560b94fbb188919dd1d36c8ab70a4}\label{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38a601560b94fbb188919dd1d36c8ab70a4} 
+North&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{South@{South}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!South@{South}}}\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38a263d7b2cf53802c9ed127b718c0bf9fd}\label{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38a263d7b2cf53802c9ed127b718c0bf9fd} 
+South&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00036}{36}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_af76e927022bbd8022cb10cfae6f4cc80}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!QuadTreePartition@{QuadTreePartition}}
+\index{QuadTreePartition@{QuadTreePartition}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{QuadTreePartition()}{QuadTreePartition()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_af76e927022bbd8022cb10cfae6f4cc80} 
+SFW\+::\+Quad\+Tree\+Partition\+::\+Quad\+Tree\+Partition (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{origin\+WS}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}}}]{worldW}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}}}]{worldH}{, }\item[{float}]{min\+Leaf\+Size}{, }\item[{uint32\+\_\+t}]{max\+Entities\+Per\+Leaf}{ = {\ttfamily 1024}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em worldW} & X方向の最小葉の数 \\
+\hline
+{\em worldH} & Z方向の最小葉の数 \\
+\hline
+{\em min\+Leaf\+Size} & 最小葉のサイズ(ワールドサイズに対する比率、0.0\texorpdfstring{$\sim$}{\string~}1.0) \\
+\hline
+{\em max\+Entities\+Per\+Leaf} & 1つの葉に格納できるエンティティの最大数 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00051}{51}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_afef29579e0c9ff3ff21c069be9261488}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!CleanChunk@{CleanChunk}}
+\index{CleanChunk@{CleanChunk}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{CleanChunk()}{CleanChunk()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_afef29579e0c9ff3ff21c069be9261488} 
+void SFW\+::\+Quad\+Tree\+Partition\+::\+Clean\+Chunk (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+チャンクのクリア 
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00327}{327}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a85ea5848721774fbaf9ec9424f9691cc}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!CullChunkLine@{CullChunkLine}}
+\index{CullChunkLine@{CullChunkLine}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunkLine()}{CullChunkLine()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a85ea5848721774fbaf9ec9424f9691cc} 
+uint32\+\_\+t SFW\+::\+Quad\+Tree\+Partition\+::\+Cull\+Chunk\+Line (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{cp}{, }\item[{float}]{hy}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug\+::\+Line\+Vertex}} \texorpdfstring{$\ast$}{*}}]{out\+Line}{, }\item[{uint32\+\_\+t}]{capacity}{, }\item[{uint32\+\_\+t}]{display\+Count}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+チャンクの境界線をデバッグ描画する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em fr} & 視錐台 \\
+\hline
+{\em cp} & カメラ位置 \\
+\hline
+{\em hy} & カメラ高さからの上下の伸び \\
+\hline
+{\em out\+Line} & 出力先のラインバッファ \\
+\hline
+{\em capacity} & 出力先のラインバッファの容量(頂点数) \\
+\hline
+{\em display\+Count} & 表示するチャンクの最大数(0の場合は表示しない) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+書き込んだ頂点数 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00263}{263}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a0736e807c6117fbd82703308dd7578e1}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a0736e807c6117fbd82703308dd7578e1} 
+std\+::vector$<$ const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Quad\+Tree\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00148}{148}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a7f37de7e6aa4254a37f1b371cc28a525}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a7f37de7e6aa4254a37f1b371cc28a525} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Quad\+Tree\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+指定した視錐台に含まれるチャンクを列挙する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em fr} & 視錐台 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+チャンクのポインタ配列 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00139}{139}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_ad969039352094b580fc794ff11c3058d}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_ad969039352094b580fc794ff11c3058d} 
+template$<$class F$>$ \\
+void SFW\+::\+Quad\+Tree\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{float}]{ymin}{, }\item[{float}]{ymax}{, }\item[{F \&\&}]{f}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00248}{248}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a14aff56bbeea7af3c19c7afdc2420cb8}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a14aff56bbeea7af3c19c7afdc2420cb8} 
+template$<$class F$>$ \\
+void SFW\+::\+Quad\+Tree\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{float}]{ymin}{, }\item[{float}]{ymax}{, }\item[{F \&\&}]{f}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00241}{241}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_afd3621e82bfb79a9816bcf0bd8db3f39}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_afd3621e82bfb79a9816bcf0bd8db3f39} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Quad\+Tree\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{center}{, }\item[{float}]{radius}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00157}{157}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_ad755e1e3a1449de322a68df7225b8769}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!CullChunksNear@{CullChunksNear}}
+\index{CullChunksNear@{CullChunksNear}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{CullChunksNear()}{CullChunksNear()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_ad755e1e3a1449de322a68df7225b8769} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Quad\+Tree\+Partition\+::\+Cull\+Chunks\+Near (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{fr}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{cam\+Pos}{, }\item[{size\+\_\+t}]{max\+Count}{ = {\ttfamily (std\+:\+:numeric\+\_\+limits$<$size\+\_\+t$>$\+:\+:max)()}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00201}{201}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_aa8eb9b49e33a173d18a95119d8937fbf}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!Dist2PointAABB3D@{Dist2PointAABB3D}}
+\index{Dist2PointAABB3D@{Dist2PointAABB3D}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{Dist2PointAABB3D()}{Dist2PointAABB3D()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_aa8eb9b49e33a173d18a95119d8937fbf} 
+float SFW\+::\+Quad\+Tree\+Partition\+::\+Dist2\+Point\+AABB3D (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{p}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \&}]{c}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \&}]{e}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00190}{190}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_aee48ca1f0ff8b60feda78898bc2bec87}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!EnsureLeafForPoint@{EnsureLeafForPoint}}
+\index{EnsureLeafForPoint@{EnsureLeafForPoint}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{EnsureLeafForPoint()}{EnsureLeafForPoint()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_aee48ca1f0ff8b60feda78898bc2bec87} 
+\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} SFW\+::\+Quad\+Tree\+Partition\+::\+Ensure\+Leaf\+For\+Point (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{p}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00336}{336}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a20c9ab34cf58f03741e0324b75006c35}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!ForEachLeaf@{ForEachLeaf}}
+\index{ForEachLeaf@{ForEachLeaf}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{ForEachLeaf()}{ForEachLeaf()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a20c9ab34cf58f03741e0324b75006c35} 
+template$<$class F$>$ \\
+void SFW\+::\+Quad\+Tree\+Partition\+::\+For\+Each\+Leaf (\begin{DoxyParamCaption}\item[{F \&\&}]{f}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00443}{443}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_ad45f143ae7313da1cb886d07c3ff8264}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!ForEachLeaf@{ForEachLeaf}}
+\index{ForEachLeaf@{ForEachLeaf}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{ForEachLeaf()}{ForEachLeaf()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_ad45f143ae7313da1cb886d07c3ff8264} 
+template$<$class F$>$ \\
+void SFW\+::\+Quad\+Tree\+Partition\+::\+For\+Each\+Leaf (\begin{DoxyParamCaption}\item[{F \&\&}]{f}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00444}{444}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_ad059fb3fc34a4de03ddd3fa8e9b9ab9e}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!ForEachLeafChunk@{ForEachLeafChunk}}
+\index{ForEachLeafChunk@{ForEachLeafChunk}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{ForEachLeafChunk()}{ForEachLeafChunk()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_ad059fb3fc34a4de03ddd3fa8e9b9ab9e} 
+template$<$class F$>$ \\
+void SFW\+::\+Quad\+Tree\+Partition\+::\+For\+Each\+Leaf\+Chunk (\begin{DoxyParamCaption}\item[{F \&\&}]{f}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00446}{446}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a6fc21c281358165acf8387a96b7623c4}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!ForEachLeafChunk@{ForEachLeafChunk}}
+\index{ForEachLeafChunk@{ForEachLeafChunk}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{ForEachLeafChunk()}{ForEachLeafChunk()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a6fc21c281358165acf8387a96b7623c4} 
+template$<$class F$>$ \\
+void SFW\+::\+Quad\+Tree\+Partition\+::\+For\+Each\+Leaf\+Chunk (\begin{DoxyParamCaption}\item[{F \&\&}]{f}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00449}{449}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a3aec2ed7dd1c44ce6c04adf8e469f333}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!ForEachLeafEM@{ForEachLeafEM}}
+\index{ForEachLeafEM@{ForEachLeafEM}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{ForEachLeafEM()}{ForEachLeafEM()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a3aec2ed7dd1c44ce6c04adf8e469f333} 
+template$<$class F$>$ \\
+void SFW\+::\+Quad\+Tree\+Partition\+::\+For\+Each\+Leaf\+EM (\begin{DoxyParamCaption}\item[{F \&\&}]{f}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00453}{453}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a4dfa57995d586436e20fe6571e920382}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!ForEachLeafEM@{ForEachLeafEM}}
+\index{ForEachLeafEM@{ForEachLeafEM}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{ForEachLeafEM()}{ForEachLeafEM()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a4dfa57995d586436e20fe6571e920382} 
+template$<$class F$>$ \\
+void SFW\+::\+Quad\+Tree\+Partition\+::\+For\+Each\+Leaf\+EM (\begin{DoxyParamCaption}\item[{F \&\&}]{f}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00456}{456}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a07a549b625d374ba201009d95f0c3ef1}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!GetChunk@{GetChunk}}
+\index{GetChunk@{GetChunk}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{GetChunk()}{GetChunk()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a07a549b625d374ba201009d95f0c3ef1} 
+std\+::optional$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Quad\+Tree\+Partition\+::\+Get\+Chunk (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{wp}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&}]{reg}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}}}]{level}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOut\+Of\+Bounds\+Policy}}}]{policy}{ = {\ttfamily \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOut\+Of\+Bounds\+Policy\+::\+Clamp\+To\+Edge}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+指定した位置にあるチャンクを取得する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em wp} & ワールド位置(x,z) \\
+\hline
+{\em reg} & チャンクレジストリ \\
+\hline
+{\em level} & レベル\+ID \\
+\hline
+{\em policy} & 範囲外ポリシー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+チャンクへのポインタ(存在しない場合はstd\+::nullopt) 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00087}{87}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a9d3ef34acdbf8a651eea0fd5e7ddb09b}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!GetChunkForInsert@{GetChunkForInsert}}
+\index{GetChunkForInsert@{GetChunkForInsert}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{GetChunkForInsert()}{GetChunkForInsert()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a9d3ef34acdbf8a651eea0fd5e7ddb09b} 
+template$<$class Pos\+Fn$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} SFW\+::\+Quad\+Tree\+Partition\+::\+Get\+Chunk\+For\+Insert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{p}{, }\item[{Pos\+Fn \&\&}]{pos\+Fn}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00422}{422}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a4c232d93692a7526024a2c8ed8fd9ddb}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!GetChunksAABB@{GetChunksAABB}}
+\index{GetChunksAABB@{GetChunksAABB}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{GetChunksAABB()}{GetChunksAABB()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a4c232d93692a7526024a2c8ed8fd9ddb} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Quad\+Tree\+Partition\+::\+Get\+Chunks\+AABB (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}} \&}]{aabb}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00391}{391}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_ab6e245ef19ceb857223e154389791776}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!GetChunksAABB@{GetChunksAABB}}
+\index{GetChunksAABB@{GetChunksAABB}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{GetChunksAABB()}{GetChunksAABB()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_ab6e245ef19ceb857223e154389791776} 
+std\+::vector$<$ const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Quad\+Tree\+Partition\+::\+Get\+Chunks\+AABB (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a46b19848fdbda79729b7daad4476a1ca}{AABB}} \&}]{aabb}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00398}{398}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a4953b7073e2817b658d56cf0b5aade4e}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!GetChunksCircle@{GetChunksCircle}}
+\index{GetChunksCircle@{GetChunksCircle}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{GetChunksCircle()}{GetChunksCircle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a4953b7073e2817b658d56cf0b5aade4e} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Quad\+Tree\+Partition\+::\+Get\+Chunks\+Circle (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle}{Circle}} \&}]{c}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00406}{406}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a27b60188f4887ca808d213dd9a61c765}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!GetChunksCircle@{GetChunksCircle}}
+\index{GetChunksCircle@{GetChunksCircle}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{GetChunksCircle()}{GetChunksCircle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a27b60188f4887ca808d213dd9a61c765} 
+std\+::vector$<$ const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Quad\+Tree\+Partition\+::\+Get\+Chunks\+Circle (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_quad_tree_partition_1_1_circle}{Circle}} \&}]{c}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00413}{413}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a3c205d857c8df14f27a9176f07f96ad4}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!GetEntityNum@{GetEntityNum}}
+\index{GetEntityNum@{GetEntityNum}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{GetEntityNum()}{GetEntityNum()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a3c205d857c8df14f27a9176f07f96ad4} 
+size\+\_\+t SFW\+::\+Quad\+Tree\+Partition\+::\+Get\+Entity\+Num (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+すべてのエンティティ数を取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+エンティティ数 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00126}{126}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a4addc717d3493a91bc69dcdf2699a770}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!GetGlobalEntityManager@{GetGlobalEntityManager}}
+\index{GetGlobalEntityManager@{GetGlobalEntityManager}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{GetGlobalEntityManager()}{GetGlobalEntityManager()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a4addc717d3493a91bc69dcdf2699a770} 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \& SFW\+::\+Quad\+Tree\+Partition\+::\+Get\+Global\+Entity\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+グローバルエンティティマネージャーを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+グローバルエンティティマネージャーへの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00107}{107}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_ae9aeb695d593953a8a65a09c596de581}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!GetMaxPerLeafCount@{GetMaxPerLeafCount}}
+\index{GetMaxPerLeafCount@{GetMaxPerLeafCount}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{GetMaxPerLeafCount()}{GetMaxPerLeafCount()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_ae9aeb695d593953a8a65a09c596de581} 
+uint32\+\_\+t SFW\+::\+Quad\+Tree\+Partition\+::\+Get\+Max\+Per\+Leaf\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00465}{465}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_afe0200eb96ded201f0674e0106e26885}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!GetMinPerLeafCount@{GetMinPerLeafCount}}
+\index{GetMinPerLeafCount@{GetMinPerLeafCount}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{GetMinPerLeafCount()}{GetMinPerLeafCount()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_afe0200eb96ded201f0674e0106e26885} 
+uint32\+\_\+t SFW\+::\+Quad\+Tree\+Partition\+::\+Get\+Min\+Per\+Leaf\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00468}{468}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a08ed9d44b5a29ac93f848566beb02b86}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!LeafCount@{LeafCount}}
+\index{LeafCount@{LeafCount}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{LeafCount()}{LeafCount()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a08ed9d44b5a29ac93f848566beb02b86} 
+uint32\+\_\+t SFW\+::\+Quad\+Tree\+Partition\+::\+Leaf\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00461}{461}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a17d2f2c6c4858f1de834a12af6d26f16}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!MinLeafSize@{MinLeafSize}}
+\index{MinLeafSize@{MinLeafSize}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{MinLeafSize()}{MinLeafSize()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a17d2f2c6c4858f1de834a12af6d26f16} 
+float SFW\+::\+Quad\+Tree\+Partition\+::\+Min\+Leaf\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00462}{462}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a5d6312787b2a17d088378457e0909276}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!RegisterAllChunks@{RegisterAllChunks}}
+\index{RegisterAllChunks@{RegisterAllChunks}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{RegisterAllChunks()}{RegisterAllChunks()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a5d6312787b2a17d088378457e0909276} 
+void SFW\+::\+Quad\+Tree\+Partition\+::\+Register\+All\+Chunks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&}]{reg}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}}}]{level}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+すべてのチャンクをレジストリに登録する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em reg} & チャンクレジストリ \\
+\hline
+{\em level} & レベル\+ID \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00113}{113}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a40764c85e5e534dea8cb395c5c374ed9}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!ReloadLeafByPoint@{ReloadLeafByPoint}}
+\index{ReloadLeafByPoint@{ReloadLeafByPoint}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{ReloadLeafByPoint()}{ReloadLeafByPoint()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a40764c85e5e534dea8cb395c5c374ed9} 
+void SFW\+::\+Quad\+Tree\+Partition\+::\+Reload\+Leaf\+By\+Point (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{p}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&}]{reg}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}}}]{level}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00369}{369}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a5583bf5c09adf4e566ca31088255e514}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!SetMaxPerLeafCount@{SetMaxPerLeafCount}}
+\index{SetMaxPerLeafCount@{SetMaxPerLeafCount}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{SetMaxPerLeafCount()}{SetMaxPerLeafCount()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a5583bf5c09adf4e566ca31088255e514} 
+void SFW\+::\+Quad\+Tree\+Partition\+::\+Set\+Max\+Per\+Leaf\+Count (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00464}{464}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_ab6a9ef452ceff078d4c3da68722785d8}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!SetMinPerLeafCount@{SetMinPerLeafCount}}
+\index{SetMinPerLeafCount@{SetMinPerLeafCount}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{SetMinPerLeafCount()}{SetMinPerLeafCount()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_ab6a9ef452ceff078d4c3da68722785d8} 
+void SFW\+::\+Quad\+Tree\+Partition\+::\+Set\+Min\+Per\+Leaf\+Count (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00467}{467}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_ac01c07e9becd154c9580e37828e10ab7}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!SubdivideIf@{SubdivideIf}}
+\index{SubdivideIf@{SubdivideIf}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{SubdivideIf()}{SubdivideIf()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_ac01c07e9becd154c9580e37828e10ab7} 
+void SFW\+::\+Quad\+Tree\+Partition\+::\+Subdivide\+If (\begin{DoxyParamCaption}\item[{std\+::function$<$ bool(const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \&)$>$}]{predicate}{, }\item[{std\+::function$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}}, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \&)$>$}]{pos\+Fn}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00352}{352}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a1169d7765018285240a6d68431fca397}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!SubdivideIfOverCapacity@{SubdivideIfOverCapacity}}
+\index{SubdivideIfOverCapacity@{SubdivideIfOverCapacity}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{SubdivideIfOverCapacity()}{SubdivideIfOverCapacity()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a1169d7765018285240a6d68431fca397} 
+void SFW\+::\+Quad\+Tree\+Partition\+::\+Subdivide\+If\+Over\+Capacity (\begin{DoxyParamCaption}\item[{std\+::function$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}(\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}}, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \&)$>$}]{pos\+Fn}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00362}{362}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a3eafe2fa7358f20d2817dbaadb04ad9b}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!Update@{Update}}
+\index{Update@{Update}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a3eafe2fa7358f20d2817dbaadb04ad9b} 
+void SFW\+::\+Quad\+Tree\+Partition\+::\+Update (\begin{DoxyParamCaption}\item[{double}]{delta\+Time}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+エンティティの数が少ない葉を統合ために更新 
+
+
+\begin{DoxyParams}{引数}
+{\em delta\+Time} & 前回の更新からの経過時間(秒) \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00072}{72}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a2abe4e9e406dc7fafa366139fb0a7e8f}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!coalesceInterval@{coalesceInterval}}
+\index{coalesceInterval@{coalesceInterval}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{coalesceInterval}{coalesceInterval}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a2abe4e9e406dc7fafa366139fb0a7e8f} 
+double SFW\+::\+Quad\+Tree\+Partition\+::coalesce\+Interval = 10.\+0\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00043}{43}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_quad_tree_partition_a7750e1edb9d139a1963b3a80e9053bc6}\index{SFW::QuadTreePartition@{SFW::QuadTreePartition}!kZPositive@{kZPositive}}
+\index{kZPositive@{kZPositive}!SFW::QuadTreePartition@{SFW::QuadTreePartition}}
+\doxysubsubsection{\texorpdfstring{kZPositive}{kZPositive}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_quad_tree_partition_a7750e1edb9d139a1963b3a80e9053bc6} 
+\mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38}{ZPositive}} SFW\+::\+Quad\+Tree\+Partition\+::k\+ZPositive = \mbox{\hyperlink{class_s_f_w_1_1_quad_tree_partition_a84044fc582e79824a66f3b6dccc76c38a601560b94fbb188919dd1d36c8ab70a4}{ZPositive\+::\+North}}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+ \mbox{\hyperlink{_quad_tree_partition_8h_source}{Quad\+Tree\+Partition.\+h}} の \mbox{\hyperlink{_quad_tree_partition_8h_source_l00039}{39}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_quad_tree_partition_8h}{Quad\+Tree\+Partition.\+h}}\end{DoxyCompactItemize}

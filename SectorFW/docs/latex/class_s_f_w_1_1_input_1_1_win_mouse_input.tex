@@ -1,0 +1,171 @@
+\doxysection{SFW\+::Input\+::Win\+Mouse\+Input クラス}
+\hypertarget{class_s_f_w_1_1_input_1_1_win_mouse_input}{}\label{class_s_f_w_1_1_input_1_1_win_mouse_input}\index{SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}}
+
+
+Windows向けマウス入力処理クラス  
+
+
+
+
+{\ttfamily \#include $<$Win\+Mouse\+Input.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_afc12bb86540554ec3aee8c98f5f2db2a}{Toggle\+Capture}} (bool on)
+\begin{DoxyCompactList}\small\item\em マウスキャプチャの切り替え \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_acc0ee3e9ac7eb97e8a069c8778c56f3f}{Get\+Delta}} (LONG \&out\+Dx, LONG \&out\+Dy) const noexcept
+\begin{DoxyCompactList}\small\item\em 蓄積されたマウスの移動量を取得する \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_a975bbbc21fbb780fbc836aee0c0b6694}{Get\+Mouse\+Wheel}} (int \&out\+WheelV, int \&out\+WheelH) const noexcept
+\begin{DoxyCompactList}\small\item\em マウスホイールの回転量を取得する \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_a0b94e37dd1fc38590eacdc2aa085352b}{Is\+Captured}} () const noexcept
+\begin{DoxyCompactList}\small\item\em マウスの状態を取得する関数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_ad44e0fc97bbd34c089c40e8ac0af647c}{Is\+Left\+Down}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 左ボタンが押されているかどうかを取得する関数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_ae8607d8b0f958cd3a079114488c0acfe}{Is\+Right\+Down}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 右ボタンが押されているかどうかを取得する関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{フレンド}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_input_1_1_win_mouse_input_ae4de32c550ad314e206d7602e545b244}{SFW\+::\+Window\+Handler}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Windows向けマウス入力処理クラス 
+
+ \mbox{\hyperlink{_win_mouse_input_8h_source}{Win\+Mouse\+Input.\+h}} の \mbox{\hyperlink{_win_mouse_input_8h_source_l00022}{22}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_mouse_input_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_mouse_input_acc0ee3e9ac7eb97e8a069c8778c56f3f}\index{SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}!GetDelta@{GetDelta}}
+\index{GetDelta@{GetDelta}!SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}}
+\doxysubsubsection{\texorpdfstring{GetDelta()}{GetDelta()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_mouse_input_acc0ee3e9ac7eb97e8a069c8778c56f3f} 
+void SFW\+::\+Input\+::\+Win\+Mouse\+Input\+::\+Get\+Delta (\begin{DoxyParamCaption}\item[{LONG \&}]{out\+Dx}{, }\item[{LONG \&}]{out\+Dy}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+蓄積されたマウスの移動量を取得する 
+
+
+\begin{DoxyParams}{引数}
+{\em out\+Dx} & マウスの\+X方向の移動量 \\
+\hline
+{\em out\+Dy} & マウスの\+Y方向の移動量 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_win_mouse_input_8h_source}{Win\+Mouse\+Input.\+h}} の \mbox{\hyperlink{_win_mouse_input_8h_source_l00076}{76}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_mouse_input_a975bbbc21fbb780fbc836aee0c0b6694}\index{SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}!GetMouseWheel@{GetMouseWheel}}
+\index{GetMouseWheel@{GetMouseWheel}!SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}}
+\doxysubsubsection{\texorpdfstring{GetMouseWheel()}{GetMouseWheel()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_mouse_input_a975bbbc21fbb780fbc836aee0c0b6694} 
+void SFW\+::\+Input\+::\+Win\+Mouse\+Input\+::\+Get\+Mouse\+Wheel (\begin{DoxyParamCaption}\item[{int \&}]{out\+WheelV}{, }\item[{int \&}]{out\+WheelH}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+マウスホイールの回転量を取得する 
+
+
+\begin{DoxyParams}{引数}
+{\em out\+WheelV} & 垂直ホイールの回転量 \\
+\hline
+{\em out\+WheelH} & 水平ホイールの回転量 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_win_mouse_input_8h_source}{Win\+Mouse\+Input.\+h}} の \mbox{\hyperlink{_win_mouse_input_8h_source_l00082}{82}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_mouse_input_a0b94e37dd1fc38590eacdc2aa085352b}\index{SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}!IsCaptured@{IsCaptured}}
+\index{IsCaptured@{IsCaptured}!SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}}
+\doxysubsubsection{\texorpdfstring{IsCaptured()}{IsCaptured()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_mouse_input_a0b94e37dd1fc38590eacdc2aa085352b} 
+bool SFW\+::\+Input\+::\+Win\+Mouse\+Input\+::\+Is\+Captured (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+マウスの状態を取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+bool マウスがキャプチャされているかどうか 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_win_mouse_input_8h_source}{Win\+Mouse\+Input.\+h}} の \mbox{\hyperlink{_win_mouse_input_8h_source_l00087}{87}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_mouse_input_ad44e0fc97bbd34c089c40e8ac0af647c}\index{SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}!IsLeftDown@{IsLeftDown}}
+\index{IsLeftDown@{IsLeftDown}!SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}}
+\doxysubsubsection{\texorpdfstring{IsLeftDown()}{IsLeftDown()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_mouse_input_ad44e0fc97bbd34c089c40e8ac0af647c} 
+bool SFW\+::\+Input\+::\+Win\+Mouse\+Input\+::\+Is\+Left\+Down (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+左ボタンが押されているかどうかを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+bool 左ボタンが押されている場合はtrue、そうでない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_win_mouse_input_8h_source}{Win\+Mouse\+Input.\+h}} の \mbox{\hyperlink{_win_mouse_input_8h_source_l00092}{92}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_mouse_input_ae8607d8b0f958cd3a079114488c0acfe}\index{SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}!IsRightDown@{IsRightDown}}
+\index{IsRightDown@{IsRightDown}!SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}}
+\doxysubsubsection{\texorpdfstring{IsRightDown()}{IsRightDown()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_mouse_input_ae8607d8b0f958cd3a079114488c0acfe} 
+bool SFW\+::\+Input\+::\+Win\+Mouse\+Input\+::\+Is\+Right\+Down (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+右ボタンが押されているかどうかを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+bool 右ボタンが押されている場合はtrue、そうでない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_win_mouse_input_8h_source}{Win\+Mouse\+Input.\+h}} の \mbox{\hyperlink{_win_mouse_input_8h_source_l00097}{97}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_mouse_input_afc12bb86540554ec3aee8c98f5f2db2a}\index{SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}!ToggleCapture@{ToggleCapture}}
+\index{ToggleCapture@{ToggleCapture}!SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}}
+\doxysubsubsection{\texorpdfstring{ToggleCapture()}{ToggleCapture()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_mouse_input_afc12bb86540554ec3aee8c98f5f2db2a} 
+void SFW\+::\+Input\+::\+Win\+Mouse\+Input\+::\+Toggle\+Capture (\begin{DoxyParamCaption}\item[{bool}]{on}{}\end{DoxyParamCaption})}
+
+
+
+マウスキャプチャの切り替え 
+
+
+\begin{DoxyParams}{引数}
+{\em on} & キャプチャを有効にするかどうか \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-related-members}
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_mouse_input_doc-related-members}
+\doxysubsection{フレンドと関連関数の詳解}
+\Hypertarget{class_s_f_w_1_1_input_1_1_win_mouse_input_ae4de32c550ad314e206d7602e545b244}\index{SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}!SFW::WindowHandler@{SFW::WindowHandler}}
+\index{SFW::WindowHandler@{SFW::WindowHandler}!SFW::Input::WinMouseInput@{SFW::Input::WinMouseInput}}
+\doxysubsubsection{\texorpdfstring{SFW::WindowHandler}{SFW::WindowHandler}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_input_1_1_win_mouse_input_ae4de32c550ad314e206d7602e545b244} 
+friend class SFW\+::\+Window\+Handler\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+ \mbox{\hyperlink{_win_mouse_input_8h_source}{Win\+Mouse\+Input.\+h}} の \mbox{\hyperlink{_win_mouse_input_8h_source_l00023}{23}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Input/\mbox{\hyperlink{_win_mouse_input_8h}{Win\+Mouse\+Input.\+h}}\end{DoxyCompactItemize}

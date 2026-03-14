@@ -1,0 +1,45 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/extract\+\_\+type.hpp ファイル}
+\hypertarget{extract__type_8hpp}{}\label{extract__type_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/extract\_type.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/extract\_type.hpp}}
+
+
+型を引数から抽出するためのユーティリティ関数  
+
+
+{\ttfamily \#include $<$optional$>$}\newline
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T$>$ }\\std\+::optional$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_af0c092b23d8fca15a0d92cc2fabe0072}{SFW\+::extract\+\_\+first\+\_\+of\+\_\+type}} () noexcept
+\begin{DoxyCompactList}\small\item\em 型を引数から抽出するためのユーティリティ関数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T, typename First, typename... Rest$>$ }\\std\+::optional$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_a065b3fe311fee1b873ee1577b26f62f0}{SFW\+::extract\+\_\+first\+\_\+of\+\_\+type}} (First \&\&first, Rest \&\&... rest) noexcept
+\begin{DoxyCompactList}\small\item\em 可変長引数から最初の指定された型のインスタンスを抽出します。 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\std\+::vector$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_a77b156fa474ae543818624db334d5ee3}{SFW\+::extract\+\_\+all\+\_\+of\+\_\+type}} ()
+\begin{DoxyCompactList}\small\item\em 可変長引数からすべての指定された型のインスタンスを抽出します。 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T, typename First, typename... Rest$>$ }\\std\+::vector$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_a130f619f179c8016732787990d1a735a}{SFW\+::extract\+\_\+all\+\_\+of\+\_\+type}} (First \&\&first, Rest \&\&... rest)
+\begin{DoxyCompactList}\small\item\em 可変長引数からすべての指定された型のインスタンスを抽出します。 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\T \mbox{\hyperlink{namespace_s_f_w_a62cf1c4a0637bec15ada310fcfb15496}{SFW\+::extract\+\_\+required\+\_\+type}} () noexcept
+\begin{DoxyCompactList}\small\item\em 可変長引数から必須の型を抽出します。 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T, typename First, typename... Rest$>$ }\\T \mbox{\hyperlink{namespace_s_f_w_aaeee7a8f24b2f11e95357bb034514dd3}{SFW\+::extract\+\_\+required\+\_\+type}} (First \&\&first, Rest \&\&... rest) noexcept
+\begin{DoxyCompactList}\small\item\em 可変長引数から必須の型を抽出します。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+型を引数から抽出するためのユーティリティ関数 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+June 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{extract__type_8hpp_source}{extract\+\_\+type.\+hpp}} に定義があります。
+

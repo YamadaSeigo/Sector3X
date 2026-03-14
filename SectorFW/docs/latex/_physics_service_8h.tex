@@ -1,0 +1,49 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Physics/\+Physics\+Service.h ファイル}
+\hypertarget{_physics_service_8h}{}\label{_physics_service_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsService.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsService.h}}
+
+
+物理サービスを定義するクラス  
+
+
+{\ttfamily \#include "{}Physics\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}Physics\+Snapshot.\+h"{}}\newline
+{\ttfamily \#include "{}Physics\+Device.\+h"{}}\newline
+{\ttfamily \#include "{}Physics\+Shape\+Manager.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Util/\+Spsc\+Ring.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Core/\+ECS/\+Service\+Context.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Core/\+Registry\+Types.\+h"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service}{SFW\+::\+Physics\+::\+Physics\+Service}}
+\begin{DoxyCompactList}\small\item\em 物理サービスを提供するクラス。systemから物理\+Deviceを操作するための\+APIを提供する \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_plan}{SFW\+::\+Physics\+::\+Physics\+Service\+::\+Plan}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_material}{SFW\+::\+Physics\+::\+Physics\+Service\+::\+Material}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_create_intent}{SFW\+::\+Physics\+::\+Physics\+Service\+::\+Create\+Intent}}
+\begin{DoxyCompactList}\small\item\em 生成インテント：発生源で「この \doxylink{namespace_s_f_w_1_1_physics_ad5278e3775644e9bfb1f1f456498e0c0}{Entity} を作って」と積んでおく \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_created_body}{SFW\+::\+Physics\+::\+Physics\+Service\+::\+Created\+Body}}
+\begin{DoxyCompactList}\small\item\em Body 作成完了イベントの取り出し（\+Write\+Back用） \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_physics}{SFW\+::\+Physics}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+物理サービスを定義するクラス 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_physics_service_8h_source}{Physics\+Service.\+h}} に定義があります。
+

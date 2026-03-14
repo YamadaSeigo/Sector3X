@@ -1,0 +1,54 @@
+\doxysection{Query.\+h}
+\hypertarget{_query_8h_source}{}\label{_query_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/Query.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/Query.h}}
+\mbox{\hyperlink{_query_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_archetype_chunk_8h}{ArchetypeChunk.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00012}00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00013}00013\ \{}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00014}00014\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00015}00015\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00016}00016\ \ \ \ \ \ \ \ \ \textcolor{comment}{//前方宣言}}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00017}00017\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{ArchetypeChunk}};}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00022}\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_all_dense}{00022}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_all_dense}{AllDense}}\ =\ (!\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a45563ebd21e0cf9af2157c470cd54aba}{is\_sparse\_component\_v<Args>}}\ \&\&\ ...);}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00027}\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_reference_only}{00027}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_reference_only}{ReferenceOnly}}\ =\ std::is\_reference\_v<T>;}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}>}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00032}\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_aba295ea4455071ce785c6a1dce464654}{00032}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_aba295ea4455071ce785c6a1dce464654}{always\_false}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00036}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query}{00036}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query}{Query}}}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Ts>}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_all_dense}{AllDense}}<Ts...>}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00045}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a82286a440d7074faadabd3ae7750befb}{00045}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query}{Query}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a82286a440d7074faadabd3ae7750befb}{With}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (required.set(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a10187ecf92f955a8bbb8e6a5b25b8d47}{ComponentTypeRegistry::GetID<Ts>}}()),\ ...);}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Ts>}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_all_dense}{AllDense}}<Ts...>}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00055}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a35e6e545e7ced5dbbd83498f002f7e72}{00055}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query}{Query}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a35e6e545e7ced5dbbd83498f002f7e72}{Without}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (excluded.set(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a10187ecf92f955a8bbb8e6a5b25b8d47}{ComponentTypeRegistry::GetID<Ts>}}()),\ ...);}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<ReferenceOnly\ T>}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00066}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_ab30526a91aaa023239f86e62d1fc4e71}{00066}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<ArchetypeChunk*>\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_ab30526a91aaa023239f86e62d1fc4e71}{MatchingChunks}}(T\ context)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_aba295ea4455071ce785c6a1dce464654}{always\_false<T>}}\ \&\&\ \textcolor{stringliteral}{"{}Query::MatchingChunks\ must\ be\ specialized\ for\ the\ context\ type"{}});}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//クエリに必要なコンポーネントマスク}}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\ required;}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//クエリから除外するコンポーネントマスク}}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\ excluded;}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00077}00077\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_query_8h_source_l00078}00078\ \}}
+
+\end{DoxyCode}

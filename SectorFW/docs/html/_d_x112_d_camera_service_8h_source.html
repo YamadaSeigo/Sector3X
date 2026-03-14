@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX112DCameraService.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_d_x112_d_camera_service_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">DX112DCameraService.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_d_x112_d_camera_service_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="_i2_d_camera_service_8h.html">../I2DCameraService.h</a>&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="_d_x11_buffer_manager_8h.html">DX11BufferManager.h</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_matrix_8hpp.html">../../Math/Matrix.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">Graphics::DX11</a></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    {</div>
+<div class="foldopen" id="foldopen00021" data-start="{" data-end="};">
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service.html">   21</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service.html#aa20f4eb7030229d9d791b55a8f6bdebd">Camera2DService</a> : <span class="keyword">public</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a60957cf3e01c9edc322c71dfe9776f56">I2DCameraService</a> {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service.html#a2ce552ae950a3fa42fc52d842196d1f5">   26</a></span>            <span class="keyword">constexpr</span> <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">char</span> <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service.html#a2ce552ae950a3fa42fc52d842196d1f5">BUFFER_NAME</a>[] = <span class="stringliteral">&quot;2DCamera&quot;</span>;</div>
+<div class="foldopen" id="foldopen00031" data-start="{" data-end="}">
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service.html#aa20f4eb7030229d9d791b55a8f6bdebd">   31</a></span>            <span class="keyword">explicit</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service.html#aa20f4eb7030229d9d791b55a8f6bdebd">Camera2DService</a>(<a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html">BufferManager</a>* bufferMgr, <span class="keyword">const</span> uint32_t width, <span class="keyword">const</span> uint32_t height)</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                : <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a60957cf3e01c9edc322c71dfe9776f56">I2DCameraService</a>([&amp;] {</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> h;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>                bufferMgr-&gt;<a class="code hl_function" href="class_s_f_w_1_1_resource_manager_base.html#a04eedb5dbac041ec944a8dc0da60f7db">Add</a>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html">BufferCreateDesc</a>{ <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service.html#a2ce552ae950a3fa42fc52d842196d1f5">BUFFER_NAME</a>, <span class="keyword">sizeof</span>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_i2_d_camera_service_1_1_camera_buffer.html">CameraBuffer</a>) }, h);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>                <span class="keywordflow">return</span> h;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                    }()), bufferManager(bufferMgr) {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a04bd88279eefbc58f13032365b2e6816">virtualWidth</a> = (float)width, <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a149adc9cbce6257d53a85a9034bae523">virtualHeight</a> = (<span class="keywordtype">float</span>)height;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            }</div>
+</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span></div>
+<div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service.html#a58f7afc0ff301a52541c774ca4edc0a7">   44</a></span>                    <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service.html#a58f7afc0ff301a52541c774ca4edc0a7">PreUpdate</a>(<span class="keywordtype">double</span> deltaTime)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                        <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a357211746a8f849a41e85b9e9d912042">frameIdx</a>++;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#aea53437f03ec0e4452a0b369deec7226">isUpdateBuffer</a>) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                        <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html">BufferUpdateDesc</a> cbUpdateDesc;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                        {</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                            <span class="keyword">auto</span> data = bufferManager-&gt;Get(<a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#ab23ac5475731a1ea187b992074405592">cameraBufferHandle</a>);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                            cbUpdateDesc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#ad5c0b280047f02b553c758437678d546">buffer</a> = data.ref().buffer;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                        }</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                        std::unique_lock lock(<a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a9f91a570509629dd96106bc8bf3ee77f">sharedMutex</a>);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                        <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#ad9233b8ff0c074c02321b7779c017f18">center</a> += <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#ac04b956798e1fc1076862c0fb220617d">moveVec</a> * <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(deltaTime);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                        <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#abf43070b5f26a9873bcdc07449255fe5">zoom</a> += <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a07201e7211bc0c7b70e5b12249a1fe74">moveZoom</a> * <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(deltaTime);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                        <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#acc5e33f51fc590d3bcaf63d87d69b9b6">currentSlot</a> = <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a357211746a8f849a41e85b9e9d912042">frameIdx</a> % RENDER_BUFFER_COUNT;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                        <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a8f046a412352c0070756bafd13028111">RecomputeMatrices_NoLock</a>(<a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#acc5e33f51fc590d3bcaf63d87d69b9b6">currentSlot</a>);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                        cbUpdateDesc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a97151ab935e54ab98a3e03abfea98948">data</a> = &amp;<a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#ad8b54bf75faee51088d44de9b789ffa1">cameraBuffer</a>[<a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#acc5e33f51fc590d3bcaf63d87d69b9b6">currentSlot</a>];</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                        cbUpdateDesc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a90526740b06b4c7bd21cb4cedaf0706a">isDelete</a> = <span class="keyword">false</span>; <span class="comment">// 更新時は削除しない</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                        cbUpdateDesc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a278366276319100c1f60ff289705200d">size</a> = <span class="keyword">sizeof</span>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_i2_d_camera_service_1_1_camera_buffer.html">CameraBuffer</a>);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                        bufferManager-&gt;UpdateBuffer(cbUpdateDesc, <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#acc5e33f51fc590d3bcaf63d87d69b9b6">currentSlot</a>);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                        <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#ac04b956798e1fc1076862c0fb220617d">moveVec</a> = <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a>{ 0.0f, 0.0f };</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                        <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a07201e7211bc0c7b70e5b12249a1fe74">moveZoom</a> = 0.0f;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                        <a class="code hl_variable" href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#aea53437f03ec0e4452a0b369deec7226">isUpdateBuffer</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                    }</div>
+</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html">BufferManager</a>* bufferManager;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        };</div>
+</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    }</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>}</div>
+<div class="ttc" id="a_d_x11_buffer_manager_8h_html"><div class="ttname"><a href="_d_x11_buffer_manager_8h.html">DX11BufferManager.h</a></div><div class="ttdoc">DirectX 11のバッファマネージャークラスを定義するヘッダーファイル</div></div>
+<div class="ttc" id="a_i2_d_camera_service_8h_html"><div class="ttname"><a href="_i2_d_camera_service_8h.html">I2DCameraService.h</a></div><div class="ttdoc">2Dカメラサービス（Sprite/UI向け 正射影カメラ）</div></div>
+<div class="ttc" id="a_matrix_8hpp_html"><div class="ttname"><a href="_matrix_8hpp.html">Matrix.hpp</a></div><div class="ttdoc">行列を定義するヘッダーファイル（列ベクトル規約に統一）</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager.html">SFW::Graphics::DX11::BufferManager</a></div><div class="ttdoc">バッファの管理クラス。DirectX 11のバッファを作成、キャッシュ、更新する機能を提供する。</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_buffer_manager_8h_source.html#l00088">DX11BufferManager.h:90</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service_html_a2ce552ae950a3fa42fc52d842196d1f5"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service.html#a2ce552ae950a3fa42fc52d842196d1f5">SFW::Graphics::DX11::Camera2DService::BUFFER_NAME</a></div><div class="ttdeci">static constexpr char BUFFER_NAME[]</div><div class="ttdoc">カメラの定数バッファの名前</div><div class="ttdef"><b>Definition</b> <a href="#l00026">DX112DCameraService.h:26</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service_html_a58f7afc0ff301a52541c774ca4edc0a7"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service.html#a58f7afc0ff301a52541c774ca4edc0a7">SFW::Graphics::DX11::Camera2DService::PreUpdate</a></div><div class="ttdeci">void PreUpdate(double deltaTime) override</div><div class="ttdoc">カメラの更新関数</div><div class="ttdef"><b>Definition</b> <a href="#l00044">DX112DCameraService.h:44</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service_html_aa20f4eb7030229d9d791b55a8f6bdebd"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service.html#aa20f4eb7030229d9d791b55a8f6bdebd">SFW::Graphics::DX11::Camera2DService::Camera2DService</a></div><div class="ttdeci">Camera2DService(BufferManager *bufferMgr, const uint32_t width, const uint32_t height)</div><div class="ttdoc">コンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00031">DX112DCameraService.h:31</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i2_d_camera_service_html_a04bd88279eefbc58f13032365b2e6816"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a04bd88279eefbc58f13032365b2e6816">SFW::Graphics::I2DCameraService::virtualWidth</a></div><div class="ttdeci">float virtualWidth</div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00262">I2DCameraService.h:262</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i2_d_camera_service_html_a07201e7211bc0c7b70e5b12249a1fe74"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a07201e7211bc0c7b70e5b12249a1fe74">SFW::Graphics::I2DCameraService::moveZoom</a></div><div class="ttdeci">float moveZoom</div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00259">I2DCameraService.h:259</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i2_d_camera_service_html_a149adc9cbce6257d53a85a9034bae523"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a149adc9cbce6257d53a85a9034bae523">SFW::Graphics::I2DCameraService::virtualHeight</a></div><div class="ttdeci">float virtualHeight</div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00263">I2DCameraService.h:263</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i2_d_camera_service_html_a357211746a8f849a41e85b9e9d912042"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a357211746a8f849a41e85b9e9d912042">SFW::Graphics::I2DCameraService::frameIdx</a></div><div class="ttdeci">size_t frameIdx</div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00248">I2DCameraService.h:248</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i2_d_camera_service_html_a60957cf3e01c9edc322c71dfe9776f56"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a60957cf3e01c9edc322c71dfe9776f56">SFW::Graphics::I2DCameraService::I2DCameraService</a></div><div class="ttdeci">I2DCameraService(BufferHandle bufferHandle) noexcept</div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00041">I2DCameraService.h:41</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i2_d_camera_service_html_a8f046a412352c0070756bafd13028111"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a8f046a412352c0070756bafd13028111">SFW::Graphics::I2DCameraService::RecomputeMatrices_NoLock</a></div><div class="ttdeci">void RecomputeMatrices_NoLock(uint16_t slot) noexcept</div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00199">I2DCameraService.h:199</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i2_d_camera_service_html_a9f91a570509629dd96106bc8bf3ee77f"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#a9f91a570509629dd96106bc8bf3ee77f">SFW::Graphics::I2DCameraService::sharedMutex</a></div><div class="ttdeci">std::shared_mutex sharedMutex</div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00271">I2DCameraService.h:271</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i2_d_camera_service_html_ab23ac5475731a1ea187b992074405592"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#ab23ac5475731a1ea187b992074405592">SFW::Graphics::I2DCameraService::cameraBufferHandle</a></div><div class="ttdeci">BufferHandle cameraBufferHandle</div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00247">I2DCameraService.h:247</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i2_d_camera_service_html_abf43070b5f26a9873bcdc07449255fe5"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#abf43070b5f26a9873bcdc07449255fe5">SFW::Graphics::I2DCameraService::zoom</a></div><div class="ttdeci">float zoom</div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00256">I2DCameraService.h:256</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i2_d_camera_service_html_ac04b956798e1fc1076862c0fb220617d"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#ac04b956798e1fc1076862c0fb220617d">SFW::Graphics::I2DCameraService::moveVec</a></div><div class="ttdeci">Math::Vec2f moveVec</div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00258">I2DCameraService.h:258</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i2_d_camera_service_html_acc5e33f51fc590d3bcaf63d87d69b9b6"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#acc5e33f51fc590d3bcaf63d87d69b9b6">SFW::Graphics::I2DCameraService::currentSlot</a></div><div class="ttdeci">uint16_t currentSlot</div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00249">I2DCameraService.h:249</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i2_d_camera_service_html_ad8b54bf75faee51088d44de9b789ffa1"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#ad8b54bf75faee51088d44de9b789ffa1">SFW::Graphics::I2DCameraService::cameraBuffer</a></div><div class="ttdeci">CameraBuffer cameraBuffer[RENDER_BUFFER_COUNT]</div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00250">I2DCameraService.h:250</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i2_d_camera_service_html_ad9233b8ff0c074c02321b7779c017f18"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#ad9233b8ff0c074c02321b7779c017f18">SFW::Graphics::I2DCameraService::center</a></div><div class="ttdeci">Math::Vec2f center</div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00254">I2DCameraService.h:254</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i2_d_camera_service_html_aea53437f03ec0e4452a0b369deec7226"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i2_d_camera_service.html#aea53437f03ec0e4452a0b369deec7226">SFW::Graphics::I2DCameraService::isUpdateBuffer</a></div><div class="ttdeci">bool isUpdateBuffer</div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00272">I2DCameraService.h:272</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_a04eedb5dbac041ec944a8dc0da60f7db"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#a04eedb5dbac041ec944a8dc0da60f7db">SFW::ResourceManagerBase::Add</a></div><div class="ttdeci">bool Add(const CreateDescType &amp;desc, HandleType &amp;out)</div><div class="ttdoc">Add: 既存があれば再利用(+1)＆削除要求が入っていればキャンセル</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00105">ResouceManagerBase.hpp:105</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_1_1_d_x11_html"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">SFW::Graphics::DX11</a></div><div class="ttdef"><b>Definition</b> <a href="_d_x11_graphics_8h_source.html#l00034">DX11Graphics.h:35</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_a3cc0985a0fb0848b404af96ae6bb83a5"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">SFW::Math::Vec2f</a></div><div class="ttdeci">Vec2&lt; float &gt; Vec2f</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00353">Vector.hpp:353</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_buffer_handle_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">SFW::Graphics::BufferHandle</a></div><div class="ttdoc">バッファハンドル構造体</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00043">RenderTypes.h:43</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html">SFW::Graphics::DX11::BufferCreateDesc</a></div><div class="ttdoc">DirectX 11のバッファを作成するための構造体</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_buffer_manager_8h_source.html#l00023">DX11BufferManager.h:23</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html">SFW::Graphics::DX11::BufferUpdateDesc</a></div><div class="ttdoc">DirectX 11のバッファを更新するための構造体</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_buffer_manager_8h_source.html#l00064">DX11BufferManager.h:64</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html_a278366276319100c1f60ff289705200d"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a278366276319100c1f60ff289705200d">SFW::Graphics::DX11::BufferUpdateDesc::size</a></div><div class="ttdeci">size_t size</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_buffer_manager_8h_source.html#l00067">DX11BufferManager.h:67</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html_a90526740b06b4c7bd21cb4cedaf0706a"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a90526740b06b4c7bd21cb4cedaf0706a">SFW::Graphics::DX11::BufferUpdateDesc::isDelete</a></div><div class="ttdeci">bool isDelete</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_buffer_manager_8h_source.html#l00074">DX11BufferManager.h:74</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html_a97151ab935e54ab98a3e03abfea98948"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#a97151ab935e54ab98a3e03abfea98948">SFW::Graphics::DX11::BufferUpdateDesc::data</a></div><div class="ttdeci">const void * data</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_buffer_manager_8h_source.html#l00066">DX11BufferManager.h:66</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html_ad5c0b280047f02b553c758437678d546"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#ad5c0b280047f02b553c758437678d546">SFW::Graphics::DX11::BufferUpdateDesc::buffer</a></div><div class="ttdeci">ComPtr&lt; ID3D11Buffer &gt; buffer</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_buffer_manager_8h_source.html#l00065">DX11BufferManager.h:65</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_i2_d_camera_service_1_1_camera_buffer_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_i2_d_camera_service_1_1_camera_buffer.html">SFW::Graphics::I2DCameraService::CameraBuffer</a></div><div class="ttdef"><b>Definition</b> <a href="_i2_d_camera_service_8h_source.html#l00034">I2DCameraService.h:34</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="dir_b1727ce268e62d033d50a1c50b50897f.html">DX11</a></li><li class="navelem"><a href="_d_x112_d_camera_service_8h.html">DX112DCameraService.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

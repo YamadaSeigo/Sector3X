@@ -1,0 +1,1015 @@
+  % Handle batch mode
+  % to overcome problems with too many open files
+  \let\mypdfximage\pdfximage\def\pdfximage{\immediate\mypdfximage}
+  \RequirePackage{iftex}
+  \ifLuaTeX
+    \directlua{pdf.setminorversion(7)}
+  \fi
+  \ifXeTeX
+    \special{pdf:minorversion 7}
+  \fi
+  \ifPDFTeX
+    \pdfminorversion=7
+  \fi
+  % Set document class depending on configuration
+  \documentclass[twoside]{book}
+  %% moved from doxygen.sty due to workaround for LaTex 2019 version and unmaintained tabu package
+  \usepackage{ifthen}
+  \ifx\requestedLaTeXdate\undefined
+    \usepackage{array}
+  \else
+    \usepackage{array}[=2016-10-06]
+  \fi
+  %%
+  % Packages required by doxygen
+  \makeatletter
+  \providecommand\IfFormatAtLeastTF{\@ifl@t@r\fmtversion}
+  % suppress package identification of infwarerr as it contains the word "warning"
+  \let\@@protected@wlog\protected@wlog
+  \def\protected@wlog#1{\wlog{package info suppressed}}
+  \RequirePackage{infwarerr}
+  \let\protected@wlog\@@protected@wlog
+  \makeatother
+  \IfFormatAtLeastTF{2016/01/01}{}{\usepackage{fixltx2e}} % for \textsubscript
+  \ifPDFTeX
+    \IfFormatAtLeastTF{2015/01/01}{\pdfsuppresswarningpagegroup=1}{}
+  \fi
+  \usepackage{doxygen}
+  \usepackage{graphicx}
+  \iftutex
+    \usepackage{fontspec}
+    \defaultfontfeatures{Ligatures={TeX}}
+    \usepackage{unicode-math}
+  \else
+    \usepackage[utf8]{inputenc}
+  \fi
+  \usepackage{makeidx}
+  \PassOptionsToPackage{warn}{textcomp}
+  \usepackage{textcomp}
+  \usepackage[nointegrals]{wasysym}
+  \usepackage{ifxetex}
+  % NLS support packages
+  \usepackage{CJKutf8}
+  % Define default fonts
+  % Font selection
+  % set main and monospaced font
+  \usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+\renewcommand{\familydefault}{\sfdefault}
+  \doxyallsectionsfont{%
+    \fontseries{bc}\selectfont%
+    \color{darkgray}%
+  }
+  \renewcommand{\DoxyLabelFont}{%
+    \fontseries{bc}\selectfont%
+    \color{darkgray}%
+  }
+  \newcommand{\+}{\discretionary{\mbox{\scriptsize$\hookleftarrow$}}{}{}}
+   % Arguments of doxygenemoji:
+   % 1) ':<text>:' form of the emoji, already LaTeX-escaped
+   % 2) file with the name of the emoji without the .png extension
+   % in case image exist use this otherwise use the ':<text>:' form
+   \newcommand{\doxygenemoji}[2]{%
+     \IfFileExists{./#2.png}{\raisebox{-0.1em}{\includegraphics[height=0.9em]{./#2.png}}}{#1}%
+   }
+  % Page & text layout
+  \usepackage{geometry}
+  \geometry{%
+    a4paper,%
+    top=2.5cm,%
+    bottom=2.5cm,%
+    left=2.5cm,%
+    right=2.5cm%
+  }
+  \usepackage{changepage}
+  % Allow a bit of overflow to go unnoticed by other means
+  \tolerance=750
+  \hfuzz=15pt
+  \hbadness=750
+  \setlength{\emergencystretch}{15pt}
+  \setlength{\parindent}{0cm}
+  \newcommand{\doxynormalparskip}{\setlength{\parskip}{3ex plus 2ex minus 2ex}}
+  \newcommand{\doxytocparskip}{\setlength{\parskip}{1ex plus 0ex minus 0ex}}
+  \doxynormalparskip
+  % Redefine paragraph/subparagraph environments, using sectsty fonts
+  \makeatletter
+  \renewcommand{\paragraph}{%
+    \@startsection{paragraph}{4}{0ex}{-1.0ex}{1.0ex}{%
+      \normalfont\normalsize\bfseries\SS@parafont%
+    }%
+  }
+  \renewcommand{\subparagraph}{%
+    \@startsection{subparagraph}{5}{0ex}{-1.0ex}{1.0ex}{%
+      \normalfont\normalsize\bfseries\SS@subparafont%
+    }%
+  }
+  \makeatother
+  \makeatletter
+  \newcommand\hrulefilll{\leavevmode\leaders\hrule\hskip 0pt plus 1filll\kern\z@}
+  \makeatother
+  % Headers & footers
+  \usepackage{fancyhdr}
+  \pagestyle{fancyplain}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \fancypagestyle{fancyplain}{
+    \fancyhf{}
+    \fancyhead[LE, RO]{\bfseries\thepage}
+    \fancyhead[LO]{\bfseries\rightmark}
+    \fancyhead[RE]{\bfseries\leftmark}
+    \fancyfoot[LO, RE]{\bfseries\scriptsize 構築\+: Doxygen }
+  }
+  \fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[LO, RE]{\bfseries\scriptsize 構築\+: Doxygen }
+    \renewcommand{\headrulewidth}{0pt}
+  }
+  \pagestyle{fancyplain}
+  \renewcommand{\chaptermark}[1]{%
+    \markboth{#1}{}%
+  }
+  \renewcommand{\sectionmark}[1]{%
+    \markright{\thesection\ #1}%
+  }
+  % ToC, LoF, LoT, bibliography, and index
+  % Indices & bibliography
+  \usepackage[numbers]{natbib}
+  \usepackage[titles]{tocloft}
+  \setcounter{tocdepth}{3}
+  \setcounter{secnumdepth}{5}
+  % creating indexes
+  \makeindex
+  \ifPDFTeX
+\usepackage{newunicodechar}
+  \makeatletter
+    \def\doxynewunicodechar#1#2{%
+    \@tempswafalse
+    \edef\nuc@tempa{\detokenize{#1}}%
+    \if\relax\nuc@tempa\relax
+      \nuc@emptyargerr
+    \else
+      \edef\@tempb{\expandafter\@car\nuc@tempa\@nil}%
+      \nuc@check
+      \if@tempswa
+        \@namedef{u8:\nuc@tempa}{#2}%
+      \fi
+    \fi
+  }
+  \makeatother
+  \doxynewunicodechar{⁻}{${}^{-}$}% Superscript minus
+  \doxynewunicodechar{²}{${}^{2}$}% Superscript two
+  \doxynewunicodechar{³}{${}^{3}$}% Superscript three
+\fi
+  % Hyperlinks
+    % Hyperlinks (required, but should be loaded last)
+    \ifPDFTeX
+      \usepackage[pdftex,pagebackref=true]{hyperref}
+    \else
+      \ifXeTeX
+        \usepackage[xetex,pagebackref=true]{hyperref}
+      \else
+        \ifLuaTeX
+          \usepackage[luatex,pagebackref=true]{hyperref}
+        \else
+          \usepackage[ps2pdf,pagebackref=true]{hyperref}
+        \fi
+      \fi
+    \fi
+    \hypersetup{%
+      colorlinks=true,%
+      linkcolor=blue,%
+      citecolor=blue,%
+      unicode,%
+      pdftitle={Sector\+FW},%
+      pdfsubject={}%
+    }
+  % Custom commands used by the header
+  % Custom commands
+  \newcommand{\clearemptydoublepage}{%
+    \newpage{\pagestyle{empty}\cleardoublepage}%
+  }
+  % caption style definition
+  \usepackage{caption}
+  \captionsetup{labelsep=space,justification=centering,font={bf},singlelinecheck=off,skip=4pt,position=top}
+  % in page table of contents
+  \IfFormatAtLeastTF{2023/05/01}{\usepackage[deeplevels]{etoc}}{\usepackage[deeplevels]{etoc_doxygen}}
+  \etocsettocstyle{\doxytocparskip}{\doxynormalparskip}
+  \etocsetlevel{subsubsubsection}{4}
+  \etocsetlevel{subsubsubsubsection}{5}
+  \etocsetlevel{subsubsubsubsubsection}{6}
+  \etocsetlevel{subsubsubsubsubsubsection}{7}
+  \etocsetlevel{paragraph}{8}
+  \etocsetlevel{subparagraph}{9}
+  % prevent numbers overlap the titles in toc
+  \renewcommand{\numberline}[1]{#1~}
+% End of preamble, now comes the document contents
+%===== C O N T E N T S =====
+\begin{document}
+  \raggedbottom
+  \begin{CJK}{UTF8}{min}
+  % Titlepage & ToC
+    % To avoid duplicate page anchors due to reuse of same numbers for
+    % the index (be it as roman numbers)
+    \hypersetup{pageanchor=false,
+                bookmarksnumbered=true,
+                pdfencoding=unicode
+               }
+  \pagenumbering{alph}
+  \begin{titlepage}
+  \vspace*{7cm}
+  \begin{center}%
+  {\Large Sector\+FW}\\
+  \vspace*{1cm}
+  {\large 構築\+: Doxygen 1.14.0}\\
+  \end{center}
+  \end{titlepage}
+  \clearemptydoublepage
+  \pagenumbering{roman}
+  \tableofcontents
+  \clearemptydoublepage
+  \pagenumbering{arabic}
+  % re-enable anchors again
+  \hypersetup{pageanchor=true}
+%--- Begin generated contents ---
+\chapter{名前空間索引}
+\input{namespaces}
+\chapter{Concept Index}
+\input{concepts}
+\chapter{階層索引}
+\input{hierarchy}
+\chapter{クラス索引}
+\input{annotated}
+\chapter{ファイル索引}
+\input{files}
+\chapter{名前空間詳解}
+\input{namespace_sector_f_w}
+\input{namespace_sector_f_w_1_1_e_c_s}
+\input{namespace_s_f_w}
+\input{namespace_s_f_w_1_1_audio}
+\input{namespace_s_f_w_1_1_debug}
+\input{namespace_s_f_w_1_1detail}
+\input{namespace_s_f_w_1_1_e_c_s}
+\input{namespace_s_f_w_1_1_graphics}
+\input{namespace_s_f_w_1_1_graphics_1_1_d_x11}
+\input{namespace_s_f_w_1_1_graphics_1_1_d_x11_1_1detail}
+\input{namespace_s_f_w_1_1_graphics_1_1_terrain_bake}
+\input{namespace_s_f_w_1_1_input}
+\input{namespace_s_f_w_1_1_math}
+\input{namespace_s_f_w_1_1_physics}
+\input{namespace_s_f_w_1_1_physics_1_1_layers}
+\input{namespace_s_f_w_1_1_s_i_m_d}
+\input{namespace_so_loud}
+\input{namespacestd}
+\chapter{Concept Documentation}
+\input{concept_s_f_w_1_1_all_of}
+\input{concept_s_f_w_1_1_debug_1_1_im_gui_backend_type}
+\input{concept_s_f_w_1_1_e_c_s_1_1_access_spec_subset_of}
+\input{concept_s_f_w_1_1_e_c_s_1_1_access_spec_subset_of_by_component}
+\input{concept_s_f_w_1_1_e_c_s_1_1_all_dense}
+\input{concept_s_f_w_1_1_e_c_s_1_1_has_end_impl}
+\input{concept_s_f_w_1_1_e_c_s_1_1_has_global_end_impl}
+\input{concept_s_f_w_1_1_e_c_s_1_1_has_global_update_impl}
+\input{concept_s_f_w_1_1_e_c_s_1_1_has_service_tag}
+\input{concept_s_f_w_1_1_e_c_s_1_1_has_start_impl}
+\input{concept_s_f_w_1_1_e_c_s_1_1_has_update_impl}
+\input{concept_s_f_w_1_1_e_c_s_1_1_is_so_a_component}
+\input{concept_s_f_w_1_1_e_c_s_1_1_one_of_by_component}
+\input{concept_s_f_w_1_1_e_c_s_1_1_reference_only}
+\input{concept_s_f_w_1_1_e_c_s_1_1_sparse_component}
+\input{concept_s_f_w_1_1_graphics_type}
+\input{concept_s_f_w_1_1_has_partition_update}
+\input{concept_s_f_w_1_1is__crtp__base__of__1arg}
+\input{concept_s_f_w_1_1_is_primitive}
+\input{concept_s_f_w_1_1_math_1_1_arithmetic}
+\input{concept_s_f_w_1_1_math_1_1_bit_castable}
+\input{concept_s_f_w_1_1_math_1_1_unsigned_int}
+\input{concept_s_f_w_1_1_one_of}
+\input{concept_s_f_w_1_1_partition_concept}
+\input{concept_s_f_w_1_1_pointer_type}
+\chapter{クラス詳解}
+\input{struct_s_f_w_1_1_math_1_1_a_a_b_b}
+\input{struct_s_f_w_1_1_graphics_1_1_aabb_faces_reduce_options}
+\input{struct_s_f_w_1_1_graphics_1_1_a_a_b_b_front_face_quad}
+\input{struct_s_f_w_1_1_e_c_s_1_1access__component}
+\input{struct_s_f_w_1_1_e_c_s_1_1access__spec__normalize}
+\input{struct_s_f_w_1_1_e_c_s_1_1access__spec__normalize_3_01_component_accessor_3_01_ts_8_8_8_01_4_01_4}
+\input{struct_s_f_w_1_1_e_c_s_1_1access__subset__by__comp__impl}
+\input{struct_s_f_w_1_1_e_c_s_1_1access__subset__by__comp__impl_3_01_component_access_3_01_override_8_8b63d37f859fba1a5f84262d1c35961ab}
+\input{struct_s_f_w_1_1_e_c_s_1_1access__subset__impl}
+\input{struct_s_f_w_1_1_e_c_s_1_1access__subset__impl_3_01_component_access_3_01_override_8_8_8_01_4_00_01_allowed_8_8_8_01_4}
+\input{struct_s_f_w_1_1_e_c_s_1_1_access_info}
+\input{struct_s_f_w_1_1_budget_mover_1_1_accessor}
+\input{struct_s_f_w_1_1_e_c_s_1_1_archetype_chunk_1_1_accessor}
+\input{struct_s_f_w_1_1_e_c_s_1_1_access_policy}
+\input{struct_s_f_w_1_1_e_c_s_1_1_access_policy_3_01_read_3_01_t_01_4_01_4}
+\input{struct_s_f_w_1_1_e_c_s_1_1_access_policy_3_01_write_3_01_t_01_4_01_4}
+\input{struct_s_f_w_1_1_physics_1_1_add_force_cmd}
+\input{class_s_f_w_1_1_world_1_1_add_global_system_command}
+\input{struct_s_f_w_1_1_physics_1_1_add_impulse_cmd}
+\input{class_s_f_w_1_1_world_1_1_add_level_command}
+\input{struct_s_f_w_1_1_graphics_1_1_ambient_light}
+\input{class_s_f_w_1_1_world_1_1_apply_level_system_command}
+\input{class_s_f_w_1_1_e_c_s_1_1_archetype}
+\input{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}
+\input{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_manager_1_1_asset_stats}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data_1_1_attrib_binding}
+\input{struct_s_f_w_1_1_audio_1_1_audio_play_params}
+\input{class_s_f_w_1_1_audio_1_1_audio_service}
+\input{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}
+\input{struct_s_f_w_1_1_graphics_1_1_auto_grid_lod_opts}
+\input{struct_s_f_w_1_1_math_1_1_axes}
+\input{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options}
+\input{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats}
+\input{struct_s_f_w_1_1_math_1_1_basis}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_1_1_bind_node}
+\input{struct_s_f_w_1_1_graphics_1_1_bind_slot_buffer}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context}
+\input{struct_sector_f_w_1_1_s_a_p_partition_1_1_body}
+\input{struct_s_f_w_1_1_physics_1_1_body_i_d_eq}
+\input{struct_s_f_w_1_1_physics_1_1_body_i_d_hash}
+\input{struct_s_f_w_1_1_math_1_1_bounding_sphere}
+\input{struct_s_f_w_1_1_physics_1_1_box_desc}
+\input{class_s_f_w_1_1_physics_1_1_layers_1_1_b_p_layers}
+\input{class_s_f_w_1_1_physics_1_1_broad_phase_layer_filter_mask}
+\input{class_s_f_w_1_1_physics_1_1_broad_phase_layer_interface_impl}
+\input{class_s_f_w_1_1_budget_mover}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key_hash}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data}
+\input{struct_s_f_w_1_1_graphics_1_1_buffer_handle}
+\input{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc}
+\input{class_sector_f_w_1_1_b_v_h_partition}
+\input{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_camera2_d_service}
+\input{struct_s_f_w_1_1_graphics_1_1_camera_buffer}
+\input{struct_s_f_w_1_1_graphics_1_1_i2_d_camera_service_1_1_camera_buffer}
+\input{struct_s_f_w_1_1_graphics_1_1_camera_params}
+\input{struct_s_f_w_1_1_physics_1_1_capsule_desc}
+\input{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_c_b_shadow_cascades_data}
+\input{class_s_f_w_1_1_physics_1_1_character_contact_listener_impl}
+\input{struct_s_f_w_1_1_physics_1_1_character_pose}
+\input{struct_s_f_w_1_1_physics_1_1_physics_device_1_1_character_virtual_info}
+\input{struct_s_f_w_1_1_chunk_handle}
+\input{struct_s_f_w_1_1_quad_tree_partition_1_1_circle}
+\input{class_s_f_w_1_1_world_1_1_clean_level_command}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager_1_1_cluster_info}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_lod_range}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_param}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_params_g_p_u}
+\input{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_range_u32}
+\input{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_splat_meta}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_common_material_resources}
+\input{struct_s_f_w_1_1_e_c_s_1_1_component_access}
+\input{class_s_f_w_1_1_e_c_s_1_1_component_accessor}
+\input{class_s_f_w_1_1_e_c_s_1_1_component_accessor_base}
+\input{struct_s_f_w_1_1_e_c_s_1_1_component_info}
+\input{struct_s_f_w_1_1_e_c_s_1_1_component_layout}
+\input{class_s_f_w_1_1_e_c_s_1_1_component_layout_registry}
+\input{struct_s_f_w_1_1_e_c_s_1_1_component_meta}
+\input{class_s_f_w_1_1_e_c_s_1_1_component_type_registry}
+\input{struct_s_f_w_1_1_graphics_1_1_conservative_aabb_opts}
+\input{struct_s_f_w_1_1_physics_1_1_contact_event}
+\input{class_s_f_w_1_1_physics_1_1_contact_listener_impl}
+\input{struct_s_f_w_1_1_physics_1_1_convex_compound_desc}
+\input{struct_s_f_w_1_1_physics_1_1_convex_compound_file_desc}
+\input{struct_s_f_w_1_1_physics_1_1_convex_hull_desc}
+\input{struct_s_f_w_1_1_copyable_atomic}
+\input{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d}
+\input{struct_s_f_w_1_1_physics_1_1_c_phy_body}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cpu_image}
+\input{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data}
+\input{struct_s_f_w_1_1_physics_1_1_create_body_cmd}
+\input{struct_s_f_w_1_1_physics_1_1_create_character_cmd}
+\input{struct_s_f_w_1_1_physics_1_1_physics_device_1_1_created_body}
+\input{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_created_body}
+\input{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_create_intent}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_c_s_params_c_b}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_c_s_params_shadow_combined}
+\input{struct_s_f_w_1_1_c_spatial_motion_tag}
+\input{struct_s_f_w_1_1_debug_1_1_debug_control}
+\input{struct_s_f_w_1_1_graphics_1_1_default_lod_selector}
+\input{struct_s_f_w_1_1_graphics_1_1_default_view_handle}
+\input{struct_s_f_w_1_1_e_c_s_1_1_dense_runner}
+\input{struct_s_f_w_1_1_graphics_1_1_designer_height_map}
+\input{struct_s_f_w_1_1_physics_1_1_destroy_body_cmd}
+\input{struct_s_f_w_1_1_physics_1_1_destroy_character_cmd}
+\input{struct_s_f_w_1_1_graphics_1_1_directional_light}
+\input{struct_s_f_w_1_1_graphics_1_1_draw_command}
+\input{class_d_x11_graphics_device}
+\input{class_s_f_w_1_1_graphics_1_1_d_x12_backend}
+\input{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}
+\input{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator}
+\input{struct_s_f_w_1_1_e_c_s_1_1_entity_location}
+\input{class_s_f_w_1_1_e_c_s_1_1_entity_manager}
+\input{struct_s_f_w_1_1_graphics_1_1_extents}
+\input{struct_s_f_w_1_1_graphics_1_1_face_quad}
+\input{struct_s_f_w_1_1_flatten}
+\input{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4}
+\input{class_frame_timer}
+\input{struct_s_f_w_1_1_math_1_1_frustumf}
+\input{struct_s_f_w_1_1function__mentions}
+\input{struct_s_f_w_1_1function__traits}
+\input{struct_s_f_w_1_1function__traits_3_01_r_07_6_6_08_07_a_8_8_8_08_4}
+\input{struct_s_f_w_1_1function__traits_3_01_r_07_6_08_07_a_8_8_8_08_4}
+\input{struct_s_f_w_1_1function__traits_3_01_r_07_5_08_07_a_8_8_8_08_4}
+\input{struct_s_f_w_1_1function__traits_3_01_r_07_a_8_8_8_08_4}
+\input{struct_s_f_w_1_1function__traits_3_01_r_07_c_1_1_5_08_07_a_8_8_8_08_01const_01_6_01_4}
+\input{struct_s_f_w_1_1function__traits_3_01_r_07_c_1_1_5_08_07_a_8_8_8_08_01const_01_4}
+\input{struct_s_f_w_1_1function__traits_3_01_r_07_c_1_1_5_08_07_a_8_8_8_08_01noexcept_01_4}
+\input{struct_s_f_w_1_1function__traits_3_01_r_07_c_1_1_5_08_07_a_8_8_8_08_6_01_4}
+\input{struct_s_f_w_1_1function__traits_3_01_r_07_c_1_1_5_08_07_a_8_8_8_08_4}
+\input{class_s_f_w_1_1_game_engine}
+\input{struct_s_f_w_1_1_graphics_1_1_gpu_point_light}
+\input{class_s_f_w_1_1_debug_1_1_gpu_timer_d3_d11}
+\input{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device}
+\input{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid}
+\input{class_s_f_w_1_1_grid2_d}
+\input{class_s_f_w_1_1_grid2_d_partition}
+\input{class_s_f_w_1_1_grid3_d}
+\input{class_s_f_w_1_1_grid3_d_partition}
+\input{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range_1_1_grid_rect}
+\input{struct_s_f_w_1_1_e_c_s_1_1_service_locator_1_1_exec_plan_1_1_group_plan}
+\input{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state}
+\input{structstd_1_1hash_3_01_s_f_w_1_1_e_c_s_1_1_entity_i_d_01_4}
+\input{struct_s_f_w_1_1_graphics_1_1_height_bias_opts}
+\input{struct_s_f_w_1_1_graphics_1_1_height_coarse_options}
+\input{struct_s_f_w_1_1_graphics_1_1_height_coarse_options2}
+\input{struct_height_create_desc}
+\input{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_height_field}
+\input{struct_s_f_w_1_1_physics_1_1_height_field_desc}
+\input{struct_s_f_w_1_1_graphics_1_1_height_tex_mapping}
+\input{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service}
+\input{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}
+\input{class_s_f_w_1_1_e_c_s_1_1_i_commit_service}
+\input{class_s_f_w_1_1_graphics_1_1_i_graphics_device}
+\input{class_s_f_w_1_1_debug_1_1_i_im_gui_backend}
+\input{struct_s_f_w_1_1_graphics_1_1_i_lod_selector}
+\input{struct_s_f_w_1_1_graphics_1_1_image_data}
+\input{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32}
+\input{struct_s_f_w_1_1_debug_1_1_im_gui_init_info}
+\input{class_s_f_w_1_1_debug_1_1_im_gui_layer}
+\input{struct_s_f_w_1_1_graphics_1_1_index_range}
+\input{struct_s_f_w_1_1_physics_1_1_physics_device_1_1_init_params}
+\input{class_s_f_w_1_1_input_1_1_input_device}
+\input{struct_s_f_w_1_1_graphics_1_1_instance_data}
+\input{struct_s_f_w_1_1_graphics_1_1_instance_index}
+\input{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}
+\input{class_s_f_w_1_1_level_context_1_1_i_request_command}
+\input{class_s_f_w_1_1_world_1_1_i_request_command}
+\input{struct_s_f_w_1_1is__crtp__base__of}
+\input{struct_s_f_w_1_1_e_c_s_1_1is__soa__component}
+\input{struct_s_f_w_1_1_e_c_s_1_1is__soa__component_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1soa__type_01_4_01_4}
+\input{struct_s_f_w_1_1_e_c_s_1_1is__sparse__component}
+\input{struct_s_f_w_1_1_e_c_s_1_1is__sparse__component_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1sparse__tag_01_4_01_4}
+\input{struct_s_f_w_1_1_physics_1_1_i_shape_resolver}
+\input{class_s_f_w_1_1_e_c_s_1_1_i_system}
+\input{struct_one_or_more_1_1iterator}
+\input{struct_one_or_more_s_b_o_1_1iterator}
+\input{struct_s_f_w_1_1_i_thread_executor}
+\input{class_s_f_w_1_1_e_c_s_1_1_i_type_system}
+\input{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7}
+\input{class_s_f_w_1_1_e_c_s_1_1_i_update_service}
+\input{struct_s_f_w_1_1_key_row}
+\input{struct_s_f_w_1_1_physics_1_1_kinematic_batch_view}
+\input{class_s_f_w_1_1_world_1_1_lambda_command}
+\input{struct_s_f_w_1_1_debug_1_1_latest}
+\input{struct_s_f_w_1_1_debug_1_1_latest_3_01std_1_1string_01_4}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_layer_tiling}
+\input{struct_sector_f_w_1_1_b_v_h_partition_1_1_leaf}
+\input{class_s_f_w_1_1_lelve_i_d_manager}
+\input{class_s_f_w_1_1_level}
+\input{struct_s_f_w_1_1_level_context}
+\input{struct_s_f_w_1_1_world_1_1_level_holder}
+\input{struct_s_f_w_1_1_math_1_1_l_h___z_forward}
+\input{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service}
+\input{class_s_f_w_1_1_graphics_1_1_light_shadow_service}
+\input{struct_s_f_w_1_1_debug_1_1_line_vertex}
+\input{class_s_f_w_1_1_world_1_1_load_level_command}
+\input{class_s_f_w_1_1_budget_mover_1_1_local_batch}
+\input{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource}
+\input{struct_s_f_w_1_1_graphics_1_1_lod_asset_stats}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_manager_1_1_lod_recipe}
+\input{struct_s_f_w_1_1_graphics_1_1_lod_refine_policy}
+\input{struct_s_f_w_1_1_graphics_1_1_lod_thresholds_px}
+\input{struct_s_f_w_1_1_physics_1_1_mat34f}
+\input{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_material}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_binding_cache}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_create_desc}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data}
+\input{struct_s_f_w_1_1_graphics_1_1_material_handle}
+\input{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager}
+\input{struct_s_f_w_1_1_math_1_1_mat_mul_kernel}
+\input{struct_s_f_w_1_1_math_1_1_matrix}
+\input{struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_create_desc}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_data}
+\input{struct_s_f_w_1_1_physics_1_1_mesh_desc}
+\input{struct_s_f_w_1_1_physics_1_1_mesh_file_desc}
+\input{struct_s_f_w_1_1_graphics_1_1_mesh_handle}
+\input{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager}
+\input{struct_s_f_w_1_1_physics_1_1_mesh_shape_data}
+\input{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch}
+\input{struct_s_f_w_1_1_graphics_1_1_moc_tri_batch}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_data}
+\input{struct_s_f_w_1_1_graphics_1_1_model_asset_handle}
+\input{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_manager}
+\input{struct_s_f_w_1_1_morton3_d_decoded64}
+\input{struct_s_f_w_1_1_math_1_1_m_transform_so_a}
+\input{class_s_f_w_1_1_physics_1_1_my_contact_listener_owner}
+\input{struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp}
+\input{struct_s_f_w_1_1_math_1_1_ndc_rect_with_w}
+\input{struct_sector_f_w_1_1_b_v_h_partition_1_1_node}
+\input{class_non_copyable}
+\input{class_s_f_w_1_1_physics_1_1_object_layer_filter_mask}
+\input{class_s_f_w_1_1_physics_1_1_object_layer_pair_filter_impl}
+\input{class_s_f_w_1_1_physics_1_1_object_vs_broad_phase_layer_filter_impl}
+\input{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_data_1_1_sub_mesh_1_1_occluder_info}
+\input{struct_s_f_w_1_1_graphics_1_1_occluder_policy}
+\input{struct_s_f_w_1_1_graphics_1_1_occluder_viewport}
+\input{class_s_f_w_1_1_octree_partition}
+\input{class_one_or_more}
+\input{class_one_or_more_s_b_o}
+\input{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_ort_camera3_d_service}
+\input{struct_s_f_w_1_1_partition_traits}
+\input{struct_s_f_w_1_1_partition_traits_3_01_grid2_d_partition_01_4}
+\input{struct_s_f_w_1_1_partition_traits_3_01_grid3_d_partition_01_4}
+\input{struct_s_f_w_1_1_partition_traits_3_01_octree_partition_01_4}
+\input{struct_s_f_w_1_1_partition_traits_3_01_quad_tree_partition_01_4}
+\input{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group}
+\input{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node}
+\input{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range}
+\input{class_s_f_w_1_1path__view}
+\input{class_s_f_w_1_1_world_1_1_pause_resume_level_command}
+\input{struct_s_f_w_1_1_graphics_1_1_p_b_r_material_c_b}
+\input{struct_s_f_w_1_1_budget_mover_1_1_pending_move}
+\input{struct_s_f_w_1_1_physics_1_1_pending_ray_hit}
+\input{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_per_camera3_d_service}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_array_resources_1_1_per_cluster}
+\input{struct_s_f_w_1_1_debug_1_1_perf_h_u_d}
+\input{class_s_f_w_1_1_math_1_1_perlin2_d}
+\input{struct_s_f_w_1_1_e_c_s_1_1_service_locator_1_1_exec_plan_1_1_phase_plan}
+\input{class_s_f_w_1_1_physics_1_1_physics_device}
+\input{struct_s_f_w_1_1_physics_1_1_physics_interpolation}
+\input{class_s_f_w_1_1_physics_1_1_physics_service}
+\input{class_s_f_w_1_1_physics_1_1_physics_shape_manager}
+\input{struct_s_f_w_1_1_physics_1_1_physics_snapshot}
+\input{struct_s_f_w_1_1_physics_1_1_physics_service_1_1_plan}
+\input{struct_s_f_w_1_1_math_1_1_planef}
+\input{struct_s_f_w_1_1_graphics_1_1_point_light_desc}
+\input{struct_s_f_w_1_1_graphics_1_1_point_light_handle}
+\input{class_s_f_w_1_1_graphics_1_1_point_light_service}
+\input{struct_s_f_w_1_1_physics_1_1_pose}
+\input{struct_s_f_w_1_1_physics_1_1_pose_batch_view}
+\input{struct_s_f_w_1_1detail_1_1print__type}
+\input{class_s_f_w_1_1_debug_1_1_process_cpu_usage_win32}
+\input{class_s_f_w_1_1_debug_1_1_process_gpu3_d_util_p_d_h}
+\input{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session}
+\input{class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data}
+\input{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}
+\input{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager}
+\input{struct_s_f_w_1_1_graphics_1_1_quad_candidate}
+\input{class_s_f_w_1_1_quad_tree_partition}
+\input{struct_s_f_w_1_1_math_1_1_quat}
+\input{class_s_f_w_1_1_e_c_s_1_1_query}
+\input{class_s_f_w_1_1_physics_1_1_ray_body_filter_ignore_self}
+\input{struct_s_f_w_1_1_physics_1_1_ray_cast_cmd}
+\input{struct_s_f_w_1_1_physics_1_1_ray_cast_hit_event}
+\input{struct_s_f_w_1_1_e_c_s_1_1_read}
+\input{class_s_f_w_1_1_read_write_view}
+\input{struct_s_f_w_1_1_math_1_1_rectangle}
+\input{struct_s_f_w_1_1_graphics_1_1_refine_state}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager_1_1_remapped_streams}
+\input{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend}
+\input{class_s_f_w_1_1_graphics_1_1_render_backend_base}
+\input{class_s_f_w_1_1_graphics_1_1_render_graph}
+\input{struct_s_f_w_1_1_graphics_1_1_render_pass}
+\input{struct_s_f_w_1_1_graphics_1_1_render_pass_desc}
+\input{class_s_f_w_1_1_graphics_1_1_render_queue}
+\input{struct_s_f_w_1_1_graphics_1_1_render_service}
+\input{class_s_f_w_1_1_world_1_1_request_service}
+\input{class_s_f_w_1_1_resource_manager_base}
+\input{struct_s_f_w_1_1_math_1_1_r_h___z_backward}
+\input{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_rigid_pose}
+\input{struct_s_f_w_1_1_debug_1_1_rolling_buffer}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_desc_hash}
+\input{struct_s_f_w_1_1_graphics_1_1_sampler_handle}
+\input{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager}
+\input{class_sector_f_w_1_1_s_a_p_partition}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_semantic_binding}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_semantic_key}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_semantic_key_hash}
+\input{struct_s_f_w_1_1_e_c_s_1_1_service_context}
+\input{class_s_f_w_1_1_e_c_s_1_1_service_locator}
+\input{struct_s_f_w_1_1_level_1_1_session}
+\input{struct_s_f_w_1_1_world_1_1_session}
+\input{struct_s_f_w_1_1_physics_1_1_set_angular_velocity_cmd}
+\input{struct_s_f_w_1_1_physics_1_1_set_character_rotation_cmd}
+\input{struct_s_f_w_1_1_physics_1_1_set_character_velocity_cmd}
+\input{struct_s_f_w_1_1_physics_1_1_set_collision_mask_cmd}
+\input{struct_s_f_w_1_1_physics_1_1_set_kinematic_target_cmd}
+\input{struct_s_f_w_1_1_physics_1_1_set_linear_velocity_cmd}
+\input{struct_s_f_w_1_1_physics_1_1_set_object_layer_cmd}
+\input{struct_s_f_w_1_1_settle_rule}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_create_desc}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data}
+\input{struct_s_f_w_1_1_graphics_1_1_shader_handle}
+\input{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_manager}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_resource_binding}
+\input{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_shadow_depth_params}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shadow_map_config}
+\input{struct_s_f_w_1_1_physics_1_1_shape_create_desc}
+\input{struct_s_f_w_1_1_physics_1_1_shape_dims}
+\input{struct_s_f_w_1_1_physics_1_1_shape_handle}
+\input{struct_s_f_w_1_1_physics_1_1_shape_key}
+\input{struct_s_f_w_1_1_physics_1_1_shape_key_eq}
+\input{struct_s_f_w_1_1_physics_1_1_shape_key_hash}
+\input{struct_s_f_w_1_1_physics_1_1_shape_scale}
+\input{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena}
+\input{class_s_f_w_1_1_simple_thread_pool}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_skeleton}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_skeleton_joint}
+\input{struct_s_f_w_1_1_resource_manager_base_1_1_slot}
+\input{struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf}
+\input{struct_s_f_w_1_1_so_a_positions}
+\input{struct_s_f_w_1_1_graphics_1_1_so_a_pos_rad}
+\input{struct_s_f_w_1_1_e_c_s_1_1_so_a_ptr}
+\input{struct_s_f_w_1_1_e_c_s_1_1_so_a_ptr_3_01_t_01_4}
+\input{struct_s_f_w_1_1_graphics_1_1_soft_tri_clip}
+\input{struct_s_f_w_1_1_graphics_1_1_soft_tri_world}
+\input{struct_s_f_w_1_1_audio_1_1_sound_handle}
+\input{class_s_f_w_1_1_e_c_s_1_1_sparse_component_store}
+\input{struct_s_f_w_1_1_e_c_s_1_1_sparse_component_tag}
+\input{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge}
+\input{class_s_f_w_1_1_spatial_chunk}
+\input{struct_s_f_w_1_1_spatial_chunk_key}
+\input{class_s_f_w_1_1_spatial_chunk_registry}
+\input{struct_s_f_w_1_1_physics_1_1_sphere_desc}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_array_resources}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_splat_c_b_data}
+\input{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_splat_layer_meta}
+\input{class_s_f_w_1_1_spsc_ring}
+\input{struct_s_f_w_1_1_graphics_1_1_stb_image_deleter}
+\input{struct_s_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_data_1_1_sub_mesh}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_data_1_1_submesh_l_o_d}
+\input{class_s_f_w_1_1_e_c_s_1_1_system_scheduler}
+\input{struct_s_f_w_1_1_debug_1_1_telemetry}
+\input{struct_s_f_w_1_1_physics_1_1_teleport_character_cmd}
+\input{struct_s_f_w_1_1_physics_1_1_teleport_cmd}
+\input{struct_s_f_w_1_1_graphics_1_1_terrain_build_params}
+\input{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_terrain_grid_c_b}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_terrain_patch_c_b}
+\input{struct_s_f_w_1_1_graphics_1_1_terrain_vertex}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_create_desc}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_data}
+\input{struct_s_f_w_1_1_graphics_1_1_texture_handle}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1detail_1_1_texture_key}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1detail_1_1_texture_key_hash}
+\input{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_recipe}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_update_desc}
+\input{class_s_f_w_1_1_thread_count_down_latch}
+\input{class_s_f_w_1_1_thread_count_down_latch_external_sync}
+\input{class_s_f_w_1_1_timer_service}
+\input{struct_s_f_w_1_1_transform}
+\input{struct_s_f_w_1_1_transform_so_a}
+\input{struct_s_f_w_1_1_debug_1_1_tree_frame}
+\input{struct_s_f_w_1_1_debug_1_1_tree_item}
+\input{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_tri}
+\input{struct_s_f_w_1_1tuple__to__variant}
+\input{struct_s_f_w_1_1tuple__to__variant_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4}
+\input{struct_s_f_w_1_1_debug_1_1_u_i_bus}
+\input{class_s_f_w_1_1_debug_1_1_ui_queue}
+\input{class_s_f_w_1_1_debug_1_1_ui_snapshot}
+\input{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot}
+\input{class_s_f_w_1_1_undeletable_ptr}
+\input{struct_s_f_w_1_1unique__types}
+\input{struct_s_f_w_1_1unique__variant__impl}
+\input{struct_s_f_w_1_1unique__variant__impl_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4}
+\input{struct_s_f_w_1_1unique__variant__impl__alt}
+\input{struct_s_f_w_1_1_physics_1_1_update_set}
+\input{struct_s_f_w_1_1user__primitive}
+\input{struct_s_f_w_1_1user__primitive_3_01_j_p_h_1_1_body_i_d_01_4}
+\input{struct_s_f_w_1_1_value_or_self_helper}
+\input{struct_s_f_w_1_1_value_or_self_helper_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1tuple__type_01_4_01_4}
+\input{struct_s_f_w_1_1_math_1_1_vec2}
+\input{struct_s_f_w_1_1_math_1_1_vec3}
+\input{struct_s_f_w_1_1_math_1_1_vec4}
+\input{struct_s_f_w_1_1_debug_1_1_vertex_p_n_u_v}
+\input{struct_s_f_w_1_1_physics_1_1_v_h_a_c_d_hull}
+\input{struct_s_f_w_1_1_graphics_1_1_viewport}
+\input{struct_s_f_w_1_1_math_1_1_viewport_rect}
+\input{struct_s_f_w_1_1_graphics_1_1_view_proj_params}
+\input{class_s_f_w_1_1_void_partition}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_v_s_depth_params}
+\input{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context_1_1_v_s_params}
+\input{class_s_f_w_1_1_input_1_1_win_input}
+\input{class_s_f_w_1_1_input_1_1_win_mouse_input}
+\input{class_s_f_w_1_1_world}
+\input{class_s_f_w_1_1_e_c_s_1_1_service_locator_1_1_world_accessor}
+\input{struct_s_f_w_1_1_e_c_s_1_1_write}
+\input{class_s_f_w_1_1_debug_1_1_ui_snapshot_1_1_write_guard}
+\input{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard}
+\chapter{ファイル詳解}
+\input{_audio_service_8h}
+\input{_audio_service_8h_source}
+\input{_audio_type_8h}
+\input{_audio_type_8h_source}
+\input{build__order_8h}
+\input{build__order_8h_source}
+\input{_b_v_h_partition_8h}
+\input{_b_v_h_partition_8h_source}
+\input{_chunk_crossing_move_8hpp}
+\input{_chunk_crossing_move_8hpp_source}
+\input{_access_info_8h}
+\input{_access_info_8h_source}
+\input{_accessor_8hpp}
+\input{_accessor_8hpp_source}
+\input{_archetype_8h}
+\input{_archetype_8h_source}
+\input{_archetype_chunk_8h}
+\input{_archetype_chunk_8h_source}
+\input{_archetype_manager_8h}
+\input{_archetype_manager_8h_source}
+\input{component_8hpp}
+\input{component_8hpp_source}
+\input{_component_layout_registry_8h}
+\input{_component_layout_registry_8h_source}
+\input{_component_type_registry_8h}
+\input{_component_type_registry_8h_source}
+\input{entity_8h}
+\input{entity_8h_source}
+\input{_entity_i_d_allocator_8h}
+\input{_entity_i_d_allocator_8h_source}
+\input{_entity_manager_8h}
+\input{_entity_manager_8h_source}
+\input{_i_system_8hpp}
+\input{_i_system_8hpp_source}
+\input{_i_type_system_8hpp}
+\input{_i_type_system_8hpp_source}
+\input{_query_8h}
+\input{_query_8h_source}
+\input{_service_context_8hpp}
+\input{_service_context_8hpp_source}
+\input{_service_locator_8h}
+\input{_service_locator_8h_source}
+\input{_sparse_component_store_8hpp}
+\input{_sparse_component_store_8hpp_source}
+\input{_sparse_marge_8hpp}
+\input{_sparse_marge_8hpp_source}
+\input{_system_scheduler_8hpp}
+\input{_system_scheduler_8hpp_source}
+\input{_game_engine_8h}
+\input{_game_engine_8h_source}
+\input{_grid2_d_partition_8h}
+\input{_grid2_d_partition_8h_source}
+\input{_grid3_d_partition_8h}
+\input{_grid3_d_partition_8h_source}
+\input{_level_8hpp}
+\input{_level_8hpp_source}
+\input{_octree_partition_8h}
+\input{_octree_partition_8h_source}
+\input{partition_8hpp}
+\input{partition_8hpp_source}
+\input{_quad_tree_partition_8h}
+\input{_quad_tree_partition_8h_source}
+\input{_registry_types_8h}
+\input{_registry_types_8h_source}
+\input{_s_a_p_partitionh_8h}
+\input{_s_a_p_partitionh_8h_source}
+\input{_spatial_chunk_8h}
+\input{_spatial_chunk_8h_source}
+\input{_spatial_chunk_registry_service_8h}
+\input{_spatial_chunk_registry_service_8h_source}
+\input{_thread_pool_executor_8h}
+\input{_thread_pool_executor_8h_source}
+\input{_timer_service_8h}
+\input{_timer_service_8h_source}
+\input{_void_partition_8h}
+\input{_void_partition_8h_source}
+\input{_world_8hpp}
+\input{_world_8hpp_source}
+\input{assert__config_8h}
+\input{assert__config_8h_source}
+\input{_debug_type_8h}
+\input{_debug_type_8h_source}
+\input{_g_p_u_timer_d3_d11_8h}
+\input{_g_p_u_timer_d3_d11_8h_source}
+\input{_im_gui_backend_8h}
+\input{_im_gui_backend_8h_source}
+\input{_im_gui_backend_d_x11_win32_8h}
+\input{_im_gui_backend_d_x11_win32_8h_source}
+\input{_im_gui_layer_8h}
+\input{_im_gui_layer_8h_source}
+\input{logger_8h}
+\input{logger_8h_source}
+\input{message_8h}
+\input{message_8h_source}
+\input{_perf_h_u_d_8h}
+\input{_perf_h_u_d_8h_source}
+\input{_process_cpu_usage_win32_8h}
+\input{_process_cpu_usage_win32_8h_source}
+\input{_process_gpu3_d_util_p_d_h_8h}
+\input{_process_gpu3_d_util_p_d_h_8h_source}
+\input{_u_i_bus_8h}
+\input{_u_i_bus_8h_source}
+\input{_d_x11_graphics_8h}
+\input{_d_x11_graphics_8h_source}
+\input{_d_x11_win_terrain_helper_8h}
+\input{_d_x11_win_terrain_helper_8h_source}
+\input{_d_x12_graphics_8h}
+\input{_d_x12_graphics_8h_source}
+\input{convert__direct_x_8hpp}
+\input{convert__direct_x_8hpp_source}
+\input{__dx11inc_8h}
+\input{__dx11inc_8h_source}
+\input{_d_x112_d_camera_service_8h}
+\input{_d_x112_d_camera_service_8h_source}
+\input{_d_x113_d_camera_service_8h}
+\input{_d_x113_d_camera_service_8h_source}
+\input{_d_x11_block_revert_helper_8h}
+\input{_d_x11_block_revert_helper_8h_source}
+\input{_d_x11_buffer_manager_8h}
+\input{_d_x11_buffer_manager_8h_source}
+\input{_d_x11_light_shadow_resource_service_8h}
+\input{_d_x11_light_shadow_resource_service_8h_source}
+\input{_d_x11_material_manager_8h}
+\input{_d_x11_material_manager_8h_source}
+\input{_d_x11_mesh_manager_8h}
+\input{_d_x11_mesh_manager_8h_source}
+\input{_d_x11_model_asset_manager_8h}
+\input{_d_x11_model_asset_manager_8h_source}
+\input{_d_x11_p_s_o_manager_8h}
+\input{_d_x11_p_s_o_manager_8h_source}
+\input{_d_x11_render_backend_8h}
+\input{_d_x11_render_backend_8h_source}
+\input{_d_x11_sampler_manager_8h}
+\input{_d_x11_sampler_manager_8h_source}
+\input{_d_x11_shader_manager_8h}
+\input{_d_x11_shader_manager_8h_source}
+\input{_d_x11_texture_manager_8h}
+\input{_d_x11_texture_manager_8h_source}
+\input{dx12inc_8h}
+\input{dx12inc_8h_source}
+\input{_d_x12_render_backend_8h}
+\input{_d_x12_render_backend_8h_source}
+\input{_heightmap_bake_8h}
+\input{_heightmap_bake_8h_source}
+\input{_i2_d_camera_service_8h}
+\input{_i2_d_camera_service_8h_source}
+\input{_i3_d_camera_service_8h}
+\input{_i3_d_camera_service_8h_source}
+\input{_i_graphics_device_8hpp}
+\input{_i_graphics_device_8hpp_source}
+\input{_image_loader_8h}
+\input{_image_loader_8h_source}
+\input{_light_shadow_service_8h}
+\input{_light_shadow_service_8h_source}
+\input{_l_o_d_policy_8h}
+\input{_l_o_d_policy_8h_source}
+\input{_occluder_toolkit_8h}
+\input{_occluder_toolkit_8h_source}
+\input{_point_light_service_8h}
+\input{_point_light_service_8h_source}
+\input{_render_backend_8hpp}
+\input{_render_backend_8hpp_source}
+\input{_render_graph_8hpp}
+\input{_render_graph_8hpp_source}
+\input{_render_pass_8hpp}
+\input{_render_pass_8hpp_source}
+\input{_render_queue_8h}
+\input{_render_queue_8h_source}
+\input{_render_service_8h}
+\input{_render_service_8h_source}
+\input{_render_types_8h}
+\input{_render_types_8h_source}
+\input{_terrain_clustered_8h}
+\input{_terrain_clustered_8h_source}
+\input{_terrain_occluder_extraction_8h}
+\input{_terrain_occluder_extraction_8h_source}
+\input{_input_device_8hpp}
+\input{_input_device_8hpp_source}
+\input{_win_input_8h}
+\input{_win_input_8h_source}
+\input{_win_mouse_input_8h}
+\input{_win_mouse_input_8h_source}
+\input{_a_a_b_b_8hpp}
+\input{_a_a_b_b_8hpp_source}
+\input{aabb__util_8h}
+\input{aabb__util_8h_source}
+\input{_bounding_sphere_8hpp}
+\input{_bounding_sphere_8hpp_source}
+\input{convert_8hpp}
+\input{convert_8hpp_source}
+\input{ease_8h}
+\input{ease_8h_source}
+\input{_frustum_8hpp}
+\input{_frustum_8hpp_source}
+\input{_matrix_8hpp}
+\input{_matrix_8hpp_source}
+\input{_perlin2_d_8h}
+\input{_perlin2_d_8h_source}
+\input{_quaternion_8hpp}
+\input{_quaternion_8hpp_source}
+\input{_rectangle_8hpp}
+\input{_rectangle_8hpp_source}
+\input{sx__math_8h}
+\input{sx__math_8h_source}
+\input{_transform_8hpp}
+\input{_transform_8hpp_source}
+\input{_vector_8hpp}
+\input{_vector_8hpp_source}
+\input{gltf__to__shape_8h}
+\input{gltf__to__shape_8h_source}
+\input{_i_shape_resolver_8h}
+\input{_i_shape_resolver_8h_source}
+\input{_physics_component_8h}
+\input{_physics_component_8h_source}
+\input{_physics_contact_listener_8h}
+\input{_physics_contact_listener_8h_source}
+\input{_physics_convex_hull_loader_8h}
+\input{_physics_convex_hull_loader_8h_source}
+\input{_physics_device_8h}
+\input{_physics_device_8h_source}
+\input{_physics_device___util_8h}
+\input{_physics_device___util_8h_source}
+\input{_physics_layers_8h}
+\input{_physics_layers_8h_source}
+\input{_physics_mesh_shape_loader_8h}
+\input{_physics_mesh_shape_loader_8h_source}
+\input{_physics_service_8h}
+\input{_physics_service_8h_source}
+\input{_physics_shape_manager_8h}
+\input{_physics_shape_manager_8h_source}
+\input{_physics_snapshot_8h}
+\input{_physics_snapshot_8h_source}
+\input{_physics_types_8h}
+\input{_physics_types_8h_source}
+\input{sector11fw_8h}
+\input{sector11fw_8h_source}
+\input{simd__api_8h}
+\input{simd__api_8h_source}
+\input{simd__detect_8h}
+\input{simd__detect_8h_source}
+\input{_access_wrapper_8hpp}
+\input{_access_wrapper_8hpp_source}
+\input{alignment_8h}
+\input{alignment_8h_source}
+\input{convert__string_8h}
+\input{convert__string_8h_source}
+\input{_copyable_atomic_8hpp}
+\input{_copyable_atomic_8hpp_source}
+\input{extract__type_8hpp}
+\input{extract__type_8hpp_source}
+\input{_flatten_8hpp}
+\input{_flatten_8hpp_source}
+\input{for__each__macro_8hpp}
+\input{for__each__macro_8hpp_source}
+\input{_frame_timer_8h}
+\input{_frame_timer_8h_source}
+\input{function__trait_8h}
+\input{function__trait_8h_source}
+\input{_grid_8hpp}
+\input{_grid_8hpp_source}
+\input{_morton_8h}
+\input{_morton_8h_source}
+\input{_non_copyable_8h}
+\input{_non_copyable_8h_source}
+\input{_one_or_more_8hpp}
+\input{_one_or_more_8hpp_source}
+\input{_path_view_8hpp}
+\input{_path_view_8hpp_source}
+\input{_resouce_manager_base_8hpp}
+\input{_resouce_manager_base_8hpp_source}
+\input{_spsc_ring_8hpp}
+\input{_spsc_ring_8hpp_source}
+\input{_type_checker_8hpp}
+\input{_type_checker_8hpp_source}
+\input{_undeletable_ptr_8hpp}
+\input{_undeletable_ptr_8hpp_source}
+\input{unique__variant_8hpp}
+\input{unique__variant_8hpp_source}
+\input{_window_handler_8h}
+\input{_window_handler_8h_source}
+%--- End generated contents ---
+% Index
+  \backmatter
+  \newpage
+  \phantomsection
+  \clearemptydoublepage
+  \addcontentsline{toc}{chapter}{\indexname}
+  \printindex
+% Required for some languages (in combination with latexdocumentpre from the header)
+\end{CJK}
+\end{document}

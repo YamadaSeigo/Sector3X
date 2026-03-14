@@ -1,0 +1,25 @@
+\doxysection{SFW\+::Is\+Primitive Concept Reference}
+\hypertarget{concept_s_f_w_1_1_is_primitive}{}\label{concept_s_f_w_1_1_is_primitive}\index{SFW::IsPrimitive@{SFW::IsPrimitive}}
+
+
+プリミティブ型をチェックするコンセプト  
+
+
+
+
+{\ttfamily \#include $<$Type\+Checker.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_is_primitive}{SFW::IsPrimitive}}\ =\ \ std::is\_arithmetic\_v<T>\ ||\ std::is\_enum\_v<T>\ ||\ \mbox{\hyperlink{namespace_s_f_w_a611f46c1c4fc43defe841c92c34e3e9f}{user\_primitive\_v<T>}}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{詳解}
+プリミティブ型をチェックするコンセプト 
+
+ \mbox{\hyperlink{_type_checker_8hpp_source}{Type\+Checker.\+hpp}} の \mbox{\hyperlink{_type_checker_8hpp_source_l00050}{50}} 行目に定義があります。
+

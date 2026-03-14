@@ -1,0 +1,404 @@
+\doxysection{SFW\+::Graphics\+::DX11\+::Model\+Asset\+Create\+Desc 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc}{}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+
+
+{\ttfamily \#include $<$DX11\+Model\+Asset\+Manager.\+h$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_1_1_bind_node}{Bind\+Node}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3}{Bind\+Type}} \+: uint8\+\_\+t \{ \newline
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3a24036dc5b825a0949351e9d09ab1903b}{VS\+\_\+\+CBV}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0
+, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3abb180739ba24fd613127157ed2843dad}{PS\+\_\+\+CBV}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3a6a2f1ae9b89d30c078c253fd7d077f6f}{VS\+\_\+\+SRV}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2
+, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3a21f3c3e3beb2765cc827064e0dd87016}{PS\+\_\+\+SRV}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3
+, \newline
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3a56d953968166a57b05ffe3a68ea7f797}{SAMPLER}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+ \}
+\item 
+enum \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a8e9e2a63c40ba1c44e42921e848f668f}{Occluder\+Box\+Type}} \+: uint8\+\_\+t \{ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a8e9e2a63c40ba1c44e42921e848f668faef36382e90f1b82aeccd23d5aba54cb5}{Occluder\+Box\+\_\+\+AABB}}
+, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a8e9e2a63c40ba1c44e42921e848f668fac4b98c1211c3e5505ee53552dc7e618e}{Occluder\+Box\+\_\+\+Inner\+AABBs}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ad2fcea0af43bf3adbd050becd3989b0b}{Bind\+VS\+\_\+\+CBV}} (const std\+::string \&name, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \&h)
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_aa97b7ec99ce0ee7c4785562ce57646ee}{Bind\+PS\+\_\+\+CBV}} (const std\+::string \&name, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \&h)
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a0e2a55ae63df80b0b7247ba1a2e23c9a}{Bind\+VSPS\+\_\+\+CBV}} (const std\+::string \&name, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \&h)
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a3367bbbe21536f13996a29a1b283edf6}{Bind\+VS\+\_\+\+SRV}} (const std\+::string \&name, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{Texture\+Handle}} \&h)
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a16f13c80106e42e3887a54284e80e8ca}{Bind\+PS\+\_\+\+SRV}} (const std\+::string \&name, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{Texture\+Handle}} \&h)
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ab23ce4e49e52868387ea48eab659d2f6}{Bind\+VSPS\+\_\+\+SRV}} (const std\+::string \&name, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{Texture\+Handle}} \&h)
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a8e05850879963524c4b0cf0239449db9}{Bind\+Sampler}} (const std\+::string \&name, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_sampler_handle}{Sampler\+Handle}} \&h)
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a6e0149969b6abe28c570e5bcd112ade1}{Clear\+Additional\+Bindings}} () noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a7a0ce873c813132b71c355854fb81c47}{path}}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a1770b0f4a24a0926e24f35df2c140d37}{pso}} = \{\}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ad7f8dacf8ff77b0edb557d238e06de0b}{option}} = 1
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a1a7f21efece835bc58a528168d448374}{instances\+Peak}} = 1
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a98906ddd43322bde54f1e176986969f8}{view\+Min}} = 0
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ada854adbd9ab76ed82a395299b81c22a}{view\+Max}} = 100
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ace830427b4c4a81541e1404827907424}{min\+Area\+Frec}} = 0.\+001f
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ae277666482ee6f3e938712148b86f3bf}{hero}} = false
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a0b7264474272a45d070eb1458e64090a}{rh\+FlipZ}} = false
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a17bb738cd595c1b8cd6365fad12a2dfc}{build\+Occluders}} = true
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a6f967fff808e77532fe290d2f4ffc75f}{occ\+Score\+Threshold}} = 0.\+5f
+\item 
+int \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a6d978c225009d1262ff7188784d5e542}{melt\+Resolution}} = 16
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a9ee73f0fc7e8b59983f6dffcc90796c5}{melt\+Fill\+Pct}} = 0.\+3f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a7c6ea19eb6c700c18a82460f932ee32c}{min\+World\+SizeM}} = 1.\+0f
+\item 
+float \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a30e0c4e33e1cdd50ce0e50abe491951a}{min\+Thickness\+Ratio}} = 0.\+01f
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a6aefff63a6d0c3d69a20a933d24de073}{Melt\+Box\+Type}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_aef3bfb0e9fa33bc31e882c59c41396e5}{melt\+Box\+Type}} = \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a6aefff63a6d0c3d69a20a933d24de073a820ead78f0fa32544c7ba38fe7ff53d9}{Melt\+Box\+Type\+::\+REGULAR}}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager_a3799bbf6a656c313f6400d5b98cc2d75}{Mesh\+Manager\+::\+Normal\+WCustom\+Func}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_aecac6575d7817738b71f8fba03d74ff2}{p\+Custom\+Nrm\+WFunc}} = nullptr
+\end{DoxyCompactItemize}
+\doxysubsubsection*{フレンド}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a81f95b80523d7bef5ee2aeb55afeced5}{Model\+Asset\+Manager}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00042}{42}} 行目に定義があります。
+
+
+
+\label{doc-enum-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_doc-enum-members}
+\doxysubsection{列挙型メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!BindType@{BindType}}
+\index{BindType@{BindType}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{BindType}{BindType}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3} 
+enum \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3}{SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::\+Bind\+Type}} \+: uint8\+\_\+t}
+
+\begin{DoxyEnumFields}[2]{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VS\_CBV@{VS\_CBV}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!VS\_CBV@{VS\_CBV}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3a24036dc5b825a0949351e9d09ab1903b}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3a24036dc5b825a0949351e9d09ab1903b} 
+VS\+\_\+\+CBV&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PS\_CBV@{PS\_CBV}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!PS\_CBV@{PS\_CBV}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3abb180739ba24fd613127157ed2843dad}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3abb180739ba24fd613127157ed2843dad} 
+PS\+\_\+\+CBV&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VS\_SRV@{VS\_SRV}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!VS\_SRV@{VS\_SRV}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3a6a2f1ae9b89d30c078c253fd7d077f6f}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3a6a2f1ae9b89d30c078c253fd7d077f6f} 
+VS\+\_\+\+SRV&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PS\_SRV@{PS\_SRV}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!PS\_SRV@{PS\_SRV}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3a21f3c3e3beb2765cc827064e0dd87016}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3a21f3c3e3beb2765cc827064e0dd87016} 
+PS\+\_\+\+SRV&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SAMPLER@{SAMPLER}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!SAMPLER@{SAMPLER}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3a56d953968166a57b05ffe3a68ea7f797}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_af682ac7ca9dfa57d8524e754213371a3a56d953968166a57b05ffe3a68ea7f797} 
+SAMPLER&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00043}{43}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a8e9e2a63c40ba1c44e42921e848f668f}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!OccluderBoxType@{OccluderBoxType}}
+\index{OccluderBoxType@{OccluderBoxType}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{OccluderBoxType}{OccluderBoxType}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a8e9e2a63c40ba1c44e42921e848f668f} 
+enum \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a8e9e2a63c40ba1c44e42921e848f668f}{SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::\+Occluder\+Box\+Type}} \+: uint8\+\_\+t}
+
+\begin{DoxyEnumFields}[2]{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OccluderBox\_AABB@{OccluderBox\_AABB}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!OccluderBox\_AABB@{OccluderBox\_AABB}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a8e9e2a63c40ba1c44e42921e848f668faef36382e90f1b82aeccd23d5aba54cb5}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a8e9e2a63c40ba1c44e42921e848f668faef36382e90f1b82aeccd23d5aba54cb5} 
+Occluder\+Box\+\_\+\+AABB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OccluderBox\_InnerAABBs@{OccluderBox\_InnerAABBs}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!OccluderBox\_InnerAABBs@{OccluderBox\_InnerAABBs}}}\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a8e9e2a63c40ba1c44e42921e848f668fac4b98c1211c3e5505ee53552dc7e618e}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a8e9e2a63c40ba1c44e42921e848f668fac4b98c1211c3e5505ee53552dc7e618e} 
+Occluder\+Box\+\_\+\+Inner\+AABBs&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00079}{79}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_aa97b7ec99ce0ee7c4785562ce57646ee}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!BindPS\_CBV@{BindPS\_CBV}}
+\index{BindPS\_CBV@{BindPS\_CBV}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{BindPS\_CBV()}{BindPS\_CBV()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_aa97b7ec99ce0ee7c4785562ce57646ee} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::\+Bind\+PS\+\_\+\+CBV (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \&}]{h}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a16f13c80106e42e3887a54284e80e8ca}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!BindPS\_SRV@{BindPS\_SRV}}
+\index{BindPS\_SRV@{BindPS\_SRV}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{BindPS\_SRV()}{BindPS\_SRV()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a16f13c80106e42e3887a54284e80e8ca} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::\+Bind\+PS\+\_\+\+SRV (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{Texture\+Handle}} \&}]{h}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a8e05850879963524c4b0cf0239449db9}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!BindSampler@{BindSampler}}
+\index{BindSampler@{BindSampler}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{BindSampler()}{BindSampler()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a8e05850879963524c4b0cf0239449db9} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::\+Bind\+Sampler (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_sampler_handle}{Sampler\+Handle}} \&}]{h}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ad2fcea0af43bf3adbd050becd3989b0b}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!BindVS\_CBV@{BindVS\_CBV}}
+\index{BindVS\_CBV@{BindVS\_CBV}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{BindVS\_CBV()}{BindVS\_CBV()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ad2fcea0af43bf3adbd050becd3989b0b} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::\+Bind\+VS\+\_\+\+CBV (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \&}]{h}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a3367bbbe21536f13996a29a1b283edf6}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!BindVS\_SRV@{BindVS\_SRV}}
+\index{BindVS\_SRV@{BindVS\_SRV}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{BindVS\_SRV()}{BindVS\_SRV()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a3367bbbe21536f13996a29a1b283edf6} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::\+Bind\+VS\+\_\+\+SRV (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{Texture\+Handle}} \&}]{h}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a0e2a55ae63df80b0b7247ba1a2e23c9a}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!BindVSPS\_CBV@{BindVSPS\_CBV}}
+\index{BindVSPS\_CBV@{BindVSPS\_CBV}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{BindVSPS\_CBV()}{BindVSPS\_CBV()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a0e2a55ae63df80b0b7247ba1a2e23c9a} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::\+Bind\+VSPS\+\_\+\+CBV (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \&}]{h}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ab23ce4e49e52868387ea48eab659d2f6}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!BindVSPS\_SRV@{BindVSPS\_SRV}}
+\index{BindVSPS\_SRV@{BindVSPS\_SRV}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{BindVSPS\_SRV()}{BindVSPS\_SRV()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ab23ce4e49e52868387ea48eab659d2f6} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::\+Bind\+VSPS\+\_\+\+SRV (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{Texture\+Handle}} \&}]{h}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a6e0149969b6abe28c570e5bcd112ade1}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!ClearAdditionalBindings@{ClearAdditionalBindings}}
+\index{ClearAdditionalBindings@{ClearAdditionalBindings}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{ClearAdditionalBindings()}{ClearAdditionalBindings()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a6e0149969b6abe28c570e5bcd112ade1} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::\+Clear\+Additional\+Bindings (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00102}{102}} 行目に定義があります。
+
+
+
+\label{doc-related-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_doc-related-members}
+\doxysubsection{フレンドと関連関数の詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a81f95b80523d7bef5ee2aeb55afeced5}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!ModelAssetManager@{ModelAssetManager}}
+\index{ModelAssetManager@{ModelAssetManager}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{ModelAssetManager}{ModelAssetManager}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a81f95b80523d7bef5ee2aeb55afeced5} 
+friend class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_manager}{Model\+Asset\+Manager}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00109}{109}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a17bb738cd595c1b8cd6365fad12a2dfc}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!buildOccluders@{buildOccluders}}
+\index{buildOccluders@{buildOccluders}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{buildOccluders}{buildOccluders}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a17bb738cd595c1b8cd6365fad12a2dfc} 
+bool SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::build\+Occluders = true}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00071}{71}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ae277666482ee6f3e938712148b86f3bf}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!hero@{hero}}
+\index{hero@{hero}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{hero}{hero}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ae277666482ee6f3e938712148b86f3bf} 
+bool SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::hero = false}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00067}{67}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a1a7f21efece835bc58a528168d448374}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!instancesPeak@{instancesPeak}}
+\index{instancesPeak@{instancesPeak}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{instancesPeak}{instancesPeak}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a1a7f21efece835bc58a528168d448374} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::instances\+Peak = 1}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00064}{64}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_aef3bfb0e9fa33bc31e882c59c41396e5}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!meltBoxType@{meltBoxType}}
+\index{meltBoxType@{meltBoxType}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{meltBoxType}{meltBoxType}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_aef3bfb0e9fa33bc31e882c59c41396e5} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a6aefff63a6d0c3d69a20a933d24de073}{Melt\+Box\+Type}} SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::melt\+Box\+Type = \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a6aefff63a6d0c3d69a20a933d24de073a820ead78f0fa32544c7ba38fe7ff53d9}{Melt\+Box\+Type\+::\+REGULAR}}}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00077}{77}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a9ee73f0fc7e8b59983f6dffcc90796c5}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!meltFillPct@{meltFillPct}}
+\index{meltFillPct@{meltFillPct}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{meltFillPct}{meltFillPct}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a9ee73f0fc7e8b59983f6dffcc90796c5} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::melt\+Fill\+Pct = 0.\+3f}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00074}{74}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a6d978c225009d1262ff7188784d5e542}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!meltResolution@{meltResolution}}
+\index{meltResolution@{meltResolution}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{meltResolution}{meltResolution}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a6d978c225009d1262ff7188784d5e542} 
+int SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::melt\+Resolution = 16}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00073}{73}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ace830427b4c4a81541e1404827907424}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!minAreaFrec@{minAreaFrec}}
+\index{minAreaFrec@{minAreaFrec}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{minAreaFrec}{minAreaFrec}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ace830427b4c4a81541e1404827907424} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::min\+Area\+Frec = 0.\+001f}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00066}{66}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a30e0c4e33e1cdd50ce0e50abe491951a}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!minThicknessRatio@{minThicknessRatio}}
+\index{minThicknessRatio@{minThicknessRatio}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{minThicknessRatio}{minThicknessRatio}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a30e0c4e33e1cdd50ce0e50abe491951a} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::min\+Thickness\+Ratio = 0.\+01f}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00076}{76}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a7c6ea19eb6c700c18a82460f932ee32c}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!minWorldSizeM@{minWorldSizeM}}
+\index{minWorldSizeM@{minWorldSizeM}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{minWorldSizeM}{minWorldSizeM}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a7c6ea19eb6c700c18a82460f932ee32c} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::min\+World\+SizeM = 1.\+0f}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00075}{75}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a6f967fff808e77532fe290d2f4ffc75f}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!occScoreThreshold@{occScoreThreshold}}
+\index{occScoreThreshold@{occScoreThreshold}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{occScoreThreshold}{occScoreThreshold}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a6f967fff808e77532fe290d2f4ffc75f} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::occ\+Score\+Threshold = 0.\+5f}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00072}{72}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ad7f8dacf8ff77b0edb557d238e06de0b}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!option@{option}}
+\index{option@{option}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{option}{option}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ad7f8dacf8ff77b0edb557d238e06de0b} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::option = 1}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00063}{63}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a7a0ce873c813132b71c355854fb81c47}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!path@{path}}
+\index{path@{path}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{path}{path}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a7a0ce873c813132b71c355854fb81c47} 
+std\+::string SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::path}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00061}{61}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_aecac6575d7817738b71f8fba03d74ff2}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!pCustomNrmWFunc@{pCustomNrmWFunc}}
+\index{pCustomNrmWFunc@{pCustomNrmWFunc}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{pCustomNrmWFunc}{pCustomNrmWFunc}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_aecac6575d7817738b71f8fba03d74ff2} 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager_a3799bbf6a656c313f6400d5b98cc2d75}{Mesh\+Manager\+::\+Normal\+WCustom\+Func}} SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::p\+Custom\+Nrm\+WFunc = nullptr}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00086}{86}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a1770b0f4a24a0926e24f35df2c140d37}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!pso@{pso}}
+\index{pso@{pso}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{pso}{pso}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a1770b0f4a24a0926e24f35df2c140d37} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}} SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::pso = \{\}}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00062}{62}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a0b7264474272a45d070eb1458e64090a}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!rhFlipZ@{rhFlipZ}}
+\index{rhFlipZ@{rhFlipZ}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{rhFlipZ}{rhFlipZ}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a0b7264474272a45d070eb1458e64090a} 
+bool SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::rh\+FlipZ = false}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00068}{68}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ada854adbd9ab76ed82a395299b81c22a}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!viewMax@{viewMax}}
+\index{viewMax@{viewMax}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{viewMax}{viewMax}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_ada854adbd9ab76ed82a395299b81c22a} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::view\+Max = 100}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00065}{65}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a98906ddd43322bde54f1e176986969f8}\index{SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}!viewMin@{viewMin}}
+\index{viewMin@{viewMin}!SFW::Graphics::DX11::ModelAssetCreateDesc@{SFW::Graphics::DX11::ModelAssetCreateDesc}}
+\doxysubsubsection{\texorpdfstring{viewMin}{viewMin}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_a98906ddd43322bde54f1e176986969f8} 
+float SFW\+::\+Graphics\+::\+DX11\+::\+Model\+Asset\+Create\+Desc\+::view\+Min = 0}
+
+
+
+ \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source}{DX11\+Model\+Asset\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_model_asset_manager_8h_source_l00065}{65}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\mbox{\hyperlink{_d_x11_model_asset_manager_8h}{DX11\+Model\+Asset\+Manager.\+h}}\end{DoxyCompactItemize}

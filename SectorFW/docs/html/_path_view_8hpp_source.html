@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/PathView.hpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_path_view_8hpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">PathView.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_path_view_8hpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;string_view&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
+<div class="foldopen" id="foldopen00018" data-start="{" data-end="};">
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html">   18</a></span>    <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1path__view.html#a7c6cb41fb353c7e270e872259fdb57bb">path_view</a> {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html#af6ba232b4aaf90414666732285ad3263">   20</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="class_s_f_w_1_1path__view.html#af6ba232b4aaf90414666732285ad3263">path_type</a> = std::filesystem::path;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html#a1ce179325e78bfcd449c766a689f2d60">   21</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="class_s_f_w_1_1path__view.html#a1ce179325e78bfcd449c766a689f2d60">value_type</a> = <span class="keyword">typename</span> path_type::value_type;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html#ad430455fc0ab64facd3a89db96c787bd">   22</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="class_s_f_w_1_1path__view.html#ad430455fc0ab64facd3a89db96c787bd">string_type</a> = <span class="keyword">typename</span> path_type::string_type;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html#a710c04cb7cf46d6e70dfe0ae427958ab">   27</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="class_s_f_w_1_1path__view.html#a710c04cb7cf46d6e70dfe0ae427958ab">view_type</a> = std::conditional_t&lt;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            std::is_same_v&lt;value_type, char&gt;,</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            std::string_view,</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            std::wstring_view</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        &gt;;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html#a7c6cb41fb353c7e270e872259fdb57bb">   35</a></span>        <a class="code hl_function" href="class_s_f_w_1_1path__view.html#a7c6cb41fb353c7e270e872259fdb57bb">path_view</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span></div>
+<div class="foldopen" id="foldopen00041" data-start="{" data-end="}">
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html#a7ba5a2140e65596a6898ec617f81bded">   41</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="class_s_f_w_1_1path__view.html#a7ba5a2140e65596a6898ec617f81bded">path_view</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="class_s_f_w_1_1path__view.html#af6ba232b4aaf90414666732285ad3263">path_type</a>&amp; path)</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            : view_(path.native().<a class="code hl_function" href="class_s_f_w_1_1path__view.html#a412cdea59d18ebeae68909ebe9ddd098">data</a>(), path.native().<a class="code hl_function" href="class_s_f_w_1_1path__view.html#a9a3415ee4c942d1370e35394be8a1095">size</a>()) {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        }</div>
+</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
+<div class="foldopen" id="foldopen00048" data-start="{" data-end="}">
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html#a5219a8b2f221cd4bad4a07f1d36784ce">   48</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="class_s_f_w_1_1path__view.html#a5219a8b2f221cd4bad4a07f1d36784ce">path_view</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="class_s_f_w_1_1path__view.html#ad430455fc0ab64facd3a89db96c787bd">string_type</a>&amp; str)</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            : view_(str.<a class="code hl_function" href="class_s_f_w_1_1path__view.html#a412cdea59d18ebeae68909ebe9ddd098">data</a>(), str.<a class="code hl_function" href="class_s_f_w_1_1path__view.html#a9a3415ee4c942d1370e35394be8a1095">size</a>()) {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        }</div>
+</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span></div>
+<div class="foldopen" id="foldopen00056" data-start="{" data-end="}">
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html#ab3107f86edd5392a1de6b7b6f51cdc77">   56</a></span>        <a class="code hl_function" href="class_s_f_w_1_1path__view.html#ab3107f86edd5392a1de6b7b6f51cdc77">path_view</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="class_s_f_w_1_1path__view.html#a1ce179325e78bfcd449c766a689f2d60">value_type</a>* ptr, <span class="keywordtype">size_t</span> len)</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            : view_(ptr, len) {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        }</div>
+</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html#ac3cc1c602e26e9d5bc55c5ca96b0c12a">   63</a></span>        <a class="code hl_typedef" href="class_s_f_w_1_1path__view.html#a710c04cb7cf46d6e70dfe0ae427958ab">view_type</a> <a class="code hl_function" href="class_s_f_w_1_1path__view.html#ac3cc1c602e26e9d5bc55c5ca96b0c12a">view</a>() const noexcept { <span class="keywordflow">return</span> view_; }</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html#a615eb9764794c83770912b67f34d86eb">   67</a></span>        <span class="keyword">operator</span> <a class="code hl_typedef" href="class_s_f_w_1_1path__view.html#a710c04cb7cf46d6e70dfe0ae427958ab">view_type</a>() const noexcept { <span class="keywordflow">return</span> view_; }</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html#a412cdea59d18ebeae68909ebe9ddd098">   72</a></span>        <span class="keyword">const</span> <a class="code hl_typedef" href="class_s_f_w_1_1path__view.html#a1ce179325e78bfcd449c766a689f2d60">value_type</a>* <a class="code hl_function" href="class_s_f_w_1_1path__view.html#a412cdea59d18ebeae68909ebe9ddd098">data</a>() const noexcept { <span class="keywordflow">return</span> view_.data(); }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html#a9a3415ee4c942d1370e35394be8a1095">   77</a></span>        <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_s_f_w_1_1path__view.html#a9a3415ee4c942d1370e35394be8a1095">size</a>() const noexcept { <span class="keywordflow">return</span> view_.size(); }</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html#afcdf0f0026eba0a75e5293e8ba87314b">   82</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1path__view.html#afcdf0f0026eba0a75e5293e8ba87314b">empty</a>() const noexcept { <span class="keywordflow">return</span> view_.empty(); }</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1path__view.html#afaf205b17ad9ea9f82707935b6c2e505">   87</a></span>        <a class="code hl_typedef" href="class_s_f_w_1_1path__view.html#af6ba232b4aaf90414666732285ad3263">path_type</a> <a class="code hl_function" href="class_s_f_w_1_1path__view.html#afaf205b17ad9ea9f82707935b6c2e505">to_path</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_typedef" href="class_s_f_w_1_1path__view.html#af6ba232b4aaf90414666732285ad3263">path_type</a>(view_); }</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <a class="code hl_typedef" href="class_s_f_w_1_1path__view.html#a710c04cb7cf46d6e70dfe0ae427958ab">view_type</a> view_{};</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    };</div>
+</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>}</div>
+<div class="ttc" id="aclass_s_f_w_1_1path__view_html_a1ce179325e78bfcd449c766a689f2d60"><div class="ttname"><a href="class_s_f_w_1_1path__view.html#a1ce179325e78bfcd449c766a689f2d60">SFW::path_view::value_type</a></div><div class="ttdeci">typename path_type::value_type value_type</div><div class="ttdef"><b>Definition</b> <a href="#l00021">PathView.hpp:21</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1path__view_html_a412cdea59d18ebeae68909ebe9ddd098"><div class="ttname"><a href="class_s_f_w_1_1path__view.html#a412cdea59d18ebeae68909ebe9ddd098">SFW::path_view::data</a></div><div class="ttdeci">const value_type * data() const noexcept</div><div class="ttdoc">基になる文字列データへのポインタを取得</div><div class="ttdef"><b>Definition</b> <a href="#l00072">PathView.hpp:72</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1path__view_html_a5219a8b2f221cd4bad4a07f1d36784ce"><div class="ttname"><a href="class_s_f_w_1_1path__view.html#a5219a8b2f221cd4bad4a07f1d36784ce">SFW::path_view::path_view</a></div><div class="ttdeci">path_view(const string_type &amp;str)</div><div class="ttdoc">文字列から構築</div><div class="ttdef"><b>Definition</b> <a href="#l00048">PathView.hpp:48</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1path__view_html_a710c04cb7cf46d6e70dfe0ae427958ab"><div class="ttname"><a href="class_s_f_w_1_1path__view.html#a710c04cb7cf46d6e70dfe0ae427958ab">SFW::path_view::view_type</a></div><div class="ttdeci">std::conditional_t&lt; std::is_same_v&lt; value_type, char &gt;, std::string_view, std::wstring_view &gt; view_type</div><div class="ttdoc">基になる文字列ビューの型</div><div class="ttdef"><b>Definition</b> <a href="#l00027">PathView.hpp:27</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1path__view_html_a7ba5a2140e65596a6898ec617f81bded"><div class="ttname"><a href="class_s_f_w_1_1path__view.html#a7ba5a2140e65596a6898ec617f81bded">SFW::path_view::path_view</a></div><div class="ttdeci">path_view(const path_type &amp;path)</div><div class="ttdoc">std::filesystem::pathから構築</div><div class="ttdef"><b>Definition</b> <a href="#l00041">PathView.hpp:41</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1path__view_html_a7c6cb41fb353c7e270e872259fdb57bb"><div class="ttname"><a href="class_s_f_w_1_1path__view.html#a7c6cb41fb353c7e270e872259fdb57bb">SFW::path_view::path_view</a></div><div class="ttdeci">path_view()=default</div><div class="ttdoc">デフォルトコンストラクタ (空のビューを作成)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1path__view_html_a9a3415ee4c942d1370e35394be8a1095"><div class="ttname"><a href="class_s_f_w_1_1path__view.html#a9a3415ee4c942d1370e35394be8a1095">SFW::path_view::size</a></div><div class="ttdeci">size_t size() const noexcept</div><div class="ttdoc">基になる文字列の長さを取得</div><div class="ttdef"><b>Definition</b> <a href="#l00077">PathView.hpp:77</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1path__view_html_ab3107f86edd5392a1de6b7b6f51cdc77"><div class="ttname"><a href="class_s_f_w_1_1path__view.html#ab3107f86edd5392a1de6b7b6f51cdc77">SFW::path_view::path_view</a></div><div class="ttdeci">path_view(const value_type *ptr, size_t len)</div><div class="ttdoc">ポインタと長さから構築</div><div class="ttdef"><b>Definition</b> <a href="#l00056">PathView.hpp:56</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1path__view_html_ac3cc1c602e26e9d5bc55c5ca96b0c12a"><div class="ttname"><a href="class_s_f_w_1_1path__view.html#ac3cc1c602e26e9d5bc55c5ca96b0c12a">SFW::path_view::view</a></div><div class="ttdeci">view_type view() const noexcept</div><div class="ttdoc">基になる文字列ビューを取得</div><div class="ttdef"><b>Definition</b> <a href="#l00063">PathView.hpp:63</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1path__view_html_ad430455fc0ab64facd3a89db96c787bd"><div class="ttname"><a href="class_s_f_w_1_1path__view.html#ad430455fc0ab64facd3a89db96c787bd">SFW::path_view::string_type</a></div><div class="ttdeci">typename path_type::string_type string_type</div><div class="ttdef"><b>Definition</b> <a href="#l00022">PathView.hpp:22</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1path__view_html_af6ba232b4aaf90414666732285ad3263"><div class="ttname"><a href="class_s_f_w_1_1path__view.html#af6ba232b4aaf90414666732285ad3263">SFW::path_view::path_type</a></div><div class="ttdeci">std::filesystem::path path_type</div><div class="ttdef"><b>Definition</b> <a href="#l00020">PathView.hpp:20</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1path__view_html_afaf205b17ad9ea9f82707935b6c2e505"><div class="ttname"><a href="class_s_f_w_1_1path__view.html#afaf205b17ad9ea9f82707935b6c2e505">SFW::path_view::to_path</a></div><div class="ttdeci">path_type to_path() const</div><div class="ttdoc">std::filesystem::pathに変換</div><div class="ttdef"><b>Definition</b> <a href="#l00087">PathView.hpp:87</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1path__view_html_afcdf0f0026eba0a75e5293e8ba87314b"><div class="ttname"><a href="class_s_f_w_1_1path__view.html#afcdf0f0026eba0a75e5293e8ba87314b">SFW::path_view::empty</a></div><div class="ttdeci">bool empty() const noexcept</div><div class="ttdoc">ビューが空かどうかを判定</div><div class="ttdef"><b>Definition</b> <a href="#l00082">PathView.hpp:82</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_a38f029c1e896199722a8ae2b43dab78.html">Util</a></li><li class="navelem"><a href="_path_view_8hpp.html">PathView.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

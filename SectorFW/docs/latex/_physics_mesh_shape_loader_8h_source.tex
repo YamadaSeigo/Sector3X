@@ -1,0 +1,42 @@
+\doxysection{Physics\+Mesh\+Shape\+Loader.\+h}
+\hypertarget{_physics_mesh_shape_loader_8h_source}{}\label{_physics_mesh_shape_loader_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsMeshShapeLoader.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsMeshShapeLoader.h}}
+\mbox{\hyperlink{_physics_mesh_shape_loader_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <string\_view>}}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <cstring>}\ \textcolor{comment}{//\ std::memcmp}}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_physics_types_8h}{PhysicsTypes.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00019}00019\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_physics}{SFW::Physics}}}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00020}00020\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00021}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data}{00021}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data}{MeshShapeData}}}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00022}00022\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00023}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data_abd3a8a392a2713cd6555e1446456d2c1}{00023}}\ \ \ \ \ \ \ \ \ std::vector<Vec3f>\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data_abd3a8a392a2713cd6555e1446456d2c1}{vertices}};}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00024}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data_a610f6216ebe264e8f030b2da8d0ae98b}{00024}}\ \ \ \ \ \ \ \ \ std::vector<std::uint32\_t>\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data_a610f6216ebe264e8f030b2da8d0ae98b}{indices}};}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00025}00025\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00033}\mbox{\hyperlink{namespace_s_f_w_1_1_physics_a84e40993ca7a7b6ae859fc86a9fdef72}{00033}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a84e40993ca7a7b6ae859fc86a9fdef72}{LoadMeshShapeBin}}(}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::filesystem::path\&\ path,}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data}{MeshShapeData}}\&\ outData,}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ flipRightHanded\ =\ \textcolor{keyword}{false},}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ std::uint32\_t\ expectedVersion\ =\ 1}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00038}00038\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00041}\mbox{\hyperlink{namespace_s_f_w_1_1_physics_a9c1b7c84afbe6ab33bb27a21be344aba}{00041}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a9c1b7c84afbe6ab33bb27a21be344aba}{LoadMeshShapeBinFromMemory}}(}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ std::size\_t\ size,}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data}{MeshShapeData}}\&\ outData,}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ flipRightHanded\ =\ \textcolor{keyword}{false},}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ std::uint32\_t\ expectedVersion\ =\ 1}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00047}00047\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_physics_mesh_shape_loader_8h_source_l00048}00048\ \}}
+
+\end{DoxyCode}

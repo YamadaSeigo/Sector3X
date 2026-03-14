@@ -1,0 +1,692 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Graphics::DX11::ModelAssetCreateDesc 構造体</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc.html','','struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Graphics::DX11::ModelAssetCreateDesc 構造体</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:BindNode" id="r_BindNode"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc_1_1_bind_node.html">BindNode</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+公開型</h2></td></tr>
+<tr class="memitem:af682ac7ca9dfa57d8524e754213371a3" id="r_af682ac7ca9dfa57d8524e754213371a3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af682ac7ca9dfa57d8524e754213371a3">BindType</a> : uint8_t { <br />
+&#160;&#160;<a class="el" href="#af682ac7ca9dfa57d8524e754213371a3a24036dc5b825a0949351e9d09ab1903b">VS_CBV</a> = 1u &lt;&lt; 0
+, <a class="el" href="#af682ac7ca9dfa57d8524e754213371a3abb180739ba24fd613127157ed2843dad">PS_CBV</a> = 1u &lt;&lt; 1
+, <a class="el" href="#af682ac7ca9dfa57d8524e754213371a3a6a2f1ae9b89d30c078c253fd7d077f6f">VS_SRV</a> = 1u &lt;&lt; 2
+, <a class="el" href="#af682ac7ca9dfa57d8524e754213371a3a21f3c3e3beb2765cc827064e0dd87016">PS_SRV</a> = 1u &lt;&lt; 3
+, <br />
+&#160;&#160;<a class="el" href="#af682ac7ca9dfa57d8524e754213371a3a56d953968166a57b05ffe3a68ea7f797">SAMPLER</a> = 1u &lt;&lt; 4
+<br />
+ }</td></tr>
+<tr class="memitem:a8e9e2a63c40ba1c44e42921e848f668f" id="r_a8e9e2a63c40ba1c44e42921e848f668f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e9e2a63c40ba1c44e42921e848f668f">OccluderBoxType</a> : uint8_t { <a class="el" href="#a8e9e2a63c40ba1c44e42921e848f668faef36382e90f1b82aeccd23d5aba54cb5">OccluderBox_AABB</a>
+, <a class="el" href="#a8e9e2a63c40ba1c44e42921e848f668fac4b98c1211c3e5505ee53552dc7e618e">OccluderBox_InnerAABBs</a>
+ }</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:ad2fcea0af43bf3adbd050becd3989b0b" id="r_ad2fcea0af43bf3adbd050becd3989b0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2fcea0af43bf3adbd050becd3989b0b">BindVS_CBV</a> (const std::string &amp;name, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> &amp;h)</td></tr>
+<tr class="memitem:aa97b7ec99ce0ee7c4785562ce57646ee" id="r_aa97b7ec99ce0ee7c4785562ce57646ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa97b7ec99ce0ee7c4785562ce57646ee">BindPS_CBV</a> (const std::string &amp;name, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> &amp;h)</td></tr>
+<tr class="memitem:a0e2a55ae63df80b0b7247ba1a2e23c9a" id="r_a0e2a55ae63df80b0b7247ba1a2e23c9a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e2a55ae63df80b0b7247ba1a2e23c9a">BindVSPS_CBV</a> (const std::string &amp;name, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> &amp;h)</td></tr>
+<tr class="memitem:a3367bbbe21536f13996a29a1b283edf6" id="r_a3367bbbe21536f13996a29a1b283edf6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3367bbbe21536f13996a29a1b283edf6">BindVS_SRV</a> (const std::string &amp;name, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_texture_handle.html">TextureHandle</a> &amp;h)</td></tr>
+<tr class="memitem:a16f13c80106e42e3887a54284e80e8ca" id="r_a16f13c80106e42e3887a54284e80e8ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16f13c80106e42e3887a54284e80e8ca">BindPS_SRV</a> (const std::string &amp;name, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_texture_handle.html">TextureHandle</a> &amp;h)</td></tr>
+<tr class="memitem:ab23ce4e49e52868387ea48eab659d2f6" id="r_ab23ce4e49e52868387ea48eab659d2f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab23ce4e49e52868387ea48eab659d2f6">BindVSPS_SRV</a> (const std::string &amp;name, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_texture_handle.html">TextureHandle</a> &amp;h)</td></tr>
+<tr class="memitem:a8e05850879963524c4b0cf0239449db9" id="r_a8e05850879963524c4b0cf0239449db9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e05850879963524c4b0cf0239449db9">BindSampler</a> (const std::string &amp;name, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_sampler_handle.html">SamplerHandle</a> &amp;h)</td></tr>
+<tr class="memitem:a6e0149969b6abe28c570e5bcd112ade1" id="r_a6e0149969b6abe28c570e5bcd112ade1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e0149969b6abe28c570e5bcd112ade1">ClearAdditionalBindings</a> () noexcept</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+公開変数類</h2></td></tr>
+<tr class="memitem:a7a0ce873c813132b71c355854fb81c47" id="r_a7a0ce873c813132b71c355854fb81c47"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a0ce873c813132b71c355854fb81c47">path</a></td></tr>
+<tr class="memitem:a1770b0f4a24a0926e24f35df2c140d37" id="r_a1770b0f4a24a0926e24f35df2c140d37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_p_s_o_handle.html">PSOHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1770b0f4a24a0926e24f35df2c140d37">pso</a> = {}</td></tr>
+<tr class="memitem:ad7f8dacf8ff77b0edb557d238e06de0b" id="r_ad7f8dacf8ff77b0edb557d238e06de0b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad7f8dacf8ff77b0edb557d238e06de0b">option</a> = 1</td></tr>
+<tr class="memitem:a1a7f21efece835bc58a528168d448374" id="r_a1a7f21efece835bc58a528168d448374"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a7f21efece835bc58a528168d448374">instancesPeak</a> = 1</td></tr>
+<tr class="memitem:a98906ddd43322bde54f1e176986969f8" id="r_a98906ddd43322bde54f1e176986969f8"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a98906ddd43322bde54f1e176986969f8">viewMin</a> = 0</td></tr>
+<tr class="memitem:ada854adbd9ab76ed82a395299b81c22a" id="r_ada854adbd9ab76ed82a395299b81c22a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada854adbd9ab76ed82a395299b81c22a">viewMax</a> = 100</td></tr>
+<tr class="memitem:ace830427b4c4a81541e1404827907424" id="r_ace830427b4c4a81541e1404827907424"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace830427b4c4a81541e1404827907424">minAreaFrec</a> = 0.001f</td></tr>
+<tr class="memitem:ae277666482ee6f3e938712148b86f3bf" id="r_ae277666482ee6f3e938712148b86f3bf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae277666482ee6f3e938712148b86f3bf">hero</a> = false</td></tr>
+<tr class="memitem:a0b7264474272a45d070eb1458e64090a" id="r_a0b7264474272a45d070eb1458e64090a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b7264474272a45d070eb1458e64090a">rhFlipZ</a> = false</td></tr>
+<tr class="memitem:a17bb738cd595c1b8cd6365fad12a2dfc" id="r_a17bb738cd595c1b8cd6365fad12a2dfc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a17bb738cd595c1b8cd6365fad12a2dfc">buildOccluders</a> = true</td></tr>
+<tr class="memitem:a6f967fff808e77532fe290d2f4ffc75f" id="r_a6f967fff808e77532fe290d2f4ffc75f"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f967fff808e77532fe290d2f4ffc75f">occScoreThreshold</a> = 0.5f</td></tr>
+<tr class="memitem:a6d978c225009d1262ff7188784d5e542" id="r_a6d978c225009d1262ff7188784d5e542"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d978c225009d1262ff7188784d5e542">meltResolution</a> = 16</td></tr>
+<tr class="memitem:a9ee73f0fc7e8b59983f6dffcc90796c5" id="r_a9ee73f0fc7e8b59983f6dffcc90796c5"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ee73f0fc7e8b59983f6dffcc90796c5">meltFillPct</a> = 0.3f</td></tr>
+<tr class="memitem:a7c6ea19eb6c700c18a82460f932ee32c" id="r_a7c6ea19eb6c700c18a82460f932ee32c"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c6ea19eb6c700c18a82460f932ee32c">minWorldSizeM</a> = 1.0f</td></tr>
+<tr class="memitem:a30e0c4e33e1cdd50ce0e50abe491951a" id="r_a30e0c4e33e1cdd50ce0e50abe491951a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a30e0c4e33e1cdd50ce0e50abe491951a">minThicknessRatio</a> = 0.01f</td></tr>
+<tr class="memitem:aef3bfb0e9fa33bc31e882c59c41396e5" id="r_aef3bfb0e9fa33bc31e882c59c41396e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a6aefff63a6d0c3d69a20a933d24de073">MeltBoxType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef3bfb0e9fa33bc31e882c59c41396e5">meltBoxType</a> = <a class="el" href="namespace_s_f_w_1_1_graphics.html#a6aefff63a6d0c3d69a20a933d24de073a820ead78f0fa32544c7ba38fe7ff53d9">MeltBoxType::REGULAR</a></td></tr>
+<tr class="memitem:aecac6575d7817738b71f8fba03d74ff2" id="r_aecac6575d7817738b71f8fba03d74ff2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager.html#a3799bbf6a656c313f6400d5b98cc2d75">MeshManager::NormalWCustomFunc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aecac6575d7817738b71f8fba03d74ff2">pCustomNrmWFunc</a> = nullptr</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-friends" class="groupheader"><a id="friends" name="friends"></a>
+フレンド</h2></td></tr>
+<tr class="memitem:a81f95b80523d7bef5ee2aeb55afeced5" id="r_a81f95b80523d7bef5ee2aeb55afeced5"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a81f95b80523d7bef5ee2aeb55afeced5">ModelAssetManager</a></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock">
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00042">42</a> 行目に定義があります。</p>
+</div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">列挙型メンバ詳解</h2>
+<a id="af682ac7ca9dfa57d8524e754213371a3" name="af682ac7ca9dfa57d8524e754213371a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af682ac7ca9dfa57d8524e754213371a3">&#9670;&#160;</a></span>BindType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#af682ac7ca9dfa57d8524e754213371a3">SFW::Graphics::DX11::ModelAssetCreateDesc::BindType</a> : uint8_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">列挙値</th></tr><tr><td class="fieldname"><a id="af682ac7ca9dfa57d8524e754213371a3a24036dc5b825a0949351e9d09ab1903b" name="af682ac7ca9dfa57d8524e754213371a3a24036dc5b825a0949351e9d09ab1903b"></a>VS_CBV&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af682ac7ca9dfa57d8524e754213371a3abb180739ba24fd613127157ed2843dad" name="af682ac7ca9dfa57d8524e754213371a3abb180739ba24fd613127157ed2843dad"></a>PS_CBV&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af682ac7ca9dfa57d8524e754213371a3a6a2f1ae9b89d30c078c253fd7d077f6f" name="af682ac7ca9dfa57d8524e754213371a3a6a2f1ae9b89d30c078c253fd7d077f6f"></a>VS_SRV&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af682ac7ca9dfa57d8524e754213371a3a21f3c3e3beb2765cc827064e0dd87016" name="af682ac7ca9dfa57d8524e754213371a3a21f3c3e3beb2765cc827064e0dd87016"></a>PS_SRV&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af682ac7ca9dfa57d8524e754213371a3a56d953968166a57b05ffe3a68ea7f797" name="af682ac7ca9dfa57d8524e754213371a3a56d953968166a57b05ffe3a68ea7f797"></a>SAMPLER&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00043">43</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8e9e2a63c40ba1c44e42921e848f668f" name="a8e9e2a63c40ba1c44e42921e848f668f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e9e2a63c40ba1c44e42921e848f668f">&#9670;&#160;</a></span>OccluderBoxType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a8e9e2a63c40ba1c44e42921e848f668f">SFW::Graphics::DX11::ModelAssetCreateDesc::OccluderBoxType</a> : uint8_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">列挙値</th></tr><tr><td class="fieldname"><a id="a8e9e2a63c40ba1c44e42921e848f668faef36382e90f1b82aeccd23d5aba54cb5" name="a8e9e2a63c40ba1c44e42921e848f668faef36382e90f1b82aeccd23d5aba54cb5"></a>OccluderBox_AABB&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a8e9e2a63c40ba1c44e42921e848f668fac4b98c1211c3e5505ee53552dc7e618e" name="a8e9e2a63c40ba1c44e42921e848f668fac4b98c1211c3e5505ee53552dc7e618e"></a>OccluderBox_InnerAABBs&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00079">79</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="aa97b7ec99ce0ee7c4785562ce57646ee" name="aa97b7ec99ce0ee7c4785562ce57646ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa97b7ec99ce0ee7c4785562ce57646ee">&#9670;&#160;</a></span>BindPS_CBV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::ModelAssetCreateDesc::BindPS_CBV </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>h</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a16f13c80106e42e3887a54284e80e8ca" name="a16f13c80106e42e3887a54284e80e8ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16f13c80106e42e3887a54284e80e8ca">&#9670;&#160;</a></span>BindPS_SRV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::ModelAssetCreateDesc::BindPS_SRV </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_texture_handle.html">TextureHandle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>h</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8e05850879963524c4b0cf0239449db9" name="a8e05850879963524c4b0cf0239449db9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e05850879963524c4b0cf0239449db9">&#9670;&#160;</a></span>BindSampler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::ModelAssetCreateDesc::BindSampler </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_sampler_handle.html">SamplerHandle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>h</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad2fcea0af43bf3adbd050becd3989b0b" name="ad2fcea0af43bf3adbd050becd3989b0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2fcea0af43bf3adbd050becd3989b0b">&#9670;&#160;</a></span>BindVS_CBV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::ModelAssetCreateDesc::BindVS_CBV </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>h</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3367bbbe21536f13996a29a1b283edf6" name="a3367bbbe21536f13996a29a1b283edf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3367bbbe21536f13996a29a1b283edf6">&#9670;&#160;</a></span>BindVS_SRV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::ModelAssetCreateDesc::BindVS_SRV </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_texture_handle.html">TextureHandle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>h</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0e2a55ae63df80b0b7247ba1a2e23c9a" name="a0e2a55ae63df80b0b7247ba1a2e23c9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e2a55ae63df80b0b7247ba1a2e23c9a">&#9670;&#160;</a></span>BindVSPS_CBV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::ModelAssetCreateDesc::BindVSPS_CBV </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>h</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab23ce4e49e52868387ea48eab659d2f6" name="ab23ce4e49e52868387ea48eab659d2f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab23ce4e49e52868387ea48eab659d2f6">&#9670;&#160;</a></span>BindVSPS_SRV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::ModelAssetCreateDesc::BindVSPS_SRV </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_texture_handle.html">TextureHandle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>h</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6e0149969b6abe28c570e5bcd112ade1" name="a6e0149969b6abe28c570e5bcd112ade1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e0149969b6abe28c570e5bcd112ade1">&#9670;&#160;</a></span>ClearAdditionalBindings()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::ModelAssetCreateDesc::ClearAdditionalBindings </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00102">102</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-related-members" id="doc-related-members"></a><h2 id="header-doc-related-members" class="groupheader">フレンドと関連関数の詳解</h2>
+<a id="a81f95b80523d7bef5ee2aeb55afeced5" name="a81f95b80523d7bef5ee2aeb55afeced5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81f95b80523d7bef5ee2aeb55afeced5">&#9670;&#160;</a></span>ModelAssetManager</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_manager.html">ModelAssetManager</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel friend">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00109">109</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<a id="a17bb738cd595c1b8cd6365fad12a2dfc" name="a17bb738cd595c1b8cd6365fad12a2dfc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17bb738cd595c1b8cd6365fad12a2dfc">&#9670;&#160;</a></span>buildOccluders</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Graphics::DX11::ModelAssetCreateDesc::buildOccluders = true</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00071">71</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae277666482ee6f3e938712148b86f3bf" name="ae277666482ee6f3e938712148b86f3bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae277666482ee6f3e938712148b86f3bf">&#9670;&#160;</a></span>hero</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Graphics::DX11::ModelAssetCreateDesc::hero = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00067">67</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a1a7f21efece835bc58a528168d448374" name="a1a7f21efece835bc58a528168d448374"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a7f21efece835bc58a528168d448374">&#9670;&#160;</a></span>instancesPeak</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::Graphics::DX11::ModelAssetCreateDesc::instancesPeak = 1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00064">64</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aef3bfb0e9fa33bc31e882c59c41396e5" name="aef3bfb0e9fa33bc31e882c59c41396e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef3bfb0e9fa33bc31e882c59c41396e5">&#9670;&#160;</a></span>meltBoxType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a6aefff63a6d0c3d69a20a933d24de073">MeltBoxType</a> SFW::Graphics::DX11::ModelAssetCreateDesc::meltBoxType = <a class="el" href="namespace_s_f_w_1_1_graphics.html#a6aefff63a6d0c3d69a20a933d24de073a820ead78f0fa32544c7ba38fe7ff53d9">MeltBoxType::REGULAR</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00077">77</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9ee73f0fc7e8b59983f6dffcc90796c5" name="a9ee73f0fc7e8b59983f6dffcc90796c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ee73f0fc7e8b59983f6dffcc90796c5">&#9670;&#160;</a></span>meltFillPct</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Graphics::DX11::ModelAssetCreateDesc::meltFillPct = 0.3f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00074">74</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6d978c225009d1262ff7188784d5e542" name="a6d978c225009d1262ff7188784d5e542"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d978c225009d1262ff7188784d5e542">&#9670;&#160;</a></span>meltResolution</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int SFW::Graphics::DX11::ModelAssetCreateDesc::meltResolution = 16</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00073">73</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ace830427b4c4a81541e1404827907424" name="ace830427b4c4a81541e1404827907424"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace830427b4c4a81541e1404827907424">&#9670;&#160;</a></span>minAreaFrec</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Graphics::DX11::ModelAssetCreateDesc::minAreaFrec = 0.001f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00066">66</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a30e0c4e33e1cdd50ce0e50abe491951a" name="a30e0c4e33e1cdd50ce0e50abe491951a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30e0c4e33e1cdd50ce0e50abe491951a">&#9670;&#160;</a></span>minThicknessRatio</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Graphics::DX11::ModelAssetCreateDesc::minThicknessRatio = 0.01f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00076">76</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7c6ea19eb6c700c18a82460f932ee32c" name="a7c6ea19eb6c700c18a82460f932ee32c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c6ea19eb6c700c18a82460f932ee32c">&#9670;&#160;</a></span>minWorldSizeM</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Graphics::DX11::ModelAssetCreateDesc::minWorldSizeM = 1.0f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00075">75</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6f967fff808e77532fe290d2f4ffc75f" name="a6f967fff808e77532fe290d2f4ffc75f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f967fff808e77532fe290d2f4ffc75f">&#9670;&#160;</a></span>occScoreThreshold</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Graphics::DX11::ModelAssetCreateDesc::occScoreThreshold = 0.5f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00072">72</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad7f8dacf8ff77b0edb557d238e06de0b" name="ad7f8dacf8ff77b0edb557d238e06de0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7f8dacf8ff77b0edb557d238e06de0b">&#9670;&#160;</a></span>option</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::Graphics::DX11::ModelAssetCreateDesc::option = 1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00063">63</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7a0ce873c813132b71c355854fb81c47" name="a7a0ce873c813132b71c355854fb81c47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a0ce873c813132b71c355854fb81c47">&#9670;&#160;</a></span>path</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string SFW::Graphics::DX11::ModelAssetCreateDesc::path</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00061">61</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aecac6575d7817738b71f8fba03d74ff2" name="aecac6575d7817738b71f8fba03d74ff2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecac6575d7817738b71f8fba03d74ff2">&#9670;&#160;</a></span>pCustomNrmWFunc</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_mesh_manager.html#a3799bbf6a656c313f6400d5b98cc2d75">MeshManager::NormalWCustomFunc</a> SFW::Graphics::DX11::ModelAssetCreateDesc::pCustomNrmWFunc = nullptr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00086">86</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a1770b0f4a24a0926e24f35df2c140d37" name="a1770b0f4a24a0926e24f35df2c140d37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1770b0f4a24a0926e24f35df2c140d37">&#9670;&#160;</a></span>pso</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_p_s_o_handle.html">PSOHandle</a> SFW::Graphics::DX11::ModelAssetCreateDesc::pso = {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00062">62</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0b7264474272a45d070eb1458e64090a" name="a0b7264474272a45d070eb1458e64090a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b7264474272a45d070eb1458e64090a">&#9670;&#160;</a></span>rhFlipZ</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Graphics::DX11::ModelAssetCreateDesc::rhFlipZ = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00068">68</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ada854adbd9ab76ed82a395299b81c22a" name="ada854adbd9ab76ed82a395299b81c22a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada854adbd9ab76ed82a395299b81c22a">&#9670;&#160;</a></span>viewMax</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Graphics::DX11::ModelAssetCreateDesc::viewMax = 100</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00065">65</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a98906ddd43322bde54f1e176986969f8" name="a98906ddd43322bde54f1e176986969f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98906ddd43322bde54f1e176986969f8">&#9670;&#160;</a></span>viewMin</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float SFW::Graphics::DX11::ModelAssetCreateDesc::viewMin = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a> の <a class="el" href="_d_x11_model_asset_manager_8h_source.html#l00065">65</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>この構造体詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/<a class="el" href="_d_x11_model_asset_manager_8h_source.html">DX11ModelAssetManager.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics.html">Graphics</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">DX11</a></li><li class="navelem"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_model_asset_create_desc.html">ModelAssetCreateDesc</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

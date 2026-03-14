@@ -1,0 +1,125 @@
+\doxysection{Sparse\+Marge.\+hpp}
+\hypertarget{_sparse_marge_8hpp_source}{}\label{_sparse_marge_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/SparseMarge.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/SparseMarge.hpp}}
+\mbox{\hyperlink{_sparse_marge_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <cstddef>}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_archetype_manager_8h}{ArchetypeManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_archetype_chunk_8h}{ArchetypeChunk.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_query_8h}{Query.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_entity_manager_8h}{EntityManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00019}00019\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{SFW::ECS}}\ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00020}00020\ \ \ \ \ \textcolor{comment}{//==============================}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00021}00021\ \ \ \ \ \textcolor{comment}{//\ 1)\ Dense\ 最速ランナ}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00022}00022\ \ \ \ \ \textcolor{comment}{//\ \ \ -\/\ Dense\ コンポーネントのみ対象（Sparse\ なし）}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00023}00023\ \ \ \ \ \textcolor{comment}{//\ \ \ -\/\ チャンクごとに列ポインタを一度だけ取って連続アクセス}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00024}00024\ \ \ \ \ \textcolor{comment}{//\ \ \ -\/\ fn(EntityID,\ Dense\&...)}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00025}00025\ \ \ \ \ \textcolor{comment}{//==============================}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00026}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_dense_runner}{00026}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_dense_runner}{DenseRunner}}\ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}...\ Dense,\ \textcolor{keyword}{class\ }Fn>}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ (\textcolor{keyword}{sizeof}...(Dense)\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00029}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_dense_runner_af57caeb0874128fdf6da6e10e85810c8}{00029}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_dense_runner_af57caeb0874128fdf6da6e10e85810c8}{Run}}(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{ArchetypeManager}}\&\ am,\ Fn\&\&\ fn)\ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query}{Query}}\ q;}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ q.\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a82286a440d7074faadabd3ae7750befb}{With}}<Dense...>();\ \textcolor{comment}{//\ Dense\ 限定クエリ（AllDense\ 制約）\ :contentReference[oaicite:4]\{index=4\}}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ chunks\ =\ q.\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_ab30526a91aaa023239f86e62d1fc4e71}{MatchingChunks}}(am);\ \ \ \ \textcolor{comment}{//\ マスク一致チャンク列挙\ :contentReference[oaicite:5]\{index=5\}}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ total\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}*\ chunk\ :\ chunks)\ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 列ポインタを先に束ねる（GetColumn<T>()\ は列先頭の生ポインタを返す）}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 以後は\ \&col[i]\ で連続メモリアクセス。\ :contentReference[oaicite:6]\{index=6\}}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ cols\ =\ std::tuple\{\ chunk-\/>GetColumn<Dense>().value()...\ \};}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ ids\ =\ chunk-\/>GetEntityIDs();\ \textcolor{comment}{//\ 昇順\ ID\ 配列を想定\ :contentReference[oaicite:7]\{index=7\}}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ n\ =\ chunk-\/>GetEntityCount();}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ n;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::apply([\&](\textcolor{keyword}{auto}*...\ col)\ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fn(ids[i],\ col[i]...);}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},\ cols);}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\ +=\ n;}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ total;}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00052}00052\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00054}00054\ \ \ \ \ \textcolor{comment}{//==============================}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00055}00055\ \ \ \ \ \textcolor{comment}{//\ 2)\ Sparse\ マージ補助}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00056}00056\ \ \ \ \ \textcolor{comment}{//\ \ \ -\/\ unordered\_map<EntityID,\ S>\ など\ “疎”\ を\ Dense\ 走査にマージ}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00057}00057\ \ \ \ \ \textcolor{comment}{//\ \ \ -\/\ フレーム頭などでキーを一度だけ抽出→昇順ソート}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00058}00058\ \ \ \ \ \textcolor{comment}{//\ \ \ -\/\ 各チャンクの\ entities(昇順)\ と二本指マージで命中だけ適用}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00059}00059\ \ \ \ \ \textcolor{comment}{//==============================}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00060}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge}{00060}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge}{SparseMerge}}\ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ (A)\ キー抽出\ \&\ ソート（フレームに1回推奨）\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ SparseMap>}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00063}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_a41f65fb415b2a2cc926fab8c00eb7e6e}{00063}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_a41f65fb415b2a2cc926fab8c00eb7e6e}{BuildSortedKeys}}(\textcolor{keyword}{const}\ SparseMap\&\ m,\ std::vector<EntityID>\&\ outSortedKeys)\ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ outSortedKeys.clear();}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ outSortedKeys.reserve(m.size());}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ kv\ :\ m)\ outSortedKeys.push\_back(kv.first);}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ std::sort(outSortedKeys.begin(),\ outSortedKeys.end());}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ (B)\ 二本指マージで命中だけ\ fn\ を呼ぶ\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ fn\ の形:\ fn(rowIndexInChunk,\ const\ S\&\ sparseValue)}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ SparseMap,\ \textcolor{keyword}{class}\ Fn>}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00073}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_a94128c3711b08cec38dc69cc8d24db68}{00073}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_a94128c3711b08cec38dc69cc8d24db68}{MergeJoinApply}}(\textcolor{keyword}{const}\ std::vector<EntityID>\&\ chunkIDs,}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ SparseMap\&\ sparseMap,}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<EntityID>\&\ sortedKeys,}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ Fn\&\&\ fn)}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ i\ =\ 0,\ j\ =\ 0,\ hits\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ n\ =\ chunkIDs.size(),\ m\ =\ sortedKeys.size();}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (i\ <\ n\ \&\&\ j\ <\ m)\ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ a\ =\ chunkIDs[i];}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{EntityID}}\ b\ =\ sortedKeys[j];}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (a\ <\ b)\ \{\ ++i;\ \}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (a\ >\ b)\ \{\ ++j;\ \}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 命中:\ find\ は命中時のみ実行（回数最小化）}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}\ it\ =\ sparseMap.find(a);\ it\ !=\ sparseMap.end())\ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fn(i,\ it-\/>second);}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++hits;}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++i;\ ++j;}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ hits;}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ (C)\ Dense\ と併用するユーティリティ\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ DenseRunner\ と同じく\ Dense\ 列を握り、命中行にだけ\ applyDense(row,\ sparseVal,\ denseRefs...)}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class\ }S,\ \textcolor{keyword}{class}...\ Dense,\ \textcolor{keyword}{class\ }Apply>}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00101}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_af4d3f7fb90eed7e3ac581aa458731446}{00101}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_af4d3f7fb90eed7e3ac581aa458731446}{RunDenseWithSparse}}(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{ArchetypeManager}}\&\ am,}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::unordered\_map<EntityID,\ S>\&\ sparseMap,}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<EntityID>\&\ sortedKeys,}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ Apply\&\&\ applyDense)}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query}{Query}}\ q;\ q.\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_a82286a440d7074faadabd3ae7750befb}{With}}<Dense...>();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Dense\ 限定でチャンク列挙\ :contentReference[oaicite:8]\{index=8\}}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ chunks\ =\ q.\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_query_ab30526a91aaa023239f86e62d1fc4e71}{MatchingChunks}}(am);\ \ \ \ \ \ \ \ \textcolor{comment}{//\ :contentReference[oaicite:9]\{index=9\}}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ totalHits\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}*\ chunk\ :\ chunks)\ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ cols\ =\ std::tuple\{\ chunk-\/>GetColumn<Dense>().value()...\ \};\ \textcolor{comment}{//\ 列ポインタ取得\ :contentReference[oaicite:10]\{index=10\}}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ ids\ =\ chunk-\/>GetEntityIDs();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ :contentReference[oaicite:11]\{index=11\}}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ totalHits\ +=\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_a94128c3711b08cec38dc69cc8d24db68}{MergeJoinApply}}(ids,\ sparseMap,\ sortedKeys,}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\&](\textcolor{keywordtype}{size\_t}\ row,\ \textcolor{keyword}{const}\ S\&\ sval)\ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::apply([\&](\textcolor{keyword}{auto}*...\ col)\ \{}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ applyDense(row,\ sval,\ col[row]...);}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},\ cols);}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ totalHits;}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00123}00123\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_sparse_marge_8hpp_source_l00124}00124\ \}\ \textcolor{comment}{//\ namespace\ SectorFW::ECS}}
+
+\end{DoxyCode}

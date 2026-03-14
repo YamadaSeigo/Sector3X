@@ -1,0 +1,63 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\+DX11\+Shader\+Manager.h ファイル}
+\hypertarget{_d_x11_shader_manager_8h}{}\label{_d_x11_shader_manager_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11ShaderManager.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11ShaderManager.h}}
+
+
+DirectX 11のシェーダーマネージャークラスを定義するヘッダーファイル  
+
+
+{\ttfamily \#include $<$d3d11shader.\+h$>$}\newline
+{\ttfamily \#include "{}\+\_\+dx11inc.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Render\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}../../\+Util/\+Resouce\+Manager\+Base.\+hpp"{}}\newline
+{\ttfamily \#include $<$filesystem$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_semantic_key}{SFW\+::\+Graphics\+::\+DX11\+::\+Semantic\+Key}}
+\begin{DoxyCompactList}\small\item\em セマンティクキーを表す構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_semantic_key_hash}{SFW\+::\+Graphics\+::\+DX11\+::\+Semantic\+Key\+Hash}}
+\begin{DoxyCompactList}\small\item\em セマンティクキーのハッシュ関数 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_semantic_binding}{SFW\+::\+Graphics\+::\+DX11\+::\+Semantic\+Binding}}
+\begin{DoxyCompactList}\small\item\em セマンティクバインディングを表す構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_resource_binding}{SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Resource\+Binding}}
+\begin{DoxyCompactList}\small\item\em シェーダーステージを表す列挙型 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_create_desc}{SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Create\+Desc}}
+\begin{DoxyCompactList}\small\item\em DirectX 11のシェーダー作成情報を定義する構造体 \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data}{SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Data}}
+\begin{DoxyCompactList}\small\item\em DirectX 11のシェーダーデータを定義する構造体 \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_manager}{SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Manager}}
+\begin{DoxyCompactList}\small\item\em DirectX 11のシェーダーマネージャークラス \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW\+::\+Graphics}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11}{SFW\+::\+Graphics\+::\+DX11}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a348912279cf769c7dae41ef10ef31dd8}{SFW\+::\+Graphics\+::\+DX11\+::\+Input\+Binding\+Mode}} \+: uint8\+\_\+t \{ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a348912279cf769c7dae41ef10ef31dd8a28e5f7cc279ca5db27dffd13ac6b4860}{SFW\+::\+Graphics\+::\+DX11\+::\+BINDMODE\+\_\+\+AUTOSTREAMS}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a348912279cf769c7dae41ef10ef31dd8abe03ee2e03684f20991c23e1e3a227f0}{SFW\+::\+Graphics\+::\+DX11\+::\+BINDMODE\+\_\+\+OVERRIDEMAP}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a348912279cf769c7dae41ef10ef31dd8a8b622a054a762abf07e1f6fe54388541}{SFW\+::\+Graphics\+::\+DX11\+::\+BINDMODE\+\_\+\+LEGACYMANUAL}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a348912279cf769c7dae41ef10ef31dd8a00baeaec44806ce028a3b5b2e8a024c9}{SFW\+::\+Graphics\+::\+DX11\+::\+BINDMODE\+\_\+\+MAX}}
+ \}
+\begin{DoxyCompactList}\small\item\em シェーダーハンドルの型 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+DirectX 11のシェーダーマネージャークラスを定義するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_d_x11_shader_manager_8h_source}{DX11\+Shader\+Manager.\+h}} に定義があります。
+

@@ -1,0 +1,305 @@
+\doxysection{SFW\+::ECS\+::ISystem\texorpdfstring{$<$}{<} Partition \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_system}{}\label{class_s_f_w_1_1_e_c_s_1_1_i_system}\index{SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}}
+
+
+システムのインターフェース  
+
+
+
+
+{\ttfamily \#include $<$ISystem.\+hpp$>$}
+
+SFW\+::ECS\+::ISystem\texorpdfstring{$<$}{<} Partition \texorpdfstring{$>$}{>} の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.428571cm]{class_s_f_w_1_1_e_c_s_1_1_i_system}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_ae436de05af9efae1edabb1d69ed1d392}{Start}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator)
+\begin{DoxyCompactList}\small\item\em システムの開始関数 \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a2885c052870d2b09df346267c3a8837b}{Update}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor)
+\begin{DoxyCompactList}\small\item\em システムの更新関数(Worldからグローバルに呼び出す) \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a4fe27ee820e1dcd4e0baf10dde970dea}{Update}} (Partition \&partition, \mbox{\hyperlink{struct_s_f_w_1_1_level_context}{Level\+Context}}$<$ Partition $>$ \&level\+Ctx, const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor)=0
+\begin{DoxyCompactList}\small\item\em システムの更新関数 \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a9e162dcdc9cf183444cf359f93d2b1de}{End}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator)
+\begin{DoxyCompactList}\small\item\em システムの終了関数(Worldからグローバルに呼び出す) \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a2a396811178b789ca9874590a4c773da}{End}} (Partition \&partition, \mbox{\hyperlink{struct_s_f_w_1_1_level_context}{Level\+Context}}$<$ Partition $>$ \&level\+Ctx, const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator)
+\begin{DoxyCompactList}\small\item\em システムの終了関数 \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_access_info}{Access\+Info}} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_aaac60600ab1f862d7d6e303a57ad14b3}{Get\+Access\+Info}} () const noexcept=0
+\begin{DoxyCompactList}\small\item\em アクセス情報の取得関数 \end{DoxyCompactList}\item 
+virtual constexpr bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_ac662d810121106aa5ade779e3eafba54}{Is\+Parallel\+Update}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 並列に\+Updateが実行されるか？ \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a76f29426ffe8ff891839f83617b5558e}{\texorpdfstring{$\sim$}{\string~}\+ISystem}} ()=default
+\begin{DoxyCompactList}\small\item\em デストラクタ \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a1eca9e4de1c253fc1d2d3230dfeee491}{derived\+\_\+name}} () const
+\begin{DoxyCompactList}\small\item\em 継承先のクラス名を取得する \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_a8ac687dfb43be42484e0593cb1350f80}{Is\+Updateable}} () noexcept
+\begin{DoxyCompactList}\small\item\em Update\+Impl関数を保持しているか？ \end{DoxyCompactList}\item 
+static constexpr bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system_ae54ce64cf5dbe496412128c4cd542106}{Is\+End\+System}} () noexcept
+\begin{DoxyCompactList}\small\item\em End\+Impl関数を保持しているか？ \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename Partition$>$\newline
+class SFW\+::\+ECS\+::\+ISystem$<$ Partition $>$}
+システムのインターフェース 
+
+分割のクラスを指定する 
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em Partition} & パーティションの型 \\
+\hline
+\end{DoxyTemplParams}
+
+
+ \mbox{\hyperlink{_i_system_8hpp_source}{ISystem.\+hpp}} の \mbox{\hyperlink{_i_system_8hpp_source_l00057}{57}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_system_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_system_a76f29426ffe8ff891839f83617b5558e}\index{SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}!````~ISystem@{\texorpdfstring{$\sim$}{\string~}ISystem}}
+\index{````~ISystem@{\texorpdfstring{$\sim$}{\string~}ISystem}!SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ISystem()}{\string~ISystem()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_system_a76f29426ffe8ff891839f83617b5558e} 
+template$<$typename Partition$>$ \\
+virtual \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{SFW\+::\+ECS\+::\+ISystem}}$<$ Partition $>$\+::\texorpdfstring{$\sim$}{\string~}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{ISystem}} (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+デストラクタ 
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_system_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_system_a1eca9e4de1c253fc1d2d3230dfeee491}\index{SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}!derived\_name@{derived\_name}}
+\index{derived\_name@{derived\_name}!SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{derived\_name()}{derived\_name()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_system_a1eca9e4de1c253fc1d2d3230dfeee491} 
+template$<$typename Partition$>$ \\
+std\+::string \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{SFW\+::\+ECS\+::\+ISystem}}$<$ Partition $>$\+::derived\+\_\+name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+継承先のクラス名を取得する 
+
+\begin{DoxyReturn}{戻り値}
+継承クラス名 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i_system_8hpp_source}{ISystem.\+hpp}} の \mbox{\hyperlink{_i_system_8hpp_source_l00128}{128}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_system_a9e162dcdc9cf183444cf359f93d2b1de}\index{SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}!End@{End}}
+\index{End@{End}!SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{End()}{End()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_system_a9e162dcdc9cf183444cf359f93d2b1de} 
+template$<$typename Partition$>$ \\
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{SFW\+::\+ECS\+::\+ISystem}}$<$ Partition $>$\+::\+End (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&}]{service\+Locator}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+システムの終了関数(Worldからグローバルに呼び出す) 
+
+
+\begin{DoxyParams}{引数}
+{\em service\+Locator} & サービズロケーター \\
+\hline
+\end{DoxyParams}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ae2953bafb1379b2e521e1af9250109fb}{SFW\+::\+ECS\+::\+IType\+System$<$ Derived\+T, Partition, Component\+Access$<$ Access\+Types... $>$, Service\+Context$<$ Services... $>$, Parallel\+Update $>$}}で再実装されています。
+
+
+
+ \mbox{\hyperlink{_i_system_8hpp_source}{ISystem.\+hpp}} の \mbox{\hyperlink{_i_system_8hpp_source_l00098}{98}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_system_a2a396811178b789ca9874590a4c773da}\index{SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}!End@{End}}
+\index{End@{End}!SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{End()}{End()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_system_a2a396811178b789ca9874590a4c773da} 
+template$<$typename Partition$>$ \\
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{SFW\+::\+ECS\+::\+ISystem}}$<$ Partition $>$\+::\+End (\begin{DoxyParamCaption}\item[{Partition \&}]{partition}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_level_context}{Level\+Context}}$<$ Partition $>$ \&}]{level\+Ctx}{, }\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&}]{service\+Locator}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+システムの終了関数 
+
+
+\begin{DoxyParams}{引数}
+{\em partition} & 対象のパーティション \\
+\hline
+{\em service\+Locator} & サービズロケーター \\
+\hline
+\end{DoxyParams}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a416ce32deebe63dda832c04a62fa413e}{SFW\+::\+ECS\+::\+IType\+System$<$ Derived\+T, Partition, Component\+Access$<$ Access\+Types... $>$, Service\+Context$<$ Services... $>$, Parallel\+Update $>$}}で再実装されています。
+
+
+
+ \mbox{\hyperlink{_i_system_8hpp_source}{ISystem.\+hpp}} の \mbox{\hyperlink{_i_system_8hpp_source_l00105}{105}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_system_aaac60600ab1f862d7d6e303a57ad14b3}\index{SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}!GetAccessInfo@{GetAccessInfo}}
+\index{GetAccessInfo@{GetAccessInfo}!SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{GetAccessInfo()}{GetAccessInfo()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_system_aaac60600ab1f862d7d6e303a57ad14b3} 
+template$<$typename Partition$>$ \\
+virtual \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_access_info}{Access\+Info}} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{SFW\+::\+ECS\+::\+ISystem}}$<$ Partition $>$\+::\+Get\+Access\+Info (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}, {\ttfamily [noexcept]}}
+
+
+
+アクセス情報の取得関数 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_e_c_s_1_1_access_info}{Access\+Info} アクセス情報 
+\end{DoxyReturn}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ae8bfc6d7db07bc1809c7b80838b62912}{SFW\+::\+ECS\+::\+IType\+System$<$ Derived\+T, Partition, Component\+Access$<$ Access\+Types... $>$, Service\+Context$<$ Services... $>$, Parallel\+Update $>$}}で実装されています。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_system_ae54ce64cf5dbe496412128c4cd542106}\index{SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}!IsEndSystem@{IsEndSystem}}
+\index{IsEndSystem@{IsEndSystem}!SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{IsEndSystem()}{IsEndSystem()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_system_ae54ce64cf5dbe496412128c4cd542106} 
+template$<$typename Partition$>$ \\
+constexpr bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{SFW\+::\+ECS\+::\+ISystem}}$<$ Partition $>$\+::\+Is\+End\+System (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+End\+Impl関数を保持しているか？ 
+
+\begin{DoxyReturn}{戻り値}
+保持している場合true 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i_system_8hpp_source}{ISystem.\+hpp}} の \mbox{\hyperlink{_i_system_8hpp_source_l00070}{70}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_system_ac662d810121106aa5ade779e3eafba54}\index{SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}!IsParallelUpdate@{IsParallelUpdate}}
+\index{IsParallelUpdate@{IsParallelUpdate}!SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{IsParallelUpdate()}{IsParallelUpdate()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_system_ac662d810121106aa5ade779e3eafba54} 
+template$<$typename Partition$>$ \\
+virtual constexpr bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{SFW\+::\+ECS\+::\+ISystem}}$<$ Partition $>$\+::\+Is\+Parallel\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}
+
+
+
+並列に\+Updateが実行されるか？ 
+
+\begin{DoxyReturn}{戻り値}
+並列に実行される場合true 
+\end{DoxyReturn}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_ab99476ab645f18f166b058a1beca74cd}{SFW\+::\+ECS\+::\+IType\+System$<$ Derived\+T, Partition, Component\+Access$<$ Access\+Types... $>$, Service\+Context$<$ Services... $>$, Parallel\+Update $>$}}で再実装されています。
+
+
+
+ \mbox{\hyperlink{_i_system_8hpp_source}{ISystem.\+hpp}} の \mbox{\hyperlink{_i_system_8hpp_source_l00116}{116}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_system_a8ac687dfb43be42484e0593cb1350f80}\index{SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}!IsUpdateable@{IsUpdateable}}
+\index{IsUpdateable@{IsUpdateable}!SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{IsUpdateable()}{IsUpdateable()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_system_a8ac687dfb43be42484e0593cb1350f80} 
+template$<$typename Partition$>$ \\
+constexpr bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{SFW\+::\+ECS\+::\+ISystem}}$<$ Partition $>$\+::\+Is\+Updateable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Update\+Impl関数を保持しているか？ 
+
+\begin{DoxyReturn}{戻り値}
+保持している場合true 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i_system_8hpp_source}{ISystem.\+hpp}} の \mbox{\hyperlink{_i_system_8hpp_source_l00063}{63}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_system_ae436de05af9efae1edabb1d69ed1d392}\index{SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}!Start@{Start}}
+\index{Start@{Start}!SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{Start()}{Start()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_system_ae436de05af9efae1edabb1d69ed1d392} 
+template$<$typename Partition$>$ \\
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{SFW\+::\+ECS\+::\+ISystem}}$<$ Partition $>$\+::\+Start (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&}]{service\+Locator}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+システムの開始関数 
+
+
+\begin{DoxyParams}{引数}
+{\em partition} & 対象のパーティション \\
+\hline
+{\em service\+Locator} & サービスロケーター \\
+\hline
+\end{DoxyParams}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a9fd621bf93d585a90216d574253ef08a}{SFW\+::\+ECS\+::\+IType\+System$<$ Derived\+T, Partition, Component\+Access$<$ Access\+Types... $>$, Service\+Context$<$ Services... $>$, Parallel\+Update $>$}}で再実装されています。
+
+
+
+ \mbox{\hyperlink{_i_system_8hpp_source}{ISystem.\+hpp}} の \mbox{\hyperlink{_i_system_8hpp_source_l00078}{78}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_system_a2885c052870d2b09df346267c3a8837b}\index{SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}!Update@{Update}}
+\index{Update@{Update}!SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_system_a2885c052870d2b09df346267c3a8837b} 
+template$<$typename Partition$>$ \\
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{SFW\+::\+ECS\+::\+ISystem}}$<$ Partition $>$\+::\+Update (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&}]{service\+Locator}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}}]{executor}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+システムの更新関数(Worldからグローバルに呼び出す) 
+
+
+\begin{DoxyParams}{引数}
+{\em service\+Locator} & サービスロケーター \\
+\hline
+{\em executor} & スレッド実行クラス \\
+\hline
+\end{DoxyParams}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_a402516d639ff2d27497ea37464a6e721}{SFW\+::\+ECS\+::\+IType\+System$<$ Derived\+T, Partition, Component\+Access$<$ Access\+Types... $>$, Service\+Context$<$ Services... $>$, Parallel\+Update $>$}}で再実装されています。
+
+
+
+ \mbox{\hyperlink{_i_system_8hpp_source}{ISystem.\+hpp}} の \mbox{\hyperlink{_i_system_8hpp_source_l00085}{85}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_i_system_a4fe27ee820e1dcd4e0baf10dde970dea}\index{SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}!Update@{Update}}
+\index{Update@{Update}!SFW::ECS::ISystem$<$ Partition $>$@{SFW::ECS::ISystem$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_i_system_a4fe27ee820e1dcd4e0baf10dde970dea} 
+template$<$typename Partition$>$ \\
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_system}{SFW\+::\+ECS\+::\+ISystem}}$<$ Partition $>$\+::\+Update (\begin{DoxyParamCaption}\item[{Partition \&}]{partition}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_level_context}{Level\+Context}}$<$ Partition $>$ \&}]{level\+Ctx}{, }\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&}]{service\+Locator}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}}]{executor}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+システムの更新関数 
+
+
+\begin{DoxyParams}{引数}
+{\em partition} & 対象のパーティション \\
+\hline
+{\em service\+Locator} & サービズロケーター \\
+\hline
+\end{DoxyParams}
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7_afd127401fe7bea74a0b068912cd9ed27}{SFW\+::\+ECS\+::\+IType\+System$<$ Derived\+T, Partition, Component\+Access$<$ Access\+Types... $>$, Service\+Context$<$ Services... $>$, Parallel\+Update $>$}}で実装されています。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_i_system_8hpp}{ISystem.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,455 @@
+\doxysection{SFW\+::ECS\+::Entity\+Manager クラス}
+\hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{}\label{class_s_f_w_1_1_e_c_s_1_1_entity_manager}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+
+
+エンティティの生成と破棄、コンポーネントの追加・削除を管理するクラス  
+
+
+
+
+{\ttfamily \#include $<$Entity\+Manager.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}{Entity\+Manager}} ()=default
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Components$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_acfb84437dc645adb705daf9ac7a7c0c7}{Add\+Entity}} (const Components \&... components)
+\begin{DoxyCompactList}\small\item\em エンティティの追加 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Components$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_aa745de0f28163065ac818f45132c52c6}{Add\+Entity}} (\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} mask, const Components \&... components)
+\begin{DoxyCompactList}\small\item\em エンティティの追加(コンポーネントマスクを指定) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a41a39a172c7b77331ab96fdaac3be892}{Destroy\+Entity}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id)
+\begin{DoxyCompactList}\small\item\em エンティティの削除 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a6aab877f81d89c16c00301c2f39d4939}{Clean\+All\+Entity}} ()
+\begin{DoxyCompactList}\small\item\em すべてのエンティティの削除 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a413e1b9a5f4381593e0e4c66292f2609}{Has\+Component}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id) const noexcept
+\begin{DoxyCompactList}\small\item\em エンティティにコンポ―ネントがあるかどうかを確認する関数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\std\+::optional$<$ T $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae228c9994a18ce223ec03982a435e4b9}{Read\+Component}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id) noexcept
+\begin{DoxyCompactList}\small\item\em エンティティからコンポーネントを取得する関数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a0bd80e350df1bbaf14b67840a44c3f0f}{Write\+Component}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id, const T \&value) noexcept
+\begin{DoxyCompactList}\small\item\em エンティティのコンポーネントを書き換える関数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a609ef9eef1fec06c51cb36962c969ddb}{Read\+Write\+Component}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id, std\+::function$<$ T(T)$>$ \&\&f)
+\item 
+{\footnotesize template$<$typename T$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae0be59c244dd2340674ea89d2f7a0203}{Add\+Component}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id, const T \&value)
+\begin{DoxyCompactList}\small\item\em エンティティにコンポーネントを追加する関数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a7db41cd8a8a95648d35552f4a472eb10}{Remove\+Component}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id)
+\begin{DoxyCompactList}\small\item\em エンティティからコンポーネントを削除する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a8741afc591965b27b7ded1983ca637a1}{Move\+All\+Sparse\+To}} (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{Entity\+Manager}} \&dst)
+\begin{DoxyCompactList}\small\item\em すべての Sparse を this-\/\texorpdfstring{$>$}{>}dst に一括 move（型消去で処理） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a713c9102af0b1271b674ca9868836027}{Move\+Sparse\+IDs\+To}} (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{Entity\+Manager}} \&dst, const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&ids)
+\begin{DoxyCompactList}\small\item\em 指定 ID 群の Sparse を this-\/\texorpdfstring{$>$}{>}dst に一括 move（型消去で処理） \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a843a38ca9d1bbc6babb8dbeb095de3c8}{Merge\+From\+All}} (\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{Entity\+Manager}} \&src)
+\item 
+{\footnotesize template$<$typename Router$>$ }\\size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a24623ec0fcad2a19030118ed26425d5a}{Split\+By\+All}} (Router \&\&router)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a9ef664ba5532b7414726a4f6b36179d5}{Get\+All\+Entity\+IDs}} () const
+\item 
+{\footnotesize template$<$typename T$>$ \newline
+requires Sparse\+Component$<$T$>$}\\\mbox{\hyperlink{class_s_f_w_1_1_read_write_view}{Read\+Write\+View}}$<$ std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}, T $>$ $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae1a31ba953c8e4609a06f606ba03ef75}{Get\+Sparse\+Components}} ()
+\begin{DoxyCompactList}\small\item\em まばらなコンポーネントを取得する関数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae388a688fd1615210c7048b338e2fb43}{Get\+Mask}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id) const noexcept
+\begin{DoxyCompactList}\small\item\em エンティティのコンポーネントマスクを取得する関数 \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{Archetype\+Manager}} \& \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_addb50338b7958c516a5465725d56c972}{Get\+Archetype\+Manager}} () const noexcept
+\begin{DoxyCompactList}\small\item\em アーキタイプマネージャーを取得する関数 \end{DoxyCompactList}\item 
+std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location}{Entity\+Location}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ab40b3d768f3d483b9df69e450412d488}{Try\+Get\+Location}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id) const noexcept
+\begin{DoxyCompactList}\small\item\em エンティティの現在位置（\+Chunk と行）を O(1) で取得（共有ロック） \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a8df08b9c7042c6c3c05d4076591ee454}{Get\+Entity\+Count}} () const noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+static const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator}{Entity\+IDAllocator}} \& \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a46db8df58dca07d7201c30e4d4dde6cc}{Get\+Entity\+Allocator}} () noexcept
+\begin{DoxyCompactList}\small\item\em エンティティ\+IDアロケータを取得する関数 \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a7fb5684e80545fe00492cae3fe531cb0}{Insert\+With\+ID\+\_\+\+For\+Manager\+Move}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{Entity\+Manager}} \&src, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{Entity\+Manager}} \&dst)
+\begin{DoxyCompactList}\small\item\em IDを保持したまま dst 側に1行確保し、非スパースをコピー（manager間移送用） \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+エンティティの生成と破棄、コンポーネントの追加・削除を管理するクラス 
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00034}{34}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!EntityManager@{EntityManager}}
+\index{EntityManager@{EntityManager}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{EntityManager()}{EntityManager()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a4d0341903c59ff6583abd2d5ea384c53} 
+SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Entity\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+コンストラクタ 
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae0be59c244dd2340674ea89d2f7a0203}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!AddComponent@{AddComponent}}
+\index{AddComponent@{AddComponent}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{AddComponent()}{AddComponent()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae0be59c244dd2340674ea89d2f7a0203} 
+template$<$typename T$>$ \\
+void SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Add\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{, }\item[{const T \&}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+エンティティにコンポーネントを追加する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & エンティティ\+ID\\
+\hline
+\end{DoxyParams}
+※archetypeの移動があるため高負荷 
+\begin{DoxyParams}{引数}
+{\em value} & 追加するコンポーネントの値 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00250}{250}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_aa745de0f28163065ac818f45132c52c6}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!AddEntity@{AddEntity}}
+\index{AddEntity@{AddEntity}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{AddEntity()}{AddEntity()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_aa745de0f28163065ac818f45132c52c6} 
+template$<$typename... Components$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Add\+Entity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}}}]{mask}{, }\item[{const Components \&...}]{components}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+エンティティの追加(コンポーネントマスクを指定) 
+
+
+\begin{DoxyParams}{引数}
+{\em mask} & コンポーネントマスク \\
+\hline
+{\em ...\+components} & 追加するコンポーネントの可変引数 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID} 新しく追加されたエンティティの\+ID 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00074}{74}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_acfb84437dc645adb705daf9ac7a7c0c7}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!AddEntity@{AddEntity}}
+\index{AddEntity@{AddEntity}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{AddEntity()}{AddEntity()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_acfb84437dc645adb705daf9ac7a7c0c7} 
+template$<$typename... Components$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Add\+Entity (\begin{DoxyParamCaption}\item[{const Components \&...}]{components}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+エンティティの追加 
+
+
+\begin{DoxyParams}{引数}
+{\em ...\+components} & 追加するコンポーネントの可変引数 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID} 新しく追加されたエンティティの\+ID 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00046}{46}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a6aab877f81d89c16c00301c2f39d4939}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!CleanAllEntity@{CleanAllEntity}}
+\index{CleanAllEntity@{CleanAllEntity}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{CleanAllEntity()}{CleanAllEntity()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a6aab877f81d89c16c00301c2f39d4939} 
+void SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Clean\+All\+Entity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+すべてのエンティティの削除 
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a41a39a172c7b77331ab96fdaac3be892}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!DestroyEntity@{DestroyEntity}}
+\index{DestroyEntity@{DestroyEntity}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{DestroyEntity()}{DestroyEntity()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a41a39a172c7b77331ab96fdaac3be892} 
+void SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Destroy\+Entity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{}\end{DoxyParamCaption})}
+
+
+
+エンティティの削除 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & 削除するエンティティの\+ID \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a9ef664ba5532b7414726a4f6b36179d5}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!GetAllEntityIDs@{GetAllEntityIDs}}
+\index{GetAllEntityIDs@{GetAllEntityIDs}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{GetAllEntityIDs()}{GetAllEntityIDs()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a9ef664ba5532b7414726a4f6b36179d5} 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Get\+All\+Entity\+IDs (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_addb50338b7958c516a5465725d56c972}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!GetArchetypeManager@{GetArchetypeManager}}
+\index{GetArchetypeManager@{GetArchetypeManager}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{GetArchetypeManager()}{GetArchetypeManager()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_addb50338b7958c516a5465725d56c972} 
+const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{Archetype\+Manager}} \& SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Get\+Archetype\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+アーキタイプマネージャーを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+const \doxylink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{Archetype\+Manager}\& アーキタイプマネージャーへの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00448}{448}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a46db8df58dca07d7201c30e4d4dde6cc}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!GetEntityAllocator@{GetEntityAllocator}}
+\index{GetEntityAllocator@{GetEntityAllocator}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{GetEntityAllocator()}{GetEntityAllocator()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a46db8df58dca07d7201c30e4d4dde6cc} 
+const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator}{Entity\+IDAllocator}} \& SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Get\+Entity\+Allocator (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+エンティティ\+IDアロケータを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+const \doxylink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator}{Entity\+IDAllocator}\& エンティティ\+IDアロケータへの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00453}{453}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a8df08b9c7042c6c3c05d4076591ee454}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!GetEntityCount@{GetEntityCount}}
+\index{GetEntityCount@{GetEntityCount}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{GetEntityCount()}{GetEntityCount()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a8df08b9c7042c6c3c05d4076591ee454} 
+size\+\_\+t SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Get\+Entity\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00464}{464}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae388a688fd1615210c7048b338e2fb43}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!GetMask@{GetMask}}
+\index{GetMask@{GetMask}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{GetMask()}{GetMask()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae388a688fd1615210c7048b338e2fb43} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Get\+Mask (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+エンティティのコンポーネントマスクを取得する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & エンティティ\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask} エンティティのコンポーネントマスク 
+\end{DoxyReturn}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae1a31ba953c8e4609a06f606ba03ef75}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!GetSparseComponents@{GetSparseComponents}}
+\index{GetSparseComponents@{GetSparseComponents}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{GetSparseComponents()}{GetSparseComponents()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae1a31ba953c8e4609a06f606ba03ef75} 
+template$<$typename T$>$ \newline
+requires Sparse\+Component$<$T$>$\\
+\mbox{\hyperlink{class_s_f_w_1_1_read_write_view}{Read\+Write\+View}}$<$ std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}, T $>$ $>$ SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Get\+Sparse\+Components (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+まばらなコンポーネントを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_read_write_view}{Read\+Write\+View$<$std\+::unordered\+\_\+map$<$\+Entity\+ID, T$>$$>$} まばらなコンポーネントのビュー 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00434}{434}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a413e1b9a5f4381593e0e4c66292f2609}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!HasComponent@{HasComponent}}
+\index{HasComponent@{HasComponent}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{HasComponent()}{HasComponent()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a413e1b9a5f4381593e0e4c66292f2609} 
+template$<$typename T$>$ \\
+bool SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Has\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+エンティティにコンポ―ネントがあるかどうかを確認する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & エンティティ\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+bool コンポーネントがある場合はtrue、ない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00108}{108}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a7fb5684e80545fe00492cae3fe531cb0}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!InsertWithID\_ForManagerMove@{InsertWithID\_ForManagerMove}}
+\index{InsertWithID\_ForManagerMove@{InsertWithID\_ForManagerMove}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{InsertWithID\_ForManagerMove()}{InsertWithID\_ForManagerMove()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a7fb5684e80545fe00492cae3fe531cb0} 
+bool SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Insert\+With\+ID\+\_\+\+For\+Manager\+Move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{Entity\+Manager}} \&}]{src}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{Entity\+Manager}} \&}]{dst}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+IDを保持したまま dst 側に1行確保し、非スパースをコピー（manager間移送用） 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & エンティティ\+ID \\
+\hline
+{\em src} & 元のエンティティマネージャー \\
+\hline
+{\em dst} & 移動先のエンティティマネージャー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+bool 移動に成功した場合はtrue、失敗した場合はfalse 
+\end{DoxyReturn}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a843a38ca9d1bbc6babb8dbeb095de3c8}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!MergeFromAll@{MergeFromAll}}
+\index{MergeFromAll@{MergeFromAll}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{MergeFromAll()}{MergeFromAll()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a843a38ca9d1bbc6babb8dbeb095de3c8} 
+size\+\_\+t SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Merge\+From\+All (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{Entity\+Manager}} \&}]{src}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a8741afc591965b27b7ded1983ca637a1}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!MoveAllSparseTo@{MoveAllSparseTo}}
+\index{MoveAllSparseTo@{MoveAllSparseTo}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{MoveAllSparseTo()}{MoveAllSparseTo()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a8741afc591965b27b7ded1983ca637a1} 
+void SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Move\+All\+Sparse\+To (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{Entity\+Manager}} \&}]{dst}{}\end{DoxyParamCaption})}
+
+
+
+すべての Sparse を this-\/\texorpdfstring{$>$}{>}dst に一括 move（型消去で処理） 
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a713c9102af0b1271b674ca9868836027}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!MoveSparseIDsTo@{MoveSparseIDsTo}}
+\index{MoveSparseIDsTo@{MoveSparseIDsTo}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{MoveSparseIDsTo()}{MoveSparseIDsTo()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a713c9102af0b1271b674ca9868836027} 
+void SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Move\+Sparse\+IDs\+To (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{Entity\+Manager}} \&}]{dst}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&}]{ids}{}\end{DoxyParamCaption})}
+
+
+
+指定 ID 群の Sparse を this-\/\texorpdfstring{$>$}{>}dst に一括 move（型消去で処理） 
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae228c9994a18ce223ec03982a435e4b9}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!ReadComponent@{ReadComponent}}
+\index{ReadComponent@{ReadComponent}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{ReadComponent()}{ReadComponent()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ae228c9994a18ce223ec03982a435e4b9} 
+template$<$typename T$>$ \\
+std\+::optional$<$ T $>$ SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Read\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+エンティティからコンポーネントを取得する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & エンティティ\+ID\\
+\hline
+\end{DoxyParams}
+コンポーネントが見つからない場合nullptrを返す
+
+Systemからアクセスする場合は必ずアクセスするコンポーネントに追加する \begin{DoxyReturn}{戻り値}
+std\+::optional$<$\+T$>$ コンポーネントの値 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00131}{131}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a609ef9eef1fec06c51cb36962c969ddb}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!ReadWriteComponent@{ReadWriteComponent}}
+\index{ReadWriteComponent@{ReadWriteComponent}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{ReadWriteComponent()}{ReadWriteComponent()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a609ef9eef1fec06c51cb36962c969ddb} 
+template$<$typename T$>$ \\
+void SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Read\+Write\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{, }\item[{std\+::function$<$ T(T)$>$ \&\&}]{f}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00194}{194}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a7db41cd8a8a95648d35552f4a472eb10}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!RemoveComponent@{RemoveComponent}}
+\index{RemoveComponent@{RemoveComponent}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{RemoveComponent()}{RemoveComponent()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a7db41cd8a8a95648d35552f4a472eb10} 
+template$<$typename T$>$ \\
+void SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Remove\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+エンティティからコンポーネントを削除する関数 
+
+※\+Archetypeを移動する処理があるので高負荷 
+\begin{DoxyParams}{引数}
+{\em id} & エンティティ\+ID \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00326}{326}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a24623ec0fcad2a19030118ed26425d5a}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!SplitByAll@{SplitByAll}}
+\index{SplitByAll@{SplitByAll}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{SplitByAll()}{SplitByAll()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a24623ec0fcad2a19030118ed26425d5a} 
+template$<$typename Router$>$ \\
+size\+\_\+t SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Split\+By\+All (\begin{DoxyParamCaption}\item[{Router \&\&}]{router}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00403}{403}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ab40b3d768f3d483b9df69e450412d488}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!TryGetLocation@{TryGetLocation}}
+\index{TryGetLocation@{TryGetLocation}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{TryGetLocation()}{TryGetLocation()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_ab40b3d768f3d483b9df69e450412d488} 
+std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_location}{Entity\+Location}} $>$ SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Try\+Get\+Location (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+エンティティの現在位置（\+Chunk と行）を O(1) で取得（共有ロック） 
+
+
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00457}{457}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a0bd80e350df1bbaf14b67840a44c3f0f}\index{SFW::ECS::EntityManager@{SFW::ECS::EntityManager}!WriteComponent@{WriteComponent}}
+\index{WriteComponent@{WriteComponent}!SFW::ECS::EntityManager@{SFW::ECS::EntityManager}}
+\doxysubsubsection{\texorpdfstring{WriteComponent()}{WriteComponent()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_manager_a0bd80e350df1bbaf14b67840a44c3f0f} 
+template$<$typename T$>$ \\
+void SFW\+::\+ECS\+::\+Entity\+Manager\+::\+Write\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{, }\item[{const T \&}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+エンティティのコンポーネントを書き換える関数 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & エンティティ\+ID \\
+\hline
+{\em value} & 書き換えるコンポーネントの値\\
+\hline
+\end{DoxyParams}
+Systemからアクセスする場合は必ずアクセスするコンポーネントに追加する 
+
+ \mbox{\hyperlink{_entity_manager_8h_source}{Entity\+Manager.\+h}} の \mbox{\hyperlink{_entity_manager_8h_source_l00173}{173}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_entity_manager_8h}{Entity\+Manager.\+h}}\end{DoxyCompactItemize}

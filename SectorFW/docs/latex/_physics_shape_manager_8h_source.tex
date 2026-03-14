@@ -1,0 +1,800 @@
+\doxysection{Physics\+Shape\+Manager.\+h}
+\hypertarget{_physics_shape_manager_8h_source}{}\label{_physics_shape_manager_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsShapeManager.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsShapeManager.h}}
+\mbox{\hyperlink{_physics_shape_manager_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00007}00007\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_i_shape_resolver_8h}{IShapeResolver.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_resouce_manager_base_8hpp}{../Util/ResouceManagerBase.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_physics_component_8h}{PhysicsComponent.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_physics_mesh_shape_loader_8h}{PhysicsMeshShapeLoader.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_physics_convex_hull_loader_8h}{PhysicsConvexHullLoader.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <Jolt/Jolt.h>}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <Jolt/Physics/Collision/Shape/Shape.h>}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <Jolt/Physics/Collision/Shape/BoxShape.h>}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <Jolt/Physics/Collision/Shape/SphereShape.h>}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <Jolt/Physics/Collision/Shape/CapsuleShape.h>}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include\ <Jolt/Physics/Collision/Shape/MeshShape.h>}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <Jolt/Physics/Collision/Shape/HeightFieldShape.h>}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00022}00022\ \textcolor{preprocessor}{\#include\ <Jolt/Physics/Collision/Shape/ScaledShape.h>}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00023}00023\ \textcolor{preprocessor}{\#include\ <Jolt/Physics/Collision/Shape/ConvexHullShape.h>}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00024}00024\ \textcolor{preprocessor}{\#include\ <Jolt/Physics/Collision/Shape/StaticCompoundShape.h>}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00025}00025\ \textcolor{preprocessor}{\#include\ <Jolt/Physics/Collision/Shape/RotatedTranslatedShape.h>}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00027}00027\ \textcolor{preprocessor}{\#include\ <variant>}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00028}00028\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00029}00029\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00031}00031\ \textcolor{preprocessor}{\#ifdef\ \_DEBUG}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00032}00032\ \textcolor{preprocessor}{\#define\ CACHE\_SHAPE\_WIRE\_DATA\ }\textcolor{comment}{//\ ワイヤーフレーム用頂点/インデックスをキャッシュするかどうか}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00033}00033\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00035}00035\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00036}00036\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00037}00037\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_physics}{Physics}}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00038}00038\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00039}\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac907f27d7ff92942283a1273126c94a2}{00039}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac907f27d7ff92942283a1273126c94a2}{IsUniformScale}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}\&\ s,\ \textcolor{keywordtype}{float}\ eps\ =\ 1e-\/6f)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::fabs(s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ -\/\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}})\ <=\ eps\ \&\&\ std::fabs(s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ -\/\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}})\ <=\ eps;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 非一様スケールが来た場合、max\ 要素で一様化する（安全寄り）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00044}\mbox{\hyperlink{namespace_s_f_w_1_1_physics_a4e0887e940ae0a44c6f18573c449fb48}{00044}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a4e0887e940ae0a44c6f18573c449fb48}{EnforceUniformScale}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}\&\ s)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ u\ =\ (std::max)(s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ (std::max)(s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ s.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ u,\ u,\ u\ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Key（重複排除用）\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00050}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key}{00050}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key}{ShapeKey}}\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 汎用フィールド（使う所だけ使う）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00052}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a74e89756cbcc967f68c4e220e85b3984}{00052}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a74e89756cbcc967f68c4e220e85b3984}{he}}\{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Box}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00053}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a081113eb5453b9596b970ea0d0e76bf7}{00053}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a081113eb5453b9596b970ea0d0e76bf7}{r}}\{\ 0.f\ \};\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Sphere/Capsule.r}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00054}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a4fef09bf10d8411c12f0b1e82743d385}{00054}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a4fef09bf10d8411c12f0b1e82743d385}{hh}}\{\ 0.f\ \};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Capsule.halfHeight}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ HeightField\ summary}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00056}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a3a12bd913d7025acb1b768b6c721d98f}{00056}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a3a12bd913d7025acb1b768b6c721d98f}{sizeX}}\{\ 0\ \},\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a00b8f77277e77413bb0e112dbf0127b0}{sizeY}}\{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00057}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_adc221ab59cca33d060985f19203885a7}{00057}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a4d697180efd77ee99a25a231dcbbdaa9}{scaleY}}\{\ 1.f\ \},\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_adc221ab59cca33d060985f19203885a7}{cellX}}\{\ 1.f\ \},\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a82204875073e07fd206fdcf2f1ed8d6c}{cellY}}\{\ 1.f\ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Mesh\ summary}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00059}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aec0a42b13bad264dae77b3fd31de1469}{00059}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_af1db6ede9a0049f0651b2efd5502a0e0}{vcount}}\{\ 0\ \},\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aec0a42b13bad264dae77b3fd31de1469}{icount}}\{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00060}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_acd6fd20fe02701f29501397f0e72e16d}{00060}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_ac2b29805f554a3443e90200ebe0b619b}{vhash}}\{\ 0\ \},\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_acd6fd20fe02701f29501397f0e72e16d}{ihash}}\{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00061}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_ac29dff7a7bcdbbaa0be5e80db29b8fec}{00061}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_ac29dff7a7bcdbbaa0be5e80db29b8fec}{hfHash}}\{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Scale\ summary}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00063}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a7c2642575db9d56166f84b490230757c}{00063}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a7c2642575db9d56166f84b490230757c}{scale}}\{\ 1,1,1\ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ローカルオフセット}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00065}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a22776efe3fcc575db0b1275400b612d1}{00065}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a22776efe3fcc575db0b1275400b612d1}{offset}}\{\ 0,0,0\ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ローカル回転（Quatf）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00067}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a90531eb6fbd9fe8743844813b5886f9f}{00067}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a1fdfe70e25b6445560f443d0e054477d}{Quatf}}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a90531eb6fbd9fe8743844813b5886f9f}{rotation}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_ae9c5394d3e19e4500b11307037795c63}{Quatf::Identity}}();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ConvexHull\ summary}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00069}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa40cbfe053e59b9e27c502ee715a4aea}{00069}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa40cbfe053e59b9e27c502ee715a4aea}{chash}}\{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00070}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a2af0adb6e3bdaba98c0ed0ddb5a0eb68}{00070}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a2af0adb6e3bdaba98c0ed0ddb5a0eb68}{pcount}}\{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ConvexCompoundFile\ summary}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00073}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_ae47007f69ff69b64dd7542bc0f362893}{00073}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_ae47007f69ff69b64dd7542bc0f362893}{fileHash}}\{\ 0\ \};\ \ \ \textcolor{comment}{//\ path\ のハッシュ}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00075}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53d}{00075}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53d}{Kind}}\ :\ uint8\_t\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00076}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3cfce651e667ab85486dd42a8185f98a}{00076}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3cfce651e667ab85486dd42a8185f98a}{Box}},}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00077}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dab7095f057db3fefa7325ad93a04e14fd}{00077}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dab7095f057db3fefa7325ad93a04e14fd}{Sphere}},}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00078}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da4880c0f12c06dd6d142e7a40b041bf1a}{00078}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da4880c0f12c06dd6d142e7a40b041bf1a}{Capsule}},}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00079}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da710fdb6adb881b408116ef95335e1961}{00079}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da710fdb6adb881b408116ef95335e1961}{Mesh}},}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00080}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da5614c6f50f3db598910134bae4d6ead8}{00080}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da5614c6f50f3db598910134bae4d6ead8}{MeshFile}},}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00081}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da9a7e8772035f8412fc62cd830d0ba944}{00081}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da9a7e8772035f8412fc62cd830d0ba944}{HeightField}},}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00082}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3e1ee9920ed982b5da9becaf4b5463e5}{00082}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3e1ee9920ed982b5da9becaf4b5463e5}{ConvexHull}},}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00083}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da8ec606de5bac1a7d607facea2bc46fa7}{00083}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da8ec606de5bac1a7d607facea2bc46fa7}{ConvexCompound}},}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00084}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dad81b2ccc0ede82aa7d953ec01ea761a6}{00084}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dad81b2ccc0ede82aa7d953ec01ea761a6}{ConvexCompoundFile}}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00085}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa9c196cb29e30d03c657920f1e251a85}{00085}}\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa9c196cb29e30d03c657920f1e251a85}{kind}}\{\};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00087}00087\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ハッシュと比較（ビット等価）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 浮動小数は「ビット列」をハッシュするのが意図どおり（近似比較は避ける）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ HashFloatBits(\textcolor{keywordtype}{float}\ f)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\textcolor{keyword}{sizeof}(float)\ ==\ 4,\ \textcolor{stringliteral}{"{}float\ must\ be\ 32-\/bit"{}});}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ u;\ std::memcpy(\&u,\ \&f,\ 4);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::hash<uint32\_t>\{\}(u);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00094}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_hash}{00094}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_hash}{ShapeKeyHash}}\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00095}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_hash_af0a0756844148b1727160c353c874bcc}{00095}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_hash_af0a0756844148b1727160c353c874bcc}{operator()}}(\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key}{ShapeKey}}\ \textcolor{keyword}{const}\&\ k)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h\ =\ std::hash<uint8\_t>\{\}(\textcolor{keyword}{static\_cast<}uint8\_t\textcolor{keyword}{>}(k.kind));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ mix\ =\ [\&](\textcolor{keywordtype}{size\_t}\ x)\ \{\ h\ \string^=\ x\ +\ 0x9e3779b97f4a7c15ull\ +\ (h\ <<\ 6)\ +\ (h\ >>\ 2);\ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ scale}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(HashFloatBits(k.scale.x));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(HashFloatBits(k.scale.y));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(HashFloatBits(k.scale.z));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ offset}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(HashFloatBits(k.offset.x));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(HashFloatBits(k.offset.y));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(HashFloatBits(k.offset.z));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ rotation\ (x,y,z,w)}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(HashFloatBits(k.rotation.x));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(HashFloatBits(k.rotation.y));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(HashFloatBits(k.rotation.z));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(HashFloatBits(k.rotation.w));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (k.kind)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3cfce651e667ab85486dd42a8185f98a}{ShapeKey::Kind::Box}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(HashFloatBits(k.he.x));\ mix(HashFloatBits(k.he.y));\ mix(HashFloatBits(k.he.z));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dab7095f057db3fefa7325ad93a04e14fd}{ShapeKey::Kind::Sphere}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(HashFloatBits(k.r));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da4880c0f12c06dd6d142e7a40b041bf1a}{ShapeKey::Kind::Capsule}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(HashFloatBits(k.hh));\ mix(HashFloatBits(k.r));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da710fdb6adb881b408116ef95335e1961}{ShapeKey::Kind::Mesh}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(k.vhash);\ mix(k.ihash);\ mix(k.vcount);\ mix(k.icount);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da9a7e8772035f8412fc62cd830d0ba944}{ShapeKey::Kind::HeightField}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(std::hash<int>\{\}(k.sizeX));\ mix(std::hash<int>\{\}(k.sizeY));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(k.hfHash);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(HashFloatBits(k.scaleY));\ mix(HashFloatBits(k.cellX));\ mix(HashFloatBits(k.cellY));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3e1ee9920ed982b5da9becaf4b5463e5}{ShapeKey::Kind::ConvexHull}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da8ec606de5bac1a7d607facea2bc46fa7}{ShapeKey::Kind::ConvexCompound}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(k.chash);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(k.pcount);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dad81b2ccc0ede82aa7d953ec01ea761a6}{ShapeKey::Kind::ConvexCompoundFile}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mix(k.fileHash);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ h;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00145}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_eq}{00145}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_eq}{ShapeKeyEq}}\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00146}\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_eq_a119e707ab4cf1d0197a8d30fc369f02c}{00146}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_eq_a119e707ab4cf1d0197a8d30fc369f02c}{operator()}}(\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key}{ShapeKey}}\ \textcolor{keyword}{const}\&\ a,\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key}{ShapeKey}}\ \textcolor{keyword}{const}\&\ b)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (a.kind\ !=\ b.kind)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ scale}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (a.scale.x\ !=\ b.scale.x\ ||\ a.scale.y\ !=\ b.scale.y\ ||\ a.scale.z\ !=\ b.scale.z)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ offset}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (a.offset.x\ !=\ b.offset.x\ ||\ a.offset.y\ !=\ b.offset.y\ ||\ a.offset.z\ !=\ b.offset.z)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ rotation}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (a.rotation.x\ !=\ b.rotation.x\ ||}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a.rotation.y\ !=\ b.rotation.y\ ||}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a.rotation.z\ !=\ b.rotation.z\ ||}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a.rotation.w\ !=\ b.rotation.w)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (a.kind)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3cfce651e667ab85486dd42a8185f98a}{ShapeKey::Kind::Box}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.he.x\ ==\ b.he.x\ \&\&\ a.he.y\ ==\ b.he.y\ \&\&\ a.he.z\ ==\ b.he.z;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dab7095f057db3fefa7325ad93a04e14fd}{ShapeKey::Kind::Sphere}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.r\ ==\ b.r;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da4880c0f12c06dd6d142e7a40b041bf1a}{ShapeKey::Kind::Capsule}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.hh\ ==\ b.hh\ \&\&\ a.r\ ==\ b.r;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da710fdb6adb881b408116ef95335e1961}{ShapeKey::Kind::Mesh}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.vhash\ ==\ b.vhash\ \&\&\ a.ihash\ ==\ b.ihash\ \&\&\ a.vcount\ ==\ b.vcount\ \&\&\ a.icount\ ==\ b.icount;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da9a7e8772035f8412fc62cd830d0ba944}{ShapeKey::Kind::HeightField}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.sizeX\ ==\ b.sizeX\ \&\&\ a.sizeY\ ==\ b.sizeY\ \&\&\ a.hfHash\ ==\ b.hfHash}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&\&\ a.scaleY\ ==\ b.scaleY\ \&\&\ a.cellX\ ==\ b.cellX\ \&\&\ a.cellY\ ==\ b.cellY;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3e1ee9920ed982b5da9becaf4b5463e5}{ShapeKey::Kind::ConvexHull}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.chash\ ==\ b.chash\ \&\&\ a.pcount\ ==\ b.pcount;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da8ec606de5bac1a7d607facea2bc46fa7}{ShapeKey::Kind::ConvexCompound}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.chash\ ==\ b.chash\ \&\&\ a.pcount\ ==\ b.pcount;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dad81b2ccc0ede82aa7d953ec01ea761a6}{ShapeKey::Kind::ConvexCompoundFile}}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.fileHash\ ==\ b.fileHash;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00180}00180\ \textcolor{preprocessor}{\#ifdef\ CACHE\_SHAPE\_WIRE\_DATA}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }WireframeData\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<Vec3f>\ vertices;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\ indices;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00186}00186\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ triIndices:\ 3\ 要素で\ 1\ 三角形}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ WireframeData\ BuildShapeWireframe(}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<Vec3f>\&\ verts,}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<uint32\_t>\&\ triIndices)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ WireframeData\ out;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ out.vertices\ =\ verts;\ \textcolor{comment}{//\ そのままコピー（もしくは参照を別管理でもOK）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ std::unordered\_set<uint64\_t>\ edgeSet;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ edgeSet.reserve(triIndices.size()\ *\ 2);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ add\_edge\ =\ [\&](uint32\_t\ a,\ uint32\_t\ b)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (a\ ==\ b)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00200}00200\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 無向エッジとして扱うため\ (min,max)\ に正規化}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ i0\ =\ (std::min)(a,\ b);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ i1\ =\ (std::max)(a,\ b);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ key\ =\ (uint64\_t(i0)\ <<\ 32)\ |\ uint64\_t(i1);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (edgeSet.insert(key).second)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 新規エッジだけ\ LINELIST\ インデックスに追加}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.indices.push\_back(i0);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.indices.push\_back(i1);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00213}00213\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ triCount\ =\ triIndices.size()\ /\ 3;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ t\ =\ 0;\ t\ <\ triCount;\ ++t)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ i0\ =\ triIndices[t\ *\ 3\ +\ 0];}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ i1\ =\ triIndices[t\ *\ 3\ +\ 1];}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ i2\ =\ triIndices[t\ *\ 3\ +\ 2];}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00220}00220\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ add\_edge(i0,\ i1);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ add\_edge(i1,\ i2);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ add\_edge(i2,\ i0);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00227}00227\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00228}00228\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00229}00229\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }ShareWireframeData\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ WireframeData\&\ data;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00231}00231\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ ShareWireframeData(\textcolor{keyword}{const}\ WireframeData\&\ \_data,\ std::shared\_mutex\&\ mutex)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ data(\_data),\ lk\_(mutex)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00235}00235\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock<std::shared\_mutex>\ lk\_;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00237}00237\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00238}00238\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00239}00239\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00240}\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ab940a396c17e8d8374f828ac2de06692}{00240}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ab940a396c17e8d8374f828ac2de06692}{AddTrianglesWinding}}(}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ JPH::Array<JPH::IndexedTriangle>\&\ out,}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<uint32\_t>\&\ indices,}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ flip\_winding)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00244}00244\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ out.reserve(out.size()\ +\ indices.size()\ /\ 3);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00246}00246\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ +\ 2\ <\ indices.size();\ i\ +=\ 3)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ i0\ =\ indices[i\ +\ 0];}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ i1\ =\ indices[i\ +\ 1];}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ i2\ =\ indices[i\ +\ 2];}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00252}00252\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (flip\_winding)\ std::swap(i1,\ i2);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.emplace\_back(i0,\ i1,\ i2);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00256}00256\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00257}00257\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00258}00258\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ==================\ PhysicsShapeManager\ ==================}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00259}\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager}{00259}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager}{PhysicsShapeManager}}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base}{ResourceManagerBase}}<PhysicsShapeManager,\ ShapeHandle,\ ShapeCreateDesc,\ JPH::RefConst<JPH::Shape>>,}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_i_shape_resolver}{IShapeResolver}}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00262}00262\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Base\ =\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base}{ResourceManagerBase<PhysicsShapeManager,\ ShapeHandle,\ ShapeCreateDesc,\ JPH::RefConst<JPH::Shape>}}>;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ ResourceManagerBase\ から呼ばれる必須メソッド群\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 既存検出}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00267}\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager_a13721d80d41734fbf5546448727e4b5c}{00267}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<ShapeHandle>\ \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager_a13721d80d41734fbf5546448727e4b5c}{FindExisting}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc}{ShapeCreateDesc}}\&\ desc)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key}{ShapeKey}}\ key\ =\ BuildKey(desc);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lk(cacheMutex\_);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ keyToHandle\_.find(key);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ keyToHandle\_.end())\ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ IsValid\ も確認（世代が変わっている可能性に備える）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{ShapeHandle}}\ h\ =\ it-\/>second;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a27c5b607075c0da3b758542764848b9b}{IsValid}}(h))\ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ h;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00277}00277\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 新規登録時にキーを記録}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00279}\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager_a6f2e15c68da052b0b51046b4b88ea865}{00279}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager_a6f2e15c68da052b0b51046b4b88ea865}{RegisterKey}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc}{ShapeCreateDesc}}\&\ desc,\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{ShapeHandle}}\ h)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key}{ShapeKey}}\ key\ =\ BuildKey(desc);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lk(cacheMutex\_);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ keyToHandle\_.emplace(key,\ h);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (indexToKey\_.size()\ <=\ h.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle_a4cdc9d3510489593a578d8281344b3ea}{index}})\ indexToKey\_.resize(h.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle_a4cdc9d3510489593a578d8281344b3ea}{index}}\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ indexToKey\_[h.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle_a4cdc9d3510489593a578d8281344b3ea}{index}}]\ =\ key;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00288}00288\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 破棄時にキャッシュから掃除}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00290}\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager_a70593909b3b7fd8af33f32a6a328a23c}{00290}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager_a70593909b3b7fd8af33f32a6a328a23c}{RemoveFromCaches}}(uint32\_t\ index)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lk(cacheMutex\_);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index\ <\ indexToKey\_.size())\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ keyToHandle\_.find(indexToKey\_[index]);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ keyToHandle\_.end()\ \&\&\ it-\/>second.index\ ==\ index)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ keyToHandle\_.erase(it);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Key\ は不要になったのでデフォルトに戻す（オプション）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ indexToKey\_[index]\ はそのままでも問題ないが、明示的に消すなら：}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ indexToKey\_[index]\ =\ ShapeKey\{\};}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00301}00301\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00302}00302\ \textcolor{preprocessor}{\#ifdef\ CACHE\_SHAPE\_WIRE\_DATA}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ wit\ =\ wireDataCache\_.find(index);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (wit\ !=\ wireDataCache\_.end())\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wireDataCache\_.erase(wit);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00307}00307\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00309}00309\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 実体生成}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00311}\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager_a11016e84072f281323be8365bfc6b741}{00311}}\ \ \ \ \ \ \ \ \ \ \ \ \ JPH::RefConst<JPH::Shape>\ \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager_a11016e84072f281323be8365bfc6b741}{CreateResource}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc}{ShapeCreateDesc}}\&\ desc,\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{ShapeHandle}}\ h)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }JPH;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00313}00313\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ スケール決定\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}\ scale\ =\ desc.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_acb4c2dbe45c6170d9d555d5e48259353}{scale}}.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale_acb546859da5bf5c600353dcb7d05a4ec}{s}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ radial\ =\ std::holds\_alternative<SphereDesc>(desc.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_ae044089b53424b6680ed7e222f77ae1d}{shape}})\ ||\ std::holds\_alternative<CapsuleDesc>(desc.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_ae044089b53424b6680ed7e222f77ae1d}{shape}});}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (radial\ \&\&\ !\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac907f27d7ff92942283a1273126c94a2}{IsUniformScale}}(scale))\ scale\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a4e0887e940ae0a44c6f18573c449fb48}{EnforceUniformScale}}(scale);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00318}00318\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ make\_scaled\ =\ [\&](RefConst<Shape>\ base)-\/>RefConst<Shape>\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (scale.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ ==\ 1.f\ \&\&\ scale.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ ==\ 1.f\ \&\&\ scale.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ ==\ 1.f)\ \textcolor{keywordflow}{return}\ base;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ RefConst<Shape>(\textcolor{keyword}{new}\ ScaledShape(base,\ Vec3(scale.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ scale.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ scale.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}})));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00323}00323\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ RotatedTranslatedShape\ を噛ませる}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}\&\ ofs\ =\ desc.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_a433879b01d2da7ad6cb1648210230d8f}{localOffset}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a1fdfe70e25b6445560f443d0e054477d}{Quatf}}\&\ local\_rot\ =\ desc.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_a340a7356e43bd6766f99c7374063eba2}{localRotation}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00327}00327\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ make\_rotated\_translated\ =\ [\&](RefConst<Shape>\ base)-\/>RefConst<Shape>\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 何も変換がないならそのまま返してもOK（最初は常に\ wrap\ してもいい）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ has\_offset\ =}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (ofs.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ !=\ 0.0f)\ ||\ (ofs.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ !=\ 0.0f)\ ||\ (ofs.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ !=\ 0.0f);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00332}00332\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ has\_rot\ =}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !(local\_rot.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a8861a90e5ee88d31daeabb755f95d0c1}{x}}\ ==\ 0.0f\ \&\&\ local\_rot.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a2ece16b5029f9d5feb91109cb2cb0a04}{y}}\ ==\ 0.0f\ \&\&}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ local\_rot.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a5f8d4cec0df3a46f935e01b0705c1202}{z}}\ ==\ 0.0f\ \&\&\ local\_rot.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_ae93b3e27320b5e09174e2ae2d5ee71a1}{w}}\ ==\ 1.0f);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00336}00336\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!has\_offset\ \&\&\ !has\_rot)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ base;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00339}00339\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vec3\ pos(ofs.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ ofs.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}},\ ofs.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}});}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Quat\ rot(local\_rot.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a8861a90e5ee88d31daeabb755f95d0c1}{x}},\ local\_rot.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a2ece16b5029f9d5feb91109cb2cb0a04}{y}},\ local\_rot.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a5f8d4cec0df3a46f935e01b0705c1202}{z}},\ local\_rot.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_ae93b3e27320b5e09174e2ae2d5ee71a1}{w}});}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00342}00342\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ RefConst<Shape>(\textcolor{keyword}{new}\ RotatedTranslatedShape(pos,\ rot,\ base));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00345}00345\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::visit([\&](\textcolor{keyword}{auto}\&\&\ d)-\/>RefConst<Shape>\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }T\ =\ std::decay\_t<\textcolor{keyword}{decltype}(d)>;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00348}00348\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ BoxDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RefConst<Shape>\ base\ =\ \textcolor{keyword}{new}\ BoxShape(Vec3(d.halfExtents.x,\ d.halfExtents.y,\ d.halfExtents.z));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ base\ =\ make\_scaled(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ SphereDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RefConst<Shape>\ base\ =\ \textcolor{keyword}{new}\ SphereShape(d.radius);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ base\ =\ make\_scaled(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ CapsuleDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RefConst<Shape>\ base\ =\ \textcolor{keyword}{new}\ CapsuleShape(d.halfHeight,\ d.radius);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ base\ =\ make\_scaled(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ MeshDesc>\ ||\ std::is\_same\_v<T,\ MeshFileDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MeshShapeSettings\ st;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00366}00366\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ MeshDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ st.mTriangleVertices.reserve(d.vertices.size());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ v\ :\ d.vertices)\ st.mTriangleVertices.emplace\_back(v.x,\ v.y,\ v.z);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00370}00370\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ wantCW\ =\ (d.winding\ ==\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a0ca6456af0a64ba559b6918e35bd4a57a9af3107a066f6b0defb1cafc0499f6ed}{TriangleWinding::CW}});}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 右手系変換で\ x\ を反転するなら\ winding\ も反転するのが基本（ミラーは面の向きを反転させるため）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ flipByRH\ =\ (d.rhFlip\ \&\&\ d.autoFlipWindingOnRHFlip);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 最終的に反転するか}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ flipWinding\ =\ wantCW\ \string^\ flipByRH;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ triangles\ 追加}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ab940a396c17e8d8374f828ac2de06692}{AddTrianglesWinding}}(st.mIndexedTriangles,\ d.indices,\ flipWinding);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00378}00378\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00379}00379\ \textcolor{preprocessor}{\#ifdef\ CACHE\_SHAPE\_WIRE\_DATA}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wireDataCache\_.emplace(h.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle_a4cdc9d3510489593a578d8281344b3ea}{index}},}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BuildShapeWireframe(d.vertices,\ d.indices));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00382}00382\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data}{MeshShapeData}}\ meshData;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00386}00386\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespace_s_f_w_1_1_physics_a84e40993ca7a7b6ae859fc86a9fdef72}{LoadMeshShapeBin}}(d.path,\ meshData,\ d.rhFlip))}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_afde44945335adc0c0ae2986fea13438f}{LOG\_WARNING}}(\textcolor{stringliteral}{"{}PhysicsShapeManager:\ Failed\ to\ load\ VHACD\ file:\ \{\%s\}"{}},\ d.path.c\_str());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 読み込み失敗時のフォールバック}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00391}00391\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(make\_scaled(RefConst<Shape>(\textcolor{keyword}{new}\ BoxShape(Vec3(0.5f,\ 0.5f,\ 0.5f)))));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00392}00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00393}00393\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ st.mTriangleVertices.reserve(meshData.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data_abd3a8a392a2713cd6555e1446456d2c1}{vertices}}.size());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ v\ :\ meshData.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data_abd3a8a392a2713cd6555e1446456d2c1}{vertices}})\ st.mTriangleVertices.emplace\_back(v.x,\ v.y,\ v.z);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00396}00396\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ wantCW\ =\ (d.winding\ ==\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a0ca6456af0a64ba559b6918e35bd4a57a9af3107a066f6b0defb1cafc0499f6ed}{TriangleWinding::CW}});}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 右手系変換で\ x\ を反転するなら\ winding\ も反転するのが基本（ミラーは面の向きを反転させるため）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ flipByRH\ =\ (d.rhFlip\ \&\&\ d.autoFlipWindingOnRHFlip);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 最終的に反転するか}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ flipWinding\ =\ wantCW\ \string^\ flipByRH;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ triangles\ 追加}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ab940a396c17e8d8374f828ac2de06692}{AddTrianglesWinding}}(st.mIndexedTriangles,\ meshData.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data_a610f6216ebe264e8f030b2da8d0ae98b}{indices}},\ flipWinding);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00404}00404\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00405}00405\ \textcolor{preprocessor}{\#ifdef\ CACHE\_SHAPE\_WIRE\_DATA}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00406}00406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wireDataCache\_.emplace(h.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle_a4cdc9d3510489593a578d8281344b3ea}{index}},}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BuildShapeWireframe(meshData.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data_abd3a8a392a2713cd6555e1446456d2c1}{vertices}},\ meshData.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data_a610f6216ebe264e8f030b2da8d0ae98b}{indices}}));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00408}00408\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00410}00410\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ res\ =\ st.Create();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00412}00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (res.HasError())}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(make\_scaled(RefConst<Shape>(\textcolor{keyword}{new}\ BoxShape(Vec3(0.5f,\ 0.5f,\ 0.5f)))));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RefConst<Shape>\ base\ =\ res.Get();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00416}00416\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ HeightFieldDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Joltの新APIは正方のみ:\ count\ x\ count}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00419}00419\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d.sizeX\ !=\ d.sizeY\ ||\ d.sizeX\ <=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 正方でない場合のフォールバック（必要に応じて別実装へ）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00421}00421\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ JPH::RefConst<JPH::Shape>(\textcolor{keyword}{new}\ JPH::BoxShape(JPH::Vec3(0.5f,\ 0.5f,\ 0.5f)));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00423}00423\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ count\ =\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(d.sizeX);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d.samples.size()\ !=\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(count)\ *\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(count))\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ サンプル数不一致\ →\ フォールバック}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ JPH::RefConst<JPH::Shape>(\textcolor{keyword}{new}\ JPH::BoxShape(JPH::Vec3(0.5f,\ 0.5f,\ 0.5f)));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00427}00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00428}00428\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ offset\ と\ scale\ を設定}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00430}00430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ JPH::Vec3\ offset(0.0f,\ 0.0f,\ 0.0f);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 必要ならここで地形の原点を調整}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00431}00431\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ JPH::Vec3\ scale(d.cellSizeX,\ d.scaleY,\ d.cellSizeY);\ \ \ \ \textcolor{comment}{//\ x=グリッド間隔X,\ y=高さスケール,\ z=グリッド間隔Y}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00432}00432\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ material\ は未使用なら\ nullptr\ /\ 既定リスト}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00434}00434\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint8\_t*\ materialIndices\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ JPH::PhysicsMaterialList\ materialList;\ \textcolor{comment}{//\ 既定}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00436}00436\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ JPH::HeightFieldShapeSettings\ st(}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00438}00438\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d.samples.data(),\ offset,\ scale,\ count,\ materialIndices,\ materialList}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00440}00440\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ res\ =\ st.Create();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00442}00442\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (res.HasError())\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RefConst<Shape>\ base\ =\ \textcolor{keyword}{new}\ BoxShape(Vec3(0.5f,\ 0.5f,\ 0.5f));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ base\ =\ make\_scaled(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00445}00445\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00446}00446\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00447}00447\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ HeightField\ は\ res.Get()\ をそのままオフセットだけ適用}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(res.Get());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00449}00449\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00450}00450\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ ConvexHullDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00451}00451\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ConvexHullShapeSettings\ st;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00452}00452\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ st.mMaxConvexRadius\ =\ d.maxConvexRadius;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00453}00453\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ st.mHullTolerance\ =\ d.hullTolerance;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00454}00454\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ st.mPoints.reserve(d.points.size());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00455}00455\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ p\ :\ d.points)\ st.mPoints.emplace\_back(p.x,\ p.y,\ p.z);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00456}00456\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00457}00457\ \textcolor{preprocessor}{\#ifdef\ CACHE\_SHAPE\_WIRE\_DATA}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wireDataCache\_.emplace(h.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle_a4cdc9d3510489593a578d8281344b3ea}{index}},}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00459}00459\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BuildShapeWireframe(d.points,\ d.indices));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00460}00460\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00461}00461\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00462}00462\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ res\ =\ st.Create();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00463}00463\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (res.HasError())\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00464}00464\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RefConst<Shape>\ base\ =\ \textcolor{keyword}{new}\ BoxShape(Vec3(0.5f,\ 0.5f,\ 0.5f));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ base\ =\ make\_scaled(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00467}00467\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RefConst<Shape>\ base\ =\ res.Get();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00470}00470\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00471}00471\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ ConvexCompoundDesc>\ ||\ std::is\_same\_v<T,\ ConvexCompoundFileDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00472}00472\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_physics}{SFW::Physics}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00473}00473\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00474}00474\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1)\ バイナリを読み込んで\ hull\ 群を取得}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00475}00475\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<VHACDHull>\ hulls;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00476}00476\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ ConvexCompoundDesc>)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00477}00477\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00478}00478\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hulls\ =\ d.hulls;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00479}00479\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ hull\ :\ hulls)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00480}00480\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00481}00481\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ flip\_vec3z\ =\ [](\textcolor{keywordtype}{float}\&\ x,\ \textcolor{keywordtype}{float}\&\ y,\ \textcolor{keywordtype}{float}\&\ z)\ \{\ x\ =\ -\/x;\ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00482}00482\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00483}00483\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ p\ :\ hull.points)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00484}00484\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00485}00485\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.x\ *=\ desc.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_acb4c2dbe45c6170d9d555d5e48259353}{scale}}.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale_acb546859da5bf5c600353dcb7d05a4ec}{s}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00486}00486\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.y\ *=\ desc.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_acb4c2dbe45c6170d9d555d5e48259353}{scale}}.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale_acb546859da5bf5c600353dcb7d05a4ec}{s}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00487}00487\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p.z\ *=\ desc.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_acb4c2dbe45c6170d9d555d5e48259353}{scale}}.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale_acb546859da5bf5c600353dcb7d05a4ec}{s}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00488}00488\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00489}00489\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d.rhFlip)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flip\_vec3z(p.x,\ p.y,\ p.z);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00491}00491\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00493}00493\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00494}00494\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespace_s_f_w_1_1_physics_a4972e9c1ff8f3077c8ca3c0f67dad209}{LoadVHACDFile}}(d.path,\ hulls,\ desc.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_acb4c2dbe45c6170d9d555d5e48259353}{scale}}.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale_acb546859da5bf5c600353dcb7d05a4ec}{s}},\ d.rhFlip)\ ||\ hulls.empty())\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 読み込み失敗\ →\ フォールバック\ Box}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RefConst<Shape>\ base\ =\ \textcolor{keyword}{new}\ BoxShape(Vec3(0.5f,\ 0.5f,\ 0.5f));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00499}00499\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ base\ =\ make\_scaled(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00500}00500\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00501}00501\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_afde44945335adc0c0ae2986fea13438f}{LOG\_WARNING}}(\textcolor{stringliteral}{"{}PhysicsShapeManager:\ Failed\ to\ load\ VHACD\ file:\ \{\%s\}"{}},\ d.path.c\_str());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00502}00502\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00505}00505\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00506}00506\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00507}00507\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ hull\ が\ 1つだけなら普通の\ ConvexHull\ として処理}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hulls.size()\ ==\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00509}00509\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ConvexHullShapeSettings\ hst;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00510}00510\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hst.mMaxConvexRadius\ =\ d.maxConvexRadius;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00511}00511\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hst.mHullTolerance\ =\ d.hullTolerance;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hst.mPoints.reserve(hulls[0].points.size());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ p\ :\ hulls[0].points)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00514}00514\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hst.mPoints.emplace\_back(p.x,\ p.y,\ p.z);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00515}00515\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ res\ =\ hst.Create();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (res.HasError())\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00518}00518\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RefConst<Shape>\ base\ =\ \textcolor{keyword}{new}\ BoxShape(Vec3(0.5f,\ 0.5f,\ 0.5f));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ base\ =\ make\_scaled(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00521}00521\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RefConst<Shape>\ base\ =\ res.Get();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00525}00525\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00526}00526\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3)\ hull\ が複数なら\ StaticCompoundShape\ としてまとめる}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00527}00527\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ StaticCompoundShapeSettings\ cs;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00528}00528\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00529}00529\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ h\ :\ hulls)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (h.points.empty())\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00531}00531\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00532}00532\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ConvexHullShapeSettings\ hst;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00533}00533\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hst.mMaxConvexRadius\ =\ d.maxConvexRadius;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00534}00534\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hst.mHullTolerance\ =\ d.hullTolerance;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00535}00535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hst.mPoints.reserve(h.points.size());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00536}00536\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ p\ :\ h.points)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hst.mPoints.emplace\_back(p.x,\ p.y,\ p.z);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00538}00538\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ res\ =\ hst.Create();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (res.HasError())\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00541}00541\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ この\ hull\ はスキップ（もしくは全体フォールバックにするかは好み）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00543}00543\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00544}00544\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00545}00545\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RefConst<Shape>\ hullShape\ =\ res.Get();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00546}00546\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 各\ hull\ のローカルオフセットは\ Python\ 側で\ bake\ 済みと想定し、ここでは\ (0,0,0)}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00547}00547\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cs.AddShape(Vec3::sZero(),\ Quat::sIdentity(),\ hullShape);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00548}00548\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00549}00549\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00550}00550\ \textcolor{preprocessor}{\#ifdef\ CACHE\_SHAPE\_WIRE\_DATA}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00551}00551\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<Vec3f>\ allVerts;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00552}00552\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\ allIndices;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00553}00553\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ h\ :\ hulls)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00554}00554\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ wf\ =\ BuildShapeWireframe(h.points,\ h.indices);\ \textcolor{comment}{//\ インデックスは不要}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00555}00555\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ baseIndex\ =\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(allVerts.size());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00556}00556\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ allVerts.insert(allVerts.end(),\ wf.vertices.begin(),\ wf.vertices.end());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00557}00557\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ allIndices.reserve(allIndices.size()\ +\ wf.indices.size());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00558}00558\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ インデックスは頂点追加分だけオフセットして追加}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00559}00559\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ idx\ :\ wf.indices)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00560}00560\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ allIndices.push\_back(baseIndex\ +\ idx);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00561}00561\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00562}00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00563}00563\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wireDataCache\_.emplace(h.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle_a4cdc9d3510489593a578d8281344b3ea}{index}},}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00564}00564\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ WireframeData\{\ allVerts,\ allIndices\ \});}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00565}00565\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00566}00566\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00567}00567\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ compRes\ =\ cs.Create();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00568}00568\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (compRes.HasError())\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00569}00569\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RefConst<Shape>\ base\ =\ \textcolor{keyword}{new}\ BoxShape(Vec3(0.5f,\ 0.5f,\ 0.5f));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00570}00570\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ base\ =\ make\_scaled(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00571}00571\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00572}00572\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00573}00573\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00574}00574\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RefConst<Shape>\ compound\ =\ compRes.Get();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00575}00575\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(compound);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00576}00576\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00577}00577\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00578}00578\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RefConst<Shape>\ base\ =\ \textcolor{keyword}{new}\ BoxShape(Vec3(0.5f,\ 0.5f,\ 0.5f));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00579}00579\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ base\ =\ make\_scaled(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00580}00580\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ make\_rotated\_translated(base);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00581}00581\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00582}00582\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},\ desc.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_ae044089b53424b6680ed7e222f77ae1d}{shape}});}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00583}00583\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00584}00584\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00585}00585\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 実体破棄（RefConst\ は参照カウント付き：クリアでOK）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00586}\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager_abe56c530597d9facba852fdc0477cd46}{00586}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager_abe56c530597d9facba852fdc0477cd46}{DestroyResource}}(uint32\_t\ index,\ uint64\_t\ \textcolor{comment}{/*currentFrame*/})\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00587}00587\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[index].data\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00588}00588\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00589}00589\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00590}00590\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ 追加ユーティリティ\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00591}00591\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 外部から\ Shape\ を取り出すヘルパ（薄い糖衣）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00592}\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager_a47ecc0a25e97c9ced4568c29174c0929}{00592}}\ \ \ \ \ \ \ \ \ \ \ \ \ JPH::RefConst<JPH::Shape>\ \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager_a47ecc0a25e97c9ced4568c29174c0929}{Resolve}}(\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{ShapeHandle}}\ h)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00593}00593\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ d\ =\ this-\/>\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a21636b46b48c6f7e1948240a84cdd137}{Get}}(h);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00594}00594\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d.ref();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00595}00595\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00596}00596\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00597}\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager_a32325fb717a0a617314cfb58fb3c41cf}{00597}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<ShapeDims>\ \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager_a32325fb717a0a617314cfb58fb3c41cf}{GetShapeDims}}(\textcolor{keyword}{const}\ JPH::Shape*\ s,\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{ShapeHandle}}\ h)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00598}00598\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00599}00599\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }JPH;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00600}00600\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00601}00601\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Shape*\ shape\ =\ s;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00602}00602\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00603}00603\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ DecoratedShape（特に\ RotatedTranslatedShape）のローカル変換}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00604}00604\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ localOffset\{\ 0.0f,\ 0.0f,\ 0.0f\ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00605}00605\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math::Quatf}}\ localRot\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_ae9c5394d3e19e4500b11307037795c63}{Math::Quatf::Identity}}();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00606}00606\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ hasLocalTransform\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00607}00607\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00608}00608\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ まず\ RotatedTranslatedShape\ をほどく（1段だけならこれで十分）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00609}00609\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (shape-\/>GetSubType()\ ==\ EShapeSubType::RotatedTranslated)}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00610}00610\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00611}00611\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ rt\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const\ }RotatedTranslatedShape*\textcolor{keyword}{>}(shape);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00612}00612\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00613}00613\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vec3\ p\ =\ rt-\/>GetPosition();\ \ \ \textcolor{comment}{//\ 内側シェイプに適用された平行移動}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00614}00614\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Quat\ q\ =\ rt-\/>GetRotation();\ \ \ \textcolor{comment}{//\ 内側シェイプに適用された回転}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00615}00615\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00616}00616\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ localOffset\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(p.GetX(),\ p.GetY(),\ p.GetZ());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00617}00617\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ localRot\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math::Quatf}}(q.GetX(),\ q.GetY(),\ q.GetZ(),\ q.GetW());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00618}00618\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hasLocalTransform\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00619}00619\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00620}00620\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 寸法は内側のシェイプから取る}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00621}00621\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ shape\ =\ rt-\/>GetInnerShape();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00622}00622\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00623}00623\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00624}00624\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims}{ShapeDims}}\ out;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00625}00625\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00626}00626\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (shape-\/>GetSubType())}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00627}00627\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00628}00628\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ EShapeSubType::Box:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00629}00629\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00630}00630\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ bs\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const\ }BoxShape*\textcolor{keyword}{>}(shape);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00631}00631\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vec3\ he\ =\ bs-\/>GetHalfExtent();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00632}00632\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_aef0fdf609b566b84eae45cf3a922158f}{dims}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(he.GetX(),\ he.GetY(),\ he.GetZ())\ *\ 2.0f;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00633}00633\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a1718991da41b8ebf4c8a0b688ba35f5d}{type}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a3187a1f132bea84abd899cc80cd41c69abf4d8ba8a581d4dbb79bf51bbf16ea32}{ShapeDims::Type::Box}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00634}00634\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00635}00635\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00636}00636\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ EShapeSubType::Sphere:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00637}00637\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00638}00638\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ AABox\ b\ =\ shape-\/>GetLocalBounds();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00639}00639\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vec3\ d\ =\ b.GetSize();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00640}00640\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_aef0fdf609b566b84eae45cf3a922158f}{dims}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(d.GetX(),\ d.GetY(),\ d.GetZ());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00641}00641\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a7e1af5097e67fe3f2727cf24a1a463b9}{r}}\ =\ 0.5f\ *\ d.GetX();\ \textcolor{comment}{//\ 等方}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00642}00642\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a1718991da41b8ebf4c8a0b688ba35f5d}{type}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a3187a1f132bea84abd899cc80cd41c69af996282de874a6b98b8266a70743035b}{ShapeDims::Type::Sphere}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00643}00643\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00644}00644\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00645}00645\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ EShapeSubType::Capsule:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00646}00646\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00647}00647\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ cs\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const\ }CapsuleShape*\textcolor{keyword}{>}(shape);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00648}00648\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a7e1af5097e67fe3f2727cf24a1a463b9}{r}}\ =\ cs-\/>GetRadius();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00649}00649\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a1ecde897752a009470509ea6a1398686}{halfHeight}}\ =\ cs-\/>GetHalfHeightOfCylinder();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00650}00650\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_aef0fdf609b566b84eae45cf3a922158f}{dims}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00651}00651\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2.0f\ *\ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a7e1af5097e67fe3f2727cf24a1a463b9}{r}},}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00652}00652\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2.0f\ *\ (out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a1ecde897752a009470509ea6a1398686}{halfHeight}}\ +\ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a7e1af5097e67fe3f2727cf24a1a463b9}{r}}),}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00653}00653\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2.0f\ *\ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a7e1af5097e67fe3f2727cf24a1a463b9}{r}}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00654}00654\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00655}00655\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a1718991da41b8ebf4c8a0b688ba35f5d}{type}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a3187a1f132bea84abd899cc80cd41c69a83a02286f081568766acaf85069ea229}{ShapeDims::Type::Capsule}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00656}00656\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00657}00657\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00658}00658\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ EShapeSubType::Cylinder:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00659}00659\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00660}00660\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ AABox\ b\ =\ shape-\/>GetLocalBounds();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00661}00661\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vec3\ d\ =\ b.GetSize();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00662}00662\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_aef0fdf609b566b84eae45cf3a922158f}{dims}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(d.GetX(),\ d.GetY(),\ d.GetZ());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00663}00663\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a1718991da41b8ebf4c8a0b688ba35f5d}{type}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a3187a1f132bea84abd899cc80cd41c69a6e5c5c661a3103c98557ed0f822c0eda}{ShapeDims::Type::Cylinder}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00664}00664\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00665}00665\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00666}00666\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ EShapeSubType::TaperedCapsule:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00667}00667\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ EShapeSubType::TaperedCylinder:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00668}00668\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00669}00669\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ AABox\ b\ =\ shape-\/>GetLocalBounds();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00670}00670\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vec3\ d\ =\ b.GetSize();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00671}00671\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_aef0fdf609b566b84eae45cf3a922158f}{dims}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(d.GetX(),\ d.GetY(),\ d.GetZ());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00672}00672\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a1718991da41b8ebf4c8a0b688ba35f5d}{type}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a3187a1f132bea84abd899cc80cd41c69adf4996659e6a60c1ccec11415989d6bf}{ShapeDims::Type::Tapered}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00673}00673\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00674}00674\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00675}00675\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00676}00676\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00677}00677\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ConvexHull\ /\ Mesh\ /\ HeightField\ /\ Compound\ など}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00678}00678\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ AABox\ b\ =\ shape-\/>GetLocalBounds();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00679}00679\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vec3\ d\ =\ b.GetSize();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00680}00680\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_aef0fdf609b566b84eae45cf3a922158f}{dims}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}(d.GetX(),\ d.GetY(),\ d.GetZ());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00681}00681\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a1718991da41b8ebf4c8a0b688ba35f5d}{type}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a3187a1f132bea84abd899cc80cd41c69ae47bfb12c213c490f2e5127c761b597e}{ShapeDims::Type::CMHC}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00682}00682\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a07d2998d5b7066d59735c29f2114d778}{handle}}\ =\ h;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00683}00683\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ae15f0d5d2bed3eb6c9c6d7b6864d78f7}{AddRef}}(h);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00684}00684\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00685}00685\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00686}00686\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00687}00687\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00688}00688\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ここでローカル変換を反映}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00689}00689\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a948e9ba13a2773bde8d6631cf14901d7}{localOffset}}\ =\ localOffset;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00690}00690\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::memcpy(out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a219d20bd7d18cb52fe164407efecc125}{localRotation}},\ localRot.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_aac1b274eecf07a1d21de58f8e875510c}{v}},\ \textcolor{keyword}{sizeof}(out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a219d20bd7d18cb52fe164407efecc125}{localRotation}}));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00691}00691\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_dims_a534701b40cae3d63142b4121cc02cf00}{hasLocalTransform}}\ =\ hasLocalTransform;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00692}00692\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00693}00693\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00694}00694\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00695}00695\ \textcolor{preprocessor}{\#ifdef\ CACHE\_SHAPE\_WIRE\_DATA}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00696}00696\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ワイヤーフレームデータ取得}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00697}00697\ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<ShareWireframeData>\ GetShapeWireframeData(\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle}{ShapeHandle}}\ h)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00698}00698\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lk(cacheMutex\_);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00699}00699\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ wireDataCache\_.find(h.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_handle_a4cdc9d3510489593a578d8281344b3ea}{index}});}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00700}00700\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ wireDataCache\_.end())\ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00701}00701\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ShareWireframeData(it-\/>second,\ cacheMutex\_);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00702}00702\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00703}00703\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00704}00704\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00705}00705\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00706}00706\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Key\ の生成}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00707}00707\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key}{ShapeKey}}\ BuildKey(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc}{ShapeCreateDesc}}\&\ d)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00708}00708\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key}{ShapeKey}}\ k\{\};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00709}00709\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ まずスケールを入れるが、Sphere/Capsule\ は“一様強制”する}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00710}00710\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}\ scale\ =\ d.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_acb4c2dbe45c6170d9d555d5e48259353}{scale}}.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_scale_acb546859da5bf5c600353dcb7d05a4ec}{s}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00711}00711\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00712}00712\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::visit([\&](\textcolor{keyword}{auto}\&\&\ s)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00713}00713\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }T\ =\ std::decay\_t<\textcolor{keyword}{decltype}(s)>;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00714}00714\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ SphereDesc>\ ||\ std::is\_same\_v<T,\ CapsuleDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00715}00715\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ scale\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac907f27d7ff92942283a1273126c94a2}{IsUniformScale}}(scale)\ ?\ scale\ :\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a4e0887e940ae0a44c6f18573c449fb48}{EnforceUniformScale}}(scale);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00716}00716\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00717}00717\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},\ d.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_ae044089b53424b6680ed7e222f77ae1d}{shape}});}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00718}00718\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00719}00719\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a7c2642575db9d56166f84b490230757c}{scale}}\ =\ scale;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00720}00720\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a22776efe3fcc575db0b1275400b612d1}{offset}}\ =\ d.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_a433879b01d2da7ad6cb1648210230d8f}{localOffset}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00721}00721\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a90531eb6fbd9fe8743844813b5886f9f}{rotation}}\ =\ d.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_a340a7356e43bd6766f99c7374063eba2}{localRotation}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00722}00722\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00723}00723\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::visit([\&](\textcolor{keyword}{auto}\&\&\ s)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00724}00724\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_s_f_w_1_1_input_a6a6939d34261fa1488ae607d8b427c1eab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\ =\ std::decay\_t<\textcolor{keyword}{decltype}(s)>;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00725}00725\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ BoxDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00726}00726\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa9c196cb29e30d03c657920f1e251a85}{kind}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3cfce651e667ab85486dd42a8185f98a}{ShapeKey::Kind::Box}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00727}00727\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a74e89756cbcc967f68c4e220e85b3984}{he}}\ =\ s.halfExtents;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00728}00728\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00729}00729\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ SphereDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00730}00730\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa9c196cb29e30d03c657920f1e251a85}{kind}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dab7095f057db3fefa7325ad93a04e14fd}{ShapeKey::Kind::Sphere}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00731}00731\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a081113eb5453b9596b970ea0d0e76bf7}{r}}\ =\ s.radius;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00732}00732\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00733}00733\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ CapsuleDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00734}00734\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa9c196cb29e30d03c657920f1e251a85}{kind}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da4880c0f12c06dd6d142e7a40b041bf1a}{ShapeKey::Kind::Capsule}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00735}00735\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a4fef09bf10d8411c12f0b1e82743d385}{hh}}\ =\ s.halfHeight;\ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a081113eb5453b9596b970ea0d0e76bf7}{r}}\ =\ s.radius;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00736}00736\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00737}00737\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ MeshDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00738}00738\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa9c196cb29e30d03c657920f1e251a85}{kind}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da710fdb6adb881b408116ef95335e1961}{ShapeKey::Kind::Mesh}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00739}00739\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_af1db6ede9a0049f0651b2efd5502a0e0}{vcount}}\ =\ (uint32\_t)s.vertices.size();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00740}00740\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aec0a42b13bad264dae77b3fd31de1469}{icount}}\ =\ (uint32\_t)s.indices.size();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00741}00741\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!s.vertices.empty())}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00742}00742\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_ac2b29805f554a3443e90200ebe0b619b}{vhash}}\ =\ \mbox{\hyperlink{namespace_s_f_w_ab8cb832ca884cf7f1a3ae8dd04491ffa}{HashBufferContent}}(s.vertices.data(),\ s.vertices.size()\ *\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00743}00743\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!s.indices.empty())}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00744}00744\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_acd6fd20fe02701f29501397f0e72e16d}{ihash}}\ =\ \mbox{\hyperlink{namespace_s_f_w_ab8cb832ca884cf7f1a3ae8dd04491ffa}{HashBufferContent}}(s.indices.data(),\ s.indices.size()\ *\ \textcolor{keyword}{sizeof}(uint32\_t));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00745}00745\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00746}00746\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ MeshFileDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00747}00747\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa9c196cb29e30d03c657920f1e251a85}{kind}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da5614c6f50f3db598910134bae4d6ead8}{ShapeKey::Kind::MeshFile}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00748}00748\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ファイルパスのハッシュを取る}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00749}00749\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_ae47007f69ff69b64dd7542bc0f362893}{fileHash}}\ =\ std::hash<std::string>\{\}(s.path);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00750}00750\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00751}00751\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ HeightFieldDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00752}00752\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa9c196cb29e30d03c657920f1e251a85}{kind}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da9a7e8772035f8412fc62cd830d0ba944}{ShapeKey::Kind::HeightField}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00753}00753\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a3a12bd913d7025acb1b768b6c721d98f}{sizeX}}\ =\ s.sizeX;\ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a00b8f77277e77413bb0e112dbf0127b0}{sizeY}}\ =\ s.sizeY;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00754}00754\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a4d697180efd77ee99a25a231dcbbdaa9}{scaleY}}\ =\ s.scaleY;\ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_adc221ab59cca33d060985f19203885a7}{cellX}}\ =\ s.cellSizeX;\ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a82204875073e07fd206fdcf2f1ed8d6c}{cellY}}\ =\ s.cellSizeY;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00755}00755\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!s.samples.empty())}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00756}00756\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_ac29dff7a7bcdbbaa0be5e80db29b8fec}{hfHash}}\ =\ \mbox{\hyperlink{namespace_s_f_w_ab8cb832ca884cf7f1a3ae8dd04491ffa}{HashBufferContent}}(s.samples.data(),\ s.samples.size()\ *\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00757}00757\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00758}00758\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ ConvexHullDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00759}00759\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa9c196cb29e30d03c657920f1e251a85}{kind}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da3e1ee9920ed982b5da9becaf4b5463e5}{ShapeKey::Kind::ConvexHull}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00760}00760\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a2af0adb6e3bdaba98c0ed0ddb5a0eb68}{pcount}}\ =\ (uint32\_t)s.points.size();}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00761}00761\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!s.points.empty())}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00762}00762\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa40cbfe053e59b9e27c502ee715a4aea}{chash}}\ =\ \mbox{\hyperlink{namespace_s_f_w_ab8cb832ca884cf7f1a3ae8dd04491ffa}{HashBufferContent}}(s.points.data(),\ s.points.size()\ *\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00763}00763\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00764}00764\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ ConvexCompoundDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00765}00765\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa9c196cb29e30d03c657920f1e251a85}{kind}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53da8ec606de5bac1a7d607facea2bc46fa7}{ShapeKey::Kind::ConvexCompound}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00766}00766\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 複数\ hull\ のハッシュをまとめる}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00767}00767\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ combinedHash\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00768}00768\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ hull\ :\ s.hulls)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00769}00769\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!hull.points.empty())\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00770}00770\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ h\ =\ \mbox{\hyperlink{namespace_s_f_w_ab8cb832ca884cf7f1a3ae8dd04491ffa}{HashBufferContent}}(hull.points.data(),\ hull.points.size()\ *\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}));}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00771}00771\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 簡易的にミックス}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00772}00772\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ combinedHash\ \string^=\ h\ +\ 0x9e3779b97f4a7c15ull\ +\ (combinedHash\ <<\ 6)\ +\ (combinedHash\ >>\ 2);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00773}00773\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00774}00774\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a2af0adb6e3bdaba98c0ed0ddb5a0eb68}{pcount}}\ +=\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(hull.points.size());}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00775}00775\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00776}00776\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00777}00777\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa40cbfe053e59b9e27c502ee715a4aea}{chash}}\ =\ combinedHash;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00778}00778\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00779}00779\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<T,\ ConvexCompoundFileDesc>)\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00780}00780\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_aa9c196cb29e30d03c657920f1e251a85}{kind}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_a398c3495e240dc7ce2bcab344743b53dad81b2ccc0ede82aa7d953ec01ea761a6}{ShapeKey::Kind::ConvexCompoundFile}};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00781}00781\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ファイルパスのハッシュを取る}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00782}00782\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_key_ae47007f69ff69b64dd7542bc0f362893}{fileHash}}\ =\ std::hash<std::string>\{\}(s.path);}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00783}00783\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00784}00784\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},\ d.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_shape_create_desc_ae044089b53424b6680ed7e222f77ae1d}{shape}});}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00785}00785\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00786}00786\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ k;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00787}00787\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00788}00788\ }
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00789}00789\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00790}00790\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 共有キャッシュ}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00791}00791\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::shared\_mutex\ cacheMutex\_;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00792}00792\ \ \ \ \ \ \ \ \ \ \ \ \ std::unordered\_map<ShapeKey,\ ShapeHandle,\ ShapeKeyHash,\ ShapeKeyEq>\ keyToHandle\_;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00793}00793\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<ShapeKey>\ indexToKey\_;\ \textcolor{comment}{//\ index\ -\/>\ key（RemoveFromCaches\ 用）}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00794}00794\ \textcolor{preprocessor}{\#ifdef\ CACHE\_SHAPE\_WIRE\_DATA}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00795}00795\ \ \ \ \ \ \ \ \ \ \ \ \ std::unordered\_map<uint32\_t,\ WireframeData>\ wireDataCache\_;}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00796}00796\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00797}00797\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00798}00798\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_shape_manager_8h_source_l00799}00799\ \}}
+
+\end{DoxyCode}

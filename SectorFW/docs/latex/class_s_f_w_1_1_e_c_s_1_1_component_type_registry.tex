@@ -1,0 +1,278 @@
+\doxysection{SFW\+::ECS\+::Component\+Type\+Registry クラス}
+\hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_type_registry}{}\label{class_s_f_w_1_1_e_c_s_1_1_component_type_registry}\index{SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}}
+
+
+コンポーネントの型\+IDとそれに対応するメタ情報を登録、管理するクラス  
+
+
+
+
+{\ttfamily \#include $<$Component\+Type\+Registry.\+h$>$}
+
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T$>$ }\\static \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{Component\+Type\+ID}} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a10187ecf92f955a8bbb8e6a5b25b8d47}{Get\+ID}} () noexcept
+\begin{DoxyCompactList}\small\item\em コンポーネントの型\+IDを取得します。 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ \newline
+requires (!requires \{ typename T\+::soa\+\_\+type; \})}\\static void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a9f88970731ec890813a2cb3d94a5a43c}{Set\+Meta\+Structure}} (\mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure}{Component\+Meta\+::\+Structure}} $>$ \&meta\+\_\+structures)
+\begin{DoxyCompactList}\small\item\em コンポーネントのメタ情報を設定します。(So\+Aコンポーネントではない場合) \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ \newline
+requires (requires \{ typename T\+::soa\+\_\+type; \})}\\static void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a74a616e390c1c7b6d10c9397858c09dc}{Set\+Meta\+Structure}} (\mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure}{Component\+Meta\+::\+Structure}} $>$ \&meta\+\_\+structures)
+\begin{DoxyCompactList}\small\item\em So\+Aコンポーネントのメタ情報を設定します。 \end{DoxyCompactList}\item 
+{\footnotesize template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Tuple}}, std\+::size\+\_\+t... I$>$ }\\static void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a91eb5cb900ac5bb7c0803579491390b6}{Set\+So\+AComponent\+Meta\+Tuple\+Impl}} (\mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure}{Component\+Meta\+::\+Structure}} $>$ \&meta\+\_\+structures, std\+::index\+\_\+sequence$<$ I... $>$)
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Tuple} を I... で展開して各要素型に委譲 \end{DoxyCompactList}\item 
+{\footnotesize template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Tuple}}$>$ }\\static void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a9b11597a786348c59e35ad7d8930960e}{Set\+So\+AComponent\+Meta\+Tuple}} (\mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure}{Component\+Meta\+::\+Structure}} $>$ \&meta\+\_\+structures)
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Tuple} の各要素型に対して Set\+So\+AComponent\+Meta\+Tuple\+Impl を呼び出す \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Ts$>$ }\\static void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a139813b8099ade8ced1869edcb4e6737}{Set\+So\+AComponent\+Meta}} (\mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure}{Component\+Meta\+::\+Structure}} $>$ \&meta\+\_\+structures)
+\begin{DoxyCompactList}\small\item\em 併せて：可変長版は “メンバー列を直接渡すとき専用” として維持 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\static void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a362c61be980f68ae08ccf6a0b779215f}{Register}} () noexcept
+\begin{DoxyCompactList}\small\item\em コンポーネントを登録します。 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\static bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_abf6fb1dfec5e6900113ba900f2ef7177}{Is\+Registered}} () noexcept
+\begin{DoxyCompactList}\small\item\em コンポーネントが登録されているか確認します。 \end{DoxyCompactList}\item 
+{\footnotesize template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Tuple}}, std\+::size\+\_\+t... I$>$ }\\static void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a35459dcfd3c7711c76726f7c2ec07ab3}{Tuple\+Trivial\+Assert\+Impl}} (std\+::index\+\_\+sequence$<$ I... $>$)
+\begin{DoxyCompactList}\small\item\em SoA タプルの全要素が trivially copyable か確認する補助 \end{DoxyCompactList}\item 
+{\footnotesize template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Tuple}}$>$ }\\static void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a3b0b23fb1617f668ddb32b4ba6deb961}{Tuple\+Trivial\+Assert}} ()
+\begin{DoxyCompactList}\small\item\em SoA タプルの全要素が trivially copyable か確認します。 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\static constexpr bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a797b24dee165d8c9966a18a8e2805805}{Is\+Sparse}} () noexcept
+\begin{DoxyCompactList}\small\item\em コンポーネントがまばらなコンポーネントかどうかを判定します。 \end{DoxyCompactList}\item 
+static const \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_meta}{Component\+Meta}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_aaabc27f1a4d3198a3d37714acc3de42f}{Get\+Meta}} (\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{Component\+Type\+ID}} id) noexcept
+\begin{DoxyCompactList}\small\item\em コンポーネントのメタ情報を取得します。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+コンポーネントの型\+IDとそれに対応するメタ情報を登録、管理するクラス 
+
+ \mbox{\hyperlink{_component_type_registry_8h_source}{Component\+Type\+Registry.\+h}} の \mbox{\hyperlink{_component_type_registry_8h_source_l00048}{48}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a10187ecf92f955a8bbb8e6a5b25b8d47}\index{SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}!GetID@{GetID}}
+\index{GetID@{GetID}!SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}}
+\doxysubsubsection{\texorpdfstring{GetID()}{GetID()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a10187ecf92f955a8bbb8e6a5b25b8d47} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{Component\+Type\+ID}} SFW\+::\+ECS\+::\+Component\+Type\+Registry\+::\+Get\+ID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+コンポーネントの型\+IDを取得します。 
+
+
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em T} & コンポーネントの型 \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{Component\+Type\+ID} コンポーネントの型\+ID 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_component_type_registry_8h_source}{Component\+Type\+Registry.\+h}} の \mbox{\hyperlink{_component_type_registry_8h_source_l00056}{56}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_aaabc27f1a4d3198a3d37714acc3de42f}\index{SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}!GetMeta@{GetMeta}}
+\index{GetMeta@{GetMeta}!SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}}
+\doxysubsubsection{\texorpdfstring{GetMeta()}{GetMeta()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_aaabc27f1a4d3198a3d37714acc3de42f} 
+const \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_meta}{Component\+Meta}} \texorpdfstring{$\ast$}{*} SFW\+::\+ECS\+::\+Component\+Type\+Registry\+::\+Get\+Meta (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{Component\+Type\+ID}}}]{id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+コンポーネントのメタ情報を取得します。 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & コンポーネントの型\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+const \doxylink{struct_s_f_w_1_1_e_c_s_1_1_component_meta}{Component\+Meta}\& コンポーネントのメタ情報への参照 
+\end{DoxyReturn}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_abf6fb1dfec5e6900113ba900f2ef7177}\index{SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}!IsRegistered@{IsRegistered}}
+\index{IsRegistered@{IsRegistered}!SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}}
+\doxysubsubsection{\texorpdfstring{IsRegistered()}{IsRegistered()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_abf6fb1dfec5e6900113ba900f2ef7177} 
+template$<$typename T$>$ \\
+bool SFW\+::\+ECS\+::\+Component\+Type\+Registry\+::\+Is\+Registered (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+コンポーネントが登録されているか確認します。 
+
+
+
+ \mbox{\hyperlink{_component_type_registry_8h_source}{Component\+Type\+Registry.\+h}} の \mbox{\hyperlink{_component_type_registry_8h_source_l00148}{148}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a797b24dee165d8c9966a18a8e2805805}\index{SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}!IsSparse@{IsSparse}}
+\index{IsSparse@{IsSparse}!SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}}
+\doxysubsubsection{\texorpdfstring{IsSparse()}{IsSparse()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a797b24dee165d8c9966a18a8e2805805} 
+template$<$typename T$>$ \\
+constexpr bool SFW\+::\+ECS\+::\+Component\+Type\+Registry\+::\+Is\+Sparse (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+コンポーネントがまばらなコンポーネントかどうかを判定します。 
+
+\begin{DoxyReturn}{戻り値}
+true まばらなコンポーネントである場合 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_component_type_registry_8h_source}{Component\+Type\+Registry.\+h}} の \mbox{\hyperlink{_component_type_registry_8h_source_l00181}{181}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a362c61be980f68ae08ccf6a0b779215f}\index{SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}!Register@{Register}}
+\index{Register@{Register}!SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}}
+\doxysubsubsection{\texorpdfstring{Register()}{Register()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a362c61be980f68ae08ccf6a0b779215f} 
+template$<$typename T$>$ \\
+void SFW\+::\+ECS\+::\+Component\+Type\+Registry\+::\+Register (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+コンポーネントを登録します。 
+
+
+
+ \mbox{\hyperlink{_component_type_registry_8h_source}{Component\+Type\+Registry.\+h}} の \mbox{\hyperlink{_component_type_registry_8h_source_l00110}{110}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a9f88970731ec890813a2cb3d94a5a43c}\index{SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}!SetMetaStructure@{SetMetaStructure}}
+\index{SetMetaStructure@{SetMetaStructure}!SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}}
+\doxysubsubsection{\texorpdfstring{SetMetaStructure()}{SetMetaStructure()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a9f88970731ec890813a2cb3d94a5a43c} 
+template$<$typename T$>$ \newline
+requires (!requires \{ typename T\+::soa\+\_\+type; \})\\
+void SFW\+::\+ECS\+::\+Component\+Type\+Registry\+::\+Set\+Meta\+Structure (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure}{Component\+Meta\+::\+Structure}} $>$ \&}]{meta\+\_\+structures}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+コンポーネントのメタ情報を設定します。(So\+Aコンポーネントではない場合) 
+
+
+\begin{DoxyParams}{引数}
+{\em meta\+\_\+structures} & コンポーネントのメタ情報を格納する構造体 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_component_type_registry_8h_source}{Component\+Type\+Registry.\+h}} の \mbox{\hyperlink{_component_type_registry_8h_source_l00066}{66}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a74a616e390c1c7b6d10c9397858c09dc}\index{SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}!SetMetaStructure@{SetMetaStructure}}
+\index{SetMetaStructure@{SetMetaStructure}!SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}}
+\doxysubsubsection{\texorpdfstring{SetMetaStructure()}{SetMetaStructure()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a74a616e390c1c7b6d10c9397858c09dc} 
+template$<$typename T$>$ \newline
+requires (requires \{ typename T\+::soa\+\_\+type; \})\\
+void SFW\+::\+ECS\+::\+Component\+Type\+Registry\+::\+Set\+Meta\+Structure (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure}{Component\+Meta\+::\+Structure}} $>$ \&}]{meta\+\_\+structures}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+So\+Aコンポーネントのメタ情報を設定します。 
+
+
+\begin{DoxyParams}{引数}
+{\em meta\+\_\+structures} & コンポーネントのメタ情報を格納する構造体 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_component_type_registry_8h_source}{Component\+Type\+Registry.\+h}} の \mbox{\hyperlink{_component_type_registry_8h_source_l00075}{75}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a139813b8099ade8ced1869edcb4e6737}\index{SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}!SetSoAComponentMeta@{SetSoAComponentMeta}}
+\index{SetSoAComponentMeta@{SetSoAComponentMeta}!SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}}
+\doxysubsubsection{\texorpdfstring{SetSoAComponentMeta()}{SetSoAComponentMeta()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a139813b8099ade8ced1869edcb4e6737} 
+template$<$typename... Ts$>$ \\
+void SFW\+::\+ECS\+::\+Component\+Type\+Registry\+::\+Set\+So\+AComponent\+Meta (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure}{Component\+Meta\+::\+Structure}} $>$ \&}]{meta\+\_\+structures}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+併せて：可変長版は “メンバー列を直接渡すとき専用” として維持 
+
+
+\begin{DoxyParams}{引数}
+{\em meta\+\_\+structures} & コンポーネントのメタ情報を格納する構造体 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_component_type_registry_8h_source}{Component\+Type\+Registry.\+h}} の \mbox{\hyperlink{_component_type_registry_8h_source_l00103}{103}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a9b11597a786348c59e35ad7d8930960e}\index{SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}!SetSoAComponentMetaTuple@{SetSoAComponentMetaTuple}}
+\index{SetSoAComponentMetaTuple@{SetSoAComponentMetaTuple}!SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}}
+\doxysubsubsection{\texorpdfstring{SetSoAComponentMetaTuple()}{SetSoAComponentMetaTuple()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a9b11597a786348c59e35ad7d8930960e} 
+template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Tuple}}$>$ \\
+void SFW\+::\+ECS\+::\+Component\+Type\+Registry\+::\+Set\+So\+AComponent\+Meta\+Tuple (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure}{Component\+Meta\+::\+Structure}} $>$ \&}]{meta\+\_\+structures}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+\doxylink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Tuple} の各要素型に対して Set\+So\+AComponent\+Meta\+Tuple\+Impl を呼び出す 
+
+
+\begin{DoxyParams}{引数}
+{\em meta\+\_\+structures} & コンポーネントのメタ情報を格納する構造体 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_component_type_registry_8h_source}{Component\+Type\+Registry.\+h}} の \mbox{\hyperlink{_component_type_registry_8h_source_l00094}{94}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a91eb5cb900ac5bb7c0803579491390b6}\index{SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}!SetSoAComponentMetaTupleImpl@{SetSoAComponentMetaTupleImpl}}
+\index{SetSoAComponentMetaTupleImpl@{SetSoAComponentMetaTupleImpl}!SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}}
+\doxysubsubsection{\texorpdfstring{SetSoAComponentMetaTupleImpl()}{SetSoAComponentMetaTupleImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a91eb5cb900ac5bb7c0803579491390b6} 
+template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Tuple}}, std\+::size\+\_\+t... I$>$ \\
+void SFW\+::\+ECS\+::\+Component\+Type\+Registry\+::\+Set\+So\+AComponent\+Meta\+Tuple\+Impl (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_meta_1_1_structure}{Component\+Meta\+::\+Structure}} $>$ \&}]{meta\+\_\+structures}{, }\item[{std\+::index\+\_\+sequence$<$ I... $>$}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+\doxylink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Tuple} を I... で展開して各要素型に委譲 
+
+
+\begin{DoxyParams}{引数}
+{\em meta\+\_\+structures} & コンポーネントのメタ情報を格納する構造体 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_component_type_registry_8h_source}{Component\+Type\+Registry.\+h}} の \mbox{\hyperlink{_component_type_registry_8h_source_l00084}{84}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a3b0b23fb1617f668ddb32b4ba6deb961}\index{SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}!TupleTrivialAssert@{TupleTrivialAssert}}
+\index{TupleTrivialAssert@{TupleTrivialAssert}!SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}}
+\doxysubsubsection{\texorpdfstring{TupleTrivialAssert()}{TupleTrivialAssert()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a3b0b23fb1617f668ddb32b4ba6deb961} 
+template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Tuple}}$>$ \\
+void SFW\+::\+ECS\+::\+Component\+Type\+Registry\+::\+Tuple\+Trivial\+Assert (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+SoA タプルの全要素が trivially copyable か確認します。 
+
+
+
+ \mbox{\hyperlink{_component_type_registry_8h_source}{Component\+Type\+Registry.\+h}} の \mbox{\hyperlink{_component_type_registry_8h_source_l00172}{172}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a35459dcfd3c7711c76726f7c2ec07ab3}\index{SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}!TupleTrivialAssertImpl@{TupleTrivialAssertImpl}}
+\index{TupleTrivialAssertImpl@{TupleTrivialAssertImpl}!SFW::ECS::ComponentTypeRegistry@{SFW::ECS::ComponentTypeRegistry}}
+\doxysubsubsection{\texorpdfstring{TupleTrivialAssertImpl()}{TupleTrivialAssertImpl()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_component_type_registry_a35459dcfd3c7711c76726f7c2ec07ab3} 
+template$<$class \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_access}{Tuple}}, std\+::size\+\_\+t... I$>$ \\
+void SFW\+::\+ECS\+::\+Component\+Type\+Registry\+::\+Tuple\+Trivial\+Assert\+Impl (\begin{DoxyParamCaption}\item[{std\+::index\+\_\+sequence$<$ I... $>$}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+SoA タプルの全要素が trivially copyable か確認する補助 
+
+
+
+ \mbox{\hyperlink{_component_type_registry_8h_source}{Component\+Type\+Registry.\+h}} の \mbox{\hyperlink{_component_type_registry_8h_source_l00157}{157}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_component_type_registry_8h}{Component\+Type\+Registry.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,151 @@
+\doxysection{Point\+Light\+Service.\+h}
+\hypertarget{_point_light_service_8h_source}{}\label{_point_light_service_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/PointLightService.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/PointLightService.h}}
+\mbox{\hyperlink{_point_light_service_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <shared\_mutex>}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_service_context_8hpp}{../Core/ECS/ServiceContext.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_render_types_8h}{RenderTypes.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00019}00019\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW::Graphics}}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00020}00020\ \{}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00021}00021\ \ \ \ \ \textcolor{comment}{//\ 世代付きハンドル（refcount無し）}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00022}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle}{00022}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle}{PointLightHandle}}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00023}00023\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00024}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle_a5b3fbe099278bc9d2181dc19b995ee64}{00024}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle_a5b3fbe099278bc9d2181dc19b995ee64}{index}}\ =\ 0xFFFFFFFFu;}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00025}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle_a9ea161156a5c59342ce0f0300aebeefd}{00025}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle_a9ea161156a5c59342ce0f0300aebeefd}{generation}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00027}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle_a64e27f01cf5427ca2281c9603d1ba831}{00027}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle_a64e27f01cf5427ca2281c9603d1ba831}{IsValid}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle_a5b3fbe099278bc9d2181dc19b995ee64}{index}}\ !=\ 0xFFFFFFFFu;\ \}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00028}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle_a2ed5af2ba5ed2a213aeef83b96452c53}{00028}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle_a2ed5af2ba5ed2a213aeef83b96452c53}{operator==}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle}{PointLightHandle}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle}{PointLightHandle}}\&\ b)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.index\ ==\ b.index\ \&\&\ a.generation\ ==\ b.generation;}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00031}00031\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00033}00033\ \ \ \ \ \textcolor{comment}{//\ ゲーム側のライトパラメータ}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00034}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc}{00034}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc}{PointLightDesc}}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00035}00035\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00036}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc_aabc2a8b3bbce8bfdda1b28a0236ad2b0}{00036}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc_aabc2a8b3bbce8bfdda1b28a0236ad2b0}{offsetWS}}\ =\ \{\ 0,0,0\ \};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00037}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc_a4076fcaff2f1a3d9dfadee411c844ec2}{00037}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc_a4076fcaff2f1a3d9dfadee411c844ec2}{color}}\ =\ \{\ 1,1,1\ \};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00038}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc_a7dd96f6113ba212e4018f284aa7c2ba9}{00038}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc_a7dd96f6113ba212e4018f284aa7c2ba9}{intensity}}\ =\ 1.0f;\ \ \ \textcolor{comment}{//\ 明るさ}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00039}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc_a84e4b0bb5ebc7f26163467d284ab2c1a}{00039}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc_a84e4b0bb5ebc7f26163467d284ab2c1a}{range}}\ =\ 10.0f;\ \ \textcolor{comment}{//\ 影響距離}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00040}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc_a14726fd6fcce40f3ee9b1206a90789fb}{00040}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc_a14726fd6fcce40f3ee9b1206a90789fb}{castsShadow}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00041}00041\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00043}00043\ \ \ \ \ \textcolor{comment}{//\ GPU転送用（例：StructuredBuffer向け）}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00044}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light}{00044}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_ab0708541e208c792624e86658bfb257c}{GpuPointLight}}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00045}00045\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00046}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_ab0708541e208c792624e86658bfb257c}{00046}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_ab0708541e208c792624e86658bfb257c}{GpuPointLight}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00047}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a404bfcde381858c741d5b1f3fd5f779b}{00047}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a404bfcde381858c741d5b1f3fd5f779b}{GpuPointLight}}(}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ posWS,}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ range\_,}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ color\_,}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ intensity\_,}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ flags\_)}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a03c3f863c1cceb00c75a2c95e674dfae}{offsetWS}}(posWS)}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a4301c3cab739846362a1b8382c56cf51}{range}}(range\_)}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a2570587f910140da3085fbf5e79d9350}{color}}(color\_)}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a54ecd46e3673a61e4413c8912d8f83ab}{intensity}}(intensity\_)}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a33ba040b8788e42fe29092a9d7857f7f}{invRange}}(1.0f\ /\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a4301c3cab739846362a1b8382c56cf51}{range}})}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_af6c6baf550d690e007f981e093b88fdc}{flags}}(flags\_)}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00062}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a03c3f863c1cceb00c75a2c95e674dfae}{00062}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a03c3f863c1cceb00c75a2c95e674dfae}{offsetWS}}\ =\ \{\};\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a4301c3cab739846362a1b8382c56cf51}{range}}\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00063}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a2570587f910140da3085fbf5e79d9350}{00063}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a2570587f910140da3085fbf5e79d9350}{color}}\ =\ \{\};\ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a54ecd46e3673a61e4413c8912d8f83ab}{intensity}}\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00064}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a33ba040b8788e42fe29092a9d7857f7f}{00064}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_a33ba040b8788e42fe29092a9d7857f7f}{invRange}}\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00065}\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_af6c6baf550d690e007f981e093b88fdc}{00065}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light_af6c6baf550d690e007f981e093b88fdc}{flags}}\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ flags\ bit0:\ castsShadow\ など}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00067}00067\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00069}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service}{00069}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a07316ad67e4787b576924d2164b7d6e5}{PointLightService}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{ECS::IUpdateService}}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00070}00070\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00071}00071\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00072}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a24b7963e027e88fc9d7f3b7636ec7847}{00072}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a24b7963e027e88fc9d7f3b7636ec7847}{MAX\_FRAME\_POINTLIGHT}}\ =\ 1u\ <<\ 9;}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00074}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a07316ad67e4787b576924d2164b7d6e5}{00074}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a07316ad67e4787b576924d2164b7d6e5}{PointLightService}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00076}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_aa37673bcef058b8876d9a1bc70ca2008}{00076}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_aa37673bcef058b8876d9a1bc70ca2008}{PreUpdate}}(\textcolor{keywordtype}{double}\ deltaTime)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 予約（オープンワールドは事前reserveが効く）}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00079}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a701c39231bacecd7c9f911599301c1d5}{00079}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a701c39231bacecd7c9f911599301c1d5}{Reserve}}(uint32\_t\ capacity);}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 生成/破棄}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00082}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a7928c08b7e64d36e258f20ae59c47a2b}{00082}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle}{PointLightHandle}}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a7928c08b7e64d36e258f20ae59c47a2b}{Create}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc}{PointLightDesc}}\&\ desc);}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00083}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_ade8f15c78ee80788885a7e28b34d083d}{00083}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_ade8f15c78ee80788885a7e28b34d083d}{Destroy}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle}{PointLightHandle}}\ h);}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 検証}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00086}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_ae82a529139ad0737148ffdc885a52ca9}{00086}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_ae82a529139ad0737148ffdc885a52ca9}{IsValid}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle}{PointLightHandle}}\ h)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 更新（dirtyを立てる）}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00089}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_acaf149c8248d0fdcbac6c5b1dc97b3ca}{00089}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_acaf149c8248d0fdcbac6c5b1dc97b3ca}{SetPosition}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle}{PointLightHandle}}\ h,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ posWS);}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00090}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a9df4127ea37090e51e55ef85e8052b8f}{00090}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a9df4127ea37090e51e55ef85e8052b8f}{SetParams}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle}{PointLightHandle}}\ h,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\&\ color,\ \textcolor{keywordtype}{float}\ intensity,\ \textcolor{keywordtype}{float}\ range,\ \textcolor{keywordtype}{bool}\ castsShadow);}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 取得（読み取り）}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00093}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_adca1369520f4c52b9c508eee278d813b}{00093}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc}{PointLightDesc}}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_adca1369520f4c52b9c508eee278d813b}{Get}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle}{PointLightHandle}}\ h)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00099}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a2c527529c43d91e79fe54a121ce24649}{00099}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::shared\_lock<std::shared\_mutex>\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a2c527529c43d91e79fe54a121ce24649}{AcquireReadLock}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::shared\_lock<std::shared\_mutex>(m\_mtx);}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00106}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a94155a66921b9b826ed12dd42a6859e8}{00106}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_lock<std::shared\_mutex>\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a94155a66921b9b826ed12dd42a6859e8}{AcquireWriteLock}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::unique\_lock<std::shared\_mutex>(m\_mtx);}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00110}00110\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 取得（読み取り）}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00111}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a67073fabbd255340e65793cad7656995}{00111}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc}{PointLightDesc}}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a67073fabbd255340e65793cad7656995}{GetNoLock}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle}{PointLightHandle}}\ h)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00118}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_ab4e52f21642b9c45cf2674693b246e87}{00118}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_ab4e52f21642b9c45cf2674693b246e87}{PushShowHandle}}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_handle}{PointLightHandle}}\ h,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ pos);}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00120}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a3ef9d1ef896f83c851f1a80c6a4d4501}{00120}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_gpu_point_light}{GpuPointLight}}*\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a3ef9d1ef896f83c851f1a80c6a4d4501}{BuildGpuLights}}(uint32\_t\&\ outCount)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00122}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a201fc2cada08110e0008a3bd43c68a1c}{00122}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a201fc2cada08110e0008a3bd43c68a1c}{AliveCount}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ m\_aliveCount;\ \}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00123}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_adbc5bb1940e43062f81a7adeb4b716bc}{00123}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_adbc5bb1940e43062f81a7adeb4b716bc}{Capacity}}()\ \ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ (uint32\_t)m\_alive.size();\ \}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00125}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_aaddc5b9ff13f0f2110955670949f1a91}{00125}}\ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_aaddc5b9ff13f0f2110955670949f1a91}{GetLightCount}}(\textcolor{keywordtype}{size\_t}\ frameSlot)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ assert(frameSlot\ <\ RENDER\_BUFFER\_COUNT);}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_lightCount[frameSlot].load(std::memory\_order\_acquire);}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00130}00130\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00131}00131\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }Slot}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_point_light_desc}{PointLightDesc}}\ desc\{\};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ alive\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00137}00137\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 内部ユーティリティ（ロック済み前提）}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isValidNoLock(PointLightHandle\ h)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00141}00141\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::shared\_mutex\ m\_mtx;}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ std::vector<Slot>\ \ \ \ \ m\_slots;}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00145}00145\ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\ m\_generation;\ \textcolor{comment}{//\ indexごとの世代}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00146}00146\ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\ m\_freeList;\ \ \ \textcolor{comment}{//\ 空きスロット}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00147}00147\ \ \ \ \ \ \ \ \ std::vector<uint8\_t>\ \ m\_alive;\ \ \ \ \ \ \textcolor{comment}{//\ aliveフラグ（Slotにもあるが簡易参照用）}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00149}00149\ \ \ \ \ \ \ \ \ uint32\_t\ m\_aliveCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00151}00151\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ m\_frameIndex\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00152}00152\ \ \ \ \ \ \ \ \ uint32\_t\ m\_showIndex[2][\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a24b7963e027e88fc9d7f3b7636ec7847}{MAX\_FRAME\_POINTLIGHT}}]\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ m\_showPos[2][\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a24b7963e027e88fc9d7f3b7636ec7847}{MAX\_FRAME\_POINTLIGHT}}]\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00154}00154\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00155}00155\ \ \ \ \ \ \ \ \ std::atomic<uint32\_t\ >\ m\_showCount[2]\ =\ \{\ 0,0\ \};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ GpuPointLight\ m\_gpuLights[RENDER\_BUFFER\_COUNT][\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_point_light_service_a24b7963e027e88fc9d7f3b7636ec7847}{MAX\_FRAME\_POINTLIGHT}}]\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ std::atomic<uint32\_t>\ m\_lightCount[RENDER\_BUFFER\_COUNT]\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00160}00160\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_service_context_8hpp_adbfb2947c9a06b367226fe228627154c}{STATIC\_SERVICE\_TAG}}}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00162}00162\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_point_light_service_8h_source_l00163}00163\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,50 @@
+\doxysection{Flatten.\+hpp}
+\hypertarget{_flatten_8hpp_source}{}\label{_flatten_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/Flatten.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/Flatten.hpp}}
+\mbox{\hyperlink{_flatten_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <tuple>}}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00013}00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00014}00014\ \{}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00018}00018\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ =\ \textcolor{keywordtype}{void}>}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00019}\mbox{\hyperlink{struct_s_f_w_1_1_value_or_self_helper}{00019}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_value_or_self_helper}{ValueOrSelfHelper}}\ \{}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00020}\mbox{\hyperlink{struct_s_f_w_1_1_value_or_self_helper_a9870043354e7fd3a247f357fdface0b4}{00020}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_s_f_w_1_1_value_or_self_helper_a9870043354e7fd3a247f357fdface0b4}{type}}\ =\ T;}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00021}00021\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00025}00025\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00026}\mbox{\hyperlink{struct_s_f_w_1_1_value_or_self_helper_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1tuple__type_01_4_01_4}{00026}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_value_or_self_helper}{ValueOrSelfHelper}}<T,\ \mbox{\hyperlink{namespacestd}{std}}::void\_t<typename\ T::tuple\_type>>\ \{}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00027}\mbox{\hyperlink{struct_s_f_w_1_1_value_or_self_helper_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1tuple__type_01_4_01_4_aa2610b78f60889b84e5b196a47345a4a}{00027}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_s_f_w_1_1_value_or_self_helper_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1tuple__type_01_4_01_4_aa2610b78f60889b84e5b196a47345a4a}{type}}\ =\ \textcolor{keyword}{typename}\ T::tuple\_type;}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00028}00028\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00032}00032\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00033}\mbox{\hyperlink{namespace_s_f_w_a8c88125b250ae05a98a9dc96630d5df4}{00033}}\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_s_f_w_a8c88125b250ae05a98a9dc96630d5df4}{ValueOrSelf}}\ =\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{struct_s_f_w_1_1_value_or_self_helper_a9870043354e7fd3a247f357fdface0b4}{ValueOrSelfHelper<T>::type}};}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00037}00037\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00038}\mbox{\hyperlink{struct_s_f_w_1_1_flatten}{00038}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_flatten}{Flatten}}\ \{}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00039}\mbox{\hyperlink{struct_s_f_w_1_1_flatten_a95fbba95464b570e560f757a0a297a27}{00039}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_s_f_w_1_1_flatten_a95fbba95464b570e560f757a0a297a27}{type}}\ =\ std::tuple<T>;}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00040}00040\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00044}00044\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Ts>}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00045}\mbox{\hyperlink{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4}{00045}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_flatten}{Flatten}}<\mbox{\hyperlink{namespacestd}{std}}::tuple<Ts...>>\ \{}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00046}00046\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }flatten\_t\ =\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{struct_s_f_w_1_1_flatten}{Flatten<ValueOrSelf<T>}}>\mbox{\hyperlink{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_ac7b6c0e9df2e12ed53c19815d67e5fb9}{::type}};}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Tuples>}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }TupleConcat;}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ T1s,\ \textcolor{keyword}{typename}...\ T2s>}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }TupleConcat<\mbox{\hyperlink{namespacestd}{std}}::tuple<T1s...>,\ std::tuple<T2s...>>\ \{}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_ac7b6c0e9df2e12ed53c19815d67e5fb9}{type}}\ =\ std::tuple<T1s...,\ T2s...>;}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2,\ \textcolor{keyword}{typename}...\ Rest>}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }TupleConcat<T1,\ T2,\ Rest...>\ \{}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_ac7b6c0e9df2e12ed53c19815d67e5fb9}{type}}\ =\ \textcolor{keyword}{typename}\ TupleConcat<typename\ TupleConcat<T1,\ T2>::type,\ Rest...>\mbox{\hyperlink{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_ac7b6c0e9df2e12ed53c19815d67e5fb9}{::type}};}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00071}00071\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00075}\mbox{\hyperlink{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_ac7b6c0e9df2e12ed53c19815d67e5fb9}{00075}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_ac7b6c0e9df2e12ed53c19815d67e5fb9}{type}}\ =\ \textcolor{keyword}{typename}\ TupleConcat<flatten\_t<Ts>...>\mbox{\hyperlink{struct_s_f_w_1_1_flatten_3_01std_1_1tuple_3_01_ts_8_8_8_01_4_01_4_ac7b6c0e9df2e12ed53c19815d67e5fb9}{::type}};}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00076}00076\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00080}00080\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00081}\mbox{\hyperlink{namespace_s_f_w_aff2c32dcae4e0ef3a38d3322c5777156}{00081}}\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_s_f_w_aff2c32dcae4e0ef3a38d3322c5777156}{FlattenT}}\ =\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{struct_s_f_w_1_1_flatten}{Flatten<ValueOrSelf<T>}}>::type;}
+\DoxyCodeLine{\Hypertarget{_flatten_8hpp_source_l00082}00082\ \}}
+
+\end{DoxyCode}

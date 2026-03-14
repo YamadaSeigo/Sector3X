@@ -1,0 +1,48 @@
+\doxysection{Spsc\+Ring.\+hpp}
+\hypertarget{_spsc_ring_8hpp_source}{}\label{_spsc_ring_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/SpscRing.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/SpscRing.hpp}}
+\mbox{\hyperlink{_spsc_ring_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00012}00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00013}00013\ \{}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00017}00017\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00018}\mbox{\hyperlink{class_s_f_w_1_1_spsc_ring}{00018}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_spsc_ring_a892f6ed094db31e55b35a130c5f44027}{SpscRing}}\ \{}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00019}00019\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00024}\mbox{\hyperlink{class_s_f_w_1_1_spsc_ring_a892f6ed094db31e55b35a130c5f44027}{00024}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_spsc_ring_a892f6ed094db31e55b35a130c5f44027}{SpscRing}}(\textcolor{keywordtype}{size\_t}\ capacity\_pow2\ =\ 1024)}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ :\ m\_mask(capacity\_pow2\ -\/\ 1),}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ m\_buf(capacity\_pow2)\ \{}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00033}\mbox{\hyperlink{class_s_f_w_1_1_spsc_ring_a8328d0cdbd347d1ba35d2728d8a6d43a}{00033}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_spsc_ring_a8328d0cdbd347d1ba35d2728d8a6d43a}{push}}(\textcolor{keyword}{const}\ T\&\ v)\ \{}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ head\ =\ m\_head.load(std::memory\_order\_relaxed);}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ next\ =\ (head\ +\ 1)\ \&\ m\_mask;}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (next\ ==\ m\_tail.load(std::memory\_order\_acquire))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ full}}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ m\_buf[head]\ =\ v;}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ m\_head.store(next,\ std::memory\_order\_release);}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00045}\mbox{\hyperlink{class_s_f_w_1_1_spsc_ring_adebe91eafd58a2aaddf9a3023c5ed226}{00045}}\ \ \ \ \ \ \ \ \ std::optional<T>\ \mbox{\hyperlink{class_s_f_w_1_1_spsc_ring_adebe91eafd58a2aaddf9a3023c5ed226}{pop}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ tail\ =\ m\_tail.load(std::memory\_order\_relaxed);}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tail\ ==\ m\_head.load(std::memory\_order\_acquire))\ \textcolor{keywordflow}{return}\ std::nullopt;\ \textcolor{comment}{//\ empty}}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ T\ v\ =\ std::move(m\_buf[tail]);}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ m\_tail.store((tail\ +\ 1)\ \&\ m\_mask,\ std::memory\_order\_release);}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ v;}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00056}\mbox{\hyperlink{class_s_f_w_1_1_spsc_ring_aa6ded7ce4b7ef3f8782affe6a7bc6be9}{00056}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_spsc_ring_aa6ded7ce4b7ef3f8782affe6a7bc6be9}{empty}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_tail.load(std::memory\_order\_acquire)\ ==}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_head.load(std::memory\_order\_acquire);}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00061}00061\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ m\_mask;}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ std::vector<T>\ m\_buf;}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ std::atomic<size\_t>\ m\_head\{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ std::atomic<size\_t>\ m\_tail\{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00066}00066\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_spsc_ring_8hpp_source_l00067}00067\ \}}
+
+\end{DoxyCode}

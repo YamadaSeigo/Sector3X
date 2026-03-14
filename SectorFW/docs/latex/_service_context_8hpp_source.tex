@@ -1,0 +1,90 @@
+\doxysection{Service\+Context.\+hpp}
+\hypertarget{_service_context_8hpp_source}{}\label{_service_context_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ServiceContext.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/ServiceContext.hpp}}
+\mbox{\hyperlink{_service_context_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <typeindex>}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00012}00012\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}\ \{}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00013}00013\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}\ \{}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Services>}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00020}\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a8aac419d65bb75ed8784b0ad269564ae}{00020}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a8aac419d65bb75ed8784b0ad269564ae}{AllStaticServices}}\ =\ (Services::isStatic\ \&\&\ ...);}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00025}\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_service_tag}{00025}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_service_tag}{HasServiceTag}}\ =\ \textcolor{keyword}{requires}\ \{\ T::isStatic;\ \};}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00031}\mbox{\hyperlink{_service_context_8hpp_adbfb2947c9a06b367226fe228627154c}{00031}}\ \textcolor{preprocessor}{\#define\ STATIC\_SERVICE\_TAG\ static\ constexpr\ bool\ isStatic\ =\ true;}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00036}\mbox{\hyperlink{_service_context_8hpp_a6c07cc6646a45ab51cbfe7b168e82a26}{00036}}\ \textcolor{preprocessor}{\#define\ DYNAMIC\_SERVICE\_TAG\ static\ constexpr\ bool\ isStatic\ =\ false;}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Services>}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00044}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{00044}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context}{ServiceContext}}\ \{}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}((\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_service_tag}{HasServiceTag<Services>}}\ \&\&\ ...),}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}ServiceContext\ error:\ One\ or\ more\ types\ lack\ static\ constexpr\ 'isStatic'"{}});}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00048}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context_ae43d7722578b4c29c8769b0388aae5f0}{00048}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_context_ae43d7722578b4c29c8769b0388aae5f0}{Tuple}}\ =\ std::tuple<Services*...>;}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00054}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{00054}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{IUpdateService}}\ \{}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ PreUpdate(\textcolor{keywordtype}{double}\ deltaTime)\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00058}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7}{00058}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7}{Phase}}\ :\ uint16\_t\ \{}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00059}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{00059}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00060}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7}{00060}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7}{NORMAL}}\ =\ 1,}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00061}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9}{00061}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9}{LATE}}\ =\ 2,}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00062}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907}{00062}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907}{PHASE\_MAX}}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00065}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608}{00065}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608}{Group}}\ :\ uint16\_t\ \{}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00066}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{00066}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\_SERIAL}},\ \textcolor{comment}{//メインスレッドで直列実行}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00067}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b}{00067}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b}{GROUP\_GRAPHICS}},}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00068}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda}{00068}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda}{GROUP\_PHYSICS}},}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00069}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a}{00069}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a}{GROUP\_INPUT}},}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00070}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e}{00070}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e}{GROUP\_AUDIO}},}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00071}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580}{00071}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580}{GROUP\_AI}},}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00072}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90}{00072}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90}{GROUP\_MAX}}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00076}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a73744778bc5cc3113ed77db1b69e1fb1}{00076}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ uint16\_t\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a73744778bc5cc3113ed77db1b69e1fb1}{updatePhase}}\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}};}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00077}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a9f0e8abd26ab30155b39e558f004ce42}{00077}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ uint16\_t\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a9f0e8abd26ab30155b39e558f004ce42}{updateGroup}}\ =\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\_SERIAL}};}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00078}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a116ce546ab92eaf8f4282719b89a5165}{00078}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ uint16\_t\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a116ce546ab92eaf8f4282719b89a5165}{updateOrder}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ std::type\_index\ typeIndex\ =\ \textcolor{keyword}{typeid}(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{IUpdateService}});}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ phase\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ group\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ order\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00085}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a12a6623bafbade003505c9b236b749b4}{00085}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a12a6623bafbade003505c9b236b749b4}{ServiceLocator}};}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00093}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_commit_service}{00093}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_commit_service}{ICommitService}}\ \{}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00095}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_commit_service_aba1dcc26d1bfdb867f5c3afa81627ffc}{00095}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_commit_service_aba1dcc26d1bfdb867f5c3afa81627ffc}{Commit}}(\textcolor{keywordtype}{double}\ deltaTime)\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ isUpdateService\ =\ std::is\_base\_of\_v<IUpdateService,\ T>;}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ isCommitService\ =\ std::is\_base\_of\_v<ICommitService,\ T>;}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00110}\mbox{\hyperlink{_service_context_8hpp_a2bddacb472a636ca0aa134fe7fa73a79}{00110}}\ \textcolor{preprocessor}{\#define\ DEFINE\_UPDATESERVICE\_PHASE(PhaseEnum)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00111}00111\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ static\ inline\ constexpr\ uint16\_t\ updatePhase\ =\ PhaseEnum;}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00113}\mbox{\hyperlink{_service_context_8hpp_aba8d760b00a97c77ac318f63335ff1e2}{00113}}\ \textcolor{preprocessor}{\#define\ DEFINE\_UPDATESERVICE\_GROUP(GroupEnum)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00114}00114\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ static\ inline\ constexpr\ uint16\_t\ updateGroup\ =\ GroupEnum;}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00116}\mbox{\hyperlink{_service_context_8hpp_a016a3200051dfac8a45dfcdf917b46fd}{00116}}\ \textcolor{preprocessor}{\#define\ DEFINE\_UPDATESERVICE\_ORDER(OrderValue)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00117}00117\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ static\ inline\ constexpr\ uint16\_t\ updateOrder\ =\ OrderValue;}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ マクロで更新フェーズ、グループ、オーダーを定義}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00120}\mbox{\hyperlink{_service_context_8hpp_a70dae4563c328fd2eee16d7a32a67cbc}{00120}}\ \textcolor{preprocessor}{\#define\ DEFINE\_UPDATESERVICE(PhaseEnum,\ GroupEnum,\ OrderValue)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00121}00121\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ DEFINE\_UPDATESERVICE\_PHASE(PhaseEnum)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00122}00122\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ DEFINE\_UPDATESERVICE\_GROUP(GroupEnum)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00123}00123\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ DEFINE\_UPDATESERVICE\_ORDER(OrderValue)}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00124}00124\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_service_context_8hpp_source_l00125}00125\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,151 @@
+\doxysection{SFW\+::Graphics\+::DX11\+::Shader\+Data 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data}{}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data}\index{SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}}
+
+
+DirectX 11のシェーダーデータを定義する構造体  
+
+
+
+
+{\ttfamily \#include $<$DX11\+Shader\+Manager.\+h$>$}
+
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_afc5edfd2dde8e6f34da6b897a7f0b994}{Material\+Template\+ID}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a4c125b9c029f00ad7c6e6dc90498442f}{template\+ID}}
+\item 
+Microsoft\+::\+WRL\+::\+Com\+Ptr$<$ ID3\+D11\+Vertex\+Shader $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a383a613dfa11960c108809e06bb2b177}{vs}}
+\item 
+Microsoft\+::\+WRL\+::\+Com\+Ptr$<$ ID3\+D11\+Pixel\+Shader $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_adeaeb968ae32865d7c1e40163f2abbbb}{ps}}
+\item 
+Microsoft\+::\+WRL\+::\+Com\+Ptr$<$ ID3\+DBlob $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_aac24667ca84f1281a8a38c1bc871affd}{vs\+Blob}}
+\item 
+std\+::vector$<$ D3\+D11\+\_\+\+INPUT\+\_\+\+ELEMENT\+\_\+\+DESC $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a53e718c183c0c2ccab0bb3d3b1e11039}{input\+Layout\+Desc}}
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_af70dce8a3d79ebbd490ffc5865d6cf47}{input\+Layout\+Semantic\+Names}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_resource_binding}{Shader\+Resource\+Binding}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_aabc8d196dad39b5a2e63a7677d161c91}{ps\+Bindings}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_resource_binding}{Shader\+Resource\+Binding}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a383a806e0d047d56014b50e1ce21a811}{vs\+Bindings}}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a348912279cf769c7dae41ef10ef31dd8}{Input\+Binding\+Mode}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a5b21b6c5350bd5f3f4d85baef9603714}{binding\+Mode}} = \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a348912279cf769c7dae41ef10ef31dd8a28e5f7cc279ca5db27dffd13ac6b4860}{Input\+Binding\+Mode\+::\+BINDMODE\+\_\+\+AUTOSTREAMS}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_semantic_key}{Semantic\+Key}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a208585c2c4d3e87ca6281182106b52f0}{required\+Inputs}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+DirectX 11のシェーダーデータを定義する構造体 
+
+ \mbox{\hyperlink{_d_x11_shader_manager_8h_source}{DX11\+Shader\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_shader_manager_8h_source_l00074}{74}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a5b21b6c5350bd5f3f4d85baef9603714}\index{SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}!bindingMode@{bindingMode}}
+\index{bindingMode@{bindingMode}!SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}}
+\doxysubsubsection{\texorpdfstring{bindingMode}{bindingMode}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a5b21b6c5350bd5f3f4d85baef9603714} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a348912279cf769c7dae41ef10ef31dd8}{Input\+Binding\+Mode}} SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Data\+::binding\+Mode = \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a348912279cf769c7dae41ef10ef31dd8a28e5f7cc279ca5db27dffd13ac6b4860}{Input\+Binding\+Mode\+::\+BINDMODE\+\_\+\+AUTOSTREAMS}}}
+
+
+
+ \mbox{\hyperlink{_d_x11_shader_manager_8h_source}{DX11\+Shader\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_shader_manager_8h_source_l00084}{84}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a53e718c183c0c2ccab0bb3d3b1e11039}\index{SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}!inputLayoutDesc@{inputLayoutDesc}}
+\index{inputLayoutDesc@{inputLayoutDesc}!SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}}
+\doxysubsubsection{\texorpdfstring{inputLayoutDesc}{inputLayoutDesc}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a53e718c183c0c2ccab0bb3d3b1e11039} 
+std\+::vector$<$D3\+D11\+\_\+\+INPUT\+\_\+\+ELEMENT\+\_\+\+DESC$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Data\+::input\+Layout\+Desc}
+
+
+
+ \mbox{\hyperlink{_d_x11_shader_manager_8h_source}{DX11\+Shader\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_shader_manager_8h_source_l00079}{79}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_af70dce8a3d79ebbd490ffc5865d6cf47}\index{SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}!inputLayoutSemanticNames@{inputLayoutSemanticNames}}
+\index{inputLayoutSemanticNames@{inputLayoutSemanticNames}!SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}}
+\doxysubsubsection{\texorpdfstring{inputLayoutSemanticNames}{inputLayoutSemanticNames}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_af70dce8a3d79ebbd490ffc5865d6cf47} 
+std\+::vector$<$std\+::string$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Data\+::input\+Layout\+Semantic\+Names}
+
+
+
+ \mbox{\hyperlink{_d_x11_shader_manager_8h_source}{DX11\+Shader\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_shader_manager_8h_source_l00080}{80}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_adeaeb968ae32865d7c1e40163f2abbbb}\index{SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}!ps@{ps}}
+\index{ps@{ps}!SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}}
+\doxysubsubsection{\texorpdfstring{ps}{ps}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_adeaeb968ae32865d7c1e40163f2abbbb} 
+Microsoft\+::\+WRL\+::\+Com\+Ptr$<$ID3\+D11\+Pixel\+Shader$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Data\+::ps}
+
+
+
+ \mbox{\hyperlink{_d_x11_shader_manager_8h_source}{DX11\+Shader\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_shader_manager_8h_source_l00077}{77}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_aabc8d196dad39b5a2e63a7677d161c91}\index{SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}!psBindings@{psBindings}}
+\index{psBindings@{psBindings}!SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}}
+\doxysubsubsection{\texorpdfstring{psBindings}{psBindings}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_aabc8d196dad39b5a2e63a7677d161c91} 
+std\+::vector$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_resource_binding}{Shader\+Resource\+Binding}}$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Data\+::ps\+Bindings}
+
+
+
+ \mbox{\hyperlink{_d_x11_shader_manager_8h_source}{DX11\+Shader\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_shader_manager_8h_source_l00081}{81}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a208585c2c4d3e87ca6281182106b52f0}\index{SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}!requiredInputs@{requiredInputs}}
+\index{requiredInputs@{requiredInputs}!SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}}
+\doxysubsubsection{\texorpdfstring{requiredInputs}{requiredInputs}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a208585c2c4d3e87ca6281182106b52f0} 
+std\+::vector$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_semantic_key}{Semantic\+Key}}$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Data\+::required\+Inputs}
+
+
+
+ \mbox{\hyperlink{_d_x11_shader_manager_8h_source}{DX11\+Shader\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_shader_manager_8h_source_l00085}{85}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a4c125b9c029f00ad7c6e6dc90498442f}\index{SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}!templateID@{templateID}}
+\index{templateID@{templateID}!SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}}
+\doxysubsubsection{\texorpdfstring{templateID}{templateID}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a4c125b9c029f00ad7c6e6dc90498442f} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_afc5edfd2dde8e6f34da6b897a7f0b994}{Material\+Template\+ID}} SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Data\+::template\+ID}
+
+
+
+ \mbox{\hyperlink{_d_x11_shader_manager_8h_source}{DX11\+Shader\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_shader_manager_8h_source_l00075}{75}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a383a613dfa11960c108809e06bb2b177}\index{SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}!vs@{vs}}
+\index{vs@{vs}!SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}}
+\doxysubsubsection{\texorpdfstring{vs}{vs}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a383a613dfa11960c108809e06bb2b177} 
+Microsoft\+::\+WRL\+::\+Com\+Ptr$<$ID3\+D11\+Vertex\+Shader$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Data\+::vs}
+
+
+
+ \mbox{\hyperlink{_d_x11_shader_manager_8h_source}{DX11\+Shader\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_shader_manager_8h_source_l00076}{76}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a383a806e0d047d56014b50e1ce21a811}\index{SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}!vsBindings@{vsBindings}}
+\index{vsBindings@{vsBindings}!SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}}
+\doxysubsubsection{\texorpdfstring{vsBindings}{vsBindings}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_a383a806e0d047d56014b50e1ce21a811} 
+std\+::vector$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_resource_binding}{Shader\+Resource\+Binding}}$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Data\+::vs\+Bindings}
+
+
+
+ \mbox{\hyperlink{_d_x11_shader_manager_8h_source}{DX11\+Shader\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_shader_manager_8h_source_l00082}{82}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_aac24667ca84f1281a8a38c1bc871affd}\index{SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}!vsBlob@{vsBlob}}
+\index{vsBlob@{vsBlob}!SFW::Graphics::DX11::ShaderData@{SFW::Graphics::DX11::ShaderData}}
+\doxysubsubsection{\texorpdfstring{vsBlob}{vsBlob}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_data_aac24667ca84f1281a8a38c1bc871affd} 
+Microsoft\+::\+WRL\+::\+Com\+Ptr$<$ID3\+DBlob$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Shader\+Data\+::vs\+Blob}
+
+
+
+ \mbox{\hyperlink{_d_x11_shader_manager_8h_source}{DX11\+Shader\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_shader_manager_8h_source_l00078}{78}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\mbox{\hyperlink{_d_x11_shader_manager_8h}{DX11\+Shader\+Manager.\+h}}\end{DoxyCompactItemize}

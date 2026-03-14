@@ -1,0 +1,97 @@
+\doxysection{SFW\+::Graphics\+::Terrain\+Bake 名前空間}
+\hypertarget{namespace_s_f_w_1_1_graphics_1_1_terrain_bake}{}\label{namespace_s_f_w_1_1_graphics_1_1_terrain_bake}\index{SFW::Graphics::TerrainBake@{SFW::Graphics::TerrainBake}}
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options}{Bake\+Options}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats}{Bake\+Stats}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid}{Grid}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_tri}{Tri}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_af49891dde17dab335465c724b9ec9867}{Vec3}} = \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_ac6673f4629bf89536e378f300383af8a}{Bake\+Mode}} \+: uint32\+\_\+t \{ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_ac6673f4629bf89536e378f300383af8aa6872355c934b9dcaa090dbdc4afa83c2}{Max\+Height}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_ac6673f4629bf89536e378f300383af8aab1897515d548a960afe49ecf66a29021}{Average}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_a7e54a44c80f08d6f1d4b3b8cf89d84cb}{clamp01}} (float v)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_aa0a591e58e1f6218dbe3ab7512808e18}{Bake\+Height\+Field\+From\+Mesh}} (const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_tri}{Tri}} $>$ \&tris, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid}{Grid}} \&grid, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options}{Bake\+Options}} \&opt, std\+::vector$<$ float $>$ \&out\+H01, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats}{Bake\+Stats}} \texorpdfstring{$\ast$}{*}out\+Stats=nullptr)
+\end{DoxyCompactItemize}
+
+
+\label{doc-typedef-members}
+\Hypertarget{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_doc-typedef-members}
+\doxysubsection{型定義詳解}
+\Hypertarget{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_af49891dde17dab335465c724b9ec9867}\index{SFW::Graphics::TerrainBake@{SFW::Graphics::TerrainBake}!Vec3@{Vec3}}
+\index{Vec3@{Vec3}!SFW::Graphics::TerrainBake@{SFW::Graphics::TerrainBake}}
+\doxysubsubsection{\texorpdfstring{Vec3}{Vec3}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_af49891dde17dab335465c724b9ec9867} 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_af49891dde17dab335465c724b9ec9867}{SFW\+::\+Graphics\+::\+Terrain\+Bake\+::\+Vec3}} = \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}
+
+
+
+ \mbox{\hyperlink{_heightmap_bake_8h_source}{Heightmap\+Bake.\+h}} の \mbox{\hyperlink{_heightmap_bake_8h_source_l00016}{16}} 行目に定義があります。
+
+
+
+\label{doc-enum-members}
+\Hypertarget{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_doc-enum-members}
+\doxysubsection{列挙型詳解}
+\Hypertarget{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_ac6673f4629bf89536e378f300383af8a}\index{SFW::Graphics::TerrainBake@{SFW::Graphics::TerrainBake}!BakeMode@{BakeMode}}
+\index{BakeMode@{BakeMode}!SFW::Graphics::TerrainBake@{SFW::Graphics::TerrainBake}}
+\doxysubsubsection{\texorpdfstring{BakeMode}{BakeMode}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_ac6673f4629bf89536e378f300383af8a} 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_ac6673f4629bf89536e378f300383af8a}{SFW\+::\+Graphics\+::\+Terrain\+Bake\+::\+Bake\+Mode}} \+: uint32\+\_\+t\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MaxHeight@{MaxHeight}!SFW::Graphics::TerrainBake@{SFW::Graphics::TerrainBake}}\index{SFW::Graphics::TerrainBake@{SFW::Graphics::TerrainBake}!MaxHeight@{MaxHeight}}}\Hypertarget{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_ac6673f4629bf89536e378f300383af8aa6872355c934b9dcaa090dbdc4afa83c2}\label{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_ac6673f4629bf89536e378f300383af8aa6872355c934b9dcaa090dbdc4afa83c2} 
+Max\+Height&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Average@{Average}!SFW::Graphics::TerrainBake@{SFW::Graphics::TerrainBake}}\index{SFW::Graphics::TerrainBake@{SFW::Graphics::TerrainBake}!Average@{Average}}}\Hypertarget{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_ac6673f4629bf89536e378f300383af8aab1897515d548a960afe49ecf66a29021}\label{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_ac6673f4629bf89536e378f300383af8aab1897515d548a960afe49ecf66a29021} 
+Average&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+ \mbox{\hyperlink{_heightmap_bake_8h_source}{Heightmap\+Bake.\+h}} の \mbox{\hyperlink{_heightmap_bake_8h_source_l00031}{31}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_aa0a591e58e1f6218dbe3ab7512808e18}\index{SFW::Graphics::TerrainBake@{SFW::Graphics::TerrainBake}!BakeHeightFieldFromMesh@{BakeHeightFieldFromMesh}}
+\index{BakeHeightFieldFromMesh@{BakeHeightFieldFromMesh}!SFW::Graphics::TerrainBake@{SFW::Graphics::TerrainBake}}
+\doxysubsubsection{\texorpdfstring{BakeHeightFieldFromMesh()}{BakeHeightFieldFromMesh()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_aa0a591e58e1f6218dbe3ab7512808e18} 
+void SFW\+::\+Graphics\+::\+Terrain\+Bake\+::\+Bake\+Height\+Field\+From\+Mesh (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_tri}{Tri}} $>$ \&}]{tris}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid}{Grid}} \&}]{grid}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options}{Bake\+Options}} \&}]{opt}{, }\item[{std\+::vector$<$ float $>$ \&}]{out\+H01}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats}{Bake\+Stats}} \texorpdfstring{$\ast$}{*}}]{out\+Stats}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_heightmap_bake_8h_source}{Heightmap\+Bake.\+h}} の \mbox{\hyperlink{_heightmap_bake_8h_source_l00182}{182}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_a7e54a44c80f08d6f1d4b3b8cf89d84cb}\index{SFW::Graphics::TerrainBake@{SFW::Graphics::TerrainBake}!clamp01@{clamp01}}
+\index{clamp01@{clamp01}!SFW::Graphics::TerrainBake@{SFW::Graphics::TerrainBake}}
+\doxysubsubsection{\texorpdfstring{clamp01()}{clamp01()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_a7e54a44c80f08d6f1d4b3b8cf89d84cb} 
+float SFW\+::\+Graphics\+::\+Terrain\+Bake\+::clamp01 (\begin{DoxyParamCaption}\item[{float}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_heightmap_bake_8h_source}{Heightmap\+Bake.\+h}} の \mbox{\hyperlink{_heightmap_bake_8h_source_l00061}{61}} 行目に定義があります。
+

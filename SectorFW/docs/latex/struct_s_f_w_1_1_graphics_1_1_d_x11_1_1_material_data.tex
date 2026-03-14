@@ -1,0 +1,163 @@
+\doxysection{SFW\+::Graphics\+::DX11\+::Material\+Data 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data}{}\label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data}\index{SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}}
+
+
+DirectX 11用のマテリアルデータ構造体  
+
+
+
+
+{\ttfamily \#include $<$DX11\+Material\+Manager.\+h$>$}
+
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_afc5edfd2dde8e6f34da6b897a7f0b994}{Material\+Template\+ID}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a812f06f673cbd3ff00901a3eb5bc392b}{template\+ID}}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shader_handle}{Shader\+Handle}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a7bed6f4b7cc233753ccc9b51dc2d9d58}{shader}}
+\item 
+bool \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a7f7414cf6b05c6ddb2ca2cbdf5c44ad0}{is\+Bind\+VSSampler}} \{ false \}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a975071e883e497bcb601dacc1ee4b18d}{Material\+Binding\+Cache\+SRV}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a32c4afe8b6d3661713684af991be084a}{ps\+SRV}}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a975071e883e497bcb601dacc1ee4b18d}{Material\+Binding\+Cache\+SRV}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a275e161d4ee52195ca964d4eec1890b9}{vs\+SRV}}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_afcc32b3c5cf80f1b6223418d477187cd}{Material\+Binding\+Cache\+CBV}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a7bd885316c455d2080d136bd82a8a10b}{ps\+CBV}}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_afcc32b3c5cf80f1b6223418d477187cd}{Material\+Binding\+Cache\+CBV}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a499d6d66555ddc1717c8b7a8a47e0e7c}{vs\+CBV}}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0db1737e1f208324896303c5fef44941}{Material\+Binding\+Cache\+Sampler}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a4c3155178bb7f12d70569fee0a2892ee}{sampler\+Cache}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{Shader\+Resource\+Handle}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_ab3d6c41e4855854b14e31891d7376ce0}{used\+SRVs}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a5fd3ee35fe42338111f7634b262c63cd}{used\+CBBuffers}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_sampler_handle}{Sampler\+Handle}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_ac1e81510d9f8c910ae71cc04f622a808}{used\+Samplers}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+DirectX 11用のマテリアルデータ構造体 
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00148}{148}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a7f7414cf6b05c6ddb2ca2cbdf5c44ad0}\index{SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}!isBindVSSampler@{isBindVSSampler}}
+\index{isBindVSSampler@{isBindVSSampler}!SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}}
+\doxysubsubsection{\texorpdfstring{isBindVSSampler}{isBindVSSampler}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a7f7414cf6b05c6ddb2ca2cbdf5c44ad0} 
+bool SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Data\+::is\+Bind\+VSSampler \{ false \}}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00151}{151}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a7bd885316c455d2080d136bd82a8a10b}\index{SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}!psCBV@{psCBV}}
+\index{psCBV@{psCBV}!SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}}
+\doxysubsubsection{\texorpdfstring{psCBV}{psCBV}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a7bd885316c455d2080d136bd82a8a10b} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_afcc32b3c5cf80f1b6223418d477187cd}{Material\+Binding\+Cache\+CBV}} SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Data\+::ps\+CBV}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00153}{153}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a32c4afe8b6d3661713684af991be084a}\index{SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}!psSRV@{psSRV}}
+\index{psSRV@{psSRV}!SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}}
+\doxysubsubsection{\texorpdfstring{psSRV}{psSRV}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a32c4afe8b6d3661713684af991be084a} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a975071e883e497bcb601dacc1ee4b18d}{Material\+Binding\+Cache\+SRV}} SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Data\+::ps\+SRV}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00152}{152}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a4c3155178bb7f12d70569fee0a2892ee}\index{SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}!samplerCache@{samplerCache}}
+\index{samplerCache@{samplerCache}!SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}}
+\doxysubsubsection{\texorpdfstring{samplerCache}{samplerCache}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a4c3155178bb7f12d70569fee0a2892ee} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0db1737e1f208324896303c5fef44941}{Material\+Binding\+Cache\+Sampler}} SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Data\+::sampler\+Cache}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00154}{154}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a7bed6f4b7cc233753ccc9b51dc2d9d58}\index{SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}!shader@{shader}}
+\index{shader@{shader}!SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}}
+\doxysubsubsection{\texorpdfstring{shader}{shader}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a7bed6f4b7cc233753ccc9b51dc2d9d58} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shader_handle}{Shader\+Handle}} SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Data\+::shader}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00150}{150}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a812f06f673cbd3ff00901a3eb5bc392b}\index{SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}!templateID@{templateID}}
+\index{templateID@{templateID}!SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}}
+\doxysubsubsection{\texorpdfstring{templateID}{templateID}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a812f06f673cbd3ff00901a3eb5bc392b} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_afc5edfd2dde8e6f34da6b897a7f0b994}{Material\+Template\+ID}} SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Data\+::template\+ID}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00149}{149}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a5fd3ee35fe42338111f7634b262c63cd}\index{SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}!usedCBBuffers@{usedCBBuffers}}
+\index{usedCBBuffers@{usedCBBuffers}!SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}}
+\doxysubsubsection{\texorpdfstring{usedCBBuffers}{usedCBBuffers}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a5fd3ee35fe42338111f7634b262c63cd} 
+std\+::vector$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}}$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Data\+::used\+CBBuffers}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00156}{156}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_ac1e81510d9f8c910ae71cc04f622a808}\index{SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}!usedSamplers@{usedSamplers}}
+\index{usedSamplers@{usedSamplers}!SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}}
+\doxysubsubsection{\texorpdfstring{usedSamplers}{usedSamplers}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_ac1e81510d9f8c910ae71cc04f622a808} 
+std\+::vector$<$\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_sampler_handle}{Sampler\+Handle}}$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Data\+::used\+Samplers}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00157}{157}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_ab3d6c41e4855854b14e31891d7376ce0}\index{SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}!usedSRVs@{usedSRVs}}
+\index{usedSRVs@{usedSRVs}!SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}}
+\doxysubsubsection{\texorpdfstring{usedSRVs}{usedSRVs}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_ab3d6c41e4855854b14e31891d7376ce0} 
+std\+::vector$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{Shader\+Resource\+Handle}}$>$ SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Data\+::used\+SRVs}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00155}{155}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a499d6d66555ddc1717c8b7a8a47e0e7c}\index{SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}!vsCBV@{vsCBV}}
+\index{vsCBV@{vsCBV}!SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}}
+\doxysubsubsection{\texorpdfstring{vsCBV}{vsCBV}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a499d6d66555ddc1717c8b7a8a47e0e7c} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_afcc32b3c5cf80f1b6223418d477187cd}{Material\+Binding\+Cache\+CBV}} SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Data\+::vs\+CBV}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00153}{153}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a275e161d4ee52195ca964d4eec1890b9}\index{SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}!vsSRV@{vsSRV}}
+\index{vsSRV@{vsSRV}!SFW::Graphics::DX11::MaterialData@{SFW::Graphics::DX11::MaterialData}}
+\doxysubsubsection{\texorpdfstring{vsSRV}{vsSRV}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_data_a275e161d4ee52195ca964d4eec1890b9} 
+\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a975071e883e497bcb601dacc1ee4b18d}{Material\+Binding\+Cache\+SRV}} SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Data\+::vs\+SRV}
+
+
+
+ \mbox{\hyperlink{_d_x11_material_manager_8h_source}{DX11\+Material\+Manager.\+h}} の \mbox{\hyperlink{_d_x11_material_manager_8h_source_l00152}{152}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+DX11/\mbox{\hyperlink{_d_x11_material_manager_8h}{DX11\+Material\+Manager.\+h}}\end{DoxyCompactItemize}

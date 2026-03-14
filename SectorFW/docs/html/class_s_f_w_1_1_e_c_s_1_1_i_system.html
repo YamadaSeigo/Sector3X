@@ -1,0 +1,586 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::ECS::ISystem&lt; Partition &gt; クラステンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_e_c_s_1_1_i_system.html','','class_s_f_w_1_1_e_c_s_1_1_i_system-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::ECS::ISystem&lt; Partition &gt; クラステンプレート<span class="mlabels"><span class="mlabel abstract">abstract</span></span></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>システムのインターフェース  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_i_system_8hpp_source.html">ISystem.hpp</a>&gt;</code></p>
+<div class="dynheader">
+SFW::ECS::ISystem&lt; Partition &gt; の継承関係図</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_s_f_w_1_1_e_c_s_1_1_i_system.png" usemap="#SFW_3A_3AECS_3A_3AISystem_3C_20Partition_20_3E_map" alt=""/>
+  <map id="SFW_3A_3AECS_3A_3AISystem_3C_20Partition_20_3E_map" name="SFW_3A_3AECS_3A_3AISystem_3C_20Partition_20_3E_map">
+<area href="class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7.html" title="ECSシステムのインターフェース" alt="SFW::ECS::ITypeSystem&lt; DerivedT, Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt;, ParallelUpdate &gt;" shape="rect" coords="0,56,776,80"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:ae436de05af9efae1edabb1d69ed1d392" id="r_ae436de05af9efae1edabb1d69ed1d392"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae436de05af9efae1edabb1d69ed1d392">Start</a> (const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;serviceLocator)</td></tr>
+<tr class="memdesc:ae436de05af9efae1edabb1d69ed1d392"><td class="mdescLeft">&#160;</td><td class="mdescRight">システムの開始関数  <br /></td></tr>
+<tr class="memitem:a2885c052870d2b09df346267c3a8837b" id="r_a2885c052870d2b09df346267c3a8837b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2885c052870d2b09df346267c3a8837b">Update</a> (const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;serviceLocator, <a class="el" href="struct_s_f_w_1_1_i_thread_executor.html">IThreadExecutor</a> *executor)</td></tr>
+<tr class="memdesc:a2885c052870d2b09df346267c3a8837b"><td class="mdescLeft">&#160;</td><td class="mdescRight">システムの更新関数(Worldからグローバルに呼び出す)  <br /></td></tr>
+<tr class="memitem:a4fe27ee820e1dcd4e0baf10dde970dea" id="r_a4fe27ee820e1dcd4e0baf10dde970dea"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4fe27ee820e1dcd4e0baf10dde970dea">Update</a> (Partition &amp;partition, <a class="el" href="struct_s_f_w_1_1_level_context.html">LevelContext</a>&lt; Partition &gt; &amp;levelCtx, const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;serviceLocator, <a class="el" href="struct_s_f_w_1_1_i_thread_executor.html">IThreadExecutor</a> *executor)=0</td></tr>
+<tr class="memdesc:a4fe27ee820e1dcd4e0baf10dde970dea"><td class="mdescLeft">&#160;</td><td class="mdescRight">システムの更新関数  <br /></td></tr>
+<tr class="memitem:a9e162dcdc9cf183444cf359f93d2b1de" id="r_a9e162dcdc9cf183444cf359f93d2b1de"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9e162dcdc9cf183444cf359f93d2b1de">End</a> (const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;serviceLocator)</td></tr>
+<tr class="memdesc:a9e162dcdc9cf183444cf359f93d2b1de"><td class="mdescLeft">&#160;</td><td class="mdescRight">システムの終了関数(Worldからグローバルに呼び出す)  <br /></td></tr>
+<tr class="memitem:a2a396811178b789ca9874590a4c773da" id="r_a2a396811178b789ca9874590a4c773da"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a396811178b789ca9874590a4c773da">End</a> (Partition &amp;partition, <a class="el" href="struct_s_f_w_1_1_level_context.html">LevelContext</a>&lt; Partition &gt; &amp;levelCtx, const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;serviceLocator)</td></tr>
+<tr class="memdesc:a2a396811178b789ca9874590a4c773da"><td class="mdescLeft">&#160;</td><td class="mdescRight">システムの終了関数  <br /></td></tr>
+<tr class="memitem:aaac60600ab1f862d7d6e303a57ad14b3" id="r_aaac60600ab1f862d7d6e303a57ad14b3"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_access_info.html">AccessInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaac60600ab1f862d7d6e303a57ad14b3">GetAccessInfo</a> () const noexcept=0</td></tr>
+<tr class="memdesc:aaac60600ab1f862d7d6e303a57ad14b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">アクセス情報の取得関数  <br /></td></tr>
+<tr class="memitem:ac662d810121106aa5ade779e3eafba54" id="r_ac662d810121106aa5ade779e3eafba54"><td class="memItemLeft" align="right" valign="top">virtual constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac662d810121106aa5ade779e3eafba54">IsParallelUpdate</a> () const noexcept</td></tr>
+<tr class="memdesc:ac662d810121106aa5ade779e3eafba54"><td class="mdescLeft">&#160;</td><td class="mdescRight">並列にUpdateが実行されるか？  <br /></td></tr>
+<tr class="memitem:a76f29426ffe8ff891839f83617b5558e" id="r_a76f29426ffe8ff891839f83617b5558e"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a76f29426ffe8ff891839f83617b5558e">~ISystem</a> ()=default</td></tr>
+<tr class="memdesc:a76f29426ffe8ff891839f83617b5558e"><td class="mdescLeft">&#160;</td><td class="mdescRight">デストラクタ  <br /></td></tr>
+<tr class="memitem:a1eca9e4de1c253fc1d2d3230dfeee491" id="r_a1eca9e4de1c253fc1d2d3230dfeee491"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1eca9e4de1c253fc1d2d3230dfeee491">derived_name</a> () const</td></tr>
+<tr class="memdesc:a1eca9e4de1c253fc1d2d3230dfeee491"><td class="mdescLeft">&#160;</td><td class="mdescRight">継承先のクラス名を取得する  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:a8ac687dfb43be42484e0593cb1350f80" id="r_a8ac687dfb43be42484e0593cb1350f80"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ac687dfb43be42484e0593cb1350f80">IsUpdateable</a> () noexcept</td></tr>
+<tr class="memdesc:a8ac687dfb43be42484e0593cb1350f80"><td class="mdescLeft">&#160;</td><td class="mdescRight">UpdateImpl関数を保持しているか？  <br /></td></tr>
+<tr class="memitem:ae54ce64cf5dbe496412128c4cd542106" id="r_ae54ce64cf5dbe496412128c4cd542106"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae54ce64cf5dbe496412128c4cd542106">IsEndSystem</a> () noexcept</td></tr>
+<tr class="memdesc:ae54ce64cf5dbe496412128c4cd542106"><td class="mdescLeft">&#160;</td><td class="mdescRight">EndImpl関数を保持しているか？  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Partition&gt;<br />
+class SFW::ECS::ISystem&lt; Partition &gt;</div><p>システムのインターフェース </p>
+<p>分割のクラスを指定する </p><dl class="tparams"><dt>テンプレート引数</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Partition</td><td>パーティションの型 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_i_system_8hpp_source.html">ISystem.hpp</a> の <a class="el" href="_i_system_8hpp_source.html#l00057">57</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="a76f29426ffe8ff891839f83617b5558e" name="a76f29426ffe8ff891839f83617b5558e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76f29426ffe8ff891839f83617b5558e">&#9670;&#160;</a></span>~ISystem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_system.html">SFW::ECS::ISystem</a>&lt; Partition &gt;::~<a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_system.html">ISystem</a> </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel virtual">virtual</span><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>デストラクタ </p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a1eca9e4de1c253fc1d2d3230dfeee491" name="a1eca9e4de1c253fc1d2d3230dfeee491"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1eca9e4de1c253fc1d2d3230dfeee491">&#9670;&#160;</a></span>derived_name()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_system.html">SFW::ECS::ISystem</a>&lt; Partition &gt;::derived_name </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>継承先のクラス名を取得する </p>
+<dl class="section return"><dt>戻り値</dt><dd>継承クラス名 </dd></dl>
+
+<p class="definition"> <a class="el" href="_i_system_8hpp_source.html">ISystem.hpp</a> の <a class="el" href="_i_system_8hpp_source.html#l00128">128</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9e162dcdc9cf183444cf359f93d2b1de" name="a9e162dcdc9cf183444cf359f93d2b1de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e162dcdc9cf183444cf359f93d2b1de">&#9670;&#160;</a></span>End() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_system.html">SFW::ECS::ISystem</a>&lt; Partition &gt;::End </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>serviceLocator</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>システムの終了関数(Worldからグローバルに呼び出す) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">serviceLocator</td><td>サービズロケーター </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7.html#ae2953bafb1379b2e521e1af9250109fb">SFW::ECS::ITypeSystem&lt; DerivedT, Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt;, ParallelUpdate &gt;</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="_i_system_8hpp_source.html">ISystem.hpp</a> の <a class="el" href="_i_system_8hpp_source.html#l00098">98</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2a396811178b789ca9874590a4c773da" name="a2a396811178b789ca9874590a4c773da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a396811178b789ca9874590a4c773da">&#9670;&#160;</a></span>End() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_system.html">SFW::ECS::ISystem</a>&lt; Partition &gt;::End </td>
+          <td>(</td>
+          <td class="paramtype">Partition &amp;</td>          <td class="paramname"><span class="paramname"><em>partition</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_level_context.html">LevelContext</a>&lt; Partition &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>levelCtx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>serviceLocator</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>システムの終了関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">partition</td><td>対象のパーティション </td></tr>
+    <tr><td class="paramname">serviceLocator</td><td>サービズロケーター </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7.html#a416ce32deebe63dda832c04a62fa413e">SFW::ECS::ITypeSystem&lt; DerivedT, Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt;, ParallelUpdate &gt;</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="_i_system_8hpp_source.html">ISystem.hpp</a> の <a class="el" href="_i_system_8hpp_source.html#l00105">105</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aaac60600ab1f862d7d6e303a57ad14b3" name="aaac60600ab1f862d7d6e303a57ad14b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaac60600ab1f862d7d6e303a57ad14b3">&#9670;&#160;</a></span>GetAccessInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_access_info.html">AccessInfo</a> <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_system.html">SFW::ECS::ISystem</a>&lt; Partition &gt;::GetAccessInfo </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel pure-virtual">pure virtual</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>アクセス情報の取得関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_access_info.html" title="アクセス情報を管理する構造体">AccessInfo</a> アクセス情報 </dd></dl>
+
+<p><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7.html#ae8bfc6d7db07bc1809c7b80838b62912">SFW::ECS::ITypeSystem&lt; DerivedT, Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt;, ParallelUpdate &gt;</a>で実装されています。</p>
+
+</div>
+</div>
+<a id="ae54ce64cf5dbe496412128c4cd542106" name="ae54ce64cf5dbe496412128c4cd542106"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae54ce64cf5dbe496412128c4cd542106">&#9670;&#160;</a></span>IsEndSystem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr bool <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_system.html">SFW::ECS::ISystem</a>&lt; Partition &gt;::IsEndSystem </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>EndImpl関数を保持しているか？ </p>
+<dl class="section return"><dt>戻り値</dt><dd>保持している場合true </dd></dl>
+
+<p class="definition"> <a class="el" href="_i_system_8hpp_source.html">ISystem.hpp</a> の <a class="el" href="_i_system_8hpp_source.html#l00070">70</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac662d810121106aa5ade779e3eafba54" name="ac662d810121106aa5ade779e3eafba54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac662d810121106aa5ade779e3eafba54">&#9670;&#160;</a></span>IsParallelUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual constexpr bool <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_system.html">SFW::ECS::ISystem</a>&lt; Partition &gt;::IsParallelUpdate </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel virtual">virtual</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>並列にUpdateが実行されるか？ </p>
+<dl class="section return"><dt>戻り値</dt><dd>並列に実行される場合true </dd></dl>
+
+<p><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7.html#ab99476ab645f18f166b058a1beca74cd">SFW::ECS::ITypeSystem&lt; DerivedT, Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt;, ParallelUpdate &gt;</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="_i_system_8hpp_source.html">ISystem.hpp</a> の <a class="el" href="_i_system_8hpp_source.html#l00116">116</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8ac687dfb43be42484e0593cb1350f80" name="a8ac687dfb43be42484e0593cb1350f80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ac687dfb43be42484e0593cb1350f80">&#9670;&#160;</a></span>IsUpdateable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr bool <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_system.html">SFW::ECS::ISystem</a>&lt; Partition &gt;::IsUpdateable </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>UpdateImpl関数を保持しているか？ </p>
+<dl class="section return"><dt>戻り値</dt><dd>保持している場合true </dd></dl>
+
+<p class="definition"> <a class="el" href="_i_system_8hpp_source.html">ISystem.hpp</a> の <a class="el" href="_i_system_8hpp_source.html#l00063">63</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae436de05af9efae1edabb1d69ed1d392" name="ae436de05af9efae1edabb1d69ed1d392"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae436de05af9efae1edabb1d69ed1d392">&#9670;&#160;</a></span>Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_system.html">SFW::ECS::ISystem</a>&lt; Partition &gt;::Start </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>serviceLocator</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>システムの開始関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">partition</td><td>対象のパーティション </td></tr>
+    <tr><td class="paramname">serviceLocator</td><td>サービスロケーター </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7.html#a9fd621bf93d585a90216d574253ef08a">SFW::ECS::ITypeSystem&lt; DerivedT, Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt;, ParallelUpdate &gt;</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="_i_system_8hpp_source.html">ISystem.hpp</a> の <a class="el" href="_i_system_8hpp_source.html#l00078">78</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2885c052870d2b09df346267c3a8837b" name="a2885c052870d2b09df346267c3a8837b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2885c052870d2b09df346267c3a8837b">&#9670;&#160;</a></span>Update() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_system.html">SFW::ECS::ISystem</a>&lt; Partition &gt;::Update </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>serviceLocator</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_i_thread_executor.html">IThreadExecutor</a> *</td>          <td class="paramname"><span class="paramname"><em>executor</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>システムの更新関数(Worldからグローバルに呼び出す) </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">serviceLocator</td><td>サービスロケーター </td></tr>
+    <tr><td class="paramname">executor</td><td>スレッド実行クラス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7.html#a402516d639ff2d27497ea37464a6e721">SFW::ECS::ITypeSystem&lt; DerivedT, Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt;, ParallelUpdate &gt;</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="_i_system_8hpp_source.html">ISystem.hpp</a> の <a class="el" href="_i_system_8hpp_source.html#l00085">85</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4fe27ee820e1dcd4e0baf10dde970dea" name="a4fe27ee820e1dcd4e0baf10dde970dea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fe27ee820e1dcd4e0baf10dde970dea">&#9670;&#160;</a></span>Update() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Partition&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_system.html">SFW::ECS::ISystem</a>&lt; Partition &gt;::Update </td>
+          <td>(</td>
+          <td class="paramtype">Partition &amp;</td>          <td class="paramname"><span class="paramname"><em>partition</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_level_context.html">LevelContext</a>&lt; Partition &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>levelCtx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_service_locator.html">ServiceLocator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>serviceLocator</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_i_thread_executor.html">IThreadExecutor</a> *</td>          <td class="paramname"><span class="paramname"><em>executor</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>システムの更新関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">partition</td><td>対象のパーティション </td></tr>
+    <tr><td class="paramname">serviceLocator</td><td>サービズロケーター </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_i_type_system_3_01_derived_t_00_01_partition_00_01_component_access_3_fda74186e4da0afe56e63afae6c86cd7.html#afd127401fe7bea74a0b068912cd9ed27">SFW::ECS::ITypeSystem&lt; DerivedT, Partition, ComponentAccess&lt; AccessTypes... &gt;, ServiceContext&lt; Services... &gt;, ParallelUpdate &gt;</a>で実装されています。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/<a class="el" href="_i_system_8hpp_source.html">ISystem.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_e_c_s.html">ECS</a></li><li class="navelem"><a href="class_s_f_w_1_1_e_c_s_1_1_i_system.html">ISystem</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

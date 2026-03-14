@@ -1,0 +1,134 @@
+\doxysection{SFW\+::Debug\+::IIm\+Gui\+Backend クラス}
+\hypertarget{class_s_f_w_1_1_debug_1_1_i_im_gui_backend}{}\label{class_s_f_w_1_1_debug_1_1_i_im_gui_backend}\index{SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}}
+
+
+Im\+Guiのバックエンドインターフェース(抽象クラス)  
+
+
+
+
+{\ttfamily \#include $<$Im\+Gui\+Backend.\+h$>$}
+
+SFW\+::Debug\+::IIm\+Gui\+Backend の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_f_w_1_1_debug_1_1_i_im_gui_backend}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_afa7fa7db81948159b415dfd1e877aa98}{\texorpdfstring{$\sim$}{\string~}\+IIm\+Gui\+Backend}} ()=default
+\item 
+virtual const std\+::type\+\_\+info \& \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_aff7f5d7ce448fb1b2b3382f4b7cc9a21}{Get\+Window\+Type}} () const =0
+\item 
+virtual const std\+::type\+\_\+info \& \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_af81dc0735eaebc982ab8787532faa41a}{Get\+Device\+Type}} () const =0
+\item 
+virtual bool \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_a7fe9c61756210d87117918f87dcae86d}{Init}} (const \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info}{Im\+Gui\+Init\+Info}} \&)=0
+\item 
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_aa78cd71cf45626743bfa8a79ac0918df}{New\+Frame}} ()=0
+\item 
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_a1fb090d993ec9ac37ba8a6bc8de1ca32}{Render}} ()=0
+\item 
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_a83dd46ac507fdba7559c7d77919d5321}{Shutdown}} ()=0
+\item 
+virtual void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_add2602c2fb1e1dc7ba5bddfd7e0c15f6}{On\+Resize}} (int w, int h)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+Im\+Guiのバックエンドインターフェース(抽象クラス) 
+
+ \mbox{\hyperlink{_im_gui_backend_8h_source}{Im\+Gui\+Backend.\+h}} の \mbox{\hyperlink{_im_gui_backend_8h_source_l00027}{27}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_afa7fa7db81948159b415dfd1e877aa98}\index{SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}!````~IImGuiBackend@{\texorpdfstring{$\sim$}{\string~}IImGuiBackend}}
+\index{````~IImGuiBackend@{\texorpdfstring{$\sim$}{\string~}IImGuiBackend}!SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}IImGuiBackend()}{\string~IImGuiBackend()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_afa7fa7db81948159b415dfd1e877aa98} 
+virtual SFW\+::\+Debug\+::\+IIm\+Gui\+Backend\+::\texorpdfstring{$\sim$}{\string~}\+IIm\+Gui\+Backend (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_af81dc0735eaebc982ab8787532faa41a}\index{SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}!GetDeviceType@{GetDeviceType}}
+\index{GetDeviceType@{GetDeviceType}!SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}}
+\doxysubsubsection{\texorpdfstring{GetDeviceType()}{GetDeviceType()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_af81dc0735eaebc982ab8787532faa41a} 
+virtual const std\+::type\+\_\+info \& SFW\+::\+Debug\+::\+IIm\+Gui\+Backend\+::\+Get\+Device\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_ab79009d63a307cfb281a66812950de72}{SFW\+::\+Debug\+::\+Im\+Gui\+Backend\+DX11\+Win32}}で実装されています。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_aff7f5d7ce448fb1b2b3382f4b7cc9a21}\index{SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}!GetWindowType@{GetWindowType}}
+\index{GetWindowType@{GetWindowType}!SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}}
+\doxysubsubsection{\texorpdfstring{GetWindowType()}{GetWindowType()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_aff7f5d7ce448fb1b2b3382f4b7cc9a21} 
+virtual const std\+::type\+\_\+info \& SFW\+::\+Debug\+::\+IIm\+Gui\+Backend\+::\+Get\+Window\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a80176ebc68d04a6a8704bf4ed1d08beb}{SFW\+::\+Debug\+::\+Im\+Gui\+Backend\+DX11\+Win32}}で実装されています。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_a7fe9c61756210d87117918f87dcae86d}\index{SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}!Init@{Init}}
+\index{Init@{Init}!SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}}
+\doxysubsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_a7fe9c61756210d87117918f87dcae86d} 
+virtual bool SFW\+::\+Debug\+::\+IIm\+Gui\+Backend\+::\+Init (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info}{Im\+Gui\+Init\+Info}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a64458d0e84d04def313c92652028a02b}{SFW\+::\+Debug\+::\+Im\+Gui\+Backend\+DX11\+Win32}}で実装されています。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_aa78cd71cf45626743bfa8a79ac0918df}\index{SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}!NewFrame@{NewFrame}}
+\index{NewFrame@{NewFrame}!SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}}
+\doxysubsubsection{\texorpdfstring{NewFrame()}{NewFrame()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_aa78cd71cf45626743bfa8a79ac0918df} 
+virtual void SFW\+::\+Debug\+::\+IIm\+Gui\+Backend\+::\+New\+Frame (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a46d72f5cf8db9e34400690b5adcdb07e}{SFW\+::\+Debug\+::\+Im\+Gui\+Backend\+DX11\+Win32}}で実装されています。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_add2602c2fb1e1dc7ba5bddfd7e0c15f6}\index{SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}!OnResize@{OnResize}}
+\index{OnResize@{OnResize}!SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}}
+\doxysubsubsection{\texorpdfstring{OnResize()}{OnResize()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_add2602c2fb1e1dc7ba5bddfd7e0c15f6} 
+virtual void SFW\+::\+Debug\+::\+IIm\+Gui\+Backend\+::\+On\+Resize (\begin{DoxyParamCaption}\item[{int}]{w}{, }\item[{int}]{h}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+ \mbox{\hyperlink{_im_gui_backend_8h_source}{Im\+Gui\+Backend.\+h}} の \mbox{\hyperlink{_im_gui_backend_8h_source_l00037}{37}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_a1fb090d993ec9ac37ba8a6bc8de1ca32}\index{SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}!Render@{Render}}
+\index{Render@{Render}!SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_a1fb090d993ec9ac37ba8a6bc8de1ca32} 
+virtual void SFW\+::\+Debug\+::\+IIm\+Gui\+Backend\+::\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a66f1836dfac19b539c9226738f55546b}{SFW\+::\+Debug\+::\+Im\+Gui\+Backend\+DX11\+Win32}}で実装されています。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_a83dd46ac507fdba7559c7d77919d5321}\index{SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}!Shutdown@{Shutdown}}
+\index{Shutdown@{Shutdown}!SFW::Debug::IImGuiBackend@{SFW::Debug::IImGuiBackend}}
+\doxysubsubsection{\texorpdfstring{Shutdown()}{Shutdown()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_i_im_gui_backend_a83dd46ac507fdba7559c7d77919d5321} 
+virtual void SFW\+::\+Debug\+::\+IIm\+Gui\+Backend\+::\+Shutdown (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_im_gui_backend_d_x11_win32_a8b296fdb1534521a5074f0cfcff2c2f1}{SFW\+::\+Debug\+::\+Im\+Gui\+Backend\+DX11\+Win32}}で実装されています。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Debug/\mbox{\hyperlink{_im_gui_backend_8h}{Im\+Gui\+Backend.\+h}}\end{DoxyCompactItemize}

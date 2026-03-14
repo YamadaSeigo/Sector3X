@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Graphics::CoverageMask2D 構造体</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d.html','','struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Graphics::CoverageMask2D 構造体</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_terrain_occluder_extraction_8h_source.html">TerrainOccluderExtraction.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a5af496f3d8141907218a0b156db2a025" id="r_a5af496f3d8141907218a0b156db2a025"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5af496f3d8141907218a0b156db2a025">init</a> (uint32_t screenW_, uint32_t screenH_, uint32_t tileW_=32, uint32_t tileH_=32)</td></tr>
+<tr class="memitem:a163e126243e213e40211465bbdea6913" id="r_a163e126243e213e40211465bbdea6913"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a163e126243e213e40211465bbdea6913">idx</a> (uint32_t x, uint32_t y) const</td></tr>
+<tr class="memitem:aaec0de47db714feca4004d839290c759" id="r_aaec0de47db714feca4004d839290c759"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaec0de47db714feca4004d839290c759">countUncoveredTilesAndUpdate</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_face_quad.html">FaceQuad</a> &amp;q, float depthBias=0.0f, float *outAddedRatio=nullptr, bool commit=true)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+公開変数類</h2></td></tr>
+<tr class="memitem:a64074f795abf246f928ca37c10993964" id="r_a64074f795abf246f928ca37c10993964"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a64074f795abf246f928ca37c10993964">tilesX</a> = 0</td></tr>
+<tr class="memitem:aa3e3d46023a886d8059b8756fde2d670" id="r_aa3e3d46023a886d8059b8756fde2d670"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa3e3d46023a886d8059b8756fde2d670">tilesY</a> = 0</td></tr>
+<tr class="memitem:a6d06183b3e1b42e1d8a1fb9d70696dba" id="r_a6d06183b3e1b42e1d8a1fb9d70696dba"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d06183b3e1b42e1d8a1fb9d70696dba">tileW</a> = 0</td></tr>
+<tr class="memitem:abe26c83890a1c366979e5cc6527c6e72" id="r_abe26c83890a1c366979e5cc6527c6e72"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe26c83890a1c366979e5cc6527c6e72">tileH</a> = 0</td></tr>
+<tr class="memitem:a44f11c4bf43d1bf4538a84e7475f4805" id="r_a44f11c4bf43d1bf4538a84e7475f4805"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a44f11c4bf43d1bf4538a84e7475f4805">screenW</a> = 0</td></tr>
+<tr class="memitem:a8cfb82e515841a5ac9b9c2425c93e6db" id="r_a8cfb82e515841a5ac9b9c2425c93e6db"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8cfb82e515841a5ac9b9c2425c93e6db">screenH</a> = 0</td></tr>
+<tr class="memitem:a4490e2527b18be8b3ba0d793bdd8dec8" id="r_a4490e2527b18be8b3ba0d793bdd8dec8"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4490e2527b18be8b3ba0d793bdd8dec8">occ</a></td></tr>
+<tr class="memitem:a78058a93d9b425ddb9ab5b0101e52120" id="r_a78058a93d9b425ddb9ab5b0101e52120"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a78058a93d9b425ddb9ab5b0101e52120">minZ</a></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock">
+<p class="definition"> <a class="el" href="_terrain_occluder_extraction_8h_source.html">TerrainOccluderExtraction.h</a> の <a class="el" href="_terrain_occluder_extraction_8h_source.html#l00359">359</a> 行目に定義があります。</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="aaec0de47db714feca4004d839290c759" name="aaec0de47db714feca4004d839290c759"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaec0de47db714feca4004d839290c759">&#9670;&#160;</a></span>countUncoveredTilesAndUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::Graphics::CoverageMask2D::countUncoveredTilesAndUpdate </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_face_quad.html">FaceQuad</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>q</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>depthBias</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.0f</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *</td>          <td class="paramname"><span class="paramname"><em>outAddedRatio</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>commit</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_terrain_occluder_extraction_8h_source.html">TerrainOccluderExtraction.h</a> の <a class="el" href="_terrain_occluder_extraction_8h_source.html#l00377">377</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a163e126243e213e40211465bbdea6913" name="a163e126243e213e40211465bbdea6913"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a163e126243e213e40211465bbdea6913">&#9670;&#160;</a></span>idx()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::Graphics::CoverageMask2D::idx </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_terrain_occluder_extraction_8h_source.html">TerrainOccluderExtraction.h</a> の <a class="el" href="_terrain_occluder_extraction_8h_source.html#l00374">374</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a5af496f3d8141907218a0b156db2a025" name="a5af496f3d8141907218a0b156db2a025"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5af496f3d8141907218a0b156db2a025">&#9670;&#160;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::CoverageMask2D::init </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>screenW_</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>screenH_</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>tileW_</em></span><span class="paramdefsep"> = </span><span class="paramdefval">32</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>tileH_</em></span><span class="paramdefsep"> = </span><span class="paramdefval">32</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_terrain_occluder_extraction_8h_source.html">TerrainOccluderExtraction.h</a> の <a class="el" href="_terrain_occluder_extraction_8h_source.html#l00366">366</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<a id="a78058a93d9b425ddb9ab5b0101e52120" name="a78058a93d9b425ddb9ab5b0101e52120"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78058a93d9b425ddb9ab5b0101e52120">&#9670;&#160;</a></span>minZ</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;float&gt; SFW::Graphics::CoverageMask2D::minZ</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_terrain_occluder_extraction_8h_source.html">TerrainOccluderExtraction.h</a> の <a class="el" href="_terrain_occluder_extraction_8h_source.html#l00364">364</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4490e2527b18be8b3ba0d793bdd8dec8" name="a4490e2527b18be8b3ba0d793bdd8dec8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4490e2527b18be8b3ba0d793bdd8dec8">&#9670;&#160;</a></span>occ</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;uint8_t&gt; SFW::Graphics::CoverageMask2D::occ</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_terrain_occluder_extraction_8h_source.html">TerrainOccluderExtraction.h</a> の <a class="el" href="_terrain_occluder_extraction_8h_source.html#l00363">363</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8cfb82e515841a5ac9b9c2425c93e6db" name="a8cfb82e515841a5ac9b9c2425c93e6db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cfb82e515841a5ac9b9c2425c93e6db">&#9670;&#160;</a></span>screenH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::Graphics::CoverageMask2D::screenH = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_terrain_occluder_extraction_8h_source.html">TerrainOccluderExtraction.h</a> の <a class="el" href="_terrain_occluder_extraction_8h_source.html#l00361">361</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a44f11c4bf43d1bf4538a84e7475f4805" name="a44f11c4bf43d1bf4538a84e7475f4805"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44f11c4bf43d1bf4538a84e7475f4805">&#9670;&#160;</a></span>screenW</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::Graphics::CoverageMask2D::screenW = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_terrain_occluder_extraction_8h_source.html">TerrainOccluderExtraction.h</a> の <a class="el" href="_terrain_occluder_extraction_8h_source.html#l00361">361</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="abe26c83890a1c366979e5cc6527c6e72" name="abe26c83890a1c366979e5cc6527c6e72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe26c83890a1c366979e5cc6527c6e72">&#9670;&#160;</a></span>tileH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::Graphics::CoverageMask2D::tileH = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_terrain_occluder_extraction_8h_source.html">TerrainOccluderExtraction.h</a> の <a class="el" href="_terrain_occluder_extraction_8h_source.html#l00360">360</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a64074f795abf246f928ca37c10993964" name="a64074f795abf246f928ca37c10993964"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64074f795abf246f928ca37c10993964">&#9670;&#160;</a></span>tilesX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::Graphics::CoverageMask2D::tilesX = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_terrain_occluder_extraction_8h_source.html">TerrainOccluderExtraction.h</a> の <a class="el" href="_terrain_occluder_extraction_8h_source.html#l00360">360</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aa3e3d46023a886d8059b8756fde2d670" name="aa3e3d46023a886d8059b8756fde2d670"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3e3d46023a886d8059b8756fde2d670">&#9670;&#160;</a></span>tilesY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::Graphics::CoverageMask2D::tilesY = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_terrain_occluder_extraction_8h_source.html">TerrainOccluderExtraction.h</a> の <a class="el" href="_terrain_occluder_extraction_8h_source.html#l00360">360</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6d06183b3e1b42e1d8a1fb9d70696dba" name="a6d06183b3e1b42e1d8a1fb9d70696dba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d06183b3e1b42e1d8a1fb9d70696dba">&#9670;&#160;</a></span>tileW</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::Graphics::CoverageMask2D::tileW = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_terrain_occluder_extraction_8h_source.html">TerrainOccluderExtraction.h</a> の <a class="el" href="_terrain_occluder_extraction_8h_source.html#l00360">360</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>この構造体詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/<a class="el" href="_terrain_occluder_extraction_8h_source.html">TerrainOccluderExtraction.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics.html">Graphics</a></li><li class="navelem"><a href="struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d.html">CoverageMask2D</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

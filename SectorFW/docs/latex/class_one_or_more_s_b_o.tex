@@ -1,0 +1,222 @@
+\doxysection{One\+Or\+More\+SBO\texorpdfstring{$<$}{<} T, SmallN \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_one_or_more_s_b_o}{}\label{class_one_or_more_s_b_o}\index{OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}}
+
+
+1個から4個程度の要素を格納すると効率がいいコンテナクラス（\+Small Buffer Optimization版）  
+
+
+
+
+{\ttfamily \#include $<$One\+Or\+More.\+hpp$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_one_or_more_s_b_o_1_1iterator}{iterator}}
+\begin{DoxyCompactList}\small\item\em 反復イテレータ（分岐なし \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_one_or_more_s_b_o_aa85da916059e913e4bfaefc70003137c}{One\+Or\+More\+SBO}} ()=default
+\item 
+size\+\_\+t \mbox{\hyperlink{class_one_or_more_s_b_o_a873f3fef10d2b56a575606064fe1e5c2}{size}} () const noexcept
+\begin{DoxyCompactList}\small\item\em サイズ / 空判定 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_one_or_more_s_b_o_aae6e17b64a03db4e8d4f0b919222ba9b}{empty}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 空判定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_one_or_more_s_b_o_ad790f93d790071979e51ecc089683420}{clear}} () noexcept
+\begin{DoxyCompactList}\small\item\em clear \end{DoxyCompactList}\item 
+{\footnotesize template$<$class... Args$>$ }\\T \& \mbox{\hyperlink{class_one_or_more_s_b_o_a85118ee149592a8302bcd0e18cad0998}{emplace}} (Args \&\&... args)
+\begin{DoxyCompactList}\small\item\em 追加（コピー） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_one_or_more_s_b_o_acdc6df09ad62c0b2ea82af158df317a4}{reserve}} (size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em reserve \end{DoxyCompactList}\item 
+const T \& \mbox{\hyperlink{class_one_or_more_s_b_o_af68972ee2859409f4a8a657fcb3e8890}{operator\mbox{[}$\,$\mbox{]}}} (size\+\_\+t i) const
+\begin{DoxyCompactList}\small\item\em 直接参照（高速だが自己責任） \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_one_or_more_s_b_o_1_1iterator}{iterator}} \mbox{\hyperlink{class_one_or_more_s_b_o_a32c2e7ec1aa3c0ca95b031c625de3d56}{begin}} () const noexcept
+\begin{DoxyCompactList}\small\item\em begin \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_one_or_more_s_b_o_1_1iterator}{iterator}} \mbox{\hyperlink{class_one_or_more_s_b_o_a661f3924ba94bd9cb04103d2b263365b}{end}} () const noexcept
+\begin{DoxyCompactList}\small\item\em end \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$class T, size\+\_\+t SmallN = 4$>$\newline
+class One\+Or\+More\+SBO$<$ T, Small\+N $>$}
+1個から4個程度の要素を格納すると効率がいいコンテナクラス（\+Small Buffer Optimization版） 
+
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00215}{215}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_one_or_more_s_b_o_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_one_or_more_s_b_o_aa85da916059e913e4bfaefc70003137c}\index{OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}!OneOrMoreSBO@{OneOrMoreSBO}}
+\index{OneOrMoreSBO@{OneOrMoreSBO}!OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}}
+\doxysubsubsection{\texorpdfstring{OneOrMoreSBO()}{OneOrMoreSBO()}}
+{\footnotesize\ttfamily \label{class_one_or_more_s_b_o_aa85da916059e913e4bfaefc70003137c} 
+template$<$class T, size\+\_\+t SmallN = 4$>$ \\
+\mbox{\hyperlink{class_one_or_more_s_b_o}{One\+Or\+More\+SBO}}$<$ T, SmallN $>$\mbox{\hyperlink{class_one_or_more_s_b_o}{\+::\+One\+Or\+More\+SBO}} (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_one_or_more_s_b_o_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_one_or_more_s_b_o_a32c2e7ec1aa3c0ca95b031c625de3d56}\index{OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}!begin@{begin}}
+\index{begin@{begin}!OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily \label{class_one_or_more_s_b_o_a32c2e7ec1aa3c0ca95b031c625de3d56} 
+template$<$class T, size\+\_\+t SmallN = 4$>$ \\
+\mbox{\hyperlink{struct_one_or_more_s_b_o_1_1iterator}{iterator}} \mbox{\hyperlink{class_one_or_more_s_b_o}{One\+Or\+More\+SBO}}$<$ T, SmallN $>$\+::begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+begin 
+
+\begin{DoxyReturn}{戻り値}
+iterator 先頭イテレータ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00304}{304}} 行目に定義があります。
+
+\Hypertarget{class_one_or_more_s_b_o_ad790f93d790071979e51ecc089683420}\index{OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}!clear@{clear}}
+\index{clear@{clear}!OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{class_one_or_more_s_b_o_ad790f93d790071979e51ecc089683420} 
+template$<$class T, size\+\_\+t SmallN = 4$>$ \\
+void \mbox{\hyperlink{class_one_or_more_s_b_o}{One\+Or\+More\+SBO}}$<$ T, SmallN $>$\+::clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+clear 
+
+
+
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00238}{238}} 行目に定義があります。
+
+\Hypertarget{class_one_or_more_s_b_o_a85118ee149592a8302bcd0e18cad0998}\index{OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}!emplace@{emplace}}
+\index{emplace@{emplace}!OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}}
+\doxysubsubsection{\texorpdfstring{emplace()}{emplace()}}
+{\footnotesize\ttfamily \label{class_one_or_more_s_b_o_a85118ee149592a8302bcd0e18cad0998} 
+template$<$class T, size\+\_\+t SmallN = 4$>$ \\
+template$<$class... Args$>$ \\
+T \& \mbox{\hyperlink{class_one_or_more_s_b_o}{One\+Or\+More\+SBO}}$<$ T, SmallN $>$\+::emplace (\begin{DoxyParamCaption}\item[{Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+追加（コピー） 
+
+
+\begin{DoxyParams}{引数}
+{\em ...\+args} & コンストラクタ引数 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+T\& 追加された要素への参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00248}{248}} 行目に定義があります。
+
+\Hypertarget{class_one_or_more_s_b_o_aae6e17b64a03db4e8d4f0b919222ba9b}\index{OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}!empty@{empty}}
+\index{empty@{empty}!OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}}
+\doxysubsubsection{\texorpdfstring{empty()}{empty()}}
+{\footnotesize\ttfamily \label{class_one_or_more_s_b_o_aae6e17b64a03db4e8d4f0b919222ba9b} 
+template$<$class T, size\+\_\+t SmallN = 4$>$ \\
+bool \mbox{\hyperlink{class_one_or_more_s_b_o}{One\+Or\+More\+SBO}}$<$ T, SmallN $>$\+::empty (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+空判定 
+
+\begin{DoxyReturn}{戻り値}
+bool 空なら true 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00234}{234}} 行目に定義があります。
+
+\Hypertarget{class_one_or_more_s_b_o_a661f3924ba94bd9cb04103d2b263365b}\index{OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}!end@{end}}
+\index{end@{end}!OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}}
+{\footnotesize\ttfamily \label{class_one_or_more_s_b_o_a661f3924ba94bd9cb04103d2b263365b} 
+template$<$class T, size\+\_\+t SmallN = 4$>$ \\
+\mbox{\hyperlink{struct_one_or_more_s_b_o_1_1iterator}{iterator}} \mbox{\hyperlink{class_one_or_more_s_b_o}{One\+Or\+More\+SBO}}$<$ T, SmallN $>$\+::end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+end 
+
+\begin{DoxyReturn}{戻り値}
+iterator 終端イテレータ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00313}{313}} 行目に定義があります。
+
+\Hypertarget{class_one_or_more_s_b_o_af68972ee2859409f4a8a657fcb3e8890}\index{OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily \label{class_one_or_more_s_b_o_af68972ee2859409f4a8a657fcb3e8890} 
+template$<$class T, size\+\_\+t SmallN = 4$>$ \\
+const T \& \mbox{\hyperlink{class_one_or_more_s_b_o}{One\+Or\+More\+SBO}}$<$ T, SmallN $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{i}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+直接参照（高速だが自己責任） 
+
+
+\begin{DoxyParams}{引数}
+{\em i} & インデックス \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+const T\& 参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00285}{285}} 行目に定義があります。
+
+\Hypertarget{class_one_or_more_s_b_o_acdc6df09ad62c0b2ea82af158df317a4}\index{OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}!reserve@{reserve}}
+\index{reserve@{reserve}!OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}}
+\doxysubsubsection{\texorpdfstring{reserve()}{reserve()}}
+{\footnotesize\ttfamily \label{class_one_or_more_s_b_o_acdc6df09ad62c0b2ea82af158df317a4} 
+template$<$class T, size\+\_\+t SmallN = 4$>$ \\
+void \mbox{\hyperlink{class_one_or_more_s_b_o}{One\+Or\+More\+SBO}}$<$ T, SmallN $>$\+::reserve (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+reserve 
+
+
+\begin{DoxyParams}{引数}
+{\em n} & 予約する要素数 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00269}{269}} 行目に定義があります。
+
+\Hypertarget{class_one_or_more_s_b_o_a873f3fef10d2b56a575606064fe1e5c2}\index{OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}!size@{size}}
+\index{size@{size}!OneOrMoreSBO$<$ T, SmallN $>$@{OneOrMoreSBO$<$ T, SmallN $>$}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily \label{class_one_or_more_s_b_o_a873f3fef10d2b56a575606064fe1e5c2} 
+template$<$class T, size\+\_\+t SmallN = 4$>$ \\
+size\+\_\+t \mbox{\hyperlink{class_one_or_more_s_b_o}{One\+Or\+More\+SBO}}$<$ T, SmallN $>$\+::size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+サイズ / 空判定 
+
+\begin{DoxyReturn}{戻り値}
+size\+\_\+t サイズ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00229}{229}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/\mbox{\hyperlink{_one_or_more_8hpp}{One\+Or\+More.\+hpp}}\end{DoxyCompactItemize}

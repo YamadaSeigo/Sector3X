@@ -1,0 +1,161 @@
+\doxysection{SFW\+::Level\texorpdfstring{$<$}{<} Partition \texorpdfstring{$>$}{>}\+::Session 構造体}
+\hypertarget{struct_s_f_w_1_1_level_1_1_session}{}\label{struct_s_f_w_1_1_level_1_1_session}\index{SFW::Level$<$ Partition $>$::Session@{SFW::Level$<$ Partition $>$::Session}}
+
+
+レベルへの要求を管理するセッション構造体  
+
+
+
+
+{\ttfamily \#include $<$Level.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_a8b4665fa7ec338679029e854b7e4e1c7}{Session}} (\mbox{\hyperlink{class_s_f_w_1_1_level}{Level}}$<$ Partition $>$ \&\+\_\+level, std\+::shared\+\_\+mutex \&\+\_\+m)
+\item 
+{\footnotesize template$<$typename... Components$>$ }\\std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_a1497f0e7d6f5910ab9e3abac04a78884}{Add\+Entity}} (const Components \&... components)
+\begin{DoxyCompactList}\small\item\em エンティティを追加する関数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Components$>$ }\\std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_a8b87ed219a0226e66c527535c329b6b8}{Add\+Static\+Bounds\+Entity}} (\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}{Spatial\+Chunk\+::\+Bounds3f}} bounds\+WS, const Components \&... components)
+\begin{DoxyCompactList}\small\item\em 静的境界ボリュームを持つエンティティを追加する関数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Components$>$ }\\std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_ae5f0dbb27c12ac67b189a7b467630a8f}{Add\+Entity\+With\+Location}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} location, const Components \&... components)
+\begin{DoxyCompactList}\small\item\em 位置を指定してエンティティを追加する関数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Components$>$ }\\std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} $>$ \mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session_ad260b94cdba1682550dbc752aed2e765}{Add\+Global\+Entity}} (const Components \&... components)
+\begin{DoxyCompactList}\small\item\em グローバルエンティティを追加する関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$Partition\+Concept Partition$>$\newline
+struct SFW\+::\+Level$<$ Partition $>$\+::\+Session}
+レベルへの要求を管理するセッション構造体 
+
+専有ロックを取得しているので、システムの更新で生成するとデッドロックの可能性あり 
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00143}{143}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{struct_s_f_w_1_1_level_1_1_session_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{struct_s_f_w_1_1_level_1_1_session_a8b4665fa7ec338679029e854b7e4e1c7}\index{SFW::Level$<$ Partition $>$::Session@{SFW::Level$<$ Partition $>$::Session}!Session@{Session}}
+\index{Session@{Session}!SFW::Level$<$ Partition $>$::Session@{SFW::Level$<$ Partition $>$::Session}}
+\doxysubsubsection{\texorpdfstring{Session()}{Session()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_level_1_1_session_a8b4665fa7ec338679029e854b7e4e1c7} 
+template$<$Partition\+Concept Partition$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Session\+::\+Session (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_level}{Level}}$<$ Partition $>$ \&}]{\+\_\+level}{, }\item[{std\+::shared\+\_\+mutex \&}]{\+\_\+m}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00145}{145}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_level_1_1_session_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_level_1_1_session_a1497f0e7d6f5910ab9e3abac04a78884}\index{SFW::Level$<$ Partition $>$::Session@{SFW::Level$<$ Partition $>$::Session}!AddEntity@{AddEntity}}
+\index{AddEntity@{AddEntity}!SFW::Level$<$ Partition $>$::Session@{SFW::Level$<$ Partition $>$::Session}}
+\doxysubsubsection{\texorpdfstring{AddEntity()}{AddEntity()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_level_1_1_session_a1497f0e7d6f5910ab9e3abac04a78884} 
+template$<$Partition\+Concept Partition$>$ \\
+template$<$typename... Components$>$ \\
+std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Session\+::\+Add\+Entity (\begin{DoxyParamCaption}\item[{const Components \&...}]{components}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+エンティティを追加する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em ...\+components} & 追加するコンポーネントの可変引数 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+std\+::optional$<$\+ECS\+::\+Entity\+ID$>$ エンティティ\+IDのオプション 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00153}{153}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_level_1_1_session_ae5f0dbb27c12ac67b189a7b467630a8f}\index{SFW::Level$<$ Partition $>$::Session@{SFW::Level$<$ Partition $>$::Session}!AddEntityWithLocation@{AddEntityWithLocation}}
+\index{AddEntityWithLocation@{AddEntityWithLocation}!SFW::Level$<$ Partition $>$::Session@{SFW::Level$<$ Partition $>$::Session}}
+\doxysubsubsection{\texorpdfstring{AddEntityWithLocation()}{AddEntityWithLocation()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_level_1_1_session_ae5f0dbb27c12ac67b189a7b467630a8f} 
+template$<$Partition\+Concept Partition$>$ \\
+template$<$typename... Components$>$ \\
+std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Session\+::\+Add\+Entity\+With\+Location (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{location}{, }\item[{const Components \&...}]{components}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+位置を指定してエンティティを追加する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em location} & エンティティの位置 \\
+\hline
+{\em ...\+components} & 追加するコンポーネントの可変引数 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+std\+::optional$<$\+ECS\+::\+Entity\+ID$>$ エンティティ\+ID 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00252}{252}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_level_1_1_session_ad260b94cdba1682550dbc752aed2e765}\index{SFW::Level$<$ Partition $>$::Session@{SFW::Level$<$ Partition $>$::Session}!AddGlobalEntity@{AddGlobalEntity}}
+\index{AddGlobalEntity@{AddGlobalEntity}!SFW::Level$<$ Partition $>$::Session@{SFW::Level$<$ Partition $>$::Session}}
+\doxysubsubsection{\texorpdfstring{AddGlobalEntity()}{AddGlobalEntity()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_level_1_1_session_ad260b94cdba1682550dbc752aed2e765} 
+template$<$Partition\+Concept Partition$>$ \\
+template$<$typename... Components$>$ \\
+std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Session\+::\+Add\+Global\+Entity (\begin{DoxyParamCaption}\item[{const Components \&...}]{components}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+グローバルエンティティを追加する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em ...\+components} & 追加するコンポーネントの可変引数 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+std\+::optional$<$\+ECS\+::\+Entity\+ID$>$ エンティティ\+IDのオプション 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00292}{292}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_level_1_1_session_a8b87ed219a0226e66c527535c329b6b8}\index{SFW::Level$<$ Partition $>$::Session@{SFW::Level$<$ Partition $>$::Session}!AddStaticBoundsEntity@{AddStaticBoundsEntity}}
+\index{AddStaticBoundsEntity@{AddStaticBoundsEntity}!SFW::Level$<$ Partition $>$::Session@{SFW::Level$<$ Partition $>$::Session}}
+\doxysubsubsection{\texorpdfstring{AddStaticBoundsEntity()}{AddStaticBoundsEntity()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_level_1_1_session_a8b87ed219a0226e66c527535c329b6b8} 
+template$<$Partition\+Concept Partition$>$ \\
+template$<$typename... Components$>$ \\
+std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Session\+::\+Add\+Static\+Bounds\+Entity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_af290a42d0fc1b4a1862cd90e56878711}{Spatial\+Chunk\+::\+Bounds3f}}}]{bounds\+WS}{, }\item[{const Components \&...}]{components}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+静的境界ボリュームを持つエンティティを追加する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em bounds\+WS} & ワールド空間での境界ボリューム \\
+\hline
+{\em ...\+components} & 追加するコンポーネントの可変引数 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+std\+::optional$<$\+ECS\+::\+Entity\+ID$>$ エンティティ\+ID 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00201}{201}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_level_8hpp}{Level.\+hpp}}\end{DoxyCompactItemize}

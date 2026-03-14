@@ -1,0 +1,235 @@
+\doxysection{SFW\+::Copyable\+Atomic\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} 構造体テンプレート}
+\hypertarget{struct_s_f_w_1_1_copyable_atomic}{}\label{struct_s_f_w_1_1_copyable_atomic}\index{SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}}
+
+
+コピー可能なatomicラッパークラス  
+
+
+
+
+{\ttfamily \#include $<$Copyable\+Atomic.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a351be247334ebd719ba0d2613d833c92}{Copyable\+Atomic}} () noexcept=default
+\begin{DoxyCompactList}\small\item\em デフォルトコンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a3edfb6fbf365b4017469919bca5da3f8}{Copyable\+Atomic}} (T v) noexcept
+\begin{DoxyCompactList}\small\item\em 値を指定して初期化するコンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a629b8c97b869982f2216114bf190985b}{Copyable\+Atomic}} (const \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{Copyable\+Atomic}} \&other) noexcept
+\begin{DoxyCompactList}\small\item\em コピー時はデフォルト初期化（0） \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{Copyable\+Atomic}} \& \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a141fef1b4c5c9921c6b9025f62a7c6d4}{operator=}} (const \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{Copyable\+Atomic}} \&other) noexcept
+\item 
+T \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_af074ab5d8afcb3fbfb655b609a78e747}{load}} (std\+::memory\+\_\+order order=std\+::memory\+\_\+order\+\_\+seq\+\_\+cst) const
+\begin{DoxyCompactList}\small\item\em 明示的にatomic操作を委譲 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a50573d79a69eafaf28b63997abfd0a20}{store}} (T v, std\+::memory\+\_\+order order=std\+::memory\+\_\+order\+\_\+seq\+\_\+cst)
+\begin{DoxyCompactList}\small\item\em ストア操作を委譲 \end{DoxyCompactList}\item 
+T \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_ac542b8627e82698556ab3be9e8c9000c}{fetch\+\_\+add}} (T arg, std\+::memory\+\_\+order order=std\+::memory\+\_\+order\+\_\+seq\+\_\+cst)
+\begin{DoxyCompactList}\small\item\em 加算操作を委譲 \end{DoxyCompactList}\item 
+T \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_a9056e7a3cb03985b536c342fdde8ddd1}{fetch\+\_\+sub}} (T arg, std\+::memory\+\_\+order order=std\+::memory\+\_\+order\+\_\+seq\+\_\+cst)
+\begin{DoxyCompactList}\small\item\em 減算操作を委譲 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+std\+::atomic$<$ T $>$ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic_af4045847582f5e0c161061f32b44f060}{value}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename T$>$\newline
+struct SFW\+::\+Copyable\+Atomic$<$ T $>$}
+コピー可能なatomicラッパークラス 
+
+ \mbox{\hyperlink{_copyable_atomic_8hpp_source}{Copyable\+Atomic.\+hpp}} の \mbox{\hyperlink{_copyable_atomic_8hpp_source_l00018}{18}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{struct_s_f_w_1_1_copyable_atomic_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{struct_s_f_w_1_1_copyable_atomic_a351be247334ebd719ba0d2613d833c92}\index{SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}!CopyableAtomic@{CopyableAtomic}}
+\index{CopyableAtomic@{CopyableAtomic}!SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CopyableAtomic()}{CopyableAtomic()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_copyable_atomic_a351be247334ebd719ba0d2613d833c92} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{SFW\+::\+Copyable\+Atomic}}$<$ T $>$\+::\+Copyable\+Atomic (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}, {\ttfamily [noexcept]}}
+
+
+
+デフォルトコンストラクタ 
+
+\Hypertarget{struct_s_f_w_1_1_copyable_atomic_a3edfb6fbf365b4017469919bca5da3f8}\index{SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}!CopyableAtomic@{CopyableAtomic}}
+\index{CopyableAtomic@{CopyableAtomic}!SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CopyableAtomic()}{CopyableAtomic()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_copyable_atomic_a3edfb6fbf365b4017469919bca5da3f8} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{SFW\+::\+Copyable\+Atomic}}$<$ T $>$\+::\+Copyable\+Atomic (\begin{DoxyParamCaption}\item[{T}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+値を指定して初期化するコンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em v} & 初期化する値 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_copyable_atomic_8hpp_source}{Copyable\+Atomic.\+hpp}} の \mbox{\hyperlink{_copyable_atomic_8hpp_source_l00029}{29}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_copyable_atomic_a629b8c97b869982f2216114bf190985b}\index{SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}!CopyableAtomic@{CopyableAtomic}}
+\index{CopyableAtomic@{CopyableAtomic}!SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CopyableAtomic()}{CopyableAtomic()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_copyable_atomic_a629b8c97b869982f2216114bf190985b} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{SFW\+::\+Copyable\+Atomic}}$<$ T $>$\+::\+Copyable\+Atomic (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{Copyable\+Atomic}}$<$ T $>$ \&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+コピー時はデフォルト初期化（0） 
+
+
+\begin{DoxyParams}{引数}
+{\em other} & コピー元 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_copyable_atomic}{Copyable\+Atomic}\& 自身の参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_copyable_atomic_8hpp_source}{Copyable\+Atomic.\+hpp}} の \mbox{\hyperlink{_copyable_atomic_8hpp_source_l00036}{36}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_copyable_atomic_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_copyable_atomic_ac542b8627e82698556ab3be9e8c9000c}\index{SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}!fetch\_add@{fetch\_add}}
+\index{fetch\_add@{fetch\_add}!SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{fetch\_add()}{fetch\_add()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_copyable_atomic_ac542b8627e82698556ab3be9e8c9000c} 
+template$<$typename T$>$ \\
+T \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{SFW\+::\+Copyable\+Atomic}}$<$ T $>$\+::fetch\+\_\+add (\begin{DoxyParamCaption}\item[{T}]{arg}{, }\item[{std\+::memory\+\_\+order}]{order}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+seq\+\_\+cst}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+加算操作を委譲 
+
+
+\begin{DoxyParams}{引数}
+{\em arg} & 加算する値 \\
+\hline
+{\em order} & メモリオーダー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+T 加算前の値 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_copyable_atomic_8hpp_source}{Copyable\+Atomic.\+hpp}} の \mbox{\hyperlink{_copyable_atomic_8hpp_source_l00064}{64}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_copyable_atomic_a9056e7a3cb03985b536c342fdde8ddd1}\index{SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}!fetch\_sub@{fetch\_sub}}
+\index{fetch\_sub@{fetch\_sub}!SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{fetch\_sub()}{fetch\_sub()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_copyable_atomic_a9056e7a3cb03985b536c342fdde8ddd1} 
+template$<$typename T$>$ \\
+T \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{SFW\+::\+Copyable\+Atomic}}$<$ T $>$\+::fetch\+\_\+sub (\begin{DoxyParamCaption}\item[{T}]{arg}{, }\item[{std\+::memory\+\_\+order}]{order}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+seq\+\_\+cst}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+減算操作を委譲 
+
+
+\begin{DoxyParams}{引数}
+{\em arg} & 減算する値 \\
+\hline
+{\em order} & メモリオーダー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+T 減算前の値 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_copyable_atomic_8hpp_source}{Copyable\+Atomic.\+hpp}} の \mbox{\hyperlink{_copyable_atomic_8hpp_source_l00073}{73}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_copyable_atomic_af074ab5d8afcb3fbfb655b609a78e747}\index{SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}!load@{load}}
+\index{load@{load}!SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_copyable_atomic_af074ab5d8afcb3fbfb655b609a78e747} 
+template$<$typename T$>$ \\
+T \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{SFW\+::\+Copyable\+Atomic}}$<$ T $>$\+::load (\begin{DoxyParamCaption}\item[{std\+::memory\+\_\+order}]{order}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+seq\+\_\+cst}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+明示的にatomic操作を委譲 
+
+
+\begin{DoxyParams}{引数}
+{\em order} & メモリオーダー \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+T ロードした値 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_copyable_atomic_8hpp_source}{Copyable\+Atomic.\+hpp}} の \mbox{\hyperlink{_copyable_atomic_8hpp_source_l00047}{47}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_copyable_atomic_a141fef1b4c5c9921c6b9025f62a7c6d4}\index{SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_copyable_atomic_a141fef1b4c5c9921c6b9025f62a7c6d4} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{Copyable\+Atomic}} \& \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{SFW\+::\+Copyable\+Atomic}}$<$ T $>$\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{Copyable\+Atomic}}$<$ T $>$ \&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_copyable_atomic_8hpp_source}{Copyable\+Atomic.\+hpp}} の \mbox{\hyperlink{_copyable_atomic_8hpp_source_l00037}{37}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_copyable_atomic_a50573d79a69eafaf28b63997abfd0a20}\index{SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}!store@{store}}
+\index{store@{store}!SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{store()}{store()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_copyable_atomic_a50573d79a69eafaf28b63997abfd0a20} 
+template$<$typename T$>$ \\
+void \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{SFW\+::\+Copyable\+Atomic}}$<$ T $>$\+::store (\begin{DoxyParamCaption}\item[{T}]{v}{, }\item[{std\+::memory\+\_\+order}]{order}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+seq\+\_\+cst}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ストア操作を委譲 
+
+
+\begin{DoxyParams}{引数}
+{\em v} & 格納する値 \\
+\hline
+{\em order} & メモリオーダー \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_copyable_atomic_8hpp_source}{Copyable\+Atomic.\+hpp}} の \mbox{\hyperlink{_copyable_atomic_8hpp_source_l00055}{55}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_copyable_atomic_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_copyable_atomic_af4045847582f5e0c161061f32b44f060}\index{SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}!value@{value}}
+\index{value@{value}!SFW::CopyableAtomic$<$ T $>$@{SFW::CopyableAtomic$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_copyable_atomic_af4045847582f5e0c161061f32b44f060} 
+template$<$typename T$>$ \\
+std\+::atomic$<$T$>$ \mbox{\hyperlink{struct_s_f_w_1_1_copyable_atomic}{SFW\+::\+Copyable\+Atomic}}$<$ T $>$\+::value}
+
+
+
+ \mbox{\hyperlink{_copyable_atomic_8hpp_source}{Copyable\+Atomic.\+hpp}} の \mbox{\hyperlink{_copyable_atomic_8hpp_source_l00019}{19}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/\mbox{\hyperlink{_copyable_atomic_8hpp}{Copyable\+Atomic.\+hpp}}\end{DoxyCompactItemize}

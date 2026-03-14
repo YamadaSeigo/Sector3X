@@ -1,0 +1,292 @@
+\doxysection{Sector\+FW\+::SAPPartition クラス}
+\hypertarget{class_sector_f_w_1_1_s_a_p_partition}{}\label{class_sector_f_w_1_1_s_a_p_partition}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+
+
+{\ttfamily \#include $<$SAPPartitionh.\+h$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_sector_f_w_1_1_s_a_p_partition_1_1_body}{Body}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bb}{Axis}} \+: uint8\+\_\+t \{ \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bba02129bb861061d1a052c592e2dc6b383}{X}} = 0
+, \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bba57cec4137b614c87cb4e24a3d003a3e0}{Y}} = 1
+, \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bba21c2e59531c8710156d34a3c30ac81d5}{Z}} = 2
+ \}
+\item 
+using \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a59f0b4b4a00cf2f57defcfd7ce5deadf}{AABB}} = Math\+::\+AABB3f
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a8a7d81aa4e9879ddfa93fba77e7f9387}{SAPPartition}} (\mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bb}{Axis}} primary\+Axis=\mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bba02129bb861061d1a052c592e2dc6b383}{Axis\+::X}}) noexcept
+\item 
+Spatial\+Chunk \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a6e367a0ecfa6415fac8fdc42fdf492f7}{Create\+Body}} (const \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a59f0b4b4a00cf2f57defcfd7ce5deadf}{AABB}} \&box) noexcept
+\begin{DoxyCompactList}\small\item\em ボディ（=Spatial\+Chunk）を追加 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a2d72a97ab11c1e000b22e16b7530f67a}{Update\+Body\+Bounds}} (uint32\+\_\+t body\+Index, const \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a59f0b4b4a00cf2f57defcfd7ce5deadf}{AABB}} \&new\+Box) noexcept
+\begin{DoxyCompactList}\small\item\em AABB更新（移動体など） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a70f155d43b039f73b39cb83a5667bc0b}{Rebuild}} () noexcept
+\begin{DoxyCompactList}\small\item\em すべての投影配列を再構築（安定ソート） 頻繁更新ならフレーム終端で呼ぶ想定 \end{DoxyCompactList}\item 
+std\+::optional$<$ Spatial\+Chunk \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a291293606bd94c0245dc5fa4d65b4c0d}{Get\+Chunk}} (Math\+::\+Vec3f p, EOut\+Of\+Bounds\+Policy=EOut\+Of\+Bounds\+Policy\+::\+Clamp\+To\+Edge) noexcept
+\begin{DoxyCompactList}\small\item\em 点が含まれるボディのチャンクを返す（最初の一致を返却） \end{DoxyCompactList}\item 
+ECS\+::\+Entity\+Manager \& \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a2c6016522712a17d71454bb6f04580d9}{Get\+Global\+Entity\+Manager}} () noexcept
+\begin{DoxyCompactList}\small\item\em グローバル\+EM \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_ad88980dbf1d1e75f86b30890fde1d98b}{Get\+Entity\+Num}} ()
+\begin{DoxyCompactList}\small\item\em 全エンティティ数（グローバル＋各ボディ） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a008f102fd84d91ccd9062aedccb7f562}{Register\+All\+Chunks}} (Entity\+Manager\+Registry \&reg, Level\+ID level)
+\begin{DoxyCompactList}\small\item\em Registry登録（\+Partition\+Scheme\+::\+SAP） \end{DoxyCompactList}\item 
+std\+::vector$<$ Spatial\+Chunk \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a72b2b7cddafde2a0416eb96959b2694f}{Cull\+Chunks}} (const Math\+::\+Frustumf \&fr) const noexcept
+\begin{DoxyCompactList}\small\item\em Frustumカリング：交差ボディを列挙 \end{DoxyCompactList}\item 
+{\footnotesize template$<$class F$>$ }\\void \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a9e966a80107442c15992d8344535d2ea}{Cull\+Chunks}} (const Math\+::\+Frustumf \&fr, F \&\&f) const noexcept
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_aa12c0621ad3e34598071bd8bafacd12e}{Cull\+Chunk\+Line}} (const Math\+::\+Frustumf \&fr, Math\+::\+Vec3f cp, Debug\+::\+Line\+Vertex \texorpdfstring{$\ast$}{*}out\+Line, uint32\+\_\+t capacity, uint32\+\_\+t display\+Count) const noexcept
+\begin{DoxyCompactList}\small\item\em デバッグ：各ボディ\+AABBのワイヤ（12エッジ） \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Pair\+Fn$>$ }\\void \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_aeecef9654a9d7dc482bf2be8766e3d92}{Enumerate\+Overlap\+Pairs}} (Pair\+Fn \&\&fn) noexcept
+\begin{DoxyCompactList}\small\item\em 近傍候補（重なり）ペア列挙（ブロードフェーズ） \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a9800148cd06fd6d647dafa186a8d380f}{Reload\+Body}} (uint32\+\_\+t body\+Index, Entity\+Manager\+Registry \&reg)
+\begin{DoxyCompactList}\small\item\em ボディ再ロード \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00028}{28}} 行目に定義があります。
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_doc-typedef-members}
+\doxysubsection{型定義メンバ詳解}
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_a59f0b4b4a00cf2f57defcfd7ce5deadf}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!AABB@{AABB}}
+\index{AABB@{AABB}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{AABB}{AABB}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_a59f0b4b4a00cf2f57defcfd7ce5deadf} 
+using \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a59f0b4b4a00cf2f57defcfd7ce5deadf}{Sector\+FW\+::\+SAPPartition\+::\+AABB}} = Math\+::\+AABB3f}
+
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00031}{31}} 行目に定義があります。
+
+
+
+\label{doc-enum-members}
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_doc-enum-members}
+\doxysubsection{列挙型メンバ詳解}
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bb}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!Axis@{Axis}}
+\index{Axis@{Axis}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{Axis}{Axis}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bb} 
+enum class \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bb}{Sector\+FW\+::\+SAPPartition\+::\+Axis}} \+: uint8\+\_\+t\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{X@{X}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!X@{X}}}\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bba02129bb861061d1a052c592e2dc6b383}\label{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bba02129bb861061d1a052c592e2dc6b383} 
+X&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Y@{Y}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!Y@{Y}}}\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bba57cec4137b614c87cb4e24a3d003a3e0}\label{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bba57cec4137b614c87cb4e24a3d003a3e0} 
+Y&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Z@{Z}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!Z@{Z}}}\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bba21c2e59531c8710156d34a3c30ac81d5}\label{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bba21c2e59531c8710156d34a3c30ac81d5} 
+Z&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00044}{44}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_a8a7d81aa4e9879ddfa93fba77e7f9387}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!SAPPartition@{SAPPartition}}
+\index{SAPPartition@{SAPPartition}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{SAPPartition()}{SAPPartition()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_a8a7d81aa4e9879ddfa93fba77e7f9387} 
+Sector\+FW\+::\+SAPPartition\+::\+SAPPartition (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bb}{Axis}}}]{primary\+Axis}{ = {\ttfamily \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_ab2bdfe0f8a5ef8f0af28d092b22029bba02129bb861061d1a052c592e2dc6b383}{Axis\+::X}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00047}{47}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_a6e367a0ecfa6415fac8fdc42fdf492f7}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!CreateBody@{CreateBody}}
+\index{CreateBody@{CreateBody}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{CreateBody()}{CreateBody()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_a6e367a0ecfa6415fac8fdc42fdf492f7} 
+Spatial\+Chunk \texorpdfstring{$\ast$}{*} Sector\+FW\+::\+SAPPartition\+::\+Create\+Body (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a59f0b4b4a00cf2f57defcfd7ce5deadf}{AABB}} \&}]{box}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ボディ（=Spatial\+Chunk）を追加 
+
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00054}{54}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_aa12c0621ad3e34598071bd8bafacd12e}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!CullChunkLine@{CullChunkLine}}
+\index{CullChunkLine@{CullChunkLine}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunkLine()}{CullChunkLine()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_aa12c0621ad3e34598071bd8bafacd12e} 
+uint32\+\_\+t Sector\+FW\+::\+SAPPartition\+::\+Cull\+Chunk\+Line (\begin{DoxyParamCaption}\item[{const Math\+::\+Frustumf \&}]{fr}{, }\item[{Math\+::\+Vec3f}]{cp}{, }\item[{Debug\+::\+Line\+Vertex \texorpdfstring{$\ast$}{*}}]{out\+Line}{, }\item[{uint32\+\_\+t}]{capacity}{, }\item[{uint32\+\_\+t}]{display\+Count}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+デバッグ：各ボディ\+AABBのワイヤ（12エッジ） 
+
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00156}{156}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_a72b2b7cddafde2a0416eb96959b2694f}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_a72b2b7cddafde2a0416eb96959b2694f} 
+std\+::vector$<$ Spatial\+Chunk \texorpdfstring{$\ast$}{*} $>$ Sector\+FW\+::\+SAPPartition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const Math\+::\+Frustumf \&}]{fr}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Frustumカリング：交差ボディを列挙 
+
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00134}{134}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_a9e966a80107442c15992d8344535d2ea}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_a9e966a80107442c15992d8344535d2ea} 
+template$<$class F$>$ \\
+void Sector\+FW\+::\+SAPPartition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const Math\+::\+Frustumf \&}]{fr}{, }\item[{F \&\&}]{f}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00145}{145}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_aeecef9654a9d7dc482bf2be8766e3d92}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!EnumerateOverlapPairs@{EnumerateOverlapPairs}}
+\index{EnumerateOverlapPairs@{EnumerateOverlapPairs}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{EnumerateOverlapPairs()}{EnumerateOverlapPairs()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_aeecef9654a9d7dc482bf2be8766e3d92} 
+template$<$class Pair\+Fn$>$ \\
+void Sector\+FW\+::\+SAPPartition\+::\+Enumerate\+Overlap\+Pairs (\begin{DoxyParamCaption}\item[{Pair\+Fn \&\&}]{fn}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+近傍候補（重なり）ペア列挙（ブロードフェーズ） 
+
+primary軸のソートを使い、min\texorpdfstring{$<$}{<}=curr.\+max の範囲でスイープ。 2軸/3軸目は早期判定用の\+AABBチェックで絞り込み。 
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00209}{209}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_a291293606bd94c0245dc5fa4d65b4c0d}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!GetChunk@{GetChunk}}
+\index{GetChunk@{GetChunk}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{GetChunk()}{GetChunk()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_a291293606bd94c0245dc5fa4d65b4c0d} 
+std\+::optional$<$ Spatial\+Chunk \texorpdfstring{$\ast$}{*} $>$ Sector\+FW\+::\+SAPPartition\+::\+Get\+Chunk (\begin{DoxyParamCaption}\item[{Math\+::\+Vec3f}]{p}{, }\item[{EOut\+Of\+Bounds\+Policy}]{}{ = {\ttfamily EOutOfBoundsPolicy\+:\+:ClampToEdge}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+点が含まれるボディのチャンクを返す（最初の一致を返却） 
+
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00091}{91}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_ad88980dbf1d1e75f86b30890fde1d98b}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!GetEntityNum@{GetEntityNum}}
+\index{GetEntityNum@{GetEntityNum}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{GetEntityNum()}{GetEntityNum()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_ad88980dbf1d1e75f86b30890fde1d98b} 
+size\+\_\+t Sector\+FW\+::\+SAPPartition\+::\+Get\+Entity\+Num (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+全エンティティ数（グローバル＋各ボディ） 
+
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00106}{106}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_a2c6016522712a17d71454bb6f04580d9}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!GetGlobalEntityManager@{GetGlobalEntityManager}}
+\index{GetGlobalEntityManager@{GetGlobalEntityManager}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{GetGlobalEntityManager()}{GetGlobalEntityManager()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_a2c6016522712a17d71454bb6f04580d9} 
+ECS\+::\+Entity\+Manager \& Sector\+FW\+::\+SAPPartition\+::\+Get\+Global\+Entity\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+グローバル\+EM 
+
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00103}{103}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_a70f155d43b039f73b39cb83a5667bc0b}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!Rebuild@{Rebuild}}
+\index{Rebuild@{Rebuild}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{Rebuild()}{Rebuild()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_a70f155d43b039f73b39cb83a5667bc0b} 
+void Sector\+FW\+::\+SAPPartition\+::\+Rebuild (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+すべての投影配列を再構築（安定ソート） 頻繁更新ならフレーム終端で呼ぶ想定 
+
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00080}{80}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_a008f102fd84d91ccd9062aedccb7f562}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!RegisterAllChunks@{RegisterAllChunks}}
+\index{RegisterAllChunks@{RegisterAllChunks}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{RegisterAllChunks()}{RegisterAllChunks()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_a008f102fd84d91ccd9062aedccb7f562} 
+void Sector\+FW\+::\+SAPPartition\+::\+Register\+All\+Chunks (\begin{DoxyParamCaption}\item[{Entity\+Manager\+Registry \&}]{reg}{, }\item[{Level\+ID}]{level}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Registry登録（\+Partition\+Scheme\+::\+SAP） 
+
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00116}{116}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_a9800148cd06fd6d647dafa186a8d380f}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!ReloadBody@{ReloadBody}}
+\index{ReloadBody@{ReloadBody}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{ReloadBody()}{ReloadBody()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_a9800148cd06fd6d647dafa186a8d380f} 
+void Sector\+FW\+::\+SAPPartition\+::\+Reload\+Body (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{body\+Index}{, }\item[{Entity\+Manager\+Registry \&}]{reg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ボディ再ロード 
+
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00244}{244}} 行目に定義があります。
+
+\Hypertarget{class_sector_f_w_1_1_s_a_p_partition_a2d72a97ab11c1e000b22e16b7530f67a}\index{SectorFW::SAPPartition@{SectorFW::SAPPartition}!UpdateBodyBounds@{UpdateBodyBounds}}
+\index{UpdateBodyBounds@{UpdateBodyBounds}!SectorFW::SAPPartition@{SectorFW::SAPPartition}}
+\doxysubsubsection{\texorpdfstring{UpdateBodyBounds()}{UpdateBodyBounds()}}
+{\footnotesize\ttfamily \label{class_sector_f_w_1_1_s_a_p_partition_a2d72a97ab11c1e000b22e16b7530f67a} 
+void Sector\+FW\+::\+SAPPartition\+::\+Update\+Body\+Bounds (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{body\+Index}{, }\item[{const \mbox{\hyperlink{class_sector_f_w_1_1_s_a_p_partition_a59f0b4b4a00cf2f57defcfd7ce5deadf}{AABB}} \&}]{new\+Box}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+AABB更新（移動体など） 
+
+
+
+ \mbox{\hyperlink{_s_a_p_partitionh_8h_source}{SAPPartitionh.\+h}} の \mbox{\hyperlink{_s_a_p_partitionh_8h_source_l00068}{68}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_s_a_p_partitionh_8h}{SAPPartitionh.\+h}}\end{DoxyCompactItemize}

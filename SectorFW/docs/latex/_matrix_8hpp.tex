@@ -1,0 +1,143 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Math/\+Matrix.hpp ファイル}
+\hypertarget{_matrix_8hpp}{}\label{_matrix_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/Matrix.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/Matrix.hpp}}
+
+
+行列を定義するヘッダーファイル（列ベクトル規約に統一）  
+
+
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+{\ttfamily \#include "{}Vector.\+hpp"{}}\newline
+{\ttfamily \#include "{}Quaternion.\+hpp"{}}\newline
+{\ttfamily \#include "{}AABB.\+hpp"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{SFW\+::\+Math\+::\+Matrix$<$ Rows, Cols, T $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_mat_mul_kernel}{SFW\+::\+Math\+::\+Mat\+Mul\+Kernel$<$ R, K, C, T $>$}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a}{SFW\+::\+Math\+::\+Matrix3x4f\+SoA}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_m_transform_so_a}{SFW\+::\+Math\+::\+MTransform\+SoA}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_math}{SFW\+::\+Math}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_math_ae11a4f993d4323b6da402a4789e7844c}{SFW\+::\+Math\+::\+Matrix3x3f}} = \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$3, 3, float$>$
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_math_aceae33e246554abb26d6d17be9048cbc}{SFW\+::\+Math\+::\+Matrix3x4f}} = \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$3, 4, float$>$
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{SFW\+::\+Math\+::\+Matrix4x4f}} = \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$4, 4, float$>$
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_math_a844e4739772abf63c57fe91978c675c5}{SFW\+::\+Math\+::\+Matrix4x4d}} = \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$4, 4, double$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_math_a0bff19cfd872257c355f889c5e6c4ee1}{SFW\+::\+Math\+::\+Handedness}} \{ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a0bff19cfd872257c355f889c5e6c4ee1a2b9645dc7a42b738ac9fa5a75117b1c0}{SFW\+::\+Math\+::\+LH}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a0bff19cfd872257c355f889c5e6c4ee1a9508a19d7801e07ee7b7628c31bfdd47}{SFW\+::\+Math\+::\+RH}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{SFW\+::\+Math\+::\+Clip\+ZRange}} \{ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5a4b942544cb3e764bbb8d33f8a8744855}{SFW\+::\+Math\+::\+Zero\+To\+One}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5ae4cdc0c2728d06052338b3fd504415bb}{SFW\+::\+Math\+::\+Neg\+One\+To\+One}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$size\+\_\+t R, size\+\_\+t C, typename T$>$ }\\constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ C, R, T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aeb7ec46e1bb5d9031b018c51d30b8b92}{SFW\+::\+Math\+::\+Transpose\+Matrix}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ R, C, T $>$ \&M) noexcept
+\item 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a00f807985a4cc86629c66ace6bef2ce9}{SFW\+::\+Math\+::operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 3, 3, T $>$ \&M, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&v) noexcept
+\item 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4}{Vec4}}$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_abf4434bd2b9c19bcc3055eee587fb619}{SFW\+::\+Math\+::operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \&M, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4}{Vec4}}$<$ T $>$ \&v) noexcept
+\item 
+{\footnotesize template$<$typename T, typename VecT$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ T, VecT $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a758f5a468a17840879d347194600daba}{SFW\+::\+Math\+::operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \&M, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_a_a_b_b}{AABB}}$<$ T, VecT $>$ \&box) noexcept
+\item 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a7052c86a03552341584effa8a0d77a08}{SFW\+::\+Math\+::\+Inverse}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \&M) noexcept
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_math_ae9857e7fd9922d4f0baca4c4786305ed}{SFW\+::\+Math\+::\+Is\+Orthonormal\+Rotation3x3}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M, float eps=1e-\/4f) noexcept
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_a1893246a3e12644f47b7ed61700feb28}{SFW\+::\+Math\+::\+Inverse\+Affine}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M) noexcept
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \mbox{\hyperlink{namespace_s_f_w_1_1_math_a815311ab84fb33d84a045b8057547040}{SFW\+::\+Math\+::\+Inverse\+Fast\+Affine}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a5196e4831f2fd01ecad777f4b2bcc708}{SFW\+::\+Math\+::\+Multiply4x4\+Batch}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \texorpdfstring{$\ast$}{*}A, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \texorpdfstring{$\ast$}{*}B, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \texorpdfstring{$\ast$}{*}C, size\+\_\+t n) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a048d22b024642fb39c27b13f67f21e6c}{SFW\+::\+Math\+::\+Multiply\+Many\+By\+Same\+Right}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \texorpdfstring{$\ast$}{*}A, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&B, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \texorpdfstring{$\ast$}{*}C, size\+\_\+t n) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a46c194bca1b6bb23d5a46fee5ac47d91}{SFW\+::\+Math\+::\+Transform\+Points}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ float $>$ \texorpdfstring{$\ast$}{*}in\+Pts, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ float $>$ \texorpdfstring{$\ast$}{*}out\+Pts, size\+\_\+t n) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a61c84c2934e4fd6495584dc67aa746b1}{SFW\+::\+Math\+::\+Transform\+Points}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ float $>$ \texorpdfstring{$\ast$}{*}in\+Pts, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4}{Vec4}}$<$ float $>$ \texorpdfstring{$\ast$}{*}out\+Pts, size\+\_\+t n) noexcept
+\item 
+{\footnotesize template$<$typename T$>$ }\\constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a93a4b7bc89ed2114dde5c974d78f8295}{SFW\+::\+Math\+::\+Make\+Translation\+Matrix}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&t) noexcept
+\item 
+{\footnotesize template$<$typename T$>$ }\\constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a54af502f443c4b07e2d1bb16f3343ab4}{SFW\+::\+Math\+::\+Make\+Scaling\+Matrix}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&s) noexcept
+\item 
+{\footnotesize template$<$typename T$>$ }\\constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aaa598cd1008577b7c384b3efcf98cbb3}{SFW\+::\+Math\+::\+Make\+Rotation\+Matrix}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$ T $>$ \&q\+In) noexcept
+\item 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a6218d334f18a3ba71b7f3b9789d0aa38}{SFW\+::\+Math\+::\+Make\+Look\+At\+Matrix\+LH}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&eye, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&target, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&up) noexcept
+\item 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aed798d42f4db7f618c0be25a08073e5d}{SFW\+::\+Math\+::\+Make\+Look\+At\+Matrix\+RH}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&eye, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&target, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&up) noexcept
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_math_a0bff19cfd872257c355f889c5e6c4ee1}{Handedness}} H, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{Clip\+ZRange}} Z, typename T$>$ }\\constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a9d9bf57f3400f80ea21e244cebeeccc4}{SFW\+::\+Math\+::\+Make\+Perspective\+FovT}} (T fovY, T aspect, T nearZ, T farZ) noexcept
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_math_a0bff19cfd872257c355f889c5e6c4ee1}{Handedness}} H, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a90c36f096be6cfc4610a92d5223b6bc5}{Clip\+ZRange}} Z, typename T$>$ }\\constexpr \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a40b0e6ba60461712ad4c81fbfd2e499b}{SFW\+::\+Math\+::\+Make\+OrthographicT}} (T l, T r, T b, T t, T n, T f\+\_\+) noexcept
+\item 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a46dbd11b3f23607eeb85c734b81c58d0}{SFW\+::\+Math\+::\+Transform\+Point}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \&M, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&p) noexcept
+\item 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a12ecc63877793c92a29c72500e59d8b4}{SFW\+::\+Math\+::\+Transform\+Vector}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix}}$<$ 4, 4, T $>$ \&M, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&v) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a0ccdfb69fbbe102198d8785a5ddff627}{SFW\+::\+Math\+::\+Set\+Zero}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a0cdf743cc65f267a0879d0bc82a70a86}{SFW\+::\+Math\+::\+Set\+Identity}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a649e21acfcbc1ae88e3778288a8606f3}{SFW\+::\+Math\+::\+Set\+Row}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M, int r, const float \texorpdfstring{$\ast$}{*}row4) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a04799332788c34249ff63762204b699e}{SFW\+::\+Math\+::\+Load\+Row\+Major}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M, const float \texorpdfstring{$\ast$}{*}p) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2450deb5365a517c71097d834d2de74f}{SFW\+::\+Math\+::\+Load\+Column\+Major}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M, const float \texorpdfstring{$\ast$}{*}p) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a7e17d3e1bb7b00e6174db11f03328e4f}{SFW\+::\+Math\+::\+Store\+Row\+Major}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M, float \texorpdfstring{$\ast$}{*}p) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a77c4dec479f8f63f0881f165c9b2cf09}{SFW\+::\+Math\+::\+Set\+Rows}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M, const float \texorpdfstring{$\ast$}{*}r0, const float \texorpdfstring{$\ast$}{*}r1, const float \texorpdfstring{$\ast$}{*}r2, const float \texorpdfstring{$\ast$}{*}r3) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_ae199957c10961f2c8c389325134ff06e}{SFW\+::\+Math\+::\+Fill}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M, float v) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_ae983d0ddb7cae63341f2b10e473e303a}{SFW\+::\+Math\+::\+Set\+Upper3x3}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M, const float \texorpdfstring{$\ast$}{*}r0, const float \texorpdfstring{$\ast$}{*}r1, const float \texorpdfstring{$\ast$}{*}r2) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab3801827007a82da1ffa4245b8a12d13}{SFW\+::\+Math\+::\+Set\+Bottom\+Row\+Affine}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a8ec286634f43fa23aeef93b3187d0973}{SFW\+::\+Math\+::\+Build\+World\+Matrices\+\_\+\+From\+SoA}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_m_transform_so_a}{MTransform\+SoA}} \&t, size\+\_\+t n, \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{SFW\+::\+Math\+::\+Matrix4x4f}} \texorpdfstring{$\ast$}{*}outM, bool renormalize\+Quat=false) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_ab30bb9e8a0b95fb4e3c44ac6e19c9e73}{SFW\+::\+Math\+::\+Mul\+Point\+\_\+\+Row\+Major\+\_\+\+Col\+Vec}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Matrix4x4f}} \&M, float x, float y, float z, float \&cx, float \&cy, float \&cz, float \&cw) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_ae66fd9a179c06b778b96b76d77169cde}{SFW\+::\+Math\+::\+Mul\+Point\+\_\+\+Row\+Major\+\_\+\+Col\+Vec}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_aceae33e246554abb26d6d17be9048cbc}{Matrix3x4f}} \&M, float x, float y, float z, float \&cx, float \&cy, float \&cz) noexcept
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_math_a1a2a6a6a9110d00bc47a90a4949f6177}{SFW\+::\+Math\+::\+Build\+World\+Matrix\+So\+A\+\_\+\+From\+Transform\+SoA}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_m_transform_so_a}{MTransform\+SoA}} \&in, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a}{Matrix3x4f\+SoA}} \&M, bool normalizeQ=true) noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+行列を定義するヘッダーファイル（列ベクトル規約に統一） 
+
+\begin{DoxyAuthor}{著者}
+seigo 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+Revised\+: Oct 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_matrix_8hpp_source}{Matrix.\+hpp}} に定義があります。
+

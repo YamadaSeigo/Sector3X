@@ -1,0 +1,152 @@
+\doxysection{SFW\+::ECS\+::Entity\+IDAllocator クラス}
+\hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator}{}\label{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator}\index{SFW::ECS::EntityIDAllocator@{SFW::ECS::EntityIDAllocator}}
+
+
+エンティティ\+IDを管理するクラス(スレッドセーフ)  
+
+
+
+
+{\ttfamily \#include $<$Entity\+IDAllocator.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_af336676aca5dae81f12e2a3fe106641d}{Entity\+IDAllocator}} (size\+\_\+t max\+Entities)
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_abd15dcb763c2e7be3f39fb8d2379de02}{Create}} ()
+\begin{DoxyCompactList}\small\item\em 新しいエンティティ\+IDを作成する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a91557aa74d5bb75ee44bcc9492a1ca42}{Destroy}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id)
+\begin{DoxyCompactList}\small\item\em エンティティ\+IDを破棄する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_aedeb76d27dc99d28770d29880a931867}{Destroy\+Bulk}} (const \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} \texorpdfstring{$\ast$}{*}ids, size\+\_\+t count)
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a178dfebf6eafdf65360ba884f9177e03}{Is\+Alive}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} id) const noexcept
+\begin{DoxyCompactList}\small\item\em エンティティ\+IDが有効かどうかを確認する関数 \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a556803037b9fcaee5e2f698145b5e86c}{Capacity}} () const noexcept
+\begin{DoxyCompactList}\small\item\em エンティティ\+IDの最大数を取得する関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+エンティティ\+IDを管理するクラス(スレッドセーフ) 
+
+ \mbox{\hyperlink{_entity_i_d_allocator_8h_source}{Entity\+IDAllocator.\+h}} の \mbox{\hyperlink{_entity_i_d_allocator_8h_source_l00025}{25}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_af336676aca5dae81f12e2a3fe106641d}\index{SFW::ECS::EntityIDAllocator@{SFW::ECS::EntityIDAllocator}!EntityIDAllocator@{EntityIDAllocator}}
+\index{EntityIDAllocator@{EntityIDAllocator}!SFW::ECS::EntityIDAllocator@{SFW::ECS::EntityIDAllocator}}
+\doxysubsubsection{\texorpdfstring{EntityIDAllocator()}{EntityIDAllocator()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_af336676aca5dae81f12e2a3fe106641d} 
+SFW\+::\+ECS\+::\+Entity\+IDAllocator\+::\+Entity\+IDAllocator (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{max\+Entities}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em max\+Entities} & 最大エンティティ数 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_entity_i_d_allocator_8h_source}{Entity\+IDAllocator.\+h}} の \mbox{\hyperlink{_entity_i_d_allocator_8h_source_l00031}{31}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a556803037b9fcaee5e2f698145b5e86c}\index{SFW::ECS::EntityIDAllocator@{SFW::ECS::EntityIDAllocator}!Capacity@{Capacity}}
+\index{Capacity@{Capacity}!SFW::ECS::EntityIDAllocator@{SFW::ECS::EntityIDAllocator}}
+\doxysubsubsection{\texorpdfstring{Capacity()}{Capacity()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a556803037b9fcaee5e2f698145b5e86c} 
+uint32\+\_\+t SFW\+::\+ECS\+::\+Entity\+IDAllocator\+::\+Capacity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+エンティティ\+IDの最大数を取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+uint32\+\_\+t 最大エンティティ数 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_entity_i_d_allocator_8h_source}{Entity\+IDAllocator.\+h}} の \mbox{\hyperlink{_entity_i_d_allocator_8h_source_l00115}{115}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_abd15dcb763c2e7be3f39fb8d2379de02}\index{SFW::ECS::EntityIDAllocator@{SFW::ECS::EntityIDAllocator}!Create@{Create}}
+\index{Create@{Create}!SFW::ECS::EntityIDAllocator@{SFW::ECS::EntityIDAllocator}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_abd15dcb763c2e7be3f39fb8d2379de02} 
+\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} SFW\+::\+ECS\+::\+Entity\+IDAllocator\+::\+Create (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+新しいエンティティ\+IDを作成する関数 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID} 新しいエンティティ\+ID 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_entity_i_d_allocator_8h_source}{Entity\+IDAllocator.\+h}} の \mbox{\hyperlink{_entity_i_d_allocator_8h_source_l00043}{43}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a91557aa74d5bb75ee44bcc9492a1ca42}\index{SFW::ECS::EntityIDAllocator@{SFW::ECS::EntityIDAllocator}!Destroy@{Destroy}}
+\index{Destroy@{Destroy}!SFW::ECS::EntityIDAllocator@{SFW::ECS::EntityIDAllocator}}
+\doxysubsubsection{\texorpdfstring{Destroy()}{Destroy()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a91557aa74d5bb75ee44bcc9492a1ca42} 
+void SFW\+::\+ECS\+::\+Entity\+IDAllocator\+::\+Destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+エンティティ\+IDを破棄する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & 破棄するエンティティ\+ID \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_entity_i_d_allocator_8h_source}{Entity\+IDAllocator.\+h}} の \mbox{\hyperlink{_entity_i_d_allocator_8h_source_l00066}{66}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_aedeb76d27dc99d28770d29880a931867}\index{SFW::ECS::EntityIDAllocator@{SFW::ECS::EntityIDAllocator}!DestroyBulk@{DestroyBulk}}
+\index{DestroyBulk@{DestroyBulk}!SFW::ECS::EntityIDAllocator@{SFW::ECS::EntityIDAllocator}}
+\doxysubsubsection{\texorpdfstring{DestroyBulk()}{DestroyBulk()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_aedeb76d27dc99d28770d29880a931867} 
+void SFW\+::\+ECS\+::\+Entity\+IDAllocator\+::\+Destroy\+Bulk (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} \texorpdfstring{$\ast$}{*}}]{ids}{, }\item[{size\+\_\+t}]{count}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_entity_i_d_allocator_8h_source}{Entity\+IDAllocator.\+h}} の \mbox{\hyperlink{_entity_i_d_allocator_8h_source_l00078}{78}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a178dfebf6eafdf65360ba884f9177e03}\index{SFW::ECS::EntityIDAllocator@{SFW::ECS::EntityIDAllocator}!IsAlive@{IsAlive}}
+\index{IsAlive@{IsAlive}!SFW::ECS::EntityIDAllocator@{SFW::ECS::EntityIDAllocator}}
+\doxysubsubsection{\texorpdfstring{IsAlive()}{IsAlive()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_entity_i_d_allocator_a178dfebf6eafdf65360ba884f9177e03} 
+bool SFW\+::\+ECS\+::\+Entity\+IDAllocator\+::\+Is\+Alive (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}}]{id}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+エンティティ\+IDが有効かどうかを確認する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em id} & エンティティ\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+bool 有効な場合はtrue、無効な場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_entity_i_d_allocator_8h_source}{Entity\+IDAllocator.\+h}} の \mbox{\hyperlink{_entity_i_d_allocator_8h_source_l00107}{107}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_entity_i_d_allocator_8h}{Entity\+IDAllocator.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,101 @@
+\doxysection{SFW\+::Budget\+Mover クラス}
+\hypertarget{class_s_f_w_1_1_budget_mover}{}\label{class_s_f_w_1_1_budget_mover}\index{SFW::BudgetMover@{SFW::BudgetMover}}
+
+
+予算付きバッチ移送クラス  
+
+
+
+
+{\ttfamily \#include $<$Chunk\+Crossing\+Move.\+hpp$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_budget_mover_1_1_accessor}{Accessor}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_1_1_local_batch}{Local\+Batch}}
+\begin{DoxyCompactList}\small\item\em ローカル一時バッファ（thread\+\_\+local を使わない合意的バッチ） \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_budget_mover_1_1_pending_move}{Pending\+Move}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_a9a3cfc8caf2427132d0b122522219076}{Try\+Enqueue}} (\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}} id, const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&src, const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&dst)
+\item 
+{\footnotesize template$<$class Range$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_a6ed5612313992d6920d074700df04087}{Enqueue\+Bulk}} (const Range \&moves)
+\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_aeddcb2d4a0bd5661930d248697469d8b}{Flush}} (const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg, size\+\_\+t budget)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_a845be92d99951bf2d8261ebe2661959c}{Clear}} ()
+\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_budget_mover_ae9bab9984ede07a8f96c655dd67bf8f1}{Size}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+予算付きバッチ移送クラス 
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00214}{214}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_budget_mover_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_budget_mover_a845be92d99951bf2d8261ebe2661959c}\index{SFW::BudgetMover@{SFW::BudgetMover}!Clear@{Clear}}
+\index{Clear@{Clear}!SFW::BudgetMover@{SFW::BudgetMover}}
+\doxysubsubsection{\texorpdfstring{Clear()}{Clear()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_a845be92d99951bf2d8261ebe2661959c} 
+void SFW\+::\+Budget\+Mover\+::\+Clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00363}{363}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_a6ed5612313992d6920d074700df04087}\index{SFW::BudgetMover@{SFW::BudgetMover}!EnqueueBulk@{EnqueueBulk}}
+\index{EnqueueBulk@{EnqueueBulk}!SFW::BudgetMover@{SFW::BudgetMover}}
+\doxysubsubsection{\texorpdfstring{EnqueueBulk()}{EnqueueBulk()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_a6ed5612313992d6920d074700df04087} 
+template$<$class Range$>$ \\
+void SFW\+::\+Budget\+Mover\+::\+Enqueue\+Bulk (\begin{DoxyParamCaption}\item[{const Range \&}]{moves}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00312}{312}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_aeddcb2d4a0bd5661930d248697469d8b}\index{SFW::BudgetMover@{SFW::BudgetMover}!Flush@{Flush}}
+\index{Flush@{Flush}!SFW::BudgetMover@{SFW::BudgetMover}}
+\doxysubsubsection{\texorpdfstring{Flush()}{Flush()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_aeddcb2d4a0bd5661930d248697469d8b} 
+size\+\_\+t SFW\+::\+Budget\+Mover\+::\+Flush (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&}]{reg}{, }\item[{size\+\_\+t}]{budget}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00318}{318}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_ae9bab9984ede07a8f96c655dd67bf8f1}\index{SFW::BudgetMover@{SFW::BudgetMover}!Size@{Size}}
+\index{Size@{Size}!SFW::BudgetMover@{SFW::BudgetMover}}
+\doxysubsubsection{\texorpdfstring{Size()}{Size()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_ae9bab9984ede07a8f96c655dd67bf8f1} 
+size\+\_\+t SFW\+::\+Budget\+Mover\+::\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00364}{364}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_budget_mover_a9a3cfc8caf2427132d0b122522219076}\index{SFW::BudgetMover@{SFW::BudgetMover}!TryEnqueue@{TryEnqueue}}
+\index{TryEnqueue@{TryEnqueue}!SFW::BudgetMover@{SFW::BudgetMover}}
+\doxysubsubsection{\texorpdfstring{TryEnqueue()}{TryEnqueue()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_budget_mover_a9a3cfc8caf2427132d0b122522219076} 
+void SFW\+::\+Budget\+Mover\+::\+Try\+Enqueue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{ECS\+::\+Entity\+ID}}}]{id}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&}]{src}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \&}]{dst}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00303}{303}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_chunk_crossing_move_8hpp}{Chunk\+Crossing\+Move.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,45 @@
+\doxysection{Archetype.\+h}
+\hypertarget{_archetype_8h_source}{}\label{_archetype_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/Archetype.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/Archetype.h}}
+\mbox{\hyperlink{_archetype_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_archetype_chunk_8h}{ArchetypeChunk.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00015}00015\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00016}00016\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00017}00017\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00018}00018\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00022}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype}{00022}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_abe7b719e57373d40a136b0ed156f91fc}{Archetype}}\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00028}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_abe7b719e57373d40a136b0ed156f91fc}{00028}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_abe7b719e57373d40a136b0ed156f91fc}{Archetype}}(\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\ mask)\ noexcept\ :\ mask(mask)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00033}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_aa8c85b68e26631b775f75afc9fd82242}{00033}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{ArchetypeChunk}}*\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_aa8c85b68e26631b775f75afc9fd82242}{GetOrCreateChunk}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ chunk\ :\ chunks)\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunk-\/>GetEntityCount()\ <\ chunk-\/>GetCapacity())}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ chunk.get();}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<ArchetypeChunk>\ newChunk\ =\ std::make\_unique<ArchetypeChunk>(mask);}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{ArchetypeChunk}}*\ ptr\ =\ newChunk.get();}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ chunks.emplace\_back(std::move(newChunk));}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ptr;}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00048}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_aa4582d501677dca8d7037f20a383880a}{00048}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_aa4582d501677dca8d7037f20a383880a}{GetMask}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ mask;\ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00053}\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_af0d158aa3c978781310c523899879883}{00053}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::unique\_ptr<ArchetypeChunk>>\&\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_af0d158aa3c978781310c523899879883}{GetChunks}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ chunks;}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//アーキタイプのコンポーネントマスク}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\ mask;}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//アーキタイプのチャンクのコンテナ}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::unique\_ptr<ArchetypeChunk>>\ chunks;}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00062}00062\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_archetype_8h_source_l00063}00063\ \}}
+
+\end{DoxyCode}

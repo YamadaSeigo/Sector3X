@@ -1,0 +1,25 @@
+\doxysection{SFW\+::ECS\+::Has\+Service\+Tag Concept Reference}
+\hypertarget{concept_s_f_w_1_1_e_c_s_1_1_has_service_tag}{}\label{concept_s_f_w_1_1_e_c_s_1_1_has_service_tag}\index{SFW::ECS::HasServiceTag@{SFW::ECS::HasServiceTag}}
+
+
+サービスの型にis\+Staticメンバーが存在するかをチェックするコンセプト  
+
+
+
+
+{\ttfamily \#include $<$Service\+Context.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_has_service_tag}{SFW::ECS::HasServiceTag}}\ =\ \ \textcolor{keyword}{requires}\ \{\ T::isStatic;\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{詳解}
+サービスの型にis\+Staticメンバーが存在するかをチェックするコンセプト 
+
+ \mbox{\hyperlink{_service_context_8hpp_source}{Service\+Context.\+hpp}} の \mbox{\hyperlink{_service_context_8hpp_source_l00025}{25}} 行目に定義があります。
+

@@ -1,0 +1,464 @@
+\doxysection{SFW\+::Level\texorpdfstring{$<$}{<} Partition \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_level}{}\label{class_s_f_w_1_1_level}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+
+
+レベル(シーン単位)を定義するクラス  
+
+
+
+
+{\ttfamily \#include $<$Level.\+hpp$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session}{Session}}
+\begin{DoxyCompactList}\small\item\em レベルへの要求を管理するセッション構造体 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_level_af121d6c47aa936403568199efa87de50}{Level}} (const std\+::string \&name, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg, \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} \+\_\+state=\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53aa02c83a7dbd96295beaefb72c2bee2de}{ELevel\+State\+::\+Main}}, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} origin\+WS=\{ 0.\+0f, 0.\+0f, 0.\+0f \}, \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}} \+\_\+chunk\+Width=Default\+Chunk\+Width, \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}} \+\_\+chunk\+Height=Default\+Chunk\+Height, float \+\_\+chunk\+Cell\+Size=Default\+Chunk\+Cell\+Size) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+{\footnotesize template$<$class... Args$>$ \newline
+requires std\+::constructible\+\_\+from$<$Partition, Args...$>$ \&\& (!(std\+::same\+\_\+as$<$std\+::remove\+\_\+cvref\+\_\+t$<$Args$>$, \mbox{\hyperlink{class_s_f_w_1_1_level}{Level}}$>$ \texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|} ...))}\\\mbox{\hyperlink{class_s_f_w_1_1_level_a5f0fc5b69446cf7dca25d9d4210a0a8b}{explicit}} (sizeof...(Args)==1) \mbox{\hyperlink{class_s_f_w_1_1_level}{Level}}(const std
+\begin{DoxyCompactList}\small\item\em T が Args... で構築可能なときだけ、このコンストラクタを有効化 @ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} \mbox{\hyperlink{class_s_f_w_1_1_level_a515a296039f5c2a28b716d8c6d426b23}{Get\+ID}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Level\+IDの取得関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_level_aa3016006d7145226409d98d2fb30da2f}{Update}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}} \&service\+Locator, double delta\+Time, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor)
+\begin{DoxyCompactList}\small\item\em 更新処理 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_level_a69bb3f35b3d7733bf0930e717d17f756}{Clean}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}} \&service\+Locator)
+\begin{DoxyCompactList}\small\item\em 終了処理 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_level_ab77413853ea076d61557053d71c6c6bc}{Update\+Limited}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}} \&service\+Locator, double delta\+Time, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor)
+\begin{DoxyCompactList}\small\item\em 限定的な更新処理 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_level_a29b848cbecad925f85b9dc69b3b650e7}{Register\+All\+Chunks}} (\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&reg)
+\begin{DoxyCompactList}\small\item\em すべてのチャンクの\+Entity\+Managerをレジスターに登録する \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \& \mbox{\hyperlink{class_s_f_w_1_1_level_a99c6b45fb1cc2e107d66ffde7a77ed7e}{Get\+Global\+Entity\+Manager}} () noexcept
+\begin{DoxyCompactList}\small\item\em グローバルなエンティティマネージャーを取得する関数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler}{Scheduler\+Type}} \& \mbox{\hyperlink{class_s_f_w_1_1_level_a134b57117aef18aa98c5cebe8ec0bde1}{Get\+Scheduler}} () noexcept
+\begin{DoxyCompactList}\small\item\em スケジューラを取得する関数 \end{DoxyCompactList}\item 
+const std\+::string \& \mbox{\hyperlink{class_s_f_w_1_1_level_a4cebf531263e4cc764748a73e57acfb0}{Get\+Name}} () const noexcept
+\begin{DoxyCompactList}\small\item\em レベルの名前を取得する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_level_ae77b647f6c5302bd2e4abddaf3cd7f58}{Change\+State}} (\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} bits, bool set=true, std\+::memory\+\_\+order mo=std\+::memory\+\_\+order\+\_\+acq\+\_\+rel)
+\begin{DoxyCompactList}\small\item\em レベルの状態を設定する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_level_aa6903a92fc54d7b8b78ba22901154aba}{Update\+State}} (\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} set\+Bits, \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} clear\+Bits, std\+::memory\+\_\+order success=std\+::memory\+\_\+order\+\_\+acq\+\_\+rel, std\+::memory\+\_\+order fail=std\+::memory\+\_\+order\+\_\+acquire)
+\begin{DoxyCompactList}\small\item\em ビットを立てるのと落とすのを同時に行う関数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} \mbox{\hyperlink{class_s_f_w_1_1_level_a029398fed9ae2f15c2a820034022c1a6}{Get\+State}} (std\+::memory\+\_\+order mo=std\+::memory\+\_\+order\+\_\+acquire) const
+\begin{DoxyCompactList}\small\item\em レベルの状態を取得する関数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_level_ab655fe3a3b1d7f088e56e9449f25a68c}{Is\+Active}} (std\+::memory\+\_\+order mo=std\+::memory\+\_\+order\+\_\+acquire) const
+\begin{DoxyCompactList}\small\item\em レベルがアクティブ状態かどうかを取得する関数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_level_a5f059d268722000c42a20faf7adf2c09}{Is\+Loading}} (std\+::memory\+\_\+order mo=std\+::memory\+\_\+order\+\_\+acquire) const
+\begin{DoxyCompactList}\small\item\em レベルがローディング状態かどうかを取得する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_level_a08aaadaec0651b93df14daca91e16b0b}{Set\+Active}} (bool active, std\+::memory\+\_\+order mo=std\+::memory\+\_\+order\+\_\+acq\+\_\+rel)
+\begin{DoxyCompactList}\small\item\em レベルのアクティブ状態を設定する関数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_level_ac6ad823ef201187a53b833228138ee7e}{Try\+Begin\+Loading}} (std\+::memory\+\_\+order success=std\+::memory\+\_\+order\+\_\+acq\+\_\+rel, std\+::memory\+\_\+order fail=std\+::memory\+\_\+order\+\_\+acquire)
+\begin{DoxyCompactList}\small\item\em レベルのローディングを開始し、成功したかどうかを返す関数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_level_a14f5e74e991ff4c0641c923cad9eaf4d}{Try\+Begin\+Clean}} (std\+::memory\+\_\+order success=std\+::memory\+\_\+order\+\_\+acq\+\_\+rel, std\+::memory\+\_\+order fail=std\+::memory\+\_\+order\+\_\+acquire)
+\begin{DoxyCompactList}\small\item\em レベルのクリーンを開始し、成功したかどうかを返す関数 \end{DoxyCompactList}\item 
+std\+::optional$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_level_aa11adee2de120e6e8083a5aa6e8b3ae2}{Get\+Chunk}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} location, \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOut\+Of\+Bounds\+Policy}} policy=\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOut\+Of\+Bounds\+Policy\+::\+Clamp\+To\+Edge}}) noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session}{Session}} \mbox{\hyperlink{class_s_f_w_1_1_level_a1dd68e8dacc69f758fc9bb70200a0494}{Get\+Session}} ()
+\begin{DoxyCompactList}\small\item\em Entityを更新するためのクラス取得 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_level_a5bc0fb54b56a15d7ff96e95ca963afcc}{Show\+Debug\+Inactive\+Level\+Info\+UI}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$Partition\+Concept Partition$>$\newline
+class SFW\+::\+Level$<$ Partition $>$}
+レベル(シーン単位)を定義するクラス 
+
+
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em Partition} & パーティションの型 \\
+\hline
+\end{DoxyTemplParams}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00132}{132}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_level_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_level_af121d6c47aa936403568199efa87de50}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!Level@{Level}}
+\index{Level@{Level}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{Level()}{Level()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_af121d6c47aa936403568199efa87de50} 
+template$<$Partition\+Concept Partition$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Level (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&}]{reg}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}}}]{\+\_\+state}{ = {\ttfamily \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53aa02c83a7dbd96295beaefb72c2bee2de}{ELevel\+State\+::\+Main}}}, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{origin\+WS}{ = {\ttfamily \{~0.0f,0.0f,0.0f~\}}, }\item[{\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}}}]{\+\_\+chunk\+Width}{ = {\ttfamily DefaultChunkWidth}, }\item[{\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}}}]{\+\_\+chunk\+Height}{ = {\ttfamily DefaultChunkHeight}, }\item[{float}]{\+\_\+chunk\+Cell\+Size}{ = {\ttfamily DefaultChunkCellSize}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em name} & レベルの名前 \\
+\hline
+{\em state} & レベルの状態 \\
+\hline
+{\em \+\_\+chunk\+Width} & チャンクの幅 \\
+\hline
+{\em \+\_\+chunk\+Height} & チャンクの高さ \\
+\hline
+{\em \+\_\+chunk\+Cell\+Size} & チャンクのセルサイズ \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00324}{324}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_level_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_level_ae77b647f6c5302bd2e4abddaf3cd7f58}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!ChangeState@{ChangeState}}
+\index{ChangeState@{ChangeState}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{ChangeState()}{ChangeState()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_ae77b647f6c5302bd2e4abddaf3cd7f58} 
+template$<$Partition\+Concept Partition$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Change\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}}}]{bits}{, }\item[{bool}]{set}{ = {\ttfamily true}, }\item[{std\+::memory\+\_\+order}]{mo}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+acq\+\_\+rel}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+レベルの状態を設定する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em s} & レベルの状態 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00453}{453}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_a69bb3f35b3d7733bf0930e717d17f756}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!Clean@{Clean}}
+\index{Clean@{Clean}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{Clean()}{Clean()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_a69bb3f35b3d7733bf0930e717d17f756} 
+template$<$Partition\+Concept Partition$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Clean (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}} \&}]{service\+Locator}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+終了処理 
+
+System\+Schedulerの\+Systemの\+End関数を呼び出す 
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00393}{393}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_a5f0fc5b69446cf7dca25d9d4210a0a8b}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!explicit@{explicit}}
+\index{explicit@{explicit}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{explicit()}{explicit()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_a5f0fc5b69446cf7dca25d9d4210a0a8b} 
+template$<$Partition\+Concept Partition$>$ \\
+template$<$class... Args$>$ \newline
+requires std\+::constructible\+\_\+from$<$Partition, Args...$>$ \&\& (!(std\+::same\+\_\+as$<$std\+::remove\+\_\+cvref\+\_\+t$<$Args$>$, \mbox{\hyperlink{class_s_f_w_1_1_level}{Level}}$>$ \texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|} ...))\\
+\mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::explicit (\begin{DoxyParamCaption}\item[{sizeof...}]{}{Args = {\ttfamily =~1}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+T が Args... で構築可能なときだけ、このコンストラクタを有効化 @ 
+
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00344}{344}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_aa11adee2de120e6e8083a5aa6e8b3ae2}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!GetChunk@{GetChunk}}
+\index{GetChunk@{GetChunk}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{GetChunk()}{GetChunk()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_aa11adee2de120e6e8083a5aa6e8b3ae2} 
+template$<$Partition\+Concept Partition$>$ \\
+std\+::optional$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Get\+Chunk (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{location}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOut\+Of\+Bounds\+Policy}}}]{policy}{ = {\ttfamily \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOut\+Of\+Bounds\+Policy\+::\+Clamp\+To\+Edge}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00568}{568}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_a99c6b45fb1cc2e107d66ffde7a77ed7e}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!GetGlobalEntityManager@{GetGlobalEntityManager}}
+\index{GetGlobalEntityManager@{GetGlobalEntityManager}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{GetGlobalEntityManager()}{GetGlobalEntityManager()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_a99c6b45fb1cc2e107d66ffde7a77ed7e} 
+template$<$Partition\+Concept Partition$>$ \\
+const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \& \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Get\+Global\+Entity\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+グローバルなエンティティマネージャーを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+const \doxylink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}\& グローバルエンティティマネージャーへの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00438}{438}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_a515a296039f5c2a28b716d8c6d426b23}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!GetID@{GetID}}
+\index{GetID@{GetID}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{GetID()}{GetID()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_a515a296039f5c2a28b716d8c6d426b23} 
+template$<$Partition\+Concept Partition$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Get\+ID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Level\+IDの取得関数 
+
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00359}{359}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_a4cebf531263e4cc764748a73e57acfb0}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!GetName@{GetName}}
+\index{GetName@{GetName}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{GetName()}{GetName()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_a4cebf531263e4cc764748a73e57acfb0} 
+template$<$Partition\+Concept Partition$>$ \\
+const std\+::string \& \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Get\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+レベルの名前を取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+const std\+::string\& レベルの名前への参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00448}{448}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_a134b57117aef18aa98c5cebe8ec0bde1}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!GetScheduler@{GetScheduler}}
+\index{GetScheduler@{GetScheduler}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{GetScheduler()}{GetScheduler()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_a134b57117aef18aa98c5cebe8ec0bde1} 
+template$<$Partition\+Concept Partition$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler}{Scheduler\+Type}} \& \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Get\+Scheduler (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+スケジューラを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+Scheduler\+Type\& スケジューラへの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00443}{443}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_a1dd68e8dacc69f758fc9bb70200a0494}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!GetSession@{GetSession}}
+\index{GetSession@{GetSession}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{GetSession()}{GetSession()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_a1dd68e8dacc69f758fc9bb70200a0494} 
+template$<$Partition\+Concept Partition$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session}{Session}} \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Get\+Session (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+Entityを更新するためのクラス取得 
+
+\begin{DoxyReturn}{戻り値}
+std\+::shared\+\_\+mutex\& mutex 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00575}{575}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_a029398fed9ae2f15c2a820034022c1a6}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!GetState@{GetState}}
+\index{GetState@{GetState}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{GetState()}{GetState()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_a029398fed9ae2f15c2a820034022c1a6} 
+template$<$Partition\+Concept Partition$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Get\+State (\begin{DoxyParamCaption}\item[{std\+::memory\+\_\+order}]{mo}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+acquire}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+レベルの状態を取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State} レベルの状態 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00484}{484}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_ab655fe3a3b1d7f088e56e9449f25a68c}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!IsActive@{IsActive}}
+\index{IsActive@{IsActive}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{IsActive()}{IsActive()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_ab655fe3a3b1d7f088e56e9449f25a68c} 
+template$<$Partition\+Concept Partition$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Is\+Active (\begin{DoxyParamCaption}\item[{std\+::memory\+\_\+order}]{mo}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+acquire}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+レベルがアクティブ状態かどうかを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+bool アクティブ状態の場合はtrue、そうでない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00492}{492}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_a5f059d268722000c42a20faf7adf2c09}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!IsLoading@{IsLoading}}
+\index{IsLoading@{IsLoading}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{IsLoading()}{IsLoading()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_a5f059d268722000c42a20faf7adf2c09} 
+template$<$Partition\+Concept Partition$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Is\+Loading (\begin{DoxyParamCaption}\item[{std\+::memory\+\_\+order}]{mo}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+acquire}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+レベルがローディング状態かどうかを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+bool ローディング状態の場合はtrue、そうでない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00499}{499}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_a29b848cbecad925f85b9dc69b3b650e7}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!RegisterAllChunks@{RegisterAllChunks}}
+\index{RegisterAllChunks@{RegisterAllChunks}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{RegisterAllChunks()}{RegisterAllChunks()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_a29b848cbecad925f85b9dc69b3b650e7} 
+template$<$Partition\+Concept Partition$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Register\+All\+Chunks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&}]{reg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+すべてのチャンクの\+Entity\+Managerをレジスターに登録する 
+
+
+\begin{DoxyParams}{引数}
+{\em reg} & Entity\+Manager\+Registryの参照 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00430}{430}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_a08aaadaec0651b93df14daca91e16b0b}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!SetActive@{SetActive}}
+\index{SetActive@{SetActive}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{SetActive()}{SetActive()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_a08aaadaec0651b93df14daca91e16b0b} 
+template$<$Partition\+Concept Partition$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Set\+Active (\begin{DoxyParamCaption}\item[{bool}]{active}{, }\item[{std\+::memory\+\_\+order}]{mo}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+acq\+\_\+rel}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+レベルのアクティブ状態を設定する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em active} & アクティブ状態 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00507}{507}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_a5bc0fb54b56a15d7ff96e95ca963afcc}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!ShowDebugInactiveLevelInfoUI@{ShowDebugInactiveLevelInfoUI}}
+\index{ShowDebugInactiveLevelInfoUI@{ShowDebugInactiveLevelInfoUI}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{ShowDebugInactiveLevelInfoUI()}{ShowDebugInactiveLevelInfoUI()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_a5bc0fb54b56a15d7ff96e95ca963afcc} 
+template$<$Partition\+Concept Partition$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Show\+Debug\+Inactive\+Level\+Info\+UI (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00580}{580}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_a14f5e74e991ff4c0641c923cad9eaf4d}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!TryBeginClean@{TryBeginClean}}
+\index{TryBeginClean@{TryBeginClean}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{TryBeginClean()}{TryBeginClean()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_a14f5e74e991ff4c0641c923cad9eaf4d} 
+template$<$Partition\+Concept Partition$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Try\+Begin\+Clean (\begin{DoxyParamCaption}\item[{std\+::memory\+\_\+order}]{success}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+acq\+\_\+rel}, }\item[{std\+::memory\+\_\+order}]{fail}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+acquire}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+レベルのクリーンを開始し、成功したかどうかを返す関数 
+
+\begin{DoxyReturn}{戻り値}
+bool クリーンの開始に成功した場合はtrue、そうでない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00548}{548}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_ac6ad823ef201187a53b833228138ee7e}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!TryBeginLoading@{TryBeginLoading}}
+\index{TryBeginLoading@{TryBeginLoading}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{TryBeginLoading()}{TryBeginLoading()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_ac6ad823ef201187a53b833228138ee7e} 
+template$<$Partition\+Concept Partition$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Try\+Begin\+Loading (\begin{DoxyParamCaption}\item[{std\+::memory\+\_\+order}]{success}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+acq\+\_\+rel}, }\item[{std\+::memory\+\_\+order}]{fail}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+acquire}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+レベルのローディングを開始し、成功したかどうかを返す関数 
+
+\begin{DoxyReturn}{戻り値}
+bool ローディングの開始に成功した場合はtrue、そうでない場合はfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00524}{524}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_aa3016006d7145226409d98d2fb30da2f}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!Update@{Update}}
+\index{Update@{Update}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_aa3016006d7145226409d98d2fb30da2f} 
+template$<$Partition\+Concept Partition$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Update (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}} \&}]{service\+Locator}{, }\item[{double}]{delta\+Time}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}}]{executor}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+更新処理 
+
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00364}{364}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_ab77413853ea076d61557053d71c6c6bc}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!UpdateLimited@{UpdateLimited}}
+\index{UpdateLimited@{UpdateLimited}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{UpdateLimited()}{UpdateLimited()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_ab77413853ea076d61557053d71c6c6bc} 
+template$<$Partition\+Concept Partition$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Update\+Limited (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}} \&}]{service\+Locator}{, }\item[{double}]{delta\+Time}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}}]{executor}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+限定的な更新処理 
+
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00405}{405}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_level_aa6903a92fc54d7b8b78ba22901154aba}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!UpdateState@{UpdateState}}
+\index{UpdateState@{UpdateState}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{UpdateState()}{UpdateState()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_level_aa6903a92fc54d7b8b78ba22901154aba} 
+template$<$Partition\+Concept Partition$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+::\+Update\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}}}]{set\+Bits}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}}}]{clear\+Bits}{, }\item[{std\+::memory\+\_\+order}]{success}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+acq\+\_\+rel}, }\item[{std\+::memory\+\_\+order}]{fail}{ = {\ttfamily std\+:\+:memory\+\_\+order\+\_\+acquire}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ビットを立てるのと落とすのを同時に行う関数 
+
+
+\begin{DoxyParams}{引数}
+{\em set\+Mask} & 立てるビットのマスク \\
+\hline
+{\em clear\+Mask} & 落とすビットのマスク \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00467}{467}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_level_8hpp}{Level.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,311 @@
+\doxysection{SFW\+::Math\+::Quat\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} 構造体テンプレート}
+\hypertarget{struct_s_f_w_1_1_math_1_1_quat}{}\label{struct_s_f_w_1_1_math_1_1_quat}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+
+
+{\ttfamily \#include $<$Quaternion.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a30a226f303e716dfc936ba4b5fcce018}{Quat}} () noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a4bfb91a8e1b8f8fca320d997e16b6039}{Quat}} (T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a8861a90e5ee88d31daeabb755f95d0c1}{x}}, T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a2ece16b5029f9d5feb91109cb2cb0a04}{y}}, T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a5f8d4cec0df3a46f935e01b0705c1202}{z}}, T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_ae93b3e27320b5e09174e2ae2d5ee71a1}{w}}) noexcept
+\item 
+T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a35e831b284bdc8d08c1ff93e9276d465}{Length\+Sq}} () const noexcept
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_ac7829e9ac2df921534cd5cf9eef60d7a}{Normalize}} () noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a6592719c83cf49baea82d5ec21e744f5}{Normalized}} () const noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a31051fbad04016a4590d610d4a4b1f1c}{Rotate\+Vector}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_aac1b274eecf07a1d21de58f8e875510c}{v}}) const noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a6fe68ba185c1d595c60b5409177f6783}{Inverse}} () const noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a79b9c5dffc2e345ac3ffb737a0e49a5f}{operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \&q) const noexcept
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_ae97ca3f846cace66005e4553d21c60b8}{Decompose\+Swing\+Twist}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&axis, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \&out\+Swing, \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \&out\+Twist) const noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a6a8835335983e062951bbcd8c2dc72b1}{Keep\+Twist}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&axis) const noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a806107b8a55e6fac2c4aed7c26bdc864}{Remove\+Twist}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&axis) const noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{静的公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_ae9c5394d3e19e4500b11307037795c63}{Identity}} () noexcept
+\item 
+static \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a545f1c95e57a52ec4e41565e3e02fef0}{From\+Euler}} (T pitch, T yaw, T roll) noexcept
+\item 
+static \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a35d3886b34429654f8e299578f77dca7}{From\+Axis\+Angle}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&axis, T angle\+Rad) noexcept
+\item 
+static \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a7c152cc1eb78e8e69dad8f7a212bbe6f}{Slerp}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \&a, const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \&b, T t) noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a8861a90e5ee88d31daeabb755f95d0c1}{x}}\\
+\>\>T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a2ece16b5029f9d5feb91109cb2cb0a04}{y}}\\
+\>\>T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a5f8d4cec0df3a46f935e01b0705c1202}{z}}\\
+\>\>T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_ae93b3e27320b5e09174e2ae2d5ee71a1}{w}}\\
+\>\} \\
+\>T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_aac1b274eecf07a1d21de58f8e875510c}{v}} \mbox{[}4\mbox{]}\\
+\}; \\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename T$>$\newline
+struct SFW\+::\+Math\+::\+Quat$<$ T $>$}
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00020}{20}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a30a226f303e716dfc936ba4b5fcce018}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!Quat@{Quat}}
+\index{Quat@{Quat}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Quat()}{Quat()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a30a226f303e716dfc936ba4b5fcce018} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::\+Quat (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00026}{26}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a4bfb91a8e1b8f8fca320d997e16b6039}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!Quat@{Quat}}
+\index{Quat@{Quat}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Quat()}{Quat()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a4bfb91a8e1b8f8fca320d997e16b6039} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::\+Quat (\begin{DoxyParamCaption}\item[{T}]{x}{, }\item[{T}]{y}{, }\item[{T}]{z}{, }\item[{T}]{w}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00027}{27}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_ae97ca3f846cace66005e4553d21c60b8}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!DecomposeSwingTwist@{DecomposeSwingTwist}}
+\index{DecomposeSwingTwist@{DecomposeSwingTwist}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{DecomposeSwingTwist()}{DecomposeSwingTwist()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_ae97ca3f846cace66005e4553d21c60b8} 
+template$<$typename T$>$ \\
+void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::\+Decompose\+Swing\+Twist (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&}]{axis}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$ T $>$ \&}]{out\+Swing}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$ T $>$ \&}]{out\+Twist}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00118}{118}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a35d3886b34429654f8e299578f77dca7}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!FromAxisAngle@{FromAxisAngle}}
+\index{FromAxisAngle@{FromAxisAngle}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{FromAxisAngle()}{FromAxisAngle()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a35d3886b34429654f8e299578f77dca7} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::\+From\+Axis\+Angle (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&}]{axis}{, }\item[{T}]{angle\+Rad}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00059}{59}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a545f1c95e57a52ec4e41565e3e02fef0}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!FromEuler@{FromEuler}}
+\index{FromEuler@{FromEuler}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{FromEuler()}{FromEuler()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a545f1c95e57a52ec4e41565e3e02fef0} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::\+From\+Euler (\begin{DoxyParamCaption}\item[{T}]{pitch}{, }\item[{T}]{yaw}{, }\item[{T}]{roll}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00044}{44}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_ae9c5394d3e19e4500b11307037795c63}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!Identity@{Identity}}
+\index{Identity@{Identity}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Identity()}{Identity()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_ae9c5394d3e19e4500b11307037795c63} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::\+Identity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00041}{41}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a6fe68ba185c1d595c60b5409177f6783}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!Inverse@{Inverse}}
+\index{Inverse@{Inverse}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Inverse()}{Inverse()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a6fe68ba185c1d595c60b5409177f6783} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::\+Inverse (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00075}{75}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a6a8835335983e062951bbcd8c2dc72b1}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!KeepTwist@{KeepTwist}}
+\index{KeepTwist@{KeepTwist}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{KeepTwist()}{KeepTwist()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a6a8835335983e062951bbcd8c2dc72b1} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::\+Keep\+Twist (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&}]{axis}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00167}{167}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a35e831b284bdc8d08c1ff93e9276d465}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!LengthSq@{LengthSq}}
+\index{LengthSq@{LengthSq}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{LengthSq()}{LengthSq()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a35e831b284bdc8d08c1ff93e9276d465} 
+template$<$typename T$>$ \\
+T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::\+Length\+Sq (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00030}{30}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_ac7829e9ac2df921534cd5cf9eef60d7a}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!Normalize@{Normalize}}
+\index{Normalize@{Normalize}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Normalize()}{Normalize()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_ac7829e9ac2df921534cd5cf9eef60d7a} 
+template$<$typename T$>$ \\
+void \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::\+Normalize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00032}{32}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a6592719c83cf49baea82d5ec21e744f5}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!Normalized@{Normalized}}
+\index{Normalized@{Normalized}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Normalized()}{Normalized()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a6592719c83cf49baea82d5ec21e744f5} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::\+Normalized (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00039}{39}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a79b9c5dffc2e345ac3ffb737a0e49a5f}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a79b9c5dffc2e345ac3ffb737a0e49a5f} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$ T $>$ \&}]{q}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00105}{105}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a806107b8a55e6fac2c4aed7c26bdc864}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!RemoveTwist@{RemoveTwist}}
+\index{RemoveTwist@{RemoveTwist}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{RemoveTwist()}{RemoveTwist()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a806107b8a55e6fac2c4aed7c26bdc864} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::\+Remove\+Twist (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&}]{axis}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00176}{176}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a31051fbad04016a4590d610d4a4b1f1c}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!RotateVector@{RotateVector}}
+\index{RotateVector@{RotateVector}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{RotateVector()}{RotateVector()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a31051fbad04016a4590d610d4a4b1f1c} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::\+Rotate\+Vector (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3}}$<$ T $>$ \&}]{v}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00069}{69}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a7c152cc1eb78e8e69dad8f7a212bbe6f}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!Slerp@{Slerp}}
+\index{Slerp@{Slerp}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Slerp()}{Slerp()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a7c152cc1eb78e8e69dad8f7a212bbe6f} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}} \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::\+Slerp (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$ T $>$ \&}]{a}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{Quat}}$<$ T $>$ \&}]{b}{, }\item[{T}]{t}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00077}{77}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_aa0d5df3987d2f080059ccf57a9d032cf}\doxysubsubsection{\texorpdfstring{[union]}{[union]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_aa0d5df3987d2f080059ccf57a9d032cf} 
+union  \{ ... \}  \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$}
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_aac1b274eecf07a1d21de58f8e875510c}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!v@{v}}
+\index{v@{v}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{v}{v}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_aac1b274eecf07a1d21de58f8e875510c} 
+template$<$typename T$>$ \\
+T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::v\mbox{[}4\mbox{]}}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00023}{23}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_ae93b3e27320b5e09174e2ae2d5ee71a1}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!w@{w}}
+\index{w@{w}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{w}{w}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_ae93b3e27320b5e09174e2ae2d5ee71a1} 
+template$<$typename T$>$ \\
+T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::w}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00022}{22}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a8861a90e5ee88d31daeabb755f95d0c1}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!x@{x}}
+\index{x@{x}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{x}{x}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a8861a90e5ee88d31daeabb755f95d0c1} 
+template$<$typename T$>$ \\
+T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::x}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00022}{22}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a2ece16b5029f9d5feb91109cb2cb0a04}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!y@{y}}
+\index{y@{y}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{y}{y}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a2ece16b5029f9d5feb91109cb2cb0a04} 
+template$<$typename T$>$ \\
+T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::y}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00022}{22}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_math_1_1_quat_a5f8d4cec0df3a46f935e01b0705c1202}\index{SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}!z@{z}}
+\index{z@{z}!SFW::Math::Quat$<$ T $>$@{SFW::Math::Quat$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{z}{z}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_math_1_1_quat_a5f8d4cec0df3a46f935e01b0705c1202} 
+template$<$typename T$>$ \\
+T \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat}{SFW\+::\+Math\+::\+Quat}}$<$ T $>$\+::z}
+
+
+
+ \mbox{\hyperlink{_quaternion_8hpp_source}{Quaternion.\+hpp}} の \mbox{\hyperlink{_quaternion_8hpp_source_l00022}{22}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Math/\mbox{\hyperlink{_quaternion_8hpp}{Quaternion.\+hpp}}\end{DoxyCompactItemize}

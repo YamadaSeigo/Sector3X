@@ -1,0 +1,267 @@
+\doxysection{Resouce\+Manager\+Base.\+hpp}
+\hypertarget{_resouce_manager_base_8hpp_source}{}\label{_resouce_manager_base_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/ResouceManagerBase.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/ResouceManagerBase.hpp}}
+\mbox{\hyperlink{_resouce_manager_base_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <shared\_mutex>}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_copyable_atomic_8hpp}{CopyableAtomic.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00017}00017\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00018}00018\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00022}00022\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Derived,\ \textcolor{keyword}{typename}\ HandleType,\ \textcolor{keyword}{typename}\ CreateDescType,\ \textcolor{keyword}{typename}\ ResourceType>}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00023}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base}{00023}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base}{ResourceManagerBase}}\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00024}00024\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{template}<\textcolor{keyword}{class}>\ \textcolor{keyword}{class\ }Lock>}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00029}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource}{00029}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ab86ae61c081ac50a5596095415c58ff2}{LockedResource}}\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00031}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a639ea08b0ee11925913afa6ccd941068}{00031}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a639ea08b0ee11925913afa6ccd941068}{mutex\_type}}\ =\ std::shared\_mutex;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 共有ロックなら\ const\ T\&/const\ T*、それ以外は\ T\&/T*}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00034}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ac0c2af7acf0ff8d52906f475556e19f4}{00034}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ac0c2af7acf0ff8d52906f475556e19f4}{ref\_type}}\ =\ std::conditional\_t<}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::is\_same\_v<Lock<mutex\_type>,\ std::shared\_lock<mutex\_type>>,}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\&,\ T\&}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ >;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00038}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a8b2d629a85d2a7a3a081afb77fd2a8dc}{00038}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a8b2d629a85d2a7a3a081afb77fd2a8dc}{ptr\_type}}\ =\ std::conditional\_t<}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::is\_same\_v<Lock<mutex\_type>,\ std::shared\_lock<mutex\_type>>,}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T*,\ T*}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ >;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ロックを取得してから呼ぶこと}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00044}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ab86ae61c081ac50a5596095415c58ff2}{00044}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ab86ae61c081ac50a5596095415c58ff2}{LockedResource}}(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a8b2d629a85d2a7a3a081afb77fd2a8dc}{ptr\_type}}\ p,\ Lock<mutex\_type>\&\&\ lk)}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ ptr\_(p),\ lock\_(\mbox{\hyperlink{namespacestd}{std}}::move(lk))\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(lock\_.owns\_lock());}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ムーブのみ可}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00050}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_acb1ec90c1374ae40b33e616e0767b2b5}{00050}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_acb1ec90c1374ae40b33e616e0767b2b5}{LockedResource}}(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ab86ae61c081ac50a5596095415c58ff2}{LockedResource}}\&\&\ other)\ noexcept}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ ptr\_(other.ptr\_),\ lock\_(std::move(other.lock\_))\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ other.ptr\_\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//なかでムーブ代入を使う}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00055}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ab32a720b5b553bee5e68ef0da6417e62}{00055}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ab86ae61c081ac50a5596095415c58ff2}{LockedResource}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ab32a720b5b553bee5e68ef0da6417e62}{operator=}}(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ab86ae61c081ac50a5596095415c58ff2}{LockedResource}}\&\&\ other)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ !=\ \&other)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 先に自分のロックを解放（unique\_lock/shared\_lock\ はムーブ代入で自動でやってくれるが念のため順序を明確化）}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lock\_\ =\ LockTransfer(std::move(other.lock\_));}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr\_\ =\ other.ptr\_;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ other.ptr\_\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00065}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a8cde8e863c91e673a32c28c62f642eca}{00065}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a8cde8e863c91e673a32c28c62f642eca}{LockedResource}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ab86ae61c081ac50a5596095415c58ff2}{LockedResource}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00066}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a1eada6421d60b87233ec42e3e881958d}{00066}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ab86ae61c081ac50a5596095415c58ff2}{LockedResource}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a1eada6421d60b87233ec42e3e881958d}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ab86ae61c081ac50a5596095415c58ff2}{LockedResource}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00068}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a3cb8c74800407de94f9e1eddede03b94}{00068}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ ResourceType\&\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a3cb8c74800407de94f9e1eddede03b94}{operator*}}()\ const\&\&\ =\ delete;\ \ \ \ \ \ \textcolor{comment}{//\ rvalueは不可}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00069}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a5e5691b84ceafdedf8bbfe27a29587e2}{00069}}\ \ \ \ \ \ \ \ \ \ \ \ \ const\ ResourceType\&\ operator-\/>()\ const\&\&\ =\ delete;\ \ \ \ \ \ \textcolor{comment}{//\ rvalueは不可}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00070}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_acdb9f9bb60f17925b4d618b05d136744}{00070}}\ \ \ \ \ \ \ \ \ \ \ \ \ const\ ResourceType\&\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_acdb9f9bb60f17925b4d618b05d136744}{ref}}()\ const\&\&\ =\ delete;\ \ \ \ \ \ \textcolor{comment}{//\ rvalueは不可}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ アクセス}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00073}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a4d21eb240074a156cd136ae10b88591e}{00073}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ac0c2af7acf0ff8d52906f475556e19f4}{ref\_type}}\ operator*()\ const\&\ noexcept\ \{\ \textcolor{keywordflow}{return}\ *ptr\_;\ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00074}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_adac886502be4168efac30f4c9b31813e}{00074}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a8b2d629a85d2a7a3a081afb77fd2a8dc}{ptr\_type}}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_adac886502be4168efac30f4c9b31813e}{operator-\/>}}()\ const\&\ noexcept\ \{\ \textcolor{keywordflow}{return}\ ptr\_;\ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 明示的に参照を取りたい場合}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00076}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_aea7a164970a47237ca58dabf4ee3e2aa}{00076}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_ac0c2af7acf0ff8d52906f475556e19f4}{ref\_type}}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_aea7a164970a47237ca58dabf4ee3e2aa}{ref}}()\ const\&\ noexcept\ \{\ \textcolor{keywordflow}{return}\ *ptr\_;\ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ロックを明示的に保持したままにしたい設計なら、unlock\ を出さない（RAII）}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 必要なら\ lock\ を取り出す\ API\ を追加しても良い（非推奨）}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ lock\_\ のムーブ代入を式として切り出すだけの小道具}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Lock<mutex\_type>\ LockTransfer(Lock<mutex\_type>\&\&\ lk)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::move(lk);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_1_1_locked_resource_a8b2d629a85d2a7a3a081afb77fd2a8dc}{ptr\_type}}\ ptr\_\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ Lock<mutex\_type>\ lock\_;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00093}\mbox{\hyperlink{struct_s_f_w_1_1_resource_manager_base_1_1_slot}{00093}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_resource_manager_base_1_1_slot}{Slot}}\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00094}\mbox{\hyperlink{struct_s_f_w_1_1_resource_manager_base_1_1_slot_a145d0b7b0f5a156f32f0f143a54ea93c}{00094}}\ \ \ \ \ \ \ \ \ \ \ \ \ ResourceType\ \mbox{\hyperlink{struct_s_f_w_1_1_resource_manager_base_1_1_slot_a145d0b7b0f5a156f32f0f143a54ea93c}{data}};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00095}\mbox{\hyperlink{struct_s_f_w_1_1_resource_manager_base_1_1_slot_ad49869f4a813e61c424d36dd6d244bf4}{00095}}\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_s_f_w_1_1_resource_manager_base_1_1_slot_ad49869f4a813e61c424d36dd6d244bf4}{generation}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00096}\mbox{\hyperlink{struct_s_f_w_1_1_resource_manager_base_1_1_slot_a8f09d743070f0b002c88e60c3ad3fa33}{00096}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_s_f_w_1_1_resource_manager_base_1_1_slot_a8f09d743070f0b002c88e60c3ad3fa33}{alive}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00105}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a04eedb5dbac041ec944a8dc0da60f7db}{00105}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a04eedb5dbac041ec944a8dc0da60f7db}{Add}}(\textcolor{keyword}{const}\ CreateDescType\&\ desc,\ HandleType\&\ out)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}\ h\ =\ \textcolor{keyword}{static\_cast<}Derived*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>FindExisting(desc))\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 既存を\ +1}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ae15f0d5d2bed3eb6c9c6d7b6864d78f7}{AddRef}}(*h);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ もし削除要求が入っていればキャンセル}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a0d85020d8eff2ffb1b33e7e24360a125}{CancelPending}}((*h).index);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ *h;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 新規確保(再利用できる場合はそのハンドルを返す)}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ HandleType\ h\ =\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a4fba9ec2f754f59999f3cc890bf8d3aa}{AllocateHandle}}();}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ リソースの実際の生成はロック外でやってもよい（重いので）}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ ResourceType\ res\ =\ \textcolor{keyword}{static\_cast<}Derived*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>CreateResource(desc,\ h);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lk(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a2a05fb3cf3b0ea6767b836876caf0793}{mapMutex}});}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[h.index].data\ =\ std::move(res);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[h.index].alive\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a33a333a87b00d23717ff7e74c0e3bed2}{refCount}}[h.index].store(1,\ std::memory\_order\_relaxed);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}Derived*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>RegisterKey(desc,\ h);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ h;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00138}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ae15f0d5d2bed3eb6c9c6d7b6864d78f7}{00138}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ae15f0d5d2bed3eb6c9c6d7b6864d78f7}{AddRef}}(HandleType\ h)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ assert(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a27c5b607075c0da3b758542764848b9b}{IsValid}}(h));}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a33a333a87b00d23717ff7e74c0e3bed2}{refCount}}[h.index].fetch\_add(1,\ std::memory\_order\_relaxed);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00147}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a88895bdec90c2a6a1ad0981d1ea37fc5}{00147}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a88895bdec90c2a6a1ad0981d1ea37fc5}{Release}}(HandleType\ h,\ uint64\_t\ deleteSync\ =\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ assert(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a27c5b607075c0da3b758542764848b9b}{IsValid}}(h));}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ prev\ =\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a33a333a87b00d23717ff7e74c0e3bed2}{refCount}}[h.index].fetch\_sub(1,\ std::memory\_order\_acq\_rel);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ assert(prev\ >\ 0\ \&\&\ \textcolor{stringliteral}{"{}Release\ underflow"{}});}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (prev\ ==\ 1)\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a73343b94d71c058a7d42f0df945a99ce}{EnqueueDelete}}(h.index,\ deleteSync);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00158}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a73343b94d71c058a7d42f0df945a99ce}{00158}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a73343b94d71c058a7d42f0df945a99ce}{EnqueueDelete}}(uint32\_t\ index,\ uint64\_t\ deleteSync)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard\ lk(pendingMutex\_);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}\ it\ =\ pendingByIndex.find(index);\ it\ ==\ pendingByIndex.end())\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pendingDelete.push\_back(\{\ index,\ deleteSync\ \});}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pendingByIndex[index]\ =\ pendingDelete.size()\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pendingDelete[it-\/>second].deleteSync\ =\ deleteSync;\ \textcolor{comment}{//\ 後ろへ延ばす}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00172}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a0d85020d8eff2ffb1b33e7e24360a125}{00172}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a0d85020d8eff2ffb1b33e7e24360a125}{CancelPending}}(uint32\_t\ index)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard\ lk(pendingMutex\_);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ pendingByIndex.find(index);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ pendingByIndex.end())\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pos\ =\ it-\/>second;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pendingDelete.erase(pendingDelete.begin()\ +\ pos);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pendingByIndex.erase(it);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ pos\ 以降の位置がずれるので、必要なら詰め替え最適化を入れてもよい}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00187}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a21636b46b48c6f7e1948240a84cdd137}{00187}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ LockedResource<ResourceType,\ std::shared\_lock>\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a21636b46b48c6f7e1948240a84cdd137}{Get}}(HandleType\ h)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ assert(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a27c5b607075c0da3b758542764848b9b}{IsValid}}(h));}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lk(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a2a05fb3cf3b0ea6767b836876caf0793}{mapMutex}});\ \textcolor{comment}{//\ 先にロック}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ \&\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[h.index].data,\ std::move(lk)\ \};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00198}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab7f43893189687e9557458e1561ac53b}{00198}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ LockedResource<ResourceType,\ std::unique\_lock>\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab7f43893189687e9557458e1561ac53b}{GetWrite}}(HandleType\ h)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ assert(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a27c5b607075c0da3b758542764848b9b}{IsValid}}(h));}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lk(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a2a05fb3cf3b0ea6767b836876caf0793}{mapMutex}});\ \textcolor{comment}{//\ 先にロック}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ \&\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[h.index].data,\ std::move(lk)\ \};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00208}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a58e70f715b1c75115a43136bff591499}{00208}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ LockedResource<ResourceType,\ std::shared\_lock>\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a58e70f715b1c75115a43136bff591499}{GetDirect}}(uint32\_t\ idx)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_lock\ lk(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a2a05fb3cf3b0ea6767b836876caf0793}{mapMutex}});\ \textcolor{comment}{//\ 先にロック}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ \&\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[idx].data,\ std::move(lk)\ \};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00217}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ae1be2923e2cc12d30597a2a883b4c870}{00217}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ LockedResource<ResourceType,\ std::unique\_lock>\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ae1be2923e2cc12d30597a2a883b4c870}{GetDirectWrite}}(uint32\_t\ idx)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lk(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a2a05fb3cf3b0ea6767b836876caf0793}{mapMutex}});\ \textcolor{comment}{//\ 先にロック}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ \&\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[idx].data,\ std::move(lk)\ \};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00225}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a093db57dc6b50c4487114228c21f43eb}{00225}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a093db57dc6b50c4487114228c21f43eb}{ProcessDeferredDeletes}}(uint64\_t\ currentFrame)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard\ lk(pendingMutex\_);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ i\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (i\ <\ pendingDelete.size())\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ req\ =\ pendingDelete[i];}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (currentFrame\ <\ req.deleteSync)\ \{\ ++i;\ \textcolor{keywordflow}{continue};\ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00231}00231\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ idx\ =\ req.index;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a33a333a87b00d23717ff7e74c0e3bed2}{refCount}}[idx].load(std::memory\_order\_acquire)\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ここで初めて\ alive=false。以降は\ Derived\ の責務。}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[idx].alive\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 登録済みキーや名前→handleなどを掃除}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}Derived*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>RemoveFromCaches(idx);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00239}00239\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 実体破棄（子の\ Release\ 連鎖などがあれば\ currentFrame\ を渡して遅延にも対応）}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}Derived*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>DestroyResource(idx,\ currentFrame);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00242}00242\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ スロット再利用}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_af242d92113df8594cc180534243e98a8}{freeList}}.push\_back(idx);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 破棄済み\ or\ キャンセル、どちらでも要求は捨てる}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pendingByIndex.erase(idx);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pendingDelete.erase(pendingDelete.begin()\ +\ i);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00250}00250\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00251}00251\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00256}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a3b45f3d62337fc9cab8535042c015c7c}{00256}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::shared\_lock<std::shared\_mutex>\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a3b45f3d62337fc9cab8535042c015c7c}{AcquireReadLock}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::shared\_lock<std::shared\_mutex>(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a2a05fb3cf3b0ea6767b836876caf0793}{mapMutex}});}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00258}00258\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00263}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ae763873166f069f11652407b915cde4d}{00263}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_lock<std::shared\_mutex>\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ae763873166f069f11652407b915cde4d}{AcquireWriteLock}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::unique\_lock<std::shared\_mutex>(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a2a05fb3cf3b0ea6767b836876caf0793}{mapMutex}});}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00271}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab962efb2490c3a8364ddee6d4d986db8}{00271}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{const}\ ResourceType\&\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab962efb2490c3a8364ddee6d4d986db8}{GetNoLock}}(HandleType\ h)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ assert(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a27c5b607075c0da3b758542764848b9b}{IsValid}}(h));}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[h.index].data;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00280}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ad0e3f3458a61ff42eae76f90fe81fda4}{00280}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ ResourceType\&\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ad0e3f3458a61ff42eae76f90fe81fda4}{GetNoLockWrite}}(HandleType\ h)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ assert(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a27c5b607075c0da3b758542764848b9b}{IsValid}}(h));}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[h.index].data;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00289}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_acd8921794ec5f4579cf8207b8fa788bb}{00289}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{const}\ ResourceType\&\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_acd8921794ec5f4579cf8207b8fa788bb}{GetDirectNoLock}}(uint32\_t\ idx)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[idx].data;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00291}00291\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00297}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ac24562d389854f09bca4eecd53a82f6d}{00297}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ ResourceType\&\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ac24562d389854f09bca4eecd53a82f6d}{GetDirectNoLockWrite}}(uint32\_t\ idx)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[idx].data;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00299}00299\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00300}00300\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00306}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a27c5b607075c0da3b758542764848b9b}{00306}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a27c5b607075c0da3b758542764848b9b}{IsValid}}(HandleType\ h)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ h.index\ <\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}.size()\ \&\&}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[h.index].generation\ ==\ h.generation\ \&\&}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[h.index].alive;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00310}00310\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00311}00311\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00316}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a4fba9ec2f754f59999f3cc890bf8d3aa}{00316}}\ \ \ \ \ \ \ \ \ HandleType\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a4fba9ec2f754f59999f3cc890bf8d3aa}{AllocateHandle}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ idx;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lock(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a2a05fb3cf3b0ea6767b836876caf0793}{mapMutex}});}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_af242d92113df8594cc180534243e98a8}{freeList}}.empty())\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ idx\ =\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_af242d92113df8594cc180534243e98a8}{freeList}}.back();}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_af242d92113df8594cc180534243e98a8}{freeList}}.pop\_back();}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[idx].generation++;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ idx\ =\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}.size());}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}.push\_back(\{\});}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a33a333a87b00d23717ff7e74c0e3bed2}{refCount}}.push\_back(0);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ idx,\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[idx].generation\ \};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00330}00330\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00336}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_aa9555e8b96e02a75e848d470033541dd}{00336}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_aa9555e8b96e02a75e848d470033541dd}{MarkDead}}(uint32\_t\ index)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lock(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a2a05fb3cf3b0ea6767b836876caf0793}{mapMutex}});}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}}[index].alive\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00339}00339\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00345}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ad8e12c82c8062899e2114e20d0bfcd5a}{00345}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ad8e12c82c8062899e2114e20d0bfcd5a}{FreeIndex}}(uint32\_t\ index)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lock(\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a2a05fb3cf3b0ea6767b836876caf0793}{mapMutex}});}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_af242d92113df8594cc180534243e98a8}{freeList}}.push\_back(index);}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00348}00348\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00352}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{00352}}\ \ \ \ \ \ \ \ \ std::vector<Slot>\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_ab06811456bf9d3e86d400be7459a91ca}{slots}};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00356}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a33a333a87b00d23717ff7e74c0e3bed2}{00356}}\ \ \ \ \ \ \ \ \ std::vector<CopyableAtomic<uint32\_t>>\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a33a333a87b00d23717ff7e74c0e3bed2}{refCount}};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00360}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_af242d92113df8594cc180534243e98a8}{00360}}\ \ \ \ \ \ \ \ \ std::vector<uint32\_t>\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_af242d92113df8594cc180534243e98a8}{freeList}};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00361}00361\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00362}00362\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00363}00363\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Get関数のためのmutable}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00364}\mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a2a05fb3cf3b0ea6767b836876caf0793}{00364}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::shared\_mutex\ \mbox{\hyperlink{class_s_f_w_1_1_resource_manager_base_a2a05fb3cf3b0ea6767b836876caf0793}{mapMutex}};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00365}00365\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00366}00366\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 削除要求キュー}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00367}00367\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }PendingDelete\ \{\ uint32\_t\ index;\ uint64\_t\ deleteSync;\ \};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00368}00368\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00369}00369\ \ \ \ \ \ \ \ \ std::vector<PendingDelete>\ pendingDelete;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00370}00370\ \ \ \ \ \ \ \ \ std::unordered\_map<uint32\_t,\ size\_t>\ pendingByIndex;\ \textcolor{comment}{//\ index\ -\/>\ pendingDelete\_\ の位置}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00371}00371\ \ \ \ \ \ \ \ \ std::mutex\ pendingMutex\_;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00372}00372\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00373}00373\ }
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00374}00374\ \ \ \ \ \textcolor{comment}{//速度重視でハッシュで比較する。安全にするならmemcmpを使う。}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00375}\mbox{\hyperlink{namespace_s_f_w_ab8cb832ca884cf7f1a3ae8dd04491ffa}{00375}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{namespace_s_f_w_ab8cb832ca884cf7f1a3ae8dd04491ffa}{HashBufferContent}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ \textcolor{keywordtype}{size\_t}\ size)\ \{}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00376}00376\ \ \ \ \ \ \ \ \ std::hash<std::string\_view>\ hasher;}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00377}00377\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ hasher(std::string\_view((\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*)data,\ size));}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00378}00378\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_resouce_manager_base_8hpp_source_l00379}00379\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,28 @@
+\doxysection{SFW\+::Has\+Partition\+Update Concept Reference}
+\hypertarget{concept_s_f_w_1_1_has_partition_update}{}\label{concept_s_f_w_1_1_has_partition_update}\index{SFW::HasPartitionUpdate@{SFW::HasPartitionUpdate}}
+
+
+更新可能なパーティションを識別するコンセプト  
+
+
+
+
+{\ttfamily \#include $<$partition.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Derived>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_has_partition_update}{SFW::HasPartitionUpdate}}\ =\ \ \textcolor{keyword}{requires}(Derived\ t,\ \textcolor{keywordtype}{double}\ deltaTime)}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ t.Update(deltaTime)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{詳解}
+更新可能なパーティションを識別するコンセプト 
+
+ \mbox{\hyperlink{partition_8hpp_source}{partition.\+hpp}} の \mbox{\hyperlink{partition_8hpp_source_l00073}{73}} 行目に定義があります。
+

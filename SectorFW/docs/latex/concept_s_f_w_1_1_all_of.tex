@@ -1,0 +1,25 @@
+\doxysection{SFW\+::All\+Of Concept Reference}
+\hypertarget{concept_s_f_w_1_1_all_of}{}\label{concept_s_f_w_1_1_all_of}\index{SFW::AllOf@{SFW::AllOf}}
+
+
+Query\+Types のすべてが Allowed\+Types... に含まれているかをチェックするコンセプト  
+
+
+
+
+{\ttfamily \#include $<$Type\+Checker.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ QueryTypes,\ \textcolor{keyword}{typename}...\ AllowedTypes>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_all_of}{SFW::AllOf}}\ =\ \ (\mbox{\hyperlink{concept_s_f_w_1_1_one_of}{OneOf}}<QueryTypes,\ AllowedTypes...>\ \&\&\ ...)}
+
+\end{DoxyCode}
+
+
+\doxysubsection{詳解}
+Query\+Types のすべてが Allowed\+Types... に含まれているかをチェックするコンセプト 
+
+ \mbox{\hyperlink{_type_checker_8hpp_source}{Type\+Checker.\+hpp}} の \mbox{\hyperlink{_type_checker_8hpp_source_l00060}{60}} 行目に定義があります。
+

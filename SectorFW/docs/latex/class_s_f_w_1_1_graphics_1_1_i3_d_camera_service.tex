@@ -1,0 +1,1249 @@
+\doxysection{SFW\+::Graphics\+::I3\+DCamera\+Service\texorpdfstring{$<$}{<} Type \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{}\label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+
+
+3Dカメラサービスのインターフェース。カメラの操作、ビュー行列の計算、カメラバッファの管理を行う。  
+
+
+
+
+{\ttfamily \#include $<$I3\+DCamera\+Service.\+h$>$}
+
+SFW\+::Graphics\+::I3\+DCamera\+Service\texorpdfstring{$<$}{<} Type \texorpdfstring{$>$}{>} の継承関係図\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}
+\end{center}
+\end{figure}
+\doxysubsubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aa}{Rotate\+Mode}} \+: uint8\+\_\+t \{ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aaa8bfb919d2b73adfb399aee77d80b043c}{FPS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aaac70fac808ce7ae52fdfebf73aec35af5}{Orbital}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承公開型}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7}{Phase}} \+: uint16\+\_\+t \{ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}} = 0
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7abe7d4bcfc06ad8f4486e35d3f7bb84f7}{NORMAL}} = 1
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a8a1fd595d66698da8a11a0be6f7257d9}{LATE}} = 2
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7a0733626a62bf6a0ba964d198a3a19907}{PHASE\+\_\+\+MAX}}
+ \}
+\item 
+enum \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608}{Group}} \+: uint16\+\_\+t \{ \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a839fb5e5ac6f63b51f990eba3601e99b}{GROUP\+\_\+\+GRAPHICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aea81a1818ea1505a6b163a7d388a2dda}{GROUP\+\_\+\+PHYSICS}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aa3da48932f22b11bee7cfd18fad5268a}{GROUP\+\_\+\+INPUT}}
+, \newline
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e}{GROUP\+\_\+\+AUDIO}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a61de8b4615481c4e4157a53f5fe9a580}{GROUP\+\_\+\+AI}}
+, \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608aeff285ca6f409856d6990165b5ddad90}{GROUP\+\_\+\+MAX}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_afff2d1916859053e25eff9c3c9d5172b}{I3\+DCamera\+Service}} (\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} buffer\+Handle) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7c6ed09db460b4922d8493783e54961c}{\texorpdfstring{$\sim$}{\string~}\+I3\+DCamera\+Service}} ()=default
+\begin{DoxyCompactList}\small\item\em デストラクタ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a86f06f07d76d4d189a28e34fe783aa34}{Move}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&vec) noexcept
+\begin{DoxyCompactList}\small\item\em カメラの移動 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae6f70c90d8f7b723579230dcc139d258}{Rotate}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \&q) noexcept
+\begin{DoxyCompactList}\small\item\em カメラの回転 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac3ba109be35b9efed618314a6ecff889}{Set\+Rotation}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \&q) noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a72b3b57efa69e1ec48476debcbe476f4}{Set\+Eye\+Pos}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&eye\+Pos) noexcept
+\begin{DoxyCompactList}\small\item\em カメラの位置を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a94dfcedac8f1f117baad2593b9749ae9}{Set\+Target}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&target\+Pos) noexcept
+\begin{DoxyCompactList}\small\item\em カメラの注視点を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7b428777038fc0ea7fcff57ed0c577e9}{Set\+FOV}} (float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a9b7a807da1f7fa2ee1e2de14ac4451dc}{fov\+Rad}}) noexcept
+\begin{DoxyCompactList}\small\item\em カメラの視野角を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a1823fcf7edba094167e5df74c4350e3c}{Set\+Aspect\+Ratio}} (float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a21b73d3f0e9d42a4b4951cbaa5c96b39}{aspect\+Ratio}}) noexcept
+\begin{DoxyCompactList}\small\item\em カメラのアスペクト比を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4907465ca6e7ce04138f9af3fb1f84f3}{Set\+Near\+Clip}} (float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_af8640ab289a3ff476e40dc0a44f9e926}{near\+Clip}}) noexcept
+\begin{DoxyCompactList}\small\item\em カメラのニアクリップ距離を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_abb4297b5ec58b8800222512d3efba1ee}{Set\+Far\+Clip}} (float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a563ff0ed093d82a05ca233b9daaaf0db}{far\+Clip}}) noexcept
+\begin{DoxyCompactList}\small\item\em カメラのファークリップ距離を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_adc766a174220b69580f1ed44e03d0234}{Set\+Focus\+Distance}} (float distance) noexcept
+\begin{DoxyCompactList}\small\item\em カメラの焦点距離を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4d0b13a40af8191337b65a5a36530690}{Set\+Mouse\+Delta}} (float deltaX, float deltaY) noexcept
+\begin{DoxyCompactList}\small\item\em マウスの移動量を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a8652aad2aff0d6a815baa5e63fb42429}{Set\+Mouse\+Sensitivity}} (float sensX, float sensY) noexcept
+\begin{DoxyCompactList}\small\item\em マウス感度を設定 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a08e40022f3eb8d97a5fb66a70c721e03}{Set\+Rotate\+Mode}} (\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aa}{Rotate\+Mode}} mode) noexcept
+\begin{DoxyCompactList}\small\item\em カメラの回転モードを設定 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aa18926d235abb00236c1344e6919229a}{Get\+Eye\+Pos}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの位置を取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a6ebfa01c4d0a73727d85d2f98c2d3938}{Get\+Target}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの注視点を取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a961471074573710bb3a562d53923fef2}{Get\+Up}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの上方向ベクトルを取得 \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7f7159081774cc41465c9e810a513216}{Get\+FOV}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの視野角を取得 \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad4c10ec53bd610f645f95505466e3192}{Get\+Aspect\+Ratio}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラのアスペクト比を取得 \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a5917161acd7359a5e9f990e5e838e9ac}{Get\+Near\+Clip}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラのニアクリップ距離を取得 \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aa6e5274c815c57734febc89e3d9c6274}{Get\+Far\+Clip}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラのファークリップ距離を取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a6fbbaa783c53eee6a32773c32997ed73}{Get\+Rotation}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの回転を取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a67dd0b54c4ea5aedb5aaefaab248689b}{Get\+Forward}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの焦点距離を取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a77e3d3383a9ea6fc018da65c240724f9}{Get\+Backward}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの後方方向ベクトルを取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad1673672e37d59e4801b6bc1f164775d}{Get\+Right}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの右方向ベクトルを取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aff903fce1ba3b32abea17f1e31e49317}{Get\+Resolution}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラの解像度を取得 \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a2347ffb9197be13f4618f46a04e1bbca}{Get\+Focus\+Distance}} () const noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4d3d76636c3d1e36bbc58e1f7605040c}{Get\+Sensitivity}} (float \&out\+SensX, float \&out\+SensY) const noexcept
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac468d845fb0b459c7b2eaead3f7fca01}{Get\+Pitch\+Accum}} () const noexcept
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aea31f3c1a1d8a790094adab229897146}{Make\+View\+Matrix}} () const
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a14ac7c1ed3a79102e5798eb9e263515f}{Make\+Projection\+Matrix}} () const noexcept
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac5314e15f419dc781568ce70fd817ffe}{Make\+View\+Proj\+Matrix}} () const
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aa9774a14c3a51f998e566fceee1c0950}{Make\+View\+Proj\+Matrix}} (float \+\_\+near\+Clip, float \+\_\+far\+Clip) const
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad8df687adce40f6fe84190bf0fc56055}{Make\+Basis}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&out\+Right, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&out\+Up, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&out\+Forward) const noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7182a9dc9273a5ed2d372b08df140c6d}{Make\+Frustum}} (bool normalize=false) const
+\begin{DoxyCompactList}\small\item\em ビュー行列を取得 \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_buffer}{Camera\+Buffer}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_abda226a0ee17d037ccc3e05277090983}{Get\+Camera\+Buffer\+Data\+No\+Lock}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラバッファのデータを取得 \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_buffer}{Camera\+Buffer}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a97485078c0fb3f9f0daa0ba5fbb27a8b}{Get\+Old\+Camera\+Buffer\+Data\+No\+Lock}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 遅延分前のカメラバッファのデータを取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad59d70f76e8fc1fd093162dd16297e63}{Get\+Camera\+Buffer\+Handle}} () const noexcept
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a57a1962c30f01a4075d77e834b49de22}{Is\+Update\+Buffer}} () const noexcept
+\begin{DoxyCompactList}\small\item\em カメラバッファの更新が必要かどうかを取得 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a00f9a2daf461a5299ab6cf0601e77c67}{Calc\+Current\+Rotation}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 現在の回転を計算して取得する \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{限定公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a6d1fbb49e8776fdef07f3967a27d656e}{Update\+Camera\+From\+Mouse}} ()
+\begin{DoxyCompactList}\small\item\em マウスの移動に基づいてカメラの回転を更新する \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{限定公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_af7f4c4bfb97177141741fc1f7d01876a}{camera\+Buffer\+Handle}}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a305edbaa8054aaf07f021c8f95175ba5}{frame\+Idx}} = 0
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_buffer}{Camera\+Buffer}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae11a50f0fa711dada7d4bfca3445d904}{camera\+Buffer}} \mbox{[}RENDER\+\_\+\+BUFFER\+\_\+\+COUNT\mbox{]} = \{\}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a05992c900a7affda3096a8d8c09640d7}{eye}} = \{ 0.\+0f, 0.\+0f, -\/5.\+0f \}
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a123df438186cb124e2160187f8a2017e}{target}} = \{ 0.\+0f, 0.\+0f, 0.\+0f \}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a9b7a807da1f7fa2ee1e2de14ac4451dc}{fov\+Rad}} = \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87b63dc11850a6a5d5367b2f8fd87c03}{Math\+::\+Deg2\+Rad}}(90.\+0f)
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a21b73d3f0e9d42a4b4951cbaa5c96b39}{aspect\+Ratio}} = 16.\+0f / 9.\+0f
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_af8640ab289a3ff476e40dc0a44f9e926}{near\+Clip}} = 0.\+1f
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a563ff0ed093d82a05ca233b9daaaf0db}{far\+Clip}} = 1000.\+0f
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a225bed5c11a089d140ce197e621102e4}{left}} = 0.\+0
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7915e95917125d8128129e27b1a908fa}{right}} = 1080.\+0f
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a2c2f99c4b6aceb72ee2127052768b026}{bottom}} = 1920.\+0f
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a701d921ec68c68a94fa58ad0a679fff4}{top}} = 0.\+0f
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a07da00eda905d75ab3f2dee5a494ec93}{focus\+Dist}} = 10.\+0f
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4e6bcb8d236c62c213190354fe9df39a}{move\+Vec}} = \{ 0.\+0f, 0.\+0f, 0.\+0f \}
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a51ed58422b038b122206b436b3c3efba}{pitch\+Accum}} = 0.\+0f
+\item 
+uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac70f9951ed7681e226fb3af85a9708f4}{current\+Slot}} = 0
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_afda51b0b333bc317fd8e2a7d5a3e60e4}{is\+Update\+Buffer}} = true
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae16b494ca4eabb0b338046e2d81f4f8c}{rot}} = \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a545f1c95e57a52ec4e41565e3e02fef0}{Math\+::\+Quatf\+::\+From\+Euler}}(0.\+0f, 0.\+0f, 0.\+0f)
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a139b36bbfb066d1b2a1502e0617ea373}{dx}} = 0.\+0f
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a72be0c683c4c7ae8bc20769437b3e271}{dy}} = 0.\+0f
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ab1a14f1baae18145d35bdf19f75ef344}{sens\+X\+\_\+rad\+\_\+per\+\_\+px}} = std\+::numbers\+::pi\+\_\+v$<$float$>$ / 600.\+0f
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a84d697690c508a29d681a0694ce6add1}{sens\+Y\+\_\+rad\+\_\+per\+\_\+px}} = std\+::numbers\+::pi\+\_\+v$<$float$>$ / 600.\+0f
+\item 
+std\+::shared\+\_\+mutex \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_af8406bae0131b90375cb6a2b9b83839f}{shared\+Mutex}}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aa}{Rotate\+Mode}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aecd7bb74d64620d7839ffa4dfa663701}{rotate\+Mode}} = \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aaac70fac808ce7ae52fdfebf73aec35af5}{Rotate\+Mode\+::\+Orbital}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{フレンド}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4f48f4062bd3381abba782519439a61c}{ECS\+::\+Service\+Locator}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{その他の継承メンバ}
+\doxysubsection*{基底クラス \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{SFW\+::\+ECS\+::\+IUpdate\+Service}} に属する継承静的公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a73744778bc5cc3113ed77db1b69e1fb1}{update\+Phase}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_ae5407b8ae7f6739250af397382f3f6c7ae6921f0b570dd33c94ea08c9e290b8ec}{EALRY}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a9f0e8abd26ab30155b39e558f004ce42}{update\+Group}} = \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608a034db74a151e7341ff8e15e4d45b25b9}{GROUP\+\_\+\+SERIAL}}
+\item 
+static constexpr uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a116ce546ab92eaf8f4282719b89a5165}{update\+Order}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$\newline
+class SFW\+::\+Graphics\+::\+I3\+DCamera\+Service$<$ Type $>$}
+3Dカメラサービスのインターフェース。カメラの操作、ビュー行列の計算、カメラバッファの管理を行う。 
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00041}{41}} 行目に定義があります。
+
+
+
+\label{doc-enum-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_doc-enum-members}
+\doxysubsection{列挙型メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aa}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!RotateMode@{RotateMode}}
+\index{RotateMode@{RotateMode}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{RotateMode}{RotateMode}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aa} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+enum \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aa}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service\+::\+Rotate\+Mode}} \+: uint8\+\_\+t}
+
+\begin{DoxyEnumFields}[2]{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FPS@{FPS}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!FPS@{FPS}}}\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aaa8bfb919d2b73adfb399aee77d80b043c}\label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aaa8bfb919d2b73adfb399aee77d80b043c} 
+FPS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Orbital@{Orbital}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!Orbital@{Orbital}}}\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aaac70fac808ce7ae52fdfebf73aec35af5}\label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aaac70fac808ce7ae52fdfebf73aec35af5} 
+Orbital&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00044}{44}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_afff2d1916859053e25eff9c3c9d5172b}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!I3DCameraService@{I3DCameraService}}
+\index{I3DCameraService@{I3DCameraService}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{I3DCameraService()}{I3DCameraService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_afff2d1916859053e25eff9c3c9d5172b} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+I3\+DCamera\+Service (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}}}]{buffer\+Handle}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00052}{52}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7c6ed09db460b4922d8493783e54961c}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!````~I3DCameraService@{\texorpdfstring{$\sim$}{\string~}I3DCameraService}}
+\index{````~I3DCameraService@{\texorpdfstring{$\sim$}{\string~}I3DCameraService}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}I3DCameraService()}{\string~I3DCameraService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7c6ed09db460b4922d8493783e54961c} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+virtual \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\texorpdfstring{$\sim$}{\string~}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{I3\+DCamera\+Service}} (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+デストラクタ 
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a00f9a2daf461a5299ab6cf0601e77c67}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!CalcCurrentRotation@{CalcCurrentRotation}}
+\index{CalcCurrentRotation@{CalcCurrentRotation}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{CalcCurrentRotation()}{CalcCurrentRotation()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a00f9a2daf461a5299ab6cf0601e77c67} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Calc\+Current\+Rotation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+現在の回転を計算して取得する 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf} 現在の回転を表すクォータニオン 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00414}{414}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad4c10ec53bd610f645f95505466e3192}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetAspectRatio@{GetAspectRatio}}
+\index{GetAspectRatio@{GetAspectRatio}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetAspectRatio()}{GetAspectRatio()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad4c10ec53bd610f645f95505466e3192} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Aspect\+Ratio (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラのアスペクト比を取得 
+
+\begin{DoxyReturn}{戻り値}
+float アスペクト比（幅/高さ） 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00236}{236}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a77e3d3383a9ea6fc018da65c240724f9}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetBackward@{GetBackward}}
+\index{GetBackward@{GetBackward}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetBackward()}{GetBackward()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a77e3d3383a9ea6fc018da65c240724f9} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Backward (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの後方方向ベクトルを取得 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f} カメラの後方方向ベクトル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00280}{280}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_abda226a0ee17d037ccc3e05277090983}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetCameraBufferDataNoLock@{GetCameraBufferDataNoLock}}
+\index{GetCameraBufferDataNoLock@{GetCameraBufferDataNoLock}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetCameraBufferDataNoLock()}{GetCameraBufferDataNoLock()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_abda226a0ee17d037ccc3e05277090983} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_buffer}{Camera\+Buffer}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Camera\+Buffer\+Data\+No\+Lock (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラバッファのデータを取得 
+
+\begin{DoxyReturn}{戻り値}
+const \doxylink{struct_s_f_w_1_1_graphics_1_1_camera_buffer}{Camera\+Buffer}\& カメラバッファのデータ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00386}{386}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad59d70f76e8fc1fd093162dd16297e63}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetCameraBufferHandle@{GetCameraBufferHandle}}
+\index{GetCameraBufferHandle@{GetCameraBufferHandle}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetCameraBufferHandle()}{GetCameraBufferHandle()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad59d70f76e8fc1fd093162dd16297e63} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Camera\+Buffer\+Handle (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00397}{397}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aa18926d235abb00236c1344e6919229a}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetEyePos@{GetEyePos}}
+\index{GetEyePos@{GetEyePos}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetEyePos()}{GetEyePos()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aa18926d235abb00236c1344e6919229a} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Eye\+Pos (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの位置を取得 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f} カメラの位置ベクトル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00200}{200}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aa6e5274c815c57734febc89e3d9c6274}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetFarClip@{GetFarClip}}
+\index{GetFarClip@{GetFarClip}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetFarClip()}{GetFarClip()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aa6e5274c815c57734febc89e3d9c6274} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Far\+Clip (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラのファークリップ距離を取得 
+
+\begin{DoxyReturn}{戻り値}
+float ファークリップ距離 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00254}{254}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a2347ffb9197be13f4618f46a04e1bbca}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetFocusDistance@{GetFocusDistance}}
+\index{GetFocusDistance@{GetFocusDistance}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetFocusDistance()}{GetFocusDistance()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a2347ffb9197be13f4618f46a04e1bbca} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Focus\+Distance (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00302}{302}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a67dd0b54c4ea5aedb5aaefaab248689b}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetForward@{GetForward}}
+\index{GetForward@{GetForward}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetForward()}{GetForward()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a67dd0b54c4ea5aedb5aaefaab248689b} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Forward (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの焦点距離を取得 
+
+\begin{DoxyReturn}{戻り値}
+float 焦点距離 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00271}{271}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7f7159081774cc41465c9e810a513216}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetFOV@{GetFOV}}
+\index{GetFOV@{GetFOV}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetFOV()}{GetFOV()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7f7159081774cc41465c9e810a513216} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+FOV (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの視野角を取得 
+
+\begin{DoxyReturn}{戻り値}
+float 視野角（ラジアン単位） 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00227}{227}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a5917161acd7359a5e9f990e5e838e9ac}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetNearClip@{GetNearClip}}
+\index{GetNearClip@{GetNearClip}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetNearClip()}{GetNearClip()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a5917161acd7359a5e9f990e5e838e9ac} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Near\+Clip (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラのニアクリップ距離を取得 
+
+\begin{DoxyReturn}{戻り値}
+float ニアクリップ距離 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00245}{245}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a97485078c0fb3f9f0daa0ba5fbb27a8b}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetOldCameraBufferDataNoLock@{GetOldCameraBufferDataNoLock}}
+\index{GetOldCameraBufferDataNoLock@{GetOldCameraBufferDataNoLock}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetOldCameraBufferDataNoLock()}{GetOldCameraBufferDataNoLock()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a97485078c0fb3f9f0daa0ba5fbb27a8b} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_buffer}{Camera\+Buffer}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Old\+Camera\+Buffer\+Data\+No\+Lock (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+遅延分前のカメラバッファのデータを取得 
+
+\begin{DoxyReturn}{戻り値}
+const \doxylink{struct_s_f_w_1_1_graphics_1_1_camera_buffer}{Camera\+Buffer}\& カメラバッファのデータ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00393}{393}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac468d845fb0b459c7b2eaead3f7fca01}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetPitchAccum@{GetPitchAccum}}
+\index{GetPitchAccum@{GetPitchAccum}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetPitchAccum()}{GetPitchAccum()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac468d845fb0b459c7b2eaead3f7fca01} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Pitch\+Accum (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00313}{313}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aff903fce1ba3b32abea17f1e31e49317}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetResolution@{GetResolution}}
+\index{GetResolution@{GetResolution}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetResolution()}{GetResolution()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aff903fce1ba3b32abea17f1e31e49317} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Resolution (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの解像度を取得 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math\+::\+Vec2f} カメラの解像度ベクトル (width, height) 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00297}{297}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad1673672e37d59e4801b6bc1f164775d}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetRight@{GetRight}}
+\index{GetRight@{GetRight}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetRight()}{GetRight()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad1673672e37d59e4801b6bc1f164775d} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Right (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの右方向ベクトルを取得 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f} カメラの右方向ベクトル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00289}{289}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a6fbbaa783c53eee6a32773c32997ed73}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetRotation@{GetRotation}}
+\index{GetRotation@{GetRotation}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetRotation()}{GetRotation()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a6fbbaa783c53eee6a32773c32997ed73} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Rotation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの回転を取得 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf} カメラの回転クォータニオン 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00263}{263}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4d3d76636c3d1e36bbc58e1f7605040c}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetSensitivity@{GetSensitivity}}
+\index{GetSensitivity@{GetSensitivity}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetSensitivity()}{GetSensitivity()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4d3d76636c3d1e36bbc58e1f7605040c} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Sensitivity (\begin{DoxyParamCaption}\item[{float \&}]{out\+SensX}{, }\item[{float \&}]{out\+SensY}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00307}{307}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a6ebfa01c4d0a73727d85d2f98c2d3938}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetTarget@{GetTarget}}
+\index{GetTarget@{GetTarget}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetTarget()}{GetTarget()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a6ebfa01c4d0a73727d85d2f98c2d3938} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Target (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの注視点を取得 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f} カメラの注視点ベクトル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00209}{209}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a961471074573710bb3a562d53923fef2}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!GetUp@{GetUp}}
+\index{GetUp@{GetUp}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GetUp()}{GetUp()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a961471074573710bb3a562d53923fef2} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Get\+Up (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの上方向ベクトルを取得 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f} カメラの上方向ベクトル 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00218}{218}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a57a1962c30f01a4075d77e834b49de22}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!IsUpdateBuffer@{IsUpdateBuffer}}
+\index{IsUpdateBuffer@{IsUpdateBuffer}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{IsUpdateBuffer()}{IsUpdateBuffer()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a57a1962c30f01a4075d77e834b49de22} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Is\+Update\+Buffer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラバッファの更新が必要かどうかを取得 
+
+\begin{DoxyReturn}{戻り値}
+bool 更新が必要な場合はtrue、そうでなければfalse 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00405}{405}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad8df687adce40f6fe84190bf0fc56055}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!MakeBasis@{MakeBasis}}
+\index{MakeBasis@{MakeBasis}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{MakeBasis()}{MakeBasis()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ad8df687adce40f6fe84190bf0fc56055} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Make\+Basis (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{out\+Right}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{out\+Up}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{out\+Forward}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00367}{367}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7182a9dc9273a5ed2d372b08df140c6d}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!MakeFrustum@{MakeFrustum}}
+\index{MakeFrustum@{MakeFrustum}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{MakeFrustum()}{MakeFrustum()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7182a9dc9273a5ed2d372b08df140c6d} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Make\+Frustum (\begin{DoxyParamCaption}\item[{bool}]{normalize}{ = {\ttfamily false}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ビュー行列を取得 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f} ビュー行列 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00376}{376}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a14ac7c1ed3a79102e5798eb9e263515f}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!MakeProjectionMatrix@{MakeProjectionMatrix}}
+\index{MakeProjectionMatrix@{MakeProjectionMatrix}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{MakeProjectionMatrix()}{MakeProjectionMatrix()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a14ac7c1ed3a79102e5798eb9e263515f} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Make\+Projection\+Matrix (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00325}{325}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aea31f3c1a1d8a790094adab229897146}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!MakeViewMatrix@{MakeViewMatrix}}
+\index{MakeViewMatrix@{MakeViewMatrix}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{MakeViewMatrix()}{MakeViewMatrix()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aea31f3c1a1d8a790094adab229897146} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Make\+View\+Matrix (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00318}{318}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac5314e15f419dc781568ce70fd817ffe}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!MakeViewProjMatrix@{MakeViewProjMatrix}}
+\index{MakeViewProjMatrix@{MakeViewProjMatrix}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{MakeViewProjMatrix()}{MakeViewProjMatrix()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac5314e15f419dc781568ce70fd817ffe} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Make\+View\+Proj\+Matrix (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00337}{337}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aa9774a14c3a51f998e566fceee1c0950}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!MakeViewProjMatrix@{MakeViewProjMatrix}}
+\index{MakeViewProjMatrix@{MakeViewProjMatrix}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{MakeViewProjMatrix()}{MakeViewProjMatrix()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aa9774a14c3a51f998e566fceee1c0950} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a642b9cd5e3a97547b908d58a6c91f9b1}{Math\+::\+Matrix4x4f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Make\+View\+Proj\+Matrix (\begin{DoxyParamCaption}\item[{float}]{\+\_\+near\+Clip}{, }\item[{float}]{\+\_\+far\+Clip}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00352}{352}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a86f06f07d76d4d189a28e34fe783aa34}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!Move@{Move}}
+\index{Move@{Move}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{Move()}{Move()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a86f06f07d76d4d189a28e34fe783aa34} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Move (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{vec}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの移動 
+
+
+\begin{DoxyParams}{引数}
+{\em vec} & 移動ベクトル \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00061}{61}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae6f70c90d8f7b723579230dcc139d258}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!Rotate@{Rotate}}
+\index{Rotate@{Rotate}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{Rotate()}{Rotate()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae6f70c90d8f7b723579230dcc139d258} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Rotate (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \&}]{q}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの回転 
+
+
+\begin{DoxyParams}{引数}
+{\em rotation} & 回転を表すクォータニオン \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00071}{71}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a1823fcf7edba094167e5df74c4350e3c}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!SetAspectRatio@{SetAspectRatio}}
+\index{SetAspectRatio@{SetAspectRatio}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{SetAspectRatio()}{SetAspectRatio()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a1823fcf7edba094167e5df74c4350e3c} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Set\+Aspect\+Ratio (\begin{DoxyParamCaption}\item[{float}]{aspect\+Ratio}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラのアスペクト比を設定 
+
+
+\begin{DoxyParams}{引数}
+{\em aspect\+Ratio} & アスペクト比（幅/高さ） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00130}{130}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a72b3b57efa69e1ec48476debcbe476f4}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!SetEyePos@{SetEyePos}}
+\index{SetEyePos@{SetEyePos}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{SetEyePos()}{SetEyePos()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a72b3b57efa69e1ec48476debcbe476f4} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Set\+Eye\+Pos (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{eye\+Pos}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの位置を設定 
+
+
+\begin{DoxyParams}{引数}
+{\em position} & 新しい位置ベクトル \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00100}{100}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_abb4297b5ec58b8800222512d3efba1ee}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!SetFarClip@{SetFarClip}}
+\index{SetFarClip@{SetFarClip}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{SetFarClip()}{SetFarClip()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_abb4297b5ec58b8800222512d3efba1ee} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Set\+Far\+Clip (\begin{DoxyParamCaption}\item[{float}]{far\+Clip}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラのファークリップ距離を設定 
+
+
+\begin{DoxyParams}{引数}
+{\em far\+Clip} & ファークリップ距離 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00150}{150}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_adc766a174220b69580f1ed44e03d0234}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!SetFocusDistance@{SetFocusDistance}}
+\index{SetFocusDistance@{SetFocusDistance}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{SetFocusDistance()}{SetFocusDistance()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_adc766a174220b69580f1ed44e03d0234} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Set\+Focus\+Distance (\begin{DoxyParamCaption}\item[{float}]{distance}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの焦点距離を設定 
+
+
+\begin{DoxyParams}{引数}
+{\em distance} & 焦点距離 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00160}{160}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7b428777038fc0ea7fcff57ed0c577e9}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!SetFOV@{SetFOV}}
+\index{SetFOV@{SetFOV}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{SetFOV()}{SetFOV()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7b428777038fc0ea7fcff57ed0c577e9} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Set\+FOV (\begin{DoxyParamCaption}\item[{float}]{fov\+Rad}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの視野角を設定 
+
+
+\begin{DoxyParams}{引数}
+{\em fov\+Rad} & 視野角（ラジアン単位） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00120}{120}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4d0b13a40af8191337b65a5a36530690}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!SetMouseDelta@{SetMouseDelta}}
+\index{SetMouseDelta@{SetMouseDelta}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{SetMouseDelta()}{SetMouseDelta()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4d0b13a40af8191337b65a5a36530690} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Set\+Mouse\+Delta (\begin{DoxyParamCaption}\item[{float}]{deltaX}{, }\item[{float}]{deltaY}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+マウスの移動量を設定 
+
+
+\begin{DoxyParams}{引数}
+{\em deltaX} & X方向の移動量 \\
+\hline
+{\em deltaY} & Y方向の移動量 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00172}{172}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a8652aad2aff0d6a815baa5e63fb42429}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!SetMouseSensitivity@{SetMouseSensitivity}}
+\index{SetMouseSensitivity@{SetMouseSensitivity}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{SetMouseSensitivity()}{SetMouseSensitivity()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a8652aad2aff0d6a815baa5e63fb42429} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Set\+Mouse\+Sensitivity (\begin{DoxyParamCaption}\item[{float}]{sensX}{, }\item[{float}]{sensY}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+マウス感度を設定 
+
+
+\begin{DoxyParams}{引数}
+{\em sensX} & X方向の感度 \\
+\hline
+{\em sensY} & Y方向の感度 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00183}{183}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4907465ca6e7ce04138f9af3fb1f84f3}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!SetNearClip@{SetNearClip}}
+\index{SetNearClip@{SetNearClip}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{SetNearClip()}{SetNearClip()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4907465ca6e7ce04138f9af3fb1f84f3} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Set\+Near\+Clip (\begin{DoxyParamCaption}\item[{float}]{near\+Clip}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラのニアクリップ距離を設定 
+
+
+\begin{DoxyParams}{引数}
+{\em near\+Clip} & ニアクリップ距離 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00140}{140}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a08e40022f3eb8d97a5fb66a70c721e03}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!SetRotateMode@{SetRotateMode}}
+\index{SetRotateMode@{SetRotateMode}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{SetRotateMode()}{SetRotateMode()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a08e40022f3eb8d97a5fb66a70c721e03} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Set\+Rotate\+Mode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aa}{Rotate\+Mode}}}]{mode}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの回転モードを設定 
+
+
+\begin{DoxyParams}{引数}
+{\em mode} & 回転モード（\+FPSまたは\+Orbital） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00192}{192}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac3ba109be35b9efed618314a6ecff889}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!SetRotation@{SetRotation}}
+\index{SetRotation@{SetRotation}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{SetRotation()}{SetRotation()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac3ba109be35b9efed618314a6ecff889} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Set\+Rotation (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \&}]{q}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00090}{90}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a94dfcedac8f1f117baad2593b9749ae9}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!SetTarget@{SetTarget}}
+\index{SetTarget@{SetTarget}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{SetTarget()}{SetTarget()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a94dfcedac8f1f117baad2593b9749ae9} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Set\+Target (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{target\+Pos}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+カメラの注視点を設定 
+
+
+\begin{DoxyParams}{引数}
+{\em eye\+Position} & 新しい注視点ベクトル \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00110}{110}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a6d1fbb49e8776fdef07f3967a27d656e}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!UpdateCameraFromMouse@{UpdateCameraFromMouse}}
+\index{UpdateCameraFromMouse@{UpdateCameraFromMouse}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{UpdateCameraFromMouse()}{UpdateCameraFromMouse()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a6d1fbb49e8776fdef07f3967a27d656e} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::\+Update\+Camera\+From\+Mouse (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+マウスの移動に基づいてカメラの回転を更新する 
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00459}{459}} 行目に定義があります。
+
+
+
+\label{doc-related-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_doc-related-members}
+\doxysubsection{フレンドと関連関数の詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4f48f4062bd3381abba782519439a61c}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!ECS::ServiceLocator@{ECS::ServiceLocator}}
+\index{ECS::ServiceLocator@{ECS::ServiceLocator}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{ECS::ServiceLocator}{ECS::ServiceLocator}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4f48f4062bd3381abba782519439a61c} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+friend class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00042}{42}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a21b73d3f0e9d42a4b4951cbaa5c96b39}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!aspectRatio@{aspectRatio}}
+\index{aspectRatio@{aspectRatio}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{aspectRatio}{aspectRatio}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a21b73d3f0e9d42a4b4951cbaa5c96b39} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::aspect\+Ratio = 16.\+0f / 9.\+0f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00496}{496}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a2c2f99c4b6aceb72ee2127052768b026}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!bottom@{bottom}}
+\index{bottom@{bottom}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{bottom}{bottom}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a2c2f99c4b6aceb72ee2127052768b026} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::bottom = 1920.\+0f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00511}{511}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae11a50f0fa711dada7d4bfca3445d904}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!cameraBuffer@{cameraBuffer}}
+\index{cameraBuffer@{cameraBuffer}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cameraBuffer}{cameraBuffer}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae11a50f0fa711dada7d4bfca3445d904} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_buffer}{Camera\+Buffer}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::camera\+Buffer\mbox{[}RENDER\+\_\+\+BUFFER\+\_\+\+COUNT\mbox{]} = \{\}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00488}{488}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_af7f4c4bfb97177141741fc1f7d01876a}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!cameraBufferHandle@{cameraBufferHandle}}
+\index{cameraBufferHandle@{cameraBufferHandle}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cameraBufferHandle}{cameraBufferHandle}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_af7f4c4bfb97177141741fc1f7d01876a} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{Buffer\+Handle}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::camera\+Buffer\+Handle\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00484}{484}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac70f9951ed7681e226fb3af85a9708f4}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!currentSlot@{currentSlot}}
+\index{currentSlot@{currentSlot}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{currentSlot}{currentSlot}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ac70f9951ed7681e226fb3af85a9708f4} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+uint16\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::current\+Slot = 0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00522}{522}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a139b36bbfb066d1b2a1502e0617ea373}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!dx@{dx}}
+\index{dx@{dx}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{dx}{dx}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a139b36bbfb066d1b2a1502e0617ea373} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::dx = 0.\+0f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00528}{528}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a72be0c683c4c7ae8bc20769437b3e271}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!dy@{dy}}
+\index{dy@{dy}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{dy}{dy}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a72be0c683c4c7ae8bc20769437b3e271} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::dy = 0.\+0f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00528}{528}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a05992c900a7affda3096a8d8c09640d7}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!eye@{eye}}
+\index{eye@{eye}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{eye}{eye}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a05992c900a7affda3096a8d8c09640d7} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::eye = \{ 0.\+0f, 0.\+0f, -\/5.\+0f \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00490}{490}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a563ff0ed093d82a05ca233b9daaaf0db}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!farClip@{farClip}}
+\index{farClip@{farClip}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{farClip}{farClip}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a563ff0ed093d82a05ca233b9daaaf0db} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::far\+Clip = 1000.\+0f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00500}{500}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a07da00eda905d75ab3f2dee5a494ec93}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!focusDist@{focusDist}}
+\index{focusDist@{focusDist}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{focusDist}{focusDist}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a07da00eda905d75ab3f2dee5a494ec93} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::focus\+Dist = 10.\+0f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00516}{516}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a9b7a807da1f7fa2ee1e2de14ac4451dc}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!fovRad@{fovRad}}
+\index{fovRad@{fovRad}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{fovRad}{fovRad}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a9b7a807da1f7fa2ee1e2de14ac4451dc} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::fov\+Rad = \mbox{\hyperlink{namespace_s_f_w_1_1_math_a87b63dc11850a6a5d5367b2f8fd87c03}{Math\+::\+Deg2\+Rad}}(90.\+0f)\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00494}{494}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a305edbaa8054aaf07f021c8f95175ba5}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!frameIdx@{frameIdx}}
+\index{frameIdx@{frameIdx}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{frameIdx}{frameIdx}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a305edbaa8054aaf07f021c8f95175ba5} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+uint64\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::frame\+Idx = 0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00486}{486}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_afda51b0b333bc317fd8e2a7d5a3e60e4}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!isUpdateBuffer@{isUpdateBuffer}}
+\index{isUpdateBuffer@{isUpdateBuffer}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{isUpdateBuffer}{isUpdateBuffer}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_afda51b0b333bc317fd8e2a7d5a3e60e4} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::is\+Update\+Buffer = true\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00524}{524}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a225bed5c11a089d140ce197e621102e4}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!left@{left}}
+\index{left@{left}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{left}{left}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a225bed5c11a089d140ce197e621102e4} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::left = 0.\+0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00502}{502}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4e6bcb8d236c62c213190354fe9df39a}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!moveVec@{moveVec}}
+\index{moveVec@{moveVec}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{moveVec}{moveVec}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a4e6bcb8d236c62c213190354fe9df39a} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::move\+Vec = \{ 0.\+0f, 0.\+0f, 0.\+0f \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00518}{518}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_af8640ab289a3ff476e40dc0a44f9e926}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!nearClip@{nearClip}}
+\index{nearClip@{nearClip}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{nearClip}{nearClip}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_af8640ab289a3ff476e40dc0a44f9e926} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::near\+Clip = 0.\+1f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00498}{498}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a51ed58422b038b122206b436b3c3efba}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!pitchAccum@{pitchAccum}}
+\index{pitchAccum@{pitchAccum}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{pitchAccum}{pitchAccum}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a51ed58422b038b122206b436b3c3efba} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::pitch\+Accum = 0.\+0f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00520}{520}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7915e95917125d8128129e27b1a908fa}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!right@{right}}
+\index{right@{right}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{right}{right}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a7915e95917125d8128129e27b1a908fa} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::right = 1080.\+0f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00506}{506}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae16b494ca4eabb0b338046e2d81f4f8c}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!rot@{rot}}
+\index{rot@{rot}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{rot}{rot}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae16b494ca4eabb0b338046e2d81f4f8c} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a87dd0ac5fb73d065f0315c5be2632a60}{Math\+::\+Quatf}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::rot = \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_quat_a545f1c95e57a52ec4e41565e3e02fef0}{Math\+::\+Quatf\+::\+From\+Euler}}(0.\+0f, 0.\+0f, 0.\+0f)\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00526}{526}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aecd7bb74d64620d7839ffa4dfa663701}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!rotateMode@{rotateMode}}
+\index{rotateMode@{rotateMode}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{rotateMode}{rotateMode}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_aecd7bb74d64620d7839ffa4dfa663701} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aa}{Rotate\+Mode}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::rotate\+Mode = \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ae451cac8864c5e3312c52d97394665aaac70fac808ce7ae52fdfebf73aec35af5}{Rotate\+Mode\+::\+Orbital}}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00535}{535}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ab1a14f1baae18145d35bdf19f75ef344}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!sensX\_rad\_per\_px@{sensX\_rad\_per\_px}}
+\index{sensX\_rad\_per\_px@{sensX\_rad\_per\_px}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{sensX\_rad\_per\_px}{sensX\_rad\_per\_px}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_ab1a14f1baae18145d35bdf19f75ef344} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::sens\+X\+\_\+rad\+\_\+per\+\_\+px = std\+::numbers\+::pi\+\_\+v$<$float$>$ / 600.\+0f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00530}{530}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a84d697690c508a29d681a0694ce6add1}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!sensY\_rad\_per\_px@{sensY\_rad\_per\_px}}
+\index{sensY\_rad\_per\_px@{sensY\_rad\_per\_px}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{sensY\_rad\_per\_px}{sensY\_rad\_per\_px}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a84d697690c508a29d681a0694ce6add1} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::sens\+Y\+\_\+rad\+\_\+per\+\_\+px = std\+::numbers\+::pi\+\_\+v$<$float$>$ / 600.\+0f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00530}{530}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_af8406bae0131b90375cb6a2b9b83839f}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!sharedMutex@{sharedMutex}}
+\index{sharedMutex@{sharedMutex}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{sharedMutex}{sharedMutex}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_af8406bae0131b90375cb6a2b9b83839f} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+std\+::shared\+\_\+mutex \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::shared\+Mutex\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00532}{532}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a123df438186cb124e2160187f8a2017e}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!target@{target}}
+\index{target@{target}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{target}{target}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a123df438186cb124e2160187f8a2017e} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::target = \{ 0.\+0f, 0.\+0f, 0.\+0f \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00492}{492}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a701d921ec68c68a94fa58ad0a679fff4}\index{SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}!top@{top}}
+\index{top@{top}!SFW::Graphics::I3DCameraService$<$ Type $>$@{SFW::Graphics::I3DCameraService$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{top}{top}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service_a701d921ec68c68a94fa58ad0a679fff4} 
+template$<$\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a500ede552e352d789e5db496077d7046}{Projection\+Type}} Type = Projection\+Type\+::\+Perspective$>$ \\
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service}}$<$ Type $>$\+::top = 0.\+0f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ \mbox{\hyperlink{_i3_d_camera_service_8h_source}{I3\+DCamera\+Service.\+h}} の \mbox{\hyperlink{_i3_d_camera_service_8h_source_l00513}{513}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_i3_d_camera_service_8h}{I3\+DCamera\+Service.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,111 @@
+\doxysection{Physics\+Convex\+Hull\+Loader.\+h}
+\hypertarget{_physics_convex_hull_loader_8h_source}{}\label{_physics_convex_hull_loader_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsConvexHullLoader.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsConvexHullLoader.h}}
+\mbox{\hyperlink{_physics_convex_hull_loader_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_physics_types_8h}{PhysicsTypes.h}}"{}}\ \ \ \ \ \ \ \ \textcolor{comment}{//\ ShapeHandle,\ ShapeCreateDesc,\ ConvexHullDesc,\ ShapeScale}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00017}00017\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_physics}{SFW::Physics}}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00018}00018\ \{}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00019}00019\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00020}00020\ \ \ \ \ \textcolor{comment}{//\ ローカル用のデータ構造}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00021}00021\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00023}00023\ \ \ \ \ \textcolor{comment}{//\ .chullbin\ を読み込んで全部のハルを\ outHulls\ に積む}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00024}00024\ \ \ \ \ \textcolor{comment}{//\ 戻り値:\ 成功なら\ true\ /\ 失敗なら\ false}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00025}\mbox{\hyperlink{namespace_s_f_w_1_1_physics_a4972e9c1ff8f3077c8ca3c0f67dad209}{00025}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a4972e9c1ff8f3077c8ca3c0f67dad209}{LoadVHACDFile}}(}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::filesystem::path\&\ binPath,}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ std::vector<VHACDHull>\&\ outHulls,}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ scale\ =\ \{\ 1,1,1\ \},}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ flip\ =\ \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00030}00030\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ outHulls.clear();}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00033}00033\ \ \ \ \ \ \ \ \ std::ifstream\ ifs(binPath,\ std::ios::binary);}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ifs)}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}PhysicsConvexHullLoader:\ Failed\ to\ open\ VHACD\ file:\ \{\%s\}"{}},\ binPath.string().c\_str());}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ファイルが開けない}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/\ ヘッダー読込\ -\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ magic[4];}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ ifs.read(magic,\ 4);}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ifs\ ||\ magic[0]\ !=\ \textcolor{charliteral}{'C'}\ ||\ magic[1]\ !=\ \textcolor{charliteral}{'V'}\ ||\ magic[2]\ !=\ \textcolor{charliteral}{'X'}\ ||\ magic[3]\ !=\ \textcolor{charliteral}{'H'})}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}PhysicsConvexHullLoader:\ Invalid\ VHACD\ file\ format:\ \{\%s\}"{}},\ binPath.string().c\_str());}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ フォーマット不一致}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ read\_u32\ =\ [\&ifs]()\ -\/>\ uint32\_t}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ v\{\};}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ifs.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&v),\ \textcolor{keyword}{sizeof}(v));}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ v;}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ uint32\_t\ version\ =\ read\_u32();}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ uint32\_t\ hullCount\ =\ read\_u32();}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ifs)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (version\ !=\ 1)}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{LOG\_ERROR}}(\textcolor{stringliteral}{"{}PhysicsConvexHullLoader:\ Unsupported\ VHACD\ file\ version\ (\%u)\ in\ file:\ \{\%s\}"{}},\ version,\ binPath.string().c\_str());}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ とりあえず\ version\ 1\ のみ対応}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ outHulls.reserve(hullCount);}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/\ 各ハル\ -\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ h\ =\ 0;\ h\ <\ hullCount;\ ++h)}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ vCount\ =\ read\_u32();}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ iCount\ =\ read\_u32();}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ifs)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_v_h_a_c_d_hull}{VHACDHull}}\ hull;}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ hull.\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_v_h_a_c_d_hull_aad69440ba9b63eadf3d410c9584a7772}{points}}.resize(vCount);}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ hull.indices.resize(iCount);}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ flip\_vec3z\ =\ [](\textcolor{keywordtype}{float}\&\ x,\ \textcolor{keywordtype}{float}\&\ y,\ \textcolor{keywordtype}{float}\&\ z)\ \{\ x\ =\ -\/x;\ \};}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 頂点\ (vCount\ *\ 3\ float)}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ vCount;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ xyz[3];}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ifs.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(xyz),\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float})\ *\ 3);}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ifs)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (flip)\ flip\_vec3z(xyz[0],\ xyz[1],\ xyz[2]);}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hull.points[i]\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_physics_ac6ddaee89a4ac099921066adde19e4c3}{Vec3f}}\{\ xyz[0],\ xyz[1],\ xyz[2]\ \}\ *scale;}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ インデックス\ (iCount\ *\ uint32)}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (iCount\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ifs.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(hull.indices.data()),}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(uint32\_t)\ *\ iCount);}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ifs)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ outHulls.emplace\_back(std::move(hull));}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00109}00109\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_physics_convex_hull_loader_8h_source_l00110}00110\ \}\ \textcolor{comment}{//\ namespace\ SFW::Physics}}
+
+\end{DoxyCode}

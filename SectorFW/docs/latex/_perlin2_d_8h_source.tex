@@ -1,0 +1,81 @@
+\doxysection{Perlin2\+D.\+h}
+\hypertarget{_perlin2_d_8h_source}{}\label{_perlin2_d_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/Perlin2D.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/Perlin2D.h}}
+\mbox{\hyperlink{_perlin2_d_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <random>}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00013}00013\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_math}{SFW::Math}}\ \{}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00014}00014\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00015}00015\ \ \ \ \ \textcolor{comment}{//\ 乱数テーブル付き\ Perlin\ 2D}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00017}00017\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00018}\mbox{\hyperlink{class_s_f_w_1_1_math_1_1_perlin2_d}{00018}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_math_1_1_perlin2_d_ab24a9902819bb8d74d777df9cc9186f2}{Perlin2D}}\ \{}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00019}00019\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00020}\mbox{\hyperlink{class_s_f_w_1_1_math_1_1_perlin2_d_ab24a9902819bb8d74d777df9cc9186f2}{00020}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_math_1_1_perlin2_d_ab24a9902819bb8d74d777df9cc9186f2}{Perlin2D}}(uint32\_t\ seed)\ \{}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ パーマネーションテーブル\ 256*2}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<int>\ base(256);}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 256;\ i++)\ base[i]\ =\ i;}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ std::mt19937\ rng(seed);}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ std::shuffle(base.begin(),\ base.end(),\ rng);}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 256;\ i++)\ \{\ perm[i]\ =\ base[i];\ perm[256\ +\ i]\ =\ base[i];\ \}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 単オクターブの\ Perlin\ ノイズ（-\/1..1）}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00030}\mbox{\hyperlink{class_s_f_w_1_1_math_1_1_perlin2_d_a7c90537e3bf532625b051c445fa2d15f}{00030}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_f_w_1_1_math_1_1_perlin2_d_a7c90537e3bf532625b051c445fa2d15f}{noise}}(\textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ xi\ =\ fastfloor(x)\ \&\ 255;}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ yi\ =\ fastfloor(y)\ \&\ 255;}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ xf\ =\ x\ -\/\ std::floor(x);}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ yf\ =\ y\ -\/\ std::floor(y);}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ u\ =\ fade(xf);}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ v\ =\ fade(yf);}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ aa\ =\ perm[perm[xi]\ +\ yi];}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ ab\ =\ perm[perm[xi]\ +\ yi\ +\ 1];}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ ba\ =\ perm[perm[xi\ +\ 1]\ +\ yi];}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ bb\ =\ perm[perm[xi\ +\ 1]\ +\ yi\ +\ 1];}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ x1\ =\ lerp(grad(aa,\ xf,\ yf),}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grad(ba,\ xf\ -\/\ 1.0f,\ yf),\ u);}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ x2\ =\ lerp(grad(ab,\ xf,\ yf\ -\/\ 1.0f),}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grad(bb,\ xf\ -\/\ 1.0f,\ yf\ -\/\ 1.0f),\ u);}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lerp(x1,\ x2,\ v);\ \textcolor{comment}{//\ -\/1..1}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ fBm（オクターブ合成）}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00053}\mbox{\hyperlink{class_s_f_w_1_1_math_1_1_perlin2_d_a38be043d5f123e8760b33645111a4cff}{00053}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_f_w_1_1_math_1_1_perlin2_d_a38be043d5f123e8760b33645111a4cff}{fbm}}(\textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y,\ \textcolor{keywordtype}{int}\ oct,\ \textcolor{keywordtype}{float}\ lac,\ \textcolor{keywordtype}{float}\ gain)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ amp\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ freq\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ sum\ =\ 0.0f,\ norm\ =\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ oct;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sum\ +=\ amp\ *\ \mbox{\hyperlink{class_s_f_w_1_1_math_1_1_perlin2_d_a7c90537e3bf532625b051c445fa2d15f}{noise}}(x\ *\ freq,\ y\ *\ freq);}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ norm\ +=\ amp;}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ freq\ *=\ lac;}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ amp\ *=\ gain;}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (norm\ >\ 0.0f)\ ?\ (sum\ /\ norm)\ :\ 0.0f;\ \textcolor{comment}{//\ -\/1..1\ を平均化}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00066}00066\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ perm[512];}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \ \ fastfloor(\textcolor{keywordtype}{float}\ x)\ \{\ \textcolor{keywordflow}{return}\ (x\ >=\ 0)\ ?\ int(x)\ :\ int(x)\ -\/\ 1;\ \}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ fade(\textcolor{keywordtype}{float}\ t)\ \{\ \textcolor{keywordflow}{return}\ t\ *\ t\ *\ t\ *\ (t\ *\ (t\ *\ 6\ -\/\ 15)\ +\ 10);\ \}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ lerp(\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b,\ \textcolor{keywordtype}{float}\ t)\ \{\ \textcolor{keywordflow}{return}\ a\ +\ t\ *\ (b\ -\/\ a);\ \}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ grad(\textcolor{keywordtype}{int}\ h,\ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y)\ \{}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 8\ 方向グラディエント}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ g\ =\ h\ \&\ 7;\ \textcolor{comment}{//\ 0..7}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ u\ =\ (g\ <\ 4)\ ?\ x\ :\ y;}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ v\ =\ (g\ <\ 4)\ ?\ y\ :\ x;}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ((g\ \&\ 1)\ ?\ -\/u\ :\ u)\ +\ ((g\ \&\ 2)\ ?\ -\/2.0f\ *\ v\ :\ 2.0f\ *\ v);}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00079}00079\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_perlin2_d_8h_source_l00080}00080\ \}}
+
+\end{DoxyCode}

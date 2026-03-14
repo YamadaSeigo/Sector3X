@@ -1,0 +1,673 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Graphics::RenderQueue::ProducerSessionExternal クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html','','class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Graphics::RenderQueue::ProducerSessionExternal クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>生産者セッション-ユーザーに渡す用（thread_localを使わない）  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a>&gt;</code></p>
+<div class="dynheader">
+SFW::Graphics::RenderQueue::ProducerSessionExternal の継承関係図</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.png" usemap="#SFW_3A_3AGraphics_3A_3ARenderQueue_3A_3AProducerSessionExternal_map" alt=""/>
+  <map id="SFW_3A_3AGraphics_3A_3ARenderQueue_3A_3AProducerSessionExternal_map" name="SFW_3A_3AGraphics_3A_3ARenderQueue_3A_3AProducerSessionExternal_map">
+<area href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session.html" alt="SFW::Graphics::RenderQueue::ProducerSession" shape="rect" coords="0,56,330,80"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:SmallBuf" id="r_SmallBuf"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf.html">SmallBuf</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a4990fc2a08040d643ac4dd9de631dd8e" id="r_a4990fc2a08040d643ac4dd9de631dd8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4990fc2a08040d643ac4dd9de631dd8e">ProducerSessionExternal</a> (<a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue.html">RenderQueue</a> &amp;owner, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf.html">SmallBuf</a> &amp;buf) noexcept</td></tr>
+<tr class="memdesc:a4990fc2a08040d643ac4dd9de631dd8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:a85b9ec0b9c9ad1ecb238c43fce01b225" id="r_a85b9ec0b9c9ad1ecb238c43fce01b225"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85b9ec0b9c9ad1ecb238c43fce01b225">ProducerSessionExternal</a> (const <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a> &amp;)=delete</td></tr>
+<tr class="memdesc:a85b9ec0b9c9ad1ecb238c43fce01b225"><td class="mdescLeft">&#160;</td><td class="mdescRight">コピー禁止  <br /></td></tr>
+<tr class="memitem:a645708f64198823d50f44b1c90a24384" id="r_a645708f64198823d50f44b1c90a24384"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a645708f64198823d50f44b1c90a24384">operator=</a> (const <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a> &amp;)=delete</td></tr>
+<tr class="memitem:aa88dd21008ec8d6f7783044a91e47f18" id="r_aa88dd21008ec8d6f7783044a91e47f18"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa88dd21008ec8d6f7783044a91e47f18">ProducerSessionExternal</a> (<a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="memdesc:aa88dd21008ec8d6f7783044a91e47f18"><td class="mdescLeft">&#160;</td><td class="mdescRight">ムーブは可  <br /></td></tr>
+<tr class="memitem:a11167714e954f89140458ebd2e4756ab" id="r_a11167714e954f89140458ebd2e4756ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a11167714e954f89140458ebd2e4756ab">operator=</a> (<a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="memitem:a8225ffc3544cc8a72d495851602bc29d" id="r_a8225ffc3544cc8a72d495851602bc29d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8225ffc3544cc8a72d495851602bc29d">~ProducerSessionExternal</a> ()</td></tr>
+<tr class="memitem:a208b3164e835d24532f0ea68d69f2b34" id="r_a208b3164e835d24532f0ea68d69f2b34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a208b3164e835d24532f0ea68d69f2b34">Push</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">DrawCommand</a> cmd)</td></tr>
+<tr class="memdesc:a208b3164e835d24532f0ea68d69f2b34"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html" title="描画コマンド構造体">DrawCommand</a> を 1 件プールへ書き込み  <br /></td></tr>
+<tr class="memitem:abc678eebcf697d6b0ecbd90ce87cdbfb" id="r_abc678eebcf697d6b0ecbd90ce87cdbfb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc678eebcf697d6b0ecbd90ce87cdbfb">AllocInstance</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_data.html">InstanceData</a> &amp;inst)</td></tr>
+<tr class="memdesc:abc678eebcf697d6b0ecbd90ce87cdbfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">インスタンスを 1 件プールへ書き込み、Index を返す  <br /></td></tr>
+<tr class="memitem:a676ec1e5f136a22af0335284099c4d96" id="r_a676ec1e5f136a22af0335284099c4d96"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a676ec1e5f136a22af0335284099c4d96">AllocInstance</a> (<a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_data.html">InstanceData</a> &amp;&amp;inst)</td></tr>
+<tr class="memdesc:a676ec1e5f136a22af0335284099c4d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">インスタンスを 1 件プールへ書き込み、Index を返す（ムーブ版）  <br /></td></tr>
+<tr class="memitem:aabce60fecbbec79912c1700860df8ce5" id="r_aabce60fecbbec79912c1700860df8ce5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aabce60fecbbec79912c1700860df8ce5">AllocInstance</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool.html">InstancePool</a> &amp;inst)</td></tr>
+<tr class="memdesc:aabce60fecbbec79912c1700860df8ce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">インスタンスを 1 件プールへ書き込み、Index を返す  <br /></td></tr>
+<tr class="memitem:a03a5a8adc2b87f3a66862de7c0d4b0e7" id="r_a03a5a8adc2b87f3a66862de7c0d4b0e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03a5a8adc2b87f3a66862de7c0d4b0e7">AllocInstance</a> (<a class="el" href="struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool.html">InstancePool</a> &amp;&amp;inst)</td></tr>
+<tr class="memdesc:a03a5a8adc2b87f3a66862de7c0d4b0e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">インスタンスを 1 件プールへ書き込み、Index を返す（ムーブ版）  <br /></td></tr>
+<tr class="memitem:a73fc07b95267231e77a4d77f192a3fd9" id="r_a73fc07b95267231e77a4d77f192a3fd9"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73fc07b95267231e77a4d77f192a3fd9">AllocInstancesFromWorldSoA</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a.html">Math::Matrix3x4fSoA</a> &amp;wSoa, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a> *outIdx=nullptr)</td></tr>
+<tr class="memdesc:a73fc07b95267231e77a4d77f192a3fd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">WorldSoA からまとめて Instance を確保・書き込み  <br /></td></tr>
+<tr class="memitem:aba32bf5aa7875f7a48fc7ef2ca6a7efe" id="r_aba32bf5aa7875f7a48fc7ef2ca6a7efe"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba32bf5aa7875f7a48fc7ef2ca6a7efe">AllocInstancesFromWorldColorSoA</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a.html">Math::Matrix3x4fSoA</a> &amp;wSoa, const <a class="el" href="namespace_s_f_w_1_1_math.html#aba1dfa36baa96e43434532113c99dae7">Math::Vec4f</a> *cSoa, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a> *outIdx=nullptr)</td></tr>
+<tr class="memdesc:aba32bf5aa7875f7a48fc7ef2ca6a7efe"><td class="mdescLeft">&#160;</td><td class="mdescRight">WorldSoA と ColorSoA からまとめて Instance を確保・書き込み  <br /></td></tr>
+<tr class="memitem:a61f3124166e815a89bcdb90931f51070" id="r_a61f3124166e815a89bcdb90931f51070"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61f3124166e815a89bcdb90931f51070">NextInstanceIndex</a> ()</td></tr>
+<tr class="memdesc:a61f3124166e815a89bcdb90931f51070"><td class="mdescLeft">&#160;</td><td class="mdescRight">次に割り当てられるインスタンスインデックス  <br /></td></tr>
+<tr class="memitem:af033992f66ef4be28c4ff102168312d7" id="r_af033992f66ef4be28c4ff102168312d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af033992f66ef4be28c4ff102168312d7">MemsetInstancePool</a> (<a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a> index, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool.html">InstancePool</a> &amp;inst) noexcept</td></tr>
+<tr class="memdesc:af033992f66ef4be28c4ff102168312d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">　インスタンスプールを 1 件分 memset で埋める  <br /></td></tr>
+<tr class="memitem:ad7f42262109e12fcf721b9a78b7a2266" id="r_ad7f42262109e12fcf721b9a78b7a2266"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad7f42262109e12fcf721b9a78b7a2266">FlushAll</a> ()</td></tr>
+<tr class="memdesc:ad7f42262109e12fcf721b9a78b7a2266"><td class="mdescLeft">&#160;</td><td class="mdescRight">全バッファをキューへフラッシュ  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+静的公開変数類</h2></td></tr>
+<tr class="memitem:aa5eef23167db2c3345fa338323c85d00" id="r_aa5eef23167db2c3345fa338323c85d00"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5eef23167db2c3345fa338323c85d00">kChunk</a> = 128</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>生産者セッション-ユーザーに渡す用（thread_localを使わない） </p>
+<p>外部からバッファを渡す </p>
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00396">396</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="a4990fc2a08040d643ac4dd9de631dd8e" name="a4990fc2a08040d643ac4dd9de631dd8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4990fc2a08040d643ac4dd9de631dd8e">&#9670;&#160;</a></span>ProducerSessionExternal() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Graphics::RenderQueue::ProducerSessionExternal::ProducerSessionExternal </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue.html">RenderQueue</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>owner</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf.html">SmallBuf</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>buf</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">owner</td><td>このセッションが属する <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue.html" title="描画コマンドの発行。管理、ソート、バッチングを行うクラス">RenderQueue</a> への参照 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00413">413</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a85b9ec0b9c9ad1ecb238c43fce01b225" name="a85b9ec0b9c9ad1ecb238c43fce01b225"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85b9ec0b9c9ad1ecb238c43fce01b225">&#9670;&#160;</a></span>ProducerSessionExternal() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Graphics::RenderQueue::ProducerSessionExternal::ProducerSessionExternal </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コピー禁止 </p>
+
+</div>
+</div>
+<a id="aa88dd21008ec8d6f7783044a91e47f18" name="aa88dd21008ec8d6f7783044a91e47f18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa88dd21008ec8d6f7783044a91e47f18">&#9670;&#160;</a></span>ProducerSessionExternal() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Graphics::RenderQueue::ProducerSessionExternal::ProducerSessionExternal </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ムーブは可 </p>
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00424">424</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8225ffc3544cc8a72d495851602bc29d" name="a8225ffc3544cc8a72d495851602bc29d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8225ffc3544cc8a72d495851602bc29d">&#9670;&#160;</a></span>~ProducerSessionExternal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Graphics::RenderQueue::ProducerSessionExternal::~ProducerSessionExternal </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00446">446</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="abc678eebcf697d6b0ecbd90ce87cdbfb" name="abc678eebcf697d6b0ecbd90ce87cdbfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc678eebcf697d6b0ecbd90ce87cdbfb">&#9670;&#160;</a></span>AllocInstance() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a> SFW::Graphics::RenderQueue::ProducerSessionExternal::AllocInstance </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_data.html">InstanceData</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>inst</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>インスタンスを 1 件プールへ書き込み、Index を返す </p>
+
+</div>
+</div>
+<a id="aabce60fecbbec79912c1700860df8ce5" name="aabce60fecbbec79912c1700860df8ce5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabce60fecbbec79912c1700860df8ce5">&#9670;&#160;</a></span>AllocInstance() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a> SFW::Graphics::RenderQueue::ProducerSessionExternal::AllocInstance </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool.html">InstancePool</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>inst</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>インスタンスを 1 件プールへ書き込み、Index を返す </p>
+
+</div>
+</div>
+<a id="a676ec1e5f136a22af0335284099c4d96" name="a676ec1e5f136a22af0335284099c4d96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a676ec1e5f136a22af0335284099c4d96">&#9670;&#160;</a></span>AllocInstance() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a> SFW::Graphics::RenderQueue::ProducerSessionExternal::AllocInstance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_data.html">InstanceData</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>inst</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>インスタンスを 1 件プールへ書き込み、Index を返す（ムーブ版） </p>
+
+</div>
+</div>
+<a id="a03a5a8adc2b87f3a66862de7c0d4b0e7" name="a03a5a8adc2b87f3a66862de7c0d4b0e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03a5a8adc2b87f3a66862de7c0d4b0e7">&#9670;&#160;</a></span>AllocInstance() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a> SFW::Graphics::RenderQueue::ProducerSessionExternal::AllocInstance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool.html">InstancePool</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>inst</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>インスタンスを 1 件プールへ書き込み、Index を返す（ムーブ版） </p>
+
+</div>
+</div>
+<a id="aba32bf5aa7875f7a48fc7ef2ca6a7efe" name="aba32bf5aa7875f7a48fc7ef2ca6a7efe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba32bf5aa7875f7a48fc7ef2ca6a7efe">&#9670;&#160;</a></span>AllocInstancesFromWorldColorSoA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SFW::Graphics::RenderQueue::ProducerSessionExternal::AllocInstancesFromWorldColorSoA </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a.html">Math::Matrix3x4fSoA</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>wSoa</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#aba1dfa36baa96e43434532113c99dae7">Math::Vec4f</a> *</td>          <td class="paramname"><span class="paramname"><em>cSoa</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a> *</td>          <td class="paramname"><span class="paramname"><em>outIdx</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>WorldSoA と ColorSoA からまとめて Instance を確保・書き込み </p>
+
+</div>
+</div>
+<a id="a73fc07b95267231e77a4d77f192a3fd9" name="a73fc07b95267231e77a4d77f192a3fd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73fc07b95267231e77a4d77f192a3fd9">&#9670;&#160;</a></span>AllocInstancesFromWorldSoA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SFW::Graphics::RenderQueue::ProducerSessionExternal::AllocInstancesFromWorldSoA </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_math_1_1_matrix3x4f_so_a.html">Math::Matrix3x4fSoA</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>wSoa</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a> *</td>          <td class="paramname"><span class="paramname"><em>outIdx</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>WorldSoA からまとめて Instance を確保・書き込み </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wSoa</td><td>3x4 行列の SoA </td></tr>
+    <tr><td class="paramname">outIdx</td><td>null でなければ、確保した <a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html" title="インスタンスデータのインデックス構造体">InstanceIndex</a> を count 個だけ書き出す </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>実際に確保・書き込んだ件数（プール残量で小さくなる可能性あり） </dd></dl>
+
+</div>
+</div>
+<a id="ad7f42262109e12fcf721b9a78b7a2266" name="ad7f42262109e12fcf721b9a78b7a2266"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7f42262109e12fcf721b9a78b7a2266">&#9670;&#160;</a></span>FlushAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::RenderQueue::ProducerSessionExternal::FlushAll </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>全バッファをキューへフラッシュ </p>
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00502">502</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af033992f66ef4be28c4ff102168312d7" name="af033992f66ef4be28c4ff102168312d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af033992f66ef4be28c4ff102168312d7">&#9670;&#160;</a></span>MemsetInstancePool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::RenderQueue::ProducerSessionExternal::MemsetInstancePool </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a></td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool.html">InstancePool</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>inst</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>　インスタンスプールを 1 件分 memset で埋める </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>対象のインスタンスインデックス </td></tr>
+    <tr><td class="paramname">inst</td><td>埋めるデータ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a61f3124166e815a89bcdb90931f51070" name="a61f3124166e815a89bcdb90931f51070"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61f3124166e815a89bcdb90931f51070">&#9670;&#160;</a></span>NextInstanceIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">InstanceIndex</a> SFW::Graphics::RenderQueue::ProducerSessionExternal::NextInstanceIndex </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>次に割り当てられるインスタンスインデックス </p>
+<p>実際にフレーム当たりのインスタンス数が増える </p>
+
+</div>
+</div>
+<a id="a645708f64198823d50f44b1c90a24384" name="a645708f64198823d50f44b1c90a24384"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a645708f64198823d50f44b1c90a24384">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a> &amp; SFW::Graphics::RenderQueue::ProducerSessionExternal::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a11167714e954f89140458ebd2e4756ab" name="a11167714e954f89140458ebd2e4756ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11167714e954f89140458ebd2e4756ab">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a> &amp; SFW::Graphics::RenderQueue::ProducerSessionExternal::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00431">431</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a208b3164e835d24532f0ea68d69f2b34" name="a208b3164e835d24532f0ea68d69f2b34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a208b3164e835d24532f0ea68d69f2b34">&#9670;&#160;</a></span>Push()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::RenderQueue::ProducerSessionExternal::Push </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">DrawCommand</a></td>          <td class="paramname"><span class="paramname"><em>cmd</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html" title="描画コマンド構造体">DrawCommand</a> を 1 件プールへ書き込み </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cmd</td><td>書き込む <a class="el" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html" title="描画コマンド構造体">DrawCommand</a> インスタンス </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00452">452</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<a id="aa5eef23167db2c3345fa338323c85d00" name="aa5eef23167db2c3345fa338323c85d00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5eef23167db2c3345fa338323c85d00">&#9670;&#160;</a></span>kChunk</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SFW::Graphics::RenderQueue::ProducerSessionExternal::kChunk = 128</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00399">399</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/<a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics.html">Graphics</a></li><li class="navelem"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html">RenderQueue</a></li><li class="navelem"><a href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

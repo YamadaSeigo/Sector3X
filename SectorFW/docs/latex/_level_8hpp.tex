@@ -1,0 +1,80 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+Level.hpp ファイル}
+\hypertarget{_level_8hpp}{}\label{_level_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/Level.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/Level.hpp}}
+
+
+レベルを定義するクラス  
+
+
+{\ttfamily \#include "{}ECS/\+Component\+Type\+Registry.\+h"{}}\newline
+{\ttfamily \#include "{}ECS/\+System\+Scheduler.\+hpp"{}}\newline
+{\ttfamily \#include "{}partition.\+hpp"{}}\newline
+{\ttfamily \#include "{}Registry\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}Chunk\+Crossing\+Move.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Math/\+Transform.\+hpp"{}}\newline
+{\ttfamily \#include "{}../\+Debug/logger.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Util/extract\+\_\+type.\+hpp"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_level_context}{SFW\+::\+Level\+Context$<$ Partition $>$}}
+\begin{DoxyCompactList}\small\item\em Systemに渡すレベルの情報や操作を提供する構造体 \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_level_context_1_1_i_request_command}{SFW\+::\+Level\+Context$<$ Partition $>$\+::\+IRequest\+Command}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_lelve_i_d_manager}{SFW\+::\+Lelve\+IDManager}}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level$<$ Partition $>$}}
+\begin{DoxyCompactList}\small\item\em レベル(シーン単位)を定義するクラス \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_level_1_1_session}{SFW\+::\+Level$<$ Partition $>$\+::\+Session}}
+\begin{DoxyCompactList}\small\item\em レベルへの要求を管理するセッション構造体 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{SFW\+::\+ELevel\+State}} \+: uint32\+\_\+t \{ \newline
+\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a6adf97f83acf6453d4a6a4b1070f3754}{SFW\+::\+None}} = 0
+, \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53aa02c83a7dbd96295beaefb72c2bee2de}{SFW\+::\+Main}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 0
+, \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53ae80155eceb940c89e2de63ad05868db2}{SFW\+::\+Sub}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a4d3d769b812b6faa6b76e1a8abaece2d}{SFW\+::\+Active}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 2
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a16bfbf9c462762cf1cba4134ec53c504}{SFW\+::\+Loading}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 3
+, \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a7381d487d18845b379422325c0a768d6}{SFW\+::\+Loaded}} = 1u \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+ \}
+\begin{DoxyCompactList}\small\item\em レベルの状態を定義する列挙型 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+constexpr \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} \mbox{\hyperlink{namespace_s_f_w_a7ed2d08f1306b6c71786c93118c0fd74}{SFW\+::operator\texorpdfstring{$\vert$}{|}}} (\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} a, \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} b)
+\item 
+constexpr \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} \mbox{\hyperlink{namespace_s_f_w_ac2c3f02b6824740b27ca935150d68d8b}{SFW\+::operator\&}} (\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} a, \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} b)
+\item 
+constexpr \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} \mbox{\hyperlink{namespace_s_f_w_a9ac195ecef1ece06f0126c3191044508}{SFW\+::operator\texorpdfstring{$\sim$}{\string~}}} (\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} a)
+\item 
+constexpr \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} \& \mbox{\hyperlink{namespace_s_f_w_a7ff8c1b3e1ceb877fcb45cf48666fd65}{SFW\+::operator\texorpdfstring{$\vert$}{|}=}} (\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} \&a, \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} b)
+\item 
+constexpr \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} \& \mbox{\hyperlink{namespace_s_f_w_a5848d2a287d080ae019d98b92fb364a1}{SFW\+::operator\&=}} (\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} \&a, \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} b)
+\item 
+constexpr bool \mbox{\hyperlink{namespace_s_f_w_a82fdc34c030671aaa1a9bfd5a5051bcf}{SFW\+::\+Has\+Any}} (\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} v)
+\item 
+constexpr bool \mbox{\hyperlink{namespace_s_f_w_a7b3b32a24c161952206c3798fdd4706f}{SFW\+::\+Has\+Any}} (\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} v, \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} bits)
+\item 
+constexpr bool \mbox{\hyperlink{namespace_s_f_w_a978f030946d09d7e75529945f9d3f4f1}{SFW\+::\+Has\+All}} (\mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} v, \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53}{ELevel\+State}} bits)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+レベルを定義するクラス 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+June 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} に定義があります。
+

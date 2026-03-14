@@ -1,0 +1,50 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+Registry\+Types.h ファイル}
+\hypertarget{_registry_types_8h}{}\label{_registry_types_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/RegistryTypes.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/RegistryTypes.h}}
+
+
+レジストリ関連の型を定義するヘッダーファイル  
+
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{SFW\+::\+Spatial\+Chunk\+Key}}
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}\+: どの \doxylink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk} を指すか（\+Level 区画 世代） \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{SFW\+::\+Level\+ID}} = std\+::uint32\+\_\+t
+\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_a834dda392d6f71061e76b5b138ef43e6}{SFW\+::\+Partition\+Scheme}} \+: uint8\+\_\+t \{ \newline
+\mbox{\hyperlink{namespace_s_f_w_a834dda392d6f71061e76b5b138ef43e6aea730ecd1f61168b907030ec96d79172}{SFW\+::\+Grid2D}}
+, \mbox{\hyperlink{namespace_s_f_w_a834dda392d6f71061e76b5b138ef43e6a805caf84a5a00a4ae6a736b132640878}{SFW\+::\+Grid3D}}
+, \mbox{\hyperlink{namespace_s_f_w_a834dda392d6f71061e76b5b138ef43e6ae1f9acd1d65f1533d1bcc31c00e4224a}{SFW\+::\+Quadtree2D}}
+, \mbox{\hyperlink{namespace_s_f_w_a834dda392d6f71061e76b5b138ef43e6a31087bc5d4db4fe350f3e23e653abbd1}{SFW\+::\+Octree3D}}
+, \newline
+\mbox{\hyperlink{namespace_s_f_w_a834dda392d6f71061e76b5b138ef43e6a9f81c52bdd5797801a0bd46508fa27a6}{SFW\+::\+BVH}}
+, \mbox{\hyperlink{namespace_s_f_w_a834dda392d6f71061e76b5b138ef43e6a999bc6b18351bbe817d26f559ba408ae}{SFW\+::\+SAP}}
+ \}
+\begin{DoxyCompactList}\small\item\em Partition\+Scheme\+: 空間分割の方式を定義する列挙型 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+レジストリ関連の型を定義するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_registry_types_8h_source}{Registry\+Types.\+h}} に定義があります。
+

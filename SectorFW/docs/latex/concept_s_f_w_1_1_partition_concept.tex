@@ -1,0 +1,58 @@
+\doxysection{SFW\+::Partition\+Concept Concept Reference}
+\hypertarget{concept_s_f_w_1_1_partition_concept}{}\label{concept_s_f_w_1_1_partition_concept}\index{SFW::PartitionConcept@{SFW::PartitionConcept}}
+
+
+Partitionが実装する必要のあるインターフェースを定義するコンセプト  
+
+
+
+
+{\ttfamily \#include $<$partition.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Derived>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_partition_concept}{SFW::PartitionConcept}}\ =\ \ \textcolor{keyword}{requires}(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Derived\ t,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ originWS,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ v,\ \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{ChunkSizeType}}\ size,\ \textcolor{keywordtype}{float}\ chunkSize,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOutOfBoundsPolicy}}\ policy,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{SpatialChunkRegistry}}\ \&\ reg,\ \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{LevelID}}\ level,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math::Frustumf}}\ \&\ fr,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ \&\ center,\ \textcolor{keywordtype}{float}\ radius,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math::Vec3f}}\ cp,\ \textcolor{keywordtype}{float}\ hy,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug::LineVertex}}\ *\ outLine,\ uint32\_t\ lineCapacity,\ uint32\_t\ displayCount}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Derived\{\ originWS,\ size,\ size,\ chunkSize\ \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ t.GetChunk(v,\ reg,\ level,\ policy)\ \}\ -\/>\ std::same\_as<std::optional<SpatialChunk*>>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ t.GetGlobalEntityManager()\ \}\ -\/>\ std::same\_as<ECS::EntityManager\&>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ t.RegisterAllChunks(reg,\ level)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ t.GetEntityNum()\ \}\ -\/>\ std::same\_as<size\_t>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ t.CullChunks(fr)\ \}\ -\/>\ std::same\_as<std::vector<SpatialChunk*>>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ t.CullChunks(center,\ radius)\ \}\ -\/>\ std::same\_as<std::vector<SpatialChunk*>>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ t.CullChunksNear(fr,\ cp)\ \}\ -\/>\ std::same\_as<std::vector<SpatialChunk*>>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ t.CullChunkLine(fr,\ cp,\ hy,\ outLine,\ lineCapacity,\ displayCount)\ \}\ -\/>\ std::same\_as<uint32\_t>;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{\ t.CleanChunk()\ \}-\/>std::same\_as<\textcolor{keywordtype}{void}>;}
+\DoxyCodeLine{\ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{詳解}
+Partitionが実装する必要のあるインターフェースを定義するコンセプト 
+
+ \mbox{\hyperlink{partition_8hpp_source}{partition.\+hpp}} の \mbox{\hyperlink{partition_8hpp_source_l00035}{35}} 行目に定義があります。
+

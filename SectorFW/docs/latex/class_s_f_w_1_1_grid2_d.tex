@@ -1,0 +1,297 @@
+\doxysection{SFW\+::Grid2D\texorpdfstring{$<$}{<} T, Size \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_grid2_d}{}\label{class_s_f_w_1_1_grid2_d}\index{SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}}
+
+
+2Dグリッドを表すクラス  
+
+
+
+
+{\ttfamily \#include $<$Grid.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_a9798b73a229f393d35f6f4cd4e074530}{Grid2D}} (Size \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_af8ddfedd049c49855b87d51597df1269}{width}}, Size \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_a2cab90f628f79b3c8484b943e799962d}{height}}) noexcept
+\begin{DoxyCompactList}\small\item\em デフォルトコンストラクタ \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Args$>$ }\\\mbox{\hyperlink{class_s_f_w_1_1_grid2_d_af3485c40b0f1990a7dd8d5c76a7e74dd}{Grid2D}} (Size \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_af8ddfedd049c49855b87d51597df1269}{width}}, Size \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_a2cab90f628f79b3c8484b943e799962d}{height}}, Args \&\&... args) noexcept
+\begin{DoxyCompactList}\small\item\em 引数付きコンストラクタ \end{DoxyCompactList}\item 
+T \& \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_a72920bc1034a206cd77962e7b078a786}{operator()}} (Size x, Size y)
+\begin{DoxyCompactList}\small\item\em グリッドの要素にアクセスする演算子オーバーロード \end{DoxyCompactList}\item 
+const T \& \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_a05ddcf45fdd2d02eb5cf4b8e07c31f11}{operator()}} (Size x, Size y) const
+\begin{DoxyCompactList}\small\item\em グリッドの要素にアクセスする演算子オーバーロード（const版） \end{DoxyCompactList}\item 
+Size \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_af8ddfedd049c49855b87d51597df1269}{width}} () const noexcept
+\begin{DoxyCompactList}\small\item\em グリッドの幅を取得する関数 \end{DoxyCompactList}\item 
+Size \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_a2cab90f628f79b3c8484b943e799962d}{height}} () const noexcept
+\begin{DoxyCompactList}\small\item\em グリッドの高さを取得する関数 \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_ae6bc53609cf87a8758c10a7e16cb8afd}{begin}} () noexcept
+\begin{DoxyCompactList}\small\item\em グリッドの要素をイテレートするためのbeginとend関数 \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_aaa2c6d664427d4a81e177fce8ec843dc}{end}} () noexcept
+\begin{DoxyCompactList}\small\item\em グリッドの要素をイテレートするためのend関数 \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_aec19f49b9db90d90aff2e487a0fe7b78}{begin}} () const noexcept
+\begin{DoxyCompactList}\small\item\em グリッドの要素をイテレートするためのconst版beginとend関数 \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_ac0e7d34a4ea33755eb847700b97957a4}{end}} () const noexcept
+\begin{DoxyCompactList}\small\item\em グリッドの要素をイテレートするためのconst版end関数 \end{DoxyCompactList}\item 
+Size \mbox{\hyperlink{class_s_f_w_1_1_grid2_d_a753d5bed1ecc8043dcfccae394ad0dee}{size}} () const noexcept
+\begin{DoxyCompactList}\small\item\em グリッドのサイズを取得する関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename T, typename Size = size\+\_\+t$>$\newline
+class SFW\+::\+Grid2\+D$<$ T, Size $>$}
+2Dグリッドを表すクラス 
+
+
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em T} & グリッドの要素の型 \\
+\hline
+{\em Size} & サイズの型（デフォルトはsize\+\_\+t） \\
+\hline
+\end{DoxyTemplParams}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00020}{20}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_grid2_d_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_grid2_d_a9798b73a229f393d35f6f4cd4e074530}\index{SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}!Grid2D@{Grid2D}}
+\index{Grid2D@{Grid2D}!SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{Grid2D()}{Grid2D()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_a9798b73a229f393d35f6f4cd4e074530} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_grid2_d}{SFW\+::\+Grid2D}}$<$ T, Size $>$\+::\+Grid2D (\begin{DoxyParamCaption}\item[{Size}]{width}{, }\item[{Size}]{height}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+デフォルトコンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em width} & グリッドの幅 \\
+\hline
+{\em height} & グリッドの高さ \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00027}{27}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_af3485c40b0f1990a7dd8d5c76a7e74dd}\index{SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}!Grid2D@{Grid2D}}
+\index{Grid2D@{Grid2D}!SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{Grid2D()}{Grid2D()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_af3485c40b0f1990a7dd8d5c76a7e74dd} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+template$<$typename... Args$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_grid2_d}{SFW\+::\+Grid2D}}$<$ T, Size $>$\+::\+Grid2D (\begin{DoxyParamCaption}\item[{Size}]{width}{, }\item[{Size}]{height}{, }\item[{Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+引数付きコンストラクタ 
+
+
+\begin{DoxyTemplParams}{テンプレート引数}
+{\em Args} & 可変長テンプレート引数 \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{引数}
+{\em width} & グリッドの幅 \\
+\hline
+{\em height} & グリッドの高さ \\
+\hline
+{\em args} & 要素の初期化に使用する引数 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00039}{39}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_grid2_d_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_grid2_d_aec19f49b9db90d90aff2e487a0fe7b78}\index{SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}!begin@{begin}}
+\index{begin@{begin}!SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_aec19f49b9db90d90aff2e487a0fe7b78} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid2_d}{SFW\+::\+Grid2D}}$<$ T, Size $>$\+::begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+グリッドの要素をイテレートするためのconst版beginとend関数 
+
+\begin{DoxyReturn}{戻り値}
+イテレータのbeginとend 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00085}{85}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_ae6bc53609cf87a8758c10a7e16cb8afd}\index{SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}!begin@{begin}}
+\index{begin@{begin}!SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_ae6bc53609cf87a8758c10a7e16cb8afd} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid2_d}{SFW\+::\+Grid2D}}$<$ T, Size $>$\+::begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+グリッドの要素をイテレートするためのbeginとend関数 
+
+\begin{DoxyReturn}{戻り値}
+イテレータのbeginとend 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00075}{75}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_ac0e7d34a4ea33755eb847700b97957a4}\index{SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}!end@{end}}
+\index{end@{end}!SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_ac0e7d34a4ea33755eb847700b97957a4} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid2_d}{SFW\+::\+Grid2D}}$<$ T, Size $>$\+::end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+グリッドの要素をイテレートするためのconst版end関数 
+
+\begin{DoxyReturn}{戻り値}
+イテレータのend 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00090}{90}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_aaa2c6d664427d4a81e177fce8ec843dc}\index{SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}!end@{end}}
+\index{end@{end}!SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_aaa2c6d664427d4a81e177fce8ec843dc} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+auto \mbox{\hyperlink{class_s_f_w_1_1_grid2_d}{SFW\+::\+Grid2D}}$<$ T, Size $>$\+::end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+グリッドの要素をイテレートするためのend関数 
+
+\begin{DoxyReturn}{戻り値}
+イテレータのend 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00080}{80}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_a2cab90f628f79b3c8484b943e799962d}\index{SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}!height@{height}}
+\index{height@{height}!SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{height()}{height()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_a2cab90f628f79b3c8484b943e799962d} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+Size \mbox{\hyperlink{class_s_f_w_1_1_grid2_d}{SFW\+::\+Grid2D}}$<$ T, Size $>$\+::height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+グリッドの高さを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+グリッドの高さ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00070}{70}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_a72920bc1034a206cd77962e7b078a786}\index{SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_a72920bc1034a206cd77962e7b078a786} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+T \& \mbox{\hyperlink{class_s_f_w_1_1_grid2_d}{SFW\+::\+Grid2D}}$<$ T, Size $>$\+::operator() (\begin{DoxyParamCaption}\item[{Size}]{x}{, }\item[{Size}]{y}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+グリッドの要素にアクセスする演算子オーバーロード 
+
+
+\begin{DoxyParams}{引数}
+{\em x} & グリッドのx座標 \\
+\hline
+{\em y} & グリッドのy座標 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+要素への参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00049}{49}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_a05ddcf45fdd2d02eb5cf4b8e07c31f11}\index{SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_a05ddcf45fdd2d02eb5cf4b8e07c31f11} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+const T \& \mbox{\hyperlink{class_s_f_w_1_1_grid2_d}{SFW\+::\+Grid2D}}$<$ T, Size $>$\+::operator() (\begin{DoxyParamCaption}\item[{Size}]{x}{, }\item[{Size}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+グリッドの要素にアクセスする演算子オーバーロード（const版） 
+
+
+\begin{DoxyParams}{引数}
+{\em x} & グリッドのx座標 \\
+\hline
+{\em y} & グリッドのy座標 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+要素への参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00058}{58}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_a753d5bed1ecc8043dcfccae394ad0dee}\index{SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}!size@{size}}
+\index{size@{size}!SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_a753d5bed1ecc8043dcfccae394ad0dee} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+Size \mbox{\hyperlink{class_s_f_w_1_1_grid2_d}{SFW\+::\+Grid2D}}$<$ T, Size $>$\+::size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+グリッドのサイズを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+グリッドのサイズ（幅 \texorpdfstring{$\ast$}{*} 高さ） 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00095}{95}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_grid2_d_af8ddfedd049c49855b87d51597df1269}\index{SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}!width@{width}}
+\index{width@{width}!SFW::Grid2D$<$ T, Size $>$@{SFW::Grid2D$<$ T, Size $>$}}
+\doxysubsubsection{\texorpdfstring{width()}{width()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_grid2_d_af8ddfedd049c49855b87d51597df1269} 
+template$<$typename T, typename Size = size\+\_\+t$>$ \\
+Size \mbox{\hyperlink{class_s_f_w_1_1_grid2_d}{SFW\+::\+Grid2D}}$<$ T, Size $>$\+::width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+グリッドの幅を取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+グリッドの幅 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_grid_8hpp_source}{Grid.\+hpp}} の \mbox{\hyperlink{_grid_8hpp_source_l00065}{65}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Util/\mbox{\hyperlink{_grid_8hpp}{Grid.\+hpp}}\end{DoxyCompactItemize}

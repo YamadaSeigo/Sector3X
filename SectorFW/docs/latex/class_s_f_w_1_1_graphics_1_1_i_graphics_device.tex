@@ -1,0 +1,238 @@
+\doxysection{SFW\+::Graphics\+::IGraphics\+Device\texorpdfstring{$<$}{<} Impl \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{}\label{class_s_f_w_1_1_graphics_1_1_i_graphics_device}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
+
+
+グラフィックデバイスのインターフェース  
+
+
+
+
+{\ttfamily \#include $<$IGraphics\+Device.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_aead7deb30ab52aef3c7e4cd7968fd58b}{IGraphics\+Device}} ()=default
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+{\footnotesize template$<$Debug\+::\+Im\+Gui\+Backend\+Type Im\+Gui\+Backend$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a0f0271012c8d9fe7c508a1f424ead2da}{Configure}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{Native\+Window\+Handle}} \&native\+Window\+Handle, uint32\+\_\+t width, uint32\+\_\+t height, double fps)
+\begin{DoxyCompactList}\small\item\em 初期化 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a755ede26c777008d980552218ce96530}{Clear}} (const float clear\+Color\mbox{[}4\mbox{]})
+\begin{DoxyCompactList}\small\item\em 画面をクリア \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3a54c028d48da1a75038656f7dee3394}{Draw}} ()
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_abcb0602a6cec5134423c8941bd277e46}{Present}} ()
+\begin{DoxyCompactList}\small\item\em 描画 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3d210c34b525b87e33208989c4aec1d2}{Submit\+Frame}} (const FLOAT clear\+Color\mbox{[}4\mbox{]}, uint64\+\_\+t frame\+Idx)
+\begin{DoxyCompactList}\small\item\em フレームの提出 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3f13d959dd8c2f9e275cb335764aa17a}{Wait\+Submitted\+Frames}} (uint64\+\_\+t upto\+Frame)
+\begin{DoxyCompactList}\small\item\em 提出済みフレームの完了待ち \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a669ea0c8873cf05be43c35d1d10a4412}{\texorpdfstring{$\sim$}{\string~}\+IGraphics\+Device}} ()=default
+\begin{DoxyCompactList}\small\item\em デストラクタ \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a6dd6f41ea22d3d5d01046473a8216961}{Is\+Initialized}} () const
+\begin{DoxyCompactList}\small\item\em 初期化フラグの取得 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{限定公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_acd355dc1d7f35212ee71c1e8219be1e0}{Initialize}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{Native\+Window\+Handle}} \&native\+Window\+Handle, uint32\+\_\+t width, uint32\+\_\+t height, double fps)
+\begin{DoxyCompactList}\small\item\em 初期化 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename Impl$>$\newline
+class SFW\+::\+Graphics\+::\+IGraphics\+Device$<$ Impl $>$}
+グラフィックデバイスのインターフェース 
+
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00034}{34}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_aead7deb30ab52aef3c7e4cd7968fd58b}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!IGraphicsDevice@{IGraphicsDevice}}
+\index{IGraphicsDevice@{IGraphicsDevice}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
+\doxysubsubsection{\texorpdfstring{IGraphicsDevice()}{IGraphicsDevice()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i_graphics_device_aead7deb30ab52aef3c7e4cd7968fd58b} 
+template$<$typename Impl$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+Graphics\+::\+IGraphics\+Device}}$<$ Impl $>$\+::\+IGraphics\+Device (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+コンストラクタ 
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a669ea0c8873cf05be43c35d1d10a4412}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!````~IGraphicsDevice@{\texorpdfstring{$\sim$}{\string~}IGraphicsDevice}}
+\index{````~IGraphicsDevice@{\texorpdfstring{$\sim$}{\string~}IGraphicsDevice}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}IGraphicsDevice()}{\string~IGraphicsDevice()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a669ea0c8873cf05be43c35d1d10a4412} 
+template$<$typename Impl$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+Graphics\+::\+IGraphics\+Device}}$<$ Impl $>$\+::\texorpdfstring{$\sim$}{\string~}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{IGraphics\+Device}} (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+デストラクタ 
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a755ede26c777008d980552218ce96530}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!Clear@{Clear}}
+\index{Clear@{Clear}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
+\doxysubsubsection{\texorpdfstring{Clear()}{Clear()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a755ede26c777008d980552218ce96530} 
+template$<$typename Impl$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+Graphics\+::\+IGraphics\+Device}}$<$ Impl $>$\+::\+Clear (\begin{DoxyParamCaption}\item[{const float}]{clear\+Color}{\mbox{[}4\mbox{]}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+画面をクリア 
+
+
+\begin{DoxyParams}{引数}
+{\em clear\+Color} & \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00121}{121}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a0f0271012c8d9fe7c508a1f424ead2da}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!Configure@{Configure}}
+\index{Configure@{Configure}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
+\doxysubsubsection{\texorpdfstring{Configure()}{Configure()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a0f0271012c8d9fe7c508a1f424ead2da} 
+template$<$typename Impl$>$ \\
+template$<$Debug\+::\+Im\+Gui\+Backend\+Type Im\+Gui\+Backend$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+Graphics\+::\+IGraphics\+Device}}$<$ Impl $>$\+::\+Configure (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{Native\+Window\+Handle}} \&}]{native\+Window\+Handle}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{double}]{fps}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+初期化 
+
+
+\begin{DoxyParams}{引数}
+{\em native\+Window\+Handle} & ウィンドウハンドル \\
+\hline
+{\em width} & ウィンドウ幅 \\
+\hline
+{\em height} & ウィンドウ高さ \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00057}{57}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3a54c028d48da1a75038656f7dee3394}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!Draw@{Draw}}
+\index{Draw@{Draw}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
+\doxysubsubsection{\texorpdfstring{Draw()}{Draw()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3a54c028d48da1a75038656f7dee3394} 
+template$<$typename Impl$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+Graphics\+::\+IGraphics\+Device}}$<$ Impl $>$\+::\+Draw (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00124}{124}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_acd355dc1d7f35212ee71c1e8219be1e0}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i_graphics_device_acd355dc1d7f35212ee71c1e8219be1e0} 
+template$<$typename Impl$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+Graphics\+::\+IGraphics\+Device}}$<$ Impl $>$\+::\+Initialize (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{Native\+Window\+Handle}} \&}]{native\+Window\+Handle}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{double}]{fps}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+初期化 
+
+
+\begin{DoxyParams}{引数}
+{\em native\+Window\+Handle} & ウィンドウハンドル \\
+\hline
+{\em width} & ウィンドウ幅 \\
+\hline
+{\em height} & ウィンドウ高さ \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00042}{42}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a6dd6f41ea22d3d5d01046473a8216961}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!IsInitialized@{IsInitialized}}
+\index{IsInitialized@{IsInitialized}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
+\doxysubsubsection{\texorpdfstring{IsInitialized()}{IsInitialized()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a6dd6f41ea22d3d5d01046473a8216961} 
+template$<$typename Impl$>$ \\
+bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+Graphics\+::\+IGraphics\+Device}}$<$ Impl $>$\+::\+Is\+Initialized (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+初期化フラグの取得 
+
+\begin{DoxyReturn}{戻り値}
+初期化フラグ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00167}{167}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_abcb0602a6cec5134423c8941bd277e46}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!Present@{Present}}
+\index{Present@{Present}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
+\doxysubsubsection{\texorpdfstring{Present()}{Present()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i_graphics_device_abcb0602a6cec5134423c8941bd277e46} 
+template$<$typename Impl$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+Graphics\+::\+IGraphics\+Device}}$<$ Impl $>$\+::\+Present (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+描画 
+
+
+
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00141}{141}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3d210c34b525b87e33208989c4aec1d2}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!SubmitFrame@{SubmitFrame}}
+\index{SubmitFrame@{SubmitFrame}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
+\doxysubsubsection{\texorpdfstring{SubmitFrame()}{SubmitFrame()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3d210c34b525b87e33208989c4aec1d2} 
+template$<$typename Impl$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+Graphics\+::\+IGraphics\+Device}}$<$ Impl $>$\+::\+Submit\+Frame (\begin{DoxyParamCaption}\item[{const FLOAT}]{clear\+Color}{\mbox{[}4\mbox{]}, }\item[{uint64\+\_\+t}]{frame\+Idx}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+フレームの提出 
+
+
+\begin{DoxyParams}{引数}
+{\em clear\+Color} & クリアカラー \\
+\hline
+{\em frame\+Idx} & フレームインデックス \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00149}{149}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3f13d959dd8c2f9e275cb335764aa17a}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!WaitSubmittedFrames@{WaitSubmittedFrames}}
+\index{WaitSubmittedFrames@{WaitSubmittedFrames}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
+\doxysubsubsection{\texorpdfstring{WaitSubmittedFrames()}{WaitSubmittedFrames()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3f13d959dd8c2f9e275cb335764aa17a} 
+template$<$typename Impl$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+Graphics\+::\+IGraphics\+Device}}$<$ Impl $>$\+::\+Wait\+Submitted\+Frames (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{upto\+Frame}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+提出済みフレームの完了待ち 
+
+
+\begin{DoxyParams}{引数}
+{\em upto\+Frame} & フレームインデックス \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00156}{156}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_i_graphics_device_8hpp}{IGraphics\+Device.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,49 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/partition.hpp ファイル}
+\hypertarget{partition_8hpp}{}\label{partition_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/partition.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/partition.hpp}}
+
+
+パーティションのインターフェースを定義するヘッダーファイル  
+
+
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include "{}Math/\+Vector.\+hpp"{}}\newline
+{\ttfamily \#include "{}Math/\+AABB.\+hpp"{}}\newline
+{\ttfamily \#include "{}Math/\+Frustum.\+hpp"{}}\newline
+{\ttfamily \#include "{}Spatial\+Chunk.\+h"{}}\newline
+{\ttfamily \#include "{}Registry\+Types.\+h"{}}\newline
+{\ttfamily \#include "{}Spatial\+Chunk\+Registry\+Service.\+h"{}}\newline
+{\ttfamily \#include "{}Debug/\+Debug\+Type.\+h"{}}\newline
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_partition_concept}{SFW\+::\+Partition\+Concept}}
+\begin{DoxyCompactList}\small\item\em Partitionが実装する必要のあるインターフェースを定義するコンセプト \end{DoxyCompactList}\item 
+concept \mbox{\hyperlink{concept_s_f_w_1_1_has_partition_update}{SFW\+::\+Has\+Partition\+Update}}
+\begin{DoxyCompactList}\small\item\em 更新可能なパーティションを識別するコンセプト \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{SFW\+::\+EOut\+Of\+Bounds\+Policy}} \{ \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ead98ac12774fca5c3cbaffe276840c55f}{SFW\+::\+Reject}}
+, \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{SFW\+::\+Clamp\+To\+Edge}}
+ \}
+\begin{DoxyCompactList}\small\item\em チャンクを検索する際のポリシーを定義する列挙型 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+パーティションのインターフェースを定義するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+June 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{partition_8hpp_source}{partition.\+hpp}} に定義があります。
+

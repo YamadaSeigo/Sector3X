@@ -1,0 +1,107 @@
+\doxysection{SFW\+::CSpatial\+Motion\+Tag 構造体}
+\hypertarget{struct_s_f_w_1_1_c_spatial_motion_tag}{}\label{struct_s_f_w_1_1_c_spatial_motion_tag}\index{SFW::CSpatialMotionTag@{SFW::CSpatialMotionTag}}
+
+
+動的エンティティ用タグ（チャンク跨ぎ検出と\+EM間移送の状態管理）  
+
+
+
+
+{\ttfamily \#include $<$Chunk\+Crossing\+Move.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_c_spatial_motion_tag_abc6d349a27accfca7f5434cf268d24b2}{CSpatial\+Motion\+Tag}} ()=default
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_c_spatial_motion_tag_a2b381f3dd905b101644164e7a855c4fd}{CSpatial\+Motion\+Tag}} (const \mbox{\hyperlink{struct_s_f_w_1_1_chunk_handle}{Chunk\+Handle}} \&h)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_chunk_handle}{Chunk\+Handle}} \mbox{\hyperlink{struct_s_f_w_1_1_c_spatial_motion_tag_aea5d444817b8f161c6aaf10305d906c5}{handle}}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} \mbox{\hyperlink{struct_s_f_w_1_1_c_spatial_motion_tag_a680c4e0e8095af2763b6bf732b0ab23e}{pending\+Key}} \{\}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_c_spatial_motion_tag_a84efe0240d798d4df799c25ef221033f}{stable\+Frames}} = 0
+\item 
+\mbox{\hyperlink{namespace_s_f_w_a43279839ee6b550040804dc0f90c7544}{Spatial\+State}} \mbox{\hyperlink{struct_s_f_w_1_1_c_spatial_motion_tag_a896b2a2d54b70a879ba02c0b476668e6}{state}} = \mbox{\hyperlink{namespace_s_f_w_a43279839ee6b550040804dc0f90c7544a41f0e4643baa1a38c319cb96c9deaa99}{Spatial\+State\+::\+Attached}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+動的エンティティ用タグ（チャンク跨ぎ検出と\+EM間移送の状態管理） 
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00152}{152}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{struct_s_f_w_1_1_c_spatial_motion_tag_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{struct_s_f_w_1_1_c_spatial_motion_tag_abc6d349a27accfca7f5434cf268d24b2}\index{SFW::CSpatialMotionTag@{SFW::CSpatialMotionTag}!CSpatialMotionTag@{CSpatialMotionTag}}
+\index{CSpatialMotionTag@{CSpatialMotionTag}!SFW::CSpatialMotionTag@{SFW::CSpatialMotionTag}}
+\doxysubsubsection{\texorpdfstring{CSpatialMotionTag()}{CSpatialMotionTag()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_c_spatial_motion_tag_abc6d349a27accfca7f5434cf268d24b2} 
+SFW\+::\+CSpatial\+Motion\+Tag\+::\+CSpatial\+Motion\+Tag (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{struct_s_f_w_1_1_c_spatial_motion_tag_a2b381f3dd905b101644164e7a855c4fd}\index{SFW::CSpatialMotionTag@{SFW::CSpatialMotionTag}!CSpatialMotionTag@{CSpatialMotionTag}}
+\index{CSpatialMotionTag@{CSpatialMotionTag}!SFW::CSpatialMotionTag@{SFW::CSpatialMotionTag}}
+\doxysubsubsection{\texorpdfstring{CSpatialMotionTag()}{CSpatialMotionTag()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_c_spatial_motion_tag_a2b381f3dd905b101644164e7a855c4fd} 
+SFW\+::\+CSpatial\+Motion\+Tag\+::\+CSpatial\+Motion\+Tag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_chunk_handle}{Chunk\+Handle}} \&}]{h}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00156}{156}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_c_spatial_motion_tag_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_c_spatial_motion_tag_aea5d444817b8f161c6aaf10305d906c5}\index{SFW::CSpatialMotionTag@{SFW::CSpatialMotionTag}!handle@{handle}}
+\index{handle@{handle}!SFW::CSpatialMotionTag@{SFW::CSpatialMotionTag}}
+\doxysubsubsection{\texorpdfstring{handle}{handle}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_c_spatial_motion_tag_aea5d444817b8f161c6aaf10305d906c5} 
+\mbox{\hyperlink{struct_s_f_w_1_1_chunk_handle}{Chunk\+Handle}} SFW\+::\+CSpatial\+Motion\+Tag\+::handle}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00158}{158}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_c_spatial_motion_tag_a680c4e0e8095af2763b6bf732b0ab23e}\index{SFW::CSpatialMotionTag@{SFW::CSpatialMotionTag}!pendingKey@{pendingKey}}
+\index{pendingKey@{pendingKey}!SFW::CSpatialMotionTag@{SFW::CSpatialMotionTag}}
+\doxysubsubsection{\texorpdfstring{pendingKey}{pendingKey}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_c_spatial_motion_tag_a680c4e0e8095af2763b6bf732b0ab23e} 
+\mbox{\hyperlink{struct_s_f_w_1_1_spatial_chunk_key}{Spatial\+Chunk\+Key}} SFW\+::\+CSpatial\+Motion\+Tag\+::pending\+Key \{\}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00159}{159}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_c_spatial_motion_tag_a84efe0240d798d4df799c25ef221033f}\index{SFW::CSpatialMotionTag@{SFW::CSpatialMotionTag}!stableFrames@{stableFrames}}
+\index{stableFrames@{stableFrames}!SFW::CSpatialMotionTag@{SFW::CSpatialMotionTag}}
+\doxysubsubsection{\texorpdfstring{stableFrames}{stableFrames}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_c_spatial_motion_tag_a84efe0240d798d4df799c25ef221033f} 
+uint16\+\_\+t SFW\+::\+CSpatial\+Motion\+Tag\+::stable\+Frames = 0}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00160}{160}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_c_spatial_motion_tag_a896b2a2d54b70a879ba02c0b476668e6}\index{SFW::CSpatialMotionTag@{SFW::CSpatialMotionTag}!state@{state}}
+\index{state@{state}!SFW::CSpatialMotionTag@{SFW::CSpatialMotionTag}}
+\doxysubsubsection{\texorpdfstring{state}{state}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_c_spatial_motion_tag_a896b2a2d54b70a879ba02c0b476668e6} 
+\mbox{\hyperlink{namespace_s_f_w_a43279839ee6b550040804dc0f90c7544}{Spatial\+State}} SFW\+::\+CSpatial\+Motion\+Tag\+::state = \mbox{\hyperlink{namespace_s_f_w_a43279839ee6b550040804dc0f90c7544a41f0e4643baa1a38c319cb96c9deaa99}{Spatial\+State\+::\+Attached}}}
+
+
+
+ \mbox{\hyperlink{_chunk_crossing_move_8hpp_source}{Chunk\+Crossing\+Move.\+hpp}} の \mbox{\hyperlink{_chunk_crossing_move_8hpp_source_l00161}{161}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_chunk_crossing_move_8hpp}{Chunk\+Crossing\+Move.\+hpp}}\end{DoxyCompactItemize}

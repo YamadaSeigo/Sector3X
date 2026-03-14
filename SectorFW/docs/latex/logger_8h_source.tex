@@ -1,0 +1,165 @@
+\doxysection{logger.\+h}
+\hypertarget{logger_8h_source}{}\label{logger_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/logger.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Debug/logger.h}}
+\mbox{\hyperlink{logger_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00010}00010\ \textcolor{preprocessor}{\#ifdef\ \_DEBUG}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <ctime>}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <cstdarg>}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00023}00023\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\_DEBUG}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00025}00025\ \ \textcolor{comment}{//\ ログにファイル名、行番号、関数名を表示する場合は以下のいずれかを有効化}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00026}00026\ \textcolor{comment}{//\#define\ LOG\_SHOW\_TIME}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00027}00027\ \textcolor{comment}{//\#define\ LOG\_SHOW\_PEFIX}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00028}00028\ \textcolor{comment}{//\#define\ LOG\_SHOW\_FILE}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00029}00029\ \textcolor{comment}{//\#define\ LOG\_SHOW\_LINE}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00030}00030\ \textcolor{comment}{//\#define\ LOG\_SHOW\_FUNC}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00032}00032\ \textcolor{comment}{//\ ログに詳細なタイムスタンプ（ミリ秒まで）を表示する場合は以下を有効化}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00033}00033\ \textcolor{comment}{//\#define\ LOG\_SHOW\_DETAIL\_TIME}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00035}00035\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}\ \{}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00036}00036\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_debug}{Debug}}\ \{}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00037}00037\ \textcolor{preprocessor}{\#ifdef\ \_DEBUG}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00039}00039\ \textcolor{preprocessor}{\#if\ defined(\_WIN32)}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00040}00040\ \textcolor{preprocessor}{\#include\ <windows.h>}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ SetConsoleColor(\textcolor{keywordtype}{int}\ level)\ \{}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ HANDLE\ hConsole\ =\ GetStdHandle(STD\_OUTPUT\_HANDLE);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ WORD\ color;}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (level)\ \{}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:\ color\ =\ 7;\ \textcolor{keywordflow}{break};\ \textcolor{comment}{//\ Info}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:\ color\ =\ FOREGROUND\_RED\ |\ FOREGROUND\_GREEN;\ \textcolor{keywordflow}{break};\ \textcolor{comment}{//\ Warning}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:\ color\ =\ FOREGROUND\_RED\ |\ FOREGROUND\_INTENSITY;\ \textcolor{keywordflow}{break};\ \textcolor{comment}{//\ Error}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ color\ =\ 7;\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ SetConsoleTextAttribute(hConsole,\ color);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00057}00057\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{//\ LinuxやMacOSなどの他のプラットフォームではANSIエスケープシーケンスを使用}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ SetConsoleColor(\textcolor{keywordtype}{int}\ level)\ \{}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (level)\ \{}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:\ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}};\ \textcolor{keywordflow}{break};\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Info}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:\ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[33m"{}};\ \textcolor{keywordflow}{break};\ \ \ \ \ \ \ \textcolor{comment}{//\ Warning}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:\ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[31m"{}};\ \textcolor{keywordflow}{break};\ \ \ \ \ \ \ \textcolor{comment}{//\ Error}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}};\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00070}00070\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_WIN32}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::tm\ SafeLocalTime(std::time\_t\ time)\ \{}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ std::tm\ tm\_result;}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00078}00078\ \textcolor{preprocessor}{\#if\ defined(\_WIN32)}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ localtime\_s(\&tm\_result,\ \&time);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00080}00080\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ localtime\_r(\&time,\ \&tm\_result);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00082}00082\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tm\_result;}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::string\ GetCurrentTimestamp()\ \{}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ now\ =\ std::chrono::system\_clock::now();}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ time\ =\ std::chrono::system\_clock::to\_time\_t(now);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ ms\ =\ std::chrono::duration\_cast<std::chrono::milliseconds>(}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ now.time\_since\_epoch())\ \%\ 1000;}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ std::ostringstream\ oss;}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ std::tm\ tm\ =\ SafeLocalTime(time);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ oss}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00099}00099\ \textcolor{preprocessor}{\#ifdef\ LOG\_SHOW\_DETAIL\_TIME}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::put\_time(\&tm,\ \textcolor{stringliteral}{"{}\%m-\/\%d\ \%H:\%M:\%S"{}})}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}."{}}\ <<\ std::setfill(\textcolor{charliteral}{'0'})\ <<\ std::setw(3)\ <<\ ms.count();}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00102}00102\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ std::put\_time(\&tm,\ \textcolor{stringliteral}{"{}\%H:\%M:\%S"{}});}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00104}00104\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ oss.str();}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::mutex\&\ GetLogMutex()\ \{}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::mutex\ mtx;}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ mtx;}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00126}00126\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ LogImpl(\textcolor{keywordtype}{int}\ level,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ prefix,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ file,\ \textcolor{keywordtype}{int}\ line,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ function,\ \textcolor{keyword}{const}\ std::string\&\ msg)\ \{}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(GetLogMutex());\ \textcolor{comment}{//\ ←\ スレッドセーフ！}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ SetConsoleColor(level);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00132}00132\ \textcolor{preprocessor}{\#ifdef\ LOG\_SHOW\_TIME}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}["{}}\ <<\ GetCurrentTimestamp()\ <<\ \textcolor{stringliteral}{"{}]\ "{}}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00134}00134\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00135}00135\ \textcolor{preprocessor}{\#ifdef\ LOG\_SHOW\_PEFIX}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}["{}}\ <<\ prefix\ <<\ \textcolor{stringliteral}{"{}]\ "{}}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00137}00137\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00138}00138\ \textcolor{preprocessor}{\#if\ defined(LOG\_SHOW\_FILE)\ ||\ defined(LOG\_SHOW\_LINE)\ ||\ defined(LOG\_SHOW\_FUNC)}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}["{}}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00140}00140\ \textcolor{preprocessor}{\#ifdef\ LOG\_SHOW\_FILE}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ file}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00142}00142\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00143}00143\ \textcolor{preprocessor}{\#ifdef\ LOG\_SHOW\_LINE}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}:"{}}\ <<\ line}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00145}00145\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00146}00146\ \textcolor{preprocessor}{\#ifdef\ LOG\_SHOW\_FUNC}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ function}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00148}00148\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}]\ "{}}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00150}00150\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ msg\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00153}00153\ \textcolor{preprocessor}{\#if\ defined(\_WIN32)}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ SetConsoleColor(0);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00155}00155\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{//\ LinuxやMacOSなどの他のプラットフォームでは、デフォルトの色に戻す}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}};}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00157}00157\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_WIN32}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00166}00166\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::string\ FormatPrintf(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ fmt,\ ...)\ \{}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ va\_list\ args1;}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ va\_start(args1,\ fmt);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ va\_list\ args2;}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ va\_copy(args2,\ args1);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ len\ =\ std::vsnprintf(\textcolor{keyword}{nullptr},\ 0,\ fmt,\ args1);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ va\_end(args1);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<char>\ buffer(len\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ std::vsnprintf(buffer.data(),\ buffer.size(),\ fmt,\ args2);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ va\_end(args2);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::string(buffer.data(),\ len);}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00180}00180\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_DEBUG}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00181}00181\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00182}00182\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00183}00183\ \ \ \ \ \textcolor{comment}{//\ デバッグビルド時のみログ出力}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00184}00184\ \textcolor{preprocessor}{\#ifdef\ \_DEBUG}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00185}00185\ \textcolor{comment}{//\ ログ出力マクロ}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00186}00186\ \textcolor{preprocessor}{\#define\ LOG\_INFO(fmt,\ ...)\ \ \ \ SFW::Debug::LogImpl(0,\ "{}Info"{},\ \ \ \ \_\_FILE\_\_,\ \_\_LINE\_\_,\ \_\_FUNCTION\_\_,\ SFW::Debug::FormatPrintf(fmt,\ \#\#\_\_VA\_ARGS\_\_))}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00187}00187\ \textcolor{comment}{//\ 警告ログ出力マクロ}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00188}00188\ \textcolor{preprocessor}{\#define\ LOG\_WARNING(fmt,\ ...)\ SFW::Debug::LogImpl(1,\ "{}Warning"{},\ \_\_FILE\_\_,\ \_\_LINE\_\_,\ \_\_FUNCTION\_\_,\ SFW::Debug::FormatPrintf(fmt,\ \#\#\_\_VA\_ARGS\_\_))}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00189}00189\ \textcolor{comment}{//\ エラーログ出力マクロ}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00190}00190\ \textcolor{preprocessor}{\#define\ LOG\_ERROR(fmt,\ ...)\ \ \ SFW::Debug::LogImpl(2,\ "{}Error"{},\ \ \ \_\_FILE\_\_,\ \_\_LINE\_\_,\ \_\_FUNCTION\_\_,\ SFW::Debug::FormatPrintf(fmt,\ \#\#\_\_VA\_ARGS\_\_))}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00192}00192\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{//\ DEBUG}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00194}00194\ \ \ \ \ \textcolor{comment}{//\ リリースビルドでは空マクロ}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00195}\mbox{\hyperlink{logger_8h_ae69d735f8291bd2aff230fe6ffb4d4b3}{00195}}\ \textcolor{preprocessor}{\#define\ LOG\_INFO(fmt,\ ...)\ \ \ \ ((void)0)}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00196}\mbox{\hyperlink{logger_8h_afde44945335adc0c0ae2986fea13438f}{00196}}\ \textcolor{preprocessor}{\#define\ LOG\_WARNING(fmt,\ ...)\ ((void)0)}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00197}\mbox{\hyperlink{logger_8h_ae6fc70e87e424e7083c63696b8fb9e78}{00197}}\ \textcolor{preprocessor}{\#define\ LOG\_ERROR(fmt,\ ...)\ \ \ ((void)0)}}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00198}00198\ }
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00199}00199\ \textcolor{preprocessor}{\#endif\ }}
+\DoxyCodeLine{\Hypertarget{logger_8h_source_l00200}00200\ \}}
+
+\end{DoxyCode}

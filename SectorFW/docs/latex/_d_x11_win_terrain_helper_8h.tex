@@ -1,0 +1,92 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+DX11\+Win\+Terrain\+Helper.h ファイル}
+\hypertarget{_d_x11_win_terrain_helper_8h}{}\label{_d_x11_win_terrain_helper_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/DX11WinTerrainHelper.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/DX11WinTerrainHelper.h}}
+
+
+DirectX 11 を使用した Windows 向けの地形描画に関連するユーティリティ関数を定義するヘッダーファイル  
+
+
+{\ttfamily \#include $<$d3d11.\+h$>$}\newline
+{\ttfamily \#include $<$wrl/client.\+h$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_height_create_desc}{Height\+Create\+Desc}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{_d_x11_win_terrain_helper_8h_aa9155130f6e8a253049743b14fda0cb8}{Create\+Terrain\+Grid\+\_\+33x33}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}device, Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \&out\+VB, Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \&out\+IB, uint32\+\_\+t \&out\+Index\+Count\+Per\+Patch)
+\item 
+bool \mbox{\hyperlink{_d_x11_win_terrain_helper_8h_a73c12a4c5c96a17c92387d71a0e86878}{Create\+Float1\+Texture\+SRV}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}device, uint32\+\_\+t width, uint32\+\_\+t height, const float \texorpdfstring{$\ast$}{*}pixels, uint32\+\_\+t row\+Float\+Stride, Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \&out\+SRV)
+\item 
+{\footnotesize template$<$class Height\+Generator$>$ }\\bool \mbox{\hyperlink{_d_x11_win_terrain_helper_8h_a9fe854c4d187a0845a9d4809d51f24bb}{Create\+Or\+Load\+Height\+SRV\+\_\+\+Procedural}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}device, uint32\+\_\+t width, uint32\+\_\+t height, Height\+Generator \&\&gen, Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \&out\+SRV)
+\item 
+bool \mbox{\hyperlink{_d_x11_win_terrain_helper_8h_abd90c9e3cf51dd006607882ce5e66a9e}{Create\+Or\+Load\+Height\+SRV}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}device, const \mbox{\hyperlink{struct_height_create_desc}{Height\+Create\+Desc}} \&desc, Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \&out\+SRV)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+DirectX 11 を使用した Windows 向けの地形描画に関連するユーティリティ関数を定義するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+December 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_d_x11_win_terrain_helper_8h_source}{DX11\+Win\+Terrain\+Helper.\+h}} に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{_d_x11_win_terrain_helper_8h_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{_d_x11_win_terrain_helper_8h_a73c12a4c5c96a17c92387d71a0e86878}\index{DX11WinTerrainHelper.h@{DX11WinTerrainHelper.h}!CreateFloat1TextureSRV@{CreateFloat1TextureSRV}}
+\index{CreateFloat1TextureSRV@{CreateFloat1TextureSRV}!DX11WinTerrainHelper.h@{DX11WinTerrainHelper.h}}
+\doxysubsubsection{\texorpdfstring{CreateFloat1TextureSRV()}{CreateFloat1TextureSRV()}}
+{\footnotesize\ttfamily \label{_d_x11_win_terrain_helper_8h_a73c12a4c5c96a17c92387d71a0e86878} 
+bool Create\+Float1\+Texture\+SRV (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device \texorpdfstring{$\ast$}{*}}]{device}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{const float \texorpdfstring{$\ast$}{*}}]{pixels}{, }\item[{uint32\+\_\+t}]{row\+Float\+Stride}{, }\item[{Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \&}]{out\+SRV}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_win_terrain_helper_8h_source}{DX11\+Win\+Terrain\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_win_terrain_helper_8h_source_l00100}{100}} 行目に定義があります。
+
+\Hypertarget{_d_x11_win_terrain_helper_8h_abd90c9e3cf51dd006607882ce5e66a9e}\index{DX11WinTerrainHelper.h@{DX11WinTerrainHelper.h}!CreateOrLoadHeightSRV@{CreateOrLoadHeightSRV}}
+\index{CreateOrLoadHeightSRV@{CreateOrLoadHeightSRV}!DX11WinTerrainHelper.h@{DX11WinTerrainHelper.h}}
+\doxysubsubsection{\texorpdfstring{CreateOrLoadHeightSRV()}{CreateOrLoadHeightSRV()}}
+{\footnotesize\ttfamily \label{_d_x11_win_terrain_helper_8h_abd90c9e3cf51dd006607882ce5e66a9e} 
+bool Create\+Or\+Load\+Height\+SRV (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device \texorpdfstring{$\ast$}{*}}]{device}{, }\item[{const \mbox{\hyperlink{struct_height_create_desc}{Height\+Create\+Desc}} \&}]{desc}{, }\item[{Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \&}]{out\+SRV}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_win_terrain_helper_8h_source}{DX11\+Win\+Terrain\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_win_terrain_helper_8h_source_l00228}{228}} 行目に定義があります。
+
+\Hypertarget{_d_x11_win_terrain_helper_8h_a9fe854c4d187a0845a9d4809d51f24bb}\index{DX11WinTerrainHelper.h@{DX11WinTerrainHelper.h}!CreateOrLoadHeightSRV\_Procedural@{CreateOrLoadHeightSRV\_Procedural}}
+\index{CreateOrLoadHeightSRV\_Procedural@{CreateOrLoadHeightSRV\_Procedural}!DX11WinTerrainHelper.h@{DX11WinTerrainHelper.h}}
+\doxysubsubsection{\texorpdfstring{CreateOrLoadHeightSRV\_Procedural()}{CreateOrLoadHeightSRV\_Procedural()}}
+{\footnotesize\ttfamily \label{_d_x11_win_terrain_helper_8h_a9fe854c4d187a0845a9d4809d51f24bb} 
+template$<$class Height\+Generator$>$ \\
+bool Create\+Or\+Load\+Height\+SRV\+\_\+\+Procedural (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device \texorpdfstring{$\ast$}{*}}]{device}{, }\item[{uint32\+\_\+t}]{width}{, }\item[{uint32\+\_\+t}]{height}{, }\item[{Height\+Generator \&\&}]{gen}{, }\item[{Com\+Ptr$<$ ID3\+D11\+Shader\+Resource\+View $>$ \&}]{out\+SRV}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_win_terrain_helper_8h_source}{DX11\+Win\+Terrain\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_win_terrain_helper_8h_source_l00195}{195}} 行目に定義があります。
+
+\Hypertarget{_d_x11_win_terrain_helper_8h_aa9155130f6e8a253049743b14fda0cb8}\index{DX11WinTerrainHelper.h@{DX11WinTerrainHelper.h}!CreateTerrainGrid\_33x33@{CreateTerrainGrid\_33x33}}
+\index{CreateTerrainGrid\_33x33@{CreateTerrainGrid\_33x33}!DX11WinTerrainHelper.h@{DX11WinTerrainHelper.h}}
+\doxysubsubsection{\texorpdfstring{CreateTerrainGrid\_33x33()}{CreateTerrainGrid\_33x33()}}
+{\footnotesize\ttfamily \label{_d_x11_win_terrain_helper_8h_aa9155130f6e8a253049743b14fda0cb8} 
+bool Create\+Terrain\+Grid\+\_\+33x33 (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device \texorpdfstring{$\ast$}{*}}]{device}{, }\item[{Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \&}]{out\+VB}{, }\item[{Com\+Ptr$<$ ID3\+D11\+Buffer $>$ \&}]{out\+IB}{, }\item[{uint32\+\_\+t \&}]{out\+Index\+Count\+Per\+Patch}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_win_terrain_helper_8h_source}{DX11\+Win\+Terrain\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_win_terrain_helper_8h_source_l00024}{24}} 行目に定義があります。
+

@@ -1,0 +1,34 @@
+\doxysection{Access\+Wrapper.\+hpp}
+\hypertarget{_access_wrapper_8hpp_source}{}\label{_access_wrapper_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/AccessWrapper.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/AccessWrapper.hpp}}
+\mbox{\hyperlink{_access_wrapper_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00010}00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00011}00011\ \{}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00015}00015\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Container>}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00016}\mbox{\hyperlink{class_s_f_w_1_1_read_write_view}{00016}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_af161113a3ad2a1aed977992e559fc7f4}{ReadWriteView}}\ \{}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00017}00017\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00018}\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_aeedf0e631d7f7f1f61a1c382bf645145}{00018}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_aeedf0e631d7f7f1f61a1c382bf645145}{iterator}}\ =\ \textcolor{keyword}{typename}\ Container::iterator;}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00019}\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a51d7fd9016df92a6e0647dcfb0aba133}{00019}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a51d7fd9016df92a6e0647dcfb0aba133}{const\_iterator}}\ =\ \textcolor{keyword}{typename}\ Container::const\_iterator;}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00020}\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_acdd569d3faeedbc73fd3198fa61072fa}{00020}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_acdd569d3faeedbc73fd3198fa61072fa}{value\_type}}\ =\ \textcolor{keyword}{typename}\ Container::value\_type;}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00026}\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_af161113a3ad2a1aed977992e559fc7f4}{00026}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_af161113a3ad2a1aed977992e559fc7f4}{ReadWriteView}}(Container\&\ container)\ noexcept\ :\ container\_(container)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00031}\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_ad3e5ef30ec9bd29345c3a41fba278db0}{00031}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_aeedf0e631d7f7f1f61a1c382bf645145}{iterator}}\ \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_ad3e5ef30ec9bd29345c3a41fba278db0}{begin}}()\ noexcept\ \{\ \textcolor{keywordflow}{return}\ container\_.begin();\ \}}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00036}\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_aa3e88085cef47eb4aaf563e97cbb7215}{00036}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_aeedf0e631d7f7f1f61a1c382bf645145}{iterator}}\ \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_aa3e88085cef47eb4aaf563e97cbb7215}{end}}()\ noexcept\ \{\ \textcolor{keywordflow}{return}\ container\_.end();\ \}}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00041}\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a7a1114a4c4bada04cba8d9773e71024f}{00041}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a51d7fd9016df92a6e0647dcfb0aba133}{const\_iterator}}\ \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a7a1114a4c4bada04cba8d9773e71024f}{begin}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ container\_.begin();\ \}}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00046}\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_ae622cd514a1f0934705abce40acead42}{00046}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a51d7fd9016df92a6e0647dcfb0aba133}{const\_iterator}}\ \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_ae622cd514a1f0934705abce40acead42}{end}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ container\_.end();\ \}}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Key>}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00053}\mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a9cd002130e4fa35aa7b8a913d95c1cdf}{00053}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ \mbox{\hyperlink{class_s_f_w_1_1_read_write_view_a9cd002130e4fa35aa7b8a913d95c1cdf}{at}}(\textcolor{keyword}{const}\ Key\&\ key)\ \{}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ container\_.at(key);}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ operator[]\ や\ insert,\ erase\ など構造変更は提供しない}}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00059}00059\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00063}00063\ \ \ \ \ \ \ \ \ Container\&\ container\_;}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00064}00064\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_access_wrapper_8hpp_source_l00065}00065\ \}}
+
+\end{DoxyCode}

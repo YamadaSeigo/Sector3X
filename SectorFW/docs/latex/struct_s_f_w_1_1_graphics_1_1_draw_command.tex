@@ -1,0 +1,188 @@
+\doxysection{SFW\+::Graphics\+::Draw\+Command 構造体}
+\hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command}{}\label{struct_s_f_w_1_1_graphics_1_1_draw_command}\index{SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}}
+
+
+描画コマンド構造体  
+
+
+
+
+{\ttfamily \#include $<$Render\+Types.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_ada3400d8594d85fad7d7bf4ad3c23f80}{Draw\+Command}} () noexcept=default
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a4aabf26141a00508aabdfae00c42016a}{set\+CBOffset\+Bytes}} (uint32\+\_\+t byte\+Offset) noexcept
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_ab255faf77987d743c0a57a059c3af86f}{get\+CBOffset\+Bytes}} () const noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_ac01ab2364c71a8b60de439a79d26e15d}{sort\+Key}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a808078e051cf7852fcff020f33d68336}{mesh}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a61864b6ef9c1e0a5a2ab3a3f9f439b6d}{material}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a8082f0352f544054ac950d9fc3d71ae3}{pso}} = 0
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_adc958352aa1d085af13f9d1965313362}{instance\+Index}} = \{ 0 \}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a86e2f81eb13a1043615a2bb0f3186ac9}{cb\+Offset\+Div256}} = 0
+\item 
+uint16\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_afe23e6ae471e0a1b40d0468f4d06cc06}{view\+Mask}} = 0
+\item 
+uint8\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a291fe71aa8186b036623dbd8585de447}{flags}} = 0
+\item 
+uint8\+\_\+t \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command_a46f1467ec39abf69f7153098cc1e4eee}{user\+Tag}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+描画コマンド構造体 
+
+\doxylink{struct_s_f_w_1_1_graphics_1_1_draw_command}{Draw\+Command} は index のみで\+OK（軽量・32\+B化しやすい）。
+
+条件：フレーム短命 + Pin / Unpin + in -\/ flight 制御 + 投入時の generation 検証。 
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00096}{96}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_ada3400d8594d85fad7d7bf4ad3c23f80}\index{SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}!DrawCommand@{DrawCommand}}
+\index{DrawCommand@{DrawCommand}!SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}}
+\doxysubsubsection{\texorpdfstring{DrawCommand()}{DrawCommand()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_draw_command_ada3400d8594d85fad7d7bf4ad3c23f80} 
+SFW\+::\+Graphics\+::\+Draw\+Command\+::\+Draw\+Command (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}, {\ttfamily [noexcept]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_ab255faf77987d743c0a57a059c3af86f}\index{SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}!getCBOffsetBytes@{getCBOffsetBytes}}
+\index{getCBOffsetBytes@{getCBOffsetBytes}!SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}}
+\doxysubsubsection{\texorpdfstring{getCBOffsetBytes()}{getCBOffsetBytes()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_draw_command_ab255faf77987d743c0a57a059c3af86f} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Draw\+Command\+::get\+CBOffset\+Bytes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00114}{114}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_a4aabf26141a00508aabdfae00c42016a}\index{SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}!setCBOffsetBytes@{setCBOffsetBytes}}
+\index{setCBOffsetBytes@{setCBOffsetBytes}!SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}}
+\doxysubsubsection{\texorpdfstring{setCBOffsetBytes()}{setCBOffsetBytes()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_draw_command_a4aabf26141a00508aabdfae00c42016a} 
+void SFW\+::\+Graphics\+::\+Draw\+Command\+::set\+CBOffset\+Bytes (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{byte\+Offset}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00113}{113}} 行目に定義があります。
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_doc-variable-members}
+\doxysubsection{メンバ詳解}
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_a86e2f81eb13a1043615a2bb0f3186ac9}\index{SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}!cbOffsetDiv256@{cbOffsetDiv256}}
+\index{cbOffsetDiv256@{cbOffsetDiv256}!SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}}
+\doxysubsubsection{\texorpdfstring{cbOffsetDiv256}{cbOffsetDiv256}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_draw_command_a86e2f81eb13a1043615a2bb0f3186ac9} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Draw\+Command\+::cb\+Offset\+Div256 = 0}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00105}{105}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_a291fe71aa8186b036623dbd8585de447}\index{SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}!flags@{flags}}
+\index{flags@{flags}!SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}}
+\doxysubsubsection{\texorpdfstring{flags}{flags}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_draw_command_a291fe71aa8186b036623dbd8585de447} 
+uint8\+\_\+t SFW\+::\+Graphics\+::\+Draw\+Command\+::flags = 0}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00107}{107}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_adc958352aa1d085af13f9d1965313362}\index{SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}!instanceIndex@{instanceIndex}}
+\index{instanceIndex@{instanceIndex}!SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}}
+\doxysubsubsection{\texorpdfstring{instanceIndex}{instanceIndex}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_draw_command_adc958352aa1d085af13f9d1965313362} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_instance_index}{Instance\+Index}} SFW\+::\+Graphics\+::\+Draw\+Command\+::instance\+Index = \{ 0 \}}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00102}{102}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_a61864b6ef9c1e0a5a2ab3a3f9f439b6d}\index{SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}!material@{material}}
+\index{material@{material}!SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}}
+\doxysubsubsection{\texorpdfstring{material}{material}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_draw_command_a61864b6ef9c1e0a5a2ab3a3f9f439b6d} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Draw\+Command\+::material = 0}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00100}{100}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_a808078e051cf7852fcff020f33d68336}\index{SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}!mesh@{mesh}}
+\index{mesh@{mesh}!SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}}
+\doxysubsubsection{\texorpdfstring{mesh}{mesh}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_draw_command_a808078e051cf7852fcff020f33d68336} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Draw\+Command\+::mesh = 0}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00099}{99}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_a8082f0352f544054ac950d9fc3d71ae3}\index{SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}!pso@{pso}}
+\index{pso@{pso}!SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}}
+\doxysubsubsection{\texorpdfstring{pso}{pso}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_draw_command_a8082f0352f544054ac950d9fc3d71ae3} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Draw\+Command\+::pso = 0}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00101}{101}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_ac01ab2364c71a8b60de439a79d26e15d}\index{SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}!sortKey@{sortKey}}
+\index{sortKey@{sortKey}!SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}}
+\doxysubsubsection{\texorpdfstring{sortKey}{sortKey}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_draw_command_ac01ab2364c71a8b60de439a79d26e15d} 
+uint64\+\_\+t SFW\+::\+Graphics\+::\+Draw\+Command\+::sort\+Key = 0}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00097}{97}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_a46f1467ec39abf69f7153098cc1e4eee}\index{SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}!userTag@{userTag}}
+\index{userTag@{userTag}!SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}}
+\doxysubsubsection{\texorpdfstring{userTag}{userTag}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_draw_command_a46f1467ec39abf69f7153098cc1e4eee} 
+uint8\+\_\+t SFW\+::\+Graphics\+::\+Draw\+Command\+::user\+Tag = 0}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00108}{108}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_graphics_1_1_draw_command_afe23e6ae471e0a1b40d0468f4d06cc06}\index{SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}!viewMask@{viewMask}}
+\index{viewMask@{viewMask}!SFW::Graphics::DrawCommand@{SFW::Graphics::DrawCommand}}
+\doxysubsubsection{\texorpdfstring{viewMask}{viewMask}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_graphics_1_1_draw_command_afe23e6ae471e0a1b40d0468f4d06cc06} 
+uint16\+\_\+t SFW\+::\+Graphics\+::\+Draw\+Command\+::view\+Mask = 0}
+
+
+
+ \mbox{\hyperlink{_render_types_8h_source}{Render\+Types.\+h}} の \mbox{\hyperlink{_render_types_8h_source_l00106}{106}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_render_types_8h}{Render\+Types.\+h}}\end{DoxyCompactItemize}

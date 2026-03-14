@@ -1,0 +1,49 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Physics/\+Physics\+Mesh\+Shape\+Loader.h ファイル}
+\hypertarget{_physics_mesh_shape_loader_8h}{}\label{_physics_mesh_shape_loader_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsMeshShapeLoader.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsMeshShapeLoader.h}}
+
+
+JMSH (.meshbin) 形式の物理メッシュ形状データを読み込む関数を宣言するヘッダーファイル  
+
+
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$filesystem$>$}\newline
+{\ttfamily \#include $<$string\+\_\+view$>$}\newline
+{\ttfamily \#include $<$optional$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include "{}Physics\+Types.\+h"{}}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data}{SFW\+::\+Physics\+::\+Mesh\+Shape\+Data}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_physics}{SFW\+::\+Physics}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a84e40993ca7a7b6ae859fc86a9fdef72}{SFW\+::\+Physics\+::\+Load\+Mesh\+Shape\+Bin}} (const std\+::filesystem\+::path \&path, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data}{Mesh\+Shape\+Data}} \&out\+Data, bool flip\+Right\+Handed=false, std\+::uint32\+\_\+t expected\+Version=1)
+\begin{DoxyCompactList}\small\item\em JMSH (.meshbin) を読み込む \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a9c1b7c84afbe6ab33bb27a21be344aba}{SFW\+::\+Physics\+::\+Load\+Mesh\+Shape\+Bin\+From\+Memory}} (const void \texorpdfstring{$\ast$}{*}data, std\+::size\+\_\+t size, \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_mesh_shape_data}{Mesh\+Shape\+Data}} \&out\+Data, bool flip\+Right\+Handed=false, std\+::uint32\+\_\+t expected\+Version=1)
+\begin{DoxyCompactList}\small\item\em メモリ上のバッファから JMSH を読み込む版（必要なら） \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+JMSH (.meshbin) 形式の物理メッシュ形状データを読み込む関数を宣言するヘッダーファイル 
+
+\begin{DoxyAuthor}{著者}
+seigo 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+December 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_physics_mesh_shape_loader_8h_source}{Physics\+Mesh\+Shape\+Loader.\+h}} に定義があります。
+

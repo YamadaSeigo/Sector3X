@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/LODPolicy.h ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_l_o_d_policy_8h.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">LODPolicy.h ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>LOD（Level of Detail）選択のためのポリシーとユーティリティ関数を定義するヘッダーファイル  
+<a href="#details">[詳解]</a></p>
+<div class="textblock"><code>#include &lt;array&gt;</code><br />
+<code>#include &lt;algorithm&gt;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
+<code>#include &quot;<a class="el" href="_rectangle_8hpp_source.html">../Math/Rectangle.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_a_a_b_b_8hpp_source.html">../Math/AABB.hpp</a>&quot;</code><br />
+</div>
+<p><a href="_l_o_d_policy_8h_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ALodThresholdsPx" id="r_SFW_3A_3AGraphics_3A_3ALodThresholdsPx"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_lod_thresholds_px.html">SFW::Graphics::LodThresholdsPx</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ALodAssetStats" id="r_SFW_3A_3AGraphics_3A_3ALodAssetStats"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_lod_asset_stats.html">SFW::Graphics::LodAssetStats</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ALodRefinePolicy" id="r_SFW_3A_3AGraphics_3A_3ALodRefinePolicy"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_lod_refine_policy.html">SFW::Graphics::LodRefinePolicy</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3AExtents" id="r_SFW_3A_3AGraphics_3A_3AExtents"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_extents.html">SFW::Graphics::Extents</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics_3A_3ARefineState" id="r_SFW_3A_3AGraphics_3A_3ARefineState"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_refine_state.html">SFW::Graphics::RefineState</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+名前空間</h2></td></tr>
+<tr class="memitem:SFW" id="r_SFW"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w.html">SFW</a></td></tr>
+<tr class="memitem:SFW_3A_3AGraphics" id="r_SFW_3A_3AGraphics"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html">SFW::Graphics</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
+列挙型</h2></td></tr>
+<tr class="memitem:a163a28f01c939852fedcdd788adb82a5" id="r_a163a28f01c939852fedcdd788adb82a5"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a163a28f01c939852fedcdd788adb82a5">SFW::Graphics::RefineReason</a> : uint32_t { <br />
+&#160;&#160;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a163a28f01c939852fedcdd788adb82a5a6adf97f83acf6453d4a6a4b1070f3754">SFW::Graphics::None</a> = 0
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a163a28f01c939852fedcdd788adb82a5aef9feaa7d1dfdfb2c7c4a1b4ade9d2e9">SFW::Graphics::MidBand</a> = 1 &lt;&lt; 0
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a163a28f01c939852fedcdd788adb82a5a5728b1ed4aa3e6fe9df15bb6ff418e4f">SFW::Graphics::Elongated</a> = 1 &lt;&lt; 1
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a163a28f01c939852fedcdd788adb82a5a159168d14ae7d34fd98268829abc0548">SFW::Graphics::NearClip</a> = 1 &lt;&lt; 2
+, <br />
+&#160;&#160;<a class="el" href="namespace_s_f_w_1_1_graphics.html#a163a28f01c939852fedcdd788adb82a5a6cf7205dc37f846880b6416e11cb43fc">SFW::Graphics::NearEdge</a> = 1 &lt;&lt; 3
+, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a163a28f01c939852fedcdd788adb82a5a6f0477e3084d8695069f1b5730ed05e1">SFW::Graphics::LodBoundary</a> = 1 &lt;&lt; 4
+<br />
+ }</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:ae93f95aca06aa7e1400b9197a48a625b" id="r_ae93f95aca06aa7e1400b9197a48a625b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#ae93f95aca06aa7e1400b9197a48a625b">SFW::Graphics::CoveragePixelsFromNdcArea</a> (float ndcAreaFrac, int renderW, int renderH)</td></tr>
+<tr class="memitem:abd02322282142e402c1e3346606ee147" id="r_abd02322282142e402c1e3346606ee147"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#abd02322282142e402c1e3346606ee147">SFW::Graphics::PixelScaleToBase</a> (int renderW, int renderH, int baseW, int baseH)</td></tr>
+<tr class="memitem:a933d133c4f5781502a265a28bdf216de" id="r_a933d133c4f5781502a265a28bdf216de"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a933d133c4f5781502a265a28bdf216de">SFW::Graphics::ToBasePixels</a> (float P, int renderW, int renderH, int baseW, int baseH)</td></tr>
+<tr class="memitem:af4bf156b10eebbac6cbfd059bc8dcc6d" id="r_af4bf156b10eebbac6cbfd059bc8dcc6d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_lod_thresholds_px.html">LodThresholdsPx</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#af4bf156b10eebbac6cbfd059bc8dcc6d">SFW::Graphics::BuildLodThresholdsPx</a> (const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_lod_asset_stats.html">LodAssetStats</a> &amp;a, int lodCount, int baseW=1920, int baseH=1080)</td></tr>
+<tr class="memitem:af42cfad7b9a0822c7f64fc6bb2865615" id="r_af42cfad7b9a0822c7f64fc6bb2865615"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#af42cfad7b9a0822c7f64fc6bb2865615">SFW::Graphics::SelectLodByPixels</a> (float ndcAreaFrac, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_lod_thresholds_px.html">LodThresholdsPx</a> &amp;thPx, int lodCount, int prevLod, int renderW, int renderH, float globalBias, float *outSp=nullptr)</td></tr>
+<tr class="memitem:adf77e663ca0b8723890f98ba3515fc3a" id="r_adf77e663ca0b8723890f98ba3515fc3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_extents.html">Extents</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#adf77e663ca0b8723890f98ba3515fc3a">SFW::Graphics::ExtentsFromAABB</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#a2ded83bd3f26c7d6258ce43e16bdc067">Math::AABB3f</a> &amp;aabb)</td></tr>
+<tr class="memitem:a99b0fc9bedf5559e0cb3c52684075379" id="r_a99b0fc9bedf5559e0cb3c52684075379"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a163a28f01c939852fedcdd788adb82a5">RefineReason</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a99b0fc9bedf5559e0cb3c52684075379">SFW::Graphics::operator|</a> (<a class="el" href="namespace_s_f_w_1_1_graphics.html#a163a28f01c939852fedcdd788adb82a5">RefineReason</a> a, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a163a28f01c939852fedcdd788adb82a5">RefineReason</a> b)</td></tr>
+<tr class="memitem:a0fa5030795e99593335637156ed2bc29" id="r_a0fa5030795e99593335637156ed2bc29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a163a28f01c939852fedcdd788adb82a5">RefineReason</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a0fa5030795e99593335637156ed2bc29">SFW::Graphics::operator|=</a> (<a class="el" href="namespace_s_f_w_1_1_graphics.html#a163a28f01c939852fedcdd788adb82a5">RefineReason</a> &amp;a, <a class="el" href="namespace_s_f_w_1_1_graphics.html#a163a28f01c939852fedcdd788adb82a5">RefineReason</a> b)</td></tr>
+<tr class="memitem:abf3e8da39263211501d128ae210d4a70" id="r_abf3e8da39263211501d128ae210d4a70"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#abf3e8da39263211501d128ae210d4a70">SFW::Graphics::any</a> (<a class="el" href="namespace_s_f_w_1_1_graphics.html#a163a28f01c939852fedcdd788adb82a5">RefineReason</a> r)</td></tr>
+<tr class="memitem:a407d40a23a1d9dd13559a3a25e619665" id="r_a407d40a23a1d9dd13559a3a25e619665"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_refine_state.html">RefineState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a407d40a23a1d9dd13559a3a25e619665">SFW::Graphics::EvaluateRefineState</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_ndc_rect_with_w.html">Math::NdcRectWithW</a> &amp;sphereRect, float ndcAreaFrac, int renderW, int renderH, float zCam, float nearZ, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_extents.html">Extents</a> &amp;aabbExtents, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_lod_thresholds_px.html">LodThresholdsPx</a> &amp;lodPx, int lodCount, const <a class="el" href="struct_s_f_w_1_1_graphics_1_1_lod_refine_policy.html">LodRefinePolicy</a> &amp;policy={})</td></tr>
+<tr class="memdesc:a407d40a23a1d9dd13559a3a25e619665"><td class="mdescLeft">&#160;</td><td class="mdescRight">LOD 用の「球→AABB 再投影」を行うべきか評価する  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>LOD（Level of Detail）選択のためのポリシーとユーティリティ関数を定義するヘッダーファイル </p>
+<dl class="section author"><dt>著者</dt><dd>lenov </dd></dl>
+<dl class="section date"><dt>日付</dt><dd>March 2026 </dd></dl>
+
+<p class="definition"> <a class="el" href="_l_o_d_policy_8h_source.html">LODPolicy.h</a> に定義があります。</p>
+</div></div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="_l_o_d_policy_8h.html">LODPolicy.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

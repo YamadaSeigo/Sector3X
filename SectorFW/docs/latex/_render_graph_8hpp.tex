@@ -1,0 +1,70 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+Render\+Graph.hpp ファイル}
+\hypertarget{_render_graph_8hpp}{}\label{_render_graph_8hpp}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderGraph.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderGraph.hpp}}
+
+
+レンダーグラフを定義するクラス  
+
+
+{\ttfamily \#include $<$optional$>$}\newline
+{\ttfamily \#include $<$span$>$}\newline
+{\ttfamily \#include $<$bit$>$}\newline
+{\ttfamily \#include "{}Render\+Pass.\+hpp"{}}\newline
+{\ttfamily \#include "{}Render\+Queue.\+h"{}}\newline
+{\ttfamily \#include "{}Render\+Service.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Debug/\+Im\+Gui\+Layer.\+h"{}}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{SFW\+::\+Graphics\+::\+Render\+Graph$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$}}
+\begin{DoxyCompactList}\small\item\em Render\+Passごとに管理して描画を行うクラス \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_group}{SFW\+::\+Graphics\+::\+Render\+Graph$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Pass\+Group}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_node}{SFW\+::\+Graphics\+::\+Render\+Graph$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Pass\+Node}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_pass_view_range}{SFW\+::\+Graphics\+::\+Render\+Graph$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Pass\+View\+Range}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_render_graph_1_1_group_state}{SFW\+::\+Graphics\+::\+Render\+Graph$<$ Backend, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Group\+State}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW\+::\+Graphics}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{マクロ定義}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_render_graph_8hpp_aa676f4ad480964a90f23ff3914e9eae8}{NO\+\_\+\+USE\+\_\+\+PMR\+\_\+\+RENDER\+\_\+\+QUEUE}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+レンダーグラフを定義するクラス 
+
+\begin{DoxyAuthor}{著者}
+seigo\+\_\+t03b63m 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+September 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} に定義があります。
+
+
+
+\label{doc-define-members}
+\Hypertarget{_render_graph_8hpp_doc-define-members}
+\doxysubsection{マクロ定義詳解}
+\Hypertarget{_render_graph_8hpp_aa676f4ad480964a90f23ff3914e9eae8}\index{RenderGraph.hpp@{RenderGraph.hpp}!NO\_USE\_PMR\_RENDER\_QUEUE@{NO\_USE\_PMR\_RENDER\_QUEUE}}
+\index{NO\_USE\_PMR\_RENDER\_QUEUE@{NO\_USE\_PMR\_RENDER\_QUEUE}!RenderGraph.hpp@{RenderGraph.hpp}}
+\doxysubsubsection{\texorpdfstring{NO\_USE\_PMR\_RENDER\_QUEUE}{NO\_USE\_PMR\_RENDER\_QUEUE}}
+{\footnotesize\ttfamily \label{_render_graph_8hpp_aa676f4ad480964a90f23ff3914e9eae8} 
+\#define NO\+\_\+\+USE\+\_\+\+PMR\+\_\+\+RENDER\+\_\+\+QUEUE}
+
+
+
+ \mbox{\hyperlink{_render_graph_8hpp_source}{Render\+Graph.\+hpp}} の \mbox{\hyperlink{_render_graph_8hpp_source_l00023}{23}} 行目に定義があります。
+

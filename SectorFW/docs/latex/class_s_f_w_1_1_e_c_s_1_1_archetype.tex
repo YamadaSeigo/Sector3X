@@ -1,0 +1,114 @@
+\doxysection{SFW\+::ECS\+::Archetype クラス}
+\hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype}{}\label{class_s_f_w_1_1_e_c_s_1_1_archetype}\index{SFW::ECS::Archetype@{SFW::ECS::Archetype}}
+
+
+アーキタイプを表すクラス(マスクベースのコンポーネント管理)  
+
+
+
+
+{\ttfamily \#include $<$Archetype.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_abe7b719e57373d40a136b0ed156f91fc}{Archetype}} (\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} mask) noexcept
+\begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_aa8c85b68e26631b775f75afc9fd82242}{Get\+Or\+Create\+Chunk}} ()
+\begin{DoxyCompactList}\small\item\em アーキタイプのチャンクを取得または作成する関数 \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} \& \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_aa4582d501677dca8d7037f20a383880a}{Get\+Mask}} () const noexcept
+\begin{DoxyCompactList}\small\item\em アーキタイプのコンポーネントマスクを取得する関数 \end{DoxyCompactList}\item 
+const std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} $>$ $>$ \& \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_af0d158aa3c978781310c523899879883}{Get\+Chunks}} () const noexcept
+\begin{DoxyCompactList}\small\item\em アーキタイプのチャンクを取得する関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+アーキタイプを表すクラス(マスクベースのコンポーネント管理) 
+
+ \mbox{\hyperlink{_archetype_8h_source}{Archetype.\+h}} の \mbox{\hyperlink{_archetype_8h_source_l00022}{22}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_abe7b719e57373d40a136b0ed156f91fc}\index{SFW::ECS::Archetype@{SFW::ECS::Archetype}!Archetype@{Archetype}}
+\index{Archetype@{Archetype}!SFW::ECS::Archetype@{SFW::ECS::Archetype}}
+\doxysubsubsection{\texorpdfstring{Archetype()}{Archetype()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_abe7b719e57373d40a136b0ed156f91fc} 
+SFW\+::\+ECS\+::\+Archetype\+::\+Archetype (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}}}]{mask}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+コンストラクタ 
+
+
+\begin{DoxyParams}{引数}
+{\em mask} & コンポーネントマスク \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_archetype_8h_source}{Archetype.\+h}} の \mbox{\hyperlink{_archetype_8h_source_l00028}{28}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_af0d158aa3c978781310c523899879883}\index{SFW::ECS::Archetype@{SFW::ECS::Archetype}!GetChunks@{GetChunks}}
+\index{GetChunks@{GetChunks}!SFW::ECS::Archetype@{SFW::ECS::Archetype}}
+\doxysubsubsection{\texorpdfstring{GetChunks()}{GetChunks()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_af0d158aa3c978781310c523899879883} 
+const std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} $>$ $>$ \& SFW\+::\+ECS\+::\+Archetype\+::\+Get\+Chunks (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+アーキタイプのチャンクを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+const std\+::vector$<$std\+::unique\+\_\+ptr$<$\+Archetype\+Chunk$>$$>$\& チャンクのベクターへの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_archetype_8h_source}{Archetype.\+h}} の \mbox{\hyperlink{_archetype_8h_source_l00053}{53}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_aa4582d501677dca8d7037f20a383880a}\index{SFW::ECS::Archetype@{SFW::ECS::Archetype}!GetMask@{GetMask}}
+\index{GetMask@{GetMask}!SFW::ECS::Archetype@{SFW::ECS::Archetype}}
+\doxysubsubsection{\texorpdfstring{GetMask()}{GetMask()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_aa4582d501677dca8d7037f20a383880a} 
+const \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} \& SFW\+::\+ECS\+::\+Archetype\+::\+Get\+Mask (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+アーキタイプのコンポーネントマスクを取得する関数 
+
+\begin{DoxyReturn}{戻り値}
+const \doxylink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}\& コンポーネントマスクへの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_archetype_8h_source}{Archetype.\+h}} の \mbox{\hyperlink{_archetype_8h_source_l00048}{48}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_aa8c85b68e26631b775f75afc9fd82242}\index{SFW::ECS::Archetype@{SFW::ECS::Archetype}!GetOrCreateChunk@{GetOrCreateChunk}}
+\index{GetOrCreateChunk@{GetOrCreateChunk}!SFW::ECS::Archetype@{SFW::ECS::Archetype}}
+\doxysubsubsection{\texorpdfstring{GetOrCreateChunk()}{GetOrCreateChunk()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_aa8c85b68e26631b775f75afc9fd82242} 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_chunk}{Archetype\+Chunk}} \texorpdfstring{$\ast$}{*} SFW\+::\+ECS\+::\+Archetype\+::\+Get\+Or\+Create\+Chunk (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+アーキタイプのチャンクを取得または作成する関数 
+
+\begin{DoxyReturn}{戻り値}
+Archetype\+Chunk\texorpdfstring{$\ast$}{*} アーキタイプチャンクへのポインタ 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_archetype_8h_source}{Archetype.\+h}} の \mbox{\hyperlink{_archetype_8h_source_l00033}{33}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_archetype_8h}{Archetype.\+h}}\end{DoxyCompactItemize}

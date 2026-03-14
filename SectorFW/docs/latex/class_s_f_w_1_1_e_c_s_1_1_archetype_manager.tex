@@ -1,0 +1,94 @@
+\doxysection{SFW\+::ECS\+::Archetype\+Manager クラス}
+\hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{}\label{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}\index{SFW::ECS::ArchetypeManager@{SFW::ECS::ArchetypeManager}}
+
+
+各コンポーネントマスクごとのアーキタイプチャンクを管理するクラス  
+
+
+
+
+{\ttfamily \#include $<$Archetype\+Manager.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype}{Archetype}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_aa059fd2deb627fdbea3c0a7634d7407b}{Get\+Or\+Create}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} \&mask)
+\begin{DoxyCompactList}\small\item\em 対象のマスクに対応するアーキタイプを取得または作成します。 \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype}{Archetype}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_ad8d1293c7f5d776c9fd75854ad225506}{Access\+Archetype}} (uint32\+\_\+t idx) const
+\item 
+const std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}}, uint32\+\_\+t $>$ \& \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_a364435057a0b5f83a65abedf9e272cf0}{Get\+All\+Mask\+Indices}} () const noexcept
+\item 
+const std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype}{Archetype}} $>$ $>$ \& \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_a0b597d772d8c7a9273eca33e8f3351db}{Get\+All\+Data}} () const noexcept
+\begin{DoxyCompactList}\small\item\em すべてのアーキタイプを取得します。 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+各コンポーネントマスクごとのアーキタイプチャンクを管理するクラス 
+
+ \mbox{\hyperlink{_archetype_manager_8h_source}{Archetype\+Manager.\+h}} の \mbox{\hyperlink{_archetype_manager_8h_source_l00020}{20}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_ad8d1293c7f5d776c9fd75854ad225506}\index{SFW::ECS::ArchetypeManager@{SFW::ECS::ArchetypeManager}!AccessArchetype@{AccessArchetype}}
+\index{AccessArchetype@{AccessArchetype}!SFW::ECS::ArchetypeManager@{SFW::ECS::ArchetypeManager}}
+\doxysubsubsection{\texorpdfstring{AccessArchetype()}{AccessArchetype()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_ad8d1293c7f5d776c9fd75854ad225506} 
+const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype}{Archetype}} \texorpdfstring{$\ast$}{*} SFW\+::\+ECS\+::\+Archetype\+Manager\+::\+Access\+Archetype (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{idx}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_archetype_manager_8h_source}{Archetype\+Manager.\+h}} の \mbox{\hyperlink{_archetype_manager_8h_source_l00030}{30}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_a0b597d772d8c7a9273eca33e8f3351db}\index{SFW::ECS::ArchetypeManager@{SFW::ECS::ArchetypeManager}!GetAllData@{GetAllData}}
+\index{GetAllData@{GetAllData}!SFW::ECS::ArchetypeManager@{SFW::ECS::ArchetypeManager}}
+\doxysubsubsection{\texorpdfstring{GetAllData()}{GetAllData()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_a0b597d772d8c7a9273eca33e8f3351db} 
+const std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype}{Archetype}} $>$ $>$ \& SFW\+::\+ECS\+::\+Archetype\+Manager\+::\+Get\+All\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+すべてのアーキタイプを取得します。 
+
+\begin{DoxyReturn}{戻り値}
+アーキタイプの配列の参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_archetype_manager_8h_source}{Archetype\+Manager.\+h}} の \mbox{\hyperlink{_archetype_manager_8h_source_l00043}{43}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_a364435057a0b5f83a65abedf9e272cf0}\index{SFW::ECS::ArchetypeManager@{SFW::ECS::ArchetypeManager}!GetAllMaskIndices@{GetAllMaskIndices}}
+\index{GetAllMaskIndices@{GetAllMaskIndices}!SFW::ECS::ArchetypeManager@{SFW::ECS::ArchetypeManager}}
+\doxysubsubsection{\texorpdfstring{GetAllMaskIndices()}{GetAllMaskIndices()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_a364435057a0b5f83a65abedf9e272cf0} 
+const std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}}, uint32\+\_\+t $>$ \& SFW\+::\+ECS\+::\+Archetype\+Manager\+::\+Get\+All\+Mask\+Indices (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_archetype_manager_8h_source}{Archetype\+Manager.\+h}} の \mbox{\hyperlink{_archetype_manager_8h_source_l00036}{36}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_aa059fd2deb627fdbea3c0a7634d7407b}\index{SFW::ECS::ArchetypeManager@{SFW::ECS::ArchetypeManager}!GetOrCreate@{GetOrCreate}}
+\index{GetOrCreate@{GetOrCreate}!SFW::ECS::ArchetypeManager@{SFW::ECS::ArchetypeManager}}
+\doxysubsubsection{\texorpdfstring{GetOrCreate()}{GetOrCreate()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_archetype_manager_aa059fd2deb627fdbea3c0a7634d7407b} 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype}{Archetype}} \texorpdfstring{$\ast$}{*} SFW\+::\+ECS\+::\+Archetype\+Manager\+::\+Get\+Or\+Create (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{Component\+Mask}} \&}]{mask}{}\end{DoxyParamCaption})}
+
+
+
+対象のマスクに対応するアーキタイプを取得または作成します。 
+
+maskに\+Sparse\+Componentを入れてはいけない 
+\begin{DoxyParams}{引数}
+{\em mask} & 対象のコンポーネントマスク \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+対象のアーキタイプポインタ 
+\end{DoxyReturn}
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\+ECS/\mbox{\hyperlink{_archetype_manager_8h}{Archetype\+Manager.\+h}}\end{DoxyCompactItemize}

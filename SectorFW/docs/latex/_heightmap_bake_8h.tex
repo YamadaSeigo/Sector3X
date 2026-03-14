@@ -1,0 +1,66 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+Heightmap\+Bake.h ファイル}
+\hypertarget{_heightmap_bake_8h}{}\label{_heightmap_bake_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/HeightmapBake.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/HeightmapBake.h}}
+
+
+地形メッシュからグリッド（頂点格子）への高さマップ焼き付けユーティリティ  
+
+
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_tri}{SFW\+::\+Graphics\+::\+Terrain\+Bake\+::\+Tri}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid}{SFW\+::\+Graphics\+::\+Terrain\+Bake\+::\+Grid}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options}{SFW\+::\+Graphics\+::\+Terrain\+Bake\+::\+Bake\+Options}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats}{SFW\+::\+Graphics\+::\+Terrain\+Bake\+::\+Bake\+Stats}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW\+::\+Graphics}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake}{SFW\+::\+Graphics\+::\+Terrain\+Bake}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_af49891dde17dab335465c724b9ec9867}{SFW\+::\+Graphics\+::\+Terrain\+Bake\+::\+Vec3}} = \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_ac6673f4629bf89536e378f300383af8a}{SFW\+::\+Graphics\+::\+Terrain\+Bake\+::\+Bake\+Mode}} \+: uint32\+\_\+t \{ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_ac6673f4629bf89536e378f300383af8aa6872355c934b9dcaa090dbdc4afa83c2}{SFW\+::\+Graphics\+::\+Terrain\+Bake\+::\+Max\+Height}}
+, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_ac6673f4629bf89536e378f300383af8aab1897515d548a960afe49ecf66a29021}{SFW\+::\+Graphics\+::\+Terrain\+Bake\+::\+Average}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_a7e54a44c80f08d6f1d4b3b8cf89d84cb}{SFW\+::\+Graphics\+::\+Terrain\+Bake\+::clamp01}} (float v)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_terrain_bake_aa0a591e58e1f6218dbe3ab7512808e18}{SFW\+::\+Graphics\+::\+Terrain\+Bake\+::\+Bake\+Height\+Field\+From\+Mesh}} (const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_tri}{Tri}} $>$ \&tris, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid}{Grid}} \&grid, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options}{Bake\+Options}} \&opt, std\+::vector$<$ float $>$ \&out\+H01, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats}{Bake\+Stats}} \texorpdfstring{$\ast$}{*}out\+Stats=nullptr)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+地形メッシュからグリッド（頂点格子）への高さマップ焼き付けユーティリティ 
+
+\begin{DoxyAuthor}{著者}
+seigo 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+December 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_heightmap_bake_8h_source}{Heightmap\+Bake.\+h}} に定義があります。
+

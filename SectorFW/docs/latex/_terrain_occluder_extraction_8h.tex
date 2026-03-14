@@ -1,0 +1,110 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\+Terrain\+Occluder\+Extraction.h ファイル}
+\hypertarget{_terrain_occluder_extraction_8h}{}\label{_terrain_occluder_extraction_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/TerrainOccluderExtraction.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/TerrainOccluderExtraction.h}}
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_soft_tri_world}{SFW\+::\+Graphics\+::\+Soft\+Tri\+World}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_soft_tri_clip}{SFW\+::\+Graphics\+::\+Soft\+Tri\+Clip}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_i_lod_selector}{SFW\+::\+Graphics\+::\+ILod\+Selector}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_default_lod_selector}{SFW\+::\+Graphics\+::\+Default\+Lod\+Selector}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_index_range}{SFW\+::\+Graphics\+::\+Index\+Range}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options}{SFW\+::\+Graphics\+::\+Occluder\+Extract\+Options}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_face_quad}{SFW\+::\+Graphics\+::\+Face\+Quad}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d}{SFW\+::\+Graphics\+::\+Coverage\+Mask2D}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_aabb_faces_reduce_options}{SFW\+::\+Graphics\+::\+Aabb\+Faces\+Reduce\+Options}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_conservative_aabb_opts}{SFW\+::\+Graphics\+::\+Conservative\+Aabb\+Opts}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_height_coarse_options}{SFW\+::\+Graphics\+::\+Height\+Coarse\+Options}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_height_tex_mapping}{SFW\+::\+Graphics\+::\+Height\+Tex\+Mapping}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_auto_grid_lod_opts}{SFW\+::\+Graphics\+::\+Auto\+Grid\+Lod\+Opts}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_height_bias_opts}{SFW\+::\+Graphics\+::\+Height\+Bias\+Opts}}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_height_coarse_options2}{SFW\+::\+Graphics\+::\+Height\+Coarse\+Options2}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{SFW\+::\+Graphics}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a4b6017f714642526f52c6d3e8e3d4131}{SFW\+::\+Graphics\+::\+Lod\+Range\+Getter}} = bool(\texorpdfstring{$\ast$}{*})(const void\texorpdfstring{$\ast$}{*} terrain , uint32\+\_\+t cluster\+Id, uint32\+\_\+t lod, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_index_range}{Index\+Range}}\& out)
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_acf080ec4864aa4e98c1637db7cb38170}{SFW\+::\+Graphics\+::\+Render\+Triangles\+Fn}}
+\item 
+using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a9a6e6c13e257cd8b430169da73937db9}{SFW\+::\+Graphics\+::\+Height\+Sampler}} = float(\texorpdfstring{$\ast$}{*})(float x, float z, void\texorpdfstring{$\ast$}{*} user)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a277fdb04feb2b2128ad6217a91c8b084}{SFW\+::\+Graphics\+::\+Dist2\+Point\+AABB}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&p, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}} \&b)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_acde4f13495812fbaee8ed6c826100fb8}{SFW\+::\+Graphics\+::\+Mul\+Row\+Major4x4\+\_\+\+Pos}} (const float m\mbox{[}16\mbox{]}, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&p, float out\mbox{[}4\mbox{]})
+\item 
+float \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a7ff1e5c5ccee4b1c5d8a500a28cc2fb4}{SFW\+::\+Graphics\+::\+AABBScreen\+Area\+Px}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}} \&b, const float view\+Proj\mbox{[}16\mbox{]}, uint32\+\_\+t vpW, uint32\+\_\+t vpH)
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ac8b4e19d9e81ceb659ff08a47336a091}{SFW\+::\+Graphics\+::\+Is\+Front\+Facing}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&a, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&b, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&c, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&camera\+Pos, float cos\+Thresh)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ac6c317c7b5ba846205130e972c88cffa}{SFW\+::\+Graphics\+::\+Extract\+Occluder\+Triangles\+\_\+\+Screen\+Coverage\+LOD}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} \&t, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options}{Occluder\+Extract\+Options}} \&opt, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Cluster\+Ids, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_soft_tri_world}{Soft\+Tri\+World}} $>$ \&out\+Tris\+World, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_soft_tri_clip}{Soft\+Tri\+Clip}} $>$ \texorpdfstring{$\ast$}{*}out\+Tris\+Clip)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a204c955bfc1b12b85a6ac6a538d10cbb}{SFW\+::\+Graphics\+::\+Pack\+Clip\+Triangles\+For\+MOC}} (const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_soft_tri_clip}{Soft\+Tri\+Clip}} $>$ \&tris\+Clip, std\+::vector$<$ float $>$ \&out\+XYZW)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a4e743609e017115463100b098072ef52}{SFW\+::\+Graphics\+::\+Make\+Sequential\+Triangle\+Indices}} (uint32\+\_\+t tri\+Count, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Indices)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_adedac7218444a0e05a8c13f63d9f447f}{SFW\+::\+Graphics\+::\+Dispatch\+To\+MOC}} (auto fn, const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_soft_tri_clip}{Soft\+Tri\+Clip}} $>$ \&tris\+Clip, uint32\+\_\+t viewportW, uint32\+\_\+t viewportH)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a74625655256e7642665a5830faac06f6}{SFW\+::\+Graphics\+::\+Build\+Aabb\+World\+Corners}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}} \&b, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} out\mbox{[}8\mbox{]})
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}} \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ab901635cff470a4bdfa9f9dd7bbd8d58}{SFW\+::\+Graphics\+::\+Build\+Conservative\+Inner\+Aabb\+For\+Cluster}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} \&t, uint32\+\_\+t cluster\+Id, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_conservative_aabb_opts}{Conservative\+Aabb\+Opts}} \&co)
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a857108f9242ff0e26ae8a39ceaca7903}{SFW\+::\+Graphics\+::\+Face\+Normal}} (int f)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aeccd1307db0ac26d43b2eae66ca2c041}{SFW\+::\+Graphics\+::\+Project\+Face\+Quad}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} world\mbox{[}4\mbox{]}, const float VP\mbox{[}16\mbox{]}, uint32\+\_\+t vpW, uint32\+\_\+t vpH, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_face_quad}{Face\+Quad}} \&out, bool dilate1px)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ade144194e58eca349256bc845bec5c16}{SFW\+::\+Graphics\+::\+Reduce\+Aabb\+Faces\+For\+Cluster}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}} \&bounds, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&cam\+Pos, const float VP\mbox{[}16\mbox{]}, uint32\+\_\+t vpW, uint32\+\_\+t vpH, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_aabb_faces_reduce_options}{Aabb\+Faces\+Reduce\+Options}} \&ropt, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_coverage_mask2_d}{Coverage\+Mask2D}} \&mask, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_face_quad}{Face\+Quad}} $>$ \&out\+Quads)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af63486e783165c934a033b20203510b5}{SFW\+::\+Graphics\+::\+Extract\+Occluder\+Triangles\+\_\+\+Aabb\+Faces\+Reduced}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} \&t, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options}{Occluder\+Extract\+Options}} \&opt, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_aabb_faces_reduce_options}{Aabb\+Faces\+Reduce\+Options}} \&ropt, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Cluster\+Ids, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_soft_tri_world}{Soft\+Tri\+World}} $>$ \&out\+Tris\+World, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_soft_tri_clip}{Soft\+Tri\+Clip}} $>$ \texorpdfstring{$\ast$}{*}out\+Tris\+Clip)
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a1d64a59124ebbd7ee42722308e39fdfc}{SFW\+::\+Graphics\+::\+Calc\+Grid\+Normal}} (float hl, float hr, float hd, float hu, float dx, float dz)
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_height_tex_mapping}{Height\+Tex\+Mapping}} \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a36bbc9f362497d3534b5a578795c1619}{SFW\+::\+Graphics\+::\+Make\+Height\+Tex\+Mapping\+From\+Terrain\+Params}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_build_params}{Terrain\+Build\+Params}} \&p, const std\+::vector$<$ float $>$ \&H01)
+\item 
+int \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad6eeec2cbea0a488233b17053d9f5b91}{SFW\+::\+Graphics\+::clampi}} (int x, int lo, int hi)
+\item 
+float \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a6335d00768a47c09fdaaf9713a926d61}{SFW\+::\+Graphics\+::lerp}} (float a, float b, float t)
+\item 
+float \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a213f83d1763f21656757735bc7797605}{SFW\+::\+Graphics\+::\+Sample\+Height\+\_\+\+Bilinear}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_height_tex_mapping}{Height\+Tex\+Mapping}} \&m, float x, float z)
+\item 
+float \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a24716b28d90f60783e9d8fbadfa09459}{SFW\+::\+Graphics\+::\+Height\+Sampler\+\_\+\+From\+Mapping}} (float x, float z, void \texorpdfstring{$\ast$}{*}user)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_abed13699dd5f652aa81ef1e70b37368d}{SFW\+::\+Graphics\+::\+Choose\+Grid\+For\+Cluster}} (float area, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options}{Occluder\+Extract\+Options}} \&opt, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_auto_grid_lod_opts}{Auto\+Grid\+Lod\+Opts}} \&aopt, uint32\+\_\+t \&out\+GX, uint32\+\_\+t \&out\+GZ)
+\item 
+\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8b34547da77978c063a4deec5c446406}{SFW\+::\+Graphics\+::\+Calc\+Grid\+Normal\+From\+Samples}} (float hl, float hr, float hd, float hu, float dx, float dz)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad4c4c357bdd6f68d12c589f2d117ed02}{SFW\+::\+Graphics\+::\+Build\+Height\+Coarse\+Surface\+For\+Cluster\+\_\+\+Mapped}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}} \&bounds, float area, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_height_tex_mapping}{Height\+Tex\+Mapping}} \&map, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_height_coarse_options2}{Height\+Coarse\+Options2}} hopt, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options}{Occluder\+Extract\+Options}} \&opt, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_soft_tri_world}{Soft\+Tri\+World}} $>$ \&out\+Tris\+World, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_soft_tri_clip}{Soft\+Tri\+Clip}} $>$ \texorpdfstring{$\ast$}{*}out\+Tris\+Clip)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ada4ebc2a3231ecedd8dfdfec2bee3acf}{SFW\+::\+Graphics\+::\+Extract\+Occluder\+Triangles\+\_\+\+Heightmap\+Coarse\+\_\+\+Hybrid}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} \&t, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_height_tex_mapping}{Height\+Tex\+Mapping}} \&map, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_height_coarse_options2}{Height\+Coarse\+Options2}} hopt, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options}{Occluder\+Extract\+Options}} \&opt, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Cluster\+Ids, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_soft_tri_world}{Soft\+Tri\+World}} $>$ \&out\+Tris\+World, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_soft_tri_clip}{Soft\+Tri\+Clip}} $>$ \texorpdfstring{$\ast$}{*}out\+Tris\+Clip)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a026021247fa590a33b5227b7323bc205}{SFW\+::\+Graphics\+::\+Extract\+Occluder\+Triangles\+\_\+\+Heightmap\+Coarse\+\_\+\+Hybrid}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} \&t, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_height_tex_mapping}{Height\+Tex\+Mapping}} \&map, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_height_coarse_options2}{Height\+Coarse\+Options2}} hopt, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_occluder_extract_options}{Occluder\+Extract\+Options}} \&opt, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_aabb_faces_reduce_options}{Aabb\+Faces\+Reduce\+Options}} \&side\+Opt, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Cluster\+Ids, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_soft_tri_world}{Soft\+Tri\+World}} $>$ \&out\+Tris\+World, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_soft_tri_clip}{Soft\+Tri\+Clip}} $>$ \texorpdfstring{$\ast$}{*}out\+Tris\+Clip)
+\end{DoxyCompactItemize}

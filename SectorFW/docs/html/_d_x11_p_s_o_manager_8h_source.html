@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11PSOManager.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_d_x11_p_s_o_manager_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">DX11PSOManager.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_d_x11_p_s_o_manager_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;optional&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="_d_x11_shader_manager_8h.html">DX11ShaderManager.h</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>{</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">Graphics::DX11</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    {</div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="};">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html">   22</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html">PSOCreateDesc</a> {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html#a902e59d258b6b2aa65cb69d300cd3db3">   23</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_shader_handle.html">ShaderHandle</a> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html#a902e59d258b6b2aa65cb69d300cd3db3">shader</a> = {};</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html#ae384ab5829b500a37d36192254cf72ab">   24</a></span>            <a class="code hl_enumeration" href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5">RasterizerStateID</a> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html#ae384ab5829b500a37d36192254cf72ab">rasterizerState</a> = <a class="code hl_enumvalue" href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5ae95602a12f4b2df8eb06322f497bf934">RasterizerStateID::SolidCullBack</a>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html#a1026a53aa1770127ab90ddb65bee7da9">   25</a></span>            std::optional&lt;ShaderHandle&gt; <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html#a1026a53aa1770127ab90ddb65bee7da9">rebindShader</a> = std::nullopt; <span class="comment">// シェーダーリバインド用（オプション）</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        };</div>
+</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span></div>
+<div class="foldopen" id="foldopen00030" data-start="{" data-end="};">
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html">   30</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html">PSOData</a> {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#a15d2dd3ae650e6b05c06dd6ee40b88c3">   31</a></span>            ComPtr&lt;ID3D11InputLayout&gt; <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#a15d2dd3ae650e6b05c06dd6ee40b88c3">inputLayout</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#a5338b89bda32c4b96aca1efa1efb9e42">   32</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_shader_handle.html">ShaderHandle</a> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#a5338b89bda32c4b96aca1efa1efb9e42">shader</a>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#a4fc4c4bd63f69954150711ab3243911b">   33</a></span>            ComPtr&lt;ID3D11InputLayout&gt; <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#a4fc4c4bd63f69954150711ab3243911b">rebindInputLayout</a> = <span class="keyword">nullptr</span>;     <span class="comment">// シェーダーリバインド用（オプション）</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#ad81fbce6d7f96feb016c327b28565657">   34</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_shader_handle.html">ShaderHandle</a> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#ad81fbce6d7f96feb016c327b28565657">rebindShader</a>;                                  <span class="comment">// シェーダーリバインド用（オプション）</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#aa8060320daad09d06bed74319a01061f">   35</a></span>            <a class="code hl_enumeration" href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5">RasterizerStateID</a> <a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#aa8060320daad09d06bed74319a01061f">rasterizerState</a> = <a class="code hl_enumvalue" href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5ae95602a12f4b2df8eb06322f497bf934">RasterizerStateID::SolidCullBack</a>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        };</div>
+</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span></div>
+<div class="foldopen" id="foldopen00040" data-start="{" data-end="};">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html">   40</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html#a3d75a9b0cbeffd64242c3f265fba47ae">PSOManager</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_s_f_w_1_1_resource_manager_base.html">ResourceManagerBase</a>&lt;PSOManager, PSOHandle, PSOCreateDesc, PSOData&gt; {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00047" data-start="{" data-end="}">
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html#a3d75a9b0cbeffd64242c3f265fba47ae">   47</a></span>            <span class="keyword">explicit</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html#a3d75a9b0cbeffd64242c3f265fba47ae">PSOManager</a>(ID3D11Device* device, <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_manager.html">ShaderManager</a>* shaderMgr) noexcept</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                : device(device), shaderManager(shaderMgr) {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            }</div>
+</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html#af0724403cb30789289f8455f9fe8dadb">   56</a></span>            std::optional&lt;PSOHandle&gt; <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html#af0724403cb30789289f8455f9fe8dadb">FindExisting</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html">PSOCreateDesc</a>&amp; desc) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html#afa9b24acba7f14a64611ef3dde6e48b9">   57</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html#afa9b24acba7f14a64611ef3dde6e48b9">RegisterKey</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html">PSOCreateDesc</a>&amp; desc, <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_p_s_o_handle.html">PSOHandle</a> h);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html#aec9a00e1e2ecad78033d2b9a7370dade">   64</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html">PSOData</a> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html#aec9a00e1e2ecad78033d2b9a7370dade">CreateResource</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html">PSOCreateDesc</a>&amp; desc, <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_p_s_o_handle.html">PSOHandle</a> h);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            ID3D11Device* device;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <a class="code hl_class" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_manager.html">ShaderManager</a>* shaderManager;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            std::mutex mapMutex;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="comment">// ShaderHandle.index → PSOHandle</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            std::unordered_map&lt;uint32_t, PSOHandle&gt; shaderToPSO_;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        };</div>
+</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    }</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>}</div>
+<div class="ttc" id="a_d_x11_shader_manager_8h_html"><div class="ttname"><a href="_d_x11_shader_manager_8h.html">DX11ShaderManager.h</a></div><div class="ttdoc">DirectX 11のシェーダーマネージャークラスを定義するヘッダーファイル</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager_html_a3d75a9b0cbeffd64242c3f265fba47ae"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html#a3d75a9b0cbeffd64242c3f265fba47ae">SFW::Graphics::DX11::PSOManager::PSOManager</a></div><div class="ttdeci">PSOManager(ID3D11Device *device, ShaderManager *shaderMgr) noexcept</div><div class="ttdoc">コンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00047">DX11PSOManager.h:47</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager_html_aec9a00e1e2ecad78033d2b9a7370dade"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html#aec9a00e1e2ecad78033d2b9a7370dade">SFW::Graphics::DX11::PSOManager::CreateResource</a></div><div class="ttdeci">PSOData CreateResource(const PSOCreateDesc &amp;desc, PSOHandle h)</div><div class="ttdoc">新しいPSOリソースを作成する関数</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager_html_af0724403cb30789289f8455f9fe8dadb"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html#af0724403cb30789289f8455f9fe8dadb">SFW::Graphics::DX11::PSOManager::FindExisting</a></div><div class="ttdeci">std::optional&lt; PSOHandle &gt; FindExisting(const PSOCreateDesc &amp;desc) noexcept</div><div class="ttdoc">ResourceManagerBase が呼ぶフック</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager_html_afa9b24acba7f14a64611ef3dde6e48b9"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html#afa9b24acba7f14a64611ef3dde6e48b9">SFW::Graphics::DX11::PSOManager::RegisterKey</a></div><div class="ttdeci">void RegisterKey(const PSOCreateDesc &amp;desc, PSOHandle h)</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_manager_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_manager.html">SFW::Graphics::DX11::ShaderManager</a></div><div class="ttdoc">DirectX 11のシェーダーマネージャークラス</div><div class="ttdef"><b>Definition</b> <a href="_d_x11_shader_manager_8h_source.html#l00090">DX11ShaderManager.h:90</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a></div><div class="ttdoc">リソースマネージャーの基底クラス。主にRenderer系で使用する。</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00023">ResouceManagerBase.hpp:23</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_1_1_d_x11_html"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">SFW::Graphics::DX11</a></div><div class="ttdef"><b>Definition</b> <a href="_d_x11_graphics_8h_source.html#l00034">DX11Graphics.h:35</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_af9f678d5587dcdfd0bd9b7ca4072f9f5"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5">SFW::Graphics::RasterizerStateID</a></div><div class="ttdeci">RasterizerStateID</div><div class="ttdoc">ラスタライザーステートID列挙型</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00155">RenderTypes.h:155</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_af9f678d5587dcdfd0bd9b7ca4072f9f5ae95602a12f4b2df8eb06322f497bf934"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5ae95602a12f4b2df8eb06322f497bf934">SFW::Graphics::RasterizerStateID::SolidCullBack</a></div><div class="ttdeci">@ SolidCullBack</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00156">RenderTypes.h:156</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html">SFW::Graphics::DX11::PSOCreateDesc</a></div><div class="ttdoc">DirectX 11のパイプラインステートオブジェクト（PSO）を作成するための記述子構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00022">DX11PSOManager.h:22</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc_html_a1026a53aa1770127ab90ddb65bee7da9"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html#a1026a53aa1770127ab90ddb65bee7da9">SFW::Graphics::DX11::PSOCreateDesc::rebindShader</a></div><div class="ttdeci">std::optional&lt; ShaderHandle &gt; rebindShader</div><div class="ttdef"><b>Definition</b> <a href="#l00025">DX11PSOManager.h:25</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc_html_a902e59d258b6b2aa65cb69d300cd3db3"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html#a902e59d258b6b2aa65cb69d300cd3db3">SFW::Graphics::DX11::PSOCreateDesc::shader</a></div><div class="ttdeci">ShaderHandle shader</div><div class="ttdef"><b>Definition</b> <a href="#l00023">DX11PSOManager.h:23</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc_html_ae384ab5829b500a37d36192254cf72ab"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_create_desc.html#ae384ab5829b500a37d36192254cf72ab">SFW::Graphics::DX11::PSOCreateDesc::rasterizerState</a></div><div class="ttdeci">RasterizerStateID rasterizerState</div><div class="ttdef"><b>Definition</b> <a href="#l00024">DX11PSOManager.h:24</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html">SFW::Graphics::DX11::PSOData</a></div><div class="ttdoc">DirectX 11のパイプラインステートオブジェクト（PSO）のデータ構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00030">DX11PSOManager.h:30</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data_html_a15d2dd3ae650e6b05c06dd6ee40b88c3"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#a15d2dd3ae650e6b05c06dd6ee40b88c3">SFW::Graphics::DX11::PSOData::inputLayout</a></div><div class="ttdeci">ComPtr&lt; ID3D11InputLayout &gt; inputLayout</div><div class="ttdef"><b>Definition</b> <a href="#l00031">DX11PSOManager.h:31</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data_html_a4fc4c4bd63f69954150711ab3243911b"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#a4fc4c4bd63f69954150711ab3243911b">SFW::Graphics::DX11::PSOData::rebindInputLayout</a></div><div class="ttdeci">ComPtr&lt; ID3D11InputLayout &gt; rebindInputLayout</div><div class="ttdef"><b>Definition</b> <a href="#l00033">DX11PSOManager.h:33</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data_html_a5338b89bda32c4b96aca1efa1efb9e42"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#a5338b89bda32c4b96aca1efa1efb9e42">SFW::Graphics::DX11::PSOData::shader</a></div><div class="ttdeci">ShaderHandle shader</div><div class="ttdef"><b>Definition</b> <a href="#l00032">DX11PSOManager.h:32</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data_html_aa8060320daad09d06bed74319a01061f"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#aa8060320daad09d06bed74319a01061f">SFW::Graphics::DX11::PSOData::rasterizerState</a></div><div class="ttdeci">RasterizerStateID rasterizerState</div><div class="ttdef"><b>Definition</b> <a href="#l00035">DX11PSOManager.h:35</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data_html_ad81fbce6d7f96feb016c327b28565657"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_data.html#ad81fbce6d7f96feb016c327b28565657">SFW::Graphics::DX11::PSOData::rebindShader</a></div><div class="ttdeci">ShaderHandle rebindShader</div><div class="ttdef"><b>Definition</b> <a href="#l00034">DX11PSOManager.h:34</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_p_s_o_handle_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_p_s_o_handle.html">SFW::Graphics::PSOHandle</a></div><div class="ttdoc">パイプラインステートオブジェクトハンドル構造体</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00035">RenderTypes.h:35</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_shader_handle_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_shader_handle.html">SFW::Graphics::ShaderHandle</a></div><div class="ttdoc">シェーダハンドル構造体</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00031">RenderTypes.h:31</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="dir_b1727ce268e62d033d50a1c50b50897f.html">DX11</a></li><li class="navelem"><a href="_d_x11_p_s_o_manager_8h.html">DX11PSOManager.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

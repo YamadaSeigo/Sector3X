@@ -1,0 +1,158 @@
+\doxysection{SFW\+::Void\+Partition クラス}
+\hypertarget{class_s_f_w_1_1_void_partition}{}\label{class_s_f_w_1_1_void_partition}\index{SFW::VoidPartition@{SFW::VoidPartition}}
+
+
+空間分割をしないパーティションクラス  
+
+
+
+
+{\ttfamily \#include $<$Void\+Partition.\+h$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_void_partition_a237afeec09ce769dd3323a8736590499}{Void\+Partition}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}, \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}}, \mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}}, float)
+\item 
+std\+::optional$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_void_partition_ac7468533b477e8323e8231f91e5dbe9b}{Get\+Chunk}} (\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}, \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&, \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}}, \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOut\+Of\+Bounds\+Policy}}=\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOut\+Of\+Bounds\+Policy\+::\+Clamp\+To\+Edge}}) noexcept
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \& \mbox{\hyperlink{class_s_f_w_1_1_void_partition_a3839dfe8494c8a9176f58ea96560d355}{Get\+Global\+Entity\+Manager}} () noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_void_partition_a745a7c5b10150e80fa21644250e51617}{Register\+All\+Chunks}} (\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&, \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}})
+\item 
+size\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_void_partition_ad74fc96bb64360ec3365c48eb4acd3a7}{Get\+Entity\+Num}} () const noexcept
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_void_partition_a0f1b8690737c3f5abf20cb44513f666d}{Cull\+Chunks}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&) noexcept
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_void_partition_a98cc4545d09834bc6dd3ef9466c106d0}{Cull\+Chunks}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&, float) noexcept
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_s_f_w_1_1_void_partition_aa59599dff062545948fd16b259a22e33}{Cull\+Chunks\+Near}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}) noexcept
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_void_partition_af4e25223a566d5ac1d85e45ee74686ad}{Cull\+Chunk\+Line}} (const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&, \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}, float, \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug\+::\+Line\+Vertex}} \texorpdfstring{$\ast$}{*}, uint32\+\_\+t, uint32\+\_\+t) const noexcept
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_void_partition_ae8c236ed5af6a4e7befc2b73a1815ce9}{Clean\+Chunk}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+空間分割をしないパーティションクラス 
+
+タイトルなど空間分割のいらないレベルで指定する 
+
+ \mbox{\hyperlink{_void_partition_8h_source}{Void\+Partition.\+h}} の \mbox{\hyperlink{_void_partition_8h_source_l00018}{18}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_void_partition_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_void_partition_a237afeec09ce769dd3323a8736590499}\index{SFW::VoidPartition@{SFW::VoidPartition}!VoidPartition@{VoidPartition}}
+\index{VoidPartition@{VoidPartition}!SFW::VoidPartition@{SFW::VoidPartition}}
+\doxysubsubsection{\texorpdfstring{VoidPartition()}{VoidPartition()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_void_partition_a237afeec09ce769dd3323a8736590499} 
+SFW\+::\+Void\+Partition\+::\+Void\+Partition (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}}}]{}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a5a8d74c7b28d2bf30ae5f35bd7444c78}{Chunk\+Size\+Type}}}]{}{, }\item[{float}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_void_partition_8h_source}{Void\+Partition.\+h}} の \mbox{\hyperlink{_void_partition_8h_source_l00021}{21}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_void_partition_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_void_partition_ae8c236ed5af6a4e7befc2b73a1815ce9}\index{SFW::VoidPartition@{SFW::VoidPartition}!CleanChunk@{CleanChunk}}
+\index{CleanChunk@{CleanChunk}!SFW::VoidPartition@{SFW::VoidPartition}}
+\doxysubsubsection{\texorpdfstring{CleanChunk()}{CleanChunk()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_void_partition_ae8c236ed5af6a4e7befc2b73a1815ce9} 
+void SFW\+::\+Void\+Partition\+::\+Clean\+Chunk (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_void_partition_8h_source}{Void\+Partition.\+h}} の \mbox{\hyperlink{_void_partition_8h_source_l00061}{61}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_void_partition_af4e25223a566d5ac1d85e45ee74686ad}\index{SFW::VoidPartition@{SFW::VoidPartition}!CullChunkLine@{CullChunkLine}}
+\index{CullChunkLine@{CullChunkLine}!SFW::VoidPartition@{SFW::VoidPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunkLine()}{CullChunkLine()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_void_partition_af4e25223a566d5ac1d85e45ee74686ad} 
+uint32\+\_\+t SFW\+::\+Void\+Partition\+::\+Cull\+Chunk\+Line (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{}{, }\item[{float}]{}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_line_vertex}{Debug\+::\+Line\+Vertex}} \texorpdfstring{$\ast$}{*}}]{}{, }\item[{uint32\+\_\+t}]{}{, }\item[{uint32\+\_\+t}]{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_void_partition_8h_source}{Void\+Partition.\+h}} の \mbox{\hyperlink{_void_partition_8h_source_l00054}{54}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_void_partition_a0f1b8690737c3f5abf20cb44513f666d}\index{SFW::VoidPartition@{SFW::VoidPartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::VoidPartition@{SFW::VoidPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_void_partition_a0f1b8690737c3f5abf20cb44513f666d} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Void\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_void_partition_8h_source}{Void\+Partition.\+h}} の \mbox{\hyperlink{_void_partition_8h_source_l00039}{39}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_void_partition_a98cc4545d09834bc6dd3ef9466c106d0}\index{SFW::VoidPartition@{SFW::VoidPartition}!CullChunks@{CullChunks}}
+\index{CullChunks@{CullChunks}!SFW::VoidPartition@{SFW::VoidPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunks()}{CullChunks()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_void_partition_a98cc4545d09834bc6dd3ef9466c106d0} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Void\+Partition\+::\+Cull\+Chunks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} \&}]{}{, }\item[{float}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_void_partition_8h_source}{Void\+Partition.\+h}} の \mbox{\hyperlink{_void_partition_8h_source_l00044}{44}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_void_partition_aa59599dff062545948fd16b259a22e33}\index{SFW::VoidPartition@{SFW::VoidPartition}!CullChunksNear@{CullChunksNear}}
+\index{CullChunksNear@{CullChunksNear}!SFW::VoidPartition@{SFW::VoidPartition}}
+\doxysubsubsection{\texorpdfstring{CullChunksNear()}{CullChunksNear()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_void_partition_aa59599dff062545948fd16b259a22e33} 
+std\+::vector$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Void\+Partition\+::\+Cull\+Chunks\+Near (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_frustumf}{Math\+::\+Frustumf}} \&}]{}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_void_partition_8h_source}{Void\+Partition.\+h}} の \mbox{\hyperlink{_void_partition_8h_source_l00049}{49}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_void_partition_ac7468533b477e8323e8231f91e5dbe9b}\index{SFW::VoidPartition@{SFW::VoidPartition}!GetChunk@{GetChunk}}
+\index{GetChunk@{GetChunk}!SFW::VoidPartition@{SFW::VoidPartition}}
+\doxysubsubsection{\texorpdfstring{GetChunk()}{GetChunk()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_void_partition_ac7468533b477e8323e8231f91e5dbe9b} 
+std\+::optional$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chunk}} \texorpdfstring{$\ast$}{*} $>$ SFW\+::\+Void\+Partition\+::\+Get\+Chunk (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}}}]{}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&}]{}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}}}]{}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1e}{EOut\+Of\+Bounds\+Policy}}}]{}{ = {\ttfamily \mbox{\hyperlink{namespace_s_f_w_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134}{EOut\+Of\+Bounds\+Policy\+::\+Clamp\+To\+Edge}}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_void_partition_8h_source}{Void\+Partition.\+h}} の \mbox{\hyperlink{_void_partition_8h_source_l00023}{23}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_void_partition_ad74fc96bb64360ec3365c48eb4acd3a7}\index{SFW::VoidPartition@{SFW::VoidPartition}!GetEntityNum@{GetEntityNum}}
+\index{GetEntityNum@{GetEntityNum}!SFW::VoidPartition@{SFW::VoidPartition}}
+\doxysubsubsection{\texorpdfstring{GetEntityNum()}{GetEntityNum()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_void_partition_ad74fc96bb64360ec3365c48eb4acd3a7} 
+size\+\_\+t SFW\+::\+Void\+Partition\+::\+Get\+Entity\+Num (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_void_partition_8h_source}{Void\+Partition.\+h}} の \mbox{\hyperlink{_void_partition_8h_source_l00034}{34}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_void_partition_a3839dfe8494c8a9176f58ea96560d355}\index{SFW::VoidPartition@{SFW::VoidPartition}!GetGlobalEntityManager@{GetGlobalEntityManager}}
+\index{GetGlobalEntityManager@{GetGlobalEntityManager}!SFW::VoidPartition@{SFW::VoidPartition}}
+\doxysubsubsection{\texorpdfstring{GetGlobalEntityManager()}{GetGlobalEntityManager()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_void_partition_a3839dfe8494c8a9176f58ea96560d355} 
+\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manager}} \& SFW\+::\+Void\+Partition\+::\+Get\+Global\+Entity\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_void_partition_8h_source}{Void\+Partition.\+h}} の \mbox{\hyperlink{_void_partition_8h_source_l00030}{30}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_void_partition_a745a7c5b10150e80fa21644250e51617}\index{SFW::VoidPartition@{SFW::VoidPartition}!RegisterAllChunks@{RegisterAllChunks}}
+\index{RegisterAllChunks@{RegisterAllChunks}!SFW::VoidPartition@{SFW::VoidPartition}}
+\doxysubsubsection{\texorpdfstring{RegisterAllChunks()}{RegisterAllChunks()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_void_partition_a745a7c5b10150e80fa21644250e51617} 
+void SFW\+::\+Void\+Partition\+::\+Register\+All\+Chunks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk_registry}{Spatial\+Chunk\+Registry}} \&}]{}{, }\item[{\mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}}}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_void_partition_8h_source}{Void\+Partition.\+h}} の \mbox{\hyperlink{_void_partition_8h_source_l00032}{32}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_void_partition_8h}{Void\+Partition.\+h}}\end{DoxyCompactItemize}

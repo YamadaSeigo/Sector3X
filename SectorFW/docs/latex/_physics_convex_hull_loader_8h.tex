@@ -1,0 +1,39 @@
+\doxysection{C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Physics/\+Physics\+Convex\+Hull\+Loader.h ファイル}
+\hypertarget{_physics_convex_hull_loader_8h}{}\label{_physics_convex_hull_loader_8h}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsConvexHullLoader.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Physics/PhysicsConvexHullLoader.h}}
+
+
+VHACDの出力したバイナリファイル(.chullbin)を読み込んで、複数の凸ハルデータを取得するためのユーティリティ関数  
+
+
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$filesystem$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include "{}Physics\+Types.\+h"{}}\newline
+\doxysubsubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w}{SFW}}
+\item 
+namespace \mbox{\hyperlink{namespace_s_f_w_1_1_physics}{SFW\+::\+Physics}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a4972e9c1ff8f3077c8ca3c0f67dad209}{SFW\+::\+Physics\+::\+Load\+VHACDFile}} (const std\+::filesystem\+::path \&bin\+Path, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_v_h_a_c_d_hull}{VHACDHull}} $>$ \&out\+Hulls, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_afea45e91c6313bb6dd5c60690ff82019}{Math\+::\+Vec3f}} scale=\{ 1, 1, 1 \}, bool flip=false)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+VHACDの出力したバイナリファイル(.chullbin)を読み込んで、複数の凸ハルデータを取得するためのユーティリティ関数 
+
+\begin{DoxyAuthor}{著者}
+seigo 
+\end{DoxyAuthor}
+\begin{DoxyDate}{日付}
+December 2025 
+\end{DoxyDate}
+
+
+ \mbox{\hyperlink{_physics_convex_hull_loader_8h_source}{Physics\+Convex\+Hull\+Loader.\+h}} に定義があります。
+

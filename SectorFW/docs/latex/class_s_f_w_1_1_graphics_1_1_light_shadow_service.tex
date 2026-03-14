@@ -1,0 +1,248 @@
+\doxysection{SFW\+::Graphics\+::Light\+Shadow\+Service クラス}
+\hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service}{}\label{class_s_f_w_1_1_graphics_1_1_light_shadow_service}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+
+
+{\ttfamily \#include $<$Light\+Shadow\+Service.\+h$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config}{Cascade\+Config}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ad587fbefaf8eefa7a25deda32da62c17}{Light\+Shadow\+Service}} ()=default
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aa3710c8c3f8f753e68f5f7fa196c3187}{Set\+Environment}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light}{Directional\+Light}} \&dir\+Light, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light}{Ambient\+Light}} \&ambient\+Light, float emissive\+Boost)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a4cf5368a6bde5652bc2679c7cf892db6}{Set\+Directional\+Light}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light}{Directional\+Light}} \&d)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ad37eb8a51830d33d6c92c4137a7afcce}{Set\+Ambient\+Light}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light}{Ambient\+Light}} \&a)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a04b004052a408e2cebc4f54b9a2a2fe6}{Set\+Emissive\+Boost}} (float boost)
+\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light}{Directional\+Light}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_af72336d5166083c160fdc0641f9ea3c4}{Get\+Directional\+Light}} () const noexcept
+\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light}{Ambient\+Light}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ac25f9839a83530e4a3d47a6e1e927bce}{Get\+Ambient\+Light}} () const noexcept
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a1e75e793ebe3c43377b34f9779b702e1}{Get\+Emissive\+Boost}} () const noexcept
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data}{CPULight\+Data}} \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a3dc36ad2fe38f4e8bff19f5871b54db9}{Get\+CPULight\+Data}} () const
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aa0e5179c5cf6d59745ff24ff705f228b}{Set\+Cascade\+Config}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config}{Cascade\+Config}} \&cfg)
+\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config}{Cascade\+Config}} \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aca330e5e88d0ea2c15a1f05fcc70464c}{Get\+Cascade\+Config}} () const noexcept
+\item 
+std\+::uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a20e29b21df3b7e98e6af1216e69467bc}{Get\+Cascade\+Count}} () const noexcept
+\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{Shadow\+Cascade}}$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{k\+Max\+Shadow\+Cascades}} $>$ \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aaf16c99b7defafacf372a38c5ceb2b6f}{Get\+Cascades}} () const
+\item 
+const std\+::array$<$ float, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{k\+Max\+Shadow\+Cascades}} $>$ \& \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aaf4a9c3c1bf2b5d0509c1300746ff1e9}{Get\+Split\+Distances}} () const
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a521e0e3a987481665d48c172360a06fd}{Get\+Cascade\+Index}} (float view\+Dist) const
+\item 
+float \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a3093c10de8e57b385a2610539f8afe48}{Get\+Max\+Shadow\+Distance}} () const
+\item 
+std\+::pair$<$ uint32\+\_\+t, uint32\+\_\+t $>$ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_adf6821713bd49610d384bb5e725f9335}{Get\+Cascade\+Index\+Range\+Unlock}} (float min, float max) const
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a08be4f4a330168acda97a7075708caf3}{Update\+Cascade}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params}{Camera\+Params}} \&cam, const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}} \&scene\+Bounds)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00093}{93}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ad587fbefaf8eefa7a25deda32da62c17}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!LightShadowService@{LightShadowService}}
+\index{LightShadowService@{LightShadowService}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{LightShadowService()}{LightShadowService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ad587fbefaf8eefa7a25deda32da62c17} 
+SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Light\+Shadow\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ac25f9839a83530e4a3d47a6e1e927bce}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!GetAmbientLight@{GetAmbientLight}}
+\index{GetAmbientLight@{GetAmbientLight}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{GetAmbientLight()}{GetAmbientLight()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ac25f9839a83530e4a3d47a6e1e927bce} 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light}{Ambient\+Light}} \& SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Get\+Ambient\+Light (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00141}{141}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aca330e5e88d0ea2c15a1f05fcc70464c}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!GetCascadeConfig@{GetCascadeConfig}}
+\index{GetCascadeConfig@{GetCascadeConfig}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{GetCascadeConfig()}{GetCascadeConfig()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aca330e5e88d0ea2c15a1f05fcc70464c} 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config}{Cascade\+Config}} \& SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Get\+Cascade\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00174}{174}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a20e29b21df3b7e98e6af1216e69467bc}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!GetCascadeCount@{GetCascadeCount}}
+\index{GetCascadeCount@{GetCascadeCount}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{GetCascadeCount()}{GetCascadeCount()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a20e29b21df3b7e98e6af1216e69467bc} 
+std\+::uint32\+\_\+t SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Get\+Cascade\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00180}{180}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a521e0e3a987481665d48c172360a06fd}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!GetCascadeIndex@{GetCascadeIndex}}
+\index{GetCascadeIndex@{GetCascadeIndex}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{GetCascadeIndex()}{GetCascadeIndex()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a521e0e3a987481665d48c172360a06fd} 
+uint32\+\_\+t SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Get\+Cascade\+Index (\begin{DoxyParamCaption}\item[{float}]{view\+Dist}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00195}{195}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_adf6821713bd49610d384bb5e725f9335}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!GetCascadeIndexRangeUnlock@{GetCascadeIndexRangeUnlock}}
+\index{GetCascadeIndexRangeUnlock@{GetCascadeIndexRangeUnlock}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{GetCascadeIndexRangeUnlock()}{GetCascadeIndexRangeUnlock()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_adf6821713bd49610d384bb5e725f9335} 
+std\+::pair$<$ uint32\+\_\+t, uint32\+\_\+t $>$ SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Get\+Cascade\+Index\+Range\+Unlock (\begin{DoxyParamCaption}\item[{float}]{min}{, }\item[{float}]{max}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00211}{211}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aaf16c99b7defafacf372a38c5ceb2b6f}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!GetCascades@{GetCascades}}
+\index{GetCascades@{GetCascades}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{GetCascades()}{GetCascades()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aaf16c99b7defafacf372a38c5ceb2b6f} 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shadow_cascade}{Shadow\+Cascade}}$<$ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{k\+Max\+Shadow\+Cascades}} $>$ \& SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Get\+Cascades (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00185}{185}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a3dc36ad2fe38f4e8bff19f5871b54db9}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!GetCPULightData@{GetCPULightData}}
+\index{GetCPULightData@{GetCPULightData}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{GetCPULightData()}{GetCPULightData()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a3dc36ad2fe38f4e8bff19f5871b54db9} 
+\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_c_p_u_light_data}{CPULight\+Data}} SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Get\+CPULight\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00152}{152}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_af72336d5166083c160fdc0641f9ea3c4}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!GetDirectionalLight@{GetDirectionalLight}}
+\index{GetDirectionalLight@{GetDirectionalLight}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{GetDirectionalLight()}{GetDirectionalLight()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_af72336d5166083c160fdc0641f9ea3c4} 
+const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light}{Directional\+Light}} \& SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Get\+Directional\+Light (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00137}{137}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a1e75e793ebe3c43377b34f9779b702e1}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!GetEmissiveBoost@{GetEmissiveBoost}}
+\index{GetEmissiveBoost@{GetEmissiveBoost}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{GetEmissiveBoost()}{GetEmissiveBoost()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a1e75e793ebe3c43377b34f9779b702e1} 
+float SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Get\+Emissive\+Boost (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00146}{146}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a3093c10de8e57b385a2610539f8afe48}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!GetMaxShadowDistance@{GetMaxShadowDistance}}
+\index{GetMaxShadowDistance@{GetMaxShadowDistance}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{GetMaxShadowDistance()}{GetMaxShadowDistance()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a3093c10de8e57b385a2610539f8afe48} 
+float SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Get\+Max\+Shadow\+Distance (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00205}{205}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aaf4a9c3c1bf2b5d0509c1300746ff1e9}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!GetSplitDistances@{GetSplitDistances}}
+\index{GetSplitDistances@{GetSplitDistances}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{GetSplitDistances()}{GetSplitDistances()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aaf4a9c3c1bf2b5d0509c1300746ff1e9} 
+const std\+::array$<$ float, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}{k\+Max\+Shadow\+Cascades}} $>$ \& SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Get\+Split\+Distances (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00190}{190}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ad37eb8a51830d33d6c92c4137a7afcce}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!SetAmbientLight@{SetAmbientLight}}
+\index{SetAmbientLight@{SetAmbientLight}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{SetAmbientLight()}{SetAmbientLight()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_ad37eb8a51830d33d6c92c4137a7afcce} 
+void SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Set\+Ambient\+Light (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light}{Ambient\+Light}} \&}]{a}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00125}{125}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aa0e5179c5cf6d59745ff24ff705f228b}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!SetCascadeConfig@{SetCascadeConfig}}
+\index{SetCascadeConfig@{SetCascadeConfig}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{SetCascadeConfig()}{SetCascadeConfig()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aa0e5179c5cf6d59745ff24ff705f228b} 
+void SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Set\+Cascade\+Config (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_light_shadow_service_1_1_cascade_config}{Cascade\+Config}} \&}]{cfg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00166}{166}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a4cf5368a6bde5652bc2679c7cf892db6}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!SetDirectionalLight@{SetDirectionalLight}}
+\index{SetDirectionalLight@{SetDirectionalLight}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{SetDirectionalLight()}{SetDirectionalLight()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a4cf5368a6bde5652bc2679c7cf892db6} 
+void SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Set\+Directional\+Light (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light}{Directional\+Light}} \&}]{d}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00119}{119}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a04b004052a408e2cebc4f54b9a2a2fe6}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!SetEmissiveBoost@{SetEmissiveBoost}}
+\index{SetEmissiveBoost@{SetEmissiveBoost}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{SetEmissiveBoost()}{SetEmissiveBoost()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a04b004052a408e2cebc4f54b9a2a2fe6} 
+void SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Set\+Emissive\+Boost (\begin{DoxyParamCaption}\item[{float}]{boost}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00131}{131}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aa3710c8c3f8f753e68f5f7fa196c3187}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!SetEnvironment@{SetEnvironment}}
+\index{SetEnvironment@{SetEnvironment}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{SetEnvironment()}{SetEnvironment()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_aa3710c8c3f8f753e68f5f7fa196c3187} 
+void SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Set\+Environment (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_directional_light}{Directional\+Light}} \&}]{dir\+Light}{, }\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_ambient_light}{Ambient\+Light}} \&}]{ambient\+Light}{, }\item[{float}]{emissive\+Boost}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00108}{108}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a08be4f4a330168acda97a7075708caf3}\index{SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}!UpdateCascade@{UpdateCascade}}
+\index{UpdateCascade@{UpdateCascade}!SFW::Graphics::LightShadowService@{SFW::Graphics::LightShadowService}}
+\doxysubsubsection{\texorpdfstring{UpdateCascade()}{UpdateCascade()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_light_shadow_service_a08be4f4a330168acda97a7075708caf3} 
+void SFW\+::\+Graphics\+::\+Light\+Shadow\+Service\+::\+Update\+Cascade (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_camera_params}{Camera\+Params}} \&}]{cam}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_math_a2ded83bd3f26c7d6258ce43e16bdc067}{Math\+::\+AABB3f}} \&}]{scene\+Bounds}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_light_shadow_service_8h_source}{Light\+Shadow\+Service.\+h}} の \mbox{\hyperlink{_light_shadow_service_8h_source_l00246}{246}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_light_shadow_service_8h}{Light\+Shadow\+Service.\+h}}\end{DoxyCompactItemize}

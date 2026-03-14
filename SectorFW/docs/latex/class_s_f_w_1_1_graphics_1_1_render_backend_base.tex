@@ -1,0 +1,394 @@
+\doxysection{SFW\+::Graphics\+::Render\+Backend\+Base\texorpdfstring{$<$}{<} Derived, RTV, DSV, SRV, Buffer, View\+Handle \texorpdfstring{$>$}{>} クラステンプレート}
+\hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base}{}\label{class_s_f_w_1_1_graphics_1_1_render_backend_base}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+
+
+レンダリングバックエンドの基底クラス。\+CRTPを使用して派生クラスで実装を強制する。  
+
+
+
+
+{\ttfamily \#include $<$Render\+Backend.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_af9d1ab7211c075468ba6c849a326818f}{Add\+Resource\+Manager\+To\+Render\+Service}} (\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{Render\+Graph}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$ \&graph)
+\begin{DoxyCompactList}\small\item\em Render\+Graphにリソースマネージャーを追加する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a837b63bcc718fcb980542f373649cd98}{Set\+Primitive\+Topology}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0ed}{Primitive\+Topology}} topology) const
+\begin{DoxyCompactList}\small\item\em プリミティブのトポロジーを設定する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a955e3ce740c38bdc3330c177d88c2b1a}{Set\+Rasterizer\+State}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5}{Rasterizer\+State\+ID}} state) const
+\begin{DoxyCompactList}\small\item\em ラスタライザーステートを設定する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_ab3ef7edac5bd80cc13d455eae7c5a778}{Set\+Blend\+State}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556b}{Blend\+State\+ID}} state) const
+\begin{DoxyCompactList}\small\item\em ブレンドステートを設定する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_ad72a2d9b519bcf9c76c178b40002cba3}{Set\+Depth\+Stencil\+State}} (\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3}{Depth\+Stencil\+State\+ID}} state, uint32\+\_\+t stencil\+Ref=0) const
+\begin{DoxyCompactList}\small\item\em デプスステンシルステートを設定する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a509225ed159e1b59d893bd4dab882eef}{Set\+Render\+Targets}} (const std\+::vector$<$ RTV $>$ \&rtvs, void \texorpdfstring{$\ast$}{*}dsv) const
+\begin{DoxyCompactList}\small\item\em レンダーターゲットとデプスステンシルビューを設定する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a994054adf9d660b5e4957da3b1997f51}{Bind\+PSSRVs}} (const std\+::vector$<$ SRV $>$ \&srvs, uint32\+\_\+t start\+Slot=0) const
+\begin{DoxyCompactList}\small\item\em シェーダーリソースビューをバインドする関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_adcc638519750590e321400fa91db7170}{Bind\+VSCBVs}} (const std\+::vector$<$ Buffer $>$ \&cbvs, uint32\+\_\+t start\+Slot=0) const
+\begin{DoxyCompactList}\small\item\em 定数バッファビューをバインドする関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a963fc18d29a587138ec96264143cc3c8}{Bind\+PSCBVs}} (const std\+::vector$<$ Buffer $>$ \&cbvs, uint32\+\_\+t start\+Slot=0) const
+\begin{DoxyCompactList}\small\item\em ピクセルシェーダー用定数バッファビューをバインドする関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a67e4fe237beab588a9644e96ee5f092d}{Bind\+Global\+VSCBVs}} (const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_bind_slot_buffer}{Bind\+Slot\+Buffer}} $>$ \&cbvs) const
+\begin{DoxyCompactList}\small\item\em グローバル定数バッファビューをバインドする関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a3338354686612337875df76617b3174a}{Set\+Viewport}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport}{Viewport}} \&vp) const
+\begin{DoxyCompactList}\small\item\em ビューポートを設定する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a35a067f4039137e3ee3b1b271dc61d2f}{Begin\+Frame\+Upload}} (const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Shared\+Instance\+Arena\+::\+Instance\+Pool}} \texorpdfstring{$\ast$}{*}frame\+Pool, uint32\+\_\+t inst\+Count)
+\begin{DoxyCompactList}\small\item\em フレームごとのインスタンスデータをアップロードする関数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename VecT$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a517a7f4033bfccfd1f573427e12420e6}{Execute\+Draw\+Indexed\+Instanced}} (const VecT \&cmds, std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}} $>$ pso\+Override=std\+::nullopt, bool use\+PSORasterizer=true, bool rebind\+PSO=false)
+\begin{DoxyCompactList}\small\item\em インデックス付きインスタンスドローを実行する関数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename VecT$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_ac8489ee91a8e2ef8ba614dea79befd20}{Execute\+Draw\+Indexed\+Instanced}} (const VecT \&cmds, std\+::span$<$ const uint32\+\_\+t $>$ indices, std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}} $>$ pso\+Override=std\+::nullopt, bool use\+PSORasterizer=true, bool rebind\+PSO=false)
+\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a69cfbab42678e659cb8fa984f97e31cc}{Process\+Deferred\+Deletes}} (uint64\+\_\+t current\+Frame)
+\begin{DoxyCompactList}\small\item\em フレーム終了時に遅延削除を処理する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a30707e108564c58fe4e93eea0b00fdc0}{Update\+Camera\+Buffer\+Data}} (Buffer buffer, const void \texorpdfstring{$\ast$}{*}data, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em バッファデータを更新する関数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$\newline
+class SFW\+::\+Graphics\+::\+Render\+Backend\+Base$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$}
+レンダリングバックエンドの基底クラス。\+CRTPを使用して派生クラスで実装を強制する。 
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00023}{23}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_af9d1ab7211c075468ba6c849a326818f}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!AddResourceManagerToRenderService@{AddResourceManagerToRenderService}}
+\index{AddResourceManagerToRenderService@{AddResourceManagerToRenderService}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{AddResourceManagerToRenderService()}{AddResourceManagerToRenderService()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_af9d1ab7211c075468ba6c849a326818f} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Add\+Resource\+Manager\+To\+Render\+Service (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_graph}{Render\+Graph}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$ \&}]{graph}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Render\+Graphにリソースマネージャーを追加する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em graph} & レンダーグラフの参照 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00029}{29}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_a35a067f4039137e3ee3b1b271dc61d2f}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!BeginFrameUpload@{BeginFrameUpload}}
+\index{BeginFrameUpload@{BeginFrameUpload}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{BeginFrameUpload()}{BeginFrameUpload()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_a35a067f4039137e3ee3b1b271dc61d2f} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Begin\+Frame\+Upload (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool}{Shared\+Instance\+Arena\+::\+Instance\+Pool}} \texorpdfstring{$\ast$}{*}}]{frame\+Pool}{, }\item[{uint32\+\_\+t}]{inst\+Count}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+フレームごとのインスタンスデータをアップロードする関数 
+
+
+\begin{DoxyParams}{引数}
+{\em frame\+Pool} & インスタンスデータの配列 \\
+\hline
+{\em inst\+Count} & インスタンスデータの数 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00111}{111}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_a67e4fe237beab588a9644e96ee5f092d}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!BindGlobalVSCBVs@{BindGlobalVSCBVs}}
+\index{BindGlobalVSCBVs@{BindGlobalVSCBVs}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{BindGlobalVSCBVs()}{BindGlobalVSCBVs()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_a67e4fe237beab588a9644e96ee5f092d} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Bind\+Global\+VSCBVs (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_bind_slot_buffer}{Bind\+Slot\+Buffer}} $>$ \&}]{cbvs}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+グローバル定数バッファビューをバインドする関数 
+
+
+\begin{DoxyParams}{引数}
+{\em cbvs} & 定数バッファビューの配列 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00096}{96}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_a963fc18d29a587138ec96264143cc3c8}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!BindPSCBVs@{BindPSCBVs}}
+\index{BindPSCBVs@{BindPSCBVs}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{BindPSCBVs()}{BindPSCBVs()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_a963fc18d29a587138ec96264143cc3c8} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Bind\+PSCBVs (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ Buffer $>$ \&}]{cbvs}{, }\item[{uint32\+\_\+t}]{start\+Slot}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ピクセルシェーダー用定数バッファビューをバインドする関数 
+
+
+\begin{DoxyParams}{引数}
+{\em cbvs} & 定数バッファビューの配列 \\
+\hline
+{\em start\+Slot} & バインド開始スロット \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00089}{89}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_a994054adf9d660b5e4957da3b1997f51}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!BindPSSRVs@{BindPSSRVs}}
+\index{BindPSSRVs@{BindPSSRVs}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{BindPSSRVs()}{BindPSSRVs()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_a994054adf9d660b5e4957da3b1997f51} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Bind\+PSSRVs (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ SRV $>$ \&}]{srvs}{, }\item[{uint32\+\_\+t}]{start\+Slot}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+シェーダーリソースビューをバインドする関数 
+
+
+\begin{DoxyParams}{引数}
+{\em srvs} & シェーダーリソースビューの配列 \\
+\hline
+{\em start\+Slot} & バインド開始スロット \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00073}{73}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_adcc638519750590e321400fa91db7170}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!BindVSCBVs@{BindVSCBVs}}
+\index{BindVSCBVs@{BindVSCBVs}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{BindVSCBVs()}{BindVSCBVs()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_adcc638519750590e321400fa91db7170} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Bind\+VSCBVs (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ Buffer $>$ \&}]{cbvs}{, }\item[{uint32\+\_\+t}]{start\+Slot}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+定数バッファビューをバインドする関数 
+
+
+\begin{DoxyParams}{引数}
+{\em cbvs} & 定数バッファビューの配列 \\
+\hline
+{\em start\+Slot} & バインド開始スロット \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00081}{81}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_a517a7f4033bfccfd1f573427e12420e6}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!ExecuteDrawIndexedInstanced@{ExecuteDrawIndexedInstanced}}
+\index{ExecuteDrawIndexedInstanced@{ExecuteDrawIndexedInstanced}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{ExecuteDrawIndexedInstanced()}{ExecuteDrawIndexedInstanced()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_a517a7f4033bfccfd1f573427e12420e6} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+template$<$typename VecT$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Execute\+Draw\+Indexed\+Instanced (\begin{DoxyParamCaption}\item[{const VecT \&}]{cmds}{, }\item[{std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}} $>$}]{pso\+Override}{ = {\ttfamily std\+:\+:nullopt}, }\item[{bool}]{use\+PSORasterizer}{ = {\ttfamily true}, }\item[{bool}]{rebind\+PSO}{ = {\ttfamily false}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+インデックス付きインスタンスドローを実行する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em cmds} & インデックス付きインスタンスドローコマンドの配列 \\
+\hline
+{\em use\+PSORastarizer} & ラスタライザーステートを\+PSOから設定するかどうか \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00120}{120}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_ac8489ee91a8e2ef8ba614dea79befd20}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!ExecuteDrawIndexedInstanced@{ExecuteDrawIndexedInstanced}}
+\index{ExecuteDrawIndexedInstanced@{ExecuteDrawIndexedInstanced}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{ExecuteDrawIndexedInstanced()}{ExecuteDrawIndexedInstanced()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_ac8489ee91a8e2ef8ba614dea79befd20} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+template$<$typename VecT$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Execute\+Draw\+Indexed\+Instanced (\begin{DoxyParamCaption}\item[{const VecT \&}]{cmds}{, }\item[{std\+::span$<$ const uint32\+\_\+t $>$}]{indices}{, }\item[{std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}} $>$}]{pso\+Override}{ = {\ttfamily std\+:\+:nullopt}, }\item[{bool}]{use\+PSORasterizer}{ = {\ttfamily true}, }\item[{bool}]{rebind\+PSO}{ = {\ttfamily false}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00125}{125}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_a69cfbab42678e659cb8fa984f97e31cc}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!ProcessDeferredDeletes@{ProcessDeferredDeletes}}
+\index{ProcessDeferredDeletes@{ProcessDeferredDeletes}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{ProcessDeferredDeletes()}{ProcessDeferredDeletes()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_a69cfbab42678e659cb8fa984f97e31cc} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Process\+Deferred\+Deletes (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{current\+Frame}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+フレーム終了時に遅延削除を処理する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em current\+Frame} & 現在のフレーム番号 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00132}{132}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_ab3ef7edac5bd80cc13d455eae7c5a778}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!SetBlendState@{SetBlendState}}
+\index{SetBlendState@{SetBlendState}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{SetBlendState()}{SetBlendState()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_ab3ef7edac5bd80cc13d455eae7c5a778} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Set\+Blend\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ad3b0ed4e715bafe26a5351c574c1556b}{Blend\+State\+ID}}}]{state}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ブレンドステートを設定する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em state} & ブレンドステート\+ID \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00050}{50}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_ad72a2d9b519bcf9c76c178b40002cba3}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!SetDepthStencilState@{SetDepthStencilState}}
+\index{SetDepthStencilState@{SetDepthStencilState}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{SetDepthStencilState()}{SetDepthStencilState()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_ad72a2d9b519bcf9c76c178b40002cba3} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Set\+Depth\+Stencil\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a8a6b5530cdc2c1eaaa1065d6ff7dfef3}{Depth\+Stencil\+State\+ID}}}]{state}{, }\item[{uint32\+\_\+t}]{stencil\+Ref}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+デプスステンシルステートを設定する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em state} & デプスステンシルステート\+ID \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00057}{57}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_a837b63bcc718fcb980542f373649cd98}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!SetPrimitiveTopology@{SetPrimitiveTopology}}
+\index{SetPrimitiveTopology@{SetPrimitiveTopology}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{SetPrimitiveTopology()}{SetPrimitiveTopology()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_a837b63bcc718fcb980542f373649cd98} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Set\+Primitive\+Topology (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_a802b889fe73ae6c9bc7754be4cd2c0ed}{Primitive\+Topology}}}]{topology}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+プリミティブのトポロジーを設定する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em topology　プリミティブのトポロジー} & \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00036}{36}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_a955e3ce740c38bdc3330c177d88c2b1a}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!SetRasterizerState@{SetRasterizerState}}
+\index{SetRasterizerState@{SetRasterizerState}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{SetRasterizerState()}{SetRasterizerState()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_a955e3ce740c38bdc3330c177d88c2b1a} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Set\+Rasterizer\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_af9f678d5587dcdfd0bd9b7ca4072f9f5}{Rasterizer\+State\+ID}}}]{state}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ラスタライザーステートを設定する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em state} & ラスタライザーステート\+ID \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00043}{43}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_a509225ed159e1b59d893bd4dab882eef}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!SetRenderTargets@{SetRenderTargets}}
+\index{SetRenderTargets@{SetRenderTargets}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{SetRenderTargets()}{SetRenderTargets()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_a509225ed159e1b59d893bd4dab882eef} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Set\+Render\+Targets (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ RTV $>$ \&}]{rtvs}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{dsv}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+レンダーターゲットとデプスステンシルビューを設定する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em rtvs} & レンダーターゲットビューの配列 \\
+\hline
+{\em dsv} & デプスステンシルビュー \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00065}{65}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_a3338354686612337875df76617b3174a}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!SetViewport@{SetViewport}}
+\index{SetViewport@{SetViewport}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{SetViewport()}{SetViewport()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_a3338354686612337875df76617b3174a} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Set\+Viewport (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_viewport}{Viewport}} \&}]{vp}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ビューポートを設定する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em vp} & ビューポート情報 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00103}{103}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_graphics_1_1_render_backend_base_a30707e108564c58fe4e93eea0b00fdc0}\index{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}!UpdateCameraBufferData@{UpdateCameraBufferData}}
+\index{UpdateCameraBufferData@{UpdateCameraBufferData}!SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$@{SFW::Graphics::RenderBackendBase$<$ Derived, RTV, DSV, SRV, Buffer, ViewHandle $>$}}
+\doxysubsubsection{\texorpdfstring{UpdateCameraBufferData()}{UpdateCameraBufferData()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_render_backend_base_a30707e108564c58fe4e93eea0b00fdc0} 
+template$<$typename Derived, Pointer\+Type RTV, Pointer\+Type DSV, Pointer\+Type SRV, Pointer\+Type Buffer, template$<$ typename $>$ class View\+Handle$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base}{SFW\+::\+Graphics\+::\+Render\+Backend\+Base}}$<$ Derived, RTV, DSV, SRV, Buffer, View\+Handle $>$\+::\+Update\+Camera\+Buffer\+Data (\begin{DoxyParamCaption}\item[{Buffer}]{buffer}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{size\+\_\+t}]{size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+バッファデータを更新する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em buffer} & 更新するバッファ \\
+\hline
+{\em data} & 更新データへのポインタ \\
+\hline
+{\em size} & 更新データのサイズ（バイト単位） \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_render_backend_8hpp_source}{Render\+Backend.\+hpp}} の \mbox{\hyperlink{_render_backend_8hpp_source_l00141}{141}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Graphics/\mbox{\hyperlink{_render_backend_8hpp}{Render\+Backend.\+hpp}}\end{DoxyCompactItemize}

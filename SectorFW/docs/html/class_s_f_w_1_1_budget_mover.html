@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::BudgetMover クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_budget_mover.html','','class_s_f_w_1_1_budget_mover-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::BudgetMover クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>予算付きバッチ移送クラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_chunk_crossing_move_8hpp_source.html">ChunkCrossingMove.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:Accessor" id="r_Accessor"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_budget_mover_1_1_accessor.html">Accessor</a></td></tr>
+<tr class="memitem:LocalBatch" id="r_LocalBatch"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_budget_mover_1_1_local_batch.html">LocalBatch</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ローカル一時バッファ（thread_local を使わない合意的バッチ）  <a href="class_s_f_w_1_1_budget_mover_1_1_local_batch.html#details">[詳解]</a><br /></td></tr>
+<tr class="memitem:PendingMove" id="r_PendingMove"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f_w_1_1_budget_mover_1_1_pending_move.html">PendingMove</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a9a3cfc8caf2427132d0b122522219076" id="r_a9a3cfc8caf2427132d0b122522219076"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a3cfc8caf2427132d0b122522219076">TryEnqueue</a> (<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a> id, const <a class="el" href="struct_s_f_w_1_1_spatial_chunk_key.html">SpatialChunkKey</a> &amp;src, const <a class="el" href="struct_s_f_w_1_1_spatial_chunk_key.html">SpatialChunkKey</a> &amp;dst)</td></tr>
+<tr class="memitem:a6ed5612313992d6920d074700df04087" id="r_a6ed5612313992d6920d074700df04087"><td class="memTemplParams" colspan="2">template&lt;class Range&gt; </td></tr>
+<tr class="memitem:a6ed5612313992d6920d074700df04087 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ed5612313992d6920d074700df04087">EnqueueBulk</a> (const Range &amp;moves)</td></tr>
+<tr class="memitem:aeddcb2d4a0bd5661930d248697469d8b" id="r_aeddcb2d4a0bd5661930d248697469d8b"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeddcb2d4a0bd5661930d248697469d8b">Flush</a> (const <a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;reg, size_t budget)</td></tr>
+<tr class="memitem:a845be92d99951bf2d8261ebe2661959c" id="r_a845be92d99951bf2d8261ebe2661959c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a845be92d99951bf2d8261ebe2661959c">Clear</a> ()</td></tr>
+<tr class="memitem:ae9bab9984ede07a8f96c655dd67bf8f1" id="r_ae9bab9984ede07a8f96c655dd67bf8f1"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae9bab9984ede07a8f96c655dd67bf8f1">Size</a> () const</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>予算付きバッチ移送クラス </p>
+
+<p class="definition"> <a class="el" href="_chunk_crossing_move_8hpp_source.html">ChunkCrossingMove.hpp</a> の <a class="el" href="_chunk_crossing_move_8hpp_source.html#l00214">214</a> 行目に定義があります。</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a845be92d99951bf2d8261ebe2661959c" name="a845be92d99951bf2d8261ebe2661959c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a845be92d99951bf2d8261ebe2661959c">&#9670;&#160;</a></span>Clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::BudgetMover::Clear </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_chunk_crossing_move_8hpp_source.html">ChunkCrossingMove.hpp</a> の <a class="el" href="_chunk_crossing_move_8hpp_source.html#l00363">363</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6ed5612313992d6920d074700df04087" name="a6ed5612313992d6920d074700df04087"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ed5612313992d6920d074700df04087">&#9670;&#160;</a></span>EnqueueBulk()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Range&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::BudgetMover::EnqueueBulk </td>
+          <td>(</td>
+          <td class="paramtype">const Range &amp;</td>          <td class="paramname"><span class="paramname"><em>moves</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_chunk_crossing_move_8hpp_source.html">ChunkCrossingMove.hpp</a> の <a class="el" href="_chunk_crossing_move_8hpp_source.html#l00312">312</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aeddcb2d4a0bd5661930d248697469d8b" name="aeddcb2d4a0bd5661930d248697469d8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeddcb2d4a0bd5661930d248697469d8b">&#9670;&#160;</a></span>Flush()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SFW::BudgetMover::Flush </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>reg</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>budget</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_chunk_crossing_move_8hpp_source.html">ChunkCrossingMove.hpp</a> の <a class="el" href="_chunk_crossing_move_8hpp_source.html#l00318">318</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae9bab9984ede07a8f96c655dd67bf8f1" name="ae9bab9984ede07a8f96c655dd67bf8f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9bab9984ede07a8f96c655dd67bf8f1">&#9670;&#160;</a></span>Size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t SFW::BudgetMover::Size </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_chunk_crossing_move_8hpp_source.html">ChunkCrossingMove.hpp</a> の <a class="el" href="_chunk_crossing_move_8hpp_source.html#l00364">364</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9a3cfc8caf2427132d0b122522219076" name="a9a3cfc8caf2427132d0b122522219076"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a3cfc8caf2427132d0b122522219076">&#9670;&#160;</a></span>TryEnqueue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::BudgetMover::TryEnqueue </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_spatial_chunk_key.html">SpatialChunkKey</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>src</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_s_f_w_1_1_spatial_chunk_key.html">SpatialChunkKey</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>dst</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_chunk_crossing_move_8hpp_source.html">ChunkCrossingMove.hpp</a> の <a class="el" href="_chunk_crossing_move_8hpp_source.html#l00303">303</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/<a class="el" href="_chunk_crossing_move_8hpp_source.html">ChunkCrossingMove.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="class_s_f_w_1_1_budget_mover.html">BudgetMover</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

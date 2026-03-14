@@ -1,0 +1,365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Input::WinMouseInput クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_input_1_1_win_mouse_input.html','','class_s_f_w_1_1_input_1_1_win_mouse_input-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Input::WinMouseInput クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Windows向けマウス入力処理クラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_win_mouse_input_8h_source.html">WinMouseInput.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:afc12bb86540554ec3aee8c98f5f2db2a" id="r_afc12bb86540554ec3aee8c98f5f2db2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc12bb86540554ec3aee8c98f5f2db2a">ToggleCapture</a> (bool on)</td></tr>
+<tr class="memdesc:afc12bb86540554ec3aee8c98f5f2db2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">マウスキャプチャの切り替え  <br /></td></tr>
+<tr class="memitem:acc0ee3e9ac7eb97e8a069c8778c56f3f" id="r_acc0ee3e9ac7eb97e8a069c8778c56f3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc0ee3e9ac7eb97e8a069c8778c56f3f">GetDelta</a> (LONG &amp;outDx, LONG &amp;outDy) const noexcept</td></tr>
+<tr class="memdesc:acc0ee3e9ac7eb97e8a069c8778c56f3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">蓄積されたマウスの移動量を取得する  <br /></td></tr>
+<tr class="memitem:a975bbbc21fbb780fbc836aee0c0b6694" id="r_a975bbbc21fbb780fbc836aee0c0b6694"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a975bbbc21fbb780fbc836aee0c0b6694">GetMouseWheel</a> (int &amp;outWheelV, int &amp;outWheelH) const noexcept</td></tr>
+<tr class="memdesc:a975bbbc21fbb780fbc836aee0c0b6694"><td class="mdescLeft">&#160;</td><td class="mdescRight">マウスホイールの回転量を取得する  <br /></td></tr>
+<tr class="memitem:a0b94e37dd1fc38590eacdc2aa085352b" id="r_a0b94e37dd1fc38590eacdc2aa085352b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b94e37dd1fc38590eacdc2aa085352b">IsCaptured</a> () const noexcept</td></tr>
+<tr class="memdesc:a0b94e37dd1fc38590eacdc2aa085352b"><td class="mdescLeft">&#160;</td><td class="mdescRight">マウスの状態を取得する関数  <br /></td></tr>
+<tr class="memitem:ad44e0fc97bbd34c089c40e8ac0af647c" id="r_ad44e0fc97bbd34c089c40e8ac0af647c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad44e0fc97bbd34c089c40e8ac0af647c">IsLeftDown</a> () const noexcept</td></tr>
+<tr class="memdesc:ad44e0fc97bbd34c089c40e8ac0af647c"><td class="mdescLeft">&#160;</td><td class="mdescRight">左ボタンが押されているかどうかを取得する関数  <br /></td></tr>
+<tr class="memitem:ae8607d8b0f958cd3a079114488c0acfe" id="r_ae8607d8b0f958cd3a079114488c0acfe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8607d8b0f958cd3a079114488c0acfe">IsRightDown</a> () const noexcept</td></tr>
+<tr class="memdesc:ae8607d8b0f958cd3a079114488c0acfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">右ボタンが押されているかどうかを取得する関数  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-friends" class="groupheader"><a id="friends" name="friends"></a>
+フレンド</h2></td></tr>
+<tr class="memitem:ae4de32c550ad314e206d7602e545b244" id="r_ae4de32c550ad314e206d7602e545b244"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae4de32c550ad314e206d7602e545b244">SFW::WindowHandler</a></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>Windows向けマウス入力処理クラス </p>
+
+<p class="definition"> <a class="el" href="_win_mouse_input_8h_source.html">WinMouseInput.h</a> の <a class="el" href="_win_mouse_input_8h_source.html#l00022">22</a> 行目に定義があります。</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="acc0ee3e9ac7eb97e8a069c8778c56f3f" name="acc0ee3e9ac7eb97e8a069c8778c56f3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc0ee3e9ac7eb97e8a069c8778c56f3f">&#9670;&#160;</a></span>GetDelta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Input::WinMouseInput::GetDelta </td>
+          <td>(</td>
+          <td class="paramtype">LONG &amp;</td>          <td class="paramname"><span class="paramname"><em>outDx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LONG &amp;</td>          <td class="paramname"><span class="paramname"><em>outDy</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>蓄積されたマウスの移動量を取得する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">outDx</td><td>マウスのX方向の移動量 </td></tr>
+    <tr><td class="paramname">outDy</td><td>マウスのY方向の移動量 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_win_mouse_input_8h_source.html">WinMouseInput.h</a> の <a class="el" href="_win_mouse_input_8h_source.html#l00076">76</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a975bbbc21fbb780fbc836aee0c0b6694" name="a975bbbc21fbb780fbc836aee0c0b6694"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a975bbbc21fbb780fbc836aee0c0b6694">&#9670;&#160;</a></span>GetMouseWheel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Input::WinMouseInput::GetMouseWheel </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>outWheelV</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>outWheelH</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>マウスホイールの回転量を取得する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">outWheelV</td><td>垂直ホイールの回転量 </td></tr>
+    <tr><td class="paramname">outWheelH</td><td>水平ホイールの回転量 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_win_mouse_input_8h_source.html">WinMouseInput.h</a> の <a class="el" href="_win_mouse_input_8h_source.html#l00082">82</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0b94e37dd1fc38590eacdc2aa085352b" name="a0b94e37dd1fc38590eacdc2aa085352b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b94e37dd1fc38590eacdc2aa085352b">&#9670;&#160;</a></span>IsCaptured()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Input::WinMouseInput::IsCaptured </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>マウスの状態を取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>bool マウスがキャプチャされているかどうか </dd></dl>
+
+<p class="definition"> <a class="el" href="_win_mouse_input_8h_source.html">WinMouseInput.h</a> の <a class="el" href="_win_mouse_input_8h_source.html#l00087">87</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad44e0fc97bbd34c089c40e8ac0af647c" name="ad44e0fc97bbd34c089c40e8ac0af647c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad44e0fc97bbd34c089c40e8ac0af647c">&#9670;&#160;</a></span>IsLeftDown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Input::WinMouseInput::IsLeftDown </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>左ボタンが押されているかどうかを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>bool 左ボタンが押されている場合はtrue、そうでない場合はfalse </dd></dl>
+
+<p class="definition"> <a class="el" href="_win_mouse_input_8h_source.html">WinMouseInput.h</a> の <a class="el" href="_win_mouse_input_8h_source.html#l00092">92</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae8607d8b0f958cd3a079114488c0acfe" name="ae8607d8b0f958cd3a079114488c0acfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8607d8b0f958cd3a079114488c0acfe">&#9670;&#160;</a></span>IsRightDown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Input::WinMouseInput::IsRightDown </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>右ボタンが押されているかどうかを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>bool 右ボタンが押されている場合はtrue、そうでない場合はfalse </dd></dl>
+
+<p class="definition"> <a class="el" href="_win_mouse_input_8h_source.html">WinMouseInput.h</a> の <a class="el" href="_win_mouse_input_8h_source.html#l00097">97</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="afc12bb86540554ec3aee8c98f5f2db2a" name="afc12bb86540554ec3aee8c98f5f2db2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc12bb86540554ec3aee8c98f5f2db2a">&#9670;&#160;</a></span>ToggleCapture()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Input::WinMouseInput::ToggleCapture </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>on</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>マウスキャプチャの切り替え </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">on</td><td>キャプチャを有効にするかどうか </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a name="doc-related-members" id="doc-related-members"></a><h2 id="header-doc-related-members" class="groupheader">フレンドと関連関数の詳解</h2>
+<a id="ae4de32c550ad314e206d7602e545b244" name="ae4de32c550ad314e206d7602e545b244"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4de32c550ad314e206d7602e545b244">&#9670;&#160;</a></span>SFW::WindowHandler</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class SFW::WindowHandler</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel friend">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_win_mouse_input_8h_source.html">WinMouseInput.h</a> の <a class="el" href="_win_mouse_input_8h_source.html#l00023">23</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Input/<a class="el" href="_win_mouse_input_8h_source.html">WinMouseInput.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_input.html">Input</a></li><li class="navelem"><a href="class_s_f_w_1_1_input_1_1_win_mouse_input.html">WinMouseInput</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

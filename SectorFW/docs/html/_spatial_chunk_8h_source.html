@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/SpatialChunk.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_spatial_chunk_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SpatialChunk.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_spatial_chunk_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="_entity_manager_8h.html">ECS/EntityManager.h</a>&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="_registry_types_8h.html">RegistryTypes.h</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w.html">SFW</a></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
+<div class="foldopen" id="foldopen00018" data-start="{" data-end="};">
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_spatial_chunk.html">   18</a></span>    <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_spatial_chunk.html#a38b5cd5383a1de4fa3f62470f89625c4">SpatialChunk</a></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_spatial_chunk.html#a5594dba34c2b41368111b57f057d11e2">   25</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="class_s_f_w_1_1_spatial_chunk.html#a5594dba34c2b41368111b57f057d11e2">SizeType</a> = uint32_t;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_spatial_chunk.html#af290a42d0fc1b4a1862cd90e56878711">   27</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="class_s_f_w_1_1_spatial_chunk.html#af290a42d0fc1b4a1862cd90e56878711">Bounds3f</a> = <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a2ded83bd3f26c7d6258ce43e16bdc067">Math::AABB3f</a>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_spatial_chunk.html#a38b5cd5383a1de4fa3f62470f89625c4">   33</a></span>        <a class="code hl_function" href="class_s_f_w_1_1_spatial_chunk.html#a38b5cd5383a1de4fa3f62470f89625c4">SpatialChunk</a>() :entityManager(<a class="code hl_namespace" href="namespacestd.html">std</a>::make_unique&lt;<a class="code hl_namespace" href="namespace_s_f_w_1_1_e_c_s.html">ECS</a>::EntityManager&gt;()) {}</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_spatial_chunk.html#a2562539212bdebf93dff9bdb39ff43ec">   38</a></span>        <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a>&amp; <a class="code hl_function" href="class_s_f_w_1_1_spatial_chunk.html#a2562539212bdebf93dff9bdb39ff43ec">GetEntityManager</a>() noexcept { <span class="keywordflow">return</span> *entityManager; }</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_spatial_chunk.html#a3cfe9bee15f89c8726a09bbcc341b457">   39</a></span>        <span class="keyword">const</span> <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a>&amp; <a class="code hl_function" href="class_s_f_w_1_1_spatial_chunk.html#a3cfe9bee15f89c8726a09bbcc341b457">GetEntityManager</a>() const noexcept { <span class="keywordflow">return</span> *entityManager; }</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="comment">// --- NodeKey (space / code / depth / generation) をチャンク単位で保持 ---</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_spatial_chunk.html#a560ec8ffd2070c9d83a739bd97ec0e44">   42</a></span>        <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_spatial_chunk_key.html">SpatialChunkKey</a>&amp; <a class="code hl_function" href="class_s_f_w_1_1_spatial_chunk.html#a560ec8ffd2070c9d83a739bd97ec0e44">GetNodeKey</a>() const noexcept { <span class="keywordflow">return</span> nodeKey; }</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_spatial_chunk.html#abab8fbfd926eb617976eebcfe0500a55">   43</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_spatial_chunk.html#abab8fbfd926eb617976eebcfe0500a55">SetNodeKey</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_spatial_chunk_key.html">SpatialChunkKey</a>&amp; k) <span class="keyword">noexcept</span> { nodeKey = k; }</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_spatial_chunk.html#a89ac46fa43e54ec774a30690b5b06794">   44</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_spatial_chunk.html#a89ac46fa43e54ec774a30690b5b06794">BumpGeneration</a>() noexcept { ++nodeKey.generation; }</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_spatial_chunk.html#ade6f6c918550a71866fc0d36c5639ceb">   46</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_spatial_chunk.html#ade6f6c918550a71866fc0d36c5639ceb">HasStaticBounds</a>() const noexcept { <span class="keywordflow">return</span> hasStaticBounds; }</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_spatial_chunk.html#a3cb1caaeea6df05be42ca3ceb8cee2ab">   47</a></span>        <span class="keyword">const</span> <a class="code hl_typedef" href="class_s_f_w_1_1_spatial_chunk.html#af290a42d0fc1b4a1862cd90e56878711">Bounds3f</a>&amp; <a class="code hl_function" href="class_s_f_w_1_1_spatial_chunk.html#a3cb1caaeea6df05be42ca3ceb8cee2ab">GetStaticBoundsWS</a>() const noexcept { <span class="keywordflow">return</span> staticBoundsWS; }</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="comment">// 静的EntityのAABBでのみ拡張（縮めない）</span></div>
+<div class="foldopen" id="foldopen00050" data-start="{" data-end="}">
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_spatial_chunk.html#a4d7ef098b10aab26652b876742b5ad74">   50</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_spatial_chunk.html#a4d7ef098b10aab26652b876742b5ad74">ExpandStaticBoundsWS</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="class_s_f_w_1_1_spatial_chunk.html#af290a42d0fc1b4a1862cd90e56878711">Bounds3f</a>&amp; aabbWS) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        {</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="keywordflow">if</span> (!hasStaticBounds)</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                staticBoundsWS = aabbWS;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                hasStaticBounds = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            }</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            {</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                staticBoundsWS.expandToInclude(aabbWS);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            }</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        }</div>
+</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="comment">// 初期化したいとき用（任意）</span></div>
+<div class="foldopen" id="foldopen00064" data-start="{" data-end="}">
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_spatial_chunk.html#ac2ea0ad02933ed2c1884de7b55d78920">   64</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_spatial_chunk.html#ac2ea0ad02933ed2c1884de7b55d78920">ResetStaticBounds</a>() noexcept</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            hasStaticBounds = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            staticBoundsWS.invalidate();</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        }</div>
+</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="comment">//エンティティマネージャー.空間チャンク内のエンティティを管理する</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        std::unique_ptr&lt;ECS::EntityManager&gt; entityManager;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="comment">//このチャンクを特定するキー。現在世代を含む</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <a class="code hl_struct" href="struct_s_f_w_1_1_spatial_chunk_key.html">SpatialChunkKey</a> nodeKey{};</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <a class="code hl_typedef" href="class_s_f_w_1_1_spatial_chunk.html#af290a42d0fc1b4a1862cd90e56878711">Bounds3f</a> staticBoundsWS{};</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordtype">bool</span> hasStaticBounds = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    };</div>
+</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">   82</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">ChunkSizeType</a> = <a class="code hl_typedef" href="class_s_f_w_1_1_spatial_chunk.html#a5594dba34c2b41368111b57f057d11e2">SpatialChunk::SizeType</a>;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_s_f_w_1_1_e_c_s.html">ECS</a></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keyword">template</span>&lt;&gt;</div>
+<div class="foldopen" id="foldopen00087" data-start="{" data-end="}">
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_e_c_s_1_1_query.html#a8494bb7fbce111940dc9614c0c5060f1">   87</a></span>        <span class="keyword">inline</span> std::vector&lt;ArchetypeChunk*&gt; <a class="code hl_function" href="class_s_f_w_1_1_e_c_s_1_1_query.html#ab30526a91aaa023239f86e62d1fc4e71">Query::MatchingChunks</a>(std::vector&lt;SFW::SpatialChunk*&gt;&amp; context) <span class="keyword">const</span> <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        {</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            std::vector&lt;ArchetypeChunk*&gt; result;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            <span class="keyword">auto</span> collect_from = [&amp;](<span class="keyword">const</span> <a class="code hl_class" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a>&amp; em) {</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                <span class="keyword">const</span> <span class="keyword">auto</span>&amp; all = em.GetArchetypeManager().GetAllData();</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; arch : all) {</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                    <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">ComponentMask</a>&amp; mask = arch-&gt;GetMask();</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>                    <span class="keywordflow">if</span> ((mask &amp; required) == required &amp;&amp; (mask &amp; excluded).none()) {</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>                        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; chunks = arch-&gt;GetChunks();</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                        <span class="comment">// 先に必要分だけまとめて拡張（平均的に再確保を減らす）</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                        result.reserve(result.size() + chunks.size());</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; ch : chunks) {</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                            result.push_back(ch.get());</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                        }</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                    }</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                }</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                };</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            <span class="comment">// 空間ごと</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            <span class="keywordflow">for</span> (<span class="keyword">auto</span> spatial : context) {</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                collect_from(spatial-&gt;GetEntityManager());</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            }</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        }</div>
+</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    }</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>}</div>
+<div class="ttc" id="a_entity_manager_8h_html"><div class="ttname"><a href="_entity_manager_8h.html">EntityManager.h</a></div><div class="ttdoc">エンティティマネージャーを定義するクラス</div></div>
+<div class="ttc" id="a_registry_types_8h_html"><div class="ttname"><a href="_registry_types_8h.html">RegistryTypes.h</a></div><div class="ttdoc">レジストリ関連の型を定義するヘッダーファイル</div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_entity_manager_html"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">SFW::ECS::EntityManager</a></div><div class="ttdoc">エンティティの生成と破棄、コンポーネントの追加・削除を管理するクラス</div><div class="ttdef"><b>Definition</b> <a href="_entity_manager_8h_source.html#l00034">EntityManager.h:34</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_e_c_s_1_1_query_html_ab30526a91aaa023239f86e62d1fc4e71"><div class="ttname"><a href="class_s_f_w_1_1_e_c_s_1_1_query.html#ab30526a91aaa023239f86e62d1fc4e71">SFW::ECS::Query::MatchingChunks</a></div><div class="ttdeci">std::vector&lt; ArchetypeChunk * &gt; MatchingChunks(T context) const noexcept</div><div class="ttdoc">クエリにマッチするアーキタイプチャンクを取得します。</div><div class="ttdef"><b>Definition</b> <a href="_query_8h_source.html#l00066">Query.h:66</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_spatial_chunk_html_a2562539212bdebf93dff9bdb39ff43ec"><div class="ttname"><a href="class_s_f_w_1_1_spatial_chunk.html#a2562539212bdebf93dff9bdb39ff43ec">SFW::SpatialChunk::GetEntityManager</a></div><div class="ttdeci">ECS::EntityManager &amp; GetEntityManager() noexcept</div><div class="ttdoc">エンティティマネージャーの取得関数</div><div class="ttdef"><b>Definition</b> <a href="#l00038">SpatialChunk.h:38</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_spatial_chunk_html_a38b5cd5383a1de4fa3f62470f89625c4"><div class="ttname"><a href="class_s_f_w_1_1_spatial_chunk.html#a38b5cd5383a1de4fa3f62470f89625c4">SFW::SpatialChunk::SpatialChunk</a></div><div class="ttdeci">SpatialChunk()</div><div class="ttdoc">コンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00033">SpatialChunk.h:33</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_spatial_chunk_html_a3cb1caaeea6df05be42ca3ceb8cee2ab"><div class="ttname"><a href="class_s_f_w_1_1_spatial_chunk.html#a3cb1caaeea6df05be42ca3ceb8cee2ab">SFW::SpatialChunk::GetStaticBoundsWS</a></div><div class="ttdeci">const Bounds3f &amp; GetStaticBoundsWS() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00047">SpatialChunk.h:47</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_spatial_chunk_html_a3cfe9bee15f89c8726a09bbcc341b457"><div class="ttname"><a href="class_s_f_w_1_1_spatial_chunk.html#a3cfe9bee15f89c8726a09bbcc341b457">SFW::SpatialChunk::GetEntityManager</a></div><div class="ttdeci">const ECS::EntityManager &amp; GetEntityManager() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00039">SpatialChunk.h:39</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_spatial_chunk_html_a4d7ef098b10aab26652b876742b5ad74"><div class="ttname"><a href="class_s_f_w_1_1_spatial_chunk.html#a4d7ef098b10aab26652b876742b5ad74">SFW::SpatialChunk::ExpandStaticBoundsWS</a></div><div class="ttdeci">void ExpandStaticBoundsWS(const Bounds3f &amp;aabbWS) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00050">SpatialChunk.h:50</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_spatial_chunk_html_a5594dba34c2b41368111b57f057d11e2"><div class="ttname"><a href="class_s_f_w_1_1_spatial_chunk.html#a5594dba34c2b41368111b57f057d11e2">SFW::SpatialChunk::SizeType</a></div><div class="ttdeci">uint32_t SizeType</div><div class="ttdoc">空間チャンクのサイズを定義する型</div><div class="ttdef"><b>Definition</b> <a href="#l00025">SpatialChunk.h:25</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_spatial_chunk_html_a560ec8ffd2070c9d83a739bd97ec0e44"><div class="ttname"><a href="class_s_f_w_1_1_spatial_chunk.html#a560ec8ffd2070c9d83a739bd97ec0e44">SFW::SpatialChunk::GetNodeKey</a></div><div class="ttdeci">const SpatialChunkKey &amp; GetNodeKey() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00042">SpatialChunk.h:42</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_spatial_chunk_html_a89ac46fa43e54ec774a30690b5b06794"><div class="ttname"><a href="class_s_f_w_1_1_spatial_chunk.html#a89ac46fa43e54ec774a30690b5b06794">SFW::SpatialChunk::BumpGeneration</a></div><div class="ttdeci">void BumpGeneration() noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00044">SpatialChunk.h:44</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_spatial_chunk_html_abab8fbfd926eb617976eebcfe0500a55"><div class="ttname"><a href="class_s_f_w_1_1_spatial_chunk.html#abab8fbfd926eb617976eebcfe0500a55">SFW::SpatialChunk::SetNodeKey</a></div><div class="ttdeci">void SetNodeKey(const SpatialChunkKey &amp;k) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00043">SpatialChunk.h:43</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_spatial_chunk_html_ac2ea0ad02933ed2c1884de7b55d78920"><div class="ttname"><a href="class_s_f_w_1_1_spatial_chunk.html#ac2ea0ad02933ed2c1884de7b55d78920">SFW::SpatialChunk::ResetStaticBounds</a></div><div class="ttdeci">void ResetStaticBounds() noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00064">SpatialChunk.h:64</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_spatial_chunk_html_ade6f6c918550a71866fc0d36c5639ceb"><div class="ttname"><a href="class_s_f_w_1_1_spatial_chunk.html#ade6f6c918550a71866fc0d36c5639ceb">SFW::SpatialChunk::HasStaticBounds</a></div><div class="ttdeci">bool HasStaticBounds() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00046">SpatialChunk.h:46</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_spatial_chunk_html_af290a42d0fc1b4a1862cd90e56878711"><div class="ttname"><a href="class_s_f_w_1_1_spatial_chunk.html#af290a42d0fc1b4a1862cd90e56878711">SFW::SpatialChunk::Bounds3f</a></div><div class="ttdeci">Math::AABB3f Bounds3f</div><div class="ttdef"><b>Definition</b> <a href="#l00027">SpatialChunk.h:27</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html">SFW::ECS</a></div><div class="ttdef"><b>Definition</b> <a href="_access_info_8h_source.html#l00016">AccessInfo.h:17</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_e_c_s_html_a801a8ddbf41707287f3fc0588d25ec8d"><div class="ttname"><a href="namespace_s_f_w_1_1_e_c_s.html#a801a8ddbf41707287f3fc0588d25ec8d">SFW::ECS::ComponentMask</a></div><div class="ttdeci">std::bitset&lt; MaxComponents &gt; ComponentMask</div><div class="ttdoc">コンポーネントマスクを定義するビットセット型</div><div class="ttdef"><b>Definition</b> <a href="component_8hpp_source.html#l00042">component.hpp:42</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_1_1_math_html_a2ded83bd3f26c7d6258ce43e16bdc067"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#a2ded83bd3f26c7d6258ce43e16bdc067">SFW::Math::AABB3f</a></div><div class="ttdeci">AABB&lt; float, Vec3f &gt; AABB3f</div><div class="ttdef"><b>Definition</b> <a href="_a_a_b_b_8hpp_source.html#l00118">AABB.hpp:118</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html_a5a8d74c7b28d2bf30ae5f35bd7444c78"><div class="ttname"><a href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">SFW::ChunkSizeType</a></div><div class="ttdeci">SpatialChunk::SizeType ChunkSizeType</div><div class="ttdoc">空間チャンクのサイズ型を定義する</div><div class="ttdef"><b>Definition</b> <a href="#l00082">SpatialChunk.h:82</a></div></div>
+<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdef"><b>Definition</b> <a href="entity_8h_source.html#l00051">entity.h:51</a></div></div>
+<div class="ttc" id="astruct_s_f_w_1_1_spatial_chunk_key_html"><div class="ttname"><a href="struct_s_f_w_1_1_spatial_chunk_key.html">SFW::SpatialChunkKey</a></div><div class="ttdoc">SpatialChunkKey: どの SpatialChunk を指すか（Level 区画 世代）</div><div class="ttdef"><b>Definition</b> <a href="_registry_types_8h_source.html#l00021">RegistryTypes.h:21</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_5ada393002ee7234dde4caf0d7998537.html">Core</a></li><li class="navelem"><a href="_spatial_chunk_8h.html">SpatialChunk.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

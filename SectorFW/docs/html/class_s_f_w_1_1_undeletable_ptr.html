@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::UndeletablePtr&lt; T &gt; クラステンプレート</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_undeletable_ptr.html','','class_s_f_w_1_1_undeletable_ptr-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::UndeletablePtr&lt; T &gt; クラステンプレート</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>deleteを防ぐためのポインタラッパークラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_undeletable_ptr_8hpp_source.html">UndeletablePtr.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a9460705739b676fd3aa4c0c8be946d4c" id="r_a9460705739b676fd3aa4c0c8be946d4c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9460705739b676fd3aa4c0c8be946d4c">UndeletablePtr</a> (T *p) noexcept</td></tr>
+<tr class="memdesc:a9460705739b676fd3aa4c0c8be946d4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:a0cf3148a50ff495318cefa6db656453c" id="r_a0cf3148a50ff495318cefa6db656453c"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0cf3148a50ff495318cefa6db656453c">operator-&gt;</a> () const noexcept</td></tr>
+<tr class="memdesc:a0cf3148a50ff495318cefa6db656453c"><td class="mdescLeft">&#160;</td><td class="mdescRight">　実体化  <br /></td></tr>
+<tr class="memitem:a59bb4ccc812204ee36ab330873b5d2aa" id="r_a59bb4ccc812204ee36ab330873b5d2aa"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59bb4ccc812204ee36ab330873b5d2aa">operator*</a> () const noexcept</td></tr>
+<tr class="memdesc:a59bb4ccc812204ee36ab330873b5d2aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">参照演算子  <br /></td></tr>
+<tr class="memitem:a0da7e9373630d798bac72841dcd9d298" id="r_a0da7e9373630d798bac72841dcd9d298"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0da7e9373630d798bac72841dcd9d298">get</a> () const noexcept</td></tr>
+<tr class="memdesc:a0da7e9373630d798bac72841dcd9d298"><td class="mdescLeft">&#160;</td><td class="mdescRight">ポインタを取得する関数  <br /></td></tr>
+<tr class="memitem:a442fe79106ef2123372418a51f3e570c" id="r_a442fe79106ef2123372418a51f3e570c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a442fe79106ef2123372418a51f3e570c">operator delete</a> (void *)=delete</td></tr>
+<tr class="memdesc:a442fe79106ef2123372418a51f3e570c"><td class="mdescLeft">&#160;</td><td class="mdescRight">deleteを防ぐため、明示的なdeleteを禁止  <br /></td></tr>
+<tr class="memitem:a5b2446d19687f6f6fc242f314948f50a" id="r_a5b2446d19687f6f6fc242f314948f50a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b2446d19687f6f6fc242f314948f50a">IsValid</a> () const noexcept</td></tr>
+<tr class="memdesc:a5b2446d19687f6f6fc242f314948f50a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ポインタが有効かどうか  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
+class SFW::UndeletablePtr&lt; T &gt;</div><p>deleteを防ぐためのポインタラッパークラス </p>
+
+<p class="definition"> <a class="el" href="_undeletable_ptr_8hpp_source.html">UndeletablePtr.hpp</a> の <a class="el" href="_undeletable_ptr_8hpp_source.html#l00016">16</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="a9460705739b676fd3aa4c0c8be946d4c" name="a9460705739b676fd3aa4c0c8be946d4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9460705739b676fd3aa4c0c8be946d4c">&#9670;&#160;</a></span>UndeletablePtr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_undeletable_ptr.html">SFW::UndeletablePtr</a>&lt; T &gt;::UndeletablePtr </td>
+          <td>(</td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>p</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td>ポインタ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_undeletable_ptr_8hpp_source.html">UndeletablePtr.hpp</a> の <a class="el" href="_undeletable_ptr_8hpp_source.html#l00026">26</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a0da7e9373630d798bac72841dcd9d298" name="a0da7e9373630d798bac72841dcd9d298"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0da7e9373630d798bac72841dcd9d298">&#9670;&#160;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T * <a class="el" href="class_s_f_w_1_1_undeletable_ptr.html">SFW::UndeletablePtr</a>&lt; T &gt;::get </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ポインタを取得する関数 </p>
+<dl class="section return"><dt>戻り値</dt><dd>T* ポインタ </dd></dl>
+
+<p class="definition"> <a class="el" href="_undeletable_ptr_8hpp_source.html">UndeletablePtr.hpp</a> の <a class="el" href="_undeletable_ptr_8hpp_source.html#l00041">41</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a5b2446d19687f6f6fc242f314948f50a" name="a5b2446d19687f6f6fc242f314948f50a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b2446d19687f6f6fc242f314948f50a">&#9670;&#160;</a></span>IsValid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_s_f_w_1_1_undeletable_ptr.html">SFW::UndeletablePtr</a>&lt; T &gt;::IsValid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ポインタが有効かどうか </p>
+<dl class="section return"><dt>戻り値</dt><dd>有効ならtrue </dd></dl>
+
+<p class="definition"> <a class="el" href="_undeletable_ptr_8hpp_source.html">UndeletablePtr.hpp</a> の <a class="el" href="_undeletable_ptr_8hpp_source.html#l00052">52</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a442fe79106ef2123372418a51f3e570c" name="a442fe79106ef2123372418a51f3e570c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a442fe79106ef2123372418a51f3e570c">&#9670;&#160;</a></span>operator delete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_s_f_w_1_1_undeletable_ptr.html">SFW::UndeletablePtr</a>&lt; T &gt;::operator delete </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>deleteを防ぐため、明示的なdeleteを禁止 </p>
+
+</div>
+</div>
+<a id="a59bb4ccc812204ee36ab330873b5d2aa" name="a59bb4ccc812204ee36ab330873b5d2aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59bb4ccc812204ee36ab330873b5d2aa">&#9670;&#160;</a></span>operator*()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T &amp; <a class="el" href="class_s_f_w_1_1_undeletable_ptr.html">SFW::UndeletablePtr</a>&lt; T &gt;::operator* </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>参照演算子 </p>
+<dl class="section return"><dt>戻り値</dt><dd>T&amp; 参照 </dd></dl>
+
+<p class="definition"> <a class="el" href="_undeletable_ptr_8hpp_source.html">UndeletablePtr.hpp</a> の <a class="el" href="_undeletable_ptr_8hpp_source.html#l00036">36</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0cf3148a50ff495318cefa6db656453c" name="a0cf3148a50ff495318cefa6db656453c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cf3148a50ff495318cefa6db656453c">&#9670;&#160;</a></span>operator-&gt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T * <a class="el" href="class_s_f_w_1_1_undeletable_ptr.html">SFW::UndeletablePtr</a>&lt; T &gt;::operator-&gt; </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>　実体化 </p>
+<dl class="section return"><dt>戻り値</dt><dd>T* ポインタ </dd></dl>
+
+<p class="definition"> <a class="el" href="_undeletable_ptr_8hpp_source.html">UndeletablePtr.hpp</a> の <a class="el" href="_undeletable_ptr_8hpp_source.html#l00031">31</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/<a class="el" href="_undeletable_ptr_8hpp_source.html">UndeletablePtr.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="class_s_f_w_1_1_undeletable_ptr.html">UndeletablePtr</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

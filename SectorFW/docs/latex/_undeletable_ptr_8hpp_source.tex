@@ -1,0 +1,26 @@
+\doxysection{Undeletable\+Ptr.\+hpp}
+\hypertarget{_undeletable_ptr_8hpp_source}{}\label{_undeletable_ptr_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/UndeletablePtr.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Util/UndeletablePtr.hpp}}
+\mbox{\hyperlink{_undeletable_ptr_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00010}00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00011}00011\ \{}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00015}00015\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00016}\mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr}{00016}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a9460705739b676fd3aa4c0c8be946d4c}{UndeletablePtr}}\ \{}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00020}00020\ \ \ \ \ \ \ \ \ T*\ ptr;}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00021}00021\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00026}\mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a9460705739b676fd3aa4c0c8be946d4c}{00026}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a9460705739b676fd3aa4c0c8be946d4c}{UndeletablePtr}}(T*\ p)\ noexcept\ :\ ptr(p)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00031}\mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a0cf3148a50ff495318cefa6db656453c}{00031}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ T*\ \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a0cf3148a50ff495318cefa6db656453c}{operator-\/>}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ ptr;\ \}}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00036}\mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a59bb4ccc812204ee36ab330873b5d2aa}{00036}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ T\&\ \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a59bb4ccc812204ee36ab330873b5d2aa}{operator*}}()\ \ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ *ptr;\ \}}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00041}\mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a0da7e9373630d798bac72841dcd9d298}{00041}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ T*\ \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a0da7e9373630d798bac72841dcd9d298}{get}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ ptr;\ \}}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00046}\mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a442fe79106ef2123372418a51f3e570c}{00046}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \textcolor{keyword}{operator}\ \textcolor{keyword}{delete}(\textcolor{keywordtype}{void}*)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00052}\mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a5b2446d19687f6f6fc242f314948f50a}{00052}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_undeletable_ptr_a5b2446d19687f6f6fc242f314948f50a}{IsValid}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ ptr\ !=\ \textcolor{keyword}{nullptr};\ \}}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00053}00053\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_undeletable_ptr_8hpp_source_l00054}00054\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,90 @@
+\doxysection{SFW\+::Debug\+::Ui\+Tree\+Snapshot クラス}
+\hypertarget{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot}{}\label{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot}\index{SFW::Debug::UiTreeSnapshot@{SFW::Debug::UiTreeSnapshot}}
+
+
+既存 \doxylink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{Ui\+Snapshot} をそのまま流用して \doxylink{struct_s_f_w_1_1_debug_1_1_tree_frame}{Tree\+Frame} 用を追加  
+
+
+
+
+{\ttfamily \#include $<$UIBus.\+h$>$}
+
+\doxysubsubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard}{Write\+Guard}}
+\begin{DoxyCompactList}\small\item\em 書き込みガード（\+RAII でロック/アンロック） \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard}{Write\+Guard}} \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_ad6bff303ac173e98081def0381937f7b}{begin\+Write}} ()
+\begin{DoxyCompactList}\small\item\em 書き込み開始 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_a926d488f20c3b5ef7c78cc436168f73b}{swap}} ()
+\begin{DoxyCompactList}\small\item\em フロント/バックを入れ替え \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_frame}{Tree\+Frame}} \& \mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_a99beeafe206378c056a87d4be9953664}{read}} () const
+\begin{DoxyCompactList}\small\item\em フロントを読む \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+既存 \doxylink{class_s_f_w_1_1_debug_1_1_ui_snapshot}{Ui\+Snapshot} をそのまま流用して \doxylink{struct_s_f_w_1_1_debug_1_1_tree_frame}{Tree\+Frame} 用を追加 
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00148}{148}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_ad6bff303ac173e98081def0381937f7b}\index{SFW::Debug::UiTreeSnapshot@{SFW::Debug::UiTreeSnapshot}!beginWrite@{beginWrite}}
+\index{beginWrite@{beginWrite}!SFW::Debug::UiTreeSnapshot@{SFW::Debug::UiTreeSnapshot}}
+\doxysubsubsection{\texorpdfstring{beginWrite()}{beginWrite()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_ad6bff303ac173e98081def0381937f7b} 
+\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard}{Write\+Guard}} SFW\+::\+Debug\+::\+Ui\+Tree\+Snapshot\+::begin\+Write (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+書き込み開始 
+
+\begin{DoxyReturn}{戻り値}
+\doxylink{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_1_1_write_guard}{Write\+Guard} 書き込みガード 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00171}{171}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_a99beeafe206378c056a87d4be9953664}\index{SFW::Debug::UiTreeSnapshot@{SFW::Debug::UiTreeSnapshot}!read@{read}}
+\index{read@{read}!SFW::Debug::UiTreeSnapshot@{SFW::Debug::UiTreeSnapshot}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_a99beeafe206378c056a87d4be9953664} 
+const \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_tree_frame}{Tree\+Frame}} \& SFW\+::\+Debug\+::\+Ui\+Tree\+Snapshot\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+フロントを読む 
+
+\begin{DoxyReturn}{戻り値}
+const \doxylink{struct_s_f_w_1_1_debug_1_1_tree_frame}{Tree\+Frame}\& フロントの参照 
+\end{DoxyReturn}
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00183}{183}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_a926d488f20c3b5ef7c78cc436168f73b}\index{SFW::Debug::UiTreeSnapshot@{SFW::Debug::UiTreeSnapshot}!swap@{swap}}
+\index{swap@{swap}!SFW::Debug::UiTreeSnapshot@{SFW::Debug::UiTreeSnapshot}}
+\doxysubsubsection{\texorpdfstring{swap()}{swap()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_debug_1_1_ui_tree_snapshot_a926d488f20c3b5ef7c78cc436168f73b} 
+void SFW\+::\+Debug\+::\+Ui\+Tree\+Snapshot\+::swap (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+フロント/バックを入れ替え 
+
+
+
+ \mbox{\hyperlink{_u_i_bus_8h_source}{UIBus.\+h}} の \mbox{\hyperlink{_u_i_bus_8h_source_l00175}{175}} 行目に定義があります。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Debug/\mbox{\hyperlink{_u_i_bus_8h}{UIBus.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,915 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Graphics::DX11::GraphicsDevice クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html','','class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Graphics::DX11::GraphicsDevice クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_d_x11_graphics_8h_source.html">DX11Graphics.h</a>&gt;</code></p>
+<div class="dynheader">
+SFW::Graphics::DX11::GraphicsDevice の継承関係図</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.png" usemap="#SFW_3A_3AGraphics_3A_3ADX11_3A_3AGraphicsDevice_map" alt=""/>
+  <map id="SFW_3A_3AGraphics_3A_3ADX11_3A_3AGraphicsDevice_map" name="SFW_3A_3AGraphics_3A_3ADX11_3A_3AGraphicsDevice_map">
+<area href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html" alt="SFW::Graphics::IGraphicsDevice&lt; GraphicsDevice &gt;" shape="rect" coords="0,0,311,24"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+公開型</h2></td></tr>
+<tr class="memitem:abeddbd92f0d8f4cbcbc05071d32a3cf4" id="r_abeddbd92f0d8f4cbcbc05071d32a3cf4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abeddbd92f0d8f4cbcbc05071d32a3cf4">RenderGraph</a> = <a class="el" href="#abeddbd92f0d8f4cbcbc05071d32a3cf4">RenderGraph</a>&lt;<a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html">RenderBackend</a>, ID3D11RenderTargetView*, ID3D11DepthStencilView*, ID3D11ShaderResourceView*, ID3D11Buffer*, ComPtr&gt;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:afe68fa02385b14547b14337552a59ce7" id="r_afe68fa02385b14547b14337552a59ce7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe68fa02385b14547b14337552a59ce7">GraphicsDevice</a> ()=default</td></tr>
+<tr class="memdesc:afe68fa02385b14547b14337552a59ce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:a0e2da158a6f17afc9f668f4baf339d8b" id="r_a0e2da158a6f17afc9f668f4baf339d8b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e2da158a6f17afc9f668f4baf339d8b">~GraphicsDevice</a> ()</td></tr>
+<tr class="memdesc:a0e2da158a6f17afc9f668f4baf339d8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">デストラクタ  <br /></td></tr>
+<tr class="memitem:a48728df786c6b9a19d863c1719255ae0" id="r_a48728df786c6b9a19d863c1719255ae0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a48728df786c6b9a19d863c1719255ae0">GraphicsDevice</a> (<a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html">GraphicsDevice</a> &amp;&amp;rhs) noexcept</td></tr>
+<tr class="memitem:acb5af09505a59fa0604a6f158b67efc3" id="r_acb5af09505a59fa0604a6f158b67efc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html">GraphicsDevice</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb5af09505a59fa0604a6f158b67efc3">operator=</a> (<a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html">GraphicsDevice</a> &amp;&amp;rhs) noexcept</td></tr>
+<tr class="memitem:a6fee3d3805e1c9ad5faf9caccb4edbc2" id="r_a6fee3d3805e1c9ad5faf9caccb4edbc2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6fee3d3805e1c9ad5faf9caccb4edbc2">GraphicsDevice</a> (const <a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html">GraphicsDevice</a> &amp;)=delete</td></tr>
+<tr class="memitem:acb0e9e1736ee79355664bc37bd0f7ecd" id="r_acb0e9e1736ee79355664bc37bd0f7ecd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html">GraphicsDevice</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb0e9e1736ee79355664bc37bd0f7ecd">operator=</a> (const <a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html">GraphicsDevice</a> &amp;)=delete</td></tr>
+<tr class="memitem:a0d7345574bf7a81c90c8d30e25427a3a" id="r_a0d7345574bf7a81c90c8d30e25427a3a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0d7345574bf7a81c90c8d30e25427a3a">InitializeImpl</a> (const <a class="el" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">NativeWindowHandle</a> &amp;nativeWindowHandle, uint32_t width, uint32_t height, double fps)</td></tr>
+<tr class="memdesc:a0d7345574bf7a81c90c8d30e25427a3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">初期化関数  <br /></td></tr>
+<tr class="memitem:afd7529b1240416e583c06271c81595f1" id="r_afd7529b1240416e583c06271c81595f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd7529b1240416e583c06271c81595f1">ClearImpl</a> (const FLOAT clearColor[4])</td></tr>
+<tr class="memdesc:afd7529b1240416e583c06271c81595f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">画面をクリアする関数  <br /></td></tr>
+<tr class="memitem:a3798d3d0a59ceedbed1fdf40d3d6b4fe" id="r_a3798d3d0a59ceedbed1fdf40d3d6b4fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3798d3d0a59ceedbed1fdf40d3d6b4fe">DrawImpl</a> ()</td></tr>
+<tr class="memdesc:a3798d3d0a59ceedbed1fdf40d3d6b4fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">描画を実行する関数 @detailss RenderGraphを使用して描画を実行します。  <br /></td></tr>
+<tr class="memitem:a15ed685258d22d4e79ea4fc0aab091a6" id="r_a15ed685258d22d4e79ea4fc0aab091a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a15ed685258d22d4e79ea4fc0aab091a6">PresentImpl</a> ()</td></tr>
+<tr class="memdesc:a15ed685258d22d4e79ea4fc0aab091a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">描画を実行する関数 @detailss RenderGraphを使用して描画を実行します。  <br /></td></tr>
+<tr class="memitem:a3cf4f27906aeb15493d35dbabd84447b" id="r_a3cf4f27906aeb15493d35dbabd84447b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3cf4f27906aeb15493d35dbabd84447b">StartRenderThread</a> ()</td></tr>
+<tr class="memitem:abc8669a07c0f5b56c54218df11e813b0" id="r_abc8669a07c0f5b56c54218df11e813b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc8669a07c0f5b56c54218df11e813b0">StopRenderThread</a> ()</td></tr>
+<tr class="memitem:ad43491a04b805c3b6b0ea7aebaf10c8c" id="r_ad43491a04b805c3b6b0ea7aebaf10c8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad43491a04b805c3b6b0ea7aebaf10c8c">SubmitFrameImpl</a> (const FLOAT clearColor[4], uint64_t frameIdx)</td></tr>
+<tr class="memitem:a90c8a484b547dabb5a320186c0bde399" id="r_a90c8a484b547dabb5a320186c0bde399"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a90c8a484b547dabb5a320186c0bde399">WaitSubmittedFramesImpl</a> (uint64_t uptoFrame)</td></tr>
+<tr class="memitem:ad8ecbad717838b9324832559a9797846" id="r_ad8ecbad717838b9324832559a9797846"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8ecbad717838b9324832559a9797846">SetMainRenderTargetAndDepth</a> ()</td></tr>
+<tr class="memitem:a5a6be44e999078e0fe92d72321ed586d" id="r_a5a6be44e999078e0fe92d72321ed586d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5a6be44e999078e0fe92d72321ed586d">SetMainRenderTargetNoDepth</a> ()</td></tr>
+<tr class="memitem:ae57d349537b706d2db11707db680f6af" id="r_ae57d349537b706d2db11707db680f6af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae57d349537b706d2db11707db680f6af">SetBlendState</a> (<a class="el" href="namespace_s_f_w_1_1_graphics.html#ad3b0ed4e715bafe26a5351c574c1556b">BlendStateID</a> state)</td></tr>
+<tr class="memitem:adec516e7e9fc93ff030b513b410be370" id="r_adec516e7e9fc93ff030b513b410be370"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adec516e7e9fc93ff030b513b410be370">SetDepthStencilState</a> (<a class="el" href="namespace_s_f_w_1_1_graphics.html#a8a6b5530cdc2c1eaaa1065d6ff7dfef3">DepthStencilStateID</a> state, UINT stencilRef=0)</td></tr>
+<tr class="memitem:aaafe50d8157268ed66a6fb086af2658a" id="r_aaafe50d8157268ed66a6fb086af2658a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaafe50d8157268ed66a6fb086af2658a">SetRasterizerState</a> (<a class="el" href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5">RasterizerStateID</a> state)</td></tr>
+<tr class="memitem:a6314da2af52dad190b212f5744a0339d" id="r_a6314da2af52dad190b212f5744a0339d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_service.html">RenderService</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6314da2af52dad190b212f5744a0339d">GetRenderService</a> () noexcept</td></tr>
+<tr class="memitem:a69e5e12709963b2aace5084e40f48bce" id="r_a69e5e12709963b2aace5084e40f48bce"><td class="memTemplParams" colspan="2">template&lt;typename F&gt; </td></tr>
+<tr class="memitem:a69e5e12709963b2aace5084e40f48bce template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a69e5e12709963b2aace5084e40f48bce">ExecuteCustomFunc</a> (F &amp;&amp;func)</td></tr>
+<tr class="memdesc:a69e5e12709963b2aace5084e40f48bce"><td class="mdescLeft">&#160;</td><td class="mdescRight">指定した関数オブジェクトに引数を渡して実行する  <br /></td></tr>
+<tr class="memitem:a99acd2a3093931632beea699f677cc81" id="r_a99acd2a3093931632beea699f677cc81"><td class="memItemLeft" align="right" valign="top">ID3D11Device *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99acd2a3093931632beea699f677cc81">GetDevice</a> () const noexcept</td></tr>
+<tr class="memitem:ac7662923ed2c2e6219d937500debbd93" id="r_ac7662923ed2c2e6219d937500debbd93"><td class="memItemLeft" align="right" valign="top">ID3D11DeviceContext *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7662923ed2c2e6219d937500debbd93">GetDeviceContext</a> () const noexcept</td></tr>
+<tr class="memitem:a918b266a21c058c06e80406ae3175fc2" id="r_a918b266a21c058c06e80406ae3175fc2"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html">RenderBackend</a> *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a918b266a21c058c06e80406ae3175fc2">GetBackend</a> () const noexcept</td></tr>
+<tr class="memitem:a31c5350fd1d092ba91668fe4fa1967d5" id="r_a31c5350fd1d092ba91668fe4fa1967d5"><td class="memItemLeft" align="right" valign="top">ComPtr&lt; ID3D11RenderTargetView &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a31c5350fd1d092ba91668fe4fa1967d5">GetMainRenderTargetView</a> () const noexcept</td></tr>
+<tr class="memitem:a9e887461ee7d3f8b244e5ce559c06f8e" id="r_a9e887461ee7d3f8b244e5ce559c06f8e"><td class="memItemLeft" align="right" valign="top">ComPtr&lt; ID3D11DepthStencilView &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9e887461ee7d3f8b244e5ce559c06f8e">GetMainDepthStencilView</a> () const noexcept</td></tr>
+<tr class="memitem:a17cfabda61ef6e2b1af2ad00ffa227fd" id="r_a17cfabda61ef6e2b1af2ad00ffa227fd"><td class="memItemLeft" align="right" valign="top">ComPtr&lt; ID3D11DepthStencilView &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a17cfabda61ef6e2b1af2ad00ffa227fd">GetMainDepthStencilViewReadOnly</a> () const noexcept</td></tr>
+<tr class="memitem:a9226eb000359e10d86694c23e15cadec" id="r_a9226eb000359e10d86694c23e15cadec"><td class="memItemLeft" align="right" valign="top">ComPtr&lt; ID3D11ShaderResourceView &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9226eb000359e10d86694c23e15cadec">GetMainDepthStencilSRV</a> () const noexcept</td></tr>
+<tr class="memitem:a0919c51c6ffc5f05d0363d133753b6d1" id="r_a0919c51c6ffc5f05d0363d133753b6d1"><td class="memItemLeft" align="right" valign="top">const D3D11_VIEWPORT &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0919c51c6ffc5f05d0363d133753b6d1">GetMainViewport</a> () const noexcept</td></tr>
+<tr class="inherit_header pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">SFW::Graphics::IGraphicsDevice&lt; GraphicsDevice &gt;</a> に属する継承公開メンバ関数</td></tr>
+<tr class="memitem:aead7deb30ab52aef3c7e4cd7968fd58b inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device" id="r_aead7deb30ab52aef3c7e4cd7968fd58b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#aead7deb30ab52aef3c7e4cd7968fd58b">IGraphicsDevice</a> ()=default</td></tr>
+<tr class="memdesc:aead7deb30ab52aef3c7e4cd7968fd58b inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:a0f0271012c8d9fe7c508a1f424ead2da inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device" id="r_a0f0271012c8d9fe7c508a1f424ead2da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a0f0271012c8d9fe7c508a1f424ead2da">Configure</a> (const <a class="el" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">NativeWindowHandle</a> &amp;nativeWindowHandle, uint32_t width, uint32_t height, double fps)</td></tr>
+<tr class="memdesc:a0f0271012c8d9fe7c508a1f424ead2da inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">初期化  <br /></td></tr>
+<tr class="memitem:a755ede26c777008d980552218ce96530 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device" id="r_a755ede26c777008d980552218ce96530"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a755ede26c777008d980552218ce96530">Clear</a> (const float clearColor[4])</td></tr>
+<tr class="memdesc:a755ede26c777008d980552218ce96530 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">画面をクリア  <br /></td></tr>
+<tr class="memitem:a3a54c028d48da1a75038656f7dee3394 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device" id="r_a3a54c028d48da1a75038656f7dee3394"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3a54c028d48da1a75038656f7dee3394">Draw</a> ()</td></tr>
+<tr class="memitem:abcb0602a6cec5134423c8941bd277e46 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device" id="r_abcb0602a6cec5134423c8941bd277e46"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#abcb0602a6cec5134423c8941bd277e46">Present</a> ()</td></tr>
+<tr class="memdesc:abcb0602a6cec5134423c8941bd277e46 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">描画  <br /></td></tr>
+<tr class="memitem:a3d210c34b525b87e33208989c4aec1d2 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device" id="r_a3d210c34b525b87e33208989c4aec1d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3d210c34b525b87e33208989c4aec1d2">SubmitFrame</a> (const FLOAT clearColor[4], uint64_t frameIdx)</td></tr>
+<tr class="memdesc:a3d210c34b525b87e33208989c4aec1d2 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">フレームの提出  <br /></td></tr>
+<tr class="memitem:a3f13d959dd8c2f9e275cb335764aa17a inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device" id="r_a3f13d959dd8c2f9e275cb335764aa17a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3f13d959dd8c2f9e275cb335764aa17a">WaitSubmittedFrames</a> (uint64_t uptoFrame)</td></tr>
+<tr class="memdesc:a3f13d959dd8c2f9e275cb335764aa17a inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">提出済みフレームの完了待ち  <br /></td></tr>
+<tr class="memitem:a669ea0c8873cf05be43c35d1d10a4412 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device" id="r_a669ea0c8873cf05be43c35d1d10a4412"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a669ea0c8873cf05be43c35d1d10a4412">~IGraphicsDevice</a> ()=default</td></tr>
+<tr class="memdesc:a669ea0c8873cf05be43c35d1d10a4412 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">デストラクタ  <br /></td></tr>
+<tr class="memitem:a6dd6f41ea22d3d5d01046473a8216961 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device" id="r_a6dd6f41ea22d3d5d01046473a8216961"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a6dd6f41ea22d3d5d01046473a8216961">IsInitialized</a> () const</td></tr>
+<tr class="memdesc:a6dd6f41ea22d3d5d01046473a8216961 inherit pub_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">初期化フラグの取得  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
+その他の継承メンバ</h2></td></tr>
+<tr class="inherit_header pro_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">SFW::Graphics::IGraphicsDevice&lt; GraphicsDevice &gt;</a> に属する継承限定公開メンバ関数</td></tr>
+<tr class="memitem:acd355dc1d7f35212ee71c1e8219be1e0 inherit pro_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device" id="r_acd355dc1d7f35212ee71c1e8219be1e0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#acd355dc1d7f35212ee71c1e8219be1e0">Initialize</a> (const <a class="el" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">NativeWindowHandle</a> &amp;nativeWindowHandle, uint32_t width, uint32_t height, double fps)</td></tr>
+<tr class="memdesc:acd355dc1d7f35212ee71c1e8219be1e0 inherit pro_methods_class_s_f_w_1_1_graphics_1_1_i_graphics_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">初期化  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock">
+<p class="definition"> <a class="el" href="_d_x11_graphics_8h_source.html">DX11Graphics.h</a> の <a class="el" href="_d_x11_graphics_8h_source.html#l00040">40</a> 行目に定義があります。</p>
+</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">型定義メンバ詳解</h2>
+<a id="abeddbd92f0d8f4cbcbc05071d32a3cf4" name="abeddbd92f0d8f4cbcbc05071d32a3cf4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abeddbd92f0d8f4cbcbc05071d32a3cf4">&#9670;&#160;</a></span>RenderGraph</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#abeddbd92f0d8f4cbcbc05071d32a3cf4">SFW::Graphics::DX11::GraphicsDevice::RenderGraph</a> = <a class="el" href="#abeddbd92f0d8f4cbcbc05071d32a3cf4">RenderGraph</a>&lt;<a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html">RenderBackend</a>, ID3D11RenderTargetView*, ID3D11DepthStencilView*, ID3D11ShaderResourceView*, ID3D11Buffer*, ComPtr&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_graphics_8h_source.html">DX11Graphics.h</a> の <a class="el" href="_d_x11_graphics_8h_source.html#l00043">43</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="afe68fa02385b14547b14337552a59ce7" name="afe68fa02385b14547b14337552a59ce7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe68fa02385b14547b14337552a59ce7">&#9670;&#160;</a></span>GraphicsDevice() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Graphics::DX11::GraphicsDevice::GraphicsDevice </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+
+</div>
+</div>
+<a id="a0e2da158a6f17afc9f668f4baf339d8b" name="a0e2da158a6f17afc9f668f4baf339d8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e2da158a6f17afc9f668f4baf339d8b">&#9670;&#160;</a></span>~GraphicsDevice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Graphics::DX11::GraphicsDevice::~GraphicsDevice </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>デストラクタ </p>
+
+</div>
+</div>
+<a id="a48728df786c6b9a19d863c1719255ae0" name="a48728df786c6b9a19d863c1719255ae0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48728df786c6b9a19d863c1719255ae0">&#9670;&#160;</a></span>GraphicsDevice() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Graphics::DX11::GraphicsDevice::GraphicsDevice </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html">GraphicsDevice</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6fee3d3805e1c9ad5faf9caccb4edbc2" name="a6fee3d3805e1c9ad5faf9caccb4edbc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fee3d3805e1c9ad5faf9caccb4edbc2">&#9670;&#160;</a></span>GraphicsDevice() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Graphics::DX11::GraphicsDevice::GraphicsDevice </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html">GraphicsDevice</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="afd7529b1240416e583c06271c81595f1" name="afd7529b1240416e583c06271c81595f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd7529b1240416e583c06271c81595f1">&#9670;&#160;</a></span>ClearImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::GraphicsDevice::ClearImpl </td>
+          <td>(</td>
+          <td class="paramtype">const FLOAT</td>          <td class="paramname"><span class="paramname"><em>clearColor</em></span>[4]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>画面をクリアする関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clearColor</td><td>クリアカラー（RGBA） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3798d3d0a59ceedbed1fdf40d3d6b4fe" name="a3798d3d0a59ceedbed1fdf40d3d6b4fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3798d3d0a59ceedbed1fdf40d3d6b4fe">&#9670;&#160;</a></span>DrawImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::GraphicsDevice::DrawImpl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>描画を実行する関数 @detailss RenderGraphを使用して描画を実行します。 </p>
+
+</div>
+</div>
+<a id="a69e5e12709963b2aace5084e40f48bce" name="a69e5e12709963b2aace5084e40f48bce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69e5e12709963b2aace5084e40f48bce">&#9670;&#160;</a></span>ExecuteCustomFunc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename F&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::GraphicsDevice::ExecuteCustomFunc </td>
+          <td>(</td>
+          <td class="paramtype">F &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>func</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>指定した関数オブジェクトに引数を渡して実行する </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">func</td><td><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_graph.html" title="RenderPassごとに管理して描画を行うクラス">RenderGraph</a>,ID3D11RenderTargetView,ID3D11DepthStencilViewを引数に取る関数オブジェクト </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_d_x11_graphics_8h_source.html">DX11Graphics.h</a> の <a class="el" href="_d_x11_graphics_8h_source.html#l00103">103</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a918b266a21c058c06e80406ae3175fc2" name="a918b266a21c058c06e80406ae3175fc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a918b266a21c058c06e80406ae3175fc2">&#9670;&#160;</a></span>GetBackend()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend.html">RenderBackend</a> *const SFW::Graphics::DX11::GraphicsDevice::GetBackend </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_graphics_8h_source.html">DX11Graphics.h</a> の <a class="el" href="_d_x11_graphics_8h_source.html#l00111">111</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a99acd2a3093931632beea699f677cc81" name="a99acd2a3093931632beea699f677cc81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99acd2a3093931632beea699f677cc81">&#9670;&#160;</a></span>GetDevice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ID3D11Device * SFW::Graphics::DX11::GraphicsDevice::GetDevice </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_graphics_8h_source.html">DX11Graphics.h</a> の <a class="el" href="_d_x11_graphics_8h_source.html#l00108">108</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac7662923ed2c2e6219d937500debbd93" name="ac7662923ed2c2e6219d937500debbd93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7662923ed2c2e6219d937500debbd93">&#9670;&#160;</a></span>GetDeviceContext()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ID3D11DeviceContext * SFW::Graphics::DX11::GraphicsDevice::GetDeviceContext </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_graphics_8h_source.html">DX11Graphics.h</a> の <a class="el" href="_d_x11_graphics_8h_source.html#l00109">109</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9226eb000359e10d86694c23e15cadec" name="a9226eb000359e10d86694c23e15cadec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9226eb000359e10d86694c23e15cadec">&#9670;&#160;</a></span>GetMainDepthStencilSRV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ComPtr&lt; ID3D11ShaderResourceView &gt; SFW::Graphics::DX11::GraphicsDevice::GetMainDepthStencilSRV </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_graphics_8h_source.html">DX11Graphics.h</a> の <a class="el" href="_d_x11_graphics_8h_source.html#l00124">124</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9e887461ee7d3f8b244e5ce559c06f8e" name="a9e887461ee7d3f8b244e5ce559c06f8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e887461ee7d3f8b244e5ce559c06f8e">&#9670;&#160;</a></span>GetMainDepthStencilView()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ComPtr&lt; ID3D11DepthStencilView &gt; SFW::Graphics::DX11::GraphicsDevice::GetMainDepthStencilView </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_graphics_8h_source.html">DX11Graphics.h</a> の <a class="el" href="_d_x11_graphics_8h_source.html#l00118">118</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a17cfabda61ef6e2b1af2ad00ffa227fd" name="a17cfabda61ef6e2b1af2ad00ffa227fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17cfabda61ef6e2b1af2ad00ffa227fd">&#9670;&#160;</a></span>GetMainDepthStencilViewReadOnly()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ComPtr&lt; ID3D11DepthStencilView &gt; SFW::Graphics::DX11::GraphicsDevice::GetMainDepthStencilViewReadOnly </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_graphics_8h_source.html">DX11Graphics.h</a> の <a class="el" href="_d_x11_graphics_8h_source.html#l00121">121</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a31c5350fd1d092ba91668fe4fa1967d5" name="a31c5350fd1d092ba91668fe4fa1967d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31c5350fd1d092ba91668fe4fa1967d5">&#9670;&#160;</a></span>GetMainRenderTargetView()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ComPtr&lt; ID3D11RenderTargetView &gt; SFW::Graphics::DX11::GraphicsDevice::GetMainRenderTargetView </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_graphics_8h_source.html">DX11Graphics.h</a> の <a class="el" href="_d_x11_graphics_8h_source.html#l00115">115</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0919c51c6ffc5f05d0363d133753b6d1" name="a0919c51c6ffc5f05d0363d133753b6d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0919c51c6ffc5f05d0363d133753b6d1">&#9670;&#160;</a></span>GetMainViewport()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const D3D11_VIEWPORT &amp; SFW::Graphics::DX11::GraphicsDevice::GetMainViewport </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_graphics_8h_source.html">DX11Graphics.h</a> の <a class="el" href="_d_x11_graphics_8h_source.html#l00128">128</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6314da2af52dad190b212f5744a0339d" name="a6314da2af52dad190b212f5744a0339d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6314da2af52dad190b212f5744a0339d">&#9670;&#160;</a></span>GetRenderService()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_service.html">RenderService</a> * SFW::Graphics::DX11::GraphicsDevice::GetRenderService </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_d_x11_graphics_8h_source.html">DX11Graphics.h</a> の <a class="el" href="_d_x11_graphics_8h_source.html#l00095">95</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0d7345574bf7a81c90c8d30e25427a3a" name="a0d7345574bf7a81c90c8d30e25427a3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d7345574bf7a81c90c8d30e25427a3a">&#9670;&#160;</a></span>InitializeImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SFW::Graphics::DX11::GraphicsDevice::InitializeImpl </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">NativeWindowHandle</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>nativeWindowHandle</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>fps</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>初期化関数 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nativeWindowHandle</td><td>ウィンドウハンドル </td></tr>
+    <tr><td class="paramname">width</td><td>ウィンドウ幅 </td></tr>
+    <tr><td class="paramname">height</td><td>ウィンドウ高さ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>bool 初期化に成功したかどうか </dd></dl>
+
+</div>
+</div>
+<a id="acb0e9e1736ee79355664bc37bd0f7ecd" name="acb0e9e1736ee79355664bc37bd0f7ecd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb0e9e1736ee79355664bc37bd0f7ecd">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html">GraphicsDevice</a> &amp; SFW::Graphics::DX11::GraphicsDevice::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html">GraphicsDevice</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acb5af09505a59fa0604a6f158b67efc3" name="acb5af09505a59fa0604a6f158b67efc3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb5af09505a59fa0604a6f158b67efc3">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html">GraphicsDevice</a> &amp; SFW::Graphics::DX11::GraphicsDevice::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html">GraphicsDevice</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a15ed685258d22d4e79ea4fc0aab091a6" name="a15ed685258d22d4e79ea4fc0aab091a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15ed685258d22d4e79ea4fc0aab091a6">&#9670;&#160;</a></span>PresentImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::GraphicsDevice::PresentImpl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>描画を実行する関数 @detailss RenderGraphを使用して描画を実行します。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">renderGraph</td><td>RenderGraphの参照 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae57d349537b706d2db11707db680f6af" name="ae57d349537b706d2db11707db680f6af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae57d349537b706d2db11707db680f6af">&#9670;&#160;</a></span>SetBlendState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::GraphicsDevice::SetBlendState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_graphics.html#ad3b0ed4e715bafe26a5351c574c1556b">BlendStateID</a></td>          <td class="paramname"><span class="paramname"><em>state</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adec516e7e9fc93ff030b513b410be370" name="adec516e7e9fc93ff030b513b410be370"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adec516e7e9fc93ff030b513b410be370">&#9670;&#160;</a></span>SetDepthStencilState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::GraphicsDevice::SetDepthStencilState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_graphics.html#a8a6b5530cdc2c1eaaa1065d6ff7dfef3">DepthStencilStateID</a></td>          <td class="paramname"><span class="paramname"><em>state</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UINT</td>          <td class="paramname"><span class="paramname"><em>stencilRef</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad8ecbad717838b9324832559a9797846" name="ad8ecbad717838b9324832559a9797846"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8ecbad717838b9324832559a9797846">&#9670;&#160;</a></span>SetMainRenderTargetAndDepth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::GraphicsDevice::SetMainRenderTargetAndDepth </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5a6be44e999078e0fe92d72321ed586d" name="a5a6be44e999078e0fe92d72321ed586d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a6be44e999078e0fe92d72321ed586d">&#9670;&#160;</a></span>SetMainRenderTargetNoDepth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::GraphicsDevice::SetMainRenderTargetNoDepth </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaafe50d8157268ed66a6fb086af2658a" name="aaafe50d8157268ed66a6fb086af2658a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaafe50d8157268ed66a6fb086af2658a">&#9670;&#160;</a></span>SetRasterizerState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::GraphicsDevice::SetRasterizerState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_s_f_w_1_1_graphics.html#af9f678d5587dcdfd0bd9b7ca4072f9f5">RasterizerStateID</a></td>          <td class="paramname"><span class="paramname"><em>state</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3cf4f27906aeb15493d35dbabd84447b" name="a3cf4f27906aeb15493d35dbabd84447b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3cf4f27906aeb15493d35dbabd84447b">&#9670;&#160;</a></span>StartRenderThread()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::GraphicsDevice::StartRenderThread </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abc8669a07c0f5b56c54218df11e813b0" name="abc8669a07c0f5b56c54218df11e813b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc8669a07c0f5b56c54218df11e813b0">&#9670;&#160;</a></span>StopRenderThread()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::GraphicsDevice::StopRenderThread </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad43491a04b805c3b6b0ea7aebaf10c8c" name="ad43491a04b805c3b6b0ea7aebaf10c8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad43491a04b805c3b6b0ea7aebaf10c8c">&#9670;&#160;</a></span>SubmitFrameImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::GraphicsDevice::SubmitFrameImpl </td>
+          <td>(</td>
+          <td class="paramtype">const FLOAT</td>          <td class="paramname"><span class="paramname"><em>clearColor</em></span>[4], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>frameIdx</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a90c8a484b547dabb5a320186c0bde399" name="a90c8a484b547dabb5a320186c0bde399"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90c8a484b547dabb5a320186c0bde399">&#9670;&#160;</a></span>WaitSubmittedFramesImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::DX11::GraphicsDevice::WaitSubmittedFramesImpl </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>uptoFrame</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/<a class="el" href="_d_x11_graphics_8h_source.html">DX11Graphics.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics.html">Graphics</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">DX11</a></li><li class="navelem"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html">GraphicsDevice</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

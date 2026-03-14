@@ -1,0 +1,102 @@
+\doxysection{component.\+hpp}
+\hypertarget{component_8hpp_source}{}\label{component_8hpp_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/component.hpp@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/ECS/component.hpp}}
+\mbox{\hyperlink{component_8hpp}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <bitset>}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_flatten_8hpp}{../../Util/Flatten.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{for__each__macro_8hpp}{../../Util/for\_each\_macro.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{unique__variant_8hpp}{../../Util/unique\_variant.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00018}00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_type_checker_8hpp}{../../Util/TypeChecker.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00020}00020\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00021}00021\ \{}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00022}00022\ \ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s}{ECS}}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00023}00023\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00027}00027\ \textcolor{preprocessor}{\#ifdef\ MAX\_COMPONENTS\_NUM}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a4dd4bb40129246ff9c8f24d576bf3b7c}{MaxComponents}}\ =\ MAX\_COMPONENTS\_NUM;}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00029}00029\ \textcolor{preprocessor}{\#else}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00033}\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a4dd4bb40129246ff9c8f24d576bf3b7c}{00033}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a4dd4bb40129246ff9c8f24d576bf3b7c}{MaxComponents}}\ =\ 64;}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00034}00034\ \textcolor{preprocessor}{\#endif}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00038}\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{00038}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a1127b2c8d467a6889c6cb2c41dea49c1}{ComponentTypeID}}\ =\ uint32\_t;}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00042}\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{00042}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a801a8ddbf41707287f3fc0588d25ec8d}{ComponentMask}}\ =\ std::bitset<MaxComponents>;}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00046}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_info}{00046}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_info}{ComponentInfo}}\ \{}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00047}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_info_aba249bf5e49ced9e20153ee503ada2f6}{00047}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_info_aba249bf5e49ced9e20153ee503ada2f6}{offset}};}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00048}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_info_a6558917abf2491d108b9facdac29e47e}{00048}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_component_info_a6558917abf2491d108b9facdac29e47e}{stride}};}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00053}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_component_tag}{00053}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_sparse_component_tag}{SparseComponentTag}}\ \{\};}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename},\ \textcolor{keyword}{typename}\ =\ \textcolor{keywordtype}{void}>}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00058}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__sparse__component}{00058}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__sparse__component}{is\_sparse\_component}}\ :\ std::false\_type\ \{\};}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00063}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__sparse__component_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1sparse__tag_01_4_01_4}{00063}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__sparse__component}{is\_sparse\_component}}<T,\ \mbox{\hyperlink{namespacestd}{std}}::void\_t<typename\ T::sparse\_tag>>}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ :\ std::is\_same<typename\ T::sparse\_tag,\ SparseComponentTag>\ \{}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00070}\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a45563ebd21e0cf9af2157c470cd54aba}{00070}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a45563ebd21e0cf9af2157c470cd54aba}{is\_sparse\_component\_v}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__sparse__component}{is\_sparse\_component<T>::value}};}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ =\ \textcolor{keywordtype}{void}>}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00075}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__soa__component}{00075}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__soa__component}{is\_soa\_component}}\ :\ std::false\_type\ \{\};}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00080}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__soa__component_3_01_t_00_01std_1_1void__t_3_01typename_01_t_1_1soa__type_01_4_01_4}{00080}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__soa__component}{is\_soa\_component}}<T,\ \mbox{\hyperlink{namespacestd}{std}}::void\_t<typename\ T::soa\_type>>\ :\ std::true\_type\ \{\};}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00085}\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a25d9a1e96eb15d02aa7924495157cae4}{00085}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a25d9a1e96eb15d02aa7924495157cae4}{is\_soa\_component\_v}}\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1is__soa__component}{is\_soa\_component<T>::value}};}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00090}\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_sparse_component}{00090}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_sparse_component}{SparseComponent}}\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_a45563ebd21e0cf9af2157c470cd54aba}{is\_sparse\_component\_v<T>}};}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00095}\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_is_so_a_component}{00095}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_is_so_a_component}{IsSoAComponent}}\ =\ \textcolor{keyword}{requires}\ \{}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ T::soa\_type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ T::soa\_type\ が存在する}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ T::variant\_type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ T::variant\_type\ が存在する}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ T::member\_ptr\_tuple\ \}\ -\/>\ std::convertible\_to<\textcolor{keyword}{decltype}(T::member\_ptr\_tuple)>;\ \textcolor{comment}{//\ 静的メンバ変数として存在}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ =\ \textcolor{keywordtype}{void}>}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00104}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_so_a_ptr}{00104}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_so_a_ptr}{SoAPtr}}\ \{}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00105}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_so_a_ptr_a81bc634660ba26fb2a2628913c9cd10d}{00105}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_so_a_ptr_a81bc634660ba26fb2a2628913c9cd10d}{type}}\ =\ T*;}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{requires}\ \mbox{\hyperlink{concept_s_f_w_1_1_e_c_s_1_1_is_so_a_component}{IsSoAComponent<T>}}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00112}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_so_a_ptr_3_01_t_01_4}{00112}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_so_a_ptr}{SoAPtr}}<T>\ \{}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00113}\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_so_a_ptr_3_01_t_01_4_ae916b13f9158e57539dc48d7ad0cc92e}{00113}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_so_a_ptr_3_01_t_01_4_ae916b13f9158e57539dc48d7ad0cc92e}{type}}\ =\ \textcolor{keyword}{typename}\ T::ToPtr;}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00119}\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_acc45c11b7021883610af3dafbfe19fa8}{00119}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_s_f_w_1_1_e_c_s_acc45c11b7021883610af3dafbfe19fa8}{ConstReturnType}}\ =\ std::conditional\_t<}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ std::is\_pointer\_v<T>,}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ std::add\_pointer\_t<std::add\_const\_t<std::remove\_pointer\_t<T>>>,}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ std::add\_const\_t<T>}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00123}00123\ \ \ \ \ \ \ \ \ >;}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \textcolor{comment}{//まばらなコンポーネントを識別するためのタグを定義するマクロ}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00126}\mbox{\hyperlink{component_8hpp_ace35318955d470537b85ea2092fad252}{00126}}\ \textcolor{preprocessor}{\#define\ SPARSE\_TAG\ using\ sparse\_tag\ =\ SFW::ECS::SparseComponentTag;}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \textcolor{comment}{//メンバ変数を定義するマクロ}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00128}\mbox{\hyperlink{component_8hpp_aea32930e71b31f9653dffc4a7e4e0dc7}{00128}}\ \textcolor{preprocessor}{\#define\ WRAP\_MEMBER(var,name)\ \&name::var}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \textcolor{comment}{//メンバ変数のポインタを定義するマクロ}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00130}\mbox{\hyperlink{component_8hpp_a7c6e4b717bd2937fcd1939dc1a3ffebe}{00130}}\ \textcolor{preprocessor}{\#define\ WRAP\_MEMBER\_PTR(var,name)\ \&name::p\_\#\#var}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \textcolor{comment}{//渡された引数をコンマで区切って展開するマクロ}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00132}\mbox{\hyperlink{component_8hpp_a62061c18f225be846d805a5ff72f57a8}{00132}}\ \textcolor{preprocessor}{\#define\ WRAP\_MEMBER\_FOREACH(className,\ macro,\ ...)\ FOR\_EACH\_ARG(macro,\ className,COMMA,\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \textcolor{comment}{//引数をdecltypeでラップするマクロ}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00134}\mbox{\hyperlink{component_8hpp_a79224b3cb8887c83fbc9359fa0cfb335}{00134}}\ \textcolor{preprocessor}{\#define\ WRAP\_DECLTYPE(x)\ decltype(x)}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \textcolor{comment}{//引数をSoAPtrでラップしてポインタ型を取得するマクロ}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00136}\mbox{\hyperlink{component_8hpp_a97a5ca4bfe40b766eba9de8d70d2fa4c}{00136}}\ \textcolor{preprocessor}{\#define\ WRAP\_DECLTYPE\_PTR(x)\ SFW::ECS::SoAPtr<decltype(x)>::type\ p\_\#\#x}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \textcolor{comment}{//コンポーネントのメンバーを取得するため関数定義マクロ}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00138}\mbox{\hyperlink{component_8hpp_ad2934d89e1ee40ddf9f6186ca340cd5c}{00138}}\ \textcolor{preprocessor}{\#define\ DEFINE\_GET\_FUNCTION(x)\ inline\ decltype(p\_\#\#x)\ x\#\#()\ noexcept\ \{return\ p\_\#\#x;\}\ inline\ SFW::ECS::ConstReturnType<decltype(p\_\#\#x)>\ x\#\#()\ const\ noexcept\ \{return\ p\_\#\#x;\}}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \textcolor{comment}{//SoAコンポーネントの定義マクロ}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00140}\mbox{\hyperlink{component_8hpp_a0ba0e6788f946281ef0b2a4984179fb0}{00140}}\ \textcolor{preprocessor}{\#define\ DEFINE\_SOA(className,\ ...)\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00141}00141\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ using\ tuple\_type\ =\ std::tuple<FOR\_EACH(WRAP\_DECLTYPE,COMMA,\_\_VA\_ARGS\_\_)>;\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00142}00142\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ using\ soa\_type\ =\ SFW::FlattenT<tuple\_type>;\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00143}00143\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ using\ variant\_type\ =\ SFW::unique\_variant\_from\_tuple<soa\_type>;\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00144}00144\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ constexpr\ auto\ member\_ptr\_tuple\ =\ std::make\_tuple(WRAP\_MEMBER\_FOREACH(className,WRAP\_MEMBER,\_\_VA\_ARGS\_\_));\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00145}00145\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ struct\ ToPtr\{private:\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00146}00146\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ struct\ ToPtrTag\{\};\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00147}00147\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ FOR\_EACH(WRAP\_DECLTYPE\_PTR,SEMICOLON,\_\_VA\_ARGS\_\_);\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00148}00148\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ static\ constexpr\ auto\ ptr\_tuple\ =\ std::make\_tuple(WRAP\_MEMBER\_FOREACH(ToPtr,WRAP\_MEMBER\_PTR,\_\_VA\_ARGS\_\_));\ public:\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00149}00149\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ FOR\_EACH(DEFINE\_GET\_FUNCTION,SPACE,\_\_VA\_ARGS\_\_)\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00150}00150\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ friend\ class\ SFW::ECS::ComponentAccessorBase;\};}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00151}00151\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{component_8hpp_source_l00152}00152\ \}}
+
+\end{DoxyCode}

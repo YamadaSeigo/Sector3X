@@ -1,0 +1,486 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SectorFW: SFW::Graphics::RenderQueue クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SectorFW
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_s_f_w_1_1_graphics_1_1_render_queue.html','','class_s_f_w_1_1_graphics_1_1_render_queue-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SFW::Graphics::RenderQueue クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>描画コマンドの発行。管理、ソート、バッチングを行うクラス  
+ <a href="#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:ProducerSession" id="r_ProducerSession"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session.html">ProducerSession</a></td></tr>
+<tr class="memitem:ProducerSessionExternal" id="r_ProducerSessionExternal"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">生産者セッション-ユーザーに渡す用（thread_localを使わない）  <a href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html#details">[詳解]</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a6b556e6bf269d23db95db6f0c6f01745" id="r_a6b556e6bf269d23db95db6f0c6f01745"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6b556e6bf269d23db95db6f0c6f01745">RenderQueue</a> (const std::atomic&lt; uint16_t &gt; &amp;bufSlot, <a class="el" href="struct_s_f_w_1_1_graphics_1_1_shared_instance_arena.html">SharedInstanceArena</a> *instanceArena, uint32_t maxInstancesPerFrame=MAX_INSTANCES_PER_FRAME)</td></tr>
+<tr class="memdesc:a6b556e6bf269d23db95db6f0c6f01745"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="memitem:a2fffa389dc934df94660237c434a3243" id="r_a2fffa389dc934df94660237c434a3243"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2fffa389dc934df94660237c434a3243">RenderQueue</a> (<a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue.html">RenderQueue</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="memdesc:a2fffa389dc934df94660237c434a3243"><td class="mdescLeft">&#160;</td><td class="mdescRight">ムーブコンストラクタ  <br /></td></tr>
+<tr class="memitem:af61f28027cd0d36d1965af45b1c1beb1" id="r_af61f28027cd0d36d1965af45b1c1beb1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af61f28027cd0d36d1965af45b1c1beb1">~RenderQueue</a> ()</td></tr>
+<tr class="memitem:af2f1377f00b94c46dc17e21d4299de8d" id="r_af2f1377f00b94c46dc17e21d4299de8d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue.html">RenderQueue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af2f1377f00b94c46dc17e21d4299de8d">operator=</a> (<a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue.html">RenderQueue</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="memdesc:af2f1377f00b94c46dc17e21d4299de8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ムーブ代入演算子  <br /></td></tr>
+<tr class="memitem:a78e0342099b1a2ff0651f0a16afad444" id="r_a78e0342099b1a2ff0651f0a16afad444"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session.html">ProducerSession</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a78e0342099b1a2ff0651f0a16afad444">MakeProducer</a> ()</td></tr>
+<tr class="memdesc:a78e0342099b1a2ff0651f0a16afad444"><td class="mdescLeft">&#160;</td><td class="mdescRight">各ワーカーはフレーム / タスク開始時にこれで <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session.html">ProducerSession</a> を取得  <br /></td></tr>
+<tr class="memitem:a6ca42a9b5aa3c7eb32f4214f8662272a" id="r_a6ca42a9b5aa3c7eb32f4214f8662272a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ca42a9b5aa3c7eb32f4214f8662272a">MakeProducer</a> (<a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf.html">ProducerSessionExternal::SmallBuf</a> &amp;buf)</td></tr>
+<tr class="memitem:ae14724a27e00372d18e80bbf09d41ce1" id="r_ae14724a27e00372d18e80bbf09d41ce1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae14724a27e00372d18e80bbf09d41ce1">Submit</a> (uint32_t slot, std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">DrawCommand</a> &gt; &amp;out)</td></tr>
+<tr class="memdesc:ae14724a27e00372d18e80bbf09d41ce1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submit は「全ワーカーが FlushAll 済み」バリアの後に呼ぶ  <br /></td></tr>
+<tr class="memitem:a80d85c6a3382a6f46a65a11725a74e82" id="r_a80d85c6a3382a6f46a65a11725a74e82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a80d85c6a3382a6f46a65a11725a74e82">Submit</a> (uint32_t slot, std::pmr::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">DrawCommand</a> &gt; &amp;out)</td></tr>
+<tr class="memdesc:a80d85c6a3382a6f46a65a11725a74e82"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMR 版 Submit（pmr::vector を直接受けられる）  <br /></td></tr>
+<tr class="memitem:a26d0a5f2e6ae6aff8cf182af45ad5942" id="r_a26d0a5f2e6ae6aff8cf182af45ad5942"><td class="memItemLeft" align="right" valign="top">std::pair&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool.html">InstancePool</a> *, std::atomic&lt; uint32_t &gt; * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a26d0a5f2e6ae6aff8cf182af45ad5942">GetCurrentInstancePoolAccess</a> () noexcept</td></tr>
+<tr class="memdesc:a26d0a5f2e6ae6aff8cf182af45ad5942"><td class="mdescLeft">&#160;</td><td class="mdescRight">現在フレーム側の Instance プールアクセス  <br /></td></tr>
+<tr class="memitem:ad4c776bc0646c58b8cda3eab21d73e7d" id="r_ad4c776bc0646c58b8cda3eab21d73e7d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4c776bc0646c58b8cda3eab21d73e7d">MaxInstancesPerFrame</a> () const noexcept</td></tr>
+<tr class="memdesc:ad4c776bc0646c58b8cda3eab21d73e7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">最大インスタンス数の公開 Getter  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>描画コマンドの発行。管理、ソート、バッチングを行うクラス </p>
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00105">105</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="a6b556e6bf269d23db95db6f0c6f01745" name="a6b556e6bf269d23db95db6f0c6f01745"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b556e6bf269d23db95db6f0c6f01745">&#9670;&#160;</a></span>RenderQueue() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Graphics::RenderQueue::RenderQueue </td>
+          <td>(</td>
+          <td class="paramtype">const std::atomic&lt; uint16_t &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>bufSlot</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_shared_instance_arena.html">SharedInstanceArena</a> *</td>          <td class="paramname"><span class="paramname"><em>instanceArena</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>maxInstancesPerFrame</em></span><span class="paramdefsep"> = </span><span class="paramdefval">MAX_INSTANCES_PER_FRAME</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">maxInstancesPerFrame</td><td>フレーム当たりの最大インスタンス数（1～MAX_INSTANCES_PER_FRAME） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00546">546</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2fffa389dc934df94660237c434a3243" name="a2fffa389dc934df94660237c434a3243"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fffa389dc934df94660237c434a3243">&#9670;&#160;</a></span>RenderQueue() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Graphics::RenderQueue::RenderQueue </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue.html">RenderQueue</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ムーブコンストラクタ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>ムーブ元 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00559">559</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af61f28027cd0d36d1965af45b1c1beb1" name="af61f28027cd0d36d1965af45b1c1beb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af61f28027cd0d36d1965af45b1c1beb1">&#9670;&#160;</a></span>~RenderQueue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SFW::Graphics::RenderQueue::~RenderQueue </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00569">569</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a26d0a5f2e6ae6aff8cf182af45ad5942" name="a26d0a5f2e6ae6aff8cf182af45ad5942"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26d0a5f2e6ae6aff8cf182af45ad5942">&#9670;&#160;</a></span>GetCurrentInstancePoolAccess()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_shared_instance_arena_1_1_instance_pool.html">InstancePool</a> *, std::atomic&lt; uint32_t &gt; * &gt; SFW::Graphics::RenderQueue::GetCurrentInstancePoolAccess </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>現在フレーム側の Instance プールアクセス </p>
+<dl class="section return"><dt>戻り値</dt><dd>(InstanceData*, 書き込み位置へのポインタ) </dd></dl>
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00659">659</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a78e0342099b1a2ff0651f0a16afad444" name="a78e0342099b1a2ff0651f0a16afad444"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78e0342099b1a2ff0651f0a16afad444">&#9670;&#160;</a></span>MakeProducer() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session.html">ProducerSession</a> SFW::Graphics::RenderQueue::MakeProducer </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>各ワーカーはフレーム / タスク開始時にこれで <a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session.html">ProducerSession</a> を取得 </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session.html">ProducerSession</a> 生産者セッション </dd></dl>
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00589">589</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6ca42a9b5aa3c7eb32f4214f8662272a" name="a6ca42a9b5aa3c7eb32f4214f8662272a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ca42a9b5aa3c7eb32f4214f8662272a">&#9670;&#160;</a></span>MakeProducer() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">ProducerSessionExternal</a> SFW::Graphics::RenderQueue::MakeProducer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_1_1_small_buf.html">ProducerSessionExternal::SmallBuf</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>buf</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00590">590</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad4c776bc0646c58b8cda3eab21d73e7d" name="ad4c776bc0646c58b8cda3eab21d73e7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4c776bc0646c58b8cda3eab21d73e7d">&#9670;&#160;</a></span>MaxInstancesPerFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SFW::Graphics::RenderQueue::MaxInstancesPerFrame </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>最大インスタンス数の公開 Getter </p>
+<dl class="section return"><dt>戻り値</dt><dd>uint32_t 最大インスタンス数 </dd></dl>
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00668">668</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af2f1377f00b94c46dc17e21d4299de8d" name="af2f1377f00b94c46dc17e21d4299de8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2f1377f00b94c46dc17e21d4299de8d">&#9670;&#160;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue.html">RenderQueue</a> &amp; SFW::Graphics::RenderQueue::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_f_w_1_1_graphics_1_1_render_queue.html">RenderQueue</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ムーブ代入演算子 </p>
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00576">576</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a80d85c6a3382a6f46a65a11725a74e82" name="a80d85c6a3382a6f46a65a11725a74e82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80d85c6a3382a6f46a65a11725a74e82">&#9670;&#160;</a></span>Submit() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::RenderQueue::Submit </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>slot</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::pmr::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">DrawCommand</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>out</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>PMR 版 Submit（pmr::vector を直接受けられる） </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td><a class="el" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html" title="描画コマンド構造体">DrawCommand</a> コンテナ（呼び出し側で確保して渡す） </td></tr>
+    <tr><td class="paramname">outInstances</td><td>インスタンスプールの生配列（次フレーム用に確保済み） </td></tr>
+    <tr><td class="paramname">outCount</td><td>インスタンスプールの使用数 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00629">629</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae14724a27e00372d18e80bbf09d41ce1" name="ae14724a27e00372d18e80bbf09d41ce1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae14724a27e00372d18e80bbf09d41ce1">&#9670;&#160;</a></span>Submit() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SFW::Graphics::RenderQueue::Submit </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>slot</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">DrawCommand</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>out</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Submit は「全ワーカーが FlushAll 済み」バリアの後に呼ぶ </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td><a class="el" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html" title="描画コマンド構造体">DrawCommand</a> コンテナ（呼び出し側で確保して渡す） </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a> の <a class="el" href="_render_queue_8h_source.html#l00596">596</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/<a class="el" href="_render_queue_8h_source.html">RenderQueue.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="namespace_s_f_w_1_1_graphics.html">Graphics</a></li><li class="navelem"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html">RenderQueue</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

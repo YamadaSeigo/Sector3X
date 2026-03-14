@@ -1,0 +1,201 @@
+\doxysection{SFW\+::World\texorpdfstring{$<$}{<} Level\+Types \texorpdfstring{$>$}{>}\+::Session 構造体}
+\hypertarget{struct_s_f_w_1_1_world_1_1_session}{}\label{struct_s_f_w_1_1_world_1_1_session}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
+
+
+{\ttfamily \#include $<$World.\+hpp$>$}
+
+\doxysubsubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a94440d9b6feb407050b8fb9be5c8dab3}{Session}} (\mbox{\hyperlink{class_s_f_w_1_1_world}{World}}$<$ Level\+Types... $>$ \&\+\_\+world)
+\item 
+{\footnotesize template$<$typename T$>$ }\\void \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a9a45f1a81228b65198bf4124e8a8b254}{Add\+Level}} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_level}{Level}}$<$ T $>$ $>$ level)
+\begin{DoxyCompactList}\small\item\em レベルを追加する関数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T, typename... Func$>$ }\\void \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_afb5a4989a64c0a52520b8e4723a7aa45}{Add\+Level}} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_level}{Level}}$<$ T $>$ $>$ level, Func \&\&... custom\+Func)
+\begin{DoxyCompactList}\small\item\em レベルを追加する関数 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\void \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a8f6d0adccd665ce607bfeb148ba37de6}{Add\+Level}} (\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_level_holder}{Level\+Holder}}$<$ T $>$ \&\&holder)
+\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a43e68e483e4475fa03aa8013ff00042b}{Load\+Level}} (const std\+::string level\+Name, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor=nullptr, bool active=true, \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}} loaded\+Custom=nullptr)
+\begin{DoxyCompactList}\small\item\em 指定したレベルのロード関数を呼び出す関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a88a774331f61b34bd311f8705bb2ea78}{Clean\+Level}} (const std\+::string level\+Name)
+\item 
+{\footnotesize template$<$template$<$ typename $>$ class System\+Type$>$ }\\void \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a4a53574b7739f96734a7fd01cefb7b6b}{Add\+Global\+System}} ()
+\item 
+{\footnotesize template$<$template$<$ typename $>$ class System\+Type$>$ }\\void \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_adbfae1706d592d23527d2afdd6719bda}{Add\+System\+To\+Level}} (const std\+::string level\+Name)
+\item 
+{\footnotesize template$<$template$<$ typename $>$ class System\+Type$>$ }\\void \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a3886f3e1a9cef19f5593ffb2fc8fbbfe}{Remove\+System\+From\+Level}} (const std\+::string level\+Name, \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}} custom\+Func=nullptr)
+\item 
+{\footnotesize template$<$template$<$ typename $>$ class System\+Type$>$ }\\void \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ad07bcb186358d6137f1913e55cf7e03c}{Pause\+Resume\+System\+In\+Level}} (const std\+::string level\+Name, bool pause, \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}} custom\+Func=nullptr)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+\subsubsection*{template$<$typename... Level\+Types$>$\newline
+struct SFW\+::\+World$<$ Level\+Types $>$\+::\+Session}
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00046}{46}} 行目に定義があります。
+
+
+
+\label{doc-constructors}
+\Hypertarget{struct_s_f_w_1_1_world_1_1_session_doc-constructors}
+\doxysubsection{構築子と解体子}
+\Hypertarget{struct_s_f_w_1_1_world_1_1_session_a94440d9b6feb407050b8fb9be5c8dab3}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!Session@{Session}}
+\index{Session@{Session}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
+\doxysubsubsection{\texorpdfstring{Session()}{Session()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_world_1_1_session_a94440d9b6feb407050b8fb9be5c8dab3} 
+template$<$typename... Level\+Types$>$ \\
+\mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Session\+::\+Session (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_world}{World}}$<$ Level\+Types... $>$ \&}]{\+\_\+world}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00048}{48}} 行目に定義があります。
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_s_f_w_1_1_world_1_1_session_doc-func-members}
+\doxysubsection{関数詳解}
+\Hypertarget{struct_s_f_w_1_1_world_1_1_session_a4a53574b7739f96734a7fd01cefb7b6b}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!AddGlobalSystem@{AddGlobalSystem}}
+\index{AddGlobalSystem@{AddGlobalSystem}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
+\doxysubsubsection{\texorpdfstring{AddGlobalSystem()}{AddGlobalSystem()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_world_1_1_session_a4a53574b7739f96734a7fd01cefb7b6b} 
+template$<$typename... Level\+Types$>$ \\
+template$<$template$<$ typename $>$ class System\+Type$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Session\+::\+Add\+Global\+System (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00193}{193}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_world_1_1_session_a8f6d0adccd665ce607bfeb148ba37de6}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!AddLevel@{AddLevel}}
+\index{AddLevel@{AddLevel}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
+\doxysubsubsection{\texorpdfstring{AddLevel()}{AddLevel()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_world_1_1_session_a8f6d0adccd665ce607bfeb148ba37de6} 
+template$<$typename... Level\+Types$>$ \\
+template$<$typename T$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Session\+::\+Add\+Level (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_level_holder}{Level\+Holder}}$<$ T $>$ \&\&}]{holder}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00081}{81}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_world_1_1_session_a9a45f1a81228b65198bf4124e8a8b254}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!AddLevel@{AddLevel}}
+\index{AddLevel@{AddLevel}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
+\doxysubsubsection{\texorpdfstring{AddLevel()}{AddLevel()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_world_1_1_session_a9a45f1a81228b65198bf4124e8a8b254} 
+template$<$typename... Level\+Types$>$ \\
+template$<$typename T$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Session\+::\+Add\+Level (\begin{DoxyParamCaption}\item[{std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_level}{Level}}$<$ T $>$ $>$}]{level}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+レベルを追加する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em level} & 追加するレベルの右辺値参照 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00055}{55}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_world_1_1_session_afb5a4989a64c0a52520b8e4723a7aa45}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!AddLevel@{AddLevel}}
+\index{AddLevel@{AddLevel}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
+\doxysubsubsection{\texorpdfstring{AddLevel()}{AddLevel()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_world_1_1_session_afb5a4989a64c0a52520b8e4723a7aa45} 
+template$<$typename... Level\+Types$>$ \\
+template$<$typename T, typename... Func$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Session\+::\+Add\+Level (\begin{DoxyParamCaption}\item[{std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_level}{Level}}$<$ T $>$ $>$}]{level}{, }\item[{Func \&\&...}]{custom\+Func}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+レベルを追加する関数 
+
+
+\begin{DoxyParams}{引数}
+{\em level} & 追加するレベルの右辺値参照 \\
+\hline
+{\em custom\+Func} & レベルのロード時やアンロード時に呼び出される関数 \\
+\hline
+\end{DoxyParams}
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00070}{70}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_world_1_1_session_adbfae1706d592d23527d2afdd6719bda}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!AddSystemToLevel@{AddSystemToLevel}}
+\index{AddSystemToLevel@{AddSystemToLevel}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
+\doxysubsubsection{\texorpdfstring{AddSystemToLevel()}{AddSystemToLevel()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_world_1_1_session_adbfae1706d592d23527d2afdd6719bda} 
+template$<$typename... Level\+Types$>$ \\
+template$<$template$<$ typename $>$ class System\+Type$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Session\+::\+Add\+System\+To\+Level (\begin{DoxyParamCaption}\item[{const std\+::string}]{level\+Name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00198}{198}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_world_1_1_session_a88a774331f61b34bd311f8705bb2ea78}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!CleanLevel@{CleanLevel}}
+\index{CleanLevel@{CleanLevel}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
+\doxysubsubsection{\texorpdfstring{CleanLevel()}{CleanLevel()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_world_1_1_session_a88a774331f61b34bd311f8705bb2ea78} 
+template$<$typename... Level\+Types$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Session\+::\+Clean\+Level (\begin{DoxyParamCaption}\item[{const std\+::string}]{level\+Name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00165}{165}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_world_1_1_session_a43e68e483e4475fa03aa8013ff00042b}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!LoadLevel@{LoadLevel}}
+\index{LoadLevel@{LoadLevel}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
+\doxysubsubsection{\texorpdfstring{LoadLevel()}{LoadLevel()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_world_1_1_session_a43e68e483e4475fa03aa8013ff00042b} 
+template$<$typename... Level\+Types$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Session\+::\+Load\+Level (\begin{DoxyParamCaption}\item[{const std\+::string}]{level\+Name}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}}]{executor}{ = {\ttfamily nullptr}, }\item[{bool}]{active}{ = {\ttfamily true}, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}}}]{loaded\+Custom}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+指定したレベルのロード関数を呼び出す関数 
+
+
+\begin{DoxyParams}{引数}
+{\em level\+Name} & ロードするレベルの名前 \\
+\hline
+{\em executor} & 渡した場合,非同期でロードする\\
+\hline
+\end{DoxyParams}
+全レベルの名前と比較して一致するものを探す 
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00094}{94}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_world_1_1_session_ad07bcb186358d6137f1913e55cf7e03c}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!PauseResumeSystemInLevel@{PauseResumeSystemInLevel}}
+\index{PauseResumeSystemInLevel@{PauseResumeSystemInLevel}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
+\doxysubsubsection{\texorpdfstring{PauseResumeSystemInLevel()}{PauseResumeSystemInLevel()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_world_1_1_session_ad07bcb186358d6137f1913e55cf7e03c} 
+template$<$typename... Level\+Types$>$ \\
+template$<$template$<$ typename $>$ class System\+Type$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Session\+::\+Pause\+Resume\+System\+In\+Level (\begin{DoxyParamCaption}\item[{const std\+::string}]{level\+Name}{, }\item[{bool}]{pause}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}}}]{custom\+Func}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00217}{217}} 行目に定義があります。
+
+\Hypertarget{struct_s_f_w_1_1_world_1_1_session_a3886f3e1a9cef19f5593ffb2fc8fbbfe}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!RemoveSystemFromLevel@{RemoveSystemFromLevel}}
+\index{RemoveSystemFromLevel@{RemoveSystemFromLevel}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
+\doxysubsubsection{\texorpdfstring{RemoveSystemFromLevel()}{RemoveSystemFromLevel()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_world_1_1_session_a3886f3e1a9cef19f5593ffb2fc8fbbfe} 
+template$<$typename... Level\+Types$>$ \\
+template$<$template$<$ typename $>$ class System\+Type$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Session\+::\+Remove\+System\+From\+Level (\begin{DoxyParamCaption}\item[{const std\+::string}]{level\+Name}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}}}]{custom\+Func}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00207}{207}} 行目に定義があります。
+
+
+
+この構造体詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\+Core/\mbox{\hyperlink{_world_8hpp}{World.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,105 @@
+\doxysection{Game\+Engine.\+h}
+\hypertarget{_game_engine_8h_source}{}\label{_game_engine_8h_source}\index{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/GameEngine.h@{C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/GameEngine.h}}
+\mbox{\hyperlink{_game_engine_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_i_graphics_device_8hpp}{../Graphics/IGraphicsDevice.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_frame_timer_8h}{../Util/FrameTimer.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_non_copyable_8h}{../Util/NonCopyable.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_world_8hpp}{World.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_type_checker_8hpp}{../Util/TypeChecker.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00018}00018\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w}{SFW}}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00019}00019\ \{}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00023}00023\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00024}\mbox{\hyperlink{concept_s_f_w_1_1_graphics_type}{00024}}\ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_s_f_w_1_1_graphics_type}{GraphicsType}}\ =\ \mbox{\hyperlink{concept_s_f_w_1_1is__crtp__base__of__1arg}{is\_crtp\_base\_of\_1arg<T,\ Graphics::IGraphicsDevice>}};}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00029}\mbox{\hyperlink{namespace_s_f_w_ae9e811c976a496bb8aa50255fd4e6aad}{00029}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_ae9e811c976a496bb8aa50255fd4e6aad}{InitializeGameEngine}}(\textcolor{keywordtype}{bool}\ initialize);}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00033}\mbox{\hyperlink{namespace_s_f_w_ac008063a208c749fcb6c9f45f33d6d79}{00033}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespace_s_f_w_ac008063a208c749fcb6c9f45f33d6d79}{UnInitializeGameEngine}}();}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00040}00040\ \ \ \ \ \textcolor{keyword}{template}<\mbox{\hyperlink{concept_s_f_w_1_1_graphics_type}{GraphicsType}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{Graphics}},\ \textcolor{keyword}{typename}...\ LevelTypes>}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00041}\mbox{\hyperlink{class_s_f_w_1_1_game_engine}{00041}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_game_engine_ad4ee0d8680803220f4d32c9611ae98d3}{GameEngine}}\ final\ :\ \mbox{\hyperlink{class_non_copyable_a809b6e4ade7ae32f6d248f2a3b783d45}{NonCopyable}}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00042}00042\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }WorldType\ =\ \mbox{\hyperlink{class_s_f_w_1_1_world}{World}}<LevelTypes...>;}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00045}00045\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00052}\mbox{\hyperlink{class_s_f_w_1_1_game_engine_ad4ee0d8680803220f4d32c9611ae98d3}{00052}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_game_engine_ad4ee0d8680803220f4d32c9611ae98d3}{GameEngine}}(\mbox{\hyperlink{namespace_s_f_w_1_1_graphics}{Graphics}}\&\&\ graphicsDevice,\ WorldType\&\&\ world,\ \textcolor{keywordtype}{double}\ fps\ =\ 60.0)}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ :\ m\_graphicsDevice(\mbox{\hyperlink{namespacestd}{std}}::move(graphicsDevice)),\ m\_world(\mbox{\hyperlink{namespacestd}{std}}::move(world))}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ m\_world.RegisterRequestService();}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_ae9e811c976a496bb8aa50255fd4e6aad}{InitializeGameEngine}}(m\_graphicsDevice.IsInitialized());}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ m\_frameTimer.SetMaxFrameRate(fps);}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00064}\mbox{\hyperlink{class_s_f_w_1_1_game_engine_a26e4f0b29634002f5b47c43152be9fec}{00064}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_game_engine_a26e4f0b29634002f5b47c43152be9fec}{\string~GameEngine}}()}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_ac008063a208c749fcb6c9f45f33d6d79}{UnInitializeGameEngine}}();}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{comment}{//ムーブ禁止}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00070}\mbox{\hyperlink{class_s_f_w_1_1_game_engine_ac637e80bedcc2e7d1ff0b12cf95cc117}{00070}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_game_engine_ac637e80bedcc2e7d1ff0b12cf95cc117}{GameEngine}}(\mbox{\hyperlink{class_s_f_w_1_1_game_engine_ad4ee0d8680803220f4d32c9611ae98d3}{GameEngine}}\&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00071}\mbox{\hyperlink{class_s_f_w_1_1_game_engine_ac0fd50b51b4b6597286e6387eb96f0aa}{00071}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_game_engine_ad4ee0d8680803220f4d32c9611ae98d3}{GameEngine}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_game_engine_ac0fd50b51b4b6597286e6387eb96f0aa}{operator=}}(\mbox{\hyperlink{class_s_f_w_1_1_game_engine_ad4ee0d8680803220f4d32c9611ae98d3}{GameEngine}}\&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00078}\mbox{\hyperlink{class_s_f_w_1_1_game_engine_acca014647ca1ec246d1202a80b9e2354}{00078}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_game_engine_acca014647ca1ec246d1202a80b9e2354}{MainLoop}}(\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 更新処理、描画処理を呼び出す}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ Update(m\_frameTimer.GetDeltaTime(),\ executor);}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ Draw();}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//経過時間を計算と待機}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ m\_frameTimer.Tick();}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00090}\mbox{\hyperlink{class_s_f_w_1_1_game_engine_a6402259925794bcc19eaf85aa342b02d}{00090}}\ \ \ \ \ \ \ \ \ WorldType\&\ \mbox{\hyperlink{class_s_f_w_1_1_game_engine_a6402259925794bcc19eaf85aa342b02d}{GetWorld}}()\ noexcept}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_world;}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00094}00094\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Update(\textcolor{keywordtype}{double}\ delta\_time,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00102}00102\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//経過時間計測用}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ t0\ =\ std::chrono::steady\_clock::now();}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00105}00105\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ m\_world.\mbox{\hyperlink{class_s_f_w_1_1_world_a2b0b7ee5d20210bc59ec7e54370824cb}{UpdateServiceLocator}}(delta\_time,\ executor);}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ m\_world.\mbox{\hyperlink{class_s_f_w_1_1_world_a6b458833add601c670ce4263ef74c155}{UpdateAllLevels}}(delta\_time,\ executor);}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ m\_world.\mbox{\hyperlink{class_s_f_w_1_1_world_a3909f9f47b0757899f0d08e678410b7e}{CommitServiceLocator}}(delta\_time);}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00113}00113\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ t1\ =\ std::chrono::steady\_clock::now();}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ ms\ =\ std::chrono::duration<double,\ std::milli>(t1\ -\/\ t0).count();}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ロジックの実行時間をデバッグ情報に送信}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_aa600d63fbaac812f9054d99e9771d555}{Debug::PublishLogicMs}}(\textcolor{keywordtype}{float}(ms));}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00121}00121\ \textcolor{preprocessor}{\#endif}\textcolor{comment}{//\_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00122}00122\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Draw()}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00129}00129\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 画面をクリア}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ clearColor[4]\ =\ \{\ 0.0f,\ 0.0f,\ 0.0f,\ 1.0f\ \};}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ m\_graphicsDevice.SubmitFrame(clearColor,\ m\_frameCounter++);\ \textcolor{comment}{//\ 非同期提出}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 計測やスクショ等で必要なら:\ m\_graphicsDevice.WaitSubmittedFrames(m\_frameCounter\ -\/\ 1);}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00135}00135\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ FPS制御クラス}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ FrameTimer\ m\_frameTimer;}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00138}00138\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ グラフィックデバイス}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ Graphics\ m\_graphicsDevice;}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00140}00140\ \ \ \ \ \ \ \ \ \textcolor{comment}{//ワールド管理}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ WorldType\ m\_world;}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ フレームカウンタ}}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ uint64\_t\ m\_frameCounter\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00144}00144\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_game_engine_8h_source_l00145}00145\ \}}
+
+\end{DoxyCode}
