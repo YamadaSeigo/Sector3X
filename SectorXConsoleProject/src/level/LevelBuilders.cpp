@@ -145,7 +145,7 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 				colorWhite,
 				titleComp);
 
-			textureDesc.path = "assets/texture/sprite/PressEnter.png";
+			textureDesc.path = "assets/texture/sprite/PressSpace.png";
 			textureMgr->Add(textureDesc, texHandle);
 			matDesc.psSRV[2] = texHandle; // TEX2 ‚ÉƒZƒbƒg
 			matMgr->Add(matDesc, matHandle);
