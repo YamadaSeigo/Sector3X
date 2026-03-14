@@ -68,12 +68,55 @@ cbuffer GodRayCB : register(b10)
     float gGodRayMaxDepth; // “空/遠方”判定の深度閾値（例: 0.9995）
 };
 
+cbuffer WetnessCB : register(b11)
+{
+    float2 gWetOriginXZ_Snap; // スナップされたワールド原点(XZ)（スクロールの基準）
+    float gWetInvWorldSize; // 1 / カバーするワールド幅（例: 1/256m）
+    float gWetStrength; // 全体強度
+
+    float gWetDarken; // 濡れで暗くする量(例: 0.35)
+    float gWetSpecBoost; // 疑似スペキュラ強度(例: 1.0)
+    float gWetFlatten; // 法線コントラスト抑制(例: 0.6)
+    float gWetMinNdotUp; // 上面のみ濡らす閾値(例: 0.2)
+
+    float2 gInvScreen; // 1/width, 1/height
+    float2 gProjAB; // Linearize用
+    float gEdgeThreshold; // エッジ判定しきい値（線形深度の差）
+    float gEdgeSharpness; // マスクの鋭さ
+    float2 gRainDirSS; // スクリーン空間の雨方向（正規化）
+    float gTime;
+    float gDensity; // 粒密度
+    float gStrength; // 合成強度
+
+    float gDotSizeScale;
+
+    float gNearThickZ;
+    float gFarThickZ;
+    uint gNearRadiusPx;
+    uint gFarRadiusPx;
+
+    float gUpMin;
+    float gUpMax;
+    float gFarFade;
+
+    float gBlurRadiusTexels;
+}
+
+cbuffer CBRainMatrix : register(b12)
+{
+    row_major float4x4 gRainViewProj;
+};
+
 Texture2D gAlbedoAO : register(t11); // RGB: Albedo, A: Occlusion
 Texture2D gNormalRough : register(t12); // RGB: Normal, A: Roughness
 Texture2D gEmiMetal : register(t13); // RGB: Emissive, A: Metallic
 Texture2D<float> gDepth : register(t14); // Depth
 
 Texture2D<float4> gLightAccum : register(t15);
+
+Texture2D<float> gWetness : register(t16);
+
+Texture2D<float> gRainDepth : register(t17);
 
 
 // 比較サンプラ（ShadowMapService が作っているもの）
@@ -345,6 +388,287 @@ float ComputeRadialWeight(float3 camForwardWS, float3 sunDirWS)
     return smoothstep(0.2, 0.6, d);
 }
 
+// 例: D3D 0..1 depth を view-space Z(正の距離)へ（一般的な形）
+// projParams: (A,B) を CPU から渡すのが安全
+// viewZ = 1 / (A * depth + B) みたいに合わせる
+float LinearizeDepth(float depth)
+{
+    // viewZ = 1 / (A*depth + B)
+    return rcp(gProjAB.x * depth + gProjAB.y);
+}
+
+float EdgeFromDepth(float2 uv)
+{
+    float dC = LinearizeDepth(gDepth.SampleLevel(gPointSamp, uv, 0).r);
+
+    float2 dx = float2(gInvScreen.x, 0);
+    float2 dy = float2(0, gInvScreen.y);
+
+    float dR = LinearizeDepth(gDepth.SampleLevel(gPointSamp, uv + dx, 0).r);
+    float dL = LinearizeDepth(gDepth.SampleLevel(gPointSamp, uv - dx, 0).r);
+    float dU = LinearizeDepth(gDepth.SampleLevel(gPointSamp, uv + dy, 0).r);
+    float dD = LinearizeDepth(gDepth.SampleLevel(gPointSamp, uv - dy, 0).r);
+
+    float e = 0;
+    e = max(e, abs(dC - dR));
+    e = max(e, abs(dC - dL));
+    e = max(e, abs(dC - dU));
+    e = max(e, abs(dC - dD));
+
+    // しきい値超えをエッジに。smoothstepでマイルドに
+    float m = saturate((e - gEdgeThreshold) * gEdgeSharpness);
+    return m;
+}
+
+float UpMask(float3 N)
+{
+    // N.y が 0.2 以下は 0、0.8 以上で 1 みたいに
+    return saturate((N.y - gUpMin) / max(1e-4, (gUpMax - gUpMin)));
+}
+
+float3 DecodeNormal(float3 enc)
+{
+    return normalize(enc * 2 - 1);
+}
+
+float NormalEdge(float2 uv, float3 Nc)
+{
+    float2 dx = float2(gInvScreen.x, 0);
+    float2 dy = float2(0, gInvScreen.y);
+
+    float3 Nr = DecodeNormal(gNormalRough.SampleLevel(gPointSamp, uv + dx, 0).rgb);
+    float3 Nl = DecodeNormal(gNormalRough.SampleLevel(gPointSamp, uv - dx, 0).rgb);
+    float3 Nu = DecodeNormal(gNormalRough.SampleLevel(gPointSamp, uv + dy, 0).rgb);
+    float3 Nd = DecodeNormal(gNormalRough.SampleLevel(gPointSamp, uv - dy, 0).rgb);
+
+    float e = 0;
+    e = max(e, 1 - saturate(dot(Nc, Nr)));
+    e = max(e, 1 - saturate(dot(Nc, Nl)));
+    e = max(e, 1 - saturate(dot(Nc, Nu)));
+    e = max(e, 1 - saturate(dot(Nc, Nd)));
+
+    return saturate((e - 0.2f /*gNormalEdgeThreshold*/) * 0.4f /*gNormalEdgeSharpness*/);
+}
+
+int RadiusByDistance(float viewZ)
+{
+    // 例: 近い(2m)→3px、遠い(30m)→0px
+    float t = saturate((viewZ - gNearThickZ) / max(1e-4, (gFarThickZ - gNearThickZ)));
+    float r = lerp((float) gNearRadiusPx, (float) gFarRadiusPx, t);
+    return (int) r;
+}
+
+float DilateDepthUpMask(float2 uv, float up, int r)
+{
+    float m = 0;
+
+    // r=0ならそのまま
+    if (r <= 0)
+        return EdgeFromDepth(uv) * up;
+
+    // 正方形で max（重ければ Cross 版にしてOK）
+    [unroll]
+    for (int y = -3; y <= 3; ++y)   // 最大3px想定なら固定でunrollしやすい
+    {
+        [unroll]
+        for (int x = -3; x <= 3; ++x)
+        {
+            if (abs(x) > r || abs(y) > r)
+                continue;
+
+            float2 o = float2(x, y) * gInvScreen;
+            m = max(m, EdgeFromDepth(uv + o));
+        }
+    }
+
+    return m * up; // upは中心の法線でOK（近傍まで法線参照すると重い）
+}
+
+float DilateCross5(float2 uv)
+{
+    float2 dx = float2(gInvScreen.x, 0);
+    float2 dy = float2(0, gInvScreen.y);
+
+    float m = EdgeFromDepth(uv);
+    m = max(m, EdgeFromDepth(uv + dx));
+    m = max(m, EdgeFromDepth(uv - dx));
+    m = max(m, EdgeFromDepth(uv + dy));
+    m = max(m, EdgeFromDepth(uv - dy));
+    return m;
+}
+
+float DilateCross9(float2 uv)
+{
+    float2 dx = float2(gInvScreen.x, 0);
+    float2 dy = float2(0, gInvScreen.y);
+
+    float m = DilateCross5(uv);
+    m = max(m, EdgeFromDepth(uv + 2 * dx));
+    m = max(m, EdgeFromDepth(uv - 2 * dx));
+    m = max(m, EdgeFromDepth(uv + 2 * dy));
+    m = max(m, EdgeFromDepth(uv - 2 * dy));
+    return m;
+}
+
+float Hash21(float2 p)
+{
+    // 軽量ハッシュ
+    p = frac(p * float2(123.34, 456.21));
+    p += dot(p, p + 45.32);
+    return frac(p.x * p.y);
+}
+
+// 0..1 の短いパルス（点灯→減衰→消える）
+float Pulse(float phase, float width)
+{
+    // phase: 0..1
+    // width: 0.05?0.2 くらい（小さいほど一瞬）
+    float t = min(phase, 1.0 - phase) * 2.0; // 0..1..0 の三角波
+    return smoothstep(1.0 - width, 1.0, t); // 中央だけ光る
+}
+
+float ComputeSplashRadius(float depth01)
+{
+    float z = LinearizeDepth(depth01);
+
+    // 調整パラメータ
+    float nearSize = 1.6f; // カメラ近くのサイズ
+    float farSize = 0.25f; // 遠くの最小サイズ
+
+    // 距離スケーリング（重要）
+    float size = nearSize / (z * 0.15f + 1.0f);
+
+    return max(size, farSize);
+}
+
+// エッジ上に「はじけ粒」を出す（セルごとにランダム位相でパッと出る）
+float SplashDots(float2 uv, float depth01)
+{
+    float radiusScale = ComputeSplashRadius(depth01);
+
+    // 雨方向に少し流す（粒が“雨に押されてる”感じ）
+    float2 suv = uv + gRainDirSS * (gTime * 0.15);
+
+    // グリッド密度（好みで 120~300 くらい）
+    float2 grid = suv * (200.0 * gDensity);
+    float2 cell = floor(grid);
+    float2 f = frac(grid) - 0.5;
+
+    float rnd = Hash21(cell);
+
+    // セル内中心を少しランダム
+    float2 center = (float2(Hash21(cell + 1.7), Hash21(cell + 9.2)) - 0.5) * 0.6;
+    float2 q = f - center;
+    float dist = length(q);
+
+    // はじけ：位相(0..1)で半径が広がって消える
+    float phase = frac(rnd + gTime * (1.2 + 1.5 * rnd));
+
+    // 距離依存サイズ
+    float r0 = 0.06 * gDotSizeScale * radiusScale;
+    float r1 = 0.22 * gDotSizeScale * radiusScale;
+    float r = lerp(r0, r1, phase);
+
+    // 輪っか気味＋内側少し（“弾け”っぽさ）
+    float ringW = 0.03 * gDotSizeScale;
+    float ringIn0 = 0.06 * gDotSizeScale;
+    float ringIn1 = 0.02 * gDotSizeScale;
+
+    float ring = 1.0 - smoothstep(r, r + ringW, dist);
+    ring *= smoothstep(r - ringIn0, r - ringIn1, dist);
+
+    // 出現率（雨量に合わせるならここで確率を絞る）
+    float appear = step(0.55, rnd); // 半分くらいのセルだけ出す
+    return ring * appear;
+}
+
+float SplashFlickerDots(float2 uv, float viewZ)
+{
+    // 近距離ほど大粒・遠距離ほど小粒（任意）
+    float sizeScale = 1.6 / (viewZ * 0.15 + 1.0);
+    sizeScale = max(sizeScale, 0.25);
+
+    // グリッド密度:小さくすると点が大きく/粗く見える
+    float freq = 180.0 * gDensity;
+    float2 grid = uv * freq;
+
+    float2 cell = floor(grid);
+    float2 f = frac(grid) - 0.5;
+
+    float rnd = Hash21(cell);
+
+    // 各セルの点灯速度（高速点滅させる）
+    float speed = lerp(10.0, 28.0, rnd); // <-高速にしたいならここを上げる
+    float phase = frac(rnd + gTime * speed);
+
+    // 点灯時間（短いほど“パッ”と弾ける）
+    float on = Pulse(phase, 0.12); // 0.08~0.18くらいで調整
+
+    // 点の中心をランダムにずらす
+    float2 center = (float2(Hash21(cell + 1.7), Hash21(cell + 9.2)) - 0.5) * 0.8;
+    float2 q = f - center;
+
+    // “点”半径
+    float r = 0.10 * sizeScale * gDotSizeScale; // <-ここで粒の大きさ
+    float d = length(q);
+
+    // 塗りつぶし点（リングにしたいなら式を変える）
+    float dotMask = 1.0 - smoothstep(r, r + 0.04 * sizeScale, d);
+
+    // 出現率（全部のセルが光るとノイズっぽいので間引く）
+    float appear = step(0.1, rnd); // 0.5~0.8で調整
+
+    return dotMask * on * appear;
+}
+
+float SampleRainVisibility(float3 posWS)
+{
+    float4 h = mul(gRainViewProj, float4(posWS, 1.0f));
+    float3 ndc = h.xyz / h.w;
+
+    float2 uv;
+    uv.x = ndc.x * 0.5f + 0.5f;
+    uv.y = -ndc.y * 0.5f + 0.5f;
+
+    // マップ外は「遮蔽なし」扱い
+    if (any(uv < 0.0f) || any(uv > 1.0f))
+        return 1.0f;
+
+    float receiverZ = ndc.z;
+
+    // 1tap だと境界が硬いので 3x3 PCF で少しぼかす
+    uint w, hTex;
+    gRainDepth.GetDimensions(w, hTex);
+    float2 texel = 1.0f / float2((float) w, (float) hTex);
+
+    float occ = 0.0f;
+    [unroll]
+    for (int y = -1; y <= 1; ++y)
+    {
+        [unroll]
+        for (int x = -1; x <= 1; ++x)
+        {
+            float2 o = float2(x, y) * texel;
+            occ += gRainDepth.SampleLevel(gPointSamp, uv + o, 0);
+        }
+    }
+    occ /= 9.0f;
+
+    // receiverZ が occ より奥なら遮られている
+    float dz = receiverZ - occ;
+
+    // ここが境界のぼかし幅
+    const float start = 0.001f;
+    const float end = 0.04f;
+
+    // dz <= start なら visibility=1
+    // dz >= end   なら visibility=0
+    float visibility = 1.0f - smoothstep(start, end, dz);
+
+    return visibility;
+}
+
+
 float4 main(VSOut i) : SV_Target
 {
     float2 uv = i.uv;
@@ -353,10 +677,12 @@ float4 main(VSOut i) : SV_Target
     float4 nr = gNormalRough.Sample(gSampler, uv);
     float4 emiMetal = gEmiMetal.Sample(gSampler, uv);
 
+    float depth01 = gDepth.Sample(gPointSamp, uv);
+
     float4 ndc;
     ndc.xy = uv * 2.0f - 1.0f;
     ndc.y = -ndc.y; // D3DのUV(上0) と NDC(Y+上)の差を吸収
-    ndc.z = gDepth.Sample(gPointSamp, uv);
+    ndc.z = depth01;
     ndc.w = 1.0f;
 
     // View-Projection 逆行列でワールド位置を復元
@@ -377,6 +703,46 @@ float4 main(VSOut i) : SV_Target
      // GBuffer
     float3 albedo = albedoAO.rgb;
     float3 N = normalize(nr.rgb * 2.0f - 1.0f);
+
+    float3 rainTestPos = wp.xyz + float3(0.0f, 0.03f, 0.0f);
+     // --- Wetness sample (world XZ -> wet UV) ---
+    float2 uvWet = (wp.xz - gWetOriginXZ_Snap) * gWetInvWorldSize;
+
+    float rainVisibility = SampleRainVisibility(rainTestPos);
+
+    // 境界だけノイズで崩す
+    {
+        float n = Hash12(floor(wp.xz * 3.0f));
+        n = n * 2.0f - 1.0f;
+
+        float edgeZone = 1.0f - abs(rainVisibility * 2.0f - 1.0f);
+        edgeZone = pow(edgeZone, 0.6f);
+        rainVisibility = saturate(rainVisibility + n * 0.15f * edgeZone);
+    }
+
+    float wet = 0.0f;
+    if (all(uvWet >= 0.0f) && all(uvWet <= 1.0f))
+    {
+        float wetRaw = gWetness.SampleLevel(gSampler, uvWet, 0) * gWetStrength;
+
+        // 完全遮蔽でも少し残す
+        float wetMask = lerp(0.4f, 1.0f, rainVisibility);
+
+        // 境界帯だけ少し持ち上げる
+        float edgeBand = smoothstep(0.0f, 0.35f, rainVisibility) *
+                 (1.0f - smoothstep(0.65f, 1.0f, rainVisibility));
+
+        wet = wetRaw * wetMask;
+        wet += wetRaw * 0.45f * edgeBand;
+        wet = min(wet, wetRaw);
+    }
+
+    // 上向き面だけ濡れやすく（壁の濡れを抑制）
+    float ndotUp = dot(N, float3(0, 1, 0));
+    float facingUp = saturate((ndotUp - 0.2f) / (1.0f - 0.2f));
+    wet *= facingUp;
+
+    albedo *= (1.0f - wet * gWetDarken);
 
     // -----------------------------
     //  弱いノーマルライティング
@@ -406,6 +772,8 @@ float4 main(VSOut i) : SV_Target
     // detailStrength でフェードイン
     float normalFactor = lerp(1.0f, normalFactorRaw, detailStrength);
 
+    normalFactor = lerp(normalFactor, 1.0f, wet * gWetFlatten);
+
     // Ambient（Unlitの基礎明るさ）
     float3 base = albedo * (gAmbientColor * gAmbientIntensity);
 
@@ -422,8 +790,29 @@ float4 main(VSOut i) : SV_Target
     // Emissive（必要ならそのまま加算）
     float3 color = base + plAdd + emiMetal.rgb * emissiveBoost;
 
+
+    float3 V = normalize(camPos.xyz - wp.xyz);
+    float3 H = normalize(L + V);
+
+
+    float ndh = saturate(dot(N, H));
+    float ndl2 = saturate(dot(N, L));
+
+    // “濡れほど鋭いハイライト”
+    // （nr.a に roughness が入ってるなら使える：float rough = nr.a; など）
+    float rough = nr.a; // 0..1想定
+    float specPow = lerp(128.0f, 16.0f, rough); // rough大->鈍い
+
+    float wetSpec = pow(ndh, specPow) * ndl2;
+    wetSpec *= wet * gWetSpecBoost;
+
+    color += gSunColor * (gSunIntensity * wetSpec) * (shadowMul - 0.6f) / 0.4f;
+
+
+    float debugViewDepth = dot(wp.xyz - camPos.xyz, camForward.xyz);
+
     // 距離フォグ
-    float fogDist = ComputeFogFactor(viewDepth);
+    float fogDist = ComputeFogFactor(debugViewDepth);
 
     // 高さフォグ
     float fogHeight = ComputeHeightFogFactor(camPos.xyz, wp.xyz, viewDepth);
@@ -447,6 +836,51 @@ float4 main(VSOut i) : SV_Target
 
         // 太陽の色味で足す（Unlitスタイルなら加算でOK）
         color += gGodRayTint * god * fogVis;
+    }
+
+
+    {
+        float viewZ = LinearizeDepth(depth01);
+        float upMask = UpMask(N);
+        int rpx = RadiusByDistance(viewZ);
+
+        // 近距離ほど太い “深度差*上向き” マスク
+        float depthUpDilated = DilateDepthUpMask(uv, upMask, rpx);
+
+        // normal差分は補助（必要なら）
+        float nEdge = NormalEdge(uv, N);
+
+        // 最終マスク（深度差は必須）
+        float edgeMask = saturate(depthUpDilated * (1.0 + nEdge * 0.5f /*gUseNormalBoost*/));
+
+        // 粒（距離でサイズも変えるならここに viewZ/depth を渡す）
+        float splash = edgeMask * SplashFlickerDots(uv, viewZ);
+
+        // 遠方は薄く
+        splash *= saturate(1.0f - viewZ * gFarFade) * rainVisibility;
+
+        // 太陽光
+        float splashNdotL = saturate(dot(N, L));
+        float3 sunLight =
+        gSunColor * (gSunIntensity * splashNdotL * shadowMul);
+
+        // 環境光
+        float3 ambientLight =
+        gAmbientColor * gAmbientIntensity;
+
+        // splash 用の最終ライト
+        float3 splashLight =
+            ambientLight * 0.5f +
+            sunLight * 0.8f +
+            plAdd * 2.0f;
+
+        // 暗すぎると完全に消えるので少しだけ下限
+        //splashLight = max(splashLight, float3(0.02f, 0.02f, 0.02f));
+
+        // 必要なら強すぎるHDRを軽く抑える
+        // splashLight = splashLight / (1.0f + splashLight);
+
+        color += splashLight * splash * gStrength;
     }
 
     return float4(color, 1.0f);
