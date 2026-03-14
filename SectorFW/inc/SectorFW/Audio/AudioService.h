@@ -1,4 +1,11 @@
-// AudioService_AllInOne.h (or .cpp) - C++17
+/*****************************************************************//**
+ * \file   AudioService.h
+ * \brief オーディオ管理サービスの定義。SoLoudライブラリを使用して、サウンドのロード、再生、停止、パラメータ設定などの機能を提供します。
+ * \author seigo
+ * \date   December 2025
+ *********************************************************************/
+
+
 #pragma once
 #include <atomic>
 #include <cstdint>
@@ -24,9 +31,7 @@ namespace SoLoud
 
 namespace SFW::Audio
 {
-	// ---------------------------
-	// AudioService
-	// ---------------------------
+
 	class AudioService : public ECS::IUpdateService
 	{
 	public:
@@ -82,14 +87,39 @@ namespace SFW::Audio
 		 */
 		AudioTicketID EnqueuePlay(SoundHandle sound, const AudioPlayParams& p = {});
 
+		/**
+		 * @brief 指定されたボイスIDの再生を停止するコマンドをキューに追加します。実際の停止はPumpCommands()スレッドで行われます。
+		 * @param v 停止するボイスID
+		 */
 		void EnqueueStop(VoiceID v);
-
+		/**
+		 * @brief 指定されたボイスIDの音量を設定するコマンドをキューに追加します。実際の設定はPumpCommands()スレッドで行われます。
+		 * @param v 音量を設定するボイスID
+		 * @param volume 設定する音量（0.0f = 無音、1.0f = デフォルト音量、2.0f = 2倍の音量など）
+		 */
 		void EnqueueSetVolume(VoiceID v, float volume);
-
+		/**
+		 * @brief 指定されたボイスIDのパンを設定するコマンドをキューに追加します。実際の設定はPumpCommands()スレッドで行われます。
+		 * @param v パンを設定するボイスID
+		 * @param pan 設定するパン（-1.0f = 左、0.0f = 中央、1.0f = 右）
+		 */
 		void EnqueueSetPan(VoiceID v, float pan);
-
+		/**
+		 * @brief 指定されたボイスIDのピッチを設定するコマンドをキューに追加します。実際の設定はPumpCommands()スレッドで行われます。
+		 * @param v ピッチを設定するボイスID
+		 * @param pitch 設定するピッチ（1.0f = デフォルトのピッチ、0.5f = 半分のピッチ、2.0f = 2倍のピッチなど）
+		 */
 		void EnqueueSetPitch(VoiceID v, float pitch);
-
+		/**
+		 * @brief 指定されたボイスIDの3D位置と速度を設定するコマンドをキューに追加します。実際の設定はPumpCommands()スレッドで行われます。
+		 * @param v 位置と速度を設定するボイスID
+		 * @param x 位置X
+		 * @param y 位置Y
+		 * @param z 位置Z
+		 * @param vx 速度X
+		 * @param vy 速度Y
+		 * @param vz 速度Z
+		 */
 		void EnqueueSet3D(VoiceID v, float x, float y, float z, float vx, float vy, float vz);
 
 		/**

@@ -1,4 +1,11 @@
-// SimpleThreadPool.h
+/*****************************************************************//**
+ * \file   ThreadPoolExecutor.h
+ * \brief スレッドプールを実装するクラスと、スレッドカウントダウンラッチを定義するヘッダーファイル
+ * \author seigo
+ * \date   December 2025
+ *********************************************************************/
+
+
 #pragma once
 #include <thread>
 #include <vector>
@@ -62,6 +69,7 @@ namespace SFW
 				w.join();
 		}
 
+		// ワーカスレッドで指定したjobを実行する。Submit 内でさらに Submit された場合は、全ワーカーがビジーならその場で実行する（ネストした Submit のスタックが深くなりすぎないように）
 		void Submit(std::function<void()> job) override {
 			// プール内からのネストした Submit で、
 			// かつ全ワーカーがビジーなら、その場で実行
@@ -81,6 +89,7 @@ namespace SFW
 			cv_.notify_one();
 		}
 
+		// ワーカースレッド数を返す
 		uint32_t Concurrency() const override { return threadCount; }
 
 	private:
@@ -100,13 +109,20 @@ namespace SFW
 		STATIC_SERVICE_TAG
 	};
 
+	// スレッドカウントダウンラッチ
 	class ThreadCountDownLatch {
 	public:
 		explicit ThreadCountDownLatch(uint32_t count) : count_(count) {}
+
+		/**
+		 *@brief カウントを1減らし、0になったら待機しているスレッドを全て起こす
+		 *@detials 基本的にワーカースレッドの処理が終わったことを通知するために使う。ワーカースレッドは処理が終わるたびに CountDown() を呼び、メインスレッドは Wait() で全てのワーカーが終わるのを待つ。
+		 */
 		void CountDown() {
 			std::lock_guard lk(m_);
 			if (--count_ == 0) cv_.notify_all();
 		}
+		// count_ が0になるまで待機
 		void Wait() {
 			std::unique_lock lk(m_);
 			cv_.wait(lk, [&] { return count_ == 0; });
@@ -117,6 +133,7 @@ namespace SFW
 		uint32_t count_;
 	};
 
+	// 外部で mutex と condition_variable を用意して使うバージョン（複数のラッチを同時に Wait や再利用で軽量化したい場合に使う）
 	class ThreadCountDownLatchExternalSync {
 	public:
 		explicit ThreadCountDownLatchExternalSync(std::mutex& mutex, std::condition_variable& cv, int count)

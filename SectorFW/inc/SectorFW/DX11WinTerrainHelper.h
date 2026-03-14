@@ -1,4 +1,10 @@
-﻿// TerrainHelpers.h / .cpp などにどうぞ
+﻿/*****************************************************************//**
+ * \file   DX11WinTerrainHelper.h
+ * \brief DirectX 11 を使用した Windows 向けの地形描画に関連するユーティリティ関数を定義するヘッダーファイル
+ * \author seigo
+ * \date   December 2025
+ *********************************************************************/
+
 #pragma once
 #include <d3d11.h>
 #include <wrl/client.h>

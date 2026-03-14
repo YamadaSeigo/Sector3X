@@ -1,4 +1,11 @@
-﻿#pragma once
+﻿/*****************************************************************//**
+ * \file   DX11BlockRevertHelper.h
+ * \brief TerrainClustered のブロックリバート（クラスタリング前の状態に戻す）を支援するユーティリティ
+ * \author seigo
+ * \date   December 2025
+ *********************************************************************/
+
+#pragma once
 #include <d3d11.h>
 #include <d3dcompiler.h>
 #include <wrl/client.h>

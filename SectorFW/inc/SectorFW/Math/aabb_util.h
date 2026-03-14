@@ -1,5 +1,12 @@
+/*****************************************************************//**
+ * \file   aabb_util.h
+ * \brief  Axis-Aligned Bounding Box (AABB) を計算するためのユーティリティ関数を提供する。
+ * \author seigo
+ * \date   December 2025
+ *********************************************************************/
+
+
 #pragma once
-#include <cstddef>
 #include <limits>
 #include <cmath>
 #include <vector>

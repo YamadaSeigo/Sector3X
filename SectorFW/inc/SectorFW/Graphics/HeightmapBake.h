@@ -1,4 +1,10 @@
-﻿// HeightmapBake.hpp
+﻿/*****************************************************************//**
+ * \file   HeightmapBake.h
+ * \brief 地形メッシュからグリッド（頂点格子）への高さマップ焼き付けユーティリティ
+ * \author seigo
+ * \date  December 2025
+ *********************************************************************/
+
 #pragma once
 #include <vector>
 #include <cstdint>

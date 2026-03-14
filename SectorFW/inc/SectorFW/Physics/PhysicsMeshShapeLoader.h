@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * \file   PhysicsMeshShapeLoader.h
+ * \brief JMSH (.meshbin) 形式の物理メッシュ形状データを読み込む関数を宣言するヘッダーファイル
+ * \author seigo
+ * \date   December 2025
+ *********************************************************************/
+
 #pragma once
 #include <vector>
 #include <cstdint>

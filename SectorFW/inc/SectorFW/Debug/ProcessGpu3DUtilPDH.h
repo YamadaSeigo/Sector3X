@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * \file   ProcessGpu3DUtilPDH.h
+ * \brief PDH を使用して、プロセスごとの 3D GPU 使用率 (%) を取得する最小限のクラス
+ * \author seigo
+ * \date   December 2025
+ *********************************************************************/
+
 // Minimal PDH per-process 3D GPU utilization (%)
 // Build: link with pdh.lib
 #define NOMINMAX

@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * \file   build_order.h
+ * \brief カメラからの距離に基づいてエンティティの描画順序を構築するためのユーティリティ関数
+ * \author lenov
+ * \date   March 2025
+ *********************************************************************/
+
 #pragma once
 
 #include <algorithm>
@@ -84,6 +91,7 @@ namespace SFW
 		return (uint16_t)v;
 	}
 
+	// 16bitキーを使った安定な近→遠ソート（Radix16）。ビン分割よりも精細な順序が得られる。安定。
 	static void BuildOrder_FixedRadix16(const SoAPositions& T,
 		float cx, float cy, float cz,
 		float near2, float far2,
@@ -161,6 +169,7 @@ namespace SFW
 
 	struct KeyRow { float dist2; uint32_t row; };
 
+	// 厳密な近→遠ソート（安定）。距離^2をキーにして std::nth_element + sort。
 	static void BuildFrontK_Strict(const SoAPositions& T,
 		float cx, float cy, float cz,
 		uint32_t K,

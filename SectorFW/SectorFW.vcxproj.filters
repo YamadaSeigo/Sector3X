@@ -462,9 +462,6 @@
     <ClInclude Include="inc\SectorFW\Graphics\OccluderToolkit.h">
       <Filter>Inc\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\Core\build_order.h">
-      <Filter>Inc\Core</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SectorFW\Graphics\LODPolicy.h">
       <Filter>Inc\Graphics</Filter>
     </ClInclude>
@@ -533,6 +530,9 @@
     </ClInclude>
     <ClInclude Include="inc\SectorFW\Math\ease.h">
       <Filter>Inc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\build_order.h">
+      <Filter>Inc\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

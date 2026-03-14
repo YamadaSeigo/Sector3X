@@ -1,4 +1,10 @@
-// PointLightService.hpp
+/*****************************************************************//**
+ * \file   PointLightService.h
+ * \brief 点光源を管理するサービスの定義
+ * \author seigo
+ * \date   December 2025
+ *********************************************************************/
+
 #pragma once
 #include <cstdint>
 #include <vector>
@@ -12,7 +18,7 @@
 
 namespace SFW::Graphics
 {
-	/// 世代付きハンドル（refcount無し）
+	// 世代付きハンドル（refcount無し）
 	struct PointLightHandle
 	{
 		uint32_t index = 0xFFFFFFFFu;
@@ -35,7 +41,6 @@ namespace SFW::Graphics
 	};
 
 	// GPU転送用（例：StructuredBuffer向け）
-	// ※あなたのシェーダー定義に合わせて変更してOK
 	struct GpuPointLight
 	{
 		GpuPointLight() = default;

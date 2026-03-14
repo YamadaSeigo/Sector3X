@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * \file   DX11LightShadowResourceService.h
+ * \brief DirectX11 用のライト、シャドウ・リソース管理サービス
+ * \author seigo
+ * \date   December 2025
+ *********************************************************************/
+
 #pragma once
 
 #include "_dx11inc.h"

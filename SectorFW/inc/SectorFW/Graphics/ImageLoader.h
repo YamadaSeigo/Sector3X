@@ -1,4 +1,10 @@
-// ImageLoader.hpp
+/*****************************************************************//**
+ * \file   ImageLoader.h
+ * \brief STB Image をラップして画像を読み込むユーティリティ
+ * \author lenov
+ * \date   March 2026
+ *********************************************************************/
+
 #pragma once
 #include <memory>
 #include <string>

@@ -1,4 +1,11 @@
-﻿#pragma once
+﻿/*****************************************************************//**
+ * \file   LODPolicy.h
+ * \brief LOD（Level of Detail）選択のためのポリシーとユーティリティ関数を定義するヘッダーファイル
+  * \author lenov
+ * \date   March 2026
+ *********************************************************************/
+
+#pragma once
 #include <array>
 #include <algorithm>
 #include <cmath>

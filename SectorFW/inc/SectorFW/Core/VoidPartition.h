@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * \file   VoidPartition.h
+ * \brief 空間分割を行わないパーティションクラスの定義
+ * \author seigo
+ * \date   December 2025
+ *********************************************************************/
+
 #pragma once
 
 #include "partition.hpp"
@@ -6,6 +13,7 @@ namespace SFW
 {
 	/**
 	 * @brief 空間分割をしないパーティションクラス
+	 * @details タイトルなど空間分割のいらないレベルで指定する
 	 */
 	class VoidPartition
 	{
