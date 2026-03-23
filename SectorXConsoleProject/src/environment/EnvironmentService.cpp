@@ -5,6 +5,11 @@
 float gMaxDryRate = 0.15f;
 float gMaxRainRate = 0.45f;
 
+#ifdef _DEBUG
+bool gDebugChangeHeavyRainWeather = false;
+bool gDebugChangeClearWeather = false;
+#endif // _DEBUG
+
 EnvironmentService::EnvironmentService(Graphics::DX11::BufferManager* bufferMgr_) noexcept
 	: bufferMgr(bufferMgr_)
 {
@@ -98,6 +103,7 @@ EnvironmentService::EnvironmentService(Graphics::DX11::BufferManager* bufferMgr_
 	BIND_DEBUG_GODRAY_FLOAT_DATA(gGodRayWeight, 0.0f, 0.1f, 0.0001f);
 	BIND_DEBUG_GODRAY_FLOAT_DATA(gGodRayMaxDepth, 0.0f, 1.0f, 0.0001f);
 
+
 	REGISTER_DEBUG_BOUND_SLIDER_FLOAT("Weather", "currentRainIntensity", m_currentRainIntensity, 0.0f, 1.0f, 0.01f,
 		[&](float v) {m_currentRainIntensity = v; }, &m_currentRainIntensity);
 
@@ -110,6 +116,8 @@ EnvironmentService::EnvironmentService(Graphics::DX11::BufferManager* bufferMgr_
 	BIND_DEBUG_SLIDER_FLOAT("Weather", "rainRiseSpeed", &m_rainRiseSpeed, 0.0f, 1.0f, 0.001f);
 	BIND_DEBUG_SLIDER_FLOAT("Weather", "rainFallSpeed", &m_rainFallSpeed, 0.0f, 1.0f, 0.001f);
 	BIND_DEBUG_SLIDER_FLOAT("Weather", "decisionSec", &m_nextWeatherDecisionSec, 1.0f, 300.0f, 0.1f);
+	BIND_DEBUG_CHECKBOX("Weather", "changeToHeavyRain", &gDebugChangeHeavyRainWeather);
+	BIND_DEBUG_CHECKBOX("Weather", "changeToClear", &gDebugChangeClearWeather);
 #endif
 }
 
@@ -335,6 +343,27 @@ void EnvironmentService::UpdateWeatherState(float dt) noexcept
 {
 	m_weatherGlobalClock += dt;
 	m_weatherStateElapsed += dt;
+
+#ifdef _DEBUG
+	if (gDebugChangeHeavyRainWeather)
+	{
+		gDebugChangeHeavyRainWeather = false;
+		m_weatherState = WeatherState::HeavyRain;
+		m_weatherStateElapsed = 0.0f;
+		const auto desc = GetWeatherStateDesc(m_weatherState);
+		m_nextWeatherDecisionSec = RandomRange(desc.minStaySec, desc.maxStaySec);
+		return;
+	}
+	if(gDebugChangeClearWeather)
+	{
+		gDebugChangeClearWeather = false;
+		m_weatherState = WeatherState::Clear;
+		m_weatherStateElapsed = 0.0f;
+		const auto desc = GetWeatherStateDesc(m_weatherState);
+		m_nextWeatherDecisionSec = RandomRange(desc.minStaySec, desc.maxStaySec);
+		return;
+	}
+#endif
 
 	if (m_enableWeatherAutoTransition &&
 		m_weatherStateElapsed >= m_nextWeatherDecisionSec)

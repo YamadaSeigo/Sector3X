@@ -525,7 +525,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 			ModelAssetHandle ruinTowerModelHandle;
 			modelDesc.instancesPeak = 2;
-			modelDesc.viewMax = 1000.0f;
+			modelDesc.viewMax = 200.0f;
 			modelDesc.pso = normalMapPSOHandle;
 			modelDesc.minAreaFrec = 0.0f;
 			modelDesc.path = "assets/model/Ruins/Tower/RuinTower.gltf";
@@ -542,6 +542,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				occAABB.ub.x *= 0.4f;
 				occAABB.ub.z *= 0.4f;
 			}
+
 
 			ModelAssetHandle bridgeModelHandle;
 			modelDesc.path = "assets/model/Static/Bridge/medieval_bridge.gltf";
@@ -568,6 +569,24 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.rhFlipZ = true; // 右手系GLTF用のZ軸反転フラグを
 			modelDesc.buildOccluders = true;
 			modelAssetMgr->Add(modelDesc, ruinStoneModelHandle);
+
+			std::string housePath[] = {
+				"assets/model/Static/House/HouseA.gltf",
+				"assets/model/Static/House/HouseB.gltf",
+				"assets/model/Static/House/HouseC.gltf",
+				"assets/model/Static/House/HouseD.gltf",
+			};
+
+			ModelAssetHandle houseModelHandle[_countof(housePath)];
+			modelDesc.instancesPeak = 2;
+			modelDesc.viewMax = 200.0f;
+			modelDesc.pso = normalMapPSOHandle;
+			modelDesc.buildOccluders = false;
+			for (int i = 0; i < _countof(housePath); ++i)
+			{
+				modelDesc.path = housePath[i];
+				modelAssetMgr->Add(modelDesc, houseModelHandle[i]);
+			}
 
 			std::string clusterRockPath[3] = {
 				"assets/model/Static/ClusterRock/ClusterRockA.gltf",
@@ -677,7 +696,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			int terrainRank = params.terrainRank;
 
 			auto biomeImg = Graphics::LoadImageFromFileRGBA8(
-				"assets/texture/terrain/biomeDSFT.png"
+				"assets/texture/biome/biomeDSFT.png"
 			);
 
 			struct ImageRGBA {
@@ -1313,7 +1332,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			{
 				auto shape = ps->MakeMesh("generated/meshshape/Ruins/Tower/RuinTower.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
 				CModel modelComp{ ruinTowerModelHandle }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
-				addGlobalEntityWithBody({ 0.7f, 0.7f }, -10.0f, modelComp, shape);
+				addGlobalEntityWithBody({ 0.67f, 0.51f }, -10.0f, modelComp, shape);
 			}
 
 			// 壊れた塔生成
@@ -1329,6 +1348,25 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				auto shape = ps->MakeConvexCompound("generated/convex/Ruins/StoneA/RuinStoneA.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
 				CModel modelComp{ ruinStoneModelHandle }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
 				addGlobalEntityWithBody({ 0.35f, 0.26f }, -4.0f, modelComp, shape);
+			}
+
+			//家生成
+			{
+				auto shape = ps->MakeMesh("generated/meshshape/Static/House/HouseA.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+				CModel modelComp{ houseModelHandle[0]}; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+				addGlobalEntityWithBody({ 0.55f, 0.45f }, -1.0f, modelComp, shape, Math::Quatf::FromAxisAngle({ 0.0f,1.0f,0.0f }, Math::Deg2Rad(60.0f)));
+
+				shape = ps->MakeMesh("generated/meshshape/Static/House/HouseB.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+				CModel modelComp2{ houseModelHandle[1] }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+				addGlobalEntityWithBody({ 0.563f, 0.474f }, -1.0f, modelComp2, shape, Math::Quatf::FromAxisAngle({ 0.0f,1.0f,0.0f }, Math::Deg2Rad(-135.0f)));
+
+				shape = ps->MakeMesh("generated/meshshape/Static/House/HouseC.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+				CModel modelComp3{ houseModelHandle[2] }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+				addGlobalEntityWithBody({ 0.531f, 0.47f }, -1.0f, modelComp3, shape, Math::Quatf::FromAxisAngle({ 0.0f,1.0f,0.0f }, Math::Deg2Rad(110.0f)));
+
+				shape = ps->MakeMesh("generated/meshshape/Static/House/HouseD.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
+				CModel modelComp4{ houseModelHandle[3] }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+				addGlobalEntityWithBody({ 0.531f, 0.438f }, -1.0f, modelComp4, shape, Math::Quatf::FromAxisAngle({ 0.0f,1.0f,0.0f }, Math::Deg2Rad(85.0f)));
 			}
 
 			//岩クラスター生成

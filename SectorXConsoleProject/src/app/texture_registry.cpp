@@ -21,7 +21,7 @@ namespace Assets
 
     static std::unordered_map<uint32_t, std::pair<std::string, bool>> gTextures = {
         { Tex_Splat_Control_0, { "assets/texture/terrain/splat_thin.png", false } },
-		{ Tex_Biome_Control_0, { "assets/texture/terrain/biomeDSFT.png", false } },
+		{ Tex_Biome_Control_0, { "assets/texture/biome/biomeDSFT.png", false } },
     };
 
     bool ResolveTexturePath(uint32_t id, std::string& path, bool& forceSRGB)
