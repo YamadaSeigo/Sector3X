@@ -192,7 +192,7 @@ public:
 							Audio::AudioPlayParams params;
 							params.volume = distVolume(rng);
 							params.pitch = distPitch(rng);
-							audioService->EnqueuePlay(grassStepHandle, params);
+							//audioService->EnqueuePlay(grassStepHandle, params);
 							stepSoundDelay = distDelay(rng);
 						}
 					}

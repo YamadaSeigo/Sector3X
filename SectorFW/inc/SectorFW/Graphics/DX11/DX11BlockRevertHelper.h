@@ -543,7 +543,7 @@ namespace SFW::Graphics::DX11 {
 
         void RunShadowDepth(
             ID3D11DeviceContext* ctx,
-            ComPtr<ID3D11Buffer>&& cameraCB,
+            ComPtr<ID3D11Buffer> cameraCB,
 			ComPtr<ID3D11ShaderResourceView> heightMapSRV,
             ComPtr<ID3D11ShaderResourceView> normalMapSRV,
             const ShadowDepthParams& p,

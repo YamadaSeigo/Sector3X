@@ -21,6 +21,7 @@
 #include "app/component_registration.h"
 #include "graphics/RenderPipeline.h"
 #include "terrain/TerrainBootstrap.h"
+#include "terrain/TerrainWater.h"
 
 #include "app/PlayerService.h"
 #include "graphics/DeferredRenderingService.h"
@@ -59,6 +60,30 @@ int main(void)
 
 	// Terrain 構築
 	static auto terrainRes = TerrainBoot::BuildAll(graphics, terrainRank);
+
+	static TerrainWater terrainWater;
+
+	TerrainWater::BuilderParams param{};
+	{
+		param.heigthMapPath = "assets/texture/terrain/WaterHeight.png";
+		param.normal1Path = "assets/texture/terrain/WaterNormalHigh.jpeg";
+		param.normal2Path = "assets/texture/terrain/OceanNormal.jpg";
+		param.worldMapSizeX = (terrainRes.params.cellsX + 1) * terrainRes.params.cellSize;
+		param.worldMapSizeZ = (terrainRes.params.cellsZ + 1) * terrainRes.params.cellSize;
+		param.worldOffset = terrainRes.params.offset;
+		param.heightScale = terrainRes.params.heightScale;
+		param.clusterCellsX = 16;
+		param.clusterCellsZ = 16;
+		param.cellSize = 6.0f;
+	}
+
+	terrainWater.BuildCluster(param);
+	terrainWater.CompileShader(graphics.GetDevice(),
+		L"assets/shader/CS_TerrainWater.cso",
+		L"assets/shader/CS_WriteArgs.cso",
+		L"assets/shader/VS_TerrainWater.cso",
+		L"assets/shader/PS_TerrainWater.cso");
+	terrainWater.CreateResource(graphics);
 
 	// デバイス & サービス（Worldコンテナ）
 	Physics::PhysicsDevice::InitParams params;
@@ -142,7 +167,7 @@ int main(void)
 
 	static Graphics::PointLightService pointLightService;
 
-	EnvironmentService environmentService(bufferMgr);
+	static EnvironmentService environmentService(bufferMgr);
 
 	static SpriteAnimationService spriteAnimationService(bufferMgr);
 
@@ -174,14 +199,16 @@ int main(void)
 		L"assets/shader/CS_WetnessScrollCopy.cso",
 		L"assets/shader/CS_WetnessUpdate.cso");
 
+	static TimerService timerService;
+
 	ECS::ServiceLocator serviceLocator(
 		renderService, &physicsService, inputService, perCameraService,
 		ortCameraService, camera2DService, &lightShadowService, &windService,
 		&playerService, &audioService, &deferredRenderingService, &lightShadowResourceService,
 		&pointLightService, &environmentService, &spriteAnimationService,
-		&fireflyService, &leafService, &rainService);
+		&fireflyService, &leafService, &rainService, &timerService);
 
-	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry, TimerService>();
+	serviceLocator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 
 	static ComPtr<ID3D11SamplerState> linearSampler;
@@ -364,13 +391,24 @@ int main(void)
 			}
 
 			terrainRes.blockRevert->RunShadowDepth(deviceContext,
-				std::move(cameraCB),
+				cameraCB,
 				terrainRes.heightMapSRV,
 				terrainRes.normalMapSRV,
 				shadowParams,
 				*terrainRes.cp,
 				&lightShadowResourceService.GetCascadeViewport(), false);
 
+			// 地形の水面の可視インデックスを計算してバッファに書き込む
+			TerrainWater::ComputeContext computeCtx{};
+			computeCtx.devCtx = deviceContext;
+			computeCtx.mainFrustum = frustumPlanes;
+			computeCtx.viewProj = shadowParams.mainViewProj;
+			computeCtx.screenSize[0] = App::WINDOW_WIDTH;
+			computeCtx.screenSize[1] = App::WINDOW_HEIGHT;
+
+			terrainWater.ComputeVisibleIndices(computeCtx, cameraCB);
+
+			// 雨用に上からの地形の遮蔽マップを描画しておく
 			Graphics::DX11::TerrainPatchCB patchCBData{};
 			patchCBData.gPatchCenterXZ = { camPos.x, camPos.z };
 			patchCBData.gPatchHalfSize = rainService.GetSpawnRadius();
@@ -385,6 +423,7 @@ int main(void)
 				rainService.GetDepthMapDSV()
 			);
 
+			// 雨の湿り気マップを更新
 			rainService.UpdateWetnessCS(deviceContext);
 		};
 
@@ -508,7 +547,7 @@ int main(void)
 				if (curDsv) curDsv->Release();
 
 				// 読み取り専用DSV に差し替える
-				ID3D11DepthStencilView* newDsv = graphics.GetMainDepthStencilView().Get();
+				ID3D11DepthStencilView* newDsv = graphics.GetMainDepthStencilViewReadOnly().Get();
 
 				// RTV を維持したまま DSV だけ変更
 				deviceContext->OMSetRenderTargets(DeferredTextureCount, rtvs, newDsv);
@@ -523,6 +562,16 @@ int main(void)
 
 			// 深度が反映されていない透明なのでZカリングはfalseにする
 			auto tileLightList = deferredRenderingService.GetTileLightList(false);
+
+			deviceContext->VSSetSamplers(3, 1, linearSampler.GetAddressOf());
+
+			auto fogCB = environmentService.GetFogCBData();
+
+			terrainWater.Render(deviceContext, lightShadowResourceService.GetLightDataCB(),
+				graphics.GetMainDepthStencilSRV(),
+				Math::Inverse(perCameraService->GetCameraBufferDataNoLock().proj),
+				perCameraService->GetEyePos(), timerService.GetDeltaTime(), fogCB.gFogStart, fogCB.gFogEnd);
+
 			tiledLightData.lightCountSRV = tileLightList.lightCountSRV;
 			tiledLightData.lightIndexSRV = tileLightList.lightIndexSRV;
 			tiledLightData.lightCB = lightShadowResourceService.GetLightDataCB().Get();

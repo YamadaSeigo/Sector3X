@@ -339,6 +339,10 @@ public:
 		return fogCBHandle;
 	}
 
+	FogCB GetFogCBData() const noexcept {
+		return cpuFogBuf;
+	}
+
 	bool IsUpdateTimeOfDay() const noexcept {
 		return isUpdateTimeOfDay;
 	}

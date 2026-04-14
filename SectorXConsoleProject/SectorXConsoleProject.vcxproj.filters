@@ -84,6 +84,9 @@
     <ClCompile Include="src\environment\EnvironmentService.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
+    <ClCompile Include="src\terrain\TerrainWater.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\VS_ClipUV.hlsl">
@@ -281,6 +284,15 @@
     <FxCompile Include="shader\CS_WetnessUpdate.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="shader\CS_TerrainWater.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\VS_TerrainWater.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PS_TerrainWater.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\_GlobalTypes.hlsli">
@@ -443,6 +455,9 @@
     </ClInclude>
     <ClInclude Include="src\environment\RainService.h">
       <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="src\terrain\TerrainWater.h">
+      <Filter>Terrain</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
