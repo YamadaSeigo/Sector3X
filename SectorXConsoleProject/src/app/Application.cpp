@@ -197,7 +197,7 @@ namespace App
                 WINDOW_HEIGHT
             );
 
-        perCameraService_->SetFarClip(2000.0f);
+        perCameraService_->SetFarClip(1500.0f);
 
         ortCameraService_ =
             std::make_unique<Graphics::DX11::OrtCamera3DService>(
