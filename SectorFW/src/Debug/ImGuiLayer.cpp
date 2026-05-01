@@ -36,6 +36,11 @@ namespace SFW
 			io.ConfigFlags |= ImGuiConfigFlags_NavEnableSetMousePos;
 			//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;    // 任意（各バックエンドの対応が必要）
 
+			io.Fonts->AddFontFromFileTTF(
+				"C:\\Windows\\Fonts\\meiryo.ttc",
+				20.0f
+			);
+
 			ImGui::StyleColorsDark();
 			return backend_->Init(info);
 		}

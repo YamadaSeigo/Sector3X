@@ -87,6 +87,9 @@
     <ClCompile Include="src\terrain\TerrainWater.cpp">
       <Filter>Terrain</Filter>
     </ClCompile>
+    <ClCompile Include="src\app\Application.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\VS_ClipUV.hlsl">
@@ -458,6 +461,9 @@
     </ClInclude>
     <ClInclude Include="src\terrain\TerrainWater.h">
       <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app\Application.h">
+      <Filter>App</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

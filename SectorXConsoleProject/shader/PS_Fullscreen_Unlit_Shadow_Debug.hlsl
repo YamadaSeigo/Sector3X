@@ -419,7 +419,7 @@ float EdgeFromDepth(float2 uv)
     e = max(e, abs(dC - dU));
     e = max(e, abs(dC - dD));
 
-    // しきい値超えをエッジに。smoothstepでマイルドに
+    // しきい値超えをエッジに。
     float m = saturate((e - gEdgeThreshold) * gEdgeSharpness);
     return m;
 }
@@ -472,7 +472,7 @@ float DilateDepthUpMask(float2 uv, float up, int r)
 
     // 正方形で max（重ければ Cross 版にしてOK）
     [unroll]
-    for (int y = -3; y <= 3; ++y)   // 最大3px想定なら固定でunrollしやすい
+    for (int y = 0; y <= 3; ++y)   // 最大3px想定なら固定でunrollしやすい
     {
         [unroll]
         for (int x = -3; x <= 3; ++x)
@@ -481,7 +481,7 @@ float DilateDepthUpMask(float2 uv, float up, int r)
                 continue;
 
             float2 o = float2(x, y) * gInvScreen;
-            m = max(m, EdgeFromDepth(uv + o));
+            m = max(m, EdgeFromDepth(uv + o * 2.0f));
         }
     }
 
@@ -706,7 +706,7 @@ float4 main(VSOut i) : SV_Target
 
      // GBuffer
     float3 albedo = albedoAO.rgb;
-    float3 N = normalize(nr.rgb * 2.0f - 1.0f);
+    float3 N = DecodeNormal(nr.rgb);
 
     float3 rainTestPos = wp.xyz + float3(0.0f, 0.03f, 0.0f);
      // --- Wetness sample (world XZ -> wet UV) ---
@@ -843,10 +843,10 @@ float4 main(VSOut i) : SV_Target
     }
 
 
+    if (gStrength > 0.0f)
     {
-        float viewZ = LinearizeDepth(depth01);
         float upMask = UpMask(N);
-        int rpx = RadiusByDistance(viewZ);
+        int rpx = RadiusByDistance(viewDepth);
 
         // 近距離ほど太い “深度差*上向き” マスク
         float depthUpDilated = DilateDepthUpMask(uv, upMask, rpx);
@@ -856,12 +856,12 @@ float4 main(VSOut i) : SV_Target
 
         // 最終マスク（深度差は必須）
         float edgeMask = saturate(depthUpDilated * (1.0 + nEdge * 0.5f /*gUseNormalBoost*/));
-
+       
         // 粒（距離でサイズも変えるならここに viewZ/depth を渡す）
-        float splash = edgeMask * SplashFlickerDots(uv, viewZ);
+        float splash = edgeMask * SplashFlickerDots(uv, viewDepth);
 
         // 遠方は薄く
-        splash *= saturate(1.0f - viewZ * gFarFade) * rainVisibility;
+        splash *= saturate(1.0f - viewDepth * gFarFade) * rainVisibility;
 
         // 太陽光
         float splashNdotL = saturate(dot(N, L));
@@ -885,6 +885,7 @@ float4 main(VSOut i) : SV_Target
         // splashLight = splashLight / (1.0f + splashLight);
 
         color += splashLight * splash * gStrength;
+
     }
 
     return float4(color, 1.0f);

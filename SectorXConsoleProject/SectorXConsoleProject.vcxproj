@@ -145,6 +145,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)../SectorFW/inc;$(SolutionDir)../SectorFW/third_party;$(ProjectDir);$(ProjectDir)src;$(ProjectDir)src/app;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -158,6 +159,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\app\Application.cpp" />
     <ClCompile Include="src\app\component_registration.cpp" />
     <ClCompile Include="src\App\main.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
@@ -672,6 +674,7 @@
   <ItemGroup>
     <ClInclude Include="src\app\appconfig.h" />
     <ClInclude Include="src\app\AppContext.h" />
+    <ClInclude Include="src\app\Application.h" />
     <ClInclude Include="src\app\component_registration.h" />
     <ClInclude Include="src\App\PlayerService.h" />
     <ClInclude Include="src\App\stdafx.h" />

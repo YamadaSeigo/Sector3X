@@ -140,7 +140,7 @@ public:
 		static std::random_device rd;
 		static std::mt19937_64 rng(rd());
 
-		static std::uniform_real_distribution<float> distVolume(0.2f, 0.4f);
+		static std::uniform_real_distribution<float> distVolume(0.1f, 0.3f);
 		static std::uniform_real_distribution<float> distPitch(0.75f, 1.0f);
 		static std::uniform_real_distribution <float> distDelay(4.0f, 5.0f);
 
@@ -192,7 +192,7 @@ public:
 							Audio::AudioPlayParams params;
 							params.volume = distVolume(rng);
 							params.pitch = distPitch(rng);
-							//audioService->EnqueuePlay(grassStepHandle, params);
+							audioService->EnqueuePlay(grassStepHandle, params);
 							stepSoundDelay = distDelay(rng);
 						}
 					}

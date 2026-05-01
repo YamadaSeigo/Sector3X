@@ -41,7 +41,7 @@ public:
 		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
 		NoDeletePtr<TimerService> timerService)
 	{
-		constexpr float audioVolumeRatio = 0.0f;
+		constexpr float audioVolumeRatio = 1.0f;
 
 		//Audio“Ç‚Ýž‚Ý
 		mainBGM.handle = audioService->EnqueueLoadWav("assets/audio/BGM/fjordnosundakaze.ogg");

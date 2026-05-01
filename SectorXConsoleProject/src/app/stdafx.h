@@ -6,7 +6,6 @@
 #include <SectorFW/DX11Graphics.h>
 
 
-
 using namespace SFW;
 using namespace SFW::ECS;
 
@@ -15,4 +14,6 @@ using InputService = Input::InputDevice<Input::WinInput>;
 template<typename T>
 using NoDeletePtr = SFW::UndeletablePtr<T>;
 
+using GraphicsDeviceType = SFW::Graphics::DX11::GraphicsDevice;
 using WorldType = SFW::World<Grid2DPartition, VoidPartition>;
+using GameEngineType = SFW::GameEngine<GraphicsDeviceType, Grid2DPartition, VoidPartition>;

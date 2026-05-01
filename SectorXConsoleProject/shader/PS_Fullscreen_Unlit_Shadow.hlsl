@@ -839,6 +839,7 @@ float4 main(VSOut i) : SV_Target
     }
 
 
+    //雨のスプラッシュ処理
     {
         float viewZ = LinearizeDepth(depth01);
         float upMask = UpMask(N);
