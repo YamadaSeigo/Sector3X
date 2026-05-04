@@ -359,8 +359,13 @@ namespace SFW
 		LevelID GetID() const noexcept { return levelCtx.id; }
 
 		/**
-		 * @brief 更新処理
-		 */
+		* @brief 登録したシステムをスケジュール通りに更新する関数
+		* @param serviceLocator サービスロケーターの参照
+		* @param deltaTime 前回の更新からの経過時間
+		* @param executor システムの更新に使用するスレッドエグゼキューターへのポインタ
+		* @details SystemSchedulerのSystemのUpdate関数を呼び出す。チャンクを跨いだ移動もここで処理する。
+		* デバッグUIが有効な場合は、レベルの情報をUIに送る。
+		*/
 		void Update(const ECS::ServiceLocator& serviceLocator, double deltaTime, IThreadExecutor* executor) {
 #ifdef _ENABLE_IMGUI
 			{
@@ -375,12 +380,15 @@ namespace SFW
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/false, "System" });
 			} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif
+			//Entity自体に変更が入るわけではないので共有ロックで十分
 			std::shared_lock lock(updateEntityMutex);
 
+			//分割のクラスに更新が必要な場合は更新する
 			if constexpr (HasPartitionUpdate<Partition>) {
 				partition.Update(deltaTime);
 			}
 
+			// スケジューラですべてのシステムを更新
 			scheduler.UpdateAll(partition, levelCtx, serviceLocator, executor);
 
 			//各スレッドでチャンクを跨いだ移動を実行
@@ -570,7 +578,9 @@ namespace SFW
 		}
 		/**
 		 * @brief Entityを更新するためのクラス取得
-		 * @return std::shared_mutex& mutex
+		 * @return Session Entityを更新するためのクラス
+		 * @details Sessionは専有ロックを取得しているため、システムの更新で生成するとデッドロックの可能性があります。
+		 * システムの更新以外のタイミングで生成してください。
 		 */
 		[[nodiscard]] Session GetSession()
 		{

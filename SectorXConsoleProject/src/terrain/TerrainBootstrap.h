@@ -45,6 +45,12 @@ namespace TerrainBoot
         ComPtr<ID3D11ShaderResourceView> normalMapSRV;
     };
 
+    /**
+	 * @brief 地形のビルドと関連リソースの生成を行う関数
+	 * @param graphics DX11のグラフィックスデバイス。リソース生成に必要。
+	 * @param terrainRank 地形のランク。ビルドの詳細やリソースの品質に影響を与える可能性があります。
+	 * @return Result ビルドされた地形と関連リソースを含む構造体。ビルドに失敗した場合は、nullptr や空の値が含まれる可能性があります。
+     */
     Result BuildAll(
         SFW::Graphics::DX11::GraphicsDevice& graphics,
         int terrainRank

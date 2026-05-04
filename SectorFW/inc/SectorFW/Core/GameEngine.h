@@ -71,7 +71,7 @@ namespace SFW
 		GameEngine& operator=(GameEngine&&) = delete;
 
 		/**
-		 * @brief メインループ
+		 * @brief 一定の間隔で更新と描画の関数を呼び出すループ
 		 * @param fpsControl FPS制御クラスのインスタンス
 		 * @details FPS制御クラスを使用して、メインループを実行します。
 		 */
@@ -104,10 +104,13 @@ namespace SFW
 			auto t0 = std::chrono::steady_clock::now();
 #endif //_ENABLE_IMGUI
 
+			// サービスの更新
 			m_world.UpdateServiceLocator(delta_time, executor);
-
+			
+			// レベルの更新
 			m_world.UpdateAllLevels(delta_time, executor);
 
+			// サービスのコミット
 			m_world.CommitServiceLocator(delta_time);
 
 #ifdef _ENABLE_IMGUI
@@ -129,7 +132,10 @@ namespace SFW
 		{
 			// 画面をクリア
 			float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
-			m_graphicsDevice.SubmitFrame(clearColor, m_frameCounter++); // 非同期提出
+
+			// フレームを提出。最大フレームレートに達している場合は、内部で待機してくれる。
+			m_graphicsDevice.SubmitFrame(clearColor, m_frameCounter++);
+
 			// 計測やスクショ等で必要なら: m_graphicsDevice.WaitSubmittedFrames(m_frameCounter - 1);
 		}
 	private:

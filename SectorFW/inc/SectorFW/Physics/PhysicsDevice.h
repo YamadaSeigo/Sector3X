@@ -99,6 +99,9 @@ namespace SFW
 			JPH::Ref<JPH::CharacterVirtual> character;
 		};
 
+		/**
+		 * @brief 物理関連の処理を管理するクラス。一番上位のインターフェースとして機能する。
+		 */
 		class PhysicsDevice {
 			struct BodyIDHash {
 				size_t operator()(const JPH::BodyID& id) const noexcept {
@@ -137,8 +140,17 @@ namespace SFW
 			PhysicsDevice() = default;
 			~PhysicsDevice() { Shutdown(); }
 
+			/**
+			 * @brief Joltの初期化。失敗する可能性があるので、戻り値で成功を返す。
+			 * @param p 初期化パラメータ
+			 * @return 成功した場合は true、失敗した場合は false
+			 */
 			bool Initialize(const InitParams& p);
 			bool IsInitialized() const noexcept { return m_initialized; }
+
+			/**
+			 * @brief Joltのシャットダウン。内部リソースを解放する。
+			 */
 			void Shutdown();
 
 			// 1 fixed-step 中に呼ぶ：事前キューを適用

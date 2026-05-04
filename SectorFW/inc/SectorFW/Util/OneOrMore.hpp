@@ -16,6 +16,7 @@
 
  /**
   * @brief 1個以上の要素を格納するコンテナクラス
+  * @details 内部的には、要素が0個のときはstd::monostate、1個のときはT、複数のときはstd::vector<T>を保持する。要素の追加はadd()やemplace()で行い、取得はget()やoperator[]で行う。サイズや空判定も提供する。
   */
 template <class T>
 class OneOrMore {

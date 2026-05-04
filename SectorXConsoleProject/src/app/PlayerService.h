@@ -34,12 +34,16 @@ public:
 		cbDesc.initialData = &grassFoot_buf;
 		bufferMgr->Add(cbDesc, hGrassFootCB);
 
+#ifdef _DEBUG
+
 		//imguiデバッグ用スライダー登録
 		BIND_DEBUG_SLIDER_FLOAT("Player", "MoveSpeed", &MOVE_SPEED, 0.0f, 50.0f, 0.1f);
 		BIND_DEBUG_SLIDER_FLOAT("Player", "TurnSpeed", &TURN_SPEED, 0.0f, 20.0f, 0.1f);
 		BIND_DEBUG_SLIDER_FLOAT("Player", "FootStrength", &grassFoot_buf.gFootStrength, 0.0f, 10.0f, 0.01f);
 		BIND_DEBUG_SLIDER_FLOAT("Player", "HeightRange", &grassFoot_buf.gFootHeightRange, 0.0f, 50.0f, 0.01f);
 		BIND_DEBUG_SLIDER_FLOAT("Player", "DefaultFootRadius", &DEFAULT_FOOT_RADIUS, 0.1f, 20.0f, 0.1f);
+
+#endif
 	}
 
 	void PreUpdate(double deltaTime)

@@ -1,4 +1,4 @@
-
+﻿
 #include "component_registration.h"
 #include "system/ModelRenderSystem.h"
 #include "system/PointLightSystem.h"
@@ -14,6 +14,10 @@ namespace App
 {
     void RegisterComponents()
     {
+
+		//ひとりのプロジェクトのなのでまとめているが、
+		//複数の場合、ファイルごとに登録関数を呼び出すスタイルでやる
+
         ComponentTypeRegistry::Register<CModel>();
         ComponentTypeRegistry::Register<CTransform>();
         ComponentTypeRegistry::Register<CSpatialMotionTag>();

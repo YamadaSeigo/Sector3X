@@ -26,15 +26,26 @@ namespace SFW
 		using NativeWindowHandle = std::variant<HWND>;
 		//======================================================================
 
+		//=======================================================================
+		//※継承先のクラスで実装されるべき関数の宣言
+		// InitializeImpl() : デバイスの初期化を行う関数。引数はウィンドウハンドル、幅、高さ、FPSなど。戻り値は初期化の成功/失敗。
+		// ClearImpl() : 画面をクリアする関数。引数はクリアカラー。
+		// DrawImpl() : 描画を実行する関数。
+		// PresentImpl() : 描画結果を画面に表示する関数。
+		// SubmitFrameImpl() : 描画フレームをレンダースレッドに提出する関数。
+		// WaitSubmittedFramesImpl() : 指定したフレームインデックスまでの提出済みフレームの完了を待つ関数。
+		// =======================================================================
+
 		/**
 		 * @brief グラフィックデバイスのインターフェース
+		 * @detials CRTPを用いて、派生クラスで実装されるべき関数を呼び出す。これにより、共通のインターフェースを提供しつつ、派生クラスごとに異なる実装を可能にする。
 		 * @class IGraphicsDevice
 		 */
 		template<typename Impl>
 		class IGraphicsDevice {
 		protected:
 			/**
-			 * @brief 初期化
+			 * @brief 継承先のデバイスの初期化を行う関数。これを呼び出す前に、m_isInitializedがfalseであることを確認してください。
 			 * @param nativeWindowHandle ウィンドウハンドル
 			 * @param width ウィンドウ幅
 			 * @param height ウィンドウ高さ
@@ -48,7 +59,7 @@ namespace SFW
 			 */
 			IGraphicsDevice() = default;
 			/**
-			 * @brief 初期化
+			 * @brief 描画デバイスを初期化する。初めにこれを呼び出さないと描画できません。
 			 * @param nativeWindowHandle ウィンドウハンドル
 			 * @param width ウィンドウ幅
 			 * @param height ウィンドウ高さ
@@ -58,8 +69,10 @@ namespace SFW
 			{
 				assert(!m_isInitialized && "IGraphicsDevice is already initialized.");
 
+				// 派生クラスのAPIごとの初期化関数を呼び出す
 				m_isInitialized = Initialize(nativeWindowHandle, width, height, fps);
 
+				//imguiの初期化
 #ifdef _ENABLE_IMGUI
 				m_imguiLayer = std::make_unique<Debug::ImGuiLayer>(std::make_unique<ImGuiBackend>());
 				Debug::ImGuiInitInfo info{};

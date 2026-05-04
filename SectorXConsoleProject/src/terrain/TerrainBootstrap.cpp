@@ -30,6 +30,7 @@ namespace TerrainBoot
         tp.seed = 20251212;
         tp.offset.y -= 40.0f;
 
+		// ユーザーが用意したデザイナーマップを読み込んで、TerrainBuildParams にセットする
         auto designerMap = Graphics::LoadImageFromFile(
             "assets/texture/terrain/DesignerHeightMap.png",
             1

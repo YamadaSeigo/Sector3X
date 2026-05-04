@@ -69,10 +69,23 @@ namespace SFW
 				pendingResumeTypes.emplace_back(typeid(SystemType<Partition>));
 			}
 
+			void ApplyPendingProcesses(const ServiceLocator& serviceLocator, Partition* partition, LevelContext<Partition>* levelCtx) {
+				ApplyPendingAdditions(serviceLocator);
+				ApplyPendingRemovals<true>(partition, levelCtx, &serviceLocator);
+				ApplyPendingPauseResume();
+
+				if (scheduleDirty) {
+					RebuildBatches();
+				}
+			}
 
 			/**
-			 * @brief すべてのシステムを更新する関数
+			 * @brief すべてのシステムを更新する関数.
 			 * @param partition 対象のパーティション
+			 * @param levelCtx レベルコンテキスト
+			 * @param serviceLocator サービスロケーター
+			 * @param executor スレッドエグゼキューター
+			 * @details 保留された追加・削除・一時停止・再開の処理を適用した後、スケジュールが変更された場合はバッチを再構築し、各バッチごとに並列実行と直列実行を行う。例外は各システム内で握り潰さず、ここで個別捕捉することも可能。
 			 */
 			void UpdateAll(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
 
@@ -120,6 +133,8 @@ namespace SFW
 						if (idx >= updateEnabled.size() || !updateEnabled[idx]) continue;
 
 						executor->Submit([&, idx]() noexcept {
+
+							// 実際にシステムの更新関数を呼び出す inc/core/ecs/ISystem.hpp の Update仮装関数
 							updateSystems[idx]->Update(partition, levelCtx, serviceLocator, executor);
 							latch.CountDown();
 							});
@@ -136,10 +151,14 @@ namespace SFW
 				}
 			}
 
+
+
 			/**
 			 * @brief すべてのシステムをグローバルに更新する関数
 			 * @param serviceLocator サービスロケーター
 			 * @param executor スレッド実行クラス
+			 * @details 保留された追加・削除・一時停止・再開の処理を適用した後、スケジュールが変更された場合はバッチを再構築し、各バッチごとに並列実行と直列実行を行う。例外は各システム内で握り潰さず、ここで個別捕捉することも可能。
+			　* @note Partition や LevelContext を必要としないシステムの更新に使用する。これらのシステムは UpdateGlobal をオーバーライドしている必要がある。
 			 */
 			void UpdateGlobal(const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
 

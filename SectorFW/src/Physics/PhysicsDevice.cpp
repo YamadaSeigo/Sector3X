@@ -21,7 +21,7 @@ namespace SFW::Physics {
 	static ObjectVsBroadPhaseLayerFilterImpl      g_ovsbFilter;
 	static ObjectLayerPairFilterImpl              g_pairFilter;
 
-	// ===== Initialize / Shutdown =====
+	
 	bool PhysicsDevice::Initialize(const InitParams& p) {
 		assert(!m_initialized && "PhysicsDevice is already initialized!");
 		m_initialized = true;

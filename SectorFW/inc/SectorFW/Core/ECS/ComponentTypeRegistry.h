@@ -104,7 +104,7 @@ namespace SFW
 				(SetMetaStructure<Ts>(meta_structures), ...);
 			}
 			/**
-			 * @brief コンポーネントを登録します。
+			 * @brief コンポーネントの登録。T が trivially copyable でない場合はコンパイルエラーになります。
 			 */
 			template<typename T>
 			static void Register() noexcept {
@@ -121,17 +121,11 @@ namespace SFW
 				OneOrMore<ComponentMeta::Structure> meta_structures;
 
 				if constexpr (requires { typename T::soa_type; }) {
-					// SoA メンバー型の trivial を個別チェック
+
 					using tuple = typename T::soa_type;
-					constexpr auto N = std::tuple_size_v<tuple>;
-					// C++17 でもOKな constexpr ループが欲しければヘルパーを用意
-					(void)std::initializer_list<int>{
-						([] {
-							using Elem = std::tuple_element_t<0, tuple>; // ダミーでテンプレ展開例
-							}(), 0)
-					};
+					
 					// 展開ヘルパーを使って static_assert を仕込む
-					TupleTrivialAssert<tuple>();            // 下に示す補助
+					TupleTrivialAssert<tuple>();
 					SetSoAComponentMetaTuple<tuple>(meta_structures);
 				}
 				else {

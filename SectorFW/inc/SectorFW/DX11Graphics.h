@@ -35,6 +35,7 @@ namespace SFW
 	{
 		/**
 		 * @brief DX11用グラフィックスデバイスクラス
+		 * @details コピー禁止、ムーブ可能。IGraphicsDeviceを継承し、DX11に特化した実装を提供する。レンダースレッドを内部に持ち、描画コマンドのサブミットと実行を非同期に行うことができる。RenderGraphを使用して描画パスを管理し、RenderBackendを通じてリソース管理や描画状態の設定を行う。
 		 * @class DX11GraphicsDevice
 		 */
 		class GraphicsDevice : public IGraphicsDevice<GraphicsDevice>
@@ -42,47 +43,59 @@ namespace SFW
 		public:
 			using RenderGraph = RenderGraph<RenderBackend, ID3D11RenderTargetView*, ID3D11DepthStencilView*, ID3D11ShaderResourceView*, ID3D11Buffer*, ComPtr>;
 
-			/**
-			 * @brief コンストラクタ
-			 */
 			GraphicsDevice() = default;
 			/**
-			 * @brief デストラクタ
+			 * @brief　DX11のリソースはComPtrで管理されているため、特に解放処理は必要ありませんが、RenderGraphやRenderBackendなどのメンバー変数の破棄が行われます。
 			 */
 			~GraphicsDevice();
+
+			// コピー禁止、ムーブ可能
 
 			GraphicsDevice(GraphicsDevice&& rhs) noexcept;
 			GraphicsDevice& operator=(GraphicsDevice&& rhs) noexcept;
 			GraphicsDevice(const GraphicsDevice&) = delete;
 			GraphicsDevice& operator=(const GraphicsDevice&) = delete;
+
 			/**
-			 * @brief 初期化関数
+			 * @brief 初期化。デバイス関連の生成。基底クラスから呼び出される。
 			 * @param nativeWindowHandle ウィンドウハンドル
 			 * @param width ウィンドウ幅
 			 * @param height ウィンドウ高さ
 			 * @return bool 初期化に成功したかどうか
 			 */
 			bool InitializeImpl(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height, double fps);
+
 			/**
 			 * @brief 画面をクリアする関数
 			 * @param clearColor クリアカラー（RGBA）
 			 */
 			void ClearImpl(const FLOAT clearColor[4]);
+
 			/**
 			 * @brief 描画を実行する関数
 			 * @detailss RenderGraphを使用して描画を実行します。
 			 */
 			void DrawImpl();
+
 			/**
-			 * @brief 描画を実行する関数
+			 * @brief 描画を実行する関数の実装
 			 * @detailss RenderGraphを使用して描画を実行します。
 			 * @param renderGraph RenderGraphの参照
 			 */
 			void PresentImpl();
 
-			void StartRenderThread();
-			void StopRenderThread();
+			/**
+			 * @brief 描画フレームをレンダースレッドに提出する関数
+			 * @details 描画フレームが最大の場合、この関数は提出が可能になるまでブロックします。提出されたフレームは、レンダースレッドによって順次処理されます。
+			 * @param clearColor クリアカラー（RGBA）
+			 * @param frameIdx フレームインデックス
+			 */
 			void SubmitFrameImpl(const FLOAT clearColor[4], uint64_t frameIdx);
+
+			/**
+			 * @brief 指定したフレームインデックスまでの提出済みフレームの完了を待つ関数
+			 * @param uptoFrame 待つフレームインデックス
+			 */
 			void WaitSubmittedFramesImpl(uint64_t uptoFrame);
 
 			void SetMainRenderTargetAndDepth();
@@ -128,6 +141,11 @@ namespace SFW
 			const D3D11_VIEWPORT& GetMainViewport() const noexcept {
 				return m_viewport;
 			}
+
+		private:
+
+			void StartRenderThread();
+			void StopRenderThread();
 
 		private:
 			// ===== レンダースレッド実装 =====

@@ -42,14 +42,18 @@ namespace SFW
 		~WindowHandler() = default;
 
 #ifdef _CONSOLE
-		/**
-		 * @brief ウィンドウの作成(コンソールアプリケーション)
-		 */
+		
 #ifdef _UNICODE
+		/**
+		 * @brief ウィンドウの作成(コンソールアプリケーション、Unicode)
+		 */
 		static void Create(const TCHAR* windowTitle, uint32_t width, uint32_t height)
 #else  // !_UNICODE
+		/**
+		 * @brief ウィンドウの作成(コンソールアプリケーション、ANSI)
+		 */
 		static void Create(const char* windowTitle, uint32_t width, uint32_t height)
-#endif // !_UNICODE
+#endif // _UNICODE
 		{
 			// ウィンドウが作成されていたら、何もしない
 			if (m_isCreated) return;
@@ -102,14 +106,20 @@ namespace SFW
 		}
 
 #else // !_CONSOLE
+		
+#ifdef _UNICODE
 		/**
-		 * @brief ウィンドウの作成(ウィンドウアプリケーション)
+		 * @brief ウィンドウの作成(ウィンドウアプリケーション、Unicode)
 		 * @param hInstance インスタンスハンドル
 		 * @param nCmdShow 表示状態
 		 */
-#ifdef _UNICODE
 		static void Create(HINSTANCE hInstance, int nCmdShow, const TCHAR* windowTitle, uint32_t width, uint32_t height)
 #else
+		/**
+		 * @brief ウィンドウの作成(ウィンドウアプリケーション、ANSI)
+		 * @param hInstance インスタンスハンドル
+		 * @param nCmdShow 表示状態
+		 */
 		static void Create(HINSTANCE hInstance, int nCmdShow, const char* windowTitle, uint32_t width, uint32_t height)
 #endif // _UNICODE
 		{
@@ -184,7 +194,7 @@ namespace SFW
 		/**
 		 * @brief ウィンドウのメッセージループ
 		 * @param pLoop ループ処理関数ポインタ
-		 * @detailss メッセージが無ければ、ループ処理を実行
+		 * @details メッセージが無ければ、ループ処理を実行
 		 */
 		static void Run(void(*pLoop)());
 

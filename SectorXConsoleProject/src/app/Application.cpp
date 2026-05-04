@@ -23,34 +23,34 @@
 
 namespace App
 {
-	Context Application::ctx_{};
-	std::unique_ptr<SFW::SimpleThreadPool> Application::threadPool_{};
-	GraphicsDeviceType Application::graphics_{};
-	TerrainBoot::Result Application::terrainRes_{};
-    TerrainWater Application::terrainWater_{};
-    std::unique_ptr<Graphics::I3DPerCameraService> Application::perCameraService_{};
-    std::unique_ptr<Graphics::LightShadowService> Application::lightShadowService_{};
-    std::unique_ptr<WindService> Application::windService_{};
-    std::unique_ptr<DeferredRenderingService> Application::deferredRenderingService_{};
-    std::unique_ptr<Graphics::DX11::LightShadowResourceService> Application::lightShadowResourceService_{};
-	std::unique_ptr<EnvironmentService> Application::environmentService_{};
-	std::unique_ptr<FireflyService> Application::fireflyService_{};
-	std::unique_ptr<LeafService> Application::leafService_{};
-    std::unique_ptr<RainService> Application::rainService_{};
-	std::unique_ptr<SFW::TimerService> Application::timerService_{};
-	std::unique_ptr<GameEngineType> Application::gameEngine_{};
-	ComPtr<ID3D11SamplerState> Application::linearSampler_{};
-	ComPtr<ID3D11SamplerState> Application::pointSampler_{};
-	ComPtr<ID3D11ShaderResourceView> Application::leafTextureSRV_{};
-	Graphics::HeightTexMapping Application::heightTexMap_{};
+	Context Application::m_ctx{};
+	std::unique_ptr<SFW::SimpleThreadPool> Application::m_threadPool{};
+	GraphicsDeviceType Application::m_graphics{};
+	TerrainBoot::Result Application::m_terrainRes{};
+    TerrainWater Application::m_terrainWater{};
+    std::unique_ptr<Graphics::I3DPerCameraService> Application::m_perCameraService{};
+    std::unique_ptr<Graphics::LightShadowService> Application::m_lightShadowService{};
+    std::unique_ptr<WindService> Application::m_windService{};
+    std::unique_ptr<DeferredRenderingService> Application::m_deferredRenderingService{};
+    std::unique_ptr<Graphics::DX11::LightShadowResourceService> Application::m_lightShadowResourceService{};
+	std::unique_ptr<EnvironmentService> Application::m_environmentService{};
+	std::unique_ptr<FireflyService> Application::m_fireflyService{};
+	std::unique_ptr<LeafService> Application::m_leafService{};
+    std::unique_ptr<RainService> Application::m_rainService{};
+	std::unique_ptr<SFW::TimerService> Application::m_timerService{};
+	std::unique_ptr<GameEngineType> Application::m_gameEngine{};
+	ComPtr<ID3D11SamplerState> Application::m_linearSampler{};
+	ComPtr<ID3D11SamplerState> Application::m_pointSampler{};
+	ComPtr<ID3D11ShaderResourceView> Application::m_leafTextureSRV{};
+	Graphics::HeightTexMapping Application::m_heightTexMap{};
 
 
     bool Application::Initialize()
     {
+
+		// 念のため、複数回呼ばれても初期化処理が走らないようにする
 		static bool initialized = false;
-
 		if (initialized) return false;
-
 		initialized = true;
 
         App::RegisterComponents();
@@ -72,22 +72,24 @@ namespace App
         RegisterDebugUI();
         LoadInitialLevel();
 
-        threadPool_ = std::make_unique<SFW::SimpleThreadPool>();
+        m_threadPool = std::make_unique<SFW::SimpleThreadPool>();
 
         return true;
     }
 
     bool Application::InitializeWindow()
     {
+		// DPI Awareness を設定する。これを設定しないと、
+        // WindowsのDPIスケーリングが100%以外の環境でウィンドウサイズやマウスポインタの位置がおかしくなる
         SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
-
+        
         WindowHandler::Create(_T(WINDOW_NAME), WINDOW_WIDTH, WINDOW_HEIGHT);
         return true;
     }
 
     bool Application::InitializeGraphics()
     {
-        graphics_.Configure<SFW::Debug::ImGuiBackendDX11Win32>(
+        m_graphics.Configure<SFW::Debug::ImGuiBackendDX11Win32>(
             WindowHandler::GetMainHandle(),
             WINDOW_WIDTH,
             WINDOW_HEIGHT,
@@ -99,12 +101,12 @@ namespace App
 
     bool Application::InitializeTerrain()
     {
-        terrainRes_ = TerrainBoot::BuildAll(graphics_, terrainRank_);
+        m_terrainRes = TerrainBoot::BuildAll(m_graphics, m_terrainRank);
 
-        heightTexMap_ =
+        m_heightTexMap =
             Graphics::MakeHeightTexMappingFromTerrainParams(
-                terrainRes_.params,
-                terrainRes_.heightMap
+                m_terrainRes.params,
+                m_terrainRes.heightMap
             );
 
         return true;
@@ -119,28 +121,28 @@ namespace App
         param.normal2Path = "assets/texture/terrain/OceanNormal.jpg";
 
         param.worldMapSizeX =
-            (terrainRes_.params.cellsX + 1) * terrainRes_.params.cellSize;
+            (m_terrainRes.params.cellsX + 1) * m_terrainRes.params.cellSize;
 
         param.worldMapSizeZ =
-            (terrainRes_.params.cellsZ + 1) * terrainRes_.params.cellSize;
+            (m_terrainRes.params.cellsZ + 1) * m_terrainRes.params.cellSize;
 
-        param.worldOffset = terrainRes_.params.offset;
-        param.heightScale = terrainRes_.params.heightScale;
+        param.worldOffset = m_terrainRes.params.offset;
+        param.heightScale = m_terrainRes.params.heightScale;
         param.clusterCellsX = 16;
         param.clusterCellsZ = 16;
         param.cellSize = 6.0f;
 
-        terrainWater_.BuildCluster(param);
+        m_terrainWater.BuildCluster(param);
 
-        terrainWater_.CompileShader(
-            graphics_.GetDevice(),
+        m_terrainWater.CompileShader(
+            m_graphics.GetDevice(),
             L"assets/shader/CS_TerrainWater.cso",
             L"assets/shader/CS_WriteArgs.cso",
             L"assets/shader/VS_TerrainWater.cso",
             L"assets/shader/PS_TerrainWater.cso"
         );
 
-        terrainWater_.CreateResource(graphics_);
+        m_terrainWater.CreateResource(m_graphics);
 
         return true;
     }
@@ -153,9 +155,9 @@ namespace App
         params.maxContactConstraints = 2 * 1024;
         params.workerThreads = -1;
 
-        if (!physics_.Initialize(params))
+        if (!m_physics.Initialize(params))
         {
-            assert(false && "Failed Physics Device Initialize");
+            SFW_ASSERT(false && "Failed Physics Device Initialize");
             return false;
         }
 
@@ -166,11 +168,11 @@ namespace App
             false
         };
 
-        physicsService_ = std::make_unique<Physics::PhysicsService>(
-            physics_,
-            shapeManager_,
+        m_physicsService = std::make_unique<Physics::PhysicsService>(
+            m_physics,
+            m_shapeManager,
             physicsPlan,
-            1u << 14
+			1u << 14 // コマンドキューの容量 (2の累乗)
         );
 
         return true;
@@ -178,7 +180,7 @@ namespace App
 
     bool Application::InitializeServices()
     {
-        auto renderService = graphics_.GetRenderService();
+        auto renderService = m_graphics.GetRenderService();
 
         auto bufferMgr =
             renderService->GetResourceManager<Graphics::DX11::BufferManager>();
@@ -186,34 +188,34 @@ namespace App
         auto textureMgr =
             renderService->GetResourceManager<Graphics::DX11::TextureManager>();
 
-        winInput_ = std::make_unique<Input::WinInput>(
+        m_winInput = std::make_unique<Input::WinInput>(
             WindowHandler::GetMouseInput()
         );
 
-        perCameraService_ =
+        m_perCameraService =
             std::make_unique<Graphics::DX11::PerCamera3DService>(
                 bufferMgr,
                 WINDOW_WIDTH,
                 WINDOW_HEIGHT
             );
 
-        perCameraService_->SetFarClip(1500.0f);
+        m_perCameraService->SetFarClip(1500.0f);
 
-        ortCameraService_ =
+        m_ortCameraService =
             std::make_unique<Graphics::DX11::OrtCamera3DService>(
                 bufferMgr,
                 WINDOW_WIDTH,
                 WINDOW_HEIGHT
             );
 
-        camera2DService_ =
+        m_camera2DService =
             std::make_unique<Graphics::DX11::Camera2DService>(
                 bufferMgr,
                 WINDOW_WIDTH,
                 WINDOW_HEIGHT
             );
 
-        lightShadowService_ =
+        m_lightShadowService =
             std::make_unique<Graphics::LightShadowService>();
 
         Graphics::LightShadowService::CascadeConfig cascadeConfig{};
@@ -226,14 +228,14 @@ namespace App
         cascadeConfig.shadowDistance = 80.0f;
         cascadeConfig.casterExtrusion = 0.0f;
 
-        lightShadowService_->SetCascadeConfig(cascadeConfig);
+        m_lightShadowService->SetCascadeConfig(cascadeConfig);
 
-        windService_ = std::make_unique<WindService>(bufferMgr);
+        m_windService = std::make_unique<WindService>(bufferMgr);
 
-        playerService_ = std::make_unique<PlayerService>(bufferMgr);
+        m_playerService = std::make_unique<PlayerService>(bufferMgr);
 
         {
-            const auto& tp = terrainRes_.params;
+            const auto& tp = m_terrainRes.params;
 
             Math::Vec3f playerLocation =
             {
@@ -242,28 +244,28 @@ namespace App
                 tp.cellsZ * tp.cellSize * 0.19f
             };
 
-            terrainRes_.terrain->SampleHeightNormalBilinear(
+            m_terrainRes.terrain->SampleHeightNormalBilinear(
                 playerLocation.x,
                 playerLocation.z,
                 playerLocation.y
             );
 
             playerLocation.y += 2.0f;
-            playerService_->SetPlayerPosition(playerLocation);
+            m_playerService->SetPlayerPosition(playerLocation);
         }
 
-        audioService_ = std::make_unique<Audio::AudioService>();
+        m_audioService = std::make_unique<Audio::AudioService>();
 
-        if (!audioService_->Initialize())
+        if (!m_audioService->Initialize())
         {
             assert(false && "Failed Audio Service Initialize");
             return false;
         }
 
-        auto device = graphics_.GetDevice();
-        auto deviceContext = graphics_.GetDeviceContext();
+        auto device = m_graphics.GetDevice();
+        auto deviceContext = m_graphics.GetDeviceContext();
 
-        deferredRenderingService_ =
+        m_deferredRenderingService =
             std::make_unique<DeferredRenderingService>(
                 device,
                 bufferMgr,
@@ -275,29 +277,29 @@ namespace App
                 L"assets/shader/CS_TileLightingAccum.cso"
             );
 
-        lightShadowResourceService_ =
+        m_lightShadowResourceService =
             std::make_unique<Graphics::DX11::LightShadowResourceService>();
 
         Graphics::DX11::ShadowMapConfig shadowMapConfig{};
         shadowMapConfig.width = SHADOW_MAP_SIZE;
         shadowMapConfig.height = SHADOW_MAP_SIZE;
 
-        if (!lightShadowResourceService_->Initialize(device, shadowMapConfig))
+        if (!m_lightShadowResourceService->Initialize(device, shadowMapConfig))
         {
             assert(false && "Failed ShadowMapService Initialize");
             return false;
         }
 
-        pointLightService_ =
+        m_pointLightService =
             std::make_unique<Graphics::PointLightService>();
 
-        environmentService_ =
+        m_environmentService =
             std::make_unique<EnvironmentService>(bufferMgr);
 
-        spriteAnimationService_ =
+        m_spriteAnimationService =
             std::make_unique<SpriteAnimationService>(bufferMgr);
 
-        fireflyService_ =
+        m_fireflyService =
             std::make_unique<FireflyService>(
                 device,
                 deviceContext,
@@ -310,7 +312,7 @@ namespace App
                 L"assets/shader/PS_Firefly.cso"
             );
 
-        leafService_ =
+        m_leafService =
             std::make_unique<LeafService>(
                 device,
                 deviceContext,
@@ -324,7 +326,7 @@ namespace App
                 L"assets/shader/PS_Leaf.cso"
             );
 
-        rainService_ =
+        m_rainService =
             std::make_unique<RainService>(
                 device,
                 deviceContext,
@@ -339,17 +341,14 @@ namespace App
                 L"assets/shader/CS_WetnessUpdate.cso"
             );
 
-        timerService_ = std::make_unique<SFW::TimerService>();
+        m_timerService = std::make_unique<SFW::TimerService>();
 
         return true;
     }
 
     bool Application::InitializeParticleResources()
     {
-        auto textureMgr =
-            graphics_
-            .GetRenderService()
-            ->GetResourceManager<Graphics::DX11::TextureManager>();
+        auto textureMgr =m_graphics.GetRenderService()->GetResourceManager<Graphics::DX11::TextureManager>();
 
         Graphics::DX11::TextureCreateDesc texDesc{};
         texDesc.path = "assets/texture/sprite/Leaf.png";
@@ -359,31 +358,31 @@ namespace App
         textureMgr->Add(texDesc, texHandle);
 
         auto texData = textureMgr->Get(texHandle);
-        leafTextureSRV_ = texData.ref().srv;
+        m_leafTextureSRV = texData.ref().srv;
 
         return true;
     }
 
     bool App::Application::InitializeContext()
     {
-        ctx_.graphics = &graphics_;
-        ctx_.renderService = graphics_.GetRenderService();
-        ctx_.shadowRes = lightShadowResourceService_.get();
-        ctx_.pointLight = pointLightService_.get();
-        ctx_.deferred = deferredRenderingService_.get();
-        ctx_.wind = windService_.get();
-        ctx_.player = playerService_.get();
-        ctx_.env = environmentService_.get();
-        ctx_.firefly = fireflyService_.get();
-        ctx_.leaf = leafService_.get();
-        ctx_.rain = rainService_.get();
+        m_ctx.graphics = &m_graphics;
+        m_ctx.renderService = m_graphics.GetRenderService();
+        m_ctx.shadowRes = m_lightShadowResourceService.get();
+        m_ctx.pointLight = m_pointLightService.get();
+        m_ctx.deferred = m_deferredRenderingService.get();
+        m_ctx.wind = m_windService.get();
+        m_ctx.player = m_playerService.get();
+        m_ctx.env = m_environmentService.get();
+        m_ctx.firefly = m_fireflyService.get();
+        m_ctx.leaf = m_leafService.get();
+        m_ctx.rain = m_rainService.get();
 
         return true;
 	}
 
     bool App::Application::InitializeRenderPipeline()
     {
-        graphics_.ExecuteCustomFunc(
+        m_graphics.ExecuteCustomFunc(
             [this](
                 auto* rg,
                 auto& mainRTV,
@@ -392,11 +391,11 @@ namespace App
                 auto& mainDepthSRV
                 )
             {
-                ctx_.mainDepthSRV = mainDepthSRV;
+                m_ctx.mainDepthSRV = mainDepthSRV;
 
                 RenderPipe::Initialize(
                     rg,
-                    ctx_,
+                    m_ctx,
                     mainRTV,
                     mainDSV,
                     mainDSVRO,
@@ -426,32 +425,32 @@ namespace App
     bool App::Application::InitializeGameEngine()
     {
         ECS::ServiceLocator locator(
-			graphics_.GetRenderService(),
-			physicsService_.get(),
-            winInput_.get(),
-            perCameraService_.get(),
-            ortCameraService_.get(),
-            camera2DService_.get(),
-            lightShadowService_.get(),
-            windService_.get(),
-            playerService_.get(),
-            audioService_.get(),
-            deferredRenderingService_.get(),
-            lightShadowResourceService_.get(),
-            environmentService_.get(),
-			pointLightService_.get(),
-            spriteAnimationService_.get(),
-            fireflyService_.get(),
-            leafService_.get(),
-            rainService_.get(),
-            timerService_.get()
+			m_graphics.GetRenderService(),
+			m_physicsService.get(),
+            m_winInput.get(),
+            m_perCameraService.get(),
+            m_ortCameraService.get(),
+            m_camera2DService.get(),
+            m_lightShadowService.get(),
+            m_windService.get(),
+            m_playerService.get(),
+            m_audioService.get(),
+            m_deferredRenderingService.get(),
+            m_lightShadowResourceService.get(),
+            m_environmentService.get(),
+			m_pointLightService.get(),
+            m_spriteAnimationService.get(),
+            m_fireflyService.get(),
+            m_leafService.get(),
+            m_rainService.get(),
+            m_timerService.get()
         );
 
         locator.InitAndRegisterStaticService<SpatialChunkRegistry>();
 
 		WorldType world(std::move(locator));
 
-		gameEngine_ = std::make_unique<GameEngineType>(std::move(graphics_), std::move(world), App::FPS_LIMIT);
+		m_gameEngine = std::make_unique<GameEngineType>(std::move(m_graphics), std::move(world), App::FPS_LIMIT);
 
         return true;
     }
@@ -460,31 +459,31 @@ namespace App
     {
         WindowHandler::Run([]()
             {
-                gameEngine_->MainLoop(threadPool_.get());
+                m_gameEngine->MainLoop(m_threadPool.get());
             });
     }
 
     int App::Application::Shutdown()
     {
-        threadPool_.reset();
+        m_threadPool.reset();
         return WindowHandler::Destroy();
     }
 
 
     void App::Application::RegisterRenderCallbacks()
     {
-        auto renderService = graphics_.GetRenderService();
+        auto renderService = m_graphics.GetRenderService();
 
         renderService->SetCustomUpdateFunction(
             [](Graphics::RenderService* renderService)
             {
-                bool execute = ctx_.executeCustom.load(std::memory_order_relaxed);
+                bool execute = m_ctx.executeCustom.load(std::memory_order_relaxed);
                 if (!execute) return;
 
-                auto viewProj = perCameraService_->GetCameraBufferDataNoLock().viewProj;
-                auto camPos = perCameraService_->GetEyePos();
+                auto viewProj = m_perCameraService->GetCameraBufferDataNoLock().viewProj;
+                auto camPos = m_perCameraService->GetEyePos();
 
-                auto resolution = perCameraService_->GetResolution();
+                auto resolution = m_perCameraService->GetResolution();
                 uint32_t width = (uint32_t)resolution.x;
                 uint32_t height = (uint32_t)resolution.y;
 
@@ -521,7 +520,7 @@ namespace App
 
                 // ---- ハイブリッド抽出 ----
                 ExtractOccluderTriangles_HeightmapCoarse_Hybrid(
-                    *terrainRes_.terrain, heightTexMap_, hopt, opt, clusterIds, trisW, &trisC);
+                    *m_terrainRes.terrain, m_heightTexMap, hopt, opt, clusterIds, trisW, &trisC);
 
                 // MOCバインディング
                 auto MyMOCRender = [renderService](const float* packedXYZW, uint32_t vertexCount,
@@ -547,42 +546,42 @@ namespace App
         renderService->SetCustomPreDrawFunction(
             [](Graphics::RenderService* renderService, uint32_t slot)
             {
-                bool execute = ctx_.executeCustom.load(std::memory_order_relaxed);
+                bool execute = m_ctx.executeCustom.load(std::memory_order_relaxed);
                 if (!execute) return;
 
-                auto deviceContext = graphics_.GetDeviceContext();
+                auto deviceContext = m_graphics.GetDeviceContext();
 
                 //auto viewProj = perCameraService->GetCameraBufferData().viewProj;
-                auto camPos = perCameraService_->GetEyePos();
+                auto camPos = m_perCameraService->GetEyePos();
                 Math::Frustumf frustumPlanes
                     //Math::Frustumf::MakeFrustumPlanes_WorldSpace_Oriented(viewProj.data(), camPos.data, frustumPlanes.data());
-                    = perCameraService_->MakeFrustum(true);
+                    = m_perCameraService->MakeFrustum(true);
 
-                auto resolution = perCameraService_->GetResolution();
+                auto resolution = m_perCameraService->GetResolution();
                 uint32_t width = (uint32_t)resolution.x;
                 uint32_t height = (uint32_t)resolution.y;
 
-                graphics_.SetDepthStencilState(Graphics::DepthStencilStateID::Default);
-                graphics_.SetRasterizerState(Graphics::RasterizerStateID::SolidCullBack);
+                m_graphics.SetDepthStencilState(Graphics::DepthStencilStateID::Default);
+                m_graphics.SetRasterizerState(Graphics::RasterizerStateID::SolidCullBack);
 
-                deviceContext->VSSetSamplers(3, 1, linearSampler_.GetAddressOf());
+                deviceContext->VSSetSamplers(3, 1, m_linearSampler.GetAddressOf());
 
                 static Graphics::DX11::BlockReservedContext::ShadowDepthParams shadowParams{};
 
-                shadowParams.mainDSV = graphics_.GetMainDepthStencilView().Get();
-                shadowParams.mainViewProj = perCameraService_->MakeViewProjMatrix();
+                shadowParams.mainDSV = m_graphics.GetMainDepthStencilView().Get();
+                shadowParams.mainViewProj = m_perCameraService->MakeViewProjMatrix();
                 memcpy(shadowParams.mainFrustumPlanes, frustumPlanes.data(), sizeof(shadowParams.mainFrustumPlanes));
-                auto& cascadeDSV = lightShadowResourceService_->GetCascadeDSV();
+                auto& cascadeDSV = m_lightShadowResourceService->GetCascadeDSV();
                 for (int c = 0; c < Graphics::kMaxShadowCascades; ++c) {
                     shadowParams.cascadeDSV[c] = cascadeDSV[c].Get();
                 }
 
-                auto& cascade = lightShadowService_->GetCascades();
+                auto& cascade = m_lightShadowService->GetCascades();
                 memcpy(shadowParams.lightViewProj, cascade.lightViewProj.data(), sizeof(shadowParams.lightViewProj));
                 shadowParams.cascadeFrustumPlanes = cascade.frustumWS;
 
                 // フラスタムをライトの逆方向に押し出して影の判定を緩める
-                auto pushDir = lightShadowService_->GetDirectionalLight().directionWS * -1.0f;
+                auto pushDir = m_lightShadowService->GetDirectionalLight().directionWS * -1.0f;
                 float lenDot = pushDir.normalized().dot({ 0.0f, 1.0f,0.0f });
 
                 // 垂直になるほど大きくなる
@@ -599,13 +598,13 @@ namespace App
                 constexpr ID3D11ShaderResourceView* nullSRV = nullptr;
                 deviceContext->PSSetShaderResources(7, 1, &nullSRV);
 
-                lightShadowResourceService_->ClearDepthBuffer(deviceContext);
+                m_lightShadowResourceService->ClearDepthBuffer(deviceContext);
 
                 //雨用の深度マップもクリアしておく
-                rainService_->ClearDepthMap(deviceContext);
+                m_rainService->ClearDepthMap(deviceContext);
 
                 //CBの5, Samplerの1にバインド
-                lightShadowResourceService_->BindShadowResources(deviceContext, 5);
+                m_lightShadowResourceService->BindShadowResources(deviceContext, 5);
 
                 auto bufMgr = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
                 auto cameraHandle = bufMgr->FindByName(Graphics::DX11::PerCamera3DService::BUFFER_NAME);
@@ -615,13 +614,13 @@ namespace App
                     cameraCB = cameraBufData->buffer;
                 }
 
-                terrainRes_.blockRevert->RunShadowDepth(deviceContext,
+                m_terrainRes.blockRevert->RunShadowDepth(deviceContext,
                     cameraCB,
-                    terrainRes_.heightMapSRV,
-                    terrainRes_.normalMapSRV,
+                    m_terrainRes.heightMapSRV,
+                    m_terrainRes.normalMapSRV,
                     shadowParams,
-                    *terrainRes_.cp,
-                    &lightShadowResourceService_->GetCascadeViewport(), false);
+                    *m_terrainRes.cp,
+                    &m_lightShadowResourceService->GetCascadeViewport(), false);
 
                 // 地形の水面の可視インデックスを計算してバッファに書き込む
                 TerrainWater::ComputeContext computeCtx{};
@@ -631,25 +630,25 @@ namespace App
                 computeCtx.screenSize[0] = App::WINDOW_WIDTH;
                 computeCtx.screenSize[1] = App::WINDOW_HEIGHT;
 
-                terrainWater_.ComputeVisibleIndices(computeCtx, cameraCB);
+                m_terrainWater.ComputeVisibleIndices(computeCtx, cameraCB);
 
                 // 雨用に上からの地形の遮蔽マップを描画しておく
                 Graphics::DX11::TerrainPatchCB patchCBData{};
                 patchCBData.gPatchCenterXZ = { camPos.x, camPos.z };
-                patchCBData.gPatchHalfSize = rainService_->GetSpawnRadius();
+                patchCBData.gPatchHalfSize = m_rainService->GetSpawnRadius();
                 patchCBData.gPatchVertsX = 32;
                 patchCBData.gPatchVertsZ = 32;
 
-                terrainRes_.blockRevert->RunPatchDepth(deviceContext,
-                    *terrainRes_.cp,
+                m_terrainRes.blockRevert->RunPatchDepth(deviceContext,
+                    *m_terrainRes.cp,
                     patchCBData,
-                    rainService_->GetMatrixCB(),
-                    terrainRes_.heightMapSRV,
-                    rainService_->GetDepthMapDSV()
+                    m_rainService->GetMatrixCB(),
+                    m_terrainRes.heightMapSRV,
+                    m_rainService->GetDepthMapDSV()
                 );
 
                 // 雨の湿り気マップを更新
-                rainService_->UpdateWetnessCS(deviceContext);
+                m_rainService->UpdateWetnessCS(deviceContext);
             }
         );
     }
@@ -667,7 +666,7 @@ namespace App
         BIND_DEBUG_CHECKBOX("Level", "loadAsync", &loadAsync);
 
         REGISTER_DEBUG_BUTTON("Level", "load", [](bool) {
-            auto& worldRequestService = gameEngine_->GetWorld().GetRequestServiceNoLock();
+            auto& worldRequestService = m_gameEngine->GetWorld().GetRequestServiceNoLock();
 
             if (loadAsync) {
                 //ローディング中のレベルを先にロード
@@ -687,7 +686,7 @@ namespace App
             });
 
         REGISTER_DEBUG_BUTTON("Level", "clean", [](bool) {
-            auto& worldRequestService = gameEngine_->GetWorld().GetRequestServiceNoLock();
+            auto& worldRequestService = m_gameEngine->GetWorld().GetRequestServiceNoLock();
             auto reqCmd = worldRequestService.CreateCleanLevelCommand(newLevelName);
             worldRequestService.PushCommand(std::move(reqCmd));
             });
@@ -695,23 +694,23 @@ namespace App
 
     void App::Application::LoadInitialLevel()
     {
-		auto& world = gameEngine_->GetWorld();
+		auto& world = m_gameEngine->GetWorld();
 
         Levels::EnqueueGlobalSystems(world);
-        Levels::EnqueueLoadingLevel(world, ctx_, App::LOADING_LEVEL_NAME);
-        Levels::EnqueueTitleLevel(world, ctx_);
+        Levels::EnqueueLoadingLevel(world, m_ctx, App::LOADING_LEVEL_NAME);
+        Levels::EnqueueTitleLevel(world, m_ctx);
         static Levels::OpenFieldLevelParams openFieldParams =
         {
-            .gridHandle = terrainRes_.cp->gridHandle,
-            .heightTexHandle = terrainRes_.heightTexHandle,
-            .terrainParams = terrainRes_.params,
-            .terrainClustered = *terrainRes_.terrain,
-            .cpuSplatImage = *terrainRes_.cpuSplatImage,
-            .heightMap = terrainRes_.heightMap,
-            .terrainRank = terrainRank_
+            .gridHandle = m_terrainRes.cp->gridHandle,
+            .heightTexHandle = m_terrainRes.heightTexHandle,
+            .terrainParams = m_terrainRes.params,
+            .terrainClustered = *m_terrainRes.terrain,
+            .cpuSplatImage = *m_terrainRes.cpuSplatImage,
+            .heightMap = m_terrainRes.heightMap,
+            .terrainRank = m_terrainRank
         };
 
-        Levels::EnqueueOpenFieldLevel(world, ctx_, openFieldParams);
+        Levels::EnqueueOpenFieldLevel(world, m_ctx, openFieldParams);
         //初めのレベルをロード
         {
             world.LoadLevel("Title");
@@ -720,48 +719,47 @@ namespace App
 
     void App::Application::DrawTerrainColor(uint64_t frame)
     {
-        if (!ctx_.executeCustom.load(std::memory_order_relaxed))
+        if (!m_ctx.executeCustom.load(std::memory_order_relaxed))
             return;
 
-        graphics_.SetDepthStencilState(Graphics::DepthStencilStateID::DepthReadOnly);
-        graphics_.SetRasterizerState(Graphics::RasterizerStateID::SolidCullBack);
+        m_graphics.SetDepthStencilState(Graphics::DepthStencilStateID::DepthReadOnly);
+        m_graphics.SetRasterizerState(Graphics::RasterizerStateID::SolidCullBack);
+        auto deviceContext = m_graphics.GetDeviceContext();
 
-        auto deviceContext = graphics_.GetDeviceContext();
-
-        deviceContext->VSSetSamplers(3, 1, linearSampler_.GetAddressOf());
-        deviceContext->PSSetSamplers(3, 1, pointSampler_.GetAddressOf());
+        deviceContext->VSSetSamplers(3, 1, m_linearSampler.GetAddressOf());
+        deviceContext->PSSetSamplers(3, 1, m_pointSampler.GetAddressOf());
 
         Graphics::DX11::BindCommonMaterials(
             deviceContext,
-            *terrainRes_.matRes
+            *m_terrainRes.matRes
         );
 
         ID3D11ShaderResourceView* splatSrv =
-            terrainRes_.splatRes->splatArraySRV.Get();
+            m_terrainRes.splatRes->splatArraySRV.Get();
 
         deviceContext->PSSetShaderResources(28, 1, &splatSrv);
 
         ID3D11ShaderResourceView* biomeSrv =
-            terrainRes_.splatRes->biomeArraySRV.Get();
+            m_terrainRes.splatRes->biomeArraySRV.Get();
 
         deviceContext->PSSetShaderResources(30, 1, &biomeSrv);
 
-        deviceContext->RSSetViewports(1, &graphics_.GetMainViewport());
+        deviceContext->RSSetViewports(1, &m_graphics.GetMainViewport());
 
-        terrainRes_.blockRevert->RunColor(
+        m_terrainRes.blockRevert->RunColor(
             deviceContext,
-            terrainRes_.heightMapSRV,
-            terrainRes_.normalMapSRV,
-            *terrainRes_.cp
+            m_terrainRes.heightMapSRV,
+            m_terrainRes.normalMapSRV,
+            *m_terrainRes.cp
         );
     }
 
     void App::Application::DrawOpaqueParticle(uint64_t frame)
     {
-        auto* deviceContext = graphics_.GetDeviceContext();
+        auto* deviceContext = m_graphics.GetDeviceContext();
 
-        graphics_.SetDepthStencilState(Graphics::DepthStencilStateID::DepthReadOnly);
-        graphics_.SetBlendState(Graphics::BlendStateID::Additive);
+        m_graphics.SetDepthStencilState(Graphics::DepthStencilStateID::DepthReadOnly);
+        m_graphics.SetBlendState(Graphics::BlendStateID::Additive);
 
         ID3D11RenderTargetView* rtvs[DeferredTextureCount] = {};
 
@@ -778,7 +776,7 @@ namespace App
                 currentDsv->Release();
 
             ID3D11DepthStencilView* readOnlyDsv =
-                graphics_.GetMainDepthStencilViewReadOnly().Get();
+                m_graphics.GetMainDepthStencilViewReadOnly().Get();
 
             deviceContext->OMSetRenderTargets(
                 DeferredTextureCount,
@@ -791,20 +789,20 @@ namespace App
             static_cast<uint32_t>(frame % Graphics::RENDER_BUFFER_COUNT);
 
         // ホタルのスポーンと描画
-        fireflyService_->SpawnDrawParticles(
+        m_fireflyService->SpawnDrawParticles(
             deviceContext,
-            terrainRes_.heightMapSRV,
-            terrainRes_.cp->cbGrid,
+            m_terrainRes.heightMapSRV,
+            m_terrainRes.cp->cbGrid,
             slot
         );
 
         ComPtr<ID3D11Buffer> windCb;
 
         {
-            auto windHandle = windService_->GetBufferHandle();
+            auto windHandle = m_windService->GetBufferHandle();
 
             auto windBufferData =
-                graphics_
+                m_graphics
                 .GetRenderService()
                 ->GetResourceManager<Graphics::DX11::BufferManager>()
                 ->Get(windHandle);
@@ -813,31 +811,31 @@ namespace App
         }
 
         ComPtr<ID3D11ShaderResourceView> mainDepthSRV =
-            graphics_.GetMainDepthStencilSRV();
+            m_graphics.GetMainDepthStencilSRV();
 
         // 葉っぱのスポーン
-        leafService_->SpawnDrawParticles(
+        m_leafService->SpawnDrawParticles(
             deviceContext,
-            terrainRes_.heightMapSRV,
+            m_terrainRes.heightMapSRV,
             mainDepthSRV,
-            terrainRes_.cp->cbGrid,
+            m_terrainRes.cp->cbGrid,
             windCb,
             slot
         );
 
         // 葉っぱは不透明扱い
-        graphics_.SetBlendState(Graphics::BlendStateID::Opaque);
-        graphics_.SetDepthStencilState(Graphics::DepthStencilStateID::Default);
+        m_graphics.SetBlendState(Graphics::BlendStateID::Opaque);
+        m_graphics.SetDepthStencilState(Graphics::DepthStencilStateID::Default);
 
         deviceContext->OMSetRenderTargets(
             DeferredTextureCount,
             rtvs,
-            graphics_.GetMainDepthStencilView().Get()
+            m_graphics.GetMainDepthStencilView().Get()
         );
 
-        leafService_->DrawParticles(
+        m_leafService->DrawParticles(
             deviceContext,
-            leafTextureSRV_
+            m_leafTextureSRV
         );
 
         for (auto* rtv : rtvs)
@@ -849,10 +847,10 @@ namespace App
 
     void App::Application::DrawTransparentParticle(uint64_t frame)
     {
-        auto* deviceContext = graphics_.GetDeviceContext();
+        auto* deviceContext = m_graphics.GetDeviceContext();
 
-        graphics_.SetDepthStencilState(Graphics::DepthStencilStateID::DepthReadOnly);
-        graphics_.SetBlendState(Graphics::BlendStateID::Premultiplied);
+        m_graphics.SetDepthStencilState(Graphics::DepthStencilStateID::DepthReadOnly);
+        m_graphics.SetBlendState(Graphics::BlendStateID::Premultiplied);
 
         {
             ID3D11RenderTargetView* rtvs[DeferredTextureCount] = {};
@@ -868,7 +866,7 @@ namespace App
                 currentDsv->Release();
 
             ID3D11DepthStencilView* readOnlyDsv =
-                graphics_.GetMainDepthStencilViewReadOnly().Get();
+                m_graphics.GetMainDepthStencilViewReadOnly().Get();
 
             deviceContext->OMSetRenderTargets(
                 DeferredTextureCount,
@@ -886,29 +884,29 @@ namespace App
         RainParticlePool::TiledLightData tiledLightData{};
 
         tiledLightData.normalLightSRV =
-            lightShadowResourceService_->GetPointLightSRV().Get();
+            m_lightShadowResourceService->GetPointLightSRV().Get();
 
         tiledLightData.fireflyLightSRV =
-            fireflyService_->GetPointLightSRV();
+            m_fireflyService->GetPointLightSRV();
 
         auto tileLightList =
-            deferredRenderingService_->GetTileLightList(false);
+            m_deferredRenderingService->GetTileLightList(false);
 
         deviceContext->VSSetSamplers(
             3,
             1,
-            linearSampler_.GetAddressOf()
+            m_linearSampler.GetAddressOf()
         );
 
-        auto fogCB = environmentService_->GetFogCBData();
+        auto fogCB = m_environmentService->GetFogCBData();
 
-        terrainWater_.Render(
+        m_terrainWater.Render(
             deviceContext,
-            lightShadowResourceService_->GetLightDataCB(),
-            graphics_.GetMainDepthStencilSRV(),
-            Math::Inverse(perCameraService_->GetCameraBufferDataNoLock().proj),
-            perCameraService_->GetEyePos(),
-            timerService_->GetDeltaTime(),
+            m_lightShadowResourceService->GetLightDataCB(),
+            m_graphics.GetMainDepthStencilSRV(),
+            Math::Inverse(m_perCameraService->GetCameraBufferDataNoLock().proj),
+            m_perCameraService->GetEyePos(),
+            m_timerService->GetDeltaTime(),
             fogCB.gFogStart,
             fogCB.gFogEnd
         );
@@ -916,12 +914,12 @@ namespace App
         tiledLightData.lightCountSRV = tileLightList.lightCountSRV;
         tiledLightData.lightIndexSRV = tileLightList.lightIndexSRV;
         tiledLightData.lightCB =
-            lightShadowResourceService_->GetLightDataCB().Get();
+            m_lightShadowResourceService->GetLightDataCB().Get();
 
         tiledLightData.tileCB =
-            deferredRenderingService_->GetTileCB().Get();
+            m_deferredRenderingService->GetTileCB().Get();
 
-        rainService_->SpawnDrawParticles(
+        m_rainService->SpawnDrawParticles(
             deviceContext,
             &tiledLightData
         );

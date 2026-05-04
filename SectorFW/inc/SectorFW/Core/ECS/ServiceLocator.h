@@ -170,7 +170,7 @@ namespace SFW
 			}
 
 			/**
-			 * @brief サービスの更新を行う
+			 * @brief プラン通りにサービスの更新を行う
 			 */
 			void UpdateService(double dt, IThreadExecutor* executor) {
 				// ロック不要：不変 plan_ を読むだけ

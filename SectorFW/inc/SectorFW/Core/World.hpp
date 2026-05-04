@@ -227,6 +227,15 @@ namespace SFW
 
 				if (customFunc) customFunc(this);
 			}
+
+
+			template<typename Func>
+			void ExecuteLevelSessionFunc(const std::string& levelName, Func&& func) {
+				LevelCustumFunc(levelName, [&](auto& holder) {
+					func(holder.level->GetSession());
+					});
+			}
+
 		private:
 			template<typename Func>
 			void LevelCustumFunc(const std::string& levelName, Func&& func)
@@ -393,6 +402,21 @@ namespace SFW
 			EApplyLevelSystemOption option;
 		};
 
+
+		template<typename Func>
+		class LevelSessionCommand : public IRequestCommand
+		{
+		public :
+			LevelSessionCommand(std::string levelName, Func&& func) : levelName(levelName), func(std::forward<Func>(func)) {}
+			void Execute(Session* pWorldSession, IThreadExecutor* executor) override {
+				pWorldSession->ExecuteLevelSessionFunc(levelName, std::move(func));
+			}
+
+		private:
+			std::string levelName = {};
+			Func func;
+		};
+
 		class LambdaCommand : public IRequestCommand
 		{
 		public:
@@ -484,6 +508,10 @@ namespace SFW
 				return std::make_unique<ApplyLevelSystemCommand<System>>(levelName, pause ? EApplyLevelSystemOption::Pause : EApplyLevelSystemOption::Resume);
 			}
 
+			template<typename Func>
+			[[nodiscard]] std::unique_ptr<IRequestCommand> CreateLevelSessionCommand(const std::string& levelName, Func&& func) const {
+				return std::make_unique<LevelSessionCommand<Func>>(levelName, std::forward<Func>(func));
+			}
 
 			[[nodiscard]] std::unique_ptr<IRequestCommand>
 				CreateLambdaCommand(std::function<void(Session*, IThreadExecutor*)> fn) const {
@@ -576,6 +604,7 @@ namespace SFW
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_WORLD, /*leaf=*/false, "World" });
 			} // guard のデストラクトで unlock。swap は UI スレッドで。
 #endif
+
 			std::vector<std::function<void(ECS::ServiceLocator&, double, IThreadExecutor*)>> mainLevelFunc;
 			std::vector<std::function<void(ECS::ServiceLocator&, double, IThreadExecutor*)>> subLevelFunc;
 
@@ -597,6 +626,8 @@ namespace SFW
 
 							if (HasAny(levelState, ELevelState::Main)) {
 								mainFunc.push_back([&level](auto& locator, double delta, auto* te) {
+
+									//levelの更新処理。inc/core/Level.hppのLevelクラスのUpdate関数を呼び出す
 									level->Update(locator, delta, te);
 									});
 							}
@@ -623,12 +654,9 @@ namespace SFW
 			//メインのレベルの更新処理を並行で実行
 			for (auto& f : mainLevelFunc)
 			{
-				// コンテナの要素 f をタスク用に move
-				auto task = std::move(f);
-
 				executor->Submit(
-					[task = std::move(task),        // 「ラムダへの move キャプチャ」
-					this,
+					[this,
+					task = std::move(f),        // 「ラムダへの move キャプチャ」
 					deltaTime,
 					executor,
 					&latch]()
@@ -649,12 +677,13 @@ namespace SFW
 		}
 		/**
 		 * @brief サービスロケーターのサービスを更新する関数
-		 * @param deltaTime デルタタイム（秒）
+		 * @param deltaTime フレーム経過時間（秒）
 		 */
 		void UpdateServiceLocator(double deltaTime, IThreadExecutor* executor) {
 			//下層からリクエストされたコマンドを実行
 			requestService.FlashAllCommand(this, executor);
 
+			//登録したサービスの更新処理を実行
 			serviceLocator.UpdateService(deltaTime, executor);
 		}
 
