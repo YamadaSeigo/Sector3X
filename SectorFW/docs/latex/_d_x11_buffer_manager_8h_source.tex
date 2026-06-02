@@ -118,12 +118,12 @@
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Immutable\ buffer\ must\ have\ initial\ data."{}});}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00163}00163\ }
-\DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hr\ =\ device-\/>CreateBuffer(\&bd,\ \textcolor{keyword}{nullptr},\ \&out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data_ae530e46e1f691ee2f8f5f148e43e1940}{buffer}});}
+\DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hr\ =\ device-\/>CreateBuffer(\&bd,\ \textcolor{keyword}{nullptr},\ \&out.buffer);}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ D3D11\_SUBRESOURCE\_DATA\ initData\ =\ \{\};}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ initData.pSysMem\ =\ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_a174466dba1d8feaaf85a43df2a8ecce7}{initialData}};}
-\DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hr\ =\ device-\/>CreateBuffer(\&bd,\ \&initData,\ \&out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data_ae530e46e1f691ee2f8f5f148e43e1940}{buffer}});}
+\DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hr\ =\ device-\/>CreateBuffer(\&bd,\ \&initData,\ \&out.buffer);}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00171}00171\ }
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (FAILED(hr))\ \{}
@@ -148,7 +148,7 @@
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sd.Buffer.FirstElement\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sd.Buffer.NumElements\ =\ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_a420cc8d4a4ed2f5b5c7fdda8146f4b4e}{size}}\ /\ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_ab821aea901a763c0667af252f1c24734}{structureByteStride}};}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ HRESULT\ hr\ =\ device-\/>CreateShaderResourceView(out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data_ae530e46e1f691ee2f8f5f148e43e1940}{buffer}}.Get(),\ \&sd,\ \&out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data_a69557da67864ac4f275c9a6ab9892453}{srv}});}
+\DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ HRESULT\ hr\ =\ device-\/>CreateShaderResourceView(out.buffer.Get(),\ \&sd,\ \&out.srv);}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(SUCCEEDED(hr));}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00197}00197\ }
@@ -169,7 +169,7 @@
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ud.Buffer.NumElements\ =\ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_a420cc8d4a4ed2f5b5c7fdda8146f4b4e}{size}}\ /\ desc.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc_ab821aea901a763c0667af252f1c24734}{structureByteStride}};}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ud.Buffer.Flags\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ HRESULT\ hr\ =\ device-\/>CreateUnorderedAccessView(out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data_ae530e46e1f691ee2f8f5f148e43e1940}{buffer}}.Get(),\ \&ud,\ \&out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data_a36418fa060de4b27f779372f52d1baaa}{uav}});}
+\DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ HRESULT\ hr\ =\ device-\/>CreateUnorderedAccessView(out.buffer.Get(),\ \&ud,\ \&out.uav);}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(SUCCEEDED(hr));}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00218}00218\ }
@@ -192,7 +192,7 @@
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 初回作成：匿名名で\ Add（Add\ が\ +1\ を返す）}}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_buffer_handle}{BufferHandle}}\ h;}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc}{BufferCreateDesc}}\ desc\ =\ \{}
-\DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .name\ =\ \textcolor{stringliteral}{"{}auto\_cb\_"{}}\ +\ std::to\_string(key.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key_a3b52cfa4769886383debb386ee28fd17}{hash}}),}
+\DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .name\ =\ \textcolor{stringliteral}{"{}auto\_cb\_"{}}\ +\ std::to\_string(key.hash),}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .size\ =\ size,}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .initialData\ =\ data}
 \DoxyCodeLine{\Hypertarget{_d_x11_buffer_manager_8h_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}

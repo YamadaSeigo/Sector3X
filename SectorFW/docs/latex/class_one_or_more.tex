@@ -50,12 +50,12 @@ void \mbox{\hyperlink{class_one_or_more_ad16136e73d892199985e81b99780f9ce}{clear
 class One\+Or\+More$<$ T $>$}
 1個以上の要素を格納するコンテナクラス 
 
- \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00021}{21}} 行目に定義があります。
+内部的には、要素が0個のときはstd\+::monostate、1個のときは\+T、複数のときはstd\+::vector$<$\+T$>$を保持する。要素の追加はadd()やemplace()で行い、取得はget()やoperator\mbox{[}\mbox{]}で行う。サイズや空判定も提供する。 
+
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00022}{22}} 行目に定義があります。
 
 
 
-\label{doc-constructors}
-\Hypertarget{class_one_or_more_doc-constructors}
 \doxysubsection{構築子と解体子}
 \Hypertarget{class_one_or_more_aae5d09681726fe71ced4c0e481d3c0b8}\index{OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}!OneOrMore@{OneOrMore}}
 \index{OneOrMore@{OneOrMore}!OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}}
@@ -66,8 +66,6 @@ template$<$class T$>$ \\
 
 
 
-\label{doc-func-members}
-\Hypertarget{class_one_or_more_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{class_one_or_more_a6a3167fed500a2b9b8f8d2251367647f}\index{OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}!add@{add}}
 \index{add@{add}!OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}}
@@ -87,7 +85,7 @@ void \mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ T $>$\+::add (\begin
 \end{DoxyParams}
 
 
- \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00046}{46}} 行目に定義があります。
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00047}{47}} 行目に定義があります。
 
 \Hypertarget{class_one_or_more_ac2c388f1f79932cd71a4655fd1b83923}\index{OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}!add@{add}}
 \index{add@{add}!OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}}
@@ -107,7 +105,7 @@ void \mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ T $>$\+::add (\begin
 \end{DoxyParams}
 
 
- \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00065}{65}} 行目に定義があります。
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00066}{66}} 行目に定義があります。
 
 \Hypertarget{class_one_or_more_ad52b5506dc893e97f46a27afc805a1ed}\index{OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}!begin@{begin}}
 \index{begin@{begin}!OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}}
@@ -125,7 +123,7 @@ iterator 先頭イテレータ
 \end{DoxyReturn}
 
 
- \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00184}{184}} 行目に定義があります。
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00185}{185}} 行目に定義があります。
 
 \Hypertarget{class_one_or_more_ad16136e73d892199985e81b99780f9ce}\index{OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}!clear@{clear}}
 \index{clear@{clear}!OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}}
@@ -140,7 +138,7 @@ clear
 
 
 
- \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00164}{164}} 行目に定義があります。
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00165}{165}} 行目に定義があります。
 
 \Hypertarget{class_one_or_more_a504358f3f74b9a8571fde6b325d033c6}\index{OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}!emplace@{emplace}}
 \index{emplace@{emplace}!OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}}
@@ -164,7 +162,7 @@ T\& 追加された要素への参照
 \end{DoxyReturn}
 
 
- \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00086}{86}} 行目に定義があります。
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00087}{87}} 行目に定義があります。
 
 \Hypertarget{class_one_or_more_a94cf0f6653b0d16f5875fd251a0db897}\index{OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}!empty@{empty}}
 \index{empty@{empty}!OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}}
@@ -175,7 +173,7 @@ bool \mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ T $>$\+::empty (\beg
 
 
 
- \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00114}{114}} 行目に定義があります。
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00115}{115}} 行目に定義があります。
 
 \Hypertarget{class_one_or_more_abf9efaf94bdb9fa68677c01e376f7c50}\index{OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}!end@{end}}
 \index{end@{end}!OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}}
@@ -193,7 +191,7 @@ iterator 終端イテレータ
 \end{DoxyReturn}
 
 
- \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00192}{192}} 行目に定義があります。
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00193}{193}} 行目に定義があります。
 
 \Hypertarget{class_one_or_more_a495592f8139045cdf019fb85163d421e}\index{OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}!for\_each@{for\_each}}
 \index{for\_each@{for\_each}!OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}}
@@ -209,7 +207,7 @@ void \mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ T $>$\+::for\+\_\+ea
 
 
 
- \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00200}{200}} 行目に定義があります。
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00201}{201}} 行目に定義があります。
 
 \Hypertarget{class_one_or_more_a9a325fe0c73e28ac6ead6d49f7d2829a}\index{OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}!get@{get}}
 \index{get@{get}!OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}}
@@ -232,7 +230,7 @@ optional$<$ref$>$ 取得できなければ nullopt
 \end{DoxyReturn}
 
 
- \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00121}{121}} 行目に定義があります。
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00122}{122}} 行目に定義があります。
 
 \Hypertarget{class_one_or_more_a6226061515a3867296305b6d5a23dbdc}\index{OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
 \index{operator\mbox{[}\mbox{]}@{operator[]}!OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}}
@@ -255,7 +253,7 @@ const T\& 参照
 \end{DoxyReturn}
 
 
- \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00137}{137}} 行目に定義があります。
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00138}{138}} 行目に定義があります。
 
 \Hypertarget{class_one_or_more_a0c6a0caac5c29314df53a8949d6be178}\index{OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}!reserve@{reserve}}
 \index{reserve@{reserve}!OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}}
@@ -270,7 +268,7 @@ reserve
 
 
 
- \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00146}{146}} 行目に定義があります。
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00147}{147}} 行目に定義があります。
 
 \Hypertarget{class_one_or_more_ab078915d88a211212211c82a93bab6f6}\index{OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}!size@{size}}
 \index{size@{size}!OneOrMore$<$ T $>$@{OneOrMore$<$ T $>$}}
@@ -285,7 +283,7 @@ size\+\_\+t \mbox{\hyperlink{class_one_or_more}{One\+Or\+More}}$<$ T $>$\+::size
 
 
 
- \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00109}{109}} 行目に定義があります。
+ \mbox{\hyperlink{_one_or_more_8hpp_source}{One\+Or\+More.\+hpp}} の \mbox{\hyperlink{_one_or_more_8hpp_source_l00110}{110}} 行目に定義があります。
 
 
 

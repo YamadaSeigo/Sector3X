@@ -24,7 +24,7 @@
 \DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ax\ +\ by\ +\ cz\ +\ d\ =\ 0\ から（正規化オプション）}}
 \DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00026}\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a059ed45049903891ba655238d8c99d54}{00026}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}{Planef}}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a059ed45049903891ba655238d8c99d54}{FromCoefficients}}(\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b,\ \textcolor{keywordtype}{float}\ c,\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{d}},\ \textcolor{keywordtype}{bool}\ normalize\ =\ \textcolor{keyword}{true})\ noexcept\ \{}
 \DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a4ec50565d750a37a83825a8c55ecbecc}{Planef}}\ pl\{\ \{a,b,c\},\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a30598361c28e1567f280cd8fd446e89d}{d}}\ \};}
-\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (normalize)\ pl.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_planef_a7f97f81142af4416286e4667dcf78a52}{Normalize}}();}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (normalize)\ pl.Normalize();}
 \DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pl;}
 \DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00031}00031\ }
@@ -525,7 +525,6 @@
 \DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00526}00526\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00527}00527\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ aabb;}
 \DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00528}00528\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00529}00529\ }
-\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00530}00530\ \}\ \textcolor{comment}{//\ namespace\ SectorFW::Math}}
+\DoxyCodeLine{\Hypertarget{_frustum_8hpp_source_l00529}00529\ \}\ \textcolor{comment}{//\ namespace\ SectorFW::Math}}
 
 \end{DoxyCode}

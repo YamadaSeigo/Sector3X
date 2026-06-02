@@ -214,7 +214,7 @@
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{size\_t}\ R,\ \textcolor{keywordtype}{size\_t}\ C,\ \textcolor{keyword}{typename}\ T>}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00216}\mbox{\hyperlink{namespace_s_f_w_1_1_math_aeb7ec46e1bb5d9031b018c51d30b8b92}{00216}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix<C,\ R,\ T>}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_aeb7ec46e1bb5d9031b018c51d30b8b92}{TransposeMatrix}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix<R,\ C,\ T>}}\&\ M)\ \textcolor{keyword}{noexcept}\ \{}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix<C,\ R,\ T>}}\ Rt\{\};}
-\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ R;\ ++i)\ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ C;\ ++j)\ Rt.m[j][i]\ =\ M.m[i][j];}
+\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ R;\ ++i)\ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ C;\ ++j)\ Rt.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix_a1513336b5f1081c50db9ae5745943784}{m}}[j][i]\ =\ M.m[i][j];}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Rt;}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00221}00221\ }
@@ -241,8 +241,8 @@
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00242}\mbox{\hyperlink{namespace_s_f_w_1_1_math_a00f807985a4cc86629c66ace6bef2ce9}{00242}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3<T>}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a00f807985a4cc86629c66ace6bef2ce9}{operator*}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix<3,\ 3,\ T>}}\&\ M,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3<T>}}\&\ v)\ \textcolor{keyword}{noexcept}\ \{}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3<T>}}\ out\{\};}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ =\ M.m[0][0]\ *\ v.x\ +\ M.m[0][1]\ *\ v.y\ +\ M.m[0][2]\ *\ v.z;}
-\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a50dcb824e1549ed55b4addc65c4e3240}{y}}\ =\ M.m[1][0]\ *\ v.x\ +\ M.m[1][1]\ *\ v.y\ +\ M.m[1][2]\ *\ v.z;}
-\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ =\ M.m[2][0]\ *\ v.x\ +\ M.m[2][1]\ *\ v.y\ +\ M.m[2][2]\ *\ v.z;}
+\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ out.y\ =\ M.m[1][0]\ *\ v.x\ +\ M.m[1][1]\ *\ v.y\ +\ M.m[1][2]\ *\ v.z;}
+\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ out.z\ =\ M.m[2][0]\ *\ v.x\ +\ M.m[2][1]\ *\ v.y\ +\ M.m[2][2]\ *\ v.z;}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00249}00249\ }
@@ -253,9 +253,9 @@
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00254}\mbox{\hyperlink{namespace_s_f_w_1_1_math_abf4434bd2b9c19bcc3055eee587fb619}{00254}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4}{Vec4<T>}}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a00f807985a4cc86629c66ace6bef2ce9}{operator*}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_matrix}{Matrix<4,\ 4,\ T>}}\&\ M,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4}{Vec4<T>}}\&\ v)\ \textcolor{keyword}{noexcept}\ \{}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4}{Vec4<T>}}\ out\{\};}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a3b73bc23b1366b9bb9fdd5c324eb89ca}{x}}\ =\ M.m[0][0]\ *\ v.x\ +\ M.m[0][1]\ *\ v.y\ +\ M.m[0][2]\ *\ v.z\ +\ M.m[0][3]\ *\ v.w;}
-\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a322367280913e6d77a4941b968e1c617}{y}}\ =\ M.m[1][0]\ *\ v.x\ +\ M.m[1][1]\ *\ v.y\ +\ M.m[1][2]\ *\ v.z\ +\ M.m[1][3]\ *\ v.w;}
-\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_ad3b5861d4dcef8be1e2b33ec630ab9da}{z}}\ =\ M.m[2][0]\ *\ v.x\ +\ M.m[2][1]\ *\ v.y\ +\ M.m[2][2]\ *\ v.z\ +\ M.m[2][3]\ *\ v.w;}
-\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}}\ =\ M.m[3][0]\ *\ v.x\ +\ M.m[3][1]\ *\ v.y\ +\ M.m[3][2]\ *\ v.z\ +\ M.m[3][3]\ *\ v.w;}
+\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ out.y\ =\ M.m[1][0]\ *\ v.x\ +\ M.m[1][1]\ *\ v.y\ +\ M.m[1][2]\ *\ v.z\ +\ M.m[1][3]\ *\ v.w;}
+\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ out.z\ =\ M.m[2][0]\ *\ v.x\ +\ M.m[2][1]\ *\ v.y\ +\ M.m[2][2]\ *\ v.z\ +\ M.m[2][3]\ *\ v.w;}
+\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ out.w\ =\ M.m[3][0]\ *\ v.x\ +\ M.m[3][1]\ *\ v.y\ +\ M.m[3][2]\ *\ v.z\ +\ M.m[3][3]\ *\ v.w;}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00262}00262\ }
@@ -951,9 +951,9 @@
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00952}00952\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3}{Vec3<float>}}\ r2\{\ M.m[2][0],M.m[2][1],M.m[2][2]\ \};}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00953}00953\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ near1\ =\ [\&](\textcolor{keywordtype}{float}\ v)\ \{\ \textcolor{keywordflow}{return}\ std::fabs(v\ -\/\ 1.f)\ <=\ eps;\ \};}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00954}00954\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ near0\ =\ [\&](\textcolor{keywordtype}{float}\ v)\ \{\ \textcolor{keywordflow}{return}\ std::fabs(v)\ <=\ eps;\ \};}
-\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00955}00955\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ ortho\ =\ near1(r0.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a024f89ab5c1cd6815a07933afc89832d}{dot}}(r0))\ \&\&\ near1(r1.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a024f89ab5c1cd6815a07933afc89832d}{dot}}(r1))\ \&\&\ near1(r2.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a024f89ab5c1cd6815a07933afc89832d}{dot}}(r2))\ \&\&}
-\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00956}00956\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ near0(r0.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a024f89ab5c1cd6815a07933afc89832d}{dot}}(r1))\ \&\&\ near0(r1.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a024f89ab5c1cd6815a07933afc89832d}{dot}}(r2))\ \&\&\ near0(r2.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a024f89ab5c1cd6815a07933afc89832d}{dot}}(r0));}
-\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00957}00957\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ det\ =\ r0.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a024f89ab5c1cd6815a07933afc89832d}{dot}}(r1.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a90b38090396b3f1fbfbb5d9e6238bd5e}{cross}}(r2));}
+\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00955}00955\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ ortho\ =\ near1(r0.dot(r0))\ \&\&\ near1(r1.dot(r1))\ \&\&\ near1(r2.dot(r2))\ \&\&}
+\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00956}00956\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ near0(r0.dot(r1))\ \&\&\ near0(r1.dot(r2))\ \&\&\ near0(r2.dot(r0));}
+\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00957}00957\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ det\ =\ r0.dot(r1.cross(r2));}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00958}00958\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ortho\ \&\&\ (std::fabs(det\ -\/\ 1.f)\ <=\ 2e-\/3f);\ \textcolor{comment}{//\ det≈+1\ もチェック}}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00959}00959\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l00960}00960\ }
@@ -1563,7 +1563,7 @@
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l01564}01564\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M.m[3][0]\ =\ 0.f;\ M.m[3][1]\ =\ 0.f;\ M.m[3][2]\ =\ 0.f;\ M.m[3][3]\ =\ 1.f;}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l01565}01565\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outM[i]\ =\ M;}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l01566}01566\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l01567}01567\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l01567}01567\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l01568}01568\ }
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l01569}01569\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ BuildWorldMatrices3x4\_FromSoA\_Scalar(}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l01570}01570\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ px,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ py,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ pz,}
@@ -2231,7 +2231,7 @@
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l02232}02232\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l02233}02233\ \textcolor{preprocessor}{\#endif}}
 \DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l02234}02234\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l02235}02235\ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ namespace\ Math}}
-\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l02236}02236\ \ \ \ \ \}\ \textcolor{comment}{//\ namespace\ SectorFW}}
+\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l02235}02235\ \ \ \ \ \}\ \textcolor{comment}{//\ namespace\ Math}}
+\DoxyCodeLine{\Hypertarget{_matrix_8hpp_source_l02236}02236\ \}\ \textcolor{comment}{//\ namespace\ SectorFW}}
 
 \end{DoxyCode}

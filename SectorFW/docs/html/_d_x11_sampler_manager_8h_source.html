@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11SamplerManager.h ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -13,6 +13,7 @@
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -34,20 +35,26 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.14.0 -->
+<!-- 構築: Doxygen 1.13.2 -->
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
 </script>
 <script type="text/javascript">
-$(function() { codefold.init(); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
+/* @license-end */
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
@@ -62,9 +69,10 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('_d_x11_sampler_manager_8h_source.html','',''); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_d_x11_sampler_manager_8h_source.html',''); initResizable(true); });
+/* @license-end */
 </script>
-<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -159,7 +167,7 @@ $(function(){initNavTree('_d_x11_sampler_manager_8h_source.html','',''); });
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a8f613bdfdfb16fb5bab82e38b780d79e">   85</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html">SamplerData</a> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_manager.html#a8f613bdfdfb16fb5bab82e38b780d79e">CreateResource</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html">SamplerCreateDesc</a>&amp; desc, <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_sampler_handle.html">SamplerHandle</a> h) {</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html">SamplerData</a> data{};</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                HRESULT hr = device-&gt;CreateSamplerState(&amp;desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html#a0cc10d9a4b7397a3dfe4b9c0ae96078d">desc</a>, &amp;data.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_data.html#a43d7e26f3adf00c46aa702f8d21dd10e">state</a>);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                HRESULT hr = device-&gt;CreateSamplerState(&amp;desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html#a0cc10d9a4b7397a3dfe4b9c0ae96078d">desc</a>, &amp;data.state);</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                <span class="keywordflow">if</span> (FAILED(hr)) {</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                    assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Failed to create sampler&quot;</span>);</div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                }</div>
@@ -298,7 +306,7 @@ $(function(){initNavTree('_d_x11_sampler_manager_8h_source.html','',''); });
 <div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ab06811456bf9d3e86d400be7459a91ca"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">SFW::ResourceManagerBase&lt; SamplerManager, SamplerHandle, SamplerCreateDesc, SamplerData &gt;::slots</a></div><div class="ttdeci">std::vector&lt; Slot &gt; slots</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00352">ResouceManagerBase.hpp:352</a></div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ae15f0d5d2bed3eb6c9c6d7b6864d78f7"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ae15f0d5d2bed3eb6c9c6d7b6864d78f7">SFW::ResourceManagerBase&lt; SamplerManager, SamplerHandle, SamplerCreateDesc, SamplerData &gt;::AddRef</a></div><div class="ttdeci">void AddRef(SamplerHandle h)</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00138">ResouceManagerBase.hpp:138</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_graphics_1_1_d_x11_html"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">SFW::Graphics::DX11</a></div><div class="ttdef"><b>Definition</b> <a href="_d_x11_graphics_8h_source.html#l00034">DX11Graphics.h:35</a></div></div>
-<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00031">AudioService.h:32</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_html_a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9"><div class="ttname"><a href="namespace_s_f_w.html#a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9">SFW::EApplyLevelSystemOption::Add</a></div><div class="ttdeci">@ Add</div><div class="ttdef"><b>Definition</b> <a href="_world_8hpp_source.html#l00017">World.hpp:17</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_html_ab8cb832ca884cf7f1a3ae8dd04491ffa"><div class="ttname"><a href="namespace_s_f_w.html#ab8cb832ca884cf7f1a3ae8dd04491ffa">SFW::HashBufferContent</a></div><div class="ttdeci">size_t HashBufferContent(const void *data, size_t size)</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00375">ResouceManagerBase.hpp:375</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_sampler_create_desc.html">SFW::Graphics::DX11::SamplerCreateDesc</a></div><div class="ttdoc">DirectX 11のサンプラーステートを管理するクラス</div><div class="ttdef"><b>Definition</b> <a href="#l00030">DX11SamplerManager.h:30</a></div></div>
@@ -313,12 +321,11 @@ $(function(){initNavTree('_d_x11_sampler_manager_8h_source.html','',''); });
 <div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_sampler_handle_html_a2a4a06eef339ade890e2f2cfef69f258"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_sampler_handle.html#a2a4a06eef339ade890e2f2cfef69f258">SFW::Graphics::SamplerHandle::index</a></div><div class="ttdeci">uint32_t index</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00047">RenderTypes.h:47</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="dir_b1727ce268e62d033d50a1c50b50897f.html">DX11</a></li><li class="navelem"><a href="_d_x11_sampler_manager_8h.html">DX11SamplerManager.h</a></li>
-    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+    <li class="navelem"><a class="el" href="dir_69161428018e52ad84691a5947f27cc9.html">Github</a></li><li class="navelem"><a class="el" href="dir_b16de0d6cadc5f599d3a1812d4bfc31f.html">Sector3X</a></li><li class="navelem"><a class="el" href="dir_c3d880fd4ea2deebfb73ffb2e2b5a523.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_1145cf039e35774d8481e4ea1d2fa6e0.html">inc</a></li><li class="navelem"><a class="el" href="dir_991437b4ce66300b52a83f76dbdf298e.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_4b5352a26ce7ea1db35fbdafe9f06e3b.html">Graphics</a></li><li class="navelem"><a class="el" href="dir_da4c480f78a7ce53f119c7fba3622a19.html">DX11</a></li><li class="navelem"><a class="el" href="_d_x11_sampler_manager_8h.html">DX11SamplerManager.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

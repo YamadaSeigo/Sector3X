@@ -63,7 +63,7 @@ class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service}{I2\+DCa
 class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{I3\+DCamera\+Service}}
 \begin{DoxyCompactList}\small\item\em 3Dカメラサービスのインターフェース。カメラの操作、ビュー行列の計算、カメラバッファの管理を行う。 \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{IGraphics\+Device}}
-\begin{DoxyCompactList}\small\item\em グラフィックデバイスのインターフェース \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em グラフィックデバイスのインターフェース @detials CRTPを用いて、派生クラスで実装されるべき関数を呼び出す。これにより、共通のインターフェースを提供しつつ、派生クラスごとに異なる実装を可能にする。 \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_i_lod_selector}{ILod\+Selector}}
 \item 
 struct \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data}{Image\+Data}}
@@ -417,8 +417,6 @@ constexpr std\+::uint32\+\_\+t \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_aa3
 \end{DoxyCompactItemize}
 
 
-\label{doc-typedef-members}
-\Hypertarget{namespace_s_f_w_1_1_graphics_doc-typedef-members}
 \doxysubsection{型定義詳解}
 \Hypertarget{namespace_s_f_w_1_1_graphics_a9a6e6c13e257cd8b430169da73937db9}\index{SFW::Graphics@{SFW::Graphics}!HeightSampler@{HeightSampler}}
 \index{HeightSampler@{HeightSampler}!SFW::Graphics@{SFW::Graphics}}
@@ -523,8 +521,6 @@ using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_ae93ce8676d3ac86b771af9510fd
 
 
 
-\label{doc-enum-members}
-\Hypertarget{namespace_s_f_w_1_1_graphics_doc-enum-members}
 \doxysubsection{列挙型詳解}
 \Hypertarget{namespace_s_f_w_1_1_graphics_af5ac1be11beff93c6e6118e7c7391cda}\index{SFW::Graphics@{SFW::Graphics}!AABBQuadAxisBit@{AABBQuadAxisBit}}
 \index{AABBQuadAxisBit@{AABBQuadAxisBit}!SFW::Graphics@{SFW::Graphics}}
@@ -996,8 +992,6 @@ PS&\\
 
 
 
-\label{doc-func-members}
-\Hypertarget{namespace_s_f_w_1_1_graphics_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{namespace_s_f_w_1_1_graphics_a7ff1e5c5ccee4b1c5d8a500a28cc2fb4}\index{SFW::Graphics@{SFW::Graphics}!AABBScreenAreaPx@{AABBScreenAreaPx}}
 \index{AABBScreenAreaPx@{AABBScreenAreaPx}!SFW::Graphics@{SFW::Graphics}}
@@ -1547,8 +1541,6 @@ float SFW\+::\+Graphics\+::\+To\+Base\+Pixels (\begin{DoxyParamCaption}\item[{fl
 
 
 
-\label{doc-var-members}
-\Hypertarget{namespace_s_f_w_1_1_graphics_doc-var-members}
 \doxysubsection{変数詳解}
 \Hypertarget{namespace_s_f_w_1_1_graphics_aa3a9b6ad855fc9ed63fec0f7125eaed2}\index{SFW::Graphics@{SFW::Graphics}!kMaxShadowCascades@{kMaxShadowCascades}}
 \index{kMaxShadowCascades@{kMaxShadowCascades}!SFW::Graphics@{SFW::Graphics}}

@@ -165,6 +165,10 @@ bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_aae57f04aa790c9d418
 \item 
 bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a1087cfe2d2cdf1421a7550ce7fc9187a}{Build\+From\+Terrain\+Clustered}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} \&t, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context}{Block\+Reserved\+Context}} \&out)
 \item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_acd17840f6298034d1f72a388a68bdddc}{Generate\+Cluster\+LODs\+\_\+meshopt}} (const std\+::vector$<$ uint32\+\_\+t $>$ \&in\+Index\+Pool, const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range}{Terrain\+Clustered\+::\+Cluster\+Range}} $>$ \&in\+Ranges, const float \texorpdfstring{$\ast$}{*}positions, size\+\_\+t vertex\+Count, size\+\_\+t position\+Stride\+Bytes, const std\+::vector$<$ float $>$ \&lod\+Targets, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Index\+Pool, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_lod_range}{Cluster\+Lod\+Range}} $>$ \&out\+Lod\+Ranges, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Lod\+Base, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Lod\+Count)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_aeeefbbc2d1bb8375a861dff3d0498ad6}{Generate\+Cluster\+LODs\+\_\+meshopt\+\_\+fast}} (const std\+::vector$<$ uint32\+\_\+t $>$ \&in\+Index\+Pool, const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range}{Terrain\+Clustered\+::\+Cluster\+Range}} $>$ \&in\+Ranges, const float \texorpdfstring{$\ast$}{*}positions, size\+\_\+t vertex\+Count, size\+\_\+t position\+Stride\+Bytes, const std\+::vector$<$ float $>$ \&lod\+Targets, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Index\+Pool, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_lod_range}{Cluster\+Lod\+Range}} $>$ \&out\+Lod\+Ranges, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Lod\+Base, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Lod\+Count)
+\item 
 bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_aebe611e8799b4bd62c01c11ef102ee88}{Build\+Common\+Material\+SRVs}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{SFW\+::\+Graphics\+::\+DX11\+::\+Texture\+Manager}} \&tex\+Mgr, const uint32\+\_\+t material\+Ids\mbox{[}4\mbox{]}, const uint32\+\_\+t material\+Normal\+Ids\mbox{[}4\mbox{]}, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0affdb226eb1a6d3a99eefd76a6a788a}{Resolve\+Texture\+Path\+Fn}} resolve, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_common_material_resources}{Common\+Material\+Resources}} \&out)
 \item 
 void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_acbe4eea105b2cd68e9a3a0a8c06bc326}{Bind\+Common\+Materials}} (ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}ctx, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_common_material_resources}{Common\+Material\+Resources}} \&R)
@@ -207,8 +211,6 @@ bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a4d9ae789299e4637ac
 \end{DoxyCompactItemize}
 
 
-\label{doc-typedef-members}
-\Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_doc-typedef-members}
 \doxysubsection{型定義詳解}
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a528c6029d84bf954a4c3b98d59550da5}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!AllocateSplatIdFn@{AllocateSplatIdFn}}
 \index{AllocateSplatIdFn@{AllocateSplatIdFn}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -218,7 +220,7 @@ using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a528c6029d84bf954a
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01753}{1753}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01719}{1719}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a11bb13d4a681aa20464317cb5736031f}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!LodThresholds@{LodThresholds}}
 \index{LodThresholds@{LodThresholds}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -268,7 +270,7 @@ using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a64ef67bc9cc82f559
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01754}{1754}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01720}{1720}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0affdb226eb1a6d3a99eefd76a6a788a}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!ResolveTexturePathFn@{ResolveTexturePathFn}}
 \index{ResolveTexturePathFn@{ResolveTexturePathFn}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -278,7 +280,7 @@ typedef bool(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_s_f_w_1_1_gra
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00057}{57}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00055}{55}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!ShaderResourceHandle@{ShaderResourceHandle}}
 \index{ShaderResourceHandle@{ShaderResourceHandle}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -292,8 +294,6 @@ using \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef08
 
 
 
-\label{doc-enum-members}
-\Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_doc-enum-members}
 \doxysubsection{列挙型詳解}
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a348912279cf769c7dae41ef10ef31dd8}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!InputBindingMode@{InputBindingMode}}
 \index{InputBindingMode@{InputBindingMode}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -329,8 +329,6 @@ BINDMODE\+\_\+\+MAX&\\
 
 
 
-\label{doc-func-members}
-\Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a51efe8bcbf346e177beefb7313682ee7}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!AssignClusterSplatsFromHandles@{AssignClusterSplatsFromHandles}}
 \index{AssignClusterSplatsFromHandles@{AssignClusterSplatsFromHandles}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -340,7 +338,7 @@ void SFW\+::\+Graphics\+::\+DX11\+::\+Assign\+Cluster\+Splats\+From\+Handles (\b
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01756}{1756}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01722}{1722}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_acbe4eea105b2cd68e9a3a0a8c06bc326}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!BindCommonMaterials@{BindCommonMaterials}}
 \index{BindCommonMaterials@{BindCommonMaterials}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -350,7 +348,7 @@ void SFW\+::\+Graphics\+::\+DX11\+::\+Bind\+Common\+Materials (\begin{DoxyParamC
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01133}{1133}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01123}{1123}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_abdf4a4217bef4d49edaab285bcf31eee}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!BindSplatArrayForCluster@{BindSplatArrayForCluster}}
 \index{BindSplatArrayForCluster@{BindSplatArrayForCluster}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -360,7 +358,7 @@ void SFW\+::\+Graphics\+::\+DX11\+::\+Bind\+Splat\+Array\+For\+Cluster (\begin{D
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01348}{1348}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01330}{1330}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a253df16cdbb960a686b1d780e21a943a}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!BuildClusterSplatArrayResources@{BuildClusterSplatArrayResources}}
 \index{BuildClusterSplatArrayResources@{BuildClusterSplatArrayResources}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -370,7 +368,7 @@ bool SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Cluster\+Splat\+Array\+Resources (\
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01305}{1305}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01288}{1288}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a7a5ba13f8ef6027afc71ab7ce106b634}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!BuildClusterSplatTexturesFromSingleSheet@{BuildClusterSplatTexturesFromSingleSheet}}
 \index{BuildClusterSplatTexturesFromSingleSheet@{BuildClusterSplatTexturesFromSingleSheet}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -380,7 +378,7 @@ std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01526}{1526}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01501}{1501}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_abfce525fdecae950460d0b43e73c2607}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!BuildClusterSplatTexturesFromSingleSheet@{BuildClusterSplatTexturesFromSingleSheet}}
 \index{BuildClusterSplatTexturesFromSingleSheet@{BuildClusterSplatTexturesFromSingleSheet}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -390,7 +388,7 @@ std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_texture_handle}{
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01652}{1652}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01622}{1622}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_aebe611e8799b4bd62c01c11ef102ee88}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!BuildCommonMaterialSRVs@{BuildCommonMaterialSRVs}}
 \index{BuildCommonMaterialSRVs@{BuildCommonMaterialSRVs}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -400,7 +398,7 @@ bool SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Common\+Material\+SRVs (\begin{Doxy
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01086}{1086}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01077}{1077}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a1087cfe2d2cdf1421a7550ce7fc9187a}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!BuildFromTerrainClustered@{BuildFromTerrainClustered}}
 \index{BuildFromTerrainClustered@{BuildFromTerrainClustered}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -410,7 +408,7 @@ bool SFW\+::\+Graphics\+::\+DX11\+::\+Build\+From\+Terrain\+Clustered (\begin{Do
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00844}{844}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00836}{836}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a97620880d55a8bb1a5a5dd6d220bf64e}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!BuildOrUpdateClusterParamsSB@{BuildOrUpdateClusterParamsSB}}
 \index{BuildOrUpdateClusterParamsSB@{BuildOrUpdateClusterParamsSB}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -420,7 +418,7 @@ bool SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Or\+Update\+Cluster\+Params\+SB (\b
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01381}{1381}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01360}{1360}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a8c7722facfda2e137b435b7593c8982c}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!BuildOrUpdateTerrainGridCB@{BuildOrUpdateTerrainGridCB}}
 \index{BuildOrUpdateTerrainGridCB@{BuildOrUpdateTerrainGridCB}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -430,7 +428,7 @@ bool SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Or\+Update\+Terrain\+Grid\+CB (\beg
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01416}{1416}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01393}{1393}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_aaa92f7a7fc6434766f5fe4129995e2fa}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!BuildSliceTable@{BuildSliceTable}}
 \index{BuildSliceTable@{BuildSliceTable}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -440,7 +438,7 @@ std\+::unordered\+\_\+map$<$ uint32\+\_\+t, int $>$ SFW\+::\+Graphics\+::\+DX11\
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01185}{1185}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01174}{1174}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_abcc5aa0018f812177892ab2a5a250c1b}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!BuildSplatArrayFromHandles@{BuildSplatArrayFromHandles}}
 \index{BuildSplatArrayFromHandles@{BuildSplatArrayFromHandles}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -450,7 +448,7 @@ bool SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Splat\+Array\+From\+Handles (\begin
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01677}{1677}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01646}{1646}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_af464098a52ec9fa432cba104672e7292}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!BuildSplatArrayTexture@{BuildSplatArrayTexture}}
 \index{BuildSplatArrayTexture@{BuildSplatArrayTexture}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -460,7 +458,7 @@ bool SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Splat\+Array\+Texture (\begin{DoxyP
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01194}{1194}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01183}{1183}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a962ce4e57aea6727ca9420087c13d9b9}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!CollectUniqueSplatIds@{CollectUniqueSplatIds}}
 \index{CollectUniqueSplatIds@{CollectUniqueSplatIds}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -470,7 +468,7 @@ void SFW\+::\+Graphics\+::\+DX11\+::\+Collect\+Unique\+Splat\+Ids (\begin{DoxyPa
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01169}{1169}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01159}{1159}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_ac334a3e4fd5d3b1c7c6d50fb0f1b7bc0}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!CreateIndirectArgs@{CreateIndirectArgs}}
 \index{CreateIndirectArgs@{CreateIndirectArgs}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -480,7 +478,7 @@ bool SFW\+::\+Graphics\+::\+DX11\+::\+Create\+Indirect\+Args (\begin{DoxyParamCa
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00181}{181}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00176}{176}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a974e8dae1a1561f63f604e525531b0e7}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!CreateRawUAV@{CreateRawUAV}}
 \index{CreateRawUAV@{CreateRawUAV}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -490,7 +488,7 @@ bool SFW\+::\+Graphics\+::\+DX11\+::\+Create\+Raw\+UAV (\begin{DoxyParamCaption}
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00160}{160}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00155}{155}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_aae57f04aa790c9d418201d16c20c366d}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!CreateStructured@{CreateStructured}}
 \index{CreateStructured@{CreateStructured}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -500,7 +498,7 @@ bool SFW\+::\+Graphics\+::\+DX11\+::\+Create\+Structured (\begin{DoxyParamCaptio
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00251}{251}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00246}{246}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a38bd9907fc34339601a9bfbd9d98515d}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!CreateStructuredUInt@{CreateStructuredUInt}}
 \index{CreateStructuredUInt@{CreateStructuredUInt}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -510,7 +508,7 @@ bool SFW\+::\+Graphics\+::\+DX11\+::\+Create\+Structured\+UInt (\begin{DoxyParam
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00192}{192}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00187}{187}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a9ea5e70c23e3d9dbfd76643071605f96}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!CreateStructuredUInt@{CreateStructuredUInt}}
 \index{CreateStructuredUInt@{CreateStructuredUInt}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -520,7 +518,7 @@ bool SFW\+::\+Graphics\+::\+DX11\+::\+Create\+Structured\+UInt (\begin{DoxyParam
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00219}{219}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00214}{214}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a10650c2c15bb39698d92136d723ef5a5}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!FillClusterParamsCPU@{FillClusterParamsCPU}}
 \index{FillClusterParamsCPU@{FillClusterParamsCPU}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -530,7 +528,27 @@ bool SFW\+::\+Graphics\+::\+DX11\+::\+Fill\+Cluster\+Params\+CPU (\begin{DoxyPar
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01443}{1443}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01420}{1420}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_acd17840f6298034d1f72a388a68bdddc}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!GenerateClusterLODs\_meshopt@{GenerateClusterLODs\_meshopt}}
+\index{GenerateClusterLODs\_meshopt@{GenerateClusterLODs\_meshopt}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
+\doxysubsubsection{\texorpdfstring{GenerateClusterLODs\_meshopt()}{GenerateClusterLODs\_meshopt()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_graphics_1_1_d_x11_acd17840f6298034d1f72a388a68bdddc} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Generate\+Cluster\+LODs\+\_\+meshopt (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ uint32\+\_\+t $>$ \&}]{in\+Index\+Pool}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range}{Terrain\+Clustered\+::\+Cluster\+Range}} $>$ \&}]{in\+Ranges}{, }\item[{const float \texorpdfstring{$\ast$}{*}}]{positions}{, }\item[{size\+\_\+t}]{vertex\+Count}{, }\item[{size\+\_\+t}]{position\+Stride\+Bytes}{, }\item[{const std\+::vector$<$ float $>$ \&}]{lod\+Targets}{, }\item[{std\+::vector$<$ uint32\+\_\+t $>$ \&}]{out\+Index\+Pool}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_lod_range}{Cluster\+Lod\+Range}} $>$ \&}]{out\+Lod\+Ranges}{, }\item[{std\+::vector$<$ uint32\+\_\+t $>$ \&}]{out\+Lod\+Base}{, }\item[{std\+::vector$<$ uint32\+\_\+t $>$ \&}]{out\+Lod\+Count}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00877}{877}} 行目に定義があります。
+
+\Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_aeeefbbc2d1bb8375a861dff3d0498ad6}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!GenerateClusterLODs\_meshopt\_fast@{GenerateClusterLODs\_meshopt\_fast}}
+\index{GenerateClusterLODs\_meshopt\_fast@{GenerateClusterLODs\_meshopt\_fast}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
+\doxysubsubsection{\texorpdfstring{GenerateClusterLODs\_meshopt\_fast()}{GenerateClusterLODs\_meshopt\_fast()}}
+{\footnotesize\ttfamily \label{namespace_s_f_w_1_1_graphics_1_1_d_x11_aeeefbbc2d1bb8375a861dff3d0498ad6} 
+void SFW\+::\+Graphics\+::\+DX11\+::\+Generate\+Cluster\+LODs\+\_\+meshopt\+\_\+fast (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ uint32\+\_\+t $>$ \&}]{in\+Index\+Pool}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range}{Terrain\+Clustered\+::\+Cluster\+Range}} $>$ \&}]{in\+Ranges}{, }\item[{const float \texorpdfstring{$\ast$}{*}}]{positions}{, }\item[{size\+\_\+t}]{vertex\+Count}{, }\item[{size\+\_\+t}]{position\+Stride\+Bytes}{, }\item[{const std\+::vector$<$ float $>$ \&}]{lod\+Targets}{, }\item[{std\+::vector$<$ uint32\+\_\+t $>$ \&}]{out\+Index\+Pool}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_lod_range}{Cluster\+Lod\+Range}} $>$ \&}]{out\+Lod\+Ranges}{, }\item[{std\+::vector$<$ uint32\+\_\+t $>$ \&}]{out\+Lod\+Base}{, }\item[{std\+::vector$<$ uint32\+\_\+t $>$ \&}]{out\+Lod\+Count}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l00928}{928}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_ae17faf13d92b9700a360fd403306f15a}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!InitSplatArrayResources@{InitSplatArrayResources}}
 \index{InitSplatArrayResources@{InitSplatArrayResources}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -540,7 +558,7 @@ bool SFW\+::\+Graphics\+::\+DX11\+::\+Init\+Splat\+Array\+Resources (\begin{Doxy
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01148}{1148}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01138}{1138}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a122966bf4ae759f40997c64ad27637a5}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!LoadSheetAsTex2D@{LoadSheetAsTex2D}}
 \index{LoadSheetAsTex2D@{LoadSheetAsTex2D}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -550,7 +568,7 @@ Com\+Ptr$<$ ID3\+D11\+Texture2D $>$ SFW\+::\+Graphics\+::\+DX11\+::\+Load\+Sheet
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01503}{1503}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01478}{1478}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a093113ac71c73b762c72b6fa6e0a8d61}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!ReadTexture2DToCPU@{ReadTexture2DToCPU}}
 \index{ReadTexture2DToCPU@{ReadTexture2DToCPU}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}
@@ -572,7 +590,7 @@ void SFW\+::\+Graphics\+::\+DX11\+::\+Setup\+Terrain\+Grid\+CB (\begin{DoxyParam
 
 
 
- \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01469}{1469}} 行目に定義があります。
+ \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source}{DX11\+Block\+Revert\+Helper.\+h}} の \mbox{\hyperlink{_d_x11_block_revert_helper_8h_source_l01444}{1444}} 行目に定義があります。
 
 \Hypertarget{namespace_s_f_w_1_1_graphics_1_1_d_x11_a8710f0a5811fcb5a438d6b9fb10f153a}\index{SFW::Graphics::DX11@{SFW::Graphics::DX11}!ToD3DTopology@{ToD3DTopology}}
 \index{ToD3DTopology@{ToD3DTopology}!SFW::Graphics::DX11@{SFW::Graphics::DX11}}

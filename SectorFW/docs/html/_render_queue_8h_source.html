@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/RenderQueue.h ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -13,6 +13,7 @@
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -34,20 +35,26 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.14.0 -->
+<!-- 構築: Doxygen 1.13.2 -->
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
 </script>
 <script type="text/javascript">
-$(function() { codefold.init(); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
+/* @license-end */
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
@@ -62,9 +69,10 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('_render_queue_8h_source.html','',''); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_render_queue_8h_source.html',''); initResizable(true); });
+/* @license-end */
 </script>
-<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -654,78 +662,77 @@ $(function(){initNavTree('_render_queue_8h_source.html','',''); });
 <div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>                        std::memcpy(out.data() + old, pTmp, n * <span class="keyword">sizeof</span>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">DrawCommand</a>));</div>
 <div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>                    }</div>
 <div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span>                    <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span> </div>
-<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span>                        std::move(pTmp, pTmp + n, out.begin() + old);</div>
-<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>                    }</div>
-<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>                }</div>
-<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>                sortContext.Sort(out);</div>
-<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>            }</div>
+<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span>                        std::move(pTmp, pTmp + n, out.begin() + old);</div>
+<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span>                    }</div>
+<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>                }</div>
+<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>                sortContext.Sort(out);</div>
+<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>            }</div>
 </div>
-<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span><span class="preprocessor">#ifndef NO_USE_PMR_RENDER_QUEUE</span><span class="preprocessor"></span></div>
-<div class="foldopen" id="foldopen00629" data-start="{" data-end="}">
-<div class="line"><a id="l00629" name="l00629"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a80d85c6a3382a6f46a65a11725a74e82">  629</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a80d85c6a3382a6f46a65a11725a74e82">Submit</a>(uint32_t slot, std::pmr::vector&lt;DrawCommand&gt;&amp; out) {</div>
-<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span>                <span class="keyword">auto</span>&amp; q = *queues[slot];</div>
-<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>                <span class="keywordflow">if</span> (!ctoken[slot]) ctoken[slot].emplace(q);</div>
-<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span> </div>
-<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span>                <span class="comment">// 概算で一撃 reserve（pmr アリーナから確保）</span></div>
-<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>                <span class="keywordflow">if</span> (<span class="keyword">auto</span> approx = q.size_approx(); approx &gt; 0) {</div>
-<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>                    out.reserve(out.size() + approx);</div>
-<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>                }</div>
-<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span> </div>
-<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>                <span class="keyword">auto</span> pTmp = tmp.data();</div>
-<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>                <span class="keywordtype">size_t</span> n;</div>
-<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>                <span class="keywordflow">while</span> ((n = q.try_dequeue_bulk(*ctoken[slot], pTmp, DRAWCOMMAND_TMPBUF_SIZE)) != 0) {</div>
-<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>                    <span class="keyword">const</span> <span class="keyword">auto</span> old = out.size();</div>
-<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>                    out.resize(old + n);</div>
-<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>                    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_trivially_copyable_v&lt;DrawCommand&gt;) {</div>
-<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>                        std::memcpy(out.data() + old, pTmp, n * <span class="keyword">sizeof</span>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">DrawCommand</a>));</div>
-<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>                    }</div>
-<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>                    <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>                        std::move(pTmp, pTmp + n, out.begin() + old);</div>
-<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>                    }</div>
-<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>                }</div>
-<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>                sortContext.Sort(out);</div>
-<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>            }</div>
+<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span><span class="preprocessor">#ifndef NO_USE_PMR_RENDER_QUEUE</span><span class="preprocessor"></span></div>
+<div class="foldopen" id="foldopen00628" data-start="{" data-end="}">
+<div class="line"><a id="l00628" name="l00628"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a80d85c6a3382a6f46a65a11725a74e82">  628</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a80d85c6a3382a6f46a65a11725a74e82">Submit</a>(uint32_t slot, std::pmr::vector&lt;DrawCommand&gt;&amp; out) {</div>
+<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>                <span class="keyword">auto</span>&amp; q = *queues[slot];</div>
+<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span>                <span class="keywordflow">if</span> (!ctoken[slot]) ctoken[slot].emplace(q);</div>
+<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span> </div>
+<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span>                <span class="comment">// 概算で一撃 reserve（pmr アリーナから確保）</span></div>
+<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span>                <span class="keywordflow">if</span> (<span class="keyword">auto</span> approx = q.size_approx(); approx &gt; 0) {</div>
+<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>                    out.reserve(out.size() + approx);</div>
+<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>                }</div>
+<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span> </div>
+<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>                <span class="keyword">auto</span> pTmp = tmp.data();</div>
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>                <span class="keywordtype">size_t</span> n;</div>
+<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>                <span class="keywordflow">while</span> ((n = q.try_dequeue_bulk(*ctoken[slot], pTmp, DRAWCOMMAND_TMPBUF_SIZE)) != 0) {</div>
+<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>                    <span class="keyword">const</span> <span class="keyword">auto</span> old = out.size();</div>
+<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>                    out.resize(old + n);</div>
+<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>                    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_trivially_copyable_v&lt;DrawCommand&gt;) {</div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>                        std::memcpy(out.data() + old, pTmp, n * <span class="keyword">sizeof</span>(<a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">DrawCommand</a>));</div>
+<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>                    }</div>
+<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>                    <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>                        std::move(pTmp, pTmp + n, out.begin() + old);</div>
+<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>                    }</div>
+<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>                }</div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>                sortContext.Sort(out);</div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>            }</div>
 </div>
-<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span></div>
-<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span>            <span class="keyword">inline</span> std::pair&lt;InstancePool*, std::atomic&lt;uint32_t&gt;*&gt;</div>
-<div class="foldopen" id="foldopen00659" data-start="{" data-end="}">
-<div class="line"><a id="l00659" name="l00659"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a26d0a5f2e6ae6aff8cf182af45ad5942">  659</a></span>                <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a26d0a5f2e6ae6aff8cf182af45ad5942">GetCurrentInstancePoolAccess</a>() noexcept {</div>
-<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>                <span class="keyword">const</span> <span class="keywordtype">int</span> cur = current.load(std::memory_order_acquire);</div>
-<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>                <span class="keywordflow">return</span> { sharedInstanceArena-&gt;Data(cur), &amp;sharedInstanceArena-&gt;head[cur] };</div>
-<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>            }</div>
+<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span></div>
+<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>            <span class="keyword">inline</span> std::pair&lt;InstancePool*, std::atomic&lt;uint32_t&gt;*&gt;</div>
+<div class="foldopen" id="foldopen00658" data-start="{" data-end="}">
+<div class="line"><a id="l00658" name="l00658"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a26d0a5f2e6ae6aff8cf182af45ad5942">  658</a></span>                <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a26d0a5f2e6ae6aff8cf182af45ad5942">GetCurrentInstancePoolAccess</a>() noexcept {</div>
+<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>                <span class="keyword">const</span> <span class="keywordtype">int</span> cur = current.load(std::memory_order_acquire);</div>
+<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>                <span class="keywordflow">return</span> { sharedInstanceArena-&gt;Data(cur), &amp;sharedInstanceArena-&gt;head[cur] };</div>
+<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>            }</div>
 </div>
-<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span></div>
-<div class="line"><a id="l00668" name="l00668"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_queue.html#ad4c776bc0646c58b8cda3eab21d73e7d">  668</a></span>            <span class="keyword">inline</span> uint32_t <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_queue.html#ad4c776bc0646c58b8cda3eab21d73e7d">MaxInstancesPerFrame</a>() const noexcept { <span class="keywordflow">return</span> maxInstancesPerFrame; }</div>
-<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span> </div>
-<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>        <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>            <span class="comment">// 現在の生産キュー</span></div>
-<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>            moodycamel::ConcurrentQueue&lt;DrawCommand&gt;&amp; CurQ() noexcept {</div>
-<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>                <span class="keywordflow">return</span> *queues[current.load(std::memory_order_acquire)];</div>
-<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>            }</div>
-<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>        <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>            <span class="keyword">const</span> uint32_t maxInstancesPerFrame;</div>
-<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span> </div>
-<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span>            std::unique_ptr&lt;moodycamel::ConcurrentQueue&lt;DrawCommand&gt;&gt; queues[RENDER_BUFFER_COUNT];</div>
-<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>            std::optional&lt;moodycamel::ConsumerToken&gt; ctoken[RENDER_BUFFER_COUNT];</div>
-<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>            <span class="keyword">const</span> std::atomic&lt;uint16_t&gt;&amp; current;</div>
-<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span> </div>
-<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span>            SharedInstanceArena* sharedInstanceArena = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span> </div>
-<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>            <span class="comment">// 取り込み用一時バッファ：std::array でヒープ確保ゼロ化</span></div>
-<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span>            std::array&lt;DrawCommand, DRAWCOMMAND_TMPBUF_SIZE&gt; tmp{};</div>
-<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span> </div>
-<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>            <span class="comment">// PMR時は tempBuffer も同資源で確保されるようにコンストラクト</span></div>
-<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span><span class="preprocessor">#ifndef NO_USE_PMR_RENDER_QUEUE</span></div>
-<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>            SortContext sortContext{ std::pmr::get_default_resource() };</div>
-<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span>            SortContext sortContext;</div>
-<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span>        };</div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span></div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_render_queue.html#ad4c776bc0646c58b8cda3eab21d73e7d">  667</a></span>            <span class="keyword">inline</span> uint32_t <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_render_queue.html#ad4c776bc0646c58b8cda3eab21d73e7d">MaxInstancesPerFrame</a>() const noexcept { <span class="keywordflow">return</span> maxInstancesPerFrame; }</div>
+<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span> </div>
+<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>            <span class="comment">// 現在の生産キュー</span></div>
+<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>            moodycamel::ConcurrentQueue&lt;DrawCommand&gt;&amp; CurQ() noexcept {</div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>                <span class="keywordflow">return</span> *queues[current.load(std::memory_order_acquire)];</div>
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>            }</div>
+<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>            <span class="keyword">const</span> uint32_t maxInstancesPerFrame;</div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span> </div>
+<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span>            std::unique_ptr&lt;moodycamel::ConcurrentQueue&lt;DrawCommand&gt;&gt; queues[RENDER_BUFFER_COUNT];</div>
+<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span>            std::optional&lt;moodycamel::ConsumerToken&gt; ctoken[RENDER_BUFFER_COUNT];</div>
+<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>            <span class="keyword">const</span> std::atomic&lt;uint16_t&gt;&amp; current;</div>
+<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span> </div>
+<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>            SharedInstanceArena* sharedInstanceArena = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span> </div>
+<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span>            <span class="comment">// 取り込み用一時バッファ：std::array でヒープ確保ゼロ化</span></div>
+<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>            std::array&lt;DrawCommand, DRAWCOMMAND_TMPBUF_SIZE&gt; tmp{};</div>
+<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span> </div>
+<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>            <span class="comment">// PMR時は tempBuffer も同資源で確保されるようにコンストラクト</span></div>
+<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span><span class="preprocessor">#ifndef NO_USE_PMR_RENDER_QUEUE</span></div>
+<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span>            SortContext sortContext{ std::pmr::get_default_resource() };</div>
+<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span>            SortContext sortContext;</div>
+<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span>        };</div>
 </div>
-<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>    }</div>
-<div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span>}</div>
+<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span>    }</div>
+<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>}</div>
 <div class="ttc" id="a_render_graph_8hpp_html_aa676f4ad480964a90f23ff3914e9eae8"><div class="ttname"><a href="_render_graph_8hpp.html#aa676f4ad480964a90f23ff3914e9eae8">NO_USE_PMR_RENDER_QUEUE</a></div><div class="ttdeci">#define NO_USE_PMR_RENDER_QUEUE</div><div class="ttdef"><b>Definition</b> <a href="_render_graph_8hpp_source.html#l00023">RenderGraph.hpp:23</a></div></div>
 <div class="ttc" id="a_render_types_8h_html"><div class="ttname"><a href="_render_types_8h.html">RenderTypes.h</a></div><div class="ttdoc">レンダー関連の基本的な型と定数を定義するヘッダーファイル</div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html">SFW::Graphics::RenderQueue::ProducerSessionExternal</a></div><div class="ttdoc">生産者セッション-ユーザーに渡す用（thread_localを使わない）</div><div class="ttdef"><b>Definition</b> <a href="#l00396">RenderQueue.h:396</a></div></div>
@@ -748,19 +755,19 @@ $(function(){initNavTree('_render_queue_8h_source.html','',''); });
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external_html_af033992f66ef4be28c4ff102168312d7"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_external.html#af033992f66ef4be28c4ff102168312d7">SFW::Graphics::RenderQueue::ProducerSessionExternal::MemsetInstancePool</a></div><div class="ttdeci">void MemsetInstancePool(InstanceIndex index, const InstancePool &amp;inst) noexcept</div><div class="ttdoc">　インスタンスプールを 1 件分 memset で埋める</div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_html"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session.html">SFW::Graphics::RenderQueue::ProducerSession</a></div><div class="ttdef"><b>Definition</b> <a href="#l00534">RenderQueue.h:534</a></div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session_html_a7b82f7cdabca99615565d73c66ab49d7"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue_1_1_producer_session.html#a7b82f7cdabca99615565d73c66ab49d7">SFW::Graphics::RenderQueue::ProducerSession::ProducerSession</a></div><div class="ttdeci">ProducerSession(RenderQueue &amp;owner)</div><div class="ttdef"><b>Definition</b> <a href="#l00536">RenderQueue.h:536</a></div></div>
-<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_html_a26d0a5f2e6ae6aff8cf182af45ad5942"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a26d0a5f2e6ae6aff8cf182af45ad5942">SFW::Graphics::RenderQueue::GetCurrentInstancePoolAccess</a></div><div class="ttdeci">std::pair&lt; InstancePool *, std::atomic&lt; uint32_t &gt; * &gt; GetCurrentInstancePoolAccess() noexcept</div><div class="ttdoc">現在フレーム側の Instance プールアクセス</div><div class="ttdef"><b>Definition</b> <a href="#l00659">RenderQueue.h:659</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_html_a26d0a5f2e6ae6aff8cf182af45ad5942"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a26d0a5f2e6ae6aff8cf182af45ad5942">SFW::Graphics::RenderQueue::GetCurrentInstancePoolAccess</a></div><div class="ttdeci">std::pair&lt; InstancePool *, std::atomic&lt; uint32_t &gt; * &gt; GetCurrentInstancePoolAccess() noexcept</div><div class="ttdoc">現在フレーム側の Instance プールアクセス</div><div class="ttdef"><b>Definition</b> <a href="#l00658">RenderQueue.h:658</a></div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_html_a2fffa389dc934df94660237c434a3243"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a2fffa389dc934df94660237c434a3243">SFW::Graphics::RenderQueue::RenderQueue</a></div><div class="ttdeci">RenderQueue(RenderQueue &amp;&amp;other) noexcept</div><div class="ttdoc">ムーブコンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00559">RenderQueue.h:559</a></div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_html_a6b556e6bf269d23db95db6f0c6f01745"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a6b556e6bf269d23db95db6f0c6f01745">SFW::Graphics::RenderQueue::RenderQueue</a></div><div class="ttdeci">RenderQueue(const std::atomic&lt; uint16_t &gt; &amp;bufSlot, SharedInstanceArena *instanceArena, uint32_t maxInstancesPerFrame=MAX_INSTANCES_PER_FRAME)</div><div class="ttdoc">コンストラクタ</div><div class="ttdef"><b>Definition</b> <a href="#l00546">RenderQueue.h:546</a></div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_html_a6ca42a9b5aa3c7eb32f4214f8662272a"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a6ca42a9b5aa3c7eb32f4214f8662272a">SFW::Graphics::RenderQueue::MakeProducer</a></div><div class="ttdeci">ProducerSessionExternal MakeProducer(ProducerSessionExternal::SmallBuf &amp;buf)</div><div class="ttdef"><b>Definition</b> <a href="#l00590">RenderQueue.h:590</a></div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_html_a78e0342099b1a2ff0651f0a16afad444"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a78e0342099b1a2ff0651f0a16afad444">SFW::Graphics::RenderQueue::MakeProducer</a></div><div class="ttdeci">ProducerSession MakeProducer()</div><div class="ttdoc">各ワーカーはフレーム / タスク開始時にこれで ProducerSession を取得</div><div class="ttdef"><b>Definition</b> <a href="#l00589">RenderQueue.h:589</a></div></div>
-<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_html_a80d85c6a3382a6f46a65a11725a74e82"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a80d85c6a3382a6f46a65a11725a74e82">SFW::Graphics::RenderQueue::Submit</a></div><div class="ttdeci">void Submit(uint32_t slot, std::pmr::vector&lt; DrawCommand &gt; &amp;out)</div><div class="ttdoc">PMR 版 Submit（pmr::vector を直接受けられる）</div><div class="ttdef"><b>Definition</b> <a href="#l00629">RenderQueue.h:629</a></div></div>
-<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_html_ad4c776bc0646c58b8cda3eab21d73e7d"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html#ad4c776bc0646c58b8cda3eab21d73e7d">SFW::Graphics::RenderQueue::MaxInstancesPerFrame</a></div><div class="ttdeci">uint32_t MaxInstancesPerFrame() const noexcept</div><div class="ttdoc">最大インスタンス数の公開 Getter</div><div class="ttdef"><b>Definition</b> <a href="#l00668">RenderQueue.h:668</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_html_a80d85c6a3382a6f46a65a11725a74e82"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html#a80d85c6a3382a6f46a65a11725a74e82">SFW::Graphics::RenderQueue::Submit</a></div><div class="ttdeci">void Submit(uint32_t slot, std::pmr::vector&lt; DrawCommand &gt; &amp;out)</div><div class="ttdoc">PMR 版 Submit（pmr::vector を直接受けられる）</div><div class="ttdef"><b>Definition</b> <a href="#l00628">RenderQueue.h:628</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_html_ad4c776bc0646c58b8cda3eab21d73e7d"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html#ad4c776bc0646c58b8cda3eab21d73e7d">SFW::Graphics::RenderQueue::MaxInstancesPerFrame</a></div><div class="ttdeci">uint32_t MaxInstancesPerFrame() const noexcept</div><div class="ttdoc">最大インスタンス数の公開 Getter</div><div class="ttdef"><b>Definition</b> <a href="#l00667">RenderQueue.h:667</a></div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_html_ae14724a27e00372d18e80bbf09d41ce1"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html#ae14724a27e00372d18e80bbf09d41ce1">SFW::Graphics::RenderQueue::Submit</a></div><div class="ttdeci">void Submit(uint32_t slot, std::vector&lt; DrawCommand &gt; &amp;out)</div><div class="ttdoc">Submit は「全ワーカーが FlushAll 済み」バリアの後に呼ぶ</div><div class="ttdef"><b>Definition</b> <a href="#l00596">RenderQueue.h:596</a></div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_html_af2f1377f00b94c46dc17e21d4299de8d"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html#af2f1377f00b94c46dc17e21d4299de8d">SFW::Graphics::RenderQueue::operator=</a></div><div class="ttdeci">RenderQueue &amp; operator=(RenderQueue &amp;&amp;other) noexcept</div><div class="ttdoc">ムーブ代入演算子</div><div class="ttdef"><b>Definition</b> <a href="#l00576">RenderQueue.h:576</a></div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_render_queue_html_af61f28027cd0d36d1965af45b1c1beb1"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_render_queue.html#af61f28027cd0d36d1965af45b1c1beb1">SFW::Graphics::RenderQueue::~RenderQueue</a></div><div class="ttdeci">~RenderQueue()</div><div class="ttdef"><b>Definition</b> <a href="#l00569">RenderQueue.h:569</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_graphics_html"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html">SFW::Graphics</a></div><div class="ttdef"><b>Definition</b> <a href="_d_x11_graphics_8h_source.html#l00034">DX11Graphics.h:35</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_math_html_aba1dfa36baa96e43434532113c99dae7"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#aba1dfa36baa96e43434532113c99dae7">SFW::Math::Vec4f</a></div><div class="ttdeci">Vec4&lt; float &gt; Vec4f</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00355">Vector.hpp:355</a></div></div>
-<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00031">AudioService.h:32</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_draw_command_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_draw_command.html">SFW::Graphics::DrawCommand</a></div><div class="ttdoc">描画コマンド構造体</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00096">RenderTypes.h:96</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_instance_data_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_instance_data.html">SFW::Graphics::InstanceData</a></div><div class="ttdoc">インスタンスデータ構造体</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00056">RenderTypes.h:57</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_instance_index_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_instance_index.html">SFW::Graphics::InstanceIndex</a></div><div class="ttdoc">インスタンスデータのインデックス構造体</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00074">RenderTypes.h:74</a></div></div>
@@ -788,12 +795,11 @@ $(function(){initNavTree('_render_queue_8h_source.html','',''); });
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_matrix_html"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_matrix.html">SFW::Math::Matrix</a></div><div class="ttdef"><b>Definition</b> <a href="_matrix_8hpp_source.html#l00045">Matrix.hpp:45</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="_render_queue_8h.html">RenderQueue.h</a></li>
-    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+    <li class="navelem"><a class="el" href="dir_69161428018e52ad84691a5947f27cc9.html">Github</a></li><li class="navelem"><a class="el" href="dir_b16de0d6cadc5f599d3a1812d4bfc31f.html">Sector3X</a></li><li class="navelem"><a class="el" href="dir_c3d880fd4ea2deebfb73ffb2e2b5a523.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_1145cf039e35774d8481e4ea1d2fa6e0.html">inc</a></li><li class="navelem"><a class="el" href="dir_991437b4ce66300b52a83f76dbdf298e.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_4b5352a26ce7ea1db35fbdafe9f06e3b.html">Graphics</a></li><li class="navelem"><a class="el" href="_render_queue_8h.html">RenderQueue.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

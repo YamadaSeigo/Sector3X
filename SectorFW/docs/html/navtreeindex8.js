@@ -1,7 +1,5 @@
 var NAVTREEINDEX8 =
 {
-"class_s_f_w_1_1_physics_1_1_object_vs_broad_phase_layer_filter_impl.html#a5f68582634355c25a8200aa26d608e9b":[2,0,1,7,31,0],
-"class_s_f_w_1_1_physics_1_1_physics_device.html":[0,0,1,7,33],
 "class_s_f_w_1_1_physics_1_1_physics_device.html":[2,0,1,7,33],
 "class_s_f_w_1_1_physics_1_1_physics_device.html#a03eb37bdddde22d325ad2358bb4a1394":[0,0,1,7,33,6],
 "class_s_f_w_1_1_physics_1_1_physics_device.html#a03eb37bdddde22d325ad2358bb4a1394":[2,0,1,7,33,6],
@@ -249,5 +247,7 @@ var NAVTREEINDEX8 =
 "class_s_f_w_1_1_resource_manager_base.html":[2,0,1,46],
 "class_s_f_w_1_1_resource_manager_base.html#a04eedb5dbac041ec944a8dc0da60f7db":[0,0,1,47,4],
 "class_s_f_w_1_1_resource_manager_base.html#a04eedb5dbac041ec944a8dc0da60f7db":[2,0,1,46,4],
-"class_s_f_w_1_1_resource_manager_base.html#a093db57dc6b50c4487114228c21f43eb":[0,0,1,47,20]
+"class_s_f_w_1_1_resource_manager_base.html#a093db57dc6b50c4487114228c21f43eb":[0,0,1,47,20],
+"class_s_f_w_1_1_resource_manager_base.html#a093db57dc6b50c4487114228c21f43eb":[2,0,1,46,20],
+"class_s_f_w_1_1_resource_manager_base.html#a0d85020d8eff2ffb1b33e7e24360a125":[0,0,1,47,7]
 };

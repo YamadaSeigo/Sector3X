@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/Quaternion.hpp ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -13,6 +13,7 @@
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -34,20 +35,26 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.14.0 -->
+<!-- 構築: Doxygen 1.13.2 -->
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
 </script>
 <script type="text/javascript">
-$(function() { codefold.init(); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
+/* @license-end */
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
@@ -62,9 +69,10 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('_quaternion_8hpp_source.html','',''); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_quaternion_8hpp_source.html',''); initResizable(true); });
+/* @license-end */
 </script>
-<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -165,7 +173,7 @@ $(function(){initNavTree('_quaternion_8hpp_source.html','',''); });
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_math_1_1_quat.html#a31051fbad04016a4590d610d4a4b1f1c">   69</a></span>            <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3&lt;T&gt;</a> <a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_quat.html#a31051fbad04016a4590d610d4a4b1f1c">RotateVector</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3&lt;T&gt;</a>&amp; <a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#aac1b274eecf07a1d21de58f8e875510c">v</a>) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3&lt;T&gt;</a> qv{ <a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#a8861a90e5ee88d31daeabb755f95d0c1">x</a>,<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#a2ece16b5029f9d5feb91109cb2cb0a04">y</a>,<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#a5f8d4cec0df3a46f935e01b0705c1202">z</a> };</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3&lt;T&gt;</a> t = qv.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_vec3.html#a90b38090396b3f1fbfbb5d9e6238bd5e">cross</a>(<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#aac1b274eecf07a1d21de58f8e875510c">v</a>) * T(2);</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#aac1b274eecf07a1d21de58f8e875510c">v</a> + t * <a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#ae93b3e27320b5e09174e2ae2d5ee71a1">w</a> + qv.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_vec3.html#a90b38090396b3f1fbfbb5d9e6238bd5e">cross</a>(t);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#aac1b274eecf07a1d21de58f8e875510c">v</a> + t * <a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#ae93b3e27320b5e09174e2ae2d5ee71a1">w</a> + qv.cross(t);</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            }</div>
 </div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
@@ -185,7 +193,7 @@ $(function(){initNavTree('_quaternion_8hpp_source.html','',''); });
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                            a.y + t * (b2.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#a2ece16b5029f9d5feb91109cb2cb0a04">y</a> - a.y),</div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                            a.z + t * (b2.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#a5f8d4cec0df3a46f935e01b0705c1202">z</a> - a.z),</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                            a.w + t * (b2.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#ae93b3e27320b5e09174e2ae2d5ee71a1">w</a> - a.w) };</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                    r.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_quat.html#ac7829e9ac2df921534cd5cf9eef60d7a">Normalize</a>();</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                    r.Normalize();</div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                    <span class="keywordflow">return</span> r;</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                }</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
@@ -245,19 +253,19 @@ $(function(){initNavTree('_quaternion_8hpp_source.html','',''); });
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>                <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3&lt;T&gt;</a> proj{ n.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a> * projLen, n.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a50dcb824e1549ed55b4addc65c4e3240">y</a> * projLen, n.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a0d2709fc022ffd3b0be4fe2fb7914d51">z</a> * projLen };</div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>                <span class="comment">// twist: スカラー部はそのまま、ベクトル部を axis 方向だけにしたクォータニオン</span></div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>                <a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_quat.html#a30a226f303e716dfc936ba4b5fcce018">Quat</a> twist{ proj.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a>, proj.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a50dcb824e1549ed55b4addc65c4e3240">y</a>, proj.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a0d2709fc022ffd3b0be4fe2fb7914d51">z</a>, <a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#ae93b3e27320b5e09174e2ae2d5ee71a1">w</a> };</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>                <a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_quat.html#a30a226f303e716dfc936ba4b5fcce018">Quat</a> twist{ proj.x, proj.y, proj.z, <a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#ae93b3e27320b5e09174e2ae2d5ee71a1">w</a> };</div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                <span class="comment">// proj がほぼゼロなら「軸周りの回転はほぼ無い」とみなして identity</span></div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>                <span class="keyword">const</span> T projLenSq = proj.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a> * proj.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a> + proj.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a50dcb824e1549ed55b4addc65c4e3240">y</a> * proj.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a50dcb824e1549ed55b4addc65c4e3240">y</a> + proj.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a0d2709fc022ffd3b0be4fe2fb7914d51">z</a> * proj.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a0d2709fc022ffd3b0be4fe2fb7914d51">z</a>;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>                <span class="keyword">const</span> T projLenSq = proj.x * proj.x + proj.y * proj.y + proj.z * proj.z;</div>
 <div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>                <span class="keywordflow">if</span> (projLenSq &lt;= std::numeric_limits&lt;T&gt;::epsilon()) {</div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                    twist = <a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_quat.html#a30a226f303e716dfc936ba4b5fcce018">Quat</a>(T(0), T(0), T(0), T(1));</div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>                }</div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>                <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>                    twist.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_quat.html#ac7829e9ac2df921534cd5cf9eef60d7a">Normalize</a>();</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>                    twist.Normalize();</div>
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                }</div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>                <span class="comment">// swing = q * conj(twist)</span></div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>                <span class="keyword">const</span> <a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_quat.html#a30a226f303e716dfc936ba4b5fcce018">Quat</a> conjTwist(-twist.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#a8861a90e5ee88d31daeabb755f95d0c1">x</a>, -twist.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#a2ece16b5029f9d5feb91109cb2cb0a04">y</a>, -twist.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#a5f8d4cec0df3a46f935e01b0705c1202">z</a>, twist.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_quat.html#ae93b3e27320b5e09174e2ae2d5ee71a1">w</a>);</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>                <span class="keyword">const</span> <a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_quat.html#a30a226f303e716dfc936ba4b5fcce018">Quat</a> conjTwist(-twist.x, -twist.y, -twist.z, twist.w);</div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>                <a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_quat.html#a30a226f303e716dfc936ba4b5fcce018">Quat</a> swing = (*this) * conjTwist;</div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>                swing.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_quat.html#ac7829e9ac2df921534cd5cf9eef60d7a">Normalize</a>();</div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
@@ -483,7 +491,7 @@ $(function(){initNavTree('_quaternion_8hpp_source.html','',''); });
 <div class="ttc" id="anamespace_s_f_w_1_1_math_html_ac5871847de21fc69990d7e3ddfde6dfc"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#ac5871847de21fc69990d7e3ddfde6dfc">SFW::Math::QuatFromBasisPlusZ</a></div><div class="ttdeci">Quat&lt; T &gt; QuatFromBasisPlusZ(Basis&lt; T &gt; b) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00276">Quaternion.hpp:276</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_math_html_ac7bc3b8d7084839cbe72d9a75eeb4b7a"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#ac7bc3b8d7084839cbe72d9a75eeb4b7a">SFW::Math::ToBasis</a></div><div class="ttdeci">void ToBasis(const Quat&lt; T &gt; &amp;q, Vec3&lt; T &gt; &amp;outRight, Vec3&lt; T &gt; &amp;outUp, Vec3&lt; T &gt; &amp;outForward) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00213">Quaternion.hpp:213</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_math_html_acf033858a4071baf473036cc3db2b4b6"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#acf033858a4071baf473036cc3db2b4b6">SFW::Math::QuatUp</a></div><div class="ttdeci">Vec3&lt; T &gt; QuatUp(const Quat&lt; T &gt; &amp;q) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00234">Quaternion.hpp:234</a></div></div>
-<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00031">AudioService.h:32</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_basis_html"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_basis.html">SFW::Math::Basis</a></div><div class="ttdef"><b>Definition</b> <a href="#l00187">Quaternion.hpp:187</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_basis_html_a4ffd432812c95a09cd72f597d658a6ce"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_basis.html#a4ffd432812c95a09cd72f597d658a6ce">SFW::Math::Basis::up</a></div><div class="ttdeci">Vec3&lt; T &gt; up</div><div class="ttdef"><b>Definition</b> <a href="#l00189">Quaternion.hpp:189</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_basis_html_a8b23f909fb6fa4b2a0010271b2417fae"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_basis.html#a8b23f909fb6fa4b2a0010271b2417fae">SFW::Math::Basis::right</a></div><div class="ttdeci">Vec3&lt; T &gt; right</div><div class="ttdef"><b>Definition</b> <a href="#l00188">Quaternion.hpp:188</a></div></div>
@@ -516,12 +524,11 @@ $(function(){initNavTree('_quaternion_8hpp_source.html','',''); });
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec3_html_a90b38090396b3f1fbfbb5d9e6238bd5e"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec3.html#a90b38090396b3f1fbfbb5d9e6238bd5e">SFW::Math::Vec3::cross</a></div><div class="ttdeci">constexpr Vec3 cross(const Vec3 &amp;rhs) const noexcept</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00157">Vector.hpp:157</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_9f6ea1ef97a5bfa4f22433f1f9dac857.html">Math</a></li><li class="navelem"><a href="_quaternion_8hpp.html">Quaternion.hpp</a></li>
-    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+    <li class="navelem"><a class="el" href="dir_69161428018e52ad84691a5947f27cc9.html">Github</a></li><li class="navelem"><a class="el" href="dir_b16de0d6cadc5f599d3a1812d4bfc31f.html">Sector3X</a></li><li class="navelem"><a class="el" href="dir_c3d880fd4ea2deebfb73ffb2e2b5a523.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_1145cf039e35774d8481e4ea1d2fa6e0.html">inc</a></li><li class="navelem"><a class="el" href="dir_991437b4ce66300b52a83f76dbdf298e.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_a62bef02470824067fd1499f8da5153c.html">Math</a></li><li class="navelem"><a class="el" href="_quaternion_8hpp.html">Quaternion.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

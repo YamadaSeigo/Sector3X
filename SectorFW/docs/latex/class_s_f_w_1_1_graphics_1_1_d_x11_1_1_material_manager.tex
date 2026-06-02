@@ -120,8 +120,6 @@ DirectX 11用のマテリアルマネージャークラス.
 
 
 
-\label{doc-constructors}
-\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_doc-constructors}
 \doxysubsection{構築子と解体子}
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_a3af040818b1833f83542a0caa0a50392}\index{SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}!MaterialManager@{MaterialManager}}
 \index{MaterialManager@{MaterialManager}!SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}}
@@ -150,20 +148,18 @@ SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Material\+Manager (\begi
 
 
 
-\label{doc-func-members}
-\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_a3fae30584d67ed2d74a006515e262be3}\index{SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}!AddRefSRV@{AddRefSRV}}
 \index{AddRefSRV@{AddRefSRV}!SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}}
 \doxysubsubsection{\texorpdfstring{AddRefSRV()}{AddRefSRV()}}
 {\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_a3fae30584d67ed2d74a006515e262be3} 
-void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Add\+Ref\+SRV (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{Shader\+Resource\+Handle}} \&}]{h}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{DX11\+::\+Texture\+Manager}} \&}]{tex\+Mgr}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager}{DX11\+::\+Buffer\+Manager}} \&}]{buf\+Mgr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+static void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Add\+Ref\+SRV (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{Shader\+Resource\+Handle}} \&}]{h}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{DX11\+::\+Texture\+Manager}} \&}]{tex\+Mgr}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager}{DX11\+::\+Buffer\+Manager}} \&}]{buf\+Mgr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_a4c3c6b294c3b30f399fccc19736bf9de}\index{SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}!BindMaterialPSCBVs@{BindMaterialPSCBVs}}
 \index{BindMaterialPSCBVs@{BindMaterialPSCBVs}!SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}}
 \doxysubsubsection{\texorpdfstring{BindMaterialPSCBVs()}{BindMaterialPSCBVs()}}
 {\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_a4c3c6b294c3b30f399fccc19736bf9de} 
-void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+PSCBVs (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_afcc32b3c5cf80f1b6223418d477187cd}{Material\+Binding\+Cache\+CBV}} \&}]{cache}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+static void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+PSCBVs (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_afcc32b3c5cf80f1b6223418d477187cd}{Material\+Binding\+Cache\+CBV}} \&}]{cache}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -180,7 +176,7 @@ void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+PSC
 \index{BindMaterialPSSamplers@{BindMaterialPSSamplers}!SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}}
 \doxysubsubsection{\texorpdfstring{BindMaterialPSSamplers()}{BindMaterialPSSamplers()}}
 {\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_ad6923204191f6aef92352e32da94a8ff} 
-void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+PSSamplers (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0db1737e1f208324896303c5fef44941}{Material\+Binding\+Cache\+Sampler}} \&}]{cache}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+static void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+PSSamplers (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0db1737e1f208324896303c5fef44941}{Material\+Binding\+Cache\+Sampler}} \&}]{cache}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -197,7 +193,7 @@ void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+PSS
 \index{BindMaterialPSSRVs@{BindMaterialPSSRVs}!SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}}
 \doxysubsubsection{\texorpdfstring{BindMaterialPSSRVs()}{BindMaterialPSSRVs()}}
 {\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_a8c4685a2e31d3d4a44caab0a94a7220f} 
-void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+PSSRVs (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a975071e883e497bcb601dacc1ee4b18d}{Material\+Binding\+Cache\+SRV}} \&}]{cache}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+static void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+PSSRVs (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a975071e883e497bcb601dacc1ee4b18d}{Material\+Binding\+Cache\+SRV}} \&}]{cache}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -214,19 +210,19 @@ void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+PSS
 \index{BindMaterialVSCBVs@{BindMaterialVSCBVs}!SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}}
 \doxysubsubsection{\texorpdfstring{BindMaterialVSCBVs()}{BindMaterialVSCBVs()}}
 {\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_ac88812f500297279f7d93ed9e2d6ef89} 
-void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+VSCBVs (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_afcc32b3c5cf80f1b6223418d477187cd}{Material\+Binding\+Cache\+CBV}} \&}]{cache}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+static void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+VSCBVs (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_afcc32b3c5cf80f1b6223418d477187cd}{Material\+Binding\+Cache\+CBV}} \&}]{cache}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_ae8859677021218fd902b76cd3a295087}\index{SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}!BindMaterialVSSamplers@{BindMaterialVSSamplers}}
 \index{BindMaterialVSSamplers@{BindMaterialVSSamplers}!SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}}
 \doxysubsubsection{\texorpdfstring{BindMaterialVSSamplers()}{BindMaterialVSSamplers()}}
 {\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_ae8859677021218fd902b76cd3a295087} 
-void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+VSSamplers (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0db1737e1f208324896303c5fef44941}{Material\+Binding\+Cache\+Sampler}} \&}]{cache}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+static void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+VSSamplers (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0db1737e1f208324896303c5fef44941}{Material\+Binding\+Cache\+Sampler}} \&}]{cache}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_a2f54b0bb0702317d0931a50d8516e8a3}\index{SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}!BindMaterialVSSRVs@{BindMaterialVSSRVs}}
 \index{BindMaterialVSSRVs@{BindMaterialVSSRVs}!SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}}
 \doxysubsubsection{\texorpdfstring{BindMaterialVSSRVs()}{BindMaterialVSSRVs()}}
 {\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_a2f54b0bb0702317d0931a50d8516e8a3} 
-void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+VSSRVs (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a975071e883e497bcb601dacc1ee4b18d}{Material\+Binding\+Cache\+SRV}} \&}]{cache}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+static void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Bind\+Material\+VSSRVs (\begin{DoxyParamCaption}\item[{ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}}]{ctx}{, }\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a975071e883e497bcb601dacc1ee4b18d}{Material\+Binding\+Cache\+SRV}} \&}]{cache}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_a4623e98621f39439694ce53d3c3549e5}\index{SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}!CreateResource@{CreateResource}}
 \index{CreateResource@{CreateResource}!SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}}
@@ -304,7 +300,7 @@ void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Register\+Key (\beg
 \index{ReleaseSRV@{ReleaseSRV}!SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}}
 \doxysubsubsection{\texorpdfstring{ReleaseSRV()}{ReleaseSRV()}}
 {\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_a4560a68a36f67504e35dad05f926614c} 
-void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Release\+SRV (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{Shader\+Resource\+Handle}} \&}]{h}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{DX11\+::\+Texture\+Manager}} \&}]{tex\+Mgr}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager}{DX11\+::\+Buffer\+Manager}} \&}]{buf\+Mgr}{, }\item[{bool}]{del}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+static void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Release\+SRV (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{Shader\+Resource\+Handle}} \&}]{h}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{DX11\+::\+Texture\+Manager}} \&}]{tex\+Mgr}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager}{DX11\+::\+Buffer\+Manager}} \&}]{buf\+Mgr}{, }\item[{bool}]{del}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_a1be4dd64e4421f06a468dd5871876028}\index{SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}!RemoveFromCaches@{RemoveFromCaches}}
 \index{RemoveFromCaches@{RemoveFromCaches}!SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}}
@@ -325,7 +321,7 @@ void SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Remove\+From\+Cache
 \index{ResolveHandleIndex@{ResolveHandleIndex}!SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}}
 \doxysubsubsection{\texorpdfstring{ResolveHandleIndex()}{ResolveHandleIndex()}}
 {\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_aa8852e1b93d3338f8a0e9d6d46ab04a4} 
-uint32\+\_\+t SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Resolve\+Handle\+Index (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{Shader\+Resource\+Handle}} \&}]{h}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+static uint32\+\_\+t SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Resolve\+Handle\+Index (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{Shader\+Resource\+Handle}} \&}]{h}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
 
 
 
@@ -335,7 +331,7 @@ uint32\+\_\+t SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Resolve\+H
 \index{ResolveSRV@{ResolveSRV}!SFW::Graphics::DX11::MaterialManager@{SFW::Graphics::DX11::MaterialManager}}
 \doxysubsubsection{\texorpdfstring{ResolveSRV()}{ResolveSRV()}}
 {\footnotesize\ttfamily \label{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_material_manager_a662dfddab5fe5b18aed3cec23b033706} 
-ID3\+D11\+Shader\+Resource\+View \texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Resolve\+SRV (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{Shader\+Resource\+Handle}} \&}]{h}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{DX11\+::\+Texture\+Manager}} \&}]{tex\+Mgr}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager}{DX11\+::\+Buffer\+Manager}} \&}]{buf\+Mgr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+static ID3\+D11\+Shader\+Resource\+View \texorpdfstring{$\ast$}{*} SFW\+::\+Graphics\+::\+DX11\+::\+Material\+Manager\+::\+Resolve\+SRV (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a345352e9c4bb1ef087e6c145f84b871e}{Shader\+Resource\+Handle}} \&}]{h}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{DX11\+::\+Texture\+Manager}} \&}]{tex\+Mgr}{, }\item[{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_manager}{DX11\+::\+Buffer\+Manager}} \&}]{buf\+Mgr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 

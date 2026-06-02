@@ -22,15 +22,13 @@
 
 
 
-\label{doc-func-members}
-\Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_a41f65fb415b2a2cc926fab8c00eb7e6e}\index{SFW::ECS::SparseMerge@{SFW::ECS::SparseMerge}!BuildSortedKeys@{BuildSortedKeys}}
 \index{BuildSortedKeys@{BuildSortedKeys}!SFW::ECS::SparseMerge@{SFW::ECS::SparseMerge}}
 \doxysubsubsection{\texorpdfstring{BuildSortedKeys()}{BuildSortedKeys()}}
 {\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_a41f65fb415b2a2cc926fab8c00eb7e6e} 
 template$<$class Sparse\+Map$>$ \\
-void SFW\+::\+ECS\+::\+Sparse\+Merge\+::\+Build\+Sorted\+Keys (\begin{DoxyParamCaption}\item[{const Sparse\+Map \&}]{m}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&}]{out\+Sorted\+Keys}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+static void SFW\+::\+ECS\+::\+Sparse\+Merge\+::\+Build\+Sorted\+Keys (\begin{DoxyParamCaption}\item[{const Sparse\+Map \&}]{m}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&}]{out\+Sorted\+Keys}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
 
 
 
@@ -41,7 +39,7 @@ void SFW\+::\+ECS\+::\+Sparse\+Merge\+::\+Build\+Sorted\+Keys (\begin{DoxyParamC
 \doxysubsubsection{\texorpdfstring{MergeJoinApply()}{MergeJoinApply()}}
 {\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_a94128c3711b08cec38dc69cc8d24db68} 
 template$<$class Sparse\+Map, class Fn$>$ \\
-size\+\_\+t SFW\+::\+ECS\+::\+Sparse\+Merge\+::\+Merge\+Join\+Apply (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&}]{chunk\+IDs}{, }\item[{const Sparse\+Map \&}]{sparse\+Map}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&}]{sorted\+Keys}{, }\item[{Fn \&\&}]{fn}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+static size\+\_\+t SFW\+::\+ECS\+::\+Sparse\+Merge\+::\+Merge\+Join\+Apply (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&}]{chunk\+IDs}{, }\item[{const Sparse\+Map \&}]{sparse\+Map}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&}]{sorted\+Keys}{, }\item[{Fn \&\&}]{fn}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
 
 
 
@@ -52,7 +50,7 @@ size\+\_\+t SFW\+::\+ECS\+::\+Sparse\+Merge\+::\+Merge\+Join\+Apply (\begin{Doxy
 \doxysubsubsection{\texorpdfstring{RunDenseWithSparse()}{RunDenseWithSparse()}}
 {\footnotesize\ttfamily \label{struct_s_f_w_1_1_e_c_s_1_1_sparse_merge_af4d3f7fb90eed7e3ac581aa458731446} 
 template$<$class S, class... Dense, class Apply$>$ \\
-size\+\_\+t SFW\+::\+ECS\+::\+Sparse\+Merge\+::\+Run\+Dense\+With\+Sparse (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{Archetype\+Manager}} \&}]{am}{, }\item[{const std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}, S $>$ \&}]{sparse\+Map}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&}]{sorted\+Keys}{, }\item[{Apply \&\&}]{apply\+Dense}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+static size\+\_\+t SFW\+::\+ECS\+::\+Sparse\+Merge\+::\+Run\+Dense\+With\+Sparse (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_archetype_manager}{Archetype\+Manager}} \&}]{am}{, }\item[{const std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}}, S $>$ \&}]{sparse\+Map}{, }\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_entity_i_d}{Entity\+ID}} $>$ \&}]{sorted\+Keys}{, }\item[{Apply \&\&}]{apply\+Dense}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
 
 
 

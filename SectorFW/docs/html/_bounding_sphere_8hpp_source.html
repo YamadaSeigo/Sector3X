@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/BoundingSphere.hpp ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -13,6 +13,7 @@
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -34,20 +35,26 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.14.0 -->
+<!-- 構築: Doxygen 1.13.2 -->
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
 </script>
 <script type="text/javascript">
-$(function() { codefold.init(); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
+/* @license-end */
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
@@ -62,9 +69,10 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('_bounding_sphere_8hpp_source.html','',''); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_bounding_sphere_8hpp_source.html',''); initResizable(true); });
+/* @license-end */
 </script>
-<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -248,7 +256,7 @@ $(function(){initNavTree('_bounding_sphere_8hpp_source.html','',''); });
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#a02384bbb1e999b44cbf269d67e97c908">  128</a></span>            <span class="keyword">static</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> <a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#a02384bbb1e999b44cbf269d67e97c908">FromPointsRitter</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>* points, <span class="keywordtype">size_t</span> count) {</div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> s{};</div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>                <span class="keywordflow">if</span> (count == 0) <span class="keywordflow">return</span> s;</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>                <span class="keywordflow">if</span> (count == 1) { s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#ab5e03a3bece1e0ee0375ec842882caa3">center</a> = points[0]; s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#a64dd070f31ce07009c1280cff688d595">radius</a> = T(0); <span class="keywordflow">return</span> s; }</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>                <span class="keywordflow">if</span> (count == 1) { s.center = points[0]; s.radius = T(0); <span class="keywordflow">return</span> s; }</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>                <span class="comment">// 1) まず適当な点 p0 を選び、そこから最も遠い点 p1、さらに p1 から最も遠い点 p2 を探す</span></div>
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>                <span class="keywordtype">size_t</span> i0 = 0;</div>
@@ -267,12 +275,12 @@ $(function(){initNavTree('_bounding_sphere_8hpp_source.html','',''); });
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                <span class="comment">// 2) p1 と p2 を直径とする球から開始</span></div>
 <div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a> p1 = points[i1], p2 = points[i2];</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>                s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#ab5e03a3bece1e0ee0375ec842882caa3">center</a> = <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a4c4ad70492f6fb83dfdc012d0006aced">v3_mid</a>(p1, p2);</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#a64dd070f31ce07009c1280cff688d595">radius</a> = T(0.5) * <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3">v3_len</a>(<a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a6639925ed61c84b1e77852bbbdb22da2">v3_sub</a>(p2, p1));</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>                s.center = <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a4c4ad70492f6fb83dfdc012d0006aced">v3_mid</a>(p1, p2);</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                s.radius = T(0.5) * <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3">v3_len</a>(<a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a6639925ed61c84b1e77852bbbdb22da2">v3_sub</a>(p2, p1));</div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>                <span class="comment">// 3) すべての点を走査し、外側の点があれば最小拡張</span></div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; count; ++i) {</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                    s.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#aeb401ae85a35730883cbec939a889217">expandToFit</a>(points[i]);</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                    s.expandToFit(points[i]);</div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>                }</div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>                <span class="keywordflow">return</span> s;</div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            }</div>
@@ -285,7 +293,7 @@ $(function(){initNavTree('_bounding_sphere_8hpp_source.html','',''); });
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html">BoundingSphere</a> s{};</div>
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>                <span class="keyword">const</span> <span class="keywordtype">size_t</span> n = pts.size();</div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>                <span class="keywordflow">if</span> (n == 0) <span class="keywordflow">return</span> s;</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                <span class="keywordflow">if</span> (n == 1) { s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#ab5e03a3bece1e0ee0375ec842882caa3">center</a> = pts[0]; s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#a64dd070f31ce07009c1280cff688d595">radius</a> = T(0); <span class="keywordflow">return</span> s; }</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                <span class="keywordflow">if</span> (n == 1) { s.center = pts[0]; s.radius = T(0); <span class="keywordflow">return</span> s; }</div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>                <span class="comment">// ランダム順序に</span></div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                std::mt19937_64 rng(seed);</div>
@@ -296,11 +304,11 @@ $(function(){initNavTree('_bounding_sphere_8hpp_source.html','',''); });
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                <span class="keywordtype">size_t</span> rsz = 0;</div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
 <div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                <span class="keyword">auto</span> ball_from_1 = [&amp;](<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&amp; a) {</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                    s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#ab5e03a3bece1e0ee0375ec842882caa3">center</a> = a; s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#a64dd070f31ce07009c1280cff688d595">radius</a> = T(0);</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                    s.center = a; s.radius = T(0);</div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                    };</div>
 <div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                <span class="keyword">auto</span> ball_from_2 = [&amp;](<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&amp; a, <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&amp; b) {</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                    s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#ab5e03a3bece1e0ee0375ec842882caa3">center</a> = <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a4c4ad70492f6fb83dfdc012d0006aced">v3_mid</a>(a, b);</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                    s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#a64dd070f31ce07009c1280cff688d595">radius</a> = T(0.5) * <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3">v3_len</a>(<a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a6639925ed61c84b1e77852bbbdb22da2">v3_sub</a>(a, b));</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                    s.center = <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a4c4ad70492f6fb83dfdc012d0006aced">v3_mid</a>(a, b);</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                    s.radius = T(0.5) * <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3">v3_len</a>(<a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a6639925ed61c84b1e77852bbbdb22da2">v3_sub</a>(a, b));</div>
 <div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                    };</div>
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                <span class="keyword">auto</span> ball_from_3 = [&amp;](<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&amp; a, <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&amp; b, <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&amp; c) {</div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>                    <span class="comment">// 三点を通る円（3Dでは3点共面の外接円）→ その円の中心と半径（平面内）</span></div>
@@ -329,8 +337,8 @@ $(function(){initNavTree('_bounding_sphere_8hpp_source.html','',''); });
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>                        (ab2 * ac.z - ac2 * ab.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a0d2709fc022ffd3b0be4fe2fb7914d51">z</a>) * abXac_x - (ab2 * ac.x - ac2 * ab.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a>) * abXac_z,</div>
 <div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>                        (ab2 * ac.x - ac2 * ab.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a>) * abXac_y - (ab2 * ac.y - ac2 * ab.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a50dcb824e1549ed55b4addc65c4e3240">y</a>) * abXac_x</div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>                    };</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                    s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#ab5e03a3bece1e0ee0375ec842882caa3">center</a> = <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a5c287a7b34e04ade16816dae409b474e">v3_add</a>(a, <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a418cd4b76d5104be3872e05c9ebff54d">v3_muls</a>(num, T(1) / denom));</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>                    s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#a64dd070f31ce07009c1280cff688d595">radius</a> = <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3">v3_len</a>(<a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a6639925ed61c84b1e77852bbbdb22da2">v3_sub</a>(s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#ab5e03a3bece1e0ee0375ec842882caa3">center</a>, a));</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                    s.center = <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a5c287a7b34e04ade16816dae409b474e">v3_add</a>(a, <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a418cd4b76d5104be3872e05c9ebff54d">v3_muls</a>(num, T(1) / denom));</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>                    s.radius = <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3">v3_len</a>(<a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a6639925ed61c84b1e77852bbbdb22da2">v3_sub</a>(s.center, a));</div>
 <div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>                    };</div>
 <div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                <span class="keyword">auto</span> ball_from_4 = [&amp;](<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&amp; p, <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&amp; q, <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&amp; r, <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>&amp; t) {</div>
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                    <span class="comment">// 4点の外接球。行列式ベースで求める（数値的にはやや繊細）。</span></div>
@@ -384,8 +392,8 @@ $(function(){initNavTree('_bounding_sphere_8hpp_source.html','',''); });
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>                        q.x, q.y, q.z, S(q),</div>
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>                        r.x, r.y, r.z, S(r),</div>
 <div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>                        t.x, t.y, t.z, S(t));</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                    s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#ab5e03a3bece1e0ee0375ec842882caa3">center</a> = <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>{ dx / (T(2) * a), dy / (T(2) * a), dz / (T(2) * a) };</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                    s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#a64dd070f31ce07009c1280cff688d595">radius</a> = std::sqrt((dx * dx + dy * dy + dz * dz) / (T(4) * a * a) - c / a);</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                    s.center = <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>{ dx / (T(2) * a), dy / (T(2) * a), dz / (T(2) * a) };</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                    s.radius = std::sqrt((dx * dx + dy * dy + dz * dz) / (T(4) * a * a) - c / a);</div>
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>                    };</div>
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> </div>
 <div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>                <span class="keyword">auto</span> make_ball_from_R = [&amp;](<span class="keyword">const</span> std::array&lt;Vec3, 4&gt;&amp; R, <span class="keywordtype">size_t</span> rsz) {</div>
@@ -394,24 +402,24 @@ $(function(){initNavTree('_bounding_sphere_8hpp_source.html','',''); });
 <div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>                    <span class="keywordflow">case</span> 2: ball_from_2(R[0], R[1]); <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                    <span class="keywordflow">case</span> 3: ball_from_3(R[0], R[1], R[2]); <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                    <span class="keywordflow">case</span> 4: ball_from_4(R[0], R[1], R[2], R[3]); <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                    <span class="keywordflow">default</span>: s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#ab5e03a3bece1e0ee0375ec842882caa3">center</a> = <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>{ T(0),T(0),T(0) }; s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#a64dd070f31ce07009c1280cff688d595">radius</a> = T(0); <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                    <span class="keywordflow">default</span>: s.center = <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3</a>{ T(0),T(0),T(0) }; s.radius = T(0); <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                    }</div>
 <div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                    };</div>
 <div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span> </div>
 <div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>                <span class="comment">// 非再帰版 Welzl：R を拡張しながらループ</span></div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#ab5e03a3bece1e0ee0375ec842882caa3">center</a> = pts[0]; s.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#a64dd070f31ce07009c1280cff688d595">radius</a> = T(0);</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                s.center = pts[0]; s.radius = T(0);</div>
 <div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; n; ++i) {</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>                    <span class="keywordflow">if</span> (s.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#ae28c89f4937018f304bb32d055b15762">contains</a>(pts[i])) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>                    <span class="keywordflow">if</span> (s.contains(pts[i])) <span class="keywordflow">continue</span>;</div>
 <div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>                    <span class="comment">// pts[i] を必ず境界に載せる最小球を作る</span></div>
 <div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>                    R[0] = pts[i]; rsz = 1; make_ball_from_R(R, rsz);</div>
 <div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> j = 0; j &lt; i; ++j) {</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>                        <span class="keywordflow">if</span> (s.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#ae28c89f4937018f304bb32d055b15762">contains</a>(pts[j])) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>                        <span class="keywordflow">if</span> (s.contains(pts[j])) <span class="keywordflow">continue</span>;</div>
 <div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>                        R[1] = pts[j]; rsz = 2; make_ball_from_R(R, rsz);</div>
 <div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>                        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = 0; k &lt; j; ++k) {</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>                            <span class="keywordflow">if</span> (s.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#ae28c89f4937018f304bb32d055b15762">contains</a>(pts[k])) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>                            <span class="keywordflow">if</span> (s.contains(pts[k])) <span class="keywordflow">continue</span>;</div>
 <div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>                            R[2] = pts[k]; rsz = 3; make_ball_from_R(R, rsz);</div>
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>                            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> m = 0; m &lt; k; ++m) {</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>                                <span class="keywordflow">if</span> (s.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_bounding_sphere.html#ae28c89f4937018f304bb32d055b15762">contains</a>(pts[m])) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>                                <span class="keywordflow">if</span> (s.contains(pts[m])) <span class="keywordflow">continue</span>;</div>
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>                                R[3] = pts[m]; rsz = 4; make_ball_from_R(R, rsz);</div>
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>                            }</div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>                        }</div>
@@ -939,14 +947,14 @@ $(function(){initNavTree('_bounding_sphere_8hpp_source.html','',''); });
 <div class="line"><a id="l00814" name="l00814"></a><span class="lineno">  814</span>                NdcPrecomp p{};</div>
 <div class="line"><a id="l00815" name="l00815"></a><span class="lineno">  815</span> </div>
 <div class="line"><a id="l00816" name="l00816"></a><span class="lineno">  816</span>                <span class="comment">// ここはあなたの元式と同じ: VPの row0/1/2 と cam軸の内積（要素は Mat4 の定義に合わせて）</span></div>
-<div class="line"><a id="l00817" name="l00817"></a><span class="lineno">  817</span>                p.clipR_x = VP.m00 * camRightWS.x + VP.m01 * camRightWS.y + VP.m02 * camRightWS.z;</div>
-<div class="line"><a id="l00818" name="l00818"></a><span class="lineno">  818</span>                p.clipU_y = VP.m10 * camUpWS.x + VP.m11 * camUpWS.y + VP.m12 * camUpWS.z;</div>
-<div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span>                p.clipF_z = VP.m20 * camForwardWS.x + VP.m21 * camForwardWS.y + VP.m22 * camForwardWS.z;</div>
+<div class="line"><a id="l00817" name="l00817"></a><span class="lineno">  817</span>                p.clipR_x = VP.m00 * camRightWS.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a> + VP.m01 * camRightWS.y + VP.m02 * camRightWS.z;</div>
+<div class="line"><a id="l00818" name="l00818"></a><span class="lineno">  818</span>                p.clipU_y = VP.m10 * camUpWS.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a> + VP.m11 * camUpWS.y + VP.m12 * camUpWS.z;</div>
+<div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span>                p.clipF_z = VP.m20 * camForwardWS.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a> + VP.m21 * camForwardWS.y + VP.m22 * camForwardWS.z;</div>
 <div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span> </div>
 <div class="line"><a id="l00821" name="l00821"></a><span class="lineno">  821</span>                <span class="comment">// wR,wU,wF（VP row3 の xyz と cam軸の内積）</span></div>
-<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span>                p.wR = VP.m30 * camRightWS.x + VP.m31 * camRightWS.y + VP.m32 * camRightWS.z;</div>
-<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span>                p.wU = VP.m30 * camUpWS.x + VP.m31 * camUpWS.y + VP.m32 * camUpWS.z;</div>
-<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span>                p.wF = VP.m30 * camForwardWS.x + VP.m31 * camForwardWS.y + VP.m32 * camForwardWS.z;</div>
+<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span>                p.wR = VP.m30 * camRightWS.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a> + VP.m31 * camRightWS.y + VP.m32 * camRightWS.z;</div>
+<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span>                p.wU = VP.m30 * camUpWS.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a> + VP.m31 * camUpWS.y + VP.m32 * camUpWS.z;</div>
+<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span>                p.wF = VP.m30 * camForwardWS.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a> + VP.m31 * camForwardWS.y + VP.m32 * camForwardWS.z;</div>
 <div class="line"><a id="l00825" name="l00825"></a><span class="lineno">  825</span> </div>
 <div class="line"><a id="l00826" name="l00826"></a><span class="lineno">  826</span>                <span class="keywordflow">return</span> p;</div>
 <div class="line"><a id="l00827" name="l00827"></a><span class="lineno">  827</span>            }</div>
@@ -1142,7 +1150,7 @@ $(function(){initNavTree('_bounding_sphere_8hpp_source.html','',''); });
 <div class="ttc" id="anamespace_s_f_w_1_1_math_html_ab30bb9e8a0b95fb4e3c44ac6e19c9e73"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#ab30bb9e8a0b95fb4e3c44ac6e19c9e73">SFW::Math::MulPoint_RowMajor_ColVec</a></div><div class="ttdeci">void MulPoint_RowMajor_ColVec(const Matrix4x4f &amp;M, float x, float y, float z, float &amp;cx, float &amp;cy, float &amp;cz, float &amp;cw) noexcept</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8hpp_source.html#l01828">Matrix.hpp:1828</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_math_html_ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#ad78f9f5f5fbb5cedd9d68f9ab7a8b3d3">SFW::Math::v3_len</a></div><div class="ttdeci">auto v3_len(const Vec3 &amp;a) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00052">BoundingSphere.hpp:52</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_math_html_af590f6507232be6899058237f533def2"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#af590f6507232be6899058237f533def2">SFW::Math::v3_adds</a></div><div class="ttdeci">auto v3_adds(const Vec3 &amp;a, T s) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00031">BoundingSphere.hpp:31</a></div></div>
-<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00031">AudioService.h:32</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_html"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp.html">SFW::Math::BoundingSphere::NdcPrecomp</a></div><div class="ttdef"><b>Definition</b> <a href="#l00792">BoundingSphere.hpp:793</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_html_a047ebc5c633a71682ed3eae398372e8e"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp.html#a047ebc5c633a71682ed3eae398372e8e">SFW::Math::BoundingSphere::NdcPrecomp::ndcMinZ</a></div><div class="ttdeci">float ndcMinZ</div><div class="ttdef"><b>Definition</b> <a href="#l00801">BoundingSphere.hpp:801</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp_html_a04aa59d54a2624cc0e4174c0706a9c9d"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_bounding_sphere_1_1_ndc_precomp.html#a04aa59d54a2624cc0e4174c0706a9c9d">SFW::Math::BoundingSphere::NdcPrecomp::ndcMinX</a></div><div class="ttdeci">float ndcMinX</div><div class="ttdef"><b>Definition</b> <a href="#l00799">BoundingSphere.hpp:799</a></div></div>
@@ -1190,12 +1198,11 @@ $(function(){initNavTree('_bounding_sphere_8hpp_source.html','',''); });
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec3_html_a50dcb824e1549ed55b4addc65c4e3240"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec3.html#a50dcb824e1549ed55b4addc65c4e3240">SFW::Math::Vec3::y</a></div><div class="ttdeci">T y</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00091">Vector.hpp:91</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_9f6ea1ef97a5bfa4f22433f1f9dac857.html">Math</a></li><li class="navelem"><a href="_bounding_sphere_8hpp.html">BoundingSphere.hpp</a></li>
-    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+    <li class="navelem"><a class="el" href="dir_69161428018e52ad84691a5947f27cc9.html">Github</a></li><li class="navelem"><a class="el" href="dir_b16de0d6cadc5f599d3a1812d4bfc31f.html">Sector3X</a></li><li class="navelem"><a class="el" href="dir_c3d880fd4ea2deebfb73ffb2e2b5a523.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_1145cf039e35774d8481e4ea1d2fa6e0.html">inc</a></li><li class="navelem"><a class="el" href="dir_991437b4ce66300b52a83f76dbdf298e.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_a62bef02470824067fd1499f8da5153c.html">Math</a></li><li class="navelem"><a class="el" href="_bounding_sphere_8hpp.html">BoundingSphere.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

@@ -214,7 +214,7 @@
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (t.a.y\ +\ t.b.y\ +\ t.c.y)\ /\ 3.0f,}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (t.a.z\ +\ t.b.z\ +\ t.c.z)\ /\ 3.0f\ \};}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 平面の\ ny\ チェック（厳密には\ solveY\ 内でやるが、ここで早期判定）}}
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!solveYOnTrianglePlane(t,\ cen.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}},\ cen.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}},\ opt.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options_aa76df2d2bcf2ed150195ea75981c358d}{slopeNyEps}},\ dummyY))\ \{}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!solveYOnTrianglePlane(t,\ cen.x,\ cen.z,\ opt.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options_aa76df2d2bcf2ed150195ea75981c358d}{slopeNyEps}},\ dummyY))\ \{}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00221}00221\ }
@@ -225,7 +225,7 @@
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ pz\ =\ grid.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid_adca8b6bad5ff3e1e134cfa9c2ed9ff11}{origin}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a0d2709fc022ffd3b0be4fe2fb7914d51}{z}}\ +\ (float)iz\ *\ grid.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid_ac66ffe9a3e1fd60590c9bc750b53f04e}{cellSize}};}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ ix\ =\ ix0;\ ix\ <=\ ix1;\ ++ix)\ \{}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ px\ =\ grid.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid_adca8b6bad5ff3e1e134cfa9c2ed9ff11}{origin}}.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec3_a321ecffe7d2fc085be48e383b726d446}{x}}\ +\ (float)ix\ *\ grid.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid_ac66ffe9a3e1fd60590c9bc750b53f04e}{cellSize}};}
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_aa87e2d666e741dbbf92c0c0eacb48966}{testedVertices}}++;}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stats.testedVertices++;}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00230}00230\ }
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!pointInTriXZ(px,\ pz,\ t.a,\ t.b,\ t.c))\ \textcolor{keywordflow}{continue};}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00232}00232\ }
@@ -244,9 +244,9 @@
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cntY[idx]\ =\ 1;\ \textcolor{comment}{//\ 値あり}}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00247}00247\ }
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_a7183ab5b108af7326b999c661ea2fe20}{minY}}\ =\ (std::min)(stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_a7183ab5b108af7326b999c661ea2fe20}{minY}},\ y);}
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_ab802231558552011e50ddb6bf8bc819e}{maxY}}\ =\ (std::max)(stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_ab802231558552011e50ddb6bf8bc819e}{maxY}},\ y);}
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_aa3efb8f9af1d22eebf45285ee056b6d4}{writtenVertices}}++;}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stats.minY\ =\ (std::min)(stats.minY,\ y);}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stats.maxY\ =\ (std::max)(stats.maxY,\ y);}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stats.writtenVertices++;}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00253}00253\ \ \ \ \ \ \ \ \ \}}
@@ -260,22 +260,22 @@
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00261}00261\ }
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00262}00262\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 未サンプルの頂点数（補間前）}}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00263}00263\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ N;\ ++i)\ \{}
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cntY[i]\ ==\ 0)\ stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_a41c28e18e2b70707f22abfa8bc4ce1dd}{uncoveredVertices}}++;}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cntY[i]\ ==\ 0)\ stats.uncoveredVertices++;}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00265}00265\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00266}00266\ }
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00267}00267\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 必要なら穴埋め}}
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (opt.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options_a2c508826b44e98c507506208888c46e9}{fillHoles}}\ \&\&\ stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_a41c28e18e2b70707f22abfa8bc4ce1dd}{uncoveredVertices}}\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (opt.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options_a2c508826b44e98c507506208888c46e9}{fillHoles}}\ \&\&\ stats.uncoveredVertices\ >\ 0)\ \{}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ NaN\ で残っている所を近傍平均で埋める}}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ cntY\ は「元から値があるか」を示すフラグとして流用}}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ fillHolesAverage(outH01,\ cntY,\ grid,\ (std::max)(1,\ opt.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options_a36816a9b943f532a89e0e03d8ff848d0}{fillIterations}}));}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00272}00272\ }
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 補間で\ min/max\ が広がる可能性は低いが、一応再スキャン}}
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_a7183ab5b108af7326b999c661ea2fe20}{minY}}\ =\ +std::numeric\_limits<float>::infinity();}
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_ab802231558552011e50ddb6bf8bc819e}{maxY}}\ =\ -\/std::numeric\_limits<float>::infinity();}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ stats.minY\ =\ +std::numeric\_limits<float>::infinity();}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ stats.maxY\ =\ -\/std::numeric\_limits<float>::infinity();}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{float}\ y\ :\ outH01)\ \{}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!std::isnan(y))\ \{}
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_a7183ab5b108af7326b999c661ea2fe20}{minY}}\ =\ (std::min)(stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_a7183ab5b108af7326b999c661ea2fe20}{minY}},\ y);}
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_ab802231558552011e50ddb6bf8bc819e}{maxY}}\ =\ (std::max)(stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_ab802231558552011e50ddb6bf8bc819e}{maxY}},\ y);}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stats.minY\ =\ (std::min)(stats.minY,\ y);}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stats.maxY\ =\ (std::max)(stats.maxY,\ y);}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \}}
@@ -285,15 +285,15 @@
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ autoMin\ =\ std::isnan(yMin);}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ autoMax\ =\ std::isnan(yMax);}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00288}00288\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (autoMin\ ||\ autoMax)\ \{}
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_a7183ab5b108af7326b999c661ea2fe20}{minY}}\ ==\ +std::numeric\_limits<float>::infinity()\ ||}
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_ab802231558552011e50ddb6bf8bc819e}{maxY}}\ ==\ -\/std::numeric\_limits<float>::infinity())\ \{}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (stats.minY\ ==\ +std::numeric\_limits<float>::infinity()\ ||}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stats.maxY\ ==\ -\/std::numeric\_limits<float>::infinity())\ \{}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 何も焼けていない\ →\ 0で埋めて終了}}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::fill(outH01.begin(),\ outH01.end(),\ 0.0f);}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outStats)\ *outStats\ =\ stats;}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (autoMin)\ yMin\ =\ stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_a7183ab5b108af7326b999c661ea2fe20}{minY}};}
-\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (autoMax)\ yMax\ =\ stats.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats_ab802231558552011e50ddb6bf8bc819e}{maxY}};}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (autoMin)\ yMin\ =\ stats.minY;}
+\DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (autoMax)\ yMax\ =\ stats.maxY;}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00298}00298\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00299}00299\ }
 \DoxyCodeLine{\Hypertarget{_heightmap_bake_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ y\ →\ H01\ へ（クランプあり）}}

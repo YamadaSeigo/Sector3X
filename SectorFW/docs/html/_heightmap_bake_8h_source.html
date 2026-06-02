@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/HeightmapBake.h ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -13,6 +13,7 @@
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -34,20 +35,26 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.14.0 -->
+<!-- 構築: Doxygen 1.13.2 -->
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
 </script>
 <script type="text/javascript">
-$(function() { codefold.init(); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
+/* @license-end */
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
@@ -62,9 +69,10 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('_heightmap_bake_8h_source.html','',''); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_heightmap_bake_8h_source.html',''); initResizable(true); });
+/* @license-end */
 </script>
-<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -315,7 +323,7 @@ $(function(){initNavTree('_heightmap_bake_8h_source.html','',''); });
 <div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                            (t.a.y + t.b.y + t.c.y) / 3.0f,</div>
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>                            (t.a.z + t.b.z + t.c.z) / 3.0f };</div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>            <span class="comment">// 平面の ny チェック（厳密には solveY 内でやるが、ここで早期判定）</span></div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>            <span class="keywordflow">if</span> (!solveYOnTrianglePlane(t, cen.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a>, cen.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a0d2709fc022ffd3b0be4fe2fb7914d51">z</a>, opt.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options.html#aa76df2d2bcf2ed150195ea75981c358d">slopeNyEps</a>, dummyY)) {</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>            <span class="keywordflow">if</span> (!solveYOnTrianglePlane(t, cen.x, cen.z, opt.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options.html#aa76df2d2bcf2ed150195ea75981c358d">slopeNyEps</a>, dummyY)) {</div>
 <div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                <span class="keywordflow">continue</span>;</div>
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>            }</div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
@@ -326,7 +334,7 @@ $(function(){initNavTree('_heightmap_bake_8h_source.html','',''); });
 <div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                <span class="keyword">const</span> <span class="keywordtype">float</span> pz = grid.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid.html#adca8b6bad5ff3e1e134cfa9c2ed9ff11">origin</a>.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a0d2709fc022ffd3b0be4fe2fb7914d51">z</a> + (float)iz * grid.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid.html#ac66ffe9a3e1fd60590c9bc750b53f04e">cellSize</a>;</div>
 <div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                <span class="keywordflow">for</span> (uint32_t ix = ix0; ix &lt;= ix1; ++ix) {</div>
 <div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>                    <span class="keyword">const</span> <span class="keywordtype">float</span> px = grid.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid.html#adca8b6bad5ff3e1e134cfa9c2ed9ff11">origin</a>.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a> + (float)ix * grid.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_grid.html#ac66ffe9a3e1fd60590c9bc750b53f04e">cellSize</a>;</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>                    stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#aa87e2d666e741dbbf92c0c0eacb48966">testedVertices</a>++;</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>                    stats.testedVertices++;</div>
 <div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
 <div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>                    <span class="keywordflow">if</span> (!pointInTriXZ(px, pz, t.a, t.b, t.c)) <span class="keywordflow">continue</span>;</div>
 <div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
@@ -345,9 +353,9 @@ $(function(){initNavTree('_heightmap_bake_8h_source.html','',''); });
 <div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>                        cntY[idx] = 1; <span class="comment">// 値あり</span></div>
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>                    }</div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                    stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#a7183ab5b108af7326b999c661ea2fe20">minY</a> = (std::min)(stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#a7183ab5b108af7326b999c661ea2fe20">minY</a>, y);</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>                    stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#ab802231558552011e50ddb6bf8bc819e">maxY</a> = (std::max)(stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#ab802231558552011e50ddb6bf8bc819e">maxY</a>, y);</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>                    stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#aa3efb8f9af1d22eebf45285ee056b6d4">writtenVertices</a>++;</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                    stats.minY = (std::min)(stats.minY, y);</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>                    stats.maxY = (std::max)(stats.maxY, y);</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>                    stats.writtenVertices++;</div>
 <div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                }</div>
 <div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>            }</div>
 <div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        }</div>
@@ -361,22 +369,22 @@ $(function(){initNavTree('_heightmap_bake_8h_source.html','',''); });
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        <span class="comment">// 未サンプルの頂点数（補間前）</span></div>
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>            <span class="keywordflow">if</span> (cntY[i] == 0) stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#a41c28e18e2b70707f22abfa8bc4ce1dd">uncoveredVertices</a>++;</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>            <span class="keywordflow">if</span> (cntY[i] == 0) stats.uncoveredVertices++;</div>
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        }</div>
 <div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> </div>
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        <span class="comment">// 必要なら穴埋め</span></div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        <span class="keywordflow">if</span> (opt.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options.html#a2c508826b44e98c507506208888c46e9">fillHoles</a> &amp;&amp; stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#a41c28e18e2b70707f22abfa8bc4ce1dd">uncoveredVertices</a> &gt; 0) {</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        <span class="keywordflow">if</span> (opt.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options.html#a2c508826b44e98c507506208888c46e9">fillHoles</a> &amp;&amp; stats.uncoveredVertices &gt; 0) {</div>
 <div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>            <span class="comment">// NaN で残っている所を近傍平均で埋める</span></div>
 <div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>            <span class="comment">// cntY は「元から値があるか」を示すフラグとして流用</span></div>
 <div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>            fillHolesAverage(outH01, cntY, grid, (std::max)(1, opt.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_options.html#a36816a9b943f532a89e0e03d8ff848d0">fillIterations</a>));</div>
 <div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> </div>
 <div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>            <span class="comment">// 補間で min/max が広がる可能性は低いが、一応再スキャン</span></div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>            stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#a7183ab5b108af7326b999c661ea2fe20">minY</a> = +std::numeric_limits&lt;float&gt;::infinity();</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>            stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#ab802231558552011e50ddb6bf8bc819e">maxY</a> = -std::numeric_limits&lt;float&gt;::infinity();</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>            stats.minY = +std::numeric_limits&lt;float&gt;::infinity();</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>            stats.maxY = -std::numeric_limits&lt;float&gt;::infinity();</div>
 <div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>            <span class="keywordflow">for</span> (<span class="keywordtype">float</span> y : outH01) {</div>
 <div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                <span class="keywordflow">if</span> (!std::isnan(y)) {</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>                    stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#a7183ab5b108af7326b999c661ea2fe20">minY</a> = (std::min)(stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#a7183ab5b108af7326b999c661ea2fe20">minY</a>, y);</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>                    stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#ab802231558552011e50ddb6bf8bc819e">maxY</a> = (std::max)(stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#ab802231558552011e50ddb6bf8bc819e">maxY</a>, y);</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>                    stats.minY = (std::min)(stats.minY, y);</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>                    stats.maxY = (std::max)(stats.maxY, y);</div>
 <div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                }</div>
 <div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>            }</div>
 <div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        }</div>
@@ -386,15 +394,15 @@ $(function(){initNavTree('_heightmap_bake_8h_source.html','',''); });
 <div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> autoMin = std::isnan(yMin);</div>
 <div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> autoMax = std::isnan(yMax);</div>
 <div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        <span class="keywordflow">if</span> (autoMin || autoMax) {</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>            <span class="keywordflow">if</span> (stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#a7183ab5b108af7326b999c661ea2fe20">minY</a> == +std::numeric_limits&lt;float&gt;::infinity() ||</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>                stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#ab802231558552011e50ddb6bf8bc819e">maxY</a> == -std::numeric_limits&lt;float&gt;::infinity()) {</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>            <span class="keywordflow">if</span> (stats.minY == +std::numeric_limits&lt;float&gt;::infinity() ||</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>                stats.maxY == -std::numeric_limits&lt;float&gt;::infinity()) {</div>
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>                <span class="comment">// 何も焼けていない → 0で埋めて終了</span></div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>                std::fill(outH01.begin(), outH01.end(), 0.0f);</div>
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>                <span class="keywordflow">if</span> (outStats) *outStats = stats;</div>
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>                <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>            }</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>            <span class="keywordflow">if</span> (autoMin) yMin = stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#a7183ab5b108af7326b999c661ea2fe20">minY</a>;</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>            <span class="keywordflow">if</span> (autoMax) yMax = stats.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_terrain_bake_1_1_bake_stats.html#ab802231558552011e50ddb6bf8bc819e">maxY</a>;</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>            <span class="keywordflow">if</span> (autoMin) yMin = stats.minY;</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>            <span class="keywordflow">if</span> (autoMax) yMax = stats.maxY;</div>
 <div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        }</div>
 <div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span> </div>
 <div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>        <span class="comment">// y → H01 へ（クランプあり）</span></div>
@@ -447,12 +455,11 @@ $(function(){initNavTree('_heightmap_bake_8h_source.html','',''); });
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec3_html_a321ecffe7d2fc085be48e383b726d446"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">SFW::Math::Vec3::x</a></div><div class="ttdeci">T x</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00091">Vector.hpp:91</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="_heightmap_bake_8h.html">HeightmapBake.h</a></li>
-    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+    <li class="navelem"><a class="el" href="dir_69161428018e52ad84691a5947f27cc9.html">Github</a></li><li class="navelem"><a class="el" href="dir_b16de0d6cadc5f599d3a1812d4bfc31f.html">Sector3X</a></li><li class="navelem"><a class="el" href="dir_c3d880fd4ea2deebfb73ffb2e2b5a523.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_1145cf039e35774d8481e4ea1d2fa6e0.html">inc</a></li><li class="navelem"><a class="el" href="dir_991437b4ce66300b52a83f76dbdf298e.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_4b5352a26ce7ea1db35fbdafe9f06e3b.html">Graphics</a></li><li class="navelem"><a class="el" href="_heightmap_bake_8h.html">HeightmapBake.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

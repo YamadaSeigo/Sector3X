@@ -38,7 +38,7 @@ class \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_1_1_world_acces
 {\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_a22608296cf3f91afbf7882635c58ed84}{Get}} () const noexcept
 \begin{DoxyCompactList}\small\item\em サービスを取得する(const強制解除) \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_af38db6829c13b531ab73214df0a3c0c0}{Update\+Service}} (double dt, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor)
-\begin{DoxyCompactList}\small\item\em サービスの更新を行う \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em プラン通りにサービスの更新を行う \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator_a2d5e312fc400a34bd72d4760f3d39f0d}{Commit\+Service}} (double delta\+Time)
 \begin{DoxyCompactList}\small\item\em コミットサービスの関数呼び出し \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -52,8 +52,6 @@ Systemが依存するサービスを管理するクラス
 
 
 
-\label{doc-constructors}
-\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_doc-constructors}
 \doxysubsection{構築子と解体子}
 \Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_a8e26d5dd32ba8c4751444aef7b703640}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}!ServiceLocator@{ServiceLocator}}
 \index{ServiceLocator@{ServiceLocator}!SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
@@ -111,8 +109,6 @@ SFW\+::\+ECS\+::\+Service\+Locator\+::\texorpdfstring{$\sim$}{\string~}\+Service
 
 
 
-\label{doc-func-members}
-\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{class_s_f_w_1_1_e_c_s_1_1_service_locator_a2d5e312fc400a34bd72d4760f3d39f0d}\index{SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}!CommitService@{CommitService}}
 \index{CommitService@{CommitService}!SFW::ECS::ServiceLocator@{SFW::ECS::ServiceLocator}}
@@ -234,7 +230,7 @@ void SFW\+::\+ECS\+::\+Service\+Locator\+::\+Update\+Service (\begin{DoxyParamCa
 
 
 
-サービスの更新を行う 
+プラン通りにサービスの更新を行う 
 
 
 

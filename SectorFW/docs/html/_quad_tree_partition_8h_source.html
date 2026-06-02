@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Core/QuadTreePartition.h ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -13,6 +13,7 @@
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -34,20 +35,26 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.14.0 -->
+<!-- 構築: Doxygen 1.13.2 -->
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
 </script>
 <script type="text/javascript">
-$(function() { codefold.init(); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
+/* @license-end */
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
@@ -62,9 +69,10 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('_quad_tree_partition_8h_source.html','',''); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_quad_tree_partition_8h_source.html',''); initResizable(true); });
+/* @license-end */
 </script>
-<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -352,7 +360,7 @@ $(function(){initNavTree('_quad_tree_partition_8h_source.html','',''); });
 <div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; b : boxes) {</div>
 <div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>                <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> q = clampToBox(b, cp);</div>
 <div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>                <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> vec{ q.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec2.html#a1990e723a48fa71de780e96568095000">x</a> - cp.x, q.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec2.html#ae3e8fd5bb2d3d19c291844e0dfe4ad2a">y</a> - cp.z };</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>                <span class="keyword">const</span> <span class="keywordtype">float</span> d = vec.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_vec2.html#a48c92c09338aff69cdb3d3d8730c51b3">length</a>();</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>                <span class="keyword">const</span> <span class="keywordtype">float</span> d = vec.length();</div>
 <div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>                items.push_back({ b, d });</div>
 <div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>            }</div>
 <div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>            std::nth_element(items.begin(), items.begin() + std::min&lt;size_t&gt;(displayCount, items.size()), items.end(),</div>
@@ -369,7 +377,7 @@ $(function(){initNavTree('_quad_tree_partition_8h_source.html','',''); });
 <div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>                <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> extent = box.size() * 0.5f;</div>
 <div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span> </div>
 <div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>                <span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">Math::Vec2f</a> vec{ center.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec2.html#a1990e723a48fa71de780e96568095000">x</a> - cp.x, center.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec2.html#ae3e8fd5bb2d3d19c291844e0dfe4ad2a">y</a> - cp.z };</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>                <span class="keyword">const</span> <span class="keywordtype">float</span> len = vec.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_vec2.html#a48c92c09338aff69cdb3d3d8730c51b3">length</a>();</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>                <span class="keyword">const</span> <span class="keywordtype">float</span> len = vec.length();</div>
 <div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span> </div>
 <div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                <span class="keywordflow">if</span> (len &gt; maxD) <span class="keywordflow">continue</span>; <span class="comment">// 表示距離外</span></div>
 <div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
@@ -995,7 +1003,7 @@ $(function(){initNavTree('_quad_tree_partition_8h_source.html','',''); });
 <div class="ttc" id="anamespace_s_f_w_1_1_math_html_a3cc0985a0fb0848b404af96ae6bb83a5"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#a3cc0985a0fb0848b404af96ae6bb83a5">SFW::Math::Vec2f</a></div><div class="ttdeci">Vec2&lt; float &gt; Vec2f</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00353">Vector.hpp:353</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_math_html_acaea690eaef2927454b6001b882799e8"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#acaea690eaef2927454b6001b882799e8">SFW::Math::AABB2f</a></div><div class="ttdeci">AABB&lt; float, Vec2f &gt; AABB2f</div><div class="ttdef"><b>Definition</b> <a href="_a_a_b_b_8hpp_source.html#l00117">AABB.hpp:117</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_math_html_afea45e91c6313bb6dd5c60690ff82019"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">SFW::Math::Vec3f</a></div><div class="ttdeci">Vec3&lt; float &gt; Vec3f</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00354">Vector.hpp:354</a></div></div>
-<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00031">AudioService.h:32</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_html_a5a8d74c7b28d2bf30ae5f35bd7444c78"><div class="ttname"><a href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">SFW::ChunkSizeType</a></div><div class="ttdeci">SpatialChunk::SizeType ChunkSizeType</div><div class="ttdoc">空間チャンクのサイズ型を定義する</div><div class="ttdef"><b>Definition</b> <a href="_spatial_chunk_8h_source.html#l00082">SpatialChunk.h:82</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_html_a71dda63d14456ecce09c65c346d83d1e"><div class="ttname"><a href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1e">SFW::EOutOfBoundsPolicy</a></div><div class="ttdeci">EOutOfBoundsPolicy</div><div class="ttdoc">チャンクを検索する際のポリシーを定義する列挙型</div><div class="ttdef"><b>Definition</b> <a href="partition_8hpp_source.html#l00027">partition.hpp:27</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_html_a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134"><div class="ttname"><a href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134">SFW::EOutOfBoundsPolicy::ClampToEdge</a></div><div class="ttdeci">@ ClampToEdge</div><div class="ttdef"><b>Definition</b> <a href="partition_8hpp_source.html#l00029">partition.hpp:29</a></div></div>
@@ -1013,7 +1021,6 @@ $(function(){initNavTree('_quad_tree_partition_8h_source.html','',''); });
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_frustumf_html_a806d47877b24616790a7fb569631f2cc"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_frustumf.html#a806d47877b24616790a7fb569631f2cc">SFW::Math::Frustumf::ComputeYOverlapAtXZ</a></div><div class="ttdeci">static bool ComputeYOverlapAtXZ(const Math::Frustumf &amp;fr, float x, float z, float ymin, float ymax, float &amp;outCenterY, float &amp;outExtentY) noexcept</div><div class="ttdef"><b>Definition</b> <a href="_frustum_8hpp_source.html#l00331">Frustum.hpp:331</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_frustumf_html_a98e76d2faa1114777992553adf902702"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_frustumf.html#a98e76d2faa1114777992553adf902702">SFW::Math::Frustumf::IntersectsAABB</a></div><div class="ttdeci">bool IntersectsAABB(const Vec3f &amp;center, const Vec3f &amp;extent) const noexcept</div><div class="ttdef"><b>Definition</b> <a href="_frustum_8hpp_source.html#l00385">Frustum.hpp:385</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec2_html_a1990e723a48fa71de780e96568095000"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec2.html#a1990e723a48fa71de780e96568095000">SFW::Math::Vec2::x</a></div><div class="ttdeci">T x</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00037">Vector.hpp:37</a></div></div>
-<div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec2_html_a48c92c09338aff69cdb3d3d8730c51b3"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec2.html#a48c92c09338aff69cdb3d3d8730c51b3">SFW::Math::Vec2::length</a></div><div class="ttdeci">T length() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00077">Vector.hpp:77</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec2_html_ae3e8fd5bb2d3d19c291844e0dfe4ad2a"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec2.html#ae3e8fd5bb2d3d19c291844e0dfe4ad2a">SFW::Math::Vec2::y</a></div><div class="ttdeci">T y</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00037">Vector.hpp:37</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec3_html_a0d2709fc022ffd3b0be4fe2fb7914d51"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec3.html#a0d2709fc022ffd3b0be4fe2fb7914d51">SFW::Math::Vec3::z</a></div><div class="ttdeci">T z</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00091">Vector.hpp:91</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec3_html_a321ecffe7d2fc085be48e383b726d446"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">SFW::Math::Vec3::x</a></div><div class="ttdeci">T x</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00091">Vector.hpp:91</a></div></div>
@@ -1025,12 +1032,11 @@ $(function(){initNavTree('_quad_tree_partition_8h_source.html','',''); });
 <div class="ttc" id="astruct_s_f_w_1_1_transform_so_a_html_a6d0ecd7a372576777ed421d4e7cdff44"><div class="ttname"><a href="struct_s_f_w_1_1_transform_so_a.html#a6d0ecd7a372576777ed421d4e7cdff44">SFW::TransformSoA::location</a></div><div class="ttdeci">Math::Vec3f location</div><div class="ttdef"><b>Definition</b> <a href="_transform_8hpp_source.html#l00049">Transform.hpp:49</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_5ada393002ee7234dde4caf0d7998537.html">Core</a></li><li class="navelem"><a href="_quad_tree_partition_8h.html">QuadTreePartition.h</a></li>
-    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+    <li class="navelem"><a class="el" href="dir_69161428018e52ad84691a5947f27cc9.html">Github</a></li><li class="navelem"><a class="el" href="dir_b16de0d6cadc5f599d3a1812d4bfc31f.html">Sector3X</a></li><li class="navelem"><a class="el" href="dir_c3d880fd4ea2deebfb73ffb2e2b5a523.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_1145cf039e35774d8481e4ea1d2fa6e0.html">inc</a></li><li class="navelem"><a class="el" href="dir_991437b4ce66300b52a83f76dbdf298e.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_318f37e330403c310b183cdb5ff38d63.html">Core</a></li><li class="navelem"><a class="el" href="_quad_tree_partition_8h.html">QuadTreePartition.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

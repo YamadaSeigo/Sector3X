@@ -176,478 +176,503 @@
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00196}00196\ }
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }SystemType>}
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00198}\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_adbfae1706d592d23527d2afdd6719bda}{00198}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_adbfae1706d592d23527d2afdd6719bda}{AddSystemToLevel}}(\textcolor{keyword}{const}\ std::string\ levelName)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00199}00199\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LevelCustumFunc(levelName,\ [\&](\textcolor{keyword}{auto}\&\ holder)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ sc\ =\ holder.level-\/>GetScheduler();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sc.AddSystem<SystemType>(world.GetServiceLocator());}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00205}00205\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }SystemType>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00207}\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a3886f3e1a9cef19f5593ffb2fc8fbbfe}{00207}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a3886f3e1a9cef19f5593ffb2fc8fbbfe}{RemoveSystemFromLevel}}(\textcolor{keyword}{const}\ std::string\ levelName,\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc\ =\ \textcolor{keyword}{nullptr})\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LevelCustumFunc(levelName,\ [\&](\textcolor{keyword}{auto}\&\ holder)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ sc\ =\ holder.level-\/>GetScheduler();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sc.RemoveSystem<SystemType>();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00212}00212\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (customFunc)\ customFunc(\textcolor{keyword}{this});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00215}00215\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }SystemType>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00217}\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ad07bcb186358d6137f1913e55cf7e03c}{00217}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ad07bcb186358d6137f1913e55cf7e03c}{PauseResumeSystemInLevel}}(\textcolor{keyword}{const}\ std::string\ levelName,\ \textcolor{keywordtype}{bool}\ pause,\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc\ =\ \textcolor{keyword}{nullptr})\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LevelCustumFunc(levelName,\ [\&](\textcolor{keyword}{auto}\&\ holder)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ sc\ =\ holder.level-\/>GetScheduler();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pause)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sc.PauseSystem<SystemType>();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sc.ResumeSystem<SystemType>();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00227}00227\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (customFunc)\ customFunc(\textcolor{keyword}{this});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Func>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ LevelCustumFunc(\textcolor{keyword}{const}\ std::string\&\ levelName,\ Func\&\&\ func)}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00234}00234\ \textcolor{preprocessor}{\#ifdef\ \_DEBUG}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ find\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00236}00236\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00237}00237\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 指定された名前のレベルをすべてロードする}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ findLevelFunc\ =\ [\&](\textcolor{keyword}{auto}\&\ vecs)}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ holder\ :\ vecs)}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ level\ =\ holder.level;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (level-\/>GetName()\ ==\ levelName)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00245}00245\ \textcolor{preprocessor}{\#ifdef\ \_DEBUG}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ find\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00247}00247\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00248}00248\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ func(holder);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00253}00253\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::apply([\&](\textcolor{keyword}{auto}\&...\ levelVecs)}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (...,\ findLevelFunc(levelVecs));}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},\ world.levelSets);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00258}00258\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00259}00259\ \textcolor{preprocessor}{\#ifdef\ \_DEBUG}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!find)\ \mbox{\hyperlink{logger_8h_afde44945335adc0c0ae2986fea13438f}{LOG\_WARNING}}(\textcolor{stringliteral}{"{}指定されたレベルが見つかりませんでした\ \{\%s\}"{}},\ levelName.c\_str());}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00261}00261\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00263}00263\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World}}<LevelTypes...>\&\ world;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00267}00267\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00268}00268\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00269}00269\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @brief\ Worldに対するリクエストコマンドのインターフェース}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00270}00270\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00271}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{00271}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00274}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command_ad24622a74386640590145b7ec8d375db}{00274}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command_ad24622a74386640590145b7ec8d375db}{\string~IRequestCommand}}()\ =\ \textcolor{keywordflow}{default};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00275}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command_a89649df2c3a18dab528bbfc7eb4d5043}{00275}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command_a89649df2c3a18dab528bbfc7eb4d5043}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00278}00278\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @brief\ Worldにレベルを追加するコマンド}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00279}00279\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00281}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command}{00281}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command_a5518e72d02661d01f455d39f79223ab8}{AddLevelCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00282}00282\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00284}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command_a5518e72d02661d01f455d39f79223ab8}{00284}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command_a5518e72d02661d01f455d39f79223ab8}{AddLevelCommand}}(std::unique\_ptr<\mbox{\hyperlink{class_s_f_w_1_1_level}{Level<T>}}>\ level)}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ holder\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_level_holder}{LevelHolder<T>}}\{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::move(level)}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00290}00290\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Func>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00292}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command_acb642a8ae37dcc82e5c04edc547b37c1}{00292}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command_acb642a8ae37dcc82e5c04edc547b37c1}{AddLevelCommand}}(std::unique\_ptr<\mbox{\hyperlink{class_s_f_w_1_1_level}{Level<T>}}>\ level,\ Func\&\&...\ customFunc)}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ holder\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_level_holder}{LevelHolder<T>}}\{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::move(level),}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::move(customFunc)...}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00299}00299\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00300}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command_ae3227981bb8c52f569bfc7c5007fa1b6}{00300}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command_ae3227981bb8c52f569bfc7c5007fa1b6}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a9a45f1a81228b65198bf4124e8a8b254}{AddLevel}}<T>(std::move(holder));}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00303}00303\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_level_holder}{LevelHolder<T>}}\ holder;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00307}00307\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00308}00308\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00309}00309\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @brief\ Worldにレベルをロードするコマンド}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00310}00310\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00311}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_load_level_command}{00311}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_load_level_command_abb3974025cd5dda14583e6c24414fff8}{LoadLevelCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00312}00312\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00313}00313\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00314}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_load_level_command_abb3974025cd5dda14583e6c24414fff8}{00314}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_load_level_command_abb3974025cd5dda14583e6c24414fff8}{LoadLevelCommand}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc,\ \textcolor{keywordtype}{bool}\ async,\ \textcolor{keywordtype}{bool}\ active)}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ levelName(name),\ loadedCustomFunc(customFunc),\ isAsync(async),\ active(active)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00317}00317\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00318}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_load_level_command_a762deda8229eefae02a60df7fd947976}{00318}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_load_level_command_a762deda8229eefae02a60df7fd947976}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a43e68e483e4475fa03aa8013ff00042b}{LoadLevel}}(levelName,\ isAsync\ ?\ executor\ :\ \textcolor{keyword}{nullptr},\ active,\ loadedCustomFunc);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ levelName;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ loadedCustomFunc\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isAsync;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ active;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00326}00326\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00327}00327\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00328}00328\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @brief\ Worldにレベルをクリーンするコマンド}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00329}00329\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00330}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_clean_level_command}{00330}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_clean_level_command_ae391cbb5d92cfb91ca5aed64abf34885}{CleanLevelCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00331}00331\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00332}00332\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00333}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_clean_level_command_ae391cbb5d92cfb91ca5aed64abf34885}{00333}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_clean_level_command_ae391cbb5d92cfb91ca5aed64abf34885}{CleanLevelCommand}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc)\ :\ levelName(name),\ cleanedFunc(customFunc)\ \{\}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00334}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_clean_level_command_af43e46c58a0f50f90f7a58e139ff9c6f}{00334}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_clean_level_command_af43e46c58a0f50f90f7a58e139ff9c6f}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a88a774331f61b34bd311f8705bb2ea78}{CleanLevel}}(levelName);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00337}00337\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ levelName;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ cleanedFunc\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00340}00340\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00341}00341\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00342}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_pause_resume_level_command}{00342}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_pause_resume_level_command_ab1d69dac0513a68c969a2dc6c3e4cdc8}{PauseResumeLevelCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00343}00343\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00344}00344\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00345}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_pause_resume_level_command_ab1d69dac0513a68c969a2dc6c3e4cdc8}{00345}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_pause_resume_level_command_ab1d69dac0513a68c969a2dc6c3e4cdc8}{PauseResumeLevelCommand}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{bool}\ pause,\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ func)\ :\ levelName(name),\ pause(pause),\ customFunc(func)\ \{\}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00346}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_pause_resume_level_command_aa138a5d58335803a18c9cc32e91a1c68}{00346}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_pause_resume_level_command_aa138a5d58335803a18c9cc32e91a1c68}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00347}00347\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ad07bcb186358d6137f1913e55cf7e03c}{PauseResumeSystemInLevel}}(levelName,\ pause);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00350}00350\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ levelName;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ pause;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00354}00354\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00355}00355\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00356}00356\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }SystemType>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00357}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_global_system_command}{00357}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_global_system_command_a3cda139c26d8d230913b83df0b37718c}{AddGlobalSystemCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00358}00358\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00359}00359\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00360}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_global_system_command_a3cda139c26d8d230913b83df0b37718c}{00360}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_global_system_command_a3cda139c26d8d230913b83df0b37718c}{AddGlobalSystemCommand}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LevelCustumFunc(levelName,\ [\&](\textcolor{keyword}{auto}\&\ holder)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ sc\ =\ holder.level-\/>GetScheduler();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sc.AddSystem<SystemType>(world.GetServiceLocator());}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00204}00204\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }SystemType>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00206}\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a3886f3e1a9cef19f5593ffb2fc8fbbfe}{00206}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a3886f3e1a9cef19f5593ffb2fc8fbbfe}{RemoveSystemFromLevel}}(\textcolor{keyword}{const}\ std::string\ levelName,\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc\ =\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LevelCustumFunc(levelName,\ [\&](\textcolor{keyword}{auto}\&\ holder)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ sc\ =\ holder.level-\/>GetScheduler();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sc.RemoveSystem<SystemType>();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (customFunc)\ customFunc(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00214}00214\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }SystemType>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00216}\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ad07bcb186358d6137f1913e55cf7e03c}{00216}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ad07bcb186358d6137f1913e55cf7e03c}{PauseResumeSystemInLevel}}(\textcolor{keyword}{const}\ std::string\ levelName,\ \textcolor{keywordtype}{bool}\ pause,\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc\ =\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LevelCustumFunc(levelName,\ [\&](\textcolor{keyword}{auto}\&\ holder)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ sc\ =\ holder.level-\/>GetScheduler();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pause)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sc.PauseSystem<SystemType>();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sc.ResumeSystem<SystemType>();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00226}00226\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (customFunc)\ customFunc(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00229}00229\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Func>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00231}\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ae5d9d7fce198c21f956cfd8f7086ff30}{00231}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ae5d9d7fce198c21f956cfd8f7086ff30}{ExecuteLevelSessionFunc}}(\textcolor{keyword}{const}\ std::string\&\ levelName,\ Func\&\&\ func)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LevelCustumFunc(levelName,\ [\&](\textcolor{keyword}{auto}\&\ holder)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ func(holder.level-\/>GetSession());}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Func>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ LevelCustumFunc(\textcolor{keyword}{const}\ std::string\&\ levelName,\ Func\&\&\ func)}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00241}00241\ \textcolor{preprocessor}{\#ifdef\ \_DEBUG}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ find\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00243}00243\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00244}00244\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 指定された名前のレベルをすべてロードする}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ findLevelFunc\ =\ [\&](\textcolor{keyword}{auto}\&\ vecs)}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ holder\ :\ vecs)}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ level\ =\ holder.level;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (level-\/>GetName()\ ==\ levelName)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00252}00252\ \textcolor{preprocessor}{\#ifdef\ \_DEBUG}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ find\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00254}00254\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00255}00255\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ func(holder);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00260}00260\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::apply([\&](\textcolor{keyword}{auto}\&...\ levelVecs)}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (...,\ findLevelFunc(levelVecs));}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},\ world.levelSets);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00265}00265\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00266}00266\ \textcolor{preprocessor}{\#ifdef\ \_DEBUG}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!find)\ \mbox{\hyperlink{logger_8h_afde44945335adc0c0ae2986fea13438f}{LOG\_WARNING}}(\textcolor{stringliteral}{"{}指定されたレベルが見つかりませんでした\ \{\%s\}"{}},\ levelName.c\_str());}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00268}00268\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00270}00270\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World}}<LevelTypes...>\&\ world;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00274}00274\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00276}00276\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @brief\ Worldに対するリクエストコマンドのインターフェース}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00277}00277\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00278}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{00278}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00281}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command_ad24622a74386640590145b7ec8d375db}{00281}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command_ad24622a74386640590145b7ec8d375db}{\string~IRequestCommand}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00282}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command_a89649df2c3a18dab528bbfc7eb4d5043}{00282}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command_a89649df2c3a18dab528bbfc7eb4d5043}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00285}00285\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @brief\ Worldにレベルを追加するコマンド}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00286}00286\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00288}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command}{00288}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command_a5518e72d02661d01f455d39f79223ab8}{AddLevelCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00291}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command_a5518e72d02661d01f455d39f79223ab8}{00291}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command_a5518e72d02661d01f455d39f79223ab8}{AddLevelCommand}}(std::unique\_ptr<\mbox{\hyperlink{class_s_f_w_1_1_level}{Level<T>}}>\ level)}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ holder\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_level_holder}{LevelHolder<T>}}\{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::move(level)}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00297}00297\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Func>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00299}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command_acb642a8ae37dcc82e5c04edc547b37c1}{00299}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command_acb642a8ae37dcc82e5c04edc547b37c1}{AddLevelCommand}}(std::unique\_ptr<\mbox{\hyperlink{class_s_f_w_1_1_level}{Level<T>}}>\ level,\ Func\&\&...\ customFunc)}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ holder\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_level_holder}{LevelHolder<T>}}\{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::move(level),}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::move(customFunc)...}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00306}00306\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00307}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command_ae3227981bb8c52f569bfc7c5007fa1b6}{00307}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_level_command_ae3227981bb8c52f569bfc7c5007fa1b6}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a9a45f1a81228b65198bf4124e8a8b254}{AddLevel}}<T>(std::move(holder));}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00310}00310\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00311}00311\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_level_holder}{LevelHolder<T>}}\ holder;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00313}00313\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00314}00314\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00315}00315\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00316}00316\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @brief\ Worldにレベルをロードするコマンド}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00317}00317\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00318}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_load_level_command}{00318}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_load_level_command_abb3974025cd5dda14583e6c24414fff8}{LoadLevelCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00321}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_load_level_command_abb3974025cd5dda14583e6c24414fff8}{00321}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_load_level_command_abb3974025cd5dda14583e6c24414fff8}{LoadLevelCommand}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc,\ \textcolor{keywordtype}{bool}\ async,\ \textcolor{keywordtype}{bool}\ active)}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ levelName(name),\ loadedCustomFunc(customFunc),\ isAsync(async),\ active(active)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00324}00324\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00325}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_load_level_command_a762deda8229eefae02a60df7fd947976}{00325}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_load_level_command_a762deda8229eefae02a60df7fd947976}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a43e68e483e4475fa03aa8013ff00042b}{LoadLevel}}(levelName,\ isAsync\ ?\ executor\ :\ \textcolor{keyword}{nullptr},\ active,\ loadedCustomFunc);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00328}00328\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ levelName;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ loadedCustomFunc\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isAsync;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ active;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00333}00333\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00334}00334\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00335}00335\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @brief\ Worldにレベルをクリーンするコマンド}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00336}00336\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00337}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_clean_level_command}{00337}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_clean_level_command_ae391cbb5d92cfb91ca5aed64abf34885}{CleanLevelCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00338}00338\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00339}00339\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00340}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_clean_level_command_ae391cbb5d92cfb91ca5aed64abf34885}{00340}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_clean_level_command_ae391cbb5d92cfb91ca5aed64abf34885}{CleanLevelCommand}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc)\ :\ levelName(name),\ cleanedFunc(customFunc)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00341}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_clean_level_command_af43e46c58a0f50f90f7a58e139ff9c6f}{00341}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_clean_level_command_af43e46c58a0f50f90f7a58e139ff9c6f}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a88a774331f61b34bd311f8705bb2ea78}{CleanLevel}}(levelName);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00344}00344\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ levelName;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ cleanedFunc\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00347}00347\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00348}00348\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00349}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_pause_resume_level_command}{00349}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_pause_resume_level_command_ab1d69dac0513a68c969a2dc6c3e4cdc8}{PauseResumeLevelCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00350}00350\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00351}00351\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00352}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_pause_resume_level_command_ab1d69dac0513a68c969a2dc6c3e4cdc8}{00352}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_pause_resume_level_command_ab1d69dac0513a68c969a2dc6c3e4cdc8}{PauseResumeLevelCommand}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{bool}\ pause,\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ func)\ :\ levelName(name),\ pause(pause),\ customFunc(func)\ \{\}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00353}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_pause_resume_level_command_aa138a5d58335803a18c9cc32e91a1c68}{00353}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_pause_resume_level_command_aa138a5d58335803a18c9cc32e91a1c68}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ad07bcb186358d6137f1913e55cf7e03c}{PauseResumeSystemInLevel}}(levelName,\ pause);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00356}00356\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ levelName;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ pause;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00360}00360\ \ \ \ \ \ \ \ \ \};}
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00361}00361\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00362}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_global_system_command_af4f72e0c1e1bf80fb07daacf67975bfb}{00362}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_global_system_command_af4f72e0c1e1bf80fb07daacf67975bfb}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a4a53574b7739f96734a7fd01cefb7b6b}{AddGlobalSystem}}<SystemType>();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00365}00365\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00366}00366\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00367}00367\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }SystemType>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00368}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_apply_level_system_command}{00368}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_apply_level_system_command_a4ab2dd9b923d0ff0777e8faea71bb5b1}{ApplyLevelSystemCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00369}00369\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00370}00370\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00371}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_apply_level_system_command_a4ab2dd9b923d0ff0777e8faea71bb5b1}{00371}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_apply_level_system_command_a4ab2dd9b923d0ff0777e8faea71bb5b1}{ApplyLevelSystemCommand}}(std::string\ levelName,\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bc}{EApplyLevelSystemOption}}\ \_option\ =\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9}{EApplyLevelSystemOption::Add}})}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ targetLevelName(levelName),\ option(\_option)\{\}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00373}00373\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00374}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_apply_level_system_command_a9789a6f5121327bcdb69a147246b909c}{00374}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_apply_level_system_command_a9789a6f5121327bcdb69a147246b909c}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\textcolor{keyword}{\ override\ }\{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (option)}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9}{EApplyLevelSystemOption::Add}}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_adbfae1706d592d23527d2afdd6719bda}{AddSystemToLevel}}<SystemType>(targetLevelName);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bca1063e38cb53d94d386f21227fcd84717}{EApplyLevelSystemOption::Remove}}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a3886f3e1a9cef19f5593ffb2fc8fbbfe}{RemoveSystemFromLevel}}<SystemType>(targetLevelName);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bca105b296a83f9c105355403f3332af50f}{EApplyLevelSystemOption::Pause}}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ad07bcb186358d6137f1913e55cf7e03c}{PauseResumeSystemInLevel}}<SystemType>(targetLevelName,\ \textcolor{keyword}{true});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bcaf1cefec9e2196c672a622347f1fbc325}{EApplyLevelSystemOption::Resume}}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ad07bcb186358d6137f1913e55cf7e03c}{PauseResumeSystemInLevel}}<SystemType>(targetLevelName,\ \textcolor{keyword}{false});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00391}00391\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00392}00392\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ targetLevelName\ =\ \{\};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bc}{EApplyLevelSystemOption}}\ option;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00394}00394\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00395}00395\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00396}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command}{00396}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command_ad5b9df500062cd293afe9e4307423baa}{LambdaCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00397}00397\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00398}00398\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00399}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command_ad5b9df500062cd293afe9e4307423baa}{00399}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command_ad5b9df500062cd293afe9e4307423baa}{LambdaCommand}}(std::function<\textcolor{keywordtype}{void}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*)>\ fn)}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ fn\_(\mbox{\hyperlink{namespacestd}{std}}::move(fn))\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00362}00362\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }SystemType>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00363}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_global_system_command}{00363}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_global_system_command_a3cda139c26d8d230913b83df0b37718c}{AddGlobalSystemCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00364}00364\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00365}00365\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00366}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_global_system_command_a3cda139c26d8d230913b83df0b37718c}{00366}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_global_system_command_a3cda139c26d8d230913b83df0b37718c}{AddGlobalSystemCommand}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00367}00367\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00368}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_global_system_command_af4f72e0c1e1bf80fb07daacf67975bfb}{00368}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_add_global_system_command_af4f72e0c1e1bf80fb07daacf67975bfb}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a4a53574b7739f96734a7fd01cefb7b6b}{AddGlobalSystem}}<SystemType>();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00371}00371\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00372}00372\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00373}00373\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }SystemType>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00374}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_apply_level_system_command}{00374}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_apply_level_system_command_a4ab2dd9b923d0ff0777e8faea71bb5b1}{ApplyLevelSystemCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00375}00375\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00376}00376\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00377}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_apply_level_system_command_a4ab2dd9b923d0ff0777e8faea71bb5b1}{00377}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_apply_level_system_command_a4ab2dd9b923d0ff0777e8faea71bb5b1}{ApplyLevelSystemCommand}}(std::string\ levelName,\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bc}{EApplyLevelSystemOption}}\ \_option\ =\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9}{EApplyLevelSystemOption::Add}})}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ targetLevelName(levelName),\ option(\_option)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00380}00380\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00381}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_apply_level_system_command_a9789a6f5121327bcdb69a147246b909c}{00381}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_apply_level_system_command_a9789a6f5121327bcdb69a147246b909c}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (option)}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9}{EApplyLevelSystemOption::Add}}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_adbfae1706d592d23527d2afdd6719bda}{AddSystemToLevel}}<SystemType>(targetLevelName);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bca1063e38cb53d94d386f21227fcd84717}{EApplyLevelSystemOption::Remove}}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a3886f3e1a9cef19f5593ffb2fc8fbbfe}{RemoveSystemFromLevel}}<SystemType>(targetLevelName);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bca105b296a83f9c105355403f3332af50f}{EApplyLevelSystemOption::Pause}}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00391}00391\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ad07bcb186358d6137f1913e55cf7e03c}{PauseResumeSystemInLevel}}<SystemType>(targetLevelName,\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00392}00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bcaf1cefec9e2196c672a622347f1fbc325}{EApplyLevelSystemOption::Resume}}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ad07bcb186358d6137f1913e55cf7e03c}{PauseResumeSystemInLevel}}<SystemType>(targetLevelName,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00398}00398\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ targetLevelName\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bc}{EApplyLevelSystemOption}}\ option;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00401}00401\ \ \ \ \ \ \ \ \ \};}
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00402}00402\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00403}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command_a4f015ef337aeb34529ebb0e4864a774b}{00403}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command_a4f015ef337aeb34529ebb0e4864a774b}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ s,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ ex)\textcolor{keyword}{\ override\ }\{\ fn\_(s,\ ex);\ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00404}00404\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00405}00405\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00406}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a220e3aee8be7040cd192c68a0f8b5b93}{00406}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<void(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*)>\ fn\_;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00407}00407\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00408}00408\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00409}00409\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00410}00410\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @brief\ Systemなどの下層からWorldに対してのリクエストを受け付ける}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00411}00411\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00412}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service}{00412}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}{RequestService}}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00413}00413\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World}}<LevelTypes...>;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00415}00415\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00416}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}{00416}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}{RequestService}}()\ :\ requestMutex(\mbox{\hyperlink{namespacestd}{std}}::make\_unique<\mbox{\hyperlink{namespacestd}{std}}::mutex>())\ \{\}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00417}00417\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00418}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a6a6082a6b2f2bf7b96a1cfd80edd3d2b}{00418}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a6a6082a6b2f2bf7b96a1cfd80edd3d2b}{RequestService}}(\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}{RequestService}}\&\&\ other)\ noexcept\ :}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00419}00419\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ requestMutex(other.requestMutex),}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ requests(std::move(other.requests))\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00421}00421\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00422}00422\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00423}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a1fafae3b87909364e2d82c2aab6de13b}{00423}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}{RequestService}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a1fafae3b87909364e2d82c2aab6de13b}{operator=}}(\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}{RequestService}}\&\&\ other)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ !=\ \&other)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ requestMutex\ =\ other.requestMutex;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ requests\ =\ std::move(other.requests);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00427}00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00430}00430\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00431}00431\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00432}00432\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ *\ @brief\ コマンドをリクエストに追加する}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00433}00433\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00434}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9a84bc9c1cfecbd6247a4274eb66de16}{00434}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9a84bc9c1cfecbd6247a4274eb66de16}{PushCommand}}(std::unique\_ptr<IRequestCommand>\ cmd)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(*requestMutex);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ requests.push\_back(std::move(cmd));}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00403}00403\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Func>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00404}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_level_session_command}{00404}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_level_session_command_a4dcb9dfedc2c3f53cf4d39c28d584fa6}{LevelSessionCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00405}00405\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00406}00406\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00407}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_level_session_command_a4dcb9dfedc2c3f53cf4d39c28d584fa6}{00407}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_level_session_command_a4dcb9dfedc2c3f53cf4d39c28d584fa6}{LevelSessionCommand}}(std::string\ levelName,\ Func\&\&\ func)\ :\ levelName(levelName),\ func(\mbox{\hyperlink{namespacestd}{std}}::forward<Func>(func))\ \{\}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00408}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_level_session_command_a7ae8f32b8aec8b93ddd917ab41d43df5}{00408}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_level_session_command_a7ae8f32b8aec8b93ddd917ab41d43df5}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ pWorldSession,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pWorldSession-\/>\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ae5d9d7fce198c21f956cfd8f7086ff30}{ExecuteLevelSessionFunc}}(levelName,\ std::move(func));}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00410}00410\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00411}00411\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00412}00412\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ levelName\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ Func\ func;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00415}00415\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00416}00416\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00417}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command}{00417}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command_ad5b9df500062cd293afe9e4307423baa}{LambdaCommand}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequestCommand}}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00418}00418\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00419}00419\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00420}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command_ad5b9df500062cd293afe9e4307423baa}{00420}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command_ad5b9df500062cd293afe9e4307423baa}{LambdaCommand}}(std::function<\textcolor{keywordtype}{void}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*)>\ fn)}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00421}00421\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ fn\_(\mbox{\hyperlink{namespacestd}{std}}::move(fn))\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00423}00423\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00424}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command_a4f015ef337aeb34529ebb0e4864a774b}{00424}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_lambda_command_a4f015ef337aeb34529ebb0e4864a774b}{Execute}}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*\ s,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ ex)\textcolor{keyword}{\ override\ }\{\ fn\_(s,\ ex);\ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00425}00425\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00426}00426\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00427}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a220e3aee8be7040cd192c68a0f8b5b93}{00427}}\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<void(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*)>\ fn\_;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00428}00428\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00429}00429\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00430}00430\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00431}00431\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @brief\ Systemなどの下層からWorldに対してのリクエストを受け付ける}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00432}00432\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00433}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service}{00433}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}{RequestService}}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00434}00434\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World}}<LevelTypes...>;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00436}00436\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00437}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}{00437}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}{RequestService}}()\ :\ requestMutex(\mbox{\hyperlink{namespacestd}{std}}::make\_unique<\mbox{\hyperlink{namespacestd}{std}}::mutex>())\ \{\}}
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00438}00438\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00440}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a1338a1b0d2f6a80180e8f830fe2be160}{00440}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a1338a1b0d2f6a80180e8f830fe2be160}{CreateAddLevelCommand}}(std::unique\_ptr<\mbox{\hyperlink{class_s_f_w_1_1_level}{Level<T>}}>\ level)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<AddLevelCommand<T>>(std::move(level));}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00439}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a6a6082a6b2f2bf7b96a1cfd80edd3d2b}{00439}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a6a6082a6b2f2bf7b96a1cfd80edd3d2b}{RequestService}}(\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}{RequestService}}\&\&\ other)\ noexcept\ :}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00440}00440\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ requestMutex(other.requestMutex),}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ requests(std::move(other.requests))\ \{}
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00442}00442\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00443}00443\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Func>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00445}00445\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00446}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_ad27cda1145e33b189b6cc45390d95389}{00446}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_ad27cda1145e33b189b6cc45390d95389}{CreateAddLevelCommand}}(std::unique\_ptr<\mbox{\hyperlink{class_s_f_w_1_1_level}{Level<T>}}>\ level,\ Func\&\&...\ customFunc)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00447}00447\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<AddLevelCommand<T>>(std::move(level),\ std::forward<Func>(customFunc)...);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00449}00449\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00450}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_aee25791b71685a8dde3f815c195f9353}{00450}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_aee25791b71685a8dde3f815c195f9353}{CreateLoadLevelCommand}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{bool}\ isAsync\ =\ \textcolor{keyword}{false},\ \textcolor{keywordtype}{bool}\ active\ =\ \textcolor{keyword}{true},\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc\ =\ \textcolor{keyword}{nullptr})\ const\ noexcept\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00451}00451\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<LoadLevelCommand>(name,\ customFunc,\ isAsync,\ active);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00452}00452\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00453}00453\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00454}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9b813cf8db5ea065b8e3e631bbdad6d5}{00454}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9b813cf8db5ea065b8e3e631bbdad6d5}{CreateCleanLevelCommand}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc\ =\ \textcolor{keyword}{nullptr})\ const\ noexcept\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00455}00455\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<CleanLevelCommand>(name,\ customFunc);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00457}00457\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00458}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_ad0c13cd685d33c681bad955e46cfd1d4}{00458}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_ad0c13cd685d33c681bad955e46cfd1d4}{CreatePauseResumeLevelCommand}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{bool}\ pause,\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc\ =\ \textcolor{keyword}{nullptr})\ const\ noexcept\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00459}00459\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<PauseResumeLevelCommand>(name,\ pause,\ customFunc);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00460}00460\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00461}00461\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00462}00462\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }System>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00463}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a67d16bbbbc91ce3cb8fddc2a06820535}{00463}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a67d16bbbbc91ce3cb8fddc2a06820535}{CreateAddGlobalSystemCommand}}()\ const\ noexcept\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00464}00464\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<AddGlobalSystemCommand<System>>();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00466}00466\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00467}00467\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }System>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00468}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a63682feeea3322b4c2bc55be2d326454}{00468}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a63682feeea3322b4c2bc55be2d326454}{CreateApplyLevelSystemCommand}}(\textcolor{keyword}{const}\ std::string\&\ levelName,\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bc}{EApplyLevelSystemOption}}\ option)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<ApplyLevelSystemCommand<System>>(levelName,\ option);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00470}00470\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00471}00471\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00472}00472\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }System>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00473}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a7795e0bf7e794e19e178fbe53d6643ef}{00473}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a7795e0bf7e794e19e178fbe53d6643ef}{CreateAddSystemCommand}}(\textcolor{keyword}{const}\ std::string\&\ levelName)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00474}00474\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<ApplyLevelSystemCommand<System>>(levelName,\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9}{EApplyLevelSystemOption::Add}});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00475}00475\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00476}00476\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00477}00477\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }System>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00478}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_af5c7d6e96334665959d6cd72661b1bf1}{00478}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_af5c7d6e96334665959d6cd72661b1bf1}{CreateRemoveSystemCommand}}(\textcolor{keyword}{const}\ std::string\&\ levelName)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00479}00479\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<ApplyLevelSystemCommand<System>>(levelName,\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bca1063e38cb53d94d386f21227fcd84717}{EApplyLevelSystemOption::Remove}});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00480}00480\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00481}00481\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00482}00482\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }System>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00483}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9fae09c2da0d257b7659fac2bfa7f2ef}{00483}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9fae09c2da0d257b7659fac2bfa7f2ef}{CreatePauseResumeSystemCommand}}(\textcolor{keyword}{const}\ std::string\&\ levelName,\ \textcolor{keywordtype}{bool}\ pause\ =\ \textcolor{keyword}{true})\ const\ noexcept\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00484}00484\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<ApplyLevelSystemCommand<System>>(levelName,\ pause\ ?\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bca105b296a83f9c105355403f3332af50f}{EApplyLevelSystemOption::Pause}}\ :\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bcaf1cefec9e2196c672a622347f1fbc325}{EApplyLevelSystemOption::Resume}});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00485}00485\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00486}00486\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00444}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a1fafae3b87909364e2d82c2aab6de13b}{00444}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}{RequestService}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a1fafae3b87909364e2d82c2aab6de13b}{operator=}}(\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}{RequestService}}\&\&\ other)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00445}00445\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ !=\ \&other)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00446}00446\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ requestMutex\ =\ other.requestMutex;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00447}00447\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ requests\ =\ std::move(other.requests);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00449}00449\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00450}00450\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00451}00451\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00452}00452\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00453}00453\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ *\ @brief\ コマンドをリクエストに追加する}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00454}00454\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00455}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9a84bc9c1cfecbd6247a4274eb66de16}{00455}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9a84bc9c1cfecbd6247a4274eb66de16}{PushCommand}}(std::unique\_ptr<IRequestCommand>\ cmd)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(*requestMutex);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00457}00457\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ requests.push\_back(std::move(cmd));}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00459}00459\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00460}00460\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00461}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a1338a1b0d2f6a80180e8f830fe2be160}{00461}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a1338a1b0d2f6a80180e8f830fe2be160}{CreateAddLevelCommand}}(std::unique\_ptr<\mbox{\hyperlink{class_s_f_w_1_1_level}{Level<T>}}>\ level)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00462}00462\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<AddLevelCommand<T>>(std::move(level));}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00463}00463\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00464}00464\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Func>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00467}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_ad27cda1145e33b189b6cc45390d95389}{00467}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_ad27cda1145e33b189b6cc45390d95389}{CreateAddLevelCommand}}(std::unique\_ptr<\mbox{\hyperlink{class_s_f_w_1_1_level}{Level<T>}}>\ level,\ Func\&\&...\ customFunc)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<AddLevelCommand<T>>(std::move(level),\ std::forward<Func>(customFunc)...);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00470}00470\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00471}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_aee25791b71685a8dde3f815c195f9353}{00471}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_aee25791b71685a8dde3f815c195f9353}{CreateLoadLevelCommand}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{bool}\ isAsync\ =\ \textcolor{keyword}{false},\ \textcolor{keywordtype}{bool}\ active\ =\ \textcolor{keyword}{true},\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc\ =\ \textcolor{keyword}{nullptr})\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00472}00472\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<LoadLevelCommand>(name,\ customFunc,\ isAsync,\ active);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00473}00473\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00474}00474\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00475}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9b813cf8db5ea065b8e3e631bbdad6d5}{00475}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9b813cf8db5ea065b8e3e631bbdad6d5}{CreateCleanLevelCommand}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc\ =\ \textcolor{keyword}{nullptr})\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00476}00476\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<CleanLevelCommand>(name,\ customFunc);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00477}00477\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00478}00478\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00479}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_ad0c13cd685d33c681bad955e46cfd1d4}{00479}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_ad0c13cd685d33c681bad955e46cfd1d4}{CreatePauseResumeLevelCommand}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{bool}\ pause,\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc\ =\ \textcolor{keyword}{nullptr})\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00480}00480\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<PauseResumeLevelCommand>(name,\ pause,\ customFunc);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00481}00481\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00482}00482\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00483}00483\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }System>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00484}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a67d16bbbbc91ce3cb8fddc2a06820535}{00484}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a67d16bbbbc91ce3cb8fddc2a06820535}{CreateAddGlobalSystemCommand}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00485}00485\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<AddGlobalSystemCommand<System>>();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00486}00486\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00487}00487\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00488}00488\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00489}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_af8f70f420f09edc0efaa0961129fed29}{00489}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_af8f70f420f09edc0efaa0961129fed29}{CreateLambdaCommand}}(std::function<\textcolor{keywordtype}{void}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*)>\ fn)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<LambdaCommand>(std::move(fn));}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00488}00488\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }System>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00489}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a63682feeea3322b4c2bc55be2d326454}{00489}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a63682feeea3322b4c2bc55be2d326454}{CreateApplyLevelSystemCommand}}(\textcolor{keyword}{const}\ std::string\&\ levelName,\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bc}{EApplyLevelSystemOption}}\ option)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<ApplyLevelSystemCommand<System>>(levelName,\ option);}
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00491}00491\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00492}00492\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00493}00493\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00494}00494\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ すべてのコマンドを実行する関数}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ WorldでLevelを更新する前に呼び出す}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ FlashAllCommand(\mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World<LevelTypes...>}}*\ pWorld,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{decltype}(requests)\ localRequests;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00499}00499\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(*requestMutex);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00500}00500\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(localRequests,\ requests);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00501}00501\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00502}00502\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//念のためクリア}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ requests.clear();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00505}00505\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00506}00506\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (localRequests.empty())\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00493}00493\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }System>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00494}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a7795e0bf7e794e19e178fbe53d6643ef}{00494}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a7795e0bf7e794e19e178fbe53d6643ef}{CreateAddSystemCommand}}(\textcolor{keyword}{const}\ std::string\&\ levelName)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<ApplyLevelSystemCommand<System>>(levelName,\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9}{EApplyLevelSystemOption::Add}});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00497}00497\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }System>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00499}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_af5c7d6e96334665959d6cd72661b1bf1}{00499}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_af5c7d6e96334665959d6cd72661b1bf1}{CreateRemoveSystemCommand}}(\textcolor{keyword}{const}\ std::string\&\ levelName)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00500}00500\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<ApplyLevelSystemCommand<System>>(levelName,\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bca1063e38cb53d94d386f21227fcd84717}{EApplyLevelSystemOption::Remove}});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00501}00501\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00502}00502\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }System>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00504}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9fae09c2da0d257b7659fac2bfa7f2ef}{00504}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9fae09c2da0d257b7659fac2bfa7f2ef}{CreatePauseResumeSystemCommand}}(\textcolor{keyword}{const}\ std::string\&\ levelName,\ \textcolor{keywordtype}{bool}\ pause\ =\ \textcolor{keyword}{true})\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00505}00505\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<ApplyLevelSystemCommand<System>>(levelName,\ pause\ ?\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bca105b296a83f9c105355403f3332af50f}{EApplyLevelSystemOption::Pause}}\ :\ \mbox{\hyperlink{namespace_s_f_w_a832b30f9bb9e1cb1a19a69701f3501bcaf1cefec9e2196c672a622347f1fbc325}{EApplyLevelSystemOption::Resume}});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00506}00506\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00507}00507\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ session\ =\ pWorld-\/>GetSession();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00509}00509\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00510}00510\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ cmd\ :\ localRequests)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00511}00511\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmd-\/>Execute(\&session,\ executor);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00514}00514\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00515}00515\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//ムーブ可能にするためヒープで保持}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<std::mutex>\ requestMutex;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::unique\_ptr<IRequestCommand>>\ requests;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00518}00518\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_service_context_8hpp_adbfb2947c9a06b367226fe228627154c}{STATIC\_SERVICE\_TAG}}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00520}00520\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00521}00521\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00522}00522\ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00527}\mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{00527}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World}}(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS::ServiceLocator}}\&\&\ serviceLocator)\ noexcept}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00528}00528\ \ \ \ \ \ \ \ \ \ \ \ \ :\ serviceLocator(std::move(serviceLocator))\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00529}00529\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Func>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00509}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_ab63cce9dc6e078b8e3206b4fa5d3a783}{00509}}\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>\ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_ab63cce9dc6e078b8e3206b4fa5d3a783}{CreateLevelSessionCommand}}(\textcolor{keyword}{const}\ std::string\&\ levelName,\ Func\&\&\ func)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00510}00510\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<LevelSessionCommand<Func>>(levelName,\ std::forward<Func>(func));}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00511}00511\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00512}00512\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ [[nodiscard]]\ std::unique\_ptr<IRequestCommand>}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00514}\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_af8f70f420f09edc0efaa0961129fed29}{00514}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_af8f70f420f09edc0efaa0961129fed29}{CreateLambdaCommand}}(std::function<\textcolor{keywordtype}{void}(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}}*,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*)>\ fn)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00515}00515\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<LambdaCommand>(std::move(fn));}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00517}00517\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00518}00518\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ すべてのコマンドを実行する関数}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ WorldでLevelを更新する前に呼び出す}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00521}00521\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ FlashAllCommand(\mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World<LevelTypes...>}}*\ pWorld,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{decltype}(requests)\ localRequests;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lock(*requestMutex);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(localRequests,\ requests);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00526}00526\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00527}00527\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//念のためクリア}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00528}00528\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ requests.clear();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00529}00529\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00530}00530\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00535}\mbox{\hyperlink{class_s_f_w_1_1_world_a9bbef002ec82127c5cf4b8ab7b20c5d5}{00535}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_a9bbef002ec82127c5cf4b8ab7b20c5d5}{World}}(\mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World}}\&\&\ other)\ noexcept}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00536}00536\ \ \ \ \ \ \ \ \ \ \ \ \ :\ levelSets(std::move(other.levelSets)),}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ serviceLocator(std::move(other.serviceLocator)),}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ requestService(std::move(other.requestService))\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00539}00539\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00540}00540\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00546}\mbox{\hyperlink{class_s_f_w_1_1_world_a7aa47194558209caaa669da62f6bbbdd}{00546}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_world_a7aa47194558209caaa669da62f6bbbdd}{operator=}}(\mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World}}\&\&\ other)\ \textcolor{keyword}{noexcept}\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00547}00547\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ !=\ \&other)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00548}00548\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ levelSets\ =\ std::move(other.levelSets);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00549}00549\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ serviceLocator\ =\ std::move(other.serviceLocator);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00550}00550\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ requestService\ =\ std::move(other.requestService);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00551}00551\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00552}00552\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00553}00553\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00554}00554\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00559}\mbox{\hyperlink{class_s_f_w_1_1_world_a09a6b3093aefd0d4b848e8168ae18a01}{00559}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_a09a6b3093aefd0d4b848e8168ae18a01}{RegisterRequestService}}()\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00560}00560\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ワールドリクエストサービスをサービスロケーターに登録}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00561}00561\ \ \ \ \ \ \ \ \ \ \ \ \ ECS::ServiceLocator::WorldAccessor::AddStaticService(\&this-\/>serviceLocator,\ \&requestService);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00562}00562\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00563}00563\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00568}\mbox{\hyperlink{class_s_f_w_1_1_world_a6b458833add601c670ce4263ef74c155}{00568}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_a6b458833add601c670ce4263ef74c155}{UpdateAllLevels}}(\textcolor{keywordtype}{double}\ deltaTime,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00569}00569\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00570}00570\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00571}00571\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ g\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48}{Debug::BeginTreeWrite}}();\ \textcolor{comment}{//\ lock\ \&\ back\ buffer}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00572}00572\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ frame\ =\ g.data();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00573}00573\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.clear();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00574}00574\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00575}00575\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 例えばプリオーダ＋depth\ 指定で平坦化したツリーを詰める}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00576}00576\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a2b45a029635465d690236b2cc1cbad60}{Debug::WorldTreeDepth::TREEDEPTH\_WORLD}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{false},\ \textcolor{stringliteral}{"{}World"{}}\ \});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00577}00577\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ guard\ のデストラクトで\ unlock。swap\ は\ UI\ スレッドで。}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00578}00578\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00579}00579\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::function<void(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS::ServiceLocator}}\&,\ \textcolor{keywordtype}{double},\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*)>>\ mainLevelFunc;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00580}00580\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::function<void(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS::ServiceLocator}}\&,\ \textcolor{keywordtype}{double},\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*)>>\ subLevelFunc;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00581}00581\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00582}00582\ \ \ \ \ \ \ \ \ \ \ \ \ std::apply([\&](\textcolor{keyword}{auto}\&...\ levelVecs)}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00583}00583\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00584}00584\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (...,\ [](\textcolor{keyword}{auto}\&\ vecs,\ \textcolor{keyword}{auto}\&\ mainFunc,\ \textcolor{keyword}{auto}\&\ subFunc)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00585}00585\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ holder\ :\ vecs)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00586}00586\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ level\ =\ holder.level;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00587}00587\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ levelState\ =\ level-\/>GetState();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00531}00531\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (localRequests.empty())\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00532}00532\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00533}00533\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ session\ =\ pWorld-\/>GetSession();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00534}00534\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00535}00535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ cmd\ :\ localRequests)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00536}00536\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmd-\/>Execute(\&session,\ executor);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00539}00539\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//ムーブ可能にするためヒープで保持}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00541}00541\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<std::mutex>\ requestMutex;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::unique\_ptr<IRequestCommand>>\ requests;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00543}00543\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00544}00544\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_service_context_8hpp_adbfb2947c9a06b367226fe228627154c}{STATIC\_SERVICE\_TAG}}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00545}00545\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00546}00546\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00547}00547\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00552}\mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{00552}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World}}(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS::ServiceLocator}}\&\&\ serviceLocator)\ noexcept}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00553}00553\ \ \ \ \ \ \ \ \ \ \ \ \ :\ serviceLocator(std::move(serviceLocator))\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00554}00554\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00555}00555\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00560}\mbox{\hyperlink{class_s_f_w_1_1_world_a9bbef002ec82127c5cf4b8ab7b20c5d5}{00560}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_a9bbef002ec82127c5cf4b8ab7b20c5d5}{World}}(\mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World}}\&\&\ other)\ noexcept}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00561}00561\ \ \ \ \ \ \ \ \ \ \ \ \ :\ levelSets(std::move(other.levelSets)),}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00562}00562\ \ \ \ \ \ \ \ \ \ \ \ \ serviceLocator(std::move(other.serviceLocator)),}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00563}00563\ \ \ \ \ \ \ \ \ \ \ \ \ requestService(std::move(other.requestService))\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00564}00564\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00565}00565\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00571}\mbox{\hyperlink{class_s_f_w_1_1_world_a7aa47194558209caaa669da62f6bbbdd}{00571}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_world_a7aa47194558209caaa669da62f6bbbdd}{operator=}}(\mbox{\hyperlink{class_s_f_w_1_1_world_aee46ab9fd8e0efe06ed303230ceb0763}{World}}\&\&\ other)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00572}00572\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ !=\ \&other)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00573}00573\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ levelSets\ =\ std::move(other.levelSets);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00574}00574\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ serviceLocator\ =\ std::move(other.serviceLocator);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00575}00575\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ requestService\ =\ std::move(other.requestService);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00576}00576\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00577}00577\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00578}00578\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00579}00579\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00584}\mbox{\hyperlink{class_s_f_w_1_1_world_a09a6b3093aefd0d4b848e8168ae18a01}{00584}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_a09a6b3093aefd0d4b848e8168ae18a01}{RegisterRequestService}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00585}00585\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ワールドリクエストサービスをサービスロケーターに登録}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00586}00586\ \ \ \ \ \ \ \ \ \ \ \ \ ECS::ServiceLocator::WorldAccessor::AddStaticService(\&this-\/>serviceLocator,\ \&requestService);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00587}00587\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00588}00588\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00589}00589\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 非アクティブ\ |\ 未ロード\ |\ ローディング中\ レベルはスキップ}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00590}00590\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespace_s_f_w_a978f030946d09d7e75529945f9d3f4f1}{HasAll}}(levelState,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a4d3d769b812b6faa6b76e1a8abaece2d}{ELevelState::Active}}\ |\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a7381d487d18845b379422325c0a768d6}{ELevelState::Loaded}})}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00591}00591\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ||\ \mbox{\hyperlink{namespace_s_f_w_a82fdc34c030671aaa1a9bfd5a5051bcf}{HasAny}}(levelState,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a16bfbf9c462762cf1cba4134ec53c504}{ELevelState::Loading}}))\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00592}00592\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00593}00593\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ level-\/>ShowDebugInactiveLevelInfoUI();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00594}00594\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00595}00595\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00596}00596\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00597}00597\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00598}00598\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{namespace_s_f_w_a82fdc34c030671aaa1a9bfd5a5051bcf}{HasAny}}(levelState,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53aa02c83a7dbd96295beaefb72c2bee2de}{ELevelState::Main}}))\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00599}00599\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mainFunc.push\_back([\&level](\textcolor{keyword}{auto}\&\ locator,\ \textcolor{keywordtype}{double}\ delta,\ \textcolor{keyword}{auto}*\ te)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00600}00600\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ level-\/>Update(locator,\ delta,\ te);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00601}00601\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00602}00602\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00603}00603\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{namespace_s_f_w_a82fdc34c030671aaa1a9bfd5a5051bcf}{HasAny}}(levelState,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53ae80155eceb940c89e2de63ad05868db2}{ELevelState::Sub}}))\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00604}00604\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subFunc.push\_back([\&level](\textcolor{keyword}{auto}\&\ locator,\ \textcolor{keywordtype}{double}\ delta,\ \textcolor{keyword}{auto}*\ te)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00605}00605\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ level-\/>UpdateLimited(locator,\ delta,\ te);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00606}00606\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00607}00607\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00608}00608\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00609}00609\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}(levelVecs,\ mainLevelFunc,\ subLevelFunc));}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00610}00610\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},\ levelSets);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00611}00611\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00612}00612\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00613}00613\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00614}00614\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ g\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48}{Debug::BeginTreeWrite}}();\ \textcolor{comment}{//\ lock\ \&\ back\ buffer}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00615}00615\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ frame\ =\ g.data();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00616}00616\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a04b592d815dcee98bfcf032e71dc71da}{Debug::WorldTreeDepth::TREEDEPTH\_LEVEL}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{false},\ \textcolor{stringliteral}{"{}GlobalSystem"{}}\ \});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00617}00617\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00618}00618\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00619}00619\ \ \ \ \ \ \ \ \ \ \ \ \ globalSystem.ShowDebugSystemTree((uint32\_t)\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{Debug::WorldTreeDepth::TREEDEPTH\_LEVELNODE}});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00593}\mbox{\hyperlink{class_s_f_w_1_1_world_a6b458833add601c670ce4263ef74c155}{00593}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_a6b458833add601c670ce4263ef74c155}{UpdateAllLevels}}(\textcolor{keywordtype}{double}\ deltaTime,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00594}00594\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00595}00595\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00596}00596\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ g\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48}{Debug::BeginTreeWrite}}();\ \textcolor{comment}{//\ lock\ \&\ back\ buffer}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00597}00597\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ frame\ =\ g.data();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00598}00598\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.clear();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00599}00599\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00600}00600\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 例えばプリオーダ＋depth\ 指定で平坦化したツリーを詰める}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00601}00601\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a2b45a029635465d690236b2cc1cbad60}{Debug::WorldTreeDepth::TREEDEPTH\_WORLD}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{false},\ \textcolor{stringliteral}{"{}World"{}}\ \});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00602}00602\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ guard\ のデストラクトで\ unlock。swap\ は\ UI\ スレッドで。}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00603}00603\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00604}00604\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00605}00605\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::function<void(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS::ServiceLocator}}\&,\ \textcolor{keywordtype}{double},\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*)>>\ mainLevelFunc;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00606}00606\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::function<void(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS::ServiceLocator}}\&,\ \textcolor{keywordtype}{double},\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*)>>\ subLevelFunc;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00607}00607\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00608}00608\ \ \ \ \ \ \ \ \ \ \ \ \ std::apply([\&](\textcolor{keyword}{auto}\&...\ levelVecs)}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00609}00609\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00610}00610\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (...,\ [](\textcolor{keyword}{auto}\&\ vecs,\ \textcolor{keyword}{auto}\&\ mainFunc,\ \textcolor{keyword}{auto}\&\ subFunc)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00611}00611\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ holder\ :\ vecs)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00612}00612\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ level\ =\ holder.level;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00613}00613\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ levelState\ =\ level-\/>GetState();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00614}00614\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00615}00615\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 非アクティブ\ |\ 未ロード\ |\ ローディング中\ レベルはスキップ}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00616}00616\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespace_s_f_w_a978f030946d09d7e75529945f9d3f4f1}{HasAll}}(levelState,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a4d3d769b812b6faa6b76e1a8abaece2d}{ELevelState::Active}}\ |\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a7381d487d18845b379422325c0a768d6}{ELevelState::Loaded}})}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00617}00617\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ||\ \mbox{\hyperlink{namespace_s_f_w_a82fdc34c030671aaa1a9bfd5a5051bcf}{HasAny}}(levelState,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53a16bfbf9c462762cf1cba4134ec53c504}{ELevelState::Loading}}))\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00618}00618\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00619}00619\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ level-\/>ShowDebugInactiveLevelInfoUI();}
 \DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00620}00620\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00621}00621\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00622}00622\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_thread_count_down_latch}{ThreadCountDownLatch}}\ latch((\textcolor{keywordtype}{int})mainLevelFunc.size());}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00623}00623\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//メインのレベルの更新処理を並行で実行}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00624}00624\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ f\ :\ mainLevelFunc)}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00625}00625\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00626}00626\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ コンテナの要素\ f\ をタスク用に\ move}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00627}00627\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ task\ =\ std::move(f);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00628}00628\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00629}00629\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ executor-\/>\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor_a391793ace9caaab0f020a22d8806a65c}{Submit}}(}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00630}00630\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [task\ =\ std::move(task),\ \ \ \ \ \ \ \ \textcolor{comment}{//\ 「ラムダへの\ move\ キャプチャ」}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00631}00631\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{this},}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00632}00632\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ deltaTime,}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00633}00633\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ executor,}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00634}00634\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&latch]()}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00635}00635\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00636}00636\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ task(serviceLocator,\ deltaTime,\ executor);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00637}00637\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latch.\mbox{\hyperlink{class_s_f_w_1_1_thread_count_down_latch_a3461e5eba048860aad1d77d3572ef797}{CountDown}}();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00638}00638\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00639}00639\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00640}00640\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00641}00641\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00642}00642\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//グローバルシステムの更新処理実行}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00643}00643\ \ \ \ \ \ \ \ \ \ \ \ \ globalSystem.UpdateGlobal(serviceLocator,\ executor);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00644}00644\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00645}00645\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//サブレベルの更新処理実行}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00646}00646\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ f\ :\ subLevelFunc)\ f(serviceLocator,\ deltaTime,\ executor);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00647}00647\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00648}00648\ \ \ \ \ \ \ \ \ \ \ \ \ latch.\mbox{\hyperlink{class_s_f_w_1_1_thread_count_down_latch_afc71c3da419cf1762a019a0ba785b3f7}{Wait}}();}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00649}00649\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00654}\mbox{\hyperlink{class_s_f_w_1_1_world_a2b0b7ee5d20210bc59ec7e54370824cb}{00654}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_a2b0b7ee5d20210bc59ec7e54370824cb}{UpdateServiceLocator}}(\textcolor{keywordtype}{double}\ deltaTime,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00655}00655\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//下層からリクエストされたコマンドを実行}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00656}00656\ \ \ \ \ \ \ \ \ \ \ \ \ requestService.FlashAllCommand(\textcolor{keyword}{this},\ executor);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00657}00657\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00658}00658\ \ \ \ \ \ \ \ \ \ \ \ \ serviceLocator.UpdateService(deltaTime,\ executor);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00659}00659\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00660}00660\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00664}\mbox{\hyperlink{class_s_f_w_1_1_world_a3909f9f47b0757899f0d08e678410b7e}{00664}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_a3909f9f47b0757899f0d08e678410b7e}{CommitServiceLocator}}(\textcolor{keywordtype}{double}\ deltaTime)\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00665}00665\ \ \ \ \ \ \ \ \ \ \ \ \ serviceLocator.CommitService(deltaTime);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00666}00666\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00667}00667\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00672}\mbox{\hyperlink{class_s_f_w_1_1_world_a9662586e00ed524b1ab6d15d9c05cb99}{00672}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS::ServiceLocator}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_world_a9662586e00ed524b1ab6d15d9c05cb99}{GetServiceLocator}}()\ const\ noexcept\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00673}00673\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ serviceLocator;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00674}00674\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00679}\mbox{\hyperlink{class_s_f_w_1_1_world_acdecf01d0515fc8b57e87935aa37400e}{00679}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ RequestService\&\ \mbox{\hyperlink{class_s_f_w_1_1_world_acdecf01d0515fc8b57e87935aa37400e}{GetRequestServiceNoLock}}()\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00680}00680\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ requestService;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00681}00681\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00682}00682\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00683}\mbox{\hyperlink{class_s_f_w_1_1_world_a03d899d49d865d9c285851f3cdd7f6b9}{00683}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_a03d899d49d865d9c285851f3cdd7f6b9}{LoadLevel}}(\textcolor{keyword}{const}\ std::string\ levelName,\ \textcolor{keywordtype}{bool}\ async\ =\ \textcolor{keyword}{false},\ \textcolor{keywordtype}{bool}\ active\ =\ \textcolor{keyword}{true},\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc\ =\ \textcolor{keyword}{nullptr})}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00684}00684\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00685}00685\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ requestCmd\ =\ requestService.CreateLoadLevelCommand(levelName,\ async,\ active,\ customFunc);}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00686}00686\ \ \ \ \ \ \ \ \ \ \ \ \ requestService.PushCommand(std::move(requestCmd));}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00687}00687\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00688}00688\ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00689}00689\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00690}00690\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @brief\ Worldへのセッション(レベルの追加など)を取得する関数}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00691}00691\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @return\ Session\ Worldのセッションオブジェクト}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00692}00692\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00693}00693\ \ \ \ \ \ \ \ \ [[nodiscard]]\ Session\ GetSession()\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00694}00694\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Session(*\textcolor{keyword}{this});}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00695}00695\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00696}00696\ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00697}00697\ \ \ \ \ \ \ \ \ std::tuple<std::vector<LevelHolder<LevelTypes>>...>\ levelSets;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00698}00698\ \ \ \ \ \ \ \ \ ECS::ServiceLocator\ serviceLocator;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00699}00699\ \ \ \ \ \ \ \ \ RequestService\ requestService;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00700}00700\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00701}00701\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }NonePartition\ \{}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00702}00702\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00703}00703\ }
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00704}00704\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Partitionクラスを使用しないので適当な型を入れる}}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00705}00705\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler}{ECS::SystemScheduler<NonePartition>}}\ globalSystem;}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00706}00706\ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00707}00707\ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00621}00621\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00622}00622\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00623}00623\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00624}00624\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{namespace_s_f_w_a82fdc34c030671aaa1a9bfd5a5051bcf}{HasAny}}(levelState,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53aa02c83a7dbd96295beaefb72c2bee2de}{ELevelState::Main}}))\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00625}00625\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mainFunc.push\_back([\&level](\textcolor{keyword}{auto}\&\ locator,\ \textcolor{keywordtype}{double}\ delta,\ \textcolor{keyword}{auto}*\ te)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00626}00626\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//levelの更新処理。inc/core/Level.hppのLevelクラスのUpdate関数を呼び出す}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00627}00627\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ level-\/>Update(locator,\ delta,\ te);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00628}00628\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00629}00629\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00630}00630\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{namespace_s_f_w_a82fdc34c030671aaa1a9bfd5a5051bcf}{HasAny}}(levelState,\ \mbox{\hyperlink{namespace_s_f_w_a7a3877c23db2b6428dfd8852c4644b53ae80155eceb940c89e2de63ad05868db2}{ELevelState::Sub}}))\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00631}00631\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subFunc.push\_back([\&level](\textcolor{keyword}{auto}\&\ locator,\ \textcolor{keywordtype}{double}\ delta,\ \textcolor{keyword}{auto}*\ te)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00632}00632\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ level-\/>UpdateLimited(locator,\ delta,\ te);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00633}00633\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00634}00634\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00635}00635\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00636}00636\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}(levelVecs,\ mainLevelFunc,\ subLevelFunc));}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00637}00637\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},\ levelSets);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00638}00638\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00639}00639\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00640}00640\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00641}00641\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ g\ =\ \mbox{\hyperlink{namespace_s_f_w_1_1_debug_a0d68d584ecad44ee41f06416ebc5eb48}{Debug::BeginTreeWrite}}();\ \textcolor{comment}{//\ lock\ \&\ back\ buffer}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00642}00642\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ frame\ =\ g.data();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00643}00643\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frame.items.push\_back(\{\ \textcolor{comment}{/*id=*/}frame.items.size(),\ \textcolor{comment}{/*depth=*/}\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7a04b592d815dcee98bfcf032e71dc71da}{Debug::WorldTreeDepth::TREEDEPTH\_LEVEL}},\ \textcolor{comment}{/*leaf=*/}\textcolor{keyword}{false},\ \textcolor{stringliteral}{"{}GlobalSystem"{}}\ \});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00644}00644\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00645}00645\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00646}00646\ \ \ \ \ \ \ \ \ \ \ \ \ globalSystem.ShowDebugSystemTree((uint32\_t)\mbox{\hyperlink{namespace_s_f_w_1_1_debug_ae98da678cf36fa05f95e25bb0cd2a4c7aee505ca373d619a6fad192678cc27797}{Debug::WorldTreeDepth::TREEDEPTH\_LEVELNODE}});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00647}00647\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00648}00648\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00649}00649\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_thread_count_down_latch}{ThreadCountDownLatch}}\ latch((\textcolor{keywordtype}{int})mainLevelFunc.size());}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00650}00650\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//メインのレベルの更新処理を並行で実行}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00651}00651\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ f\ :\ mainLevelFunc)}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00652}00652\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00653}00653\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ executor-\/>\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor_a391793ace9caaab0f020a22d8806a65c}{Submit}}(}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00654}00654\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\textcolor{keyword}{this},}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00655}00655\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ task\ =\ std::move(f),\ \ \ \ \ \ \ \ \textcolor{comment}{//\ 「ラムダへの\ move\ キャプチャ」}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00656}00656\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ deltaTime,}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00657}00657\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ executor,}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00658}00658\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&latch]()}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00659}00659\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00660}00660\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ task(serviceLocator,\ deltaTime,\ executor);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00661}00661\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latch.\mbox{\hyperlink{class_s_f_w_1_1_thread_count_down_latch_a3461e5eba048860aad1d77d3572ef797}{CountDown}}();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00662}00662\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00663}00663\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00664}00664\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00665}00665\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00666}00666\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//グローバルシステムの更新処理実行}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00667}00667\ \ \ \ \ \ \ \ \ \ \ \ \ globalSystem.UpdateGlobal(serviceLocator,\ executor);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00668}00668\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00669}00669\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//サブレベルの更新処理実行}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00670}00670\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ f\ :\ subLevelFunc)\ f(serviceLocator,\ deltaTime,\ executor);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00671}00671\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00672}00672\ \ \ \ \ \ \ \ \ \ \ \ \ latch.\mbox{\hyperlink{class_s_f_w_1_1_thread_count_down_latch_afc71c3da419cf1762a019a0ba785b3f7}{Wait}}();}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00673}00673\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00678}\mbox{\hyperlink{class_s_f_w_1_1_world_a2b0b7ee5d20210bc59ec7e54370824cb}{00678}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_a2b0b7ee5d20210bc59ec7e54370824cb}{UpdateServiceLocator}}(\textcolor{keywordtype}{double}\ deltaTime,\ \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThreadExecutor}}*\ executor)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00679}00679\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//下層からリクエストされたコマンドを実行}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00680}00680\ \ \ \ \ \ \ \ \ \ \ \ \ requestService.FlashAllCommand(\textcolor{keyword}{this},\ executor);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00681}00681\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00682}00682\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//登録したサービスの更新処理を実行}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00683}00683\ \ \ \ \ \ \ \ \ \ \ \ \ serviceLocator.UpdateService(deltaTime,\ executor);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00684}00684\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00685}00685\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00689}\mbox{\hyperlink{class_s_f_w_1_1_world_a3909f9f47b0757899f0d08e678410b7e}{00689}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_a3909f9f47b0757899f0d08e678410b7e}{CommitServiceLocator}}(\textcolor{keywordtype}{double}\ deltaTime)\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00690}00690\ \ \ \ \ \ \ \ \ \ \ \ \ serviceLocator.CommitService(deltaTime);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00691}00691\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00692}00692\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00697}\mbox{\hyperlink{class_s_f_w_1_1_world_a9662586e00ed524b1ab6d15d9c05cb99}{00697}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS::ServiceLocator}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_world_a9662586e00ed524b1ab6d15d9c05cb99}{GetServiceLocator}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00698}00698\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ serviceLocator;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00699}00699\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00704}\mbox{\hyperlink{class_s_f_w_1_1_world_acdecf01d0515fc8b57e87935aa37400e}{00704}}\ \ \ \ \ \ \ \ \ [[nodiscard]]\ RequestService\&\ \mbox{\hyperlink{class_s_f_w_1_1_world_acdecf01d0515fc8b57e87935aa37400e}{GetRequestServiceNoLock}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00705}00705\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ requestService;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00706}00706\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00707}00707\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00708}\mbox{\hyperlink{class_s_f_w_1_1_world_a03d899d49d865d9c285851f3cdd7f6b9}{00708}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_world_a03d899d49d865d9c285851f3cdd7f6b9}{LoadLevel}}(\textcolor{keyword}{const}\ std::string\ levelName,\ \textcolor{keywordtype}{bool}\ async\ =\ \textcolor{keyword}{false},\ \textcolor{keywordtype}{bool}\ active\ =\ \textcolor{keyword}{true},\ \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{ExecutedCustomFunc}}\ customFunc\ =\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00709}00709\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00710}00710\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ requestCmd\ =\ requestService.CreateLoadLevelCommand(levelName,\ async,\ active,\ customFunc);}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00711}00711\ \ \ \ \ \ \ \ \ \ \ \ \ requestService.PushCommand(std::move(requestCmd));}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00712}00712\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00713}00713\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00714}00714\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00715}00715\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @brief\ Worldへのセッション(レベルの追加など)を取得する関数}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00716}00716\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ @return\ Session\ Worldのセッションオブジェクト}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00717}00717\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00718}00718\ \ \ \ \ \ \ \ \ [[nodiscard]]\ Session\ GetSession()\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00719}00719\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Session(*\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00720}00720\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00721}00721\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00722}00722\ \ \ \ \ \ \ \ \ std::tuple<std::vector<LevelHolder<LevelTypes>>...>\ levelSets;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00723}00723\ \ \ \ \ \ \ \ \ ECS::ServiceLocator\ serviceLocator;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00724}00724\ \ \ \ \ \ \ \ \ RequestService\ requestService;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00725}00725\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00726}00726\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }NonePartition\ \{}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00727}00727\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00728}00728\ }
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00729}00729\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Partitionクラスを使用しないので適当な型を入れる}}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00730}00730\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler}{ECS::SystemScheduler<NonePartition>}}\ globalSystem;}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00731}00731\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_world_8hpp_source_l00732}00732\ \}}
 
 \end{DoxyCode}

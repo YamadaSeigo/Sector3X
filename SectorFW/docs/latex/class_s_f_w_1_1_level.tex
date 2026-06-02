@@ -25,7 +25,7 @@ requires std\+::constructible\+\_\+from$<$Partition, Args...$>$ \&\& (!(std\+::s
 \mbox{\hyperlink{namespace_s_f_w_abeb419a6b32db0520198827d1ffe61e1}{Level\+ID}} \mbox{\hyperlink{class_s_f_w_1_1_level_a515a296039f5c2a28b716d8c6d426b23}{Get\+ID}} () const noexcept
 \begin{DoxyCompactList}\small\item\em Level\+IDの取得関数 \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_level_aa3016006d7145226409d98d2fb30da2f}{Update}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}} \&service\+Locator, double delta\+Time, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor)
-\begin{DoxyCompactList}\small\item\em 更新処理 \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em 登録したシステムをスケジュール通りに更新する関数 \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_level_a69bb3f35b3d7733bf0930e717d17f756}{Clean}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}} \&service\+Locator)
 \begin{DoxyCompactList}\small\item\em 終了処理 \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_level_ab77413853ea076d61557053d71c6c6bc}{Update\+Limited}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{ECS\+::\+Service\+Locator}} \&service\+Locator, double delta\+Time, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor)
@@ -78,8 +78,6 @@ class SFW\+::\+Level$<$ Partition $>$}
 
 
 
-\label{doc-constructors}
-\Hypertarget{class_s_f_w_1_1_level_doc-constructors}
 \doxysubsection{構築子と解体子}
 \Hypertarget{class_s_f_w_1_1_level_af121d6c47aa936403568199efa87de50}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!Level@{Level}}
 \index{Level@{Level}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -107,12 +105,10 @@ template$<$Partition\+Concept Partition$>$ \\
 \end{DoxyParams}
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00324}{324}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00323}{323}} 行目に定義があります。
 
 
 
-\label{doc-func-members}
-\Hypertarget{class_s_f_w_1_1_level_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{class_s_f_w_1_1_level_ae77b647f6c5302bd2e4abddaf3cd7f58}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!ChangeState@{ChangeState}}
 \index{ChangeState@{ChangeState}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -132,7 +128,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+
 \end{DoxyParams}
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00453}{453}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00460}{460}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_a69bb3f35b3d7733bf0930e717d17f756}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!Clean@{Clean}}
 \index{Clean@{Clean}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -147,7 +143,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+
 
 System\+Schedulerの\+Systemの\+End関数を呼び出す 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00393}{393}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00400}{400}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_a5f0fc5b69446cf7dca25d9d4210a0a8b}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!explicit@{explicit}}
 \index{explicit@{explicit}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -164,7 +160,7 @@ T が Args... で構築可能なときだけ、このコンストラクタを有
 
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00344}{344}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00343}{343}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_aa11adee2de120e6e8083a5aa6e8b3ae2}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!GetChunk@{GetChunk}}
 \index{GetChunk@{GetChunk}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -175,7 +171,7 @@ std\+::optional$<$ \mbox{\hyperlink{class_s_f_w_1_1_spatial_chunk}{Spatial\+Chun
 
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00568}{568}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00575}{575}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_a99c6b45fb1cc2e107d66ffde7a77ed7e}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!GetGlobalEntityManager@{GetGlobalEntityManager}}
 \index{GetGlobalEntityManager@{GetGlobalEntityManager}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -193,7 +189,7 @@ const \doxylink{class_s_f_w_1_1_e_c_s_1_1_entity_manager}{ECS\+::\+Entity\+Manag
 \end{DoxyReturn}
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00438}{438}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00445}{445}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_a515a296039f5c2a28b716d8c6d426b23}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!GetID@{GetID}}
 \index{GetID@{GetID}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -208,7 +204,7 @@ Level\+IDの取得関数
 
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00359}{359}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00358}{358}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_a4cebf531263e4cc764748a73e57acfb0}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!GetName@{GetName}}
 \index{GetName@{GetName}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -226,7 +222,7 @@ const std\+::string\& レベルの名前への参照
 \end{DoxyReturn}
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00448}{448}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00455}{455}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_a134b57117aef18aa98c5cebe8ec0bde1}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!GetScheduler@{GetScheduler}}
 \index{GetScheduler@{GetScheduler}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -244,7 +240,7 @@ Scheduler\+Type\& スケジューラへの参照
 \end{DoxyReturn}
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00443}{443}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00450}{450}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_a1dd68e8dacc69f758fc9bb70200a0494}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!GetSession@{GetSession}}
 \index{GetSession@{GetSession}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -258,11 +254,11 @@ template$<$Partition\+Concept Partition$>$ \\
 Entityを更新するためのクラス取得 
 
 \begin{DoxyReturn}{戻り値}
-std\+::shared\+\_\+mutex\& mutex 
+\doxylink{struct_s_f_w_1_1_level_1_1_session}{Session} Entityを更新するためのクラス
 \end{DoxyReturn}
+Sessionは専有ロックを取得しているため、システムの更新で生成するとデッドロックの可能性があります。 システムの更新以外のタイミングで生成してください。 
 
-
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00575}{575}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00584}{584}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_a029398fed9ae2f15c2a820034022c1a6}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!GetState@{GetState}}
 \index{GetState@{GetState}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -280,7 +276,7 @@ template$<$Partition\+Concept Partition$>$ \\
 \end{DoxyReturn}
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00484}{484}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00491}{491}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_ab655fe3a3b1d7f088e56e9449f25a68c}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!IsActive@{IsActive}}
 \index{IsActive@{IsActive}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -298,7 +294,7 @@ bool アクティブ状態の場合はtrue、そうでない場合はfalse
 \end{DoxyReturn}
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00492}{492}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00499}{499}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_a5f059d268722000c42a20faf7adf2c09}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!IsLoading@{IsLoading}}
 \index{IsLoading@{IsLoading}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -316,7 +312,7 @@ bool ローディング状態の場合はtrue、そうでない場合はfalse
 \end{DoxyReturn}
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00499}{499}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00506}{506}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_a29b848cbecad925f85b9dc69b3b650e7}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!RegisterAllChunks@{RegisterAllChunks}}
 \index{RegisterAllChunks@{RegisterAllChunks}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -336,7 +332,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+
 \end{DoxyParams}
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00430}{430}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00437}{437}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_a08aaadaec0651b93df14daca91e16b0b}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!SetActive@{SetActive}}
 \index{SetActive@{SetActive}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -356,7 +352,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+
 \end{DoxyParams}
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00507}{507}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00514}{514}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_a5bc0fb54b56a15d7ff96e95ca963afcc}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!ShowDebugInactiveLevelInfoUI@{ShowDebugInactiveLevelInfoUI}}
 \index{ShowDebugInactiveLevelInfoUI@{ShowDebugInactiveLevelInfoUI}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -367,7 +363,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+
 
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00580}{580}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00589}{589}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_a14f5e74e991ff4c0641c923cad9eaf4d}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!TryBeginClean@{TryBeginClean}}
 \index{TryBeginClean@{TryBeginClean}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -385,7 +381,7 @@ bool クリーンの開始に成功した場合はtrue、そうでない場合�
 \end{DoxyReturn}
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00548}{548}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00555}{555}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_ac6ad823ef201187a53b833228138ee7e}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!TryBeginLoading@{TryBeginLoading}}
 \index{TryBeginLoading@{TryBeginLoading}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -403,7 +399,7 @@ bool ローディングの開始に成功した場合はtrue、そうでない�
 \end{DoxyReturn}
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00524}{524}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00531}{531}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_aa3016006d7145226409d98d2fb30da2f}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!Update@{Update}}
 \index{Update@{Update}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -414,11 +410,20 @@ void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+
 
 
 
-更新処理 
+登録したシステムをスケジュール通りに更新する関数 
 
 
+\begin{DoxyParams}{引数}
+{\em service\+Locator} & サービスロケーターの参照 \\
+\hline
+{\em delta\+Time} & 前回の更新からの経過時間 \\
+\hline
+{\em executor} & システムの更新に使用するスレッドエグゼキューターへのポインタ\\
+\hline
+\end{DoxyParams}
+System\+Schedulerの\+Systemの\+Update関数を呼び出す。チャンクを跨いだ移動もここで処理する。 デバッグ\+UIが有効な場合は、レベルの情報を\+UIに送る。 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00364}{364}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00368}{368}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_ab77413853ea076d61557053d71c6c6bc}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!UpdateLimited@{UpdateLimited}}
 \index{UpdateLimited@{UpdateLimited}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -433,7 +438,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+
 
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00405}{405}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00412}{412}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_level_aa6903a92fc54d7b8b78ba22901154aba}\index{SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}!UpdateState@{UpdateState}}
 \index{UpdateState@{UpdateState}!SFW::Level$<$ Partition $>$@{SFW::Level$<$ Partition $>$}}
@@ -455,7 +460,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level}}$<$ Partition $>$\+
 \end{DoxyParams}
 
 
- \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00467}{467}} 行目に定義があります。
+ \mbox{\hyperlink{_level_8hpp_source}{Level.\+hpp}} の \mbox{\hyperlink{_level_8hpp_source_l00474}{474}} 行目に定義があります。
 
 
 

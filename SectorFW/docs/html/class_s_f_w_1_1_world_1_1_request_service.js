@@ -9,6 +9,7 @@ var class_s_f_w_1_1_world_1_1_request_service =
     [ "CreateApplyLevelSystemCommand", "class_s_f_w_1_1_world_1_1_request_service.html#a63682feeea3322b4c2bc55be2d326454", null ],
     [ "CreateCleanLevelCommand", "class_s_f_w_1_1_world_1_1_request_service.html#a9b813cf8db5ea065b8e3e631bbdad6d5", null ],
     [ "CreateLambdaCommand", "class_s_f_w_1_1_world_1_1_request_service.html#af8f70f420f09edc0efaa0961129fed29", null ],
+    [ "CreateLevelSessionCommand", "class_s_f_w_1_1_world_1_1_request_service.html#ab63cce9dc6e078b8e3206b4fa5d3a783", null ],
     [ "CreateLoadLevelCommand", "class_s_f_w_1_1_world_1_1_request_service.html#aee25791b71685a8dde3f815c195f9353", null ],
     [ "CreatePauseResumeLevelCommand", "class_s_f_w_1_1_world_1_1_request_service.html#ad0c13cd685d33c681bad955e46cfd1d4", null ],
     [ "CreatePauseResumeSystemCommand", "class_s_f_w_1_1_world_1_1_request_service.html#a9fae09c2da0d257b7659fac2bfa7f2ef", null ],

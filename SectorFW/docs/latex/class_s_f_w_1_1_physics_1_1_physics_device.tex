@@ -2,6 +2,11 @@
 \hypertarget{class_s_f_w_1_1_physics_1_1_physics_device}{}\label{class_s_f_w_1_1_physics_1_1_physics_device}\index{SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}}
 
 
+物理関連の処理を管理するクラス。一番上位のインターフェースとして機能する。  
+
+
+
+
 {\ttfamily \#include $<$Physics\+Device.\+h$>$}
 
 \doxysubsubsection*{クラス}
@@ -21,11 +26,11 @@ struct \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_device_1_1_init_par
 \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_device_acad907a0eead4eeb0d36956bf391ef3d}{\texorpdfstring{$\sim$}{\string~}\+Physics\+Device}} ()
 \item 
 bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_device_a2777ccee4cd4401f01f246baa07e7f35}{Initialize}} (const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_device_1_1_init_params}{Init\+Params}} \&p)
-\item 
+\begin{DoxyCompactList}\small\item\em Joltの初期化。失敗する可能性があるので、戻り値で成功を返す。 \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_device_af127057a4e1cff9d677e55b2c1ac8cc3}{Is\+Initialized}} () const noexcept
 \item 
 void \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_device_ae265b12de2f016fbb43d2a4e066b0673}{Shutdown}} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Joltのシャットダウン。内部リソースを解放する。 \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_device_afe7db8a478f206802cf10d4a0846b401}{Apply\+Command}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_physics_a29fd7d529ecbee3870e0d6ba19322289}{Physics\+Command}} \&cmd)
 \item 
 void \mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_device_aaa8512f873fafa68db77fbe731aef980}{Step}} (float fixed\+\_\+dt, int substeps)
@@ -55,14 +60,12 @@ std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_character_pose}
 
 
 \doxysubsection{詳解}
+物理関連の処理を管理するクラス。一番上位のインターフェースとして機能する。 
+
+ \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00105}{105}} 行目に定義があります。
 
 
- \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00102}{102}} 行目に定義があります。
 
-
-
-\label{doc-constructors}
-\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_device_doc-constructors}
 \doxysubsection{構築子と解体子}
 \Hypertarget{class_s_f_w_1_1_physics_1_1_physics_device_aa8efd67b1eb29f5d8e138da76a7e4af2}\index{SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}!PhysicsDevice@{PhysicsDevice}}
 \index{PhysicsDevice@{PhysicsDevice}!SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}}
@@ -78,12 +81,10 @@ SFW\+::\+Physics\+::\+Physics\+Device\+::\texorpdfstring{$\sim$}{\string~}\+Phys
 
 
 
- \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00138}{138}} 行目に定義があります。
+ \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00141}{141}} 行目に定義があります。
 
 
 
-\label{doc-func-members}
-\Hypertarget{class_s_f_w_1_1_physics_1_1_physics_device_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{class_s_f_w_1_1_physics_1_1_physics_device_afe7db8a478f206802cf10d4a0846b401}\index{SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}!ApplyCommand@{ApplyCommand}}
 \index{ApplyCommand@{ApplyCommand}!SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}}
@@ -111,7 +112,7 @@ void SFW\+::\+Physics\+::\+Physics\+Device\+::\+Consume\+Created\+Bodies (\begin
 
 
 
- \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00180}{180}} 行目に定義があります。
+ \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00192}{192}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_physics_1_1_physics_device_a19864871256439045dc55fca35483f56}\index{SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}!FindBody@{FindBody}}
 \index{FindBody@{FindBody}!SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}}
@@ -131,6 +132,18 @@ std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_character_pose}
 {\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_device_a2777ccee4cd4401f01f246baa07e7f35} 
 bool SFW\+::\+Physics\+::\+Physics\+Device\+::\+Initialize (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_device_1_1_init_params}{Init\+Params}} \&}]{p}{}\end{DoxyParamCaption})}
 
+
+
+Joltの初期化。失敗する可能性があるので、戻り値で成功を返す。 
+
+
+\begin{DoxyParams}{引数}
+{\em p} & 初期化パラメータ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+成功した場合は true、失敗した場合は false 
+\end{DoxyReturn}
 \Hypertarget{class_s_f_w_1_1_physics_1_1_physics_device_af127057a4e1cff9d677e55b2c1ac8cc3}\index{SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}!IsInitialized@{IsInitialized}}
 \index{IsInitialized@{IsInitialized}!SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}}
 \doxysubsubsection{\texorpdfstring{IsInitialized()}{IsInitialized()}}
@@ -139,7 +152,7 @@ bool SFW\+::\+Physics\+::\+Physics\+Device\+::\+Is\+Initialized (\begin{DoxyPara
 
 
 
- \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00141}{141}} 行目に定義があります。
+ \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00149}{149}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_physics_1_1_physics_device_af1ecedcf1230e4f632711e20734fe5ce}\index{SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}!PushContactEvent@{PushContactEvent}}
 \index{PushContactEvent@{PushContactEvent}!SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}}
@@ -149,7 +162,7 @@ void SFW\+::\+Physics\+::\+Physics\+Device\+::\+Push\+Contact\+Event (\begin{Dox
 
 
 
- \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00161}{161}} 行目に定義があります。
+ \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00173}{173}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_physics_1_1_physics_device_ad47efd7c03cef191d0bc625f66a089d3}\index{SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}!ReadPosesBatch@{ReadPosesBatch}}
 \index{ReadPosesBatch@{ReadPosesBatch}!SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}}
@@ -165,7 +178,7 @@ void SFW\+::\+Physics\+::\+Physics\+Device\+::\+Read\+Poses\+Batch (\begin{DoxyP
 
 
 
- \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00192}{192}} 行目に定義があります。
+ \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00204}{204}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_physics_1_1_physics_device_a4d118cc5b2085b08028acd4fb74bf8db}\index{SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}!ResolveEntity@{ResolveEntity}}
 \index{ResolveEntity@{ResolveEntity}!SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}}
@@ -175,7 +188,7 @@ void SFW\+::\+Physics\+::\+Physics\+Device\+::\+Read\+Poses\+Batch (\begin{DoxyP
 
 
 
- \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00165}{165}} 行目に定義があります。
+ \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00177}{177}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_physics_1_1_physics_device_ac9f72a9ed69bc28263a8990881c9e147}\index{SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}!SetShapeResolver@{SetShapeResolver}}
 \index{SetShapeResolver@{SetShapeResolver}!SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}}
@@ -185,13 +198,17 @@ void SFW\+::\+Physics\+::\+Physics\+Device\+::\+Set\+Shape\+Resolver (\begin{Dox
 
 
 
- \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00170}{170}} 行目に定義があります。
+ \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00182}{182}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_physics_1_1_physics_device_ae265b12de2f016fbb43d2a4e066b0673}\index{SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}!Shutdown@{Shutdown}}
 \index{Shutdown@{Shutdown}!SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}}
 \doxysubsubsection{\texorpdfstring{Shutdown()}{Shutdown()}}
 {\footnotesize\ttfamily \label{class_s_f_w_1_1_physics_1_1_physics_device_ae265b12de2f016fbb43d2a4e066b0673} 
 void SFW\+::\+Physics\+::\+Physics\+Device\+::\+Shutdown (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Joltのシャットダウン。内部リソースを解放する。 
 
 \Hypertarget{class_s_f_w_1_1_physics_1_1_physics_device_aaa8512f873fafa68db77fbe731aef980}\index{SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}!Step@{Step}}
 \index{Step@{Step}!SFW::Physics::PhysicsDevice@{SFW::Physics::PhysicsDevice}}
@@ -207,7 +224,7 @@ std\+::optional$<$ JPH\+::\+Body\+ID $>$ SFW\+::\+Physics\+::\+Physics\+Device\+
 
 
 
- \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00173}{173}} 行目に定義があります。
+ \mbox{\hyperlink{_physics_device_8h_source}{Physics\+Device.\+h}} の \mbox{\hyperlink{_physics_device_8h_source_l00185}{185}} 行目に定義があります。
 
 
 

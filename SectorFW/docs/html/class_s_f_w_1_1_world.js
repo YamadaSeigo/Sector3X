@@ -7,6 +7,7 @@ var class_s_f_w_1_1_world =
     [ "IRequestCommand", "class_s_f_w_1_1_world_1_1_i_request_command.html", "class_s_f_w_1_1_world_1_1_i_request_command" ],
     [ "LambdaCommand", "class_s_f_w_1_1_world_1_1_lambda_command.html", "class_s_f_w_1_1_world_1_1_lambda_command" ],
     [ "LevelHolder", "struct_s_f_w_1_1_world_1_1_level_holder.html", "struct_s_f_w_1_1_world_1_1_level_holder" ],
+    [ "LevelSessionCommand", "class_s_f_w_1_1_world_1_1_level_session_command.html", "class_s_f_w_1_1_world_1_1_level_session_command" ],
     [ "LoadLevelCommand", "class_s_f_w_1_1_world_1_1_load_level_command.html", "class_s_f_w_1_1_world_1_1_load_level_command" ],
     [ "PauseResumeLevelCommand", "class_s_f_w_1_1_world_1_1_pause_resume_level_command.html", "class_s_f_w_1_1_world_1_1_pause_resume_level_command" ],
     [ "RequestService", "class_s_f_w_1_1_world_1_1_request_service.html", "class_s_f_w_1_1_world_1_1_request_service" ],

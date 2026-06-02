@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/IGraphicsDevice.hpp ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -13,6 +13,7 @@
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -34,20 +35,26 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.14.0 -->
+<!-- 構築: Doxygen 1.13.2 -->
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
 </script>
 <script type="text/javascript">
-$(function() { codefold.init(); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
+/* @license-end */
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
@@ -62,9 +69,10 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('_i_graphics_device_8hpp_source.html','',''); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_i_graphics_device_8hpp_source.html',''); initResizable(true); });
+/* @license-end */
 </script>
-<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -113,165 +121,171 @@ $(function(){initNavTree('_i_graphics_device_8hpp_source.html','',''); });
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="comment">//======================================================================</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">   26</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">NativeWindowHandle</a> = std::variant&lt;HWND&gt;;</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="comment">//======================================================================</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Impl&gt;</div>
-<div class="foldopen" id="foldopen00034" data-start="{" data-end="};">
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">   34</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#aead7deb30ab52aef3c7e4cd7968fd58b">IGraphicsDevice</a> {</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <span class="keyword">protected</span>:</div>
-<div class="foldopen" id="foldopen00042" data-start="{" data-end="}">
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#acd355dc1d7f35212ee71c1e8219be1e0">   42</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#acd355dc1d7f35212ee71c1e8219be1e0">Initialize</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">NativeWindowHandle</a>&amp; nativeWindowHandle, uint32_t width, uint32_t height, <span class="keywordtype">double</span> fps) {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;InitializeImpl(nativeWindowHandle, width, height, fps);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            }</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="comment">//=======================================================================</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="comment">//※継承先のクラスで実装されるべき関数の宣言</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="comment">// InitializeImpl() : デバイスの初期化を行う関数。引数はウィンドウハンドル、幅、高さ、FPSなど。戻り値は初期化の成功/失敗。</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="comment">// ClearImpl() : 画面をクリアする関数。引数はクリアカラー。</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="comment">// DrawImpl() : 描画を実行する関数。</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="comment">// PresentImpl() : 描画結果を画面に表示する関数。</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <span class="comment">// SubmitFrameImpl() : 描画フレームをレンダースレッドに提出する関数。</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="comment">// WaitSubmittedFramesImpl() : 指定したフレームインデックスまでの提出済みフレームの完了を待つ関数。</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="comment">// =======================================================================</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Impl&gt;</div>
+<div class="foldopen" id="foldopen00045" data-start="{" data-end="};">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html">   45</a></span>        <span class="keyword">class </span><a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#aead7deb30ab52aef3c7e4cd7968fd58b">IGraphicsDevice</a> {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keyword">protected</span>:</div>
+<div class="foldopen" id="foldopen00053" data-start="{" data-end="}">
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#acd355dc1d7f35212ee71c1e8219be1e0">   53</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#acd355dc1d7f35212ee71c1e8219be1e0">Initialize</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">NativeWindowHandle</a>&amp; nativeWindowHandle, uint32_t width, uint32_t height, <span class="keywordtype">double</span> fps) {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;InitializeImpl(nativeWindowHandle, width, height, fps);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            }</div>
 </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#aead7deb30ab52aef3c7e4cd7968fd58b">   49</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#aead7deb30ab52aef3c7e4cd7968fd58b">IGraphicsDevice</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="keyword">template</span>&lt;Debug::ImGuiBackendType ImGuiBackend&gt;</div>
-<div class="foldopen" id="foldopen00057" data-start="{" data-end="}">
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a0f0271012c8d9fe7c508a1f424ead2da">   57</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a0f0271012c8d9fe7c508a1f424ead2da">Configure</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">NativeWindowHandle</a>&amp; nativeWindowHandle, uint32_t width, uint32_t height, <span class="keywordtype">double</span> fps)</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            {</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                assert(!m_isInitialized &amp;&amp; <span class="stringliteral">&quot;IGraphicsDevice is already initialized.&quot;</span>);</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                m_isInitialized = <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#acd355dc1d7f35212ee71c1e8219be1e0">Initialize</a>(nativeWindowHandle, width, height, fps);</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#ifdef _ENABLE_IMGUI</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                m_imguiLayer = std::make_unique&lt;Debug::ImGuiLayer&gt;(std::make_unique&lt;ImGuiBackend&gt;());</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html">Debug::ImGuiInitInfo</a> info{};</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                <span class="keywordtype">void</span>* windowPtr = std::visit([&amp;](<span class="keyword">auto</span>&amp; handle)-&gt;<span class="keywordtype">void</span>* {</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                    <span class="keyword">using </span>T = std::decay_t&lt;<span class="keyword">decltype</span>(handle)&gt;;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                    <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(T) != m_imguiLayer-&gt;GetWindowType()) {</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                        assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Incompatible window handle type for ImGui initialization.&quot;</span>);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                    }</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>                    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_pointer_v&lt;T&gt;) {</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                        <span class="comment">// 例: HWND / GLFWwindow* / SDL_Window* など</span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                        <span class="keywordflow">return</span> handle;                 <span class="comment">// T* → void* へ暗黙変換（OK）</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                    }</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                    <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                        <span class="comment">// 例: X11 Window のように整数ハンドルを持たせているならここは再検討</span></div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">void</span>*<span class="keyword">&gt;</span>(std::addressof(handle)); <span class="comment">// T* → void*（OK）</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                    }</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                    }, nativeWindowHandle);</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                <span class="keywordflow">if</span> (!windowPtr) {</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                    assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Failed to get window handle for ImGui initialization.&quot;</span>);</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                    <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                }</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                info.<a class="code hl_variable" href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html#a699036fd33a456a52646216da594a2d6">platform_window</a> = windowPtr;</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                <span class="comment">//info.platform_window = ;            // SDL3 なら SDL_Window*</span></div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                <span class="keyword">auto</span> device = <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;GetDevice();</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                <span class="keywordflow">if</span> (!device) {</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                    assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Failed to get graphics device for ImGui initialization.&quot;</span>);</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                    <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>                }</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>                <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(device) != m_imguiLayer-&gt;GetDeviceType()) {</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                    assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Incompatible graphics device type for ImGui initialization.&quot;</span>);</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                    <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                }</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                info.<a class="code hl_variable" href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html#ab376e48c59938c997573f82d1e5d5867">device</a> = device;</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                <span class="keyword">auto</span> deviceContext = <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;GetDeviceContext();</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                <span class="keywordflow">if</span> (!deviceContext) {</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                    assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Failed to get graphics device context for ImGui initialization.&quot;</span>);</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                    <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>                }</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                info.<a class="code hl_variable" href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html#a6cc23419ad158f8d0be8d88f8fb1a8bf">device_context</a> = deviceContext;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                info.<a class="code hl_variable" href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html#a2855f7042cc6a7eecf3799e729624e9a">display_w</a> = (int)width;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                info.<a class="code hl_variable" href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html#a273a91d294286411fed226f381524a11">display_h</a> = (int)height;</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                info.<a class="code hl_variable" href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html#ac0095cc53e5e4976b3a022142205cce5">dpi_scale</a> = 1.0f; <span class="comment">// 必要なら取得して入れる</span></div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                <span class="keywordtype">bool</span> ok = m_imguiLayer-&gt;Init(info);</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                assert(ok &amp;&amp; <span class="stringliteral">&quot;Imguiの初期化に失敗しました&quot;</span>);</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                frameSec = 1.0f / (float)fps;</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="preprocessor">#endif </span><span class="comment">// _ENABLE_IMGUI</span></div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            }</div>
-</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span></div>
-<div class="foldopen" id="foldopen00121" data-start="{" data-end="}">
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a755ede26c777008d980552218ce96530">  121</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a755ede26c777008d980552218ce96530">Clear</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> clearColor[4]) {</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>                <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;ClearImpl(clearColor);</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            }</div>
-</div>
-<div class="foldopen" id="foldopen00124" data-start="{" data-end="}">
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3a54c028d48da1a75038656f7dee3394">  124</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3a54c028d48da1a75038656f7dee3394">Draw</a>() {</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;DrawImpl();</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#aead7deb30ab52aef3c7e4cd7968fd58b">   60</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#aead7deb30ab52aef3c7e4cd7968fd58b">IGraphicsDevice</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <span class="keyword">template</span>&lt;Debug::ImGuiBackendType ImGuiBackend&gt;</div>
+<div class="foldopen" id="foldopen00068" data-start="{" data-end="}">
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a0f0271012c8d9fe7c508a1f424ead2da">   68</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a0f0271012c8d9fe7c508a1f424ead2da">Configure</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">NativeWindowHandle</a>&amp; nativeWindowHandle, uint32_t width, uint32_t height, <span class="keywordtype">double</span> fps)</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                assert(!m_isInitialized &amp;&amp; <span class="stringliteral">&quot;IGraphicsDevice is already initialized.&quot;</span>);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                <span class="comment">// 派生クラスのAPIごとの初期化関数を呼び出す</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>                m_isInitialized = <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#acd355dc1d7f35212ee71c1e8219be1e0">Initialize</a>(nativeWindowHandle, width, height, fps);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                <span class="comment">//imguiの初期化</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="preprocessor">#ifdef _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                m_imguiLayer = std::make_unique&lt;Debug::ImGuiLayer&gt;(std::make_unique&lt;ImGuiBackend&gt;());</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html">Debug::ImGuiInitInfo</a> info{};</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                <span class="keywordtype">void</span>* windowPtr = std::visit([&amp;](<span class="keyword">auto</span>&amp; handle)-&gt;<span class="keywordtype">void</span>* {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                    <span class="keyword">using </span>T = std::decay_t&lt;<span class="keyword">decltype</span>(handle)&gt;;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                    <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(T) != m_imguiLayer-&gt;GetWindowType()) {</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                        assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Incompatible window handle type for ImGui initialization.&quot;</span>);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                    }</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_pointer_v&lt;T&gt;) {</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                        <span class="comment">// 例: HWND / GLFWwindow* / SDL_Window* など</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                        <span class="keywordflow">return</span> handle;                 <span class="comment">// T* → void* へ暗黙変換（OK）</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                    }</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                    <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                        <span class="comment">// 例: X11 Window のように整数ハンドルを持たせているならここは再検討</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">void</span>*<span class="keyword">&gt;</span>(std::addressof(handle)); <span class="comment">// T* → void*（OK）</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                    }</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>                    }, nativeWindowHandle);</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                <span class="keywordflow">if</span> (!windowPtr) {</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                    assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Failed to get window handle for ImGui initialization.&quot;</span>);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                }</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                info.<a class="code hl_variable" href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html#a699036fd33a456a52646216da594a2d6">platform_window</a> = windowPtr;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                <span class="comment">//info.platform_window = ;            // SDL3 なら SDL_Window*</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                <span class="keyword">auto</span> device = <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;GetDevice();</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                <span class="keywordflow">if</span> (!device) {</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>                    assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Failed to get graphics device for ImGui initialization.&quot;</span>);</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                }</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(device) != m_imguiLayer-&gt;GetDeviceType()) {</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                    assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Incompatible graphics device type for ImGui initialization.&quot;</span>);</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                }</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>                info.device = device;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                <span class="keyword">auto</span> deviceContext = <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;GetDeviceContext();</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>                <span class="keywordflow">if</span> (!deviceContext) {</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>                    assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Failed to get graphics device context for ImGui initialization.&quot;</span>);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>                }</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>                info.device_context = deviceContext;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>                info.display_w = (int)width;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>                info.display_h = (int)height;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>                info.dpi_scale = 1.0f; <span class="comment">// 必要なら取得して入れる</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>                <span class="keywordtype">bool</span> ok = m_imguiLayer-&gt;Init(info);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                assert(ok &amp;&amp; <span class="stringliteral">&quot;Imguiの初期化に失敗しました&quot;</span>);</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="preprocessor">#ifdef _ENABLE_IMGUI</span></div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>                <span class="keywordflow">if</span> (m_imguiLayer) {</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>                    m_imguiLayer-&gt;BeginFrame();</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>                    m_imguiLayer-&gt;DrawUI(frameSec);</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>                    m_imguiLayer-&gt;EndFrame();</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>                    m_imguiLayer-&gt;Render();</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>                }</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="preprocessor">#endif </span><span class="comment">// _ENABLE_IMGUI</span></div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            }</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>                frameSec = 1.0f / (float)fps;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="preprocessor">#endif </span><span class="comment">// _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>            }</div>
 </div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span></div>
-<div class="foldopen" id="foldopen00141" data-start="{" data-end="}">
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#abcb0602a6cec5134423c8941bd277e46">  141</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#abcb0602a6cec5134423c8941bd277e46">Present</a>() {</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;PresentImpl();</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>            }</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span></div>
+<div class="foldopen" id="foldopen00134" data-start="{" data-end="}">
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a755ede26c777008d980552218ce96530">  134</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a755ede26c777008d980552218ce96530">Clear</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> clearColor[4]) {</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>                <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;ClearImpl(clearColor);</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>            }</div>
 </div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span></div>
-<div class="foldopen" id="foldopen00149" data-start="{" data-end="}">
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3d210c34b525b87e33208989c4aec1d2">  149</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3d210c34b525b87e33208989c4aec1d2">SubmitFrame</a>(<span class="keyword">const</span> FLOAT clearColor[4], uint64_t frameIdx) {</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>                <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;SubmitFrameImpl(clearColor, frameIdx);</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>            }</div>
+<div class="foldopen" id="foldopen00137" data-start="{" data-end="}">
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3a54c028d48da1a75038656f7dee3394">  137</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3a54c028d48da1a75038656f7dee3394">Draw</a>() {</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>                <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;DrawImpl();</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="preprocessor">#ifdef _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                <span class="keywordflow">if</span> (m_imguiLayer) {</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                    m_imguiLayer-&gt;BeginFrame();</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>                    m_imguiLayer-&gt;DrawUI(frameSec);</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>                    m_imguiLayer-&gt;EndFrame();</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>                    m_imguiLayer-&gt;Render();</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                }</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="preprocessor">#endif </span><span class="comment">// _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>            }</div>
 </div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span></div>
-<div class="foldopen" id="foldopen00156" data-start="{" data-end="}">
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3f13d959dd8c2f9e275cb335764aa17a">  156</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3f13d959dd8c2f9e275cb335764aa17a">WaitSubmittedFrames</a>(uint64_t uptoFrame) {</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>                <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;WaitSubmittedFramesImpl(uptoFrame);</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            }</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span></div>
+<div class="foldopen" id="foldopen00154" data-start="{" data-end="}">
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#abcb0602a6cec5134423c8941bd277e46">  154</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#abcb0602a6cec5134423c8941bd277e46">Present</a>() {</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;PresentImpl();</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>            }</div>
 </div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span></div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a669ea0c8873cf05be43c35d1d10a4412">  162</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a669ea0c8873cf05be43c35d1d10a4412">~IGraphicsDevice</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a6dd6f41ea22d3d5d01046473a8216961">  167</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a6dd6f41ea22d3d5d01046473a8216961">IsInitialized</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_isInitialized; }</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>            <span class="comment">// 初期化フラグ</span></div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>            <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> m_isInitialized = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="preprocessor">#ifdef _ENABLE_IMGUI</span></div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>            std::unique_ptr&lt;Debug::ImGuiLayer&gt; m_imguiLayer = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>            <span class="keywordtype">float</span> frameSec = 1.0f / 60.0f;</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="preprocessor">#endif </span><span class="comment">// _ENABLE_IMGUI</span></div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        };</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span></div>
+<div class="foldopen" id="foldopen00162" data-start="{" data-end="}">
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3d210c34b525b87e33208989c4aec1d2">  162</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3d210c34b525b87e33208989c4aec1d2">SubmitFrame</a>(<span class="keyword">const</span> FLOAT clearColor[4], uint64_t frameIdx) {</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>                <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;SubmitFrameImpl(clearColor, frameIdx);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>            }</div>
 </div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    }</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>}</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span></div>
+<div class="foldopen" id="foldopen00169" data-start="{" data-end="}">
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3f13d959dd8c2f9e275cb335764aa17a">  169</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3f13d959dd8c2f9e275cb335764aa17a">WaitSubmittedFrames</a>(uint64_t uptoFrame) {</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                <span class="keyword">static_cast&lt;</span>Impl*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;WaitSubmittedFramesImpl(uptoFrame);</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>            }</div>
+</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a669ea0c8873cf05be43c35d1d10a4412">  175</a></span>            <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a669ea0c8873cf05be43c35d1d10a4412">~IGraphicsDevice</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno"><a class="line" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a6dd6f41ea22d3d5d01046473a8216961">  180</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a6dd6f41ea22d3d5d01046473a8216961">IsInitialized</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_isInitialized; }</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>            <span class="comment">// 初期化フラグ</span></div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>            <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> m_isInitialized = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="preprocessor">#ifdef _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>            std::unique_ptr&lt;Debug::ImGuiLayer&gt; m_imguiLayer = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>            <span class="keywordtype">float</span> frameSec = 1.0f / 60.0f;</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="preprocessor">#endif </span><span class="comment">// _ENABLE_IMGUI</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        };</div>
+</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    }</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>}</div>
 <div class="ttc" id="a_im_gui_layer_8h_html"><div class="ttname"><a href="_im_gui_layer_8h.html">ImGuiLayer.h</a></div><div class="ttdoc">ImGuiの描画を管理するクラス</div></div>
-<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_a0f0271012c8d9fe7c508a1f424ead2da"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a0f0271012c8d9fe7c508a1f424ead2da">SFW::Graphics::IGraphicsDevice::Configure</a></div><div class="ttdeci">void Configure(const NativeWindowHandle &amp;nativeWindowHandle, uint32_t width, uint32_t height, double fps)</div><div class="ttdoc">初期化</div><div class="ttdef"><b>Definition</b> <a href="#l00057">IGraphicsDevice.hpp:57</a></div></div>
-<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_a3a54c028d48da1a75038656f7dee3394"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3a54c028d48da1a75038656f7dee3394">SFW::Graphics::IGraphicsDevice::Draw</a></div><div class="ttdeci">void Draw()</div><div class="ttdef"><b>Definition</b> <a href="#l00124">IGraphicsDevice.hpp:124</a></div></div>
-<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_a3d210c34b525b87e33208989c4aec1d2"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3d210c34b525b87e33208989c4aec1d2">SFW::Graphics::IGraphicsDevice::SubmitFrame</a></div><div class="ttdeci">void SubmitFrame(const FLOAT clearColor[4], uint64_t frameIdx)</div><div class="ttdoc">フレームの提出</div><div class="ttdef"><b>Definition</b> <a href="#l00149">IGraphicsDevice.hpp:149</a></div></div>
-<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_a3f13d959dd8c2f9e275cb335764aa17a"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3f13d959dd8c2f9e275cb335764aa17a">SFW::Graphics::IGraphicsDevice::WaitSubmittedFrames</a></div><div class="ttdeci">void WaitSubmittedFrames(uint64_t uptoFrame)</div><div class="ttdoc">提出済みフレームの完了待ち</div><div class="ttdef"><b>Definition</b> <a href="#l00156">IGraphicsDevice.hpp:156</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_a0f0271012c8d9fe7c508a1f424ead2da"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a0f0271012c8d9fe7c508a1f424ead2da">SFW::Graphics::IGraphicsDevice::Configure</a></div><div class="ttdeci">void Configure(const NativeWindowHandle &amp;nativeWindowHandle, uint32_t width, uint32_t height, double fps)</div><div class="ttdoc">描画デバイスを初期化する。初めにこれを呼び出さないと描画できません。</div><div class="ttdef"><b>Definition</b> <a href="#l00068">IGraphicsDevice.hpp:68</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_a3a54c028d48da1a75038656f7dee3394"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3a54c028d48da1a75038656f7dee3394">SFW::Graphics::IGraphicsDevice::Draw</a></div><div class="ttdeci">void Draw()</div><div class="ttdef"><b>Definition</b> <a href="#l00137">IGraphicsDevice.hpp:137</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_a3d210c34b525b87e33208989c4aec1d2"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3d210c34b525b87e33208989c4aec1d2">SFW::Graphics::IGraphicsDevice::SubmitFrame</a></div><div class="ttdeci">void SubmitFrame(const FLOAT clearColor[4], uint64_t frameIdx)</div><div class="ttdoc">フレームの提出</div><div class="ttdef"><b>Definition</b> <a href="#l00162">IGraphicsDevice.hpp:162</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_a3f13d959dd8c2f9e275cb335764aa17a"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a3f13d959dd8c2f9e275cb335764aa17a">SFW::Graphics::IGraphicsDevice::WaitSubmittedFrames</a></div><div class="ttdeci">void WaitSubmittedFrames(uint64_t uptoFrame)</div><div class="ttdoc">提出済みフレームの完了待ち</div><div class="ttdef"><b>Definition</b> <a href="#l00169">IGraphicsDevice.hpp:169</a></div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_a669ea0c8873cf05be43c35d1d10a4412"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a669ea0c8873cf05be43c35d1d10a4412">SFW::Graphics::IGraphicsDevice::~IGraphicsDevice</a></div><div class="ttdeci">~IGraphicsDevice()=default</div><div class="ttdoc">デストラクタ</div></div>
-<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_a6dd6f41ea22d3d5d01046473a8216961"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a6dd6f41ea22d3d5d01046473a8216961">SFW::Graphics::IGraphicsDevice::IsInitialized</a></div><div class="ttdeci">bool IsInitialized() const</div><div class="ttdoc">初期化フラグの取得</div><div class="ttdef"><b>Definition</b> <a href="#l00167">IGraphicsDevice.hpp:167</a></div></div>
-<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_a755ede26c777008d980552218ce96530"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a755ede26c777008d980552218ce96530">SFW::Graphics::IGraphicsDevice::Clear</a></div><div class="ttdeci">void Clear(const float clearColor[4])</div><div class="ttdoc">画面をクリア</div><div class="ttdef"><b>Definition</b> <a href="#l00121">IGraphicsDevice.hpp:121</a></div></div>
-<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_abcb0602a6cec5134423c8941bd277e46"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#abcb0602a6cec5134423c8941bd277e46">SFW::Graphics::IGraphicsDevice::Present</a></div><div class="ttdeci">void Present()</div><div class="ttdoc">描画</div><div class="ttdef"><b>Definition</b> <a href="#l00141">IGraphicsDevice.hpp:141</a></div></div>
-<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_acd355dc1d7f35212ee71c1e8219be1e0"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#acd355dc1d7f35212ee71c1e8219be1e0">SFW::Graphics::IGraphicsDevice::Initialize</a></div><div class="ttdeci">bool Initialize(const NativeWindowHandle &amp;nativeWindowHandle, uint32_t width, uint32_t height, double fps)</div><div class="ttdoc">初期化</div><div class="ttdef"><b>Definition</b> <a href="#l00042">IGraphicsDevice.hpp:42</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_a6dd6f41ea22d3d5d01046473a8216961"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a6dd6f41ea22d3d5d01046473a8216961">SFW::Graphics::IGraphicsDevice::IsInitialized</a></div><div class="ttdeci">bool IsInitialized() const</div><div class="ttdoc">初期化フラグの取得</div><div class="ttdef"><b>Definition</b> <a href="#l00180">IGraphicsDevice.hpp:180</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_a755ede26c777008d980552218ce96530"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#a755ede26c777008d980552218ce96530">SFW::Graphics::IGraphicsDevice::Clear</a></div><div class="ttdeci">void Clear(const float clearColor[4])</div><div class="ttdoc">画面をクリア</div><div class="ttdef"><b>Definition</b> <a href="#l00134">IGraphicsDevice.hpp:134</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_abcb0602a6cec5134423c8941bd277e46"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#abcb0602a6cec5134423c8941bd277e46">SFW::Graphics::IGraphicsDevice::Present</a></div><div class="ttdeci">void Present()</div><div class="ttdoc">描画</div><div class="ttdef"><b>Definition</b> <a href="#l00154">IGraphicsDevice.hpp:154</a></div></div>
+<div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_acd355dc1d7f35212ee71c1e8219be1e0"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#acd355dc1d7f35212ee71c1e8219be1e0">SFW::Graphics::IGraphicsDevice::Initialize</a></div><div class="ttdeci">bool Initialize(const NativeWindowHandle &amp;nativeWindowHandle, uint32_t width, uint32_t height, double fps)</div><div class="ttdoc">継承先のデバイスの初期化を行う関数。これを呼び出す前に、m_isInitializedがfalseであることを確認してください。</div><div class="ttdef"><b>Definition</b> <a href="#l00053">IGraphicsDevice.hpp:53</a></div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_i_graphics_device_html_aead7deb30ab52aef3c7e4cd7968fd58b"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_i_graphics_device.html#aead7deb30ab52aef3c7e4cd7968fd58b">SFW::Graphics::IGraphicsDevice::IGraphicsDevice</a></div><div class="ttdeci">IGraphicsDevice()=default</div><div class="ttdoc">コンストラクタ</div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_graphics_html"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html">SFW::Graphics</a></div><div class="ttdef"><b>Definition</b> <a href="_d_x11_graphics_8h_source.html#l00034">DX11Graphics.h:35</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_add16cad34908b03f927d070c219d2f4a"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#add16cad34908b03f927d070c219d2f4a">SFW::Graphics::NativeWindowHandle</a></div><div class="ttdeci">std::variant&lt; HWND &gt; NativeWindowHandle</div><div class="ttdef"><b>Definition</b> <a href="#l00026">IGraphicsDevice.hpp:26</a></div></div>
-<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00031">AudioService.h:32</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_debug_1_1_im_gui_init_info_html"><div class="ttname"><a href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html">SFW::Debug::ImGuiInitInfo</a></div><div class="ttdoc">ImGuiの初期化情報を格納する構造体</div><div class="ttdef"><b>Definition</b> <a href="_im_gui_backend_8h_source.html#l00017">ImGuiBackend.h:17</a></div></div>
-<div class="ttc" id="astruct_s_f_w_1_1_debug_1_1_im_gui_init_info_html_a273a91d294286411fed226f381524a11"><div class="ttname"><a href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html#a273a91d294286411fed226f381524a11">SFW::Debug::ImGuiInitInfo::display_h</a></div><div class="ttdeci">int display_h</div><div class="ttdef"><b>Definition</b> <a href="_im_gui_backend_8h_source.html#l00021">ImGuiBackend.h:21</a></div></div>
-<div class="ttc" id="astruct_s_f_w_1_1_debug_1_1_im_gui_init_info_html_a2855f7042cc6a7eecf3799e729624e9a"><div class="ttname"><a href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html#a2855f7042cc6a7eecf3799e729624e9a">SFW::Debug::ImGuiInitInfo::display_w</a></div><div class="ttdeci">int display_w</div><div class="ttdef"><b>Definition</b> <a href="_im_gui_backend_8h_source.html#l00021">ImGuiBackend.h:21</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_debug_1_1_im_gui_init_info_html_a699036fd33a456a52646216da594a2d6"><div class="ttname"><a href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html#a699036fd33a456a52646216da594a2d6">SFW::Debug::ImGuiInitInfo::platform_window</a></div><div class="ttdeci">void * platform_window</div><div class="ttdef"><b>Definition</b> <a href="_im_gui_backend_8h_source.html#l00018">ImGuiBackend.h:18</a></div></div>
-<div class="ttc" id="astruct_s_f_w_1_1_debug_1_1_im_gui_init_info_html_a6cc23419ad158f8d0be8d88f8fb1a8bf"><div class="ttname"><a href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html#a6cc23419ad158f8d0be8d88f8fb1a8bf">SFW::Debug::ImGuiInitInfo::device_context</a></div><div class="ttdeci">void * device_context</div><div class="ttdef"><b>Definition</b> <a href="_im_gui_backend_8h_source.html#l00020">ImGuiBackend.h:20</a></div></div>
-<div class="ttc" id="astruct_s_f_w_1_1_debug_1_1_im_gui_init_info_html_ab376e48c59938c997573f82d1e5d5867"><div class="ttname"><a href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html#ab376e48c59938c997573f82d1e5d5867">SFW::Debug::ImGuiInitInfo::device</a></div><div class="ttdeci">void * device</div><div class="ttdef"><b>Definition</b> <a href="_im_gui_backend_8h_source.html#l00019">ImGuiBackend.h:19</a></div></div>
-<div class="ttc" id="astruct_s_f_w_1_1_debug_1_1_im_gui_init_info_html_ac0095cc53e5e4976b3a022142205cce5"><div class="ttname"><a href="struct_s_f_w_1_1_debug_1_1_im_gui_init_info.html#ac0095cc53e5e4976b3a022142205cce5">SFW::Debug::ImGuiInitInfo::dpi_scale</a></div><div class="ttdeci">float dpi_scale</div><div class="ttdef"><b>Definition</b> <a href="_im_gui_backend_8h_source.html#l00022">ImGuiBackend.h:22</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="_i_graphics_device_8hpp.html">IGraphicsDevice.hpp</a></li>
-    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+    <li class="navelem"><a class="el" href="dir_69161428018e52ad84691a5947f27cc9.html">Github</a></li><li class="navelem"><a class="el" href="dir_b16de0d6cadc5f599d3a1812d4bfc31f.html">Sector3X</a></li><li class="navelem"><a class="el" href="dir_c3d880fd4ea2deebfb73ffb2e2b5a523.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_1145cf039e35774d8481e4ea1d2fa6e0.html">inc</a></li><li class="navelem"><a class="el" href="dir_991437b4ce66300b52a83f76dbdf298e.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_4b5352a26ce7ea1db35fbdafe9f06e3b.html">Graphics</a></li><li class="navelem"><a class="el" href="_i_graphics_device_8hpp.html">IGraphicsDevice.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

@@ -231,7 +231,7 @@
 \DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ b\ :\ boxes)\ \{}
 \DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\ q\ =\ clampToBox(b,\ cp);}
 \DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\ vec\{\ q.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ -\/\ cp.x,\ q.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ -\/\ cp.z\ \};}
-\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ d\ =\ vec.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a48c92c09338aff69cdb3d3d8730c51b3}{length}}();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ d\ =\ vec.length();}
 \DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ items.push\_back(\{\ b,\ d\ \});}
 \DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ std::nth\_element(items.begin(),\ items.begin()\ +\ std::min<size\_t>(displayCount,\ items.size()),\ items.end(),}
@@ -248,7 +248,7 @@
 \DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\ extent\ =\ box.size()\ *\ 0.5f;}
 \DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00300}00300\ }
 \DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{Math::Vec2f}}\ vec\{\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a1990e723a48fa71de780e96568095000}{x}}\ -\/\ cp.x,\ center.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_ae3e8fd5bb2d3d19c291844e0dfe4ad2a}{y}}\ -\/\ cp.z\ \};}
-\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ len\ =\ vec.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec2_a48c92c09338aff69cdb3d3d8730c51b3}{length}}();}
+\DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ len\ =\ vec.length();}
 \DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00303}00303\ }
 \DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (len\ >\ maxD)\ \textcolor{keywordflow}{continue};\ \textcolor{comment}{//\ 表示距離外}}
 \DoxyCodeLine{\Hypertarget{_quad_tree_partition_8h_source_l00305}00305\ }

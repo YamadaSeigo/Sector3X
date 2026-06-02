@@ -14,6 +14,8 @@ DX11用グラフィックスデバイスクラス
 \doxysubsection{詳解}
 DX11用グラフィックスデバイスクラス 
 
+コピー禁止、ムーブ可能。\+IGraphics\+Deviceを継承し、\+DX11に特化した実装を提供する。レンダースレッドを内部に持ち、描画コマンドのサブミットと実行を非同期に行うことができる。\+Render\+Graphを使用して描画パスを管理し、\+Render\+Backendを通じてリソース管理や描画状態の設定を行う。 
+
 このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
 \item 
 C\+:/work/\+Github/\+Sector3\+X/\+Sector\+FW/inc/\+Sector\+FW/\mbox{\hyperlink{_d_x11_graphics_8h}{DX11\+Graphics.\+h}}\end{DoxyCompactItemize}

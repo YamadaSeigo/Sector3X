@@ -195,14 +195,14 @@
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00263}00263\ }
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch}{MocQuadBatch}}\ out\{\};}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00265}00265\ }
-\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ std::memcpy(out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}},\ clips,\ \textcolor{keyword}{sizeof}(Vec4)\ *\ 4);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ std::memcpy(out.clip,\ clips,\ \textcolor{keyword}{sizeof}(Vec4)\ *\ 4);}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00267}00267\ }
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2)\ 近クリップ整合（全頂点が\ near\ より奥側なら無効）}}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ MOC\ は\ depth\ =\ 1/w（逆深度）なので、near\ と合わせるなら\ w\ >\ near\ を可視空間とみなす。}}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ countFront\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[i].\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}}\ >\ nearClipW)\ ++countFront;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \textcolor{keywordflow}{if}\ (out.clip[i].w\ >\ nearClipW)\ ++countFront;}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (countFront\ ==\ 0)\ \{}
-\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a22f72333c374873329553a7a66bb3440}{valid}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.valid\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00276}00276\ }
@@ -210,9 +210,9 @@
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ NDC\ の\ x,y\ を使って符号付き面積で\ CCW\ を判定し、CW\ なら対角を入れ替える。}}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ ndcXY\_stable\ =\ [\&](\textcolor{keywordtype}{int}\ i)\ \{}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CCW判定用途なので「割り算が爆発しない」ことを優先}}
-\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ w\ =\ (std::max)(out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[i].\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a31f3d200b8bce1ffbb3391a001a6861b}{w}},\ nearClipW);\ \textcolor{comment}{//\ near\ でクランプ}}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ w\ =\ (std::max)(out.clip[i].w,\ nearClipW);\ \textcolor{comment}{//\ near\ でクランプ}}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ invw\ =\ 1.0f\ /\ w;}
-\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{SFW::Math::Vec2f}}\{\ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[i].\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a3b73bc23b1366b9bb9fdd5c324eb89ca}{x}}\ *\ invw,\ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[i].\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_vec4_a322367280913e6d77a4941b968e1c617}{y}}\ *\ invw\ \};}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{SFW::Math::Vec2f}}\{\ out.clip[i].x\ *\ invw,\ out.clip[i].y\ *\ invw\ \};}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00285}00285\ }
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ triArea2\ =\ [](\mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{SFW::Math::Vec2f}}\ p,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{SFW::Math::Vec2f}}\ q,\ \mbox{\hyperlink{namespace_s_f_w_1_1_math_a3cc0985a0fb0848b404af96ae6bb83a5}{SFW::Math::Vec2f}}\ r)\ \{}
@@ -225,12 +225,12 @@
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ ccw\ =\ (area\ >\ 0.0f);}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CCW\ でなければ\ 1\ と\ 2\ を入れ替える（0,1,2\ /\ 2,1,3\ -\/>\ 0,2,1\ /\ 1,2,3）}}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ccw)\ \{}
-\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[0],\ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a74a05f4681b818dc3133f6dbd6bb3e57}{clip}}[2]);}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(out.clip[0],\ out.clip[2]);}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00298}00298\ }
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4)\ インデックス（CCW）}}
-\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{indices}}[0]\ =\ 0;\ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{indices}}[1]\ =\ 2;\ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{indices}}[2]\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{indices}}[3]\ =\ 2;\ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{indices}}[4]\ =\ 0;\ out.\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_moc_quad_batch_a797afe6c4b1c0f29667ea427fa5f439b}{indices}}[5]\ =\ 3;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ out.indices[0]\ =\ 0;\ out.indices[1]\ =\ 2;\ out.indices[2]\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ out.indices[3]\ =\ 2;\ out.indices[4]\ =\ 0;\ out.indices[5]\ =\ 3;}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00302}00302\ }
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
 \DoxyCodeLine{\Hypertarget{_render_service_8h_source_l00304}00304\ \ \ \ \ \ \ \ \ \}}

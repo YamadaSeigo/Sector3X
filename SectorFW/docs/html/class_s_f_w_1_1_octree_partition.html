@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SectorFW: SFW::OctreePartition クラス</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -13,6 +13,7 @@
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -34,20 +35,26 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.14.0 -->
+<!-- 構築: Doxygen 1.13.2 -->
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
 </script>
 <script type="text/javascript">
-$(function() { codefold.init(); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
+/* @license-end */
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
@@ -62,9 +69,10 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('class_s_f_w_1_1_octree_partition.html','','class_s_f_w_1_1_octree_partition-members'); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_s_f_w_1_1_octree_partition.html',''); initResizable(true); });
+/* @license-end */
 </script>
-<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -88,6 +96,12 @@ $(function(){initNavTree('class_s_f_w_1_1_octree_partition.html','','class_s_f_w
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-types">公開型</a> &#124;
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pub-static-methods">静的公開メンバ関数</a> &#124;
+<a href="#pub-static-attribs">静的公開変数類</a> &#124;
+<a href="class_s_f_w_1_1_octree_partition-members.html">全メンバ一覧</a>  </div>
   <div class="headertitle"><div class="title">SFW::OctreePartition クラス</div></div>
 </div><!--header-->
 <div class="contents">
@@ -97,94 +111,133 @@ $(function(){initNavTree('class_s_f_w_1_1_octree_partition.html','','class_s_f_w
 
 <p><code>#include &lt;<a class="el" href="_octree_partition_8h_source.html">OctreePartition.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 公開型</h2></td></tr>
 <tr class="memitem:a66aa16e3db91d21bbf089f68048f8f68" id="r_a66aa16e3db91d21bbf089f68048f8f68"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a66aa16e3db91d21bbf089f68048f8f68">AABB</a> = <a class="el" href="namespace_s_f_w_1_1_math.html#a2ded83bd3f26c7d6258ce43e16bdc067">Math::AABB3f</a></td></tr>
+<tr class="separator:a66aa16e3db91d21bbf089f68048f8f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 公開メンバ関数</h2></td></tr>
 <tr class="memitem:aa5680482e46db8f7a4b6125af7bbfc06" id="r_aa5680482e46db8f7a4b6125af7bbfc06"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5680482e46db8f7a4b6125af7bbfc06">OctreePartition</a> (<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> originWS, <a class="el" href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">ChunkSizeType</a> worldBlocksX, <a class="el" href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">ChunkSizeType</a> worldBlocksY, float minLeafSize, <a class="el" href="namespace_s_f_w.html#a5a8d74c7b28d2bf30ae5f35bd7444c78">ChunkSizeType</a> worldBlocksZ=0, uint32_t maxEntitiesPerLeaf=1024) noexcept</td></tr>
 <tr class="memdesc:aa5680482e46db8f7a4b6125af7bbfc06"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ  <br /></td></tr>
+<tr class="separator:aa5680482e46db8f7a4b6125af7bbfc06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05f950a43adeb9e5beda931e7d60df01" id="r_a05f950a43adeb9e5beda931e7d60df01"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05f950a43adeb9e5beda931e7d60df01">Update</a> (double deltaTime)</td></tr>
 <tr class="memdesc:a05f950a43adeb9e5beda931e7d60df01"><td class="mdescLeft">&#160;</td><td class="mdescRight">定期的に過小利用の下位葉を親へ統合して木を縮約  <br /></td></tr>
+<tr class="separator:a05f950a43adeb9e5beda931e7d60df01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc93c1ea2a6394e0c83e6182ad8bbc81" id="r_afc93c1ea2a6394e0c83e6182ad8bbc81"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc93c1ea2a6394e0c83e6182ad8bbc81">GetChunk</a> (<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> wp, <a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;reg, <a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a> level, <a class="el" href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1e">EOutOfBoundsPolicy</a> policy=<a class="el" href="namespace_s_f_w.html#a71dda63d14456ecce09c65c346d83d1ea74556551231333c36debc3d373261134">EOutOfBoundsPolicy::ClampToEdge</a>) noexcept</td></tr>
 <tr class="memdesc:afc93c1ea2a6394e0c83e6182ad8bbc81"><td class="mdescLeft">&#160;</td><td class="mdescRight">点 p を含む葉チャンク（SpatialChunk）を取得  <br /></td></tr>
+<tr class="separator:afc93c1ea2a6394e0c83e6182ad8bbc81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefdb000f24308ff3902ab558a30150be" id="r_aefdb000f24308ff3902ab558a30150be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aefdb000f24308ff3902ab558a30150be">GetGlobalEntityManager</a> () noexcept</td></tr>
 <tr class="memdesc:aefdb000f24308ff3902ab558a30150be"><td class="mdescLeft">&#160;</td><td class="mdescRight">分割に依存しないグローバルな EntityManager を取得  <br /></td></tr>
+<tr class="separator:aefdb000f24308ff3902ab558a30150be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a095f93b88ca667e7f114dd1e58312b8b" id="r_a095f93b88ca667e7f114dd1e58312b8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a095f93b88ca667e7f114dd1e58312b8b">RegisterAllChunks</a> (<a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;reg, <a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a> level)</td></tr>
 <tr class="memdesc:a095f93b88ca667e7f114dd1e58312b8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">すべての葉をレジストリへ登録  <br /></td></tr>
+<tr class="separator:a095f93b88ca667e7f114dd1e58312b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99a53eddc23f45effa32dc785c02fa3a" id="r_a99a53eddc23f45effa32dc785c02fa3a"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99a53eddc23f45effa32dc785c02fa3a">GetEntityNum</a> () const noexcept</td></tr>
 <tr class="memdesc:a99a53eddc23f45effa32dc785c02fa3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">すべてのエンティティ数を取得（グローバル + 全葉チャンク）  <br /></td></tr>
+<tr class="separator:a99a53eddc23f45effa32dc785c02fa3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae10cc877dd28475f2e7d83683b986241" id="r_ae10cc877dd28475f2e7d83683b986241"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae10cc877dd28475f2e7d83683b986241">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr) noexcept</td></tr>
 <tr class="memdesc:ae10cc877dd28475f2e7d83683b986241"><td class="mdescLeft">&#160;</td><td class="mdescRight">3D フラスタム専用カリング（高さは八分木AABBからそのまま利用  <br /></td></tr>
+<tr class="separator:ae10cc877dd28475f2e7d83683b986241"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2148238b78b0fa828581f9353556f9f0" id="r_a2148238b78b0fa828581f9353556f9f0"><td class="memItemLeft" align="right" valign="top">std::vector&lt; const <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2148238b78b0fa828581f9353556f9f0">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr) const noexcept</td></tr>
 <tr class="memdesc:a2148238b78b0fa828581f9353556f9f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">3D フラスタム専用カリング（高さは八分木AABBからそのまま利用  <br /></td></tr>
+<tr class="separator:a2148238b78b0fa828581f9353556f9f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee81e2cc2529200121f08d358ed66c67" id="r_aee81e2cc2529200121f08d358ed66c67"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
-<tr class="memitem:aee81e2cc2529200121f08d358ed66c67 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee81e2cc2529200121f08d358ed66c67">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, F &amp;&amp;f) noexcept</td></tr>
+<tr class="memitem:aee81e2cc2529200121f08d358ed66c67"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aee81e2cc2529200121f08d358ed66c67">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, F &amp;&amp;f) noexcept</td></tr>
+<tr class="separator:aee81e2cc2529200121f08d358ed66c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab64ca4144a59c400e29d7d0f467e85d7" id="r_ab64ca4144a59c400e29d7d0f467e85d7"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
-<tr class="memitem:ab64ca4144a59c400e29d7d0f467e85d7 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab64ca4144a59c400e29d7d0f467e85d7">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, F &amp;&amp;f) const noexcept</td></tr>
+<tr class="memitem:ab64ca4144a59c400e29d7d0f467e85d7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab64ca4144a59c400e29d7d0f467e85d7">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, F &amp;&amp;f) const noexcept</td></tr>
+<tr class="separator:ab64ca4144a59c400e29d7d0f467e85d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c16b058dabb54ca6a18872d8fbea2fb" id="r_a4c16b058dabb54ca6a18872d8fbea2fb"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c16b058dabb54ca6a18872d8fbea2fb">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, float ymin, float ymax) noexcept</td></tr>
+<tr class="separator:a4c16b058dabb54ca6a18872d8fbea2fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a862b08f84de78f31aa01084dcbbc9e4b" id="r_a862b08f84de78f31aa01084dcbbc9e4b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; const <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a862b08f84de78f31aa01084dcbbc9e4b">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, float ymin, float ymax) const noexcept</td></tr>
+<tr class="separator:a862b08f84de78f31aa01084dcbbc9e4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af70115839ab84dc7a6d29033b84fc6bd" id="r_af70115839ab84dc7a6d29033b84fc6bd"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
-<tr class="memitem:af70115839ab84dc7a6d29033b84fc6bd template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af70115839ab84dc7a6d29033b84fc6bd">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, float ymin, float ymax, F &amp;&amp;f) noexcept</td></tr>
+<tr class="memitem:af70115839ab84dc7a6d29033b84fc6bd"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#af70115839ab84dc7a6d29033b84fc6bd">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, float ymin, float ymax, F &amp;&amp;f) noexcept</td></tr>
+<tr class="separator:af70115839ab84dc7a6d29033b84fc6bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3e440a0e88945b91f9b3b6bb0084816" id="r_aa3e440a0e88945b91f9b3b6bb0084816"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
-<tr class="memitem:aa3e440a0e88945b91f9b3b6bb0084816 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa3e440a0e88945b91f9b3b6bb0084816">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, float ymin, float ymax, F &amp;&amp;f) const noexcept</td></tr>
+<tr class="memitem:aa3e440a0e88945b91f9b3b6bb0084816"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aa3e440a0e88945b91f9b3b6bb0084816">CullChunks</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, float ymin, float ymax, F &amp;&amp;f) const noexcept</td></tr>
+<tr class="separator:aa3e440a0e88945b91f9b3b6bb0084816"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb0ad514ea6a72dc3ba17f5ab4813beb" id="r_acb0ad514ea6a72dc3ba17f5ab4813beb"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb0ad514ea6a72dc3ba17f5ab4813beb">CullChunks</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;center, float radius) const noexcept</td></tr>
+<tr class="separator:acb0ad514ea6a72dc3ba17f5ab4813beb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f5328d4185ac71ddf60f36849e064be" id="r_a4f5328d4185ac71ddf60f36849e064be"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4f5328d4185ac71ddf60f36849e064be">CullChunksNear</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;eye, size_t maxCount=(std::numeric_limits&lt; size_t &gt;::max)()) const noexcept</td></tr>
+<tr class="separator:a4f5328d4185ac71ddf60f36849e064be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34364ca8cda805485b4929e917a34548" id="r_a34364ca8cda805485b4929e917a34548"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a34364ca8cda805485b4929e917a34548">CullChunkLine</a> (const <a class="el" href="struct_s_f_w_1_1_math_1_1_frustumf.html">Math::Frustumf</a> &amp;fr, const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;eye, float, <a class="el" href="struct_s_f_w_1_1_debug_1_1_line_vertex.html">Debug::LineVertex</a> *outLine, uint32_t capacity, uint32_t displayCount) const noexcept</td></tr>
 <tr class="memdesc:a34364ca8cda805485b4929e917a34548"><td class="mdescLeft">&#160;</td><td class="mdescRight">チャンクのワイヤーフレームをフラスタムカリング付きで取得  <br /></td></tr>
+<tr class="separator:a34364ca8cda805485b4929e917a34548"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa0eabd5c80014ab5cda7281bb107ea7" id="r_aaa0eabd5c80014ab5cda7281bb107ea7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa0eabd5c80014ab5cda7281bb107ea7">CleanChunk</a> ()</td></tr>
 <tr class="memdesc:aaa0eabd5c80014ab5cda7281bb107ea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">チャンクのクリア  <br /></td></tr>
+<tr class="separator:aaa0eabd5c80014ab5cda7281bb107ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a9fb42559e700e9d4186a9e8a8ca4ef" id="r_a1a9fb42559e700e9d4186a9e8a8ca4ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a9fb42559e700e9d4186a9e8a8ca4ef">EnsureLeafForPoint</a> (<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> p)</td></tr>
 <tr class="memdesc:a1a9fb42559e700e9d4186a9e8a8ca4ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">指定点を含む葉を（必要なら分割しながら）必ず返す  <br /></td></tr>
+<tr class="separator:a1a9fb42559e700e9d4186a9e8a8ca4ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafc8eea38488266b076810bace443f11" id="r_aafc8eea38488266b076810bace443f11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aafc8eea38488266b076810bace443f11">SubdivideIf</a> (std::function&lt; bool(const <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> &amp;)&gt; predicate, std::function&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>(<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a>, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp;)&gt; posFn)</td></tr>
 <tr class="memdesc:aafc8eea38488266b076810bace443f11"><td class="mdescLeft">&#160;</td><td class="mdescRight">predicate を満たす葉を分割＆再割り当て  <br /></td></tr>
+<tr class="separator:aafc8eea38488266b076810bace443f11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3efd805ca0f6345e6a66dd47a3cfdeb0" id="r_a3efd805ca0f6345e6a66dd47a3cfdeb0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3efd805ca0f6345e6a66dd47a3cfdeb0">SubdivideIfOverCapacity</a> (std::function&lt; <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a>(<a class="el" href="struct_s_f_w_1_1_e_c_s_1_1_entity_i_d.html">ECS::EntityID</a>, <a class="el" href="class_s_f_w_1_1_e_c_s_1_1_entity_manager.html">ECS::EntityManager</a> &amp;)&gt; posFn)</td></tr>
 <tr class="memdesc:a3efd805ca0f6345e6a66dd47a3cfdeb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">過大利用の葉を分割＆再割り当て  <br /></td></tr>
+<tr class="separator:a3efd805ca0f6345e6a66dd47a3cfdeb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada1b3d5cb0ac8cc7d008a68182fd5541" id="r_ada1b3d5cb0ac8cc7d008a68182fd5541"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada1b3d5cb0ac8cc7d008a68182fd5541">ReloadLeafByPoint</a> (<a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> p, <a class="el" href="class_s_f_w_1_1_spatial_chunk_registry.html">SpatialChunkRegistry</a> &amp;reg, <a class="el" href="namespace_s_f_w.html#abeb419a6b32db0520198827d1ffe61e1">LevelID</a> level)</td></tr>
 <tr class="memdesc:ada1b3d5cb0ac8cc7d008a68182fd5541"><td class="mdescLeft">&#160;</td><td class="mdescRight">指定座標の葉のキーを再発行してレジストリ更新（デバッグ用）  <br /></td></tr>
+<tr class="separator:ada1b3d5cb0ac8cc7d008a68182fd5541"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6df4751ae4ac772b93a52a96326b69e" id="r_aa6df4751ae4ac772b93a52a96326b69e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6df4751ae4ac772b93a52a96326b69e">GetChunksAABB</a> (const <a class="el" href="#a66aa16e3db91d21bbf089f68048f8f68">AABB</a> &amp;aabb)</td></tr>
 <tr class="memdesc:aa6df4751ae4ac772b93a52a96326b69e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="#a66aa16e3db91d21bbf089f68048f8f68">AABB</a> / 交差検索  <br /></td></tr>
+<tr class="separator:aa6df4751ae4ac772b93a52a96326b69e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a873176a76e87e183dda0c1234567476c" id="r_a873176a76e87e183dda0c1234567476c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; const <a class="el" href="class_s_f_w_1_1_spatial_chunk.html">SpatialChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a873176a76e87e183dda0c1234567476c">GetChunksAABB</a> (const <a class="el" href="#a66aa16e3db91d21bbf089f68048f8f68">AABB</a> &amp;aabb) const</td></tr>
 <tr class="memdesc:a873176a76e87e183dda0c1234567476c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="#a66aa16e3db91d21bbf089f68048f8f68">AABB</a> / 交差検索  <br /></td></tr>
+<tr class="separator:a873176a76e87e183dda0c1234567476c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af70a6e017e1d1c98c5ff96cb994d068e" id="r_af70a6e017e1d1c98c5ff96cb994d068e"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
-<tr class="memitem:af70a6e017e1d1c98c5ff96cb994d068e template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af70a6e017e1d1c98c5ff96cb994d068e">ForEachLeaf</a> (F &amp;&amp;f)</td></tr>
+<tr class="memitem:af70a6e017e1d1c98c5ff96cb994d068e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#af70a6e017e1d1c98c5ff96cb994d068e">ForEachLeaf</a> (F &amp;&amp;f)</td></tr>
+<tr class="separator:af70a6e017e1d1c98c5ff96cb994d068e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62d1ac72df1df49da25a72b7cbb86d4e" id="r_a62d1ac72df1df49da25a72b7cbb86d4e"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
-<tr class="memitem:a62d1ac72df1df49da25a72b7cbb86d4e template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62d1ac72df1df49da25a72b7cbb86d4e">ForEachLeaf</a> (F &amp;&amp;f) const</td></tr>
+<tr class="memitem:a62d1ac72df1df49da25a72b7cbb86d4e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a62d1ac72df1df49da25a72b7cbb86d4e">ForEachLeaf</a> (F &amp;&amp;f) const</td></tr>
+<tr class="separator:a62d1ac72df1df49da25a72b7cbb86d4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f36faab5676c98149d7ec635471dd91" id="r_a4f36faab5676c98149d7ec635471dd91"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
-<tr class="memitem:a4f36faab5676c98149d7ec635471dd91 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4f36faab5676c98149d7ec635471dd91">ForEachLeafChunk</a> (F &amp;&amp;f)</td></tr>
+<tr class="memitem:a4f36faab5676c98149d7ec635471dd91"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a4f36faab5676c98149d7ec635471dd91">ForEachLeafChunk</a> (F &amp;&amp;f)</td></tr>
+<tr class="separator:a4f36faab5676c98149d7ec635471dd91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae110980ac76dd0e0751897ad1bf2e400" id="r_ae110980ac76dd0e0751897ad1bf2e400"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
-<tr class="memitem:ae110980ac76dd0e0751897ad1bf2e400 template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae110980ac76dd0e0751897ad1bf2e400">ForEachLeafChunk</a> (F &amp;&amp;f) const</td></tr>
+<tr class="memitem:ae110980ac76dd0e0751897ad1bf2e400"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ae110980ac76dd0e0751897ad1bf2e400">ForEachLeafChunk</a> (F &amp;&amp;f) const</td></tr>
+<tr class="separator:ae110980ac76dd0e0751897ad1bf2e400"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d5458008c27873fbd2753cafe264dcb" id="r_a7d5458008c27873fbd2753cafe264dcb"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
-<tr class="memitem:a7d5458008c27873fbd2753cafe264dcb template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d5458008c27873fbd2753cafe264dcb">ForEachLeafEM</a> (F &amp;&amp;f)</td></tr>
+<tr class="memitem:a7d5458008c27873fbd2753cafe264dcb"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a7d5458008c27873fbd2753cafe264dcb">ForEachLeafEM</a> (F &amp;&amp;f)</td></tr>
+<tr class="separator:a7d5458008c27873fbd2753cafe264dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a390fdfe72210928a913156efc5aa387a" id="r_a390fdfe72210928a913156efc5aa387a"><td class="memTemplParams" colspan="2">template&lt;class F&gt; </td></tr>
-<tr class="memitem:a390fdfe72210928a913156efc5aa387a template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a390fdfe72210928a913156efc5aa387a">ForEachLeafEM</a> (F &amp;&amp;f) const</td></tr>
+<tr class="memitem:a390fdfe72210928a913156efc5aa387a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a390fdfe72210928a913156efc5aa387a">ForEachLeafEM</a> (F &amp;&amp;f) const</td></tr>
+<tr class="separator:a390fdfe72210928a913156efc5aa387a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf4e9c599ae0e5c35200447e4263d554" id="r_acf4e9c599ae0e5c35200447e4263d554"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf4e9c599ae0e5c35200447e4263d554">LeafCount</a> () const noexcept</td></tr>
+<tr class="separator:acf4e9c599ae0e5c35200447e4263d554"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0aa0722117a878bcdf08bcb47412b93c" id="r_a0aa0722117a878bcdf08bcb47412b93c"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0aa0722117a878bcdf08bcb47412b93c">MinLeafSize</a> () const noexcept</td></tr>
+<tr class="separator:a0aa0722117a878bcdf08bcb47412b93c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad46690a1deea6e20501c76f3de90a63a" id="r_ad46690a1deea6e20501c76f3de90a63a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad46690a1deea6e20501c76f3de90a63a">SetMaxPerLeafCount</a> (uint32_t v) noexcept</td></tr>
+<tr class="separator:ad46690a1deea6e20501c76f3de90a63a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac53df22ffc19386ad7f4a028d5357d41" id="r_ac53df22ffc19386ad7f4a028d5357d41"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac53df22ffc19386ad7f4a028d5357d41">GetMaxPerLeafCount</a> () const noexcept</td></tr>
+<tr class="separator:ac53df22ffc19386ad7f4a028d5357d41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ff5944a58d9872b606c16a34ec52a81" id="r_a9ff5944a58d9872b606c16a34ec52a81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ff5944a58d9872b606c16a34ec52a81">SetMinPerLeafCount</a> (uint32_t v) noexcept</td></tr>
+<tr class="separator:a9ff5944a58d9872b606c16a34ec52a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e69758a408bd37e2ed95f9de3d7e6db" id="r_a7e69758a408bd37e2ed95f9de3d7e6db"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e69758a408bd37e2ed95f9de3d7e6db">GetMinPerLeafCount</a> () const noexcept</td></tr>
+<tr class="separator:a7e69758a408bd37e2ed95f9de3d7e6db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 静的公開メンバ関数</h2></td></tr>
 <tr class="memitem:af07d63c10d1d0f26c080a890bf276a50" id="r_af07d63c10d1d0f26c080a890bf276a50"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af07d63c10d1d0f26c080a890bf276a50">Dist2PointAABB3D</a> (const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;p, const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;c, const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;e)</td></tr>
+<tr class="separator:af07d63c10d1d0f26c080a890bf276a50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 静的公開変数類</h2></td></tr>
 <tr class="memitem:a8fa31fed3c557de9dba2bfcf899ca478" id="r_a8fa31fed3c557de9dba2bfcf899ca478"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8fa31fed3c557de9dba2bfcf899ca478">coalesceInterval</a> = 10.0</td></tr>
+<tr class="separator:a8fa31fed3c557de9dba2bfcf899ca478"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
 <div class="textblock"><p>3D 八分木（Octree）による空間分割 </p>
 <ul>
 <li>X, Y, Z の 3 軸で均等分割</li>
 <li>葉ノードには SpatialChunk（= EntityManager を保持）</li>
 <li><a class="el" href="class_s_f_w_1_1_quad_tree_partition.html" title="クアッドツリー(x-z)パーティションを管理するクラス">QuadTreePartition</a> と同じ API/挙動を目指して実装</li>
 </ul>
-<p><a class="el" href="concept_s_f_w_1_1_partition_concept.html" title="Partitionが実装する必要のあるインターフェースを定義するコンセプト">PartitionConcept</a> は <span class="tt">Derived{ size,size,chunkSize }</span> を要求するため、 ここでは "size" を立方体の一辺（X=Y=Z）のブロック数として扱い、 minLeafSize (= chunkSize) を 1 ブロックの実寸（ワールド単位）とみなします。 </p>
+<p><a class="el" href="concept_s_f_w_1_1_partition_concept.html" title="Partitionが実装する必要のあるインターフェースを定義するコンセプト">PartitionConcept</a> は <code>Derived{ size,size,chunkSize }</code> を要求するため、 ここでは "size" を立方体の一辺（X=Y=Z）のブロック数として扱い、 minLeafSize (= chunkSize) を 1 ブロックの実寸（ワールド単位）とみなします。 </p>
 
 <p class="definition"> <a class="el" href="_octree_partition_8h_source.html">OctreePartition.h</a> の <a class="el" href="_octree_partition_8h_source.html#l00039">39</a> 行目に定義があります。</p>
-</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">型定義メンバ詳解</h2>
+</div><h2 class="groupheader">型定義メンバ詳解</h2>
 <a id="a66aa16e3db91d21bbf089f68048f8f68" name="a66aa16e3db91d21bbf089f68048f8f68"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a66aa16e3db91d21bbf089f68048f8f68">&#9670;&#160;</a></span>AABB</h2>
 
@@ -201,7 +254,7 @@ $(function(){initNavTree('class_s_f_w_1_1_octree_partition.html','','class_s_f_w
 
 </div>
 </div>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<h2 class="groupheader">構築子と解体子</h2>
 <a id="aa5680482e46db8f7a4b6125af7bbfc06" name="aa5680482e46db8f7a4b6125af7bbfc06"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa5680482e46db8f7a4b6125af7bbfc06">&#9670;&#160;</a></span>OctreePartition()</h2>
 
@@ -265,7 +318,7 @@ $(function(){initNavTree('class_s_f_w_1_1_octree_partition.html','','class_s_f_w
 
 </div>
 </div>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<h2 class="groupheader">関数詳解</h2>
 <a id="aaa0eabd5c80014ab5cda7281bb107ea7" name="aaa0eabd5c80014ab5cda7281bb107ea7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aaa0eabd5c80014ab5cda7281bb107ea7">&#9670;&#160;</a></span>CleanChunk()</h2>
 
@@ -733,7 +786,7 @@ template&lt;class F&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float SFW::OctreePartition::Dist2PointAABB3D </td>
+          <td class="memname">static float SFW::OctreePartition::Dist2PointAABB3D </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespace_s_f_w_1_1_math.html#afea45e91c6313bb6dd5c60690ff82019">Math::Vec3f</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
         </tr>
@@ -1512,7 +1565,7 @@ template&lt;class F&gt; </div>
 
 </div>
 </div>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<h2 class="groupheader">メンバ詳解</h2>
 <a id="a8fa31fed3c557de9dba2bfcf899ca478" name="a8fa31fed3c557de9dba2bfcf899ca478"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8fa31fed3c557de9dba2bfcf899ca478">&#9670;&#160;</a></span>coalesceInterval</h2>
 
@@ -1542,19 +1595,11 @@ template&lt;class F&gt; </div>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div id="page-nav" class="page-nav-panel">
-<div id="page-nav-resize-handle"></div>
-<div id="page-nav-tree">
-<div id="page-nav-contents">
-</div><!-- page-nav-contents -->
-</div><!-- page-nav-tree -->
-</div><!-- page-nav -->
-</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a href="class_s_f_w_1_1_octree_partition.html">OctreePartition</a></li>
-    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+    <li class="navelem"><a class="el" href="namespace_s_f_w.html">SFW</a></li><li class="navelem"><a class="el" href="class_s_f_w_1_1_octree_partition.html">OctreePartition</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

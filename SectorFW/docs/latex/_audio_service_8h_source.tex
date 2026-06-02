@@ -4,240 +4,238 @@
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00001}00001\ \textcolor{comment}{/*****************************************************************/}}
 \DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00007}00007\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00008}00008\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00009}00009\ \textcolor{preprocessor}{\#pragma\ once}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <atomic>}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <cstdint>}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <mutex>}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <optional>}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <string>}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <utility>}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <vector>}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <algorithm>}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <memory>}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00020}00020\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_audio_type_8h}{AudioType.h}}"{}}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00022}00022\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00023}00023\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_service_context_8hpp}{../Core/ECS/ServiceContext.hpp}}"{}}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00024}00024\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00025}00025\ \textcolor{comment}{//\ 前方宣言}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00026}\mbox{\hyperlink{namespace_so_loud}{00026}}\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_so_loud}{SoLoud}}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00027}00027\ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00028}00028\ \ \ \ \ \textcolor{keyword}{class\ }Soloud;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00029}00029\ \ \ \ \ \textcolor{keyword}{class\ }Wav;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00030}00030\ \}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00031}00031\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00032}\mbox{\hyperlink{namespace_s_f_w}{00032}}\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_audio}{SFW::Audio}}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00033}00033\ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00034}00034\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00035}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service}{00035}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd}{AudioService}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{ECS::IUpdateService}}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00036}00036\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00037}00037\ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{//インライン展開されないようにcppで定義}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00039}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd}{00039}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd}{AudioService}}();}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00040}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a5e254e78c3b022b4386d51c825987f43}{00040}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a5e254e78c3b022b4386d51c825987f43}{\string~AudioService}}();}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00041}00041\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00042}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac6bf1cbf047f7a33f744ca5d09f8f9bd}{00042}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac6bf1cbf047f7a33f744ca5d09f8f9bd}{AudioService}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd}{AudioService}}\&)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00043}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a2aba3b2e6a26c4f46a864d6ac27c58a6}{00043}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd}{AudioService}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a2aba3b2e6a26c4f46a864d6ac27c58a6}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd}{AudioService}}\&)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00044}00044\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00049}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a7f607dc85d53b58ba154b7b218a0fe40}{00049}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a7f607dc85d53b58ba154b7b218a0fe40}{Initialize}}();}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00050}00050\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00054}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a4c3b5a74f184e72f671d6744c8be9ab5}{00054}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a4c3b5a74f184e72f671d6744c8be9ab5}{Shutdown}}();}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00055}00055\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00056}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a81bef85766a94dca536e6d9f55c04590}{00056}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a81bef85766a94dca536e6d9f55c04590}{PreUpdate}}(\textcolor{keywordtype}{double}\ deltaTime)\textcolor{keyword}{\ override}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00057}00057\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ コマンドを処理}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a0c268bdf3a5cfa7acfde0be9860e31f8}{PumpCommands}}();}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00061}00061\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00067}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_adf23f42929c404cd7a59d8c3c71fd432}{00067}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{SoundHandle}}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_adf23f42929c404cd7a59d8c3c71fd432}{EnqueueLoadWav}}(\textcolor{keyword}{const}\ std::string\&\ path);}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00068}00068\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00075}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ad6aacefd4a4f1e97f2de5f2977205b39}{00075}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{SoundHandle}}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ad6aacefd4a4f1e97f2de5f2977205b39}{EnqueueLoadStream}}(\textcolor{keyword}{const}\ std::string\&\ path);}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00080}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a5a0c1b325a1591390c4ab5840a91b244}{00080}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a5a0c1b325a1591390c4ab5840a91b244}{EnqueueUnload}}(\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{SoundHandle}}\ h);}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00081}00081\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00088}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a6d6c49ede380e63d1267c3f7e5ca00c3}{00088}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{AudioTicketID}}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a6d6c49ede380e63d1267c3f7e5ca00c3}{EnqueuePlay}}(\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{SoundHandle}}\ sound,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params}{AudioPlayParams}}\&\ p\ =\ \{\});}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00089}00089\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00094}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac864ee95c54908710da5b183ba8078d0}{00094}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac864ee95c54908710da5b183ba8078d0}{EnqueueStop}}(\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v);}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00100}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a97a936707f40f76c33ea46ecb8589ba9}{00100}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a97a936707f40f76c33ea46ecb8589ba9}{EnqueueSetVolume}}(\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v,\ \textcolor{keywordtype}{float}\ volume);}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00106}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a01a3a172776f6256472d5c628e37d4c2}{00106}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a01a3a172776f6256472d5c628e37d4c2}{EnqueueSetPan}}(\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v,\ \textcolor{keywordtype}{float}\ pan);}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00112}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a93eb42ff155580f7f9fdc62055870b6b}{00112}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a93eb42ff155580f7f9fdc62055870b6b}{EnqueueSetPitch}}(\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v,\ \textcolor{keywordtype}{float}\ pitch);}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00123}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_aeeb0aec08af65209313fd0a40a0d2f01}{00123}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_aeeb0aec08af65209313fd0a40a0d2f01}{EnqueueSet3D}}(\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v,\ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y,\ \textcolor{keywordtype}{float}\ z,\ \textcolor{keywordtype}{float}\ vx,\ \textcolor{keywordtype}{float}\ vy,\ \textcolor{keywordtype}{float}\ vz);}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00124}00124\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00140}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a81cd2f4c2785115b79a5b084fc108488}{00140}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a81cd2f4c2785115b79a5b084fc108488}{EnqueueSetListener}}(\textcolor{keywordtype}{float}\ px,\ \textcolor{keywordtype}{float}\ py,\ \textcolor{keywordtype}{float}\ pz,}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ax,\ \textcolor{keywordtype}{float}\ ay,\ \textcolor{keywordtype}{float}\ az,}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ux,\ \textcolor{keywordtype}{float}\ uy,\ \textcolor{keywordtype}{float}\ uz,}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ vx,\ \textcolor{keywordtype}{float}\ vy,\ \textcolor{keywordtype}{float}\ vz);}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00144}00144\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00150}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a14ffdf6c832f6753b361fa624074d532}{00150}}\ \ \ \ \ \ \ \ \ std::optional<VoiceID>\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a14ffdf6c832f6753b361fa624074d532}{TryResolve}}(\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{AudioTicketID}}\ t)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00151}00151\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00157}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac617d107b748914cc42e62c04b912703}{00157}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac617d107b748914cc42e62c04b912703}{ReleaseTicket}}(\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{AudioTicketID}}\ t)\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00158}00158\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00164}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a9799567dd39e451bc4da0aad93e24c6c}{00164}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a9799567dd39e451bc4da0aad93e24c6c}{IsVoiceAlive\_OnAudioThread}}(\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v)\ \textcolor{keyword}{noexcept};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00165}00165\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00169}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a0c268bdf3a5cfa7acfde0be9860e31f8}{00169}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a0c268bdf3a5cfa7acfde0be9860e31f8}{PumpCommands}}();}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00170}00170\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00171}00171\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00008}00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_audio_type_8h}{AudioType.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00022}00022\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_service_context_8hpp}{../Core/ECS/ServiceContext.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00024}00024\ \ \textcolor{comment}{//\ 前方宣言}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00025}\mbox{\hyperlink{namespace_so_loud}{00025}}\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_so_loud}{SoLoud}}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00026}00026\ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00027}00027\ \ \ \ \ \textcolor{keyword}{class\ }Soloud;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00028}00028\ \ \ \ \ \textcolor{keyword}{class\ }Wav;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00029}00029\ \}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00031}\mbox{\hyperlink{namespace_s_f_w}{00031}}\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_s_f_w_1_1_audio}{SFW::Audio}}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00032}00032\ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00033}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service}{00033}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd}{AudioService}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service}{ECS::IUpdateService}}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00034}00034\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00035}00035\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{comment}{//インライン展開されないようにcppで定義}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00037}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd}{00037}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd}{AudioService}}();}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00038}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a5e254e78c3b022b4386d51c825987f43}{00038}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a5e254e78c3b022b4386d51c825987f43}{\string~AudioService}}();}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00040}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac6bf1cbf047f7a33f744ca5d09f8f9bd}{00040}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac6bf1cbf047f7a33f744ca5d09f8f9bd}{AudioService}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd}{AudioService}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00041}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a2aba3b2e6a26c4f46a864d6ac27c58a6}{00041}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd}{AudioService}}\&\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a2aba3b2e6a26c4f46a864d6ac27c58a6}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ab64562b15c6174e2327f103f3c9545cd}{AudioService}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00047}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a7f607dc85d53b58ba154b7b218a0fe40}{00047}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a7f607dc85d53b58ba154b7b218a0fe40}{Initialize}}();}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00052}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a4c3b5a74f184e72f671d6744c8be9ab5}{00052}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a4c3b5a74f184e72f671d6744c8be9ab5}{Shutdown}}();}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00054}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a81bef85766a94dca536e6d9f55c04590}{00054}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a81bef85766a94dca536e6d9f55c04590}{PreUpdate}}(\textcolor{keywordtype}{double}\ deltaTime)\textcolor{keyword}{\ override}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00055}00055\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ コマンドを処理}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a0c268bdf3a5cfa7acfde0be9860e31f8}{PumpCommands}}();}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00065}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_adf23f42929c404cd7a59d8c3c71fd432}{00065}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{SoundHandle}}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_adf23f42929c404cd7a59d8c3c71fd432}{EnqueueLoadWav}}(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00073}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ad6aacefd4a4f1e97f2de5f2977205b39}{00073}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{SoundHandle}}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ad6aacefd4a4f1e97f2de5f2977205b39}{EnqueueLoadStream}}(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00078}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a5a0c1b325a1591390c4ab5840a91b244}{00078}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a5a0c1b325a1591390c4ab5840a91b244}{EnqueueUnload}}(\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{SoundHandle}}\ h);}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00086}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a6d6c49ede380e63d1267c3f7e5ca00c3}{00086}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{AudioTicketID}}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a6d6c49ede380e63d1267c3f7e5ca00c3}{EnqueuePlay}}(\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_sound_handle}{SoundHandle}}\ sound,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_play_params}{AudioPlayParams}}\&\ p\ =\ \{\});}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00092}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac864ee95c54908710da5b183ba8078d0}{00092}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac864ee95c54908710da5b183ba8078d0}{EnqueueStop}}(\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v);}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00098}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a97a936707f40f76c33ea46ecb8589ba9}{00098}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a97a936707f40f76c33ea46ecb8589ba9}{EnqueueSetVolume}}(\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v,\ \textcolor{keywordtype}{float}\ volume);}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00104}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a01a3a172776f6256472d5c628e37d4c2}{00104}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a01a3a172776f6256472d5c628e37d4c2}{EnqueueSetPan}}(\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v,\ \textcolor{keywordtype}{float}\ pan);}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00110}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a93eb42ff155580f7f9fdc62055870b6b}{00110}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a93eb42ff155580f7f9fdc62055870b6b}{EnqueueSetPitch}}(\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v,\ \textcolor{keywordtype}{float}\ pitch);}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00121}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_aeeb0aec08af65209313fd0a40a0d2f01}{00121}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_aeeb0aec08af65209313fd0a40a0d2f01}{EnqueueSet3D}}(\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v,\ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y,\ \textcolor{keywordtype}{float}\ z,\ \textcolor{keywordtype}{float}\ vx,\ \textcolor{keywordtype}{float}\ vy,\ \textcolor{keywordtype}{float}\ vz);}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00138}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a81cd2f4c2785115b79a5b084fc108488}{00138}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a81cd2f4c2785115b79a5b084fc108488}{EnqueueSetListener}}(\textcolor{keywordtype}{float}\ px,\ \textcolor{keywordtype}{float}\ py,\ \textcolor{keywordtype}{float}\ pz,}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ax,\ \textcolor{keywordtype}{float}\ ay,\ \textcolor{keywordtype}{float}\ az,}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ux,\ \textcolor{keywordtype}{float}\ uy,\ \textcolor{keywordtype}{float}\ uz,}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ vx,\ \textcolor{keywordtype}{float}\ vy,\ \textcolor{keywordtype}{float}\ vz);}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00142}00142\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00148}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a14ffdf6c832f6753b361fa624074d532}{00148}}\ \ \ \ \ \ \ \ \ std::optional<VoiceID>\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a14ffdf6c832f6753b361fa624074d532}{TryResolve}}(\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{AudioTicketID}}\ t)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00149}00149\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00155}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac617d107b748914cc42e62c04b912703}{00155}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_ac617d107b748914cc42e62c04b912703}{ReleaseTicket}}(\mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d}{AudioTicketID}}\ t)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00162}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a9799567dd39e451bc4da0aad93e24c6c}{00162}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a9799567dd39e451bc4da0aad93e24c6c}{IsVoiceAlive\_OnAudioThread}}(\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00167}\mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a0c268bdf3a5cfa7acfde0be9860e31f8}{00167}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a0c268bdf3a5cfa7acfde0be9860e31f8}{PumpCommands}}();}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00169}00169\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00170}00170\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00171}00171\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Ticket\ table}}
 \DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00172}00172\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00173}00173\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Ticket\ table}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00174}00174\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00175}00175\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }TicketSlot}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ std::atomic<uint32\_t>\ gen\{\ 0\ \};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ std::atomic<VoiceID>\ \ voice\{\ 0\ \};\ \textcolor{comment}{//\ 0=not\ ready/invalid}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00180}00180\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ kMaxTickets\ =\ 1u\ <<\ 16;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ \textcolor{comment}{//でかすぎるのでヒープで管理}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00183}00183\ \ \ \ \ \ \ \ \ std::vector<TicketSlot>\ m\_ticketSlots\ =\ std::vector<TicketSlot>(kMaxTickets);}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ std::atomic<uint32\_t>\ m\_ticketAlloc\{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00173}00173\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }TicketSlot}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00174}00174\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ std::atomic<uint32\_t>\ gen\{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ std::atomic<VoiceID>\ \ voice\{\ 0\ \};\ \textcolor{comment}{//\ 0=not\ ready/invalid}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00177}00177\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ kMaxTickets\ =\ 1u\ <<\ 16;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00180}00180\ \ \ \ \ \ \ \ \ \textcolor{comment}{//でかすぎるのでヒープで管理}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ std::vector<TicketSlot>\ m\_ticketSlots\ =\ std::vector<TicketSlot>(kMaxTickets);}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00182}00182\ \ \ \ \ \ \ \ \ std::atomic<uint32\_t>\ m\_ticketAlloc\{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ AudioTicketID\ AllocTicket()\ noexcept;}
 \DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00185}00185\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00186}00186\ \ \ \ \ \ \ \ \ AudioTicketID\ AllocTicket()\ noexcept;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00187}00187\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00189}00189\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Sound\ storage\ (Wav\ only)}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ you\ need\ OGG/WavStream,\ use\ variant/unique\_ptr\ base\ class.}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ struct\ SoundEntry;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00193}00193\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ std::unordered\_map<uint32\_t,\ SoundEntry>\ m\_sounds;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ std::atomic<uint32\_t>\ m\_nextSoundId\{\ 1\ \};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00196}00196\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Load\ cache\ (caller\ thread)}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/\ 同じパスを再ロードしない}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/\ EnqueueUnload()\ の参照カウントで実際のアンロードを制御}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00201}00201\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ NOTE:\ Wav\ と\ Stream\ は別キーで管理\ ("{}wav|..."{}\ /\ "{}stream|..."{})}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00202}00202\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00203}00203\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }CachedSound}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00204}00204\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ SoundHandle\ handle\{\};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \ \ \ refCount\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00207}00207\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_cacheMtx;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00209}00209\ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ CachedSound>\ m\_pathCache;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00210}00210\ \ \ \ \ \ \ \ \ std::unordered\_map<uint32\_t,\ std::string>\ m\_idToCacheKey;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00186}00186\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Sound\ storage\ (Wav\ only)}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ you\ need\ OGG/WavStream,\ use\ variant/unique\_ptr\ base\ class.}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00189}00189\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ struct\ SoundEntry;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ std::unordered\_map<uint32\_t,\ SoundEntry>\ m\_sounds;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ std::atomic<uint32\_t>\ m\_nextSoundId\{\ 1\ \};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00196}00196\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Load\ cache\ (caller\ thread)}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/\ 同じパスを再ロードしない}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/\ EnqueueUnload()\ の参照カウントで実際のアンロードを制御}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ NOTE:\ Wav\ と\ Stream\ は別キーで管理\ ("{}wav|..."{}\ /\ "{}stream|..."{})}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00201}00201\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }CachedSound}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00202}00202\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ SoundHandle\ handle\{\};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ \ \ \ refCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00205}00205\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00206}00206\ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_cacheMtx;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00207}00207\ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ CachedSound>\ m\_pathCache;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ std::unordered\_map<uint32\_t,\ std::string>\ m\_idToCacheKey;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00209}00209\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00210}00210\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00211}00211\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Command\ queue}}
 \DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00212}00212\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00213}00213\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Command\ queue}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum\ class}\ CmdType\ :\ uint8\_t}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00216}00216\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ LoadWav,}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ LoadStream,}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ Unload,}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ Play,}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ Stop,}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ SetVolume,}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ SetPan,}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ SetPitch,}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ Set3D,}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ SetListener,}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a4c3b5a74f184e72f671d6744c8be9ab5}{Shutdown}}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00228}00228\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00229}00229\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00230}00230\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }Cmd}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00231}00231\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ CmdType\ type\{\ CmdType::Play\ \};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00233}00233\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ For\ Play\ publishing}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ AudioTicketID\ ticket\{\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_a3565aa7c3dcd4714de8eeb2bf19a074f}{AudioTicketID::Invalid}}()\ \};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00236}00236\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ For\ asset}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ SoundHandle\ sound\{\};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ path;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00240}00240\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ For\ play}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ AudioPlayParams\ play\{\};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00243}00243\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ For\ voice\ control}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ voice\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00246}00246\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ generic\ floats\ (set*)}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ a\ =\ 0,\ b\ =\ 0,\ c\ =\ 0,\ d\ =\ 0,\ e\ =\ 0,\ f\ =\ 0,\ g\ =\ 0,\ h\ =\ 0,\ i\ =\ 0,\ j\ =\ 0,\ k\ =\ 0,\ l\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00249}00249\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Cmd\ MakeLoadWav(SoundHandle\ h,\ \textcolor{keyword}{const}\ std::string\&\ p)}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Cmd\ c;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.type\ =\ CmdType::LoadWav;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.sound\ =\ h;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.path\ =\ p;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00258}00258\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Cmd\ MakeLoadStream(SoundHandle\ h,\ \textcolor{keyword}{const}\ std::string\&\ p)}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Cmd\ c;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.type\ =\ CmdType::LoadStream;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.sound\ =\ h;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.path\ =\ p;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Cmd\ MakeUnload(SoundHandle\ h)}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Cmd\ c;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.type\ =\ CmdType::Unload;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.sound\ =\ h;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00274}00274\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Cmd\ MakePlay(AudioTicketID\ t,\ SoundHandle\ h,\ \textcolor{keyword}{const}\ AudioPlayParams\&\ p)}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Cmd\ c;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.type\ =\ CmdType::Play;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.ticket\ =\ t;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.sound\ =\ h;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.play\ =\ p;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00284}00284\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Cmd\ MakeStop(\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v)}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Cmd\ c;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.type\ =\ CmdType::Stop;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.voice\ =\ v;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00292}00292\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Cmd\ MakeSet1(CmdType\ t,\ \mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v,\ \textcolor{keywordtype}{float}\ x)}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Cmd\ c;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.type\ =\ t;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.voice\ =\ v;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.a\ =\ x;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00301}00301\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Cmd\ MakeShutdown()}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Cmd\ c;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.type\ =\ CmdType::Shutdown;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00308}00308\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00309}00309\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00310}00310\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Push(Cmd\&\&\ c)}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00311}00311\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lk(m\_cmdMtx);}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ m\_queue.emplace\_back(std::move(c));}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00314}00314\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00315}00315\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00316}00316\ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00317}00317\ \ \ \ \ \ \ \ \ \textcolor{comment}{//cppでヘッダーをインクルードするためにポインタを使用}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00318}00318\ \ \ \ \ \ \ \ \ std::unique\_ptr<SoLoud::Soloud>\ m\_soloud\{\};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00319}00319\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00320}00320\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ command\ queue}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00321}00321\ \ \ \ \ \ \ \ \ std::mutex\ m\_cmdMtx;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00322}00322\ \ \ \ \ \ \ \ \ std::vector<Cmd>\ m\_queue;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00323}00323\ \ \ \ \ \ \ \ \ std::vector<Cmd>\ m\_swap;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00324}00324\ }
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00325}00325\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ init\ guard}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00326}00326\ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_initMtx;}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00327}00327\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_initialized\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00328}00328\ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00329}00329\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_service_context_8hpp_adbfb2947c9a06b367226fe228627154c}{STATIC\_SERVICE\_TAG}}}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_service_context_8hpp_aba8d760b00a97c77ac318f63335ff1e2}{DEFINE\_UPDATESERVICE\_GROUP}}(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e}{GROUP\_AUDIO}})}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00331}00331\ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00332}00332\ \}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00213}00213\ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum\ class}\ CmdType\ :\ uint8\_t}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00214}00214\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ LoadWav,}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ LoadStream,}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ Unload,}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ Play,}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ Stop,}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ SetVolume,}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ SetPan,}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ SetPitch,}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ Set3D,}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ SetListener,}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_audio_1_1_audio_service_a4c3b5a74f184e72f671d6744c8be9ab5}{Shutdown}}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00226}00226\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00227}00227\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00228}00228\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }Cmd}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00229}00229\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ CmdType\ type\{\ CmdType::Play\ \};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00231}00231\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ For\ Play\ publishing}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ AudioTicketID\ ticket\{\ \mbox{\hyperlink{struct_s_f_w_1_1_audio_1_1_audio_ticket_i_d_a3565aa7c3dcd4714de8eeb2bf19a074f}{AudioTicketID::Invalid}}()\ \};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00234}00234\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ For\ asset}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ SoundHandle\ sound\{\};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ path;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00238}00238\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ For\ play}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ AudioPlayParams\ play\{\};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00241}00241\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ For\ voice\ control}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ voice\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00244}00244\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ generic\ floats\ (set*)}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ a\ =\ 0,\ b\ =\ 0,\ c\ =\ 0,\ d\ =\ 0,\ e\ =\ 0,\ f\ =\ 0,\ g\ =\ 0,\ h\ =\ 0,\ i\ =\ 0,\ j\ =\ 0,\ k\ =\ 0,\ l\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00247}00247\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Cmd\ MakeLoadWav(SoundHandle\ h,\ \textcolor{keyword}{const}\ std::string\&\ p)}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Cmd\ c;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.type\ =\ CmdType::LoadWav;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.sound\ =\ h;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.path\ =\ p;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00256}00256\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Cmd\ MakeLoadStream(SoundHandle\ h,\ \textcolor{keyword}{const}\ std::string\&\ p)}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Cmd\ c;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.type\ =\ CmdType::LoadStream;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.sound\ =\ h;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.path\ =\ p;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Cmd\ MakeUnload(SoundHandle\ h)}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Cmd\ c;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.type\ =\ CmdType::Unload;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.sound\ =\ h;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00272}00272\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Cmd\ MakePlay(AudioTicketID\ t,\ SoundHandle\ h,\ \textcolor{keyword}{const}\ AudioPlayParams\&\ p)}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Cmd\ c;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.type\ =\ CmdType::Play;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.ticket\ =\ t;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.sound\ =\ h;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.play\ =\ p;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00282}00282\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Cmd\ MakeStop(\mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v)}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Cmd\ c;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.type\ =\ CmdType::Stop;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.voice\ =\ v;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00290}00290\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Cmd\ MakeSet1(CmdType\ t,\ \mbox{\hyperlink{namespace_s_f_w_1_1_audio_a1f464382ff42e09924127ad9f960c79f}{VoiceID}}\ v,\ \textcolor{keywordtype}{float}\ x)}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Cmd\ c;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.type\ =\ t;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.voice\ =\ v;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.a\ =\ x;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00299}00299\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Cmd\ MakeShutdown()}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Cmd\ c;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.type\ =\ CmdType::Shutdown;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00306}00306\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00307}00307\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00308}00308\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Push(Cmd\&\&\ c)}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00309}00309\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ std::lock\_guard<std::mutex>\ lk(m\_cmdMtx);}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ m\_queue.emplace\_back(std::move(c));}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00312}00312\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00313}00313\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00314}00314\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00315}00315\ \ \ \ \ \ \ \ \ \textcolor{comment}{//cppでヘッダーをインクルードするためにポインタを使用}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00316}00316\ \ \ \ \ \ \ \ \ std::unique\_ptr<SoLoud::Soloud>\ m\_soloud\{\};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00317}00317\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00318}00318\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ command\ queue}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00319}00319\ \ \ \ \ \ \ \ \ std::mutex\ m\_cmdMtx;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00320}00320\ \ \ \ \ \ \ \ \ std::vector<Cmd>\ m\_queue;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00321}00321\ \ \ \ \ \ \ \ \ std::vector<Cmd>\ m\_swap;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00322}00322\ }
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00323}00323\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ init\ guard}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00324}00324\ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::mutex\ m\_initMtx;}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00325}00325\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_initialized\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00326}00326\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00327}00327\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_service_context_8hpp_adbfb2947c9a06b367226fe228627154c}{STATIC\_SERVICE\_TAG}}}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_service_context_8hpp_aba8d760b00a97c77ac318f63335ff1e2}{DEFINE\_UPDATESERVICE\_GROUP}}(\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_update_service_a0a2e8c399f89c675d9de722b706a8608ad12726a0932d00746cec4faba33deb2e}{GROUP\_AUDIO}})}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00329}00329\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_audio_service_8h_source_l00330}00330\ \}}
 
 \end{DoxyCode}

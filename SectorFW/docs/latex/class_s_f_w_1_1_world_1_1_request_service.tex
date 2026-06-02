@@ -35,6 +35,8 @@ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_c
 \item 
 {\footnotesize template$<$template$<$ typename $>$ class System$>$ }\\std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a9fae09c2da0d257b7659fac2bfa7f2ef}{Create\+Pause\+Resume\+System\+Command}} (const std\+::string \&level\+Name, bool pause=true) const noexcept
 \item 
+{\footnotesize template$<$typename Func$>$ }\\std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_ab63cce9dc6e078b8e3206b4fa5d3a783}{Create\+Level\+Session\+Command}} (const std\+::string \&level\+Name, Func \&\&func) const
+\item 
 std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_af8f70f420f09edc0efaa0961129fed29}{Create\+Lambda\+Command}} (std\+::function$<$ void(\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session}{Session}} \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*})$>$ fn) const
 \end{DoxyCompactItemize}
 \doxysubsubsection*{フレンド}
@@ -49,12 +51,10 @@ class \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_request_service_a220e3aee8be704
 class SFW\+::\+World$<$ Level\+Types $>$\+::\+Request\+Service}
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00412}{412}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00433}{433}} 行目に定義があります。
 
 
 
-\label{doc-constructors}
-\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_doc-constructors}
 \doxysubsection{構築子と解体子}
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_abe3f579d3a0f2f714bda0760a01aefb4}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!RequestService@{RequestService}}
 \index{RequestService@{RequestService}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -65,7 +65,7 @@ template$<$typename... Level\+Types$>$ \\
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00416}{416}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00437}{437}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a6a6082a6b2f2bf7b96a1cfd80edd3d2b}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!RequestService@{RequestService}}
 \index{RequestService@{RequestService}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -76,12 +76,10 @@ template$<$typename... Level\+Types$>$ \\
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00418}{418}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00439}{439}} 行目に定義があります。
 
 
 
-\label{doc-func-members}
-\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a67d16bbbbc91ce3cb8fddc2a06820535}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateAddGlobalSystemCommand@{CreateAddGlobalSystemCommand}}
 \index{CreateAddGlobalSystemCommand@{CreateAddGlobalSystemCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -93,7 +91,7 @@ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_c
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00463}{463}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00484}{484}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a1338a1b0d2f6a80180e8f830fe2be160}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateAddLevelCommand@{CreateAddLevelCommand}}
 \index{CreateAddLevelCommand@{CreateAddLevelCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -105,7 +103,7 @@ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_c
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00440}{440}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00461}{461}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_ad27cda1145e33b189b6cc45390d95389}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateAddLevelCommand@{CreateAddLevelCommand}}
 \index{CreateAddLevelCommand@{CreateAddLevelCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -117,7 +115,7 @@ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_c
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00446}{446}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00467}{467}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a7795e0bf7e794e19e178fbe53d6643ef}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateAddSystemCommand@{CreateAddSystemCommand}}
 \index{CreateAddSystemCommand@{CreateAddSystemCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -129,7 +127,7 @@ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_c
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00473}{473}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00494}{494}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a63682feeea3322b4c2bc55be2d326454}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateApplyLevelSystemCommand@{CreateApplyLevelSystemCommand}}
 \index{CreateApplyLevelSystemCommand@{CreateApplyLevelSystemCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -141,7 +139,7 @@ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_c
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00468}{468}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00489}{489}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a9b813cf8db5ea065b8e3e631bbdad6d5}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateCleanLevelCommand@{CreateCleanLevelCommand}}
 \index{CreateCleanLevelCommand@{CreateCleanLevelCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -152,7 +150,7 @@ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_c
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00454}{454}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00475}{475}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_af8f70f420f09edc0efaa0961129fed29}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateLambdaCommand@{CreateLambdaCommand}}
 \index{CreateLambdaCommand@{CreateLambdaCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -163,7 +161,19 @@ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_c
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00489}{489}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00514}{514}} 行目に定義があります。
+
+\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_ab63cce9dc6e078b8e3206b4fa5d3a783}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateLevelSessionCommand@{CreateLevelSessionCommand}}
+\index{CreateLevelSessionCommand@{CreateLevelSessionCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
+\doxysubsubsection{\texorpdfstring{CreateLevelSessionCommand()}{CreateLevelSessionCommand()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_world_1_1_request_service_ab63cce9dc6e078b8e3206b4fa5d3a783} 
+template$<$typename... Level\+Types$>$ \\
+template$<$typename Func$>$ \\
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_command}{IRequest\+Command}} $>$ \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Request\+Service\+::\+Create\+Level\+Session\+Command (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{level\+Name}{, }\item[{Func \&\&}]{func}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00509}{509}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_aee25791b71685a8dde3f815c195f9353}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateLoadLevelCommand@{CreateLoadLevelCommand}}
 \index{CreateLoadLevelCommand@{CreateLoadLevelCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -174,7 +184,7 @@ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_c
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00450}{450}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00471}{471}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_ad0c13cd685d33c681bad955e46cfd1d4}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreatePauseResumeLevelCommand@{CreatePauseResumeLevelCommand}}
 \index{CreatePauseResumeLevelCommand@{CreatePauseResumeLevelCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -185,7 +195,7 @@ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_c
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00458}{458}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00479}{479}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a9fae09c2da0d257b7659fac2bfa7f2ef}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreatePauseResumeSystemCommand@{CreatePauseResumeSystemCommand}}
 \index{CreatePauseResumeSystemCommand@{CreatePauseResumeSystemCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -197,7 +207,7 @@ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_c
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00483}{483}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00504}{504}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_af5c7d6e96334665959d6cd72661b1bf1}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!CreateRemoveSystemCommand@{CreateRemoveSystemCommand}}
 \index{CreateRemoveSystemCommand@{CreateRemoveSystemCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -209,7 +219,7 @@ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_s_f_w_1_1_world_1_1_i_request_c
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00478}{478}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00499}{499}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a1fafae3b87909364e2d82c2aab6de13b}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!operator=@{operator=}}
 \index{operator=@{operator=}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -220,7 +230,7 @@ template$<$typename... Level\+Types$>$ \\
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00423}{423}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00444}{444}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a9a84bc9c1cfecbd6247a4274eb66de16}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!PushCommand@{PushCommand}}
 \index{PushCommand@{PushCommand}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -231,12 +241,10 @@ void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00434}{434}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00455}{455}} 行目に定義があります。
 
 
 
-\label{doc-related-members}
-\Hypertarget{class_s_f_w_1_1_world_1_1_request_service_doc-related-members}
 \doxysubsection{フレンドと関連関数の詳解}
 \Hypertarget{class_s_f_w_1_1_world_1_1_request_service_a220e3aee8be7040cd192c68a0f8b5b93}\index{SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}!World$<$ LevelTypes... $>$@{World$<$ LevelTypes... $>$}}
 \index{World$<$ LevelTypes... $>$@{World$<$ LevelTypes... $>$}!SFW::World$<$ LevelTypes $>$::RequestService@{SFW::World$<$ LevelTypes $>$::RequestService}}
@@ -247,7 +255,7 @@ friend class \mbox{\hyperlink{class_s_f_w_1_1_world}{World}}$<$ Level\+Types... 
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00406}{406}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00427}{427}} 行目に定義があります。
 
 
 

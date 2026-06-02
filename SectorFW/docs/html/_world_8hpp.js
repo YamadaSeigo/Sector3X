@@ -10,6 +10,7 @@ var _world_8hpp =
     [ "SFW::World< LevelTypes >::PauseResumeLevelCommand", "class_s_f_w_1_1_world_1_1_pause_resume_level_command.html", "class_s_f_w_1_1_world_1_1_pause_resume_level_command" ],
     [ "SFW::World< LevelTypes >::AddGlobalSystemCommand< SystemType >", "class_s_f_w_1_1_world_1_1_add_global_system_command.html", "class_s_f_w_1_1_world_1_1_add_global_system_command" ],
     [ "SFW::World< LevelTypes >::ApplyLevelSystemCommand< SystemType >", "class_s_f_w_1_1_world_1_1_apply_level_system_command.html", "class_s_f_w_1_1_world_1_1_apply_level_system_command" ],
+    [ "SFW::World< LevelTypes >::LevelSessionCommand< Func >", "class_s_f_w_1_1_world_1_1_level_session_command.html", "class_s_f_w_1_1_world_1_1_level_session_command" ],
     [ "SFW::World< LevelTypes >::LambdaCommand", "class_s_f_w_1_1_world_1_1_lambda_command.html", "class_s_f_w_1_1_world_1_1_lambda_command" ],
     [ "SFW::World< LevelTypes >::RequestService", "class_s_f_w_1_1_world_1_1_request_service.html", "class_s_f_w_1_1_world_1_1_request_service" ],
     [ "SFW::EApplyLevelSystemOption", "namespace_s_f_w.html#a832b30f9bb9e1cb1a19a69701f3501bc", [

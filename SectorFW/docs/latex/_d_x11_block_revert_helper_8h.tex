@@ -94,6 +94,10 @@ bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_aae57f04aa790c9d418
 \item 
 bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a1087cfe2d2cdf1421a7550ce7fc9187a}{SFW\+::\+Graphics\+::\+DX11\+::\+Build\+From\+Terrain\+Clustered}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered}{Terrain\+Clustered}} \&t, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_block_reserved_context}{Block\+Reserved\+Context}} \&out)
 \item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_acd17840f6298034d1f72a388a68bdddc}{SFW\+::\+Graphics\+::\+DX11\+::\+Generate\+Cluster\+LODs\+\_\+meshopt}} (const std\+::vector$<$ uint32\+\_\+t $>$ \&in\+Index\+Pool, const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range}{Terrain\+Clustered\+::\+Cluster\+Range}} $>$ \&in\+Ranges, const float \texorpdfstring{$\ast$}{*}positions, size\+\_\+t vertex\+Count, size\+\_\+t position\+Stride\+Bytes, const std\+::vector$<$ float $>$ \&lod\+Targets, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Index\+Pool, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_lod_range}{Cluster\+Lod\+Range}} $>$ \&out\+Lod\+Ranges, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Lod\+Base, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Lod\+Count)
+\item 
+void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_aeeefbbc2d1bb8375a861dff3d0498ad6}{SFW\+::\+Graphics\+::\+DX11\+::\+Generate\+Cluster\+LODs\+\_\+meshopt\+\_\+fast}} (const std\+::vector$<$ uint32\+\_\+t $>$ \&in\+Index\+Pool, const std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_terrain_clustered_1_1_cluster_range}{Terrain\+Clustered\+::\+Cluster\+Range}} $>$ \&in\+Ranges, const float \texorpdfstring{$\ast$}{*}positions, size\+\_\+t vertex\+Count, size\+\_\+t position\+Stride\+Bytes, const std\+::vector$<$ float $>$ \&lod\+Targets, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Index\+Pool, std\+::vector$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_cluster_lod_range}{Cluster\+Lod\+Range}} $>$ \&out\+Lod\+Ranges, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Lod\+Base, std\+::vector$<$ uint32\+\_\+t $>$ \&out\+Lod\+Count)
+\item 
 bool \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_aebe611e8799b4bd62c01c11ef102ee88}{SFW\+::\+Graphics\+::\+DX11\+::\+Build\+Common\+Material\+SRVs}} (ID3\+D11\+Device \texorpdfstring{$\ast$}{*}dev, \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_texture_manager}{SFW\+::\+Graphics\+::\+DX11\+::\+Texture\+Manager}} \&tex\+Mgr, const uint32\+\_\+t material\+Ids\mbox{[}4\mbox{]}, const uint32\+\_\+t material\+Normal\+Ids\mbox{[}4\mbox{]}, \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_a0affdb226eb1a6d3a99eefd76a6a788a}{Resolve\+Texture\+Path\+Fn}} resolve, \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_common_material_resources}{Common\+Material\+Resources}} \&out)
 \item 
 void \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_1_1_d_x11_acbe4eea105b2cd68e9a3a0a8c06bc326}{SFW\+::\+Graphics\+::\+DX11\+::\+Bind\+Common\+Materials}} (ID3\+D11\+Device\+Context \texorpdfstring{$\ast$}{*}ctx, const \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_common_material_resources}{Common\+Material\+Resources}} \&R)
@@ -145,8 +149,6 @@ December 2025
 
 
 
-\label{doc-define-members}
-\Hypertarget{_d_x11_block_revert_helper_8h_doc-define-members}
 \doxysubsection{マクロ定義詳解}
 \Hypertarget{_d_x11_block_revert_helper_8h_acda3ab65ee665d8929cc87669a6f40b5}\index{DX11BlockRevertHelper.h@{DX11BlockRevertHelper.h}!SFW\_USE\_SIMPLIFY\_SLOPPY@{SFW\_USE\_SIMPLIFY\_SLOPPY}}
 \index{SFW\_USE\_SIMPLIFY\_SLOPPY@{SFW\_USE\_SIMPLIFY\_SLOPPY}!DX11BlockRevertHelper.h@{DX11BlockRevertHelper.h}}

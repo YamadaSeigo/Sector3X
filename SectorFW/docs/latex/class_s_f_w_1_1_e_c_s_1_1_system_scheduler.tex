@@ -20,8 +20,10 @@
 \item 
 {\footnotesize template$<$template$<$ typename $>$ class System\+Type$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler_a4e37411f4e67306266cd5470121f355b}{Resume\+System}} ()
 \item 
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler_aeb37d3c5d49633537a1af4de1b9371e3}{Apply\+Pending\+Processes}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator, Partition \texorpdfstring{$\ast$}{*}partition, \mbox{\hyperlink{struct_s_f_w_1_1_level_context}{Level\+Context}}$<$ Partition $>$ \texorpdfstring{$\ast$}{*}level\+Ctx)
+\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler_a66fdc3e61bbd361ce9863eca11befcb1}{Update\+All}} (Partition \&partition, \mbox{\hyperlink{struct_s_f_w_1_1_level_context}{Level\+Context}}$<$ Partition $>$ \&level\+Ctx, const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor)
-\begin{DoxyCompactList}\small\item\em すべてのシステムを更新する関数 \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em すべてのシステムを更新する関数. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler_abcfb7bd0e8877ec6a6466d65014d7a2a}{Update\+Global}} (const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator, \mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor)
 \begin{DoxyCompactList}\small\item\em すべてのシステムをグローバルに更新する関数 \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler_a59e18ae5a6e55d16740f0c456906cefd}{Clean\+System}} (Partition \&partition, \mbox{\hyperlink{struct_s_f_w_1_1_level_context}{Level\+Context}}$<$ Partition $>$ \&level\+Ctx, const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&service\+Locator)
@@ -46,8 +48,6 @@ class SFW\+::\+ECS\+::\+System\+Scheduler$<$ Partition $>$}
 
 
 
-\label{doc-func-members}
-\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_system_scheduler_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{class_s_f_w_1_1_e_c_s_1_1_system_scheduler_a34a90dcda4a2b31d5bbf16705d9dc43b}\index{SFW::ECS::SystemScheduler$<$ Partition $>$@{SFW::ECS::SystemScheduler$<$ Partition $>$}!AddSystem@{AddSystem}}
 \index{AddSystem@{AddSystem}!SFW::ECS::SystemScheduler$<$ Partition $>$@{SFW::ECS::SystemScheduler$<$ Partition $>$}}
@@ -70,6 +70,17 @@ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler}{SFW\+::\+ECS\+
 
  \mbox{\hyperlink{_system_scheduler_8hpp_source}{System\+Scheduler.\+hpp}} の \mbox{\hyperlink{_system_scheduler_8hpp_source_l00040}{40}} 行目に定義があります。
 
+\Hypertarget{class_s_f_w_1_1_e_c_s_1_1_system_scheduler_aeb37d3c5d49633537a1af4de1b9371e3}\index{SFW::ECS::SystemScheduler$<$ Partition $>$@{SFW::ECS::SystemScheduler$<$ Partition $>$}!ApplyPendingProcesses@{ApplyPendingProcesses}}
+\index{ApplyPendingProcesses@{ApplyPendingProcesses}!SFW::ECS::SystemScheduler$<$ Partition $>$@{SFW::ECS::SystemScheduler$<$ Partition $>$}}
+\doxysubsubsection{\texorpdfstring{ApplyPendingProcesses()}{ApplyPendingProcesses()}}
+{\footnotesize\ttfamily \label{class_s_f_w_1_1_e_c_s_1_1_system_scheduler_aeb37d3c5d49633537a1af4de1b9371e3} 
+template$<$typename Partition$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler}{SFW\+::\+ECS\+::\+System\+Scheduler}}$<$ Partition $>$\+::\+Apply\+Pending\+Processes (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_service_locator}{Service\+Locator}} \&}]{service\+Locator}{, }\item[{Partition \texorpdfstring{$\ast$}{*}}]{partition}{, }\item[{\mbox{\hyperlink{struct_s_f_w_1_1_level_context}{Level\+Context}}$<$ Partition $>$ \texorpdfstring{$\ast$}{*}}]{level\+Ctx}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_system_scheduler_8hpp_source}{System\+Scheduler.\+hpp}} の \mbox{\hyperlink{_system_scheduler_8hpp_source_l00072}{72}} 行目に定義があります。
+
 \Hypertarget{class_s_f_w_1_1_e_c_s_1_1_system_scheduler_a59e18ae5a6e55d16740f0c456906cefd}\index{SFW::ECS::SystemScheduler$<$ Partition $>$@{SFW::ECS::SystemScheduler$<$ Partition $>$}!CleanSystem@{CleanSystem}}
 \index{CleanSystem@{CleanSystem}!SFW::ECS::SystemScheduler$<$ Partition $>$@{SFW::ECS::SystemScheduler$<$ Partition $>$}}
 \doxysubsubsection{\texorpdfstring{CleanSystem()}{CleanSystem()}}
@@ -79,7 +90,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler}{SFW\+::\+ECS\+
 
 
 
- \mbox{\hyperlink{_system_scheduler_8hpp_source}{System\+Scheduler.\+hpp}} の \mbox{\hyperlink{_system_scheduler_8hpp_source_l00192}{192}} 行目に定義があります。
+ \mbox{\hyperlink{_system_scheduler_8hpp_source}{System\+Scheduler.\+hpp}} の \mbox{\hyperlink{_system_scheduler_8hpp_source_l00206}{206}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_e_c_s_1_1_system_scheduler_a2a88d9abeeec784b511d549257762e86}\index{SFW::ECS::SystemScheduler$<$ Partition $>$@{SFW::ECS::SystemScheduler$<$ Partition $>$}!PauseSystem@{PauseSystem}}
 \index{PauseSystem@{PauseSystem}!SFW::ECS::SystemScheduler$<$ Partition $>$@{SFW::ECS::SystemScheduler$<$ Partition $>$}}
@@ -130,7 +141,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler}{SFW\+::\+ECS\+
 
 
 
- \mbox{\hyperlink{_system_scheduler_8hpp_source}{System\+Scheduler.\+hpp}} の \mbox{\hyperlink{_system_scheduler_8hpp_source_l00225}{225}} 行目に定義があります。
+ \mbox{\hyperlink{_system_scheduler_8hpp_source}{System\+Scheduler.\+hpp}} の \mbox{\hyperlink{_system_scheduler_8hpp_source_l00239}{239}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_e_c_s_1_1_system_scheduler_a66fdc3e61bbd361ce9863eca11befcb1}\index{SFW::ECS::SystemScheduler$<$ Partition $>$@{SFW::ECS::SystemScheduler$<$ Partition $>$}!UpdateAll@{UpdateAll}}
 \index{UpdateAll@{UpdateAll}!SFW::ECS::SystemScheduler$<$ Partition $>$@{SFW::ECS::SystemScheduler$<$ Partition $>$}}
@@ -141,16 +152,22 @@ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler}{SFW\+::\+ECS\+
 
 
 
-すべてのシステムを更新する関数 
+すべてのシステムを更新する関数. 
 
 
 \begin{DoxyParams}{引数}
 {\em partition} & 対象のパーティション \\
 \hline
+{\em level\+Ctx} & レベルコンテキスト \\
+\hline
+{\em service\+Locator} & サービスロケーター \\
+\hline
+{\em executor} & スレッドエグゼキューター\\
+\hline
 \end{DoxyParams}
+保留された追加・削除・一時停止・再開の処理を適用した後、スケジュールが変更された場合はバッチを再構築し、各バッチごとに並列実行と直列実行を行う。例外は各システム内で握り潰さず、ここで個別捕捉することも可能。 
 
-
- \mbox{\hyperlink{_system_scheduler_8hpp_source}{System\+Scheduler.\+hpp}} の \mbox{\hyperlink{_system_scheduler_8hpp_source_l00077}{77}} 行目に定義があります。
+ \mbox{\hyperlink{_system_scheduler_8hpp_source}{System\+Scheduler.\+hpp}} の \mbox{\hyperlink{_system_scheduler_8hpp_source_l00090}{90}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_e_c_s_1_1_system_scheduler_abcfb7bd0e8877ec6a6466d65014d7a2a}\index{SFW::ECS::SystemScheduler$<$ Partition $>$@{SFW::ECS::SystemScheduler$<$ Partition $>$}!UpdateGlobal@{UpdateGlobal}}
 \index{UpdateGlobal@{UpdateGlobal}!SFW::ECS::SystemScheduler$<$ Partition $>$@{SFW::ECS::SystemScheduler$<$ Partition $>$}}
@@ -167,12 +184,15 @@ void \mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_system_scheduler}{SFW\+::\+ECS\+
 \begin{DoxyParams}{引数}
 {\em service\+Locator} & サービスロケーター \\
 \hline
-{\em executor} & スレッド実行クラス \\
+{\em executor} & スレッド実行クラス\\
 \hline
 \end{DoxyParams}
+保留された追加・削除・一時停止・再開の処理を適用した後、スケジュールが変更された場合はバッチを再構築し、各バッチごとに並列実行と直列実行を行う。例外は各システム内で握り潰さず、ここで個別捕捉することも可能。 　\texorpdfstring{$\ast$}{*} \begin{DoxyNote}{覚え書き}
+Partition や \doxylink{struct_s_f_w_1_1_level_context}{Level\+Context} を必要としないシステムの更新に使用する。これらのシステムは Update\+Global をオーバーライドしている必要がある。 
+\end{DoxyNote}
 
 
- \mbox{\hyperlink{_system_scheduler_8hpp_source}{System\+Scheduler.\+hpp}} の \mbox{\hyperlink{_system_scheduler_8hpp_source_l00144}{144}} 行目に定義があります。
+ \mbox{\hyperlink{_system_scheduler_8hpp_source}{System\+Scheduler.\+hpp}} の \mbox{\hyperlink{_system_scheduler_8hpp_source_l00159}{159}} 行目に定義があります。
 
 
 

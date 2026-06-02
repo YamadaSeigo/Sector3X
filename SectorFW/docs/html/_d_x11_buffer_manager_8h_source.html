@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11BufferManager.h ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -13,6 +13,7 @@
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -34,20 +35,26 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.14.0 -->
+<!-- 構築: Doxygen 1.13.2 -->
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
 </script>
 <script type="text/javascript">
-$(function() { codefold.init(); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
+/* @license-end */
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
@@ -62,9 +69,10 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('_d_x11_buffer_manager_8h_source.html','',''); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_d_x11_buffer_manager_8h_source.html',''); initResizable(true); });
+/* @license-end */
 </script>
-<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -244,12 +252,12 @@ $(function(){initNavTree('_d_x11_buffer_manager_8h_source.html','',''); });
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>                        assert(<span class="keyword">false</span> &amp;&amp; <span class="stringliteral">&quot;Immutable buffer must have initial data.&quot;</span>);</div>
 <div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>                    }</div>
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>                    hr = device-&gt;CreateBuffer(&amp;bd, <span class="keyword">nullptr</span>, &amp;out.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#ae530e46e1f691ee2f8f5f148e43e1940">buffer</a>);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>                    hr = device-&gt;CreateBuffer(&amp;bd, <span class="keyword">nullptr</span>, &amp;out.buffer);</div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>                }</div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>                    D3D11_SUBRESOURCE_DATA initData = {};</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>                    initData.pSysMem = desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a174466dba1d8feaaf85a43df2a8ecce7">initialData</a>;</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                    hr = device-&gt;CreateBuffer(&amp;bd, &amp;initData, &amp;out.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#ae530e46e1f691ee2f8f5f148e43e1940">buffer</a>);</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                    hr = device-&gt;CreateBuffer(&amp;bd, &amp;initData, &amp;out.buffer);</div>
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                }</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                <span class="keywordflow">if</span> (FAILED(hr)) {</div>
@@ -274,7 +282,7 @@ $(function(){initNavTree('_d_x11_buffer_manager_8h_source.html','',''); });
 <div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>                        sd.Buffer.FirstElement = 0;</div>
 <div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>                        sd.Buffer.NumElements = desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a420cc8d4a4ed2f5b5c7fdda8146f4b4e">size</a> / desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#ab821aea901a763c0667af252f1c24734">structureByteStride</a>;</div>
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>                    }</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>                    HRESULT hr = device-&gt;CreateShaderResourceView(out.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#ae530e46e1f691ee2f8f5f148e43e1940">buffer</a>.Get(), &amp;sd, &amp;out.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#a69557da67864ac4f275c9a6ab9892453">srv</a>);</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>                    HRESULT hr = device-&gt;CreateShaderResourceView(out.buffer.Get(), &amp;sd, &amp;out.srv);</div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                    assert(SUCCEEDED(hr));</div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                }</div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
@@ -295,7 +303,7 @@ $(function(){initNavTree('_d_x11_buffer_manager_8h_source.html','',''); });
 <div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>                        ud.Buffer.NumElements = desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#a420cc8d4a4ed2f5b5c7fdda8146f4b4e">size</a> / desc.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html#ab821aea901a763c0667af252f1c24734">structureByteStride</a>;</div>
 <div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                        ud.Buffer.Flags = 0;</div>
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                    }</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                    HRESULT hr = device-&gt;CreateUnorderedAccessView(out.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#ae530e46e1f691ee2f8f5f148e43e1940">buffer</a>.Get(), &amp;ud, &amp;out.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_data.html#a36418fa060de4b27f779372f52d1baaa">uav</a>);</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                    HRESULT hr = device-&gt;CreateUnorderedAccessView(out.buffer.Get(), &amp;ud, &amp;out.uav);</div>
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>                    assert(SUCCEEDED(hr));</div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>                }</div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
@@ -324,7 +332,7 @@ $(function(){initNavTree('_d_x11_buffer_manager_8h_source.html','',''); });
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>                <span class="comment">// 初回作成：匿名名で Add（Add が +1 を返す）</span></div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">BufferHandle</a> h;</div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                <a class="code hl_struct" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_create_desc.html">BufferCreateDesc</a> desc = {</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>                    .name = <span class="stringliteral">&quot;auto_cb_&quot;</span> + std::to_string(key.<a class="code hl_variable" href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_cache_key.html#a3b52cfa4769886383debb386ee28fd17">hash</a>),</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>                    .name = <span class="stringliteral">&quot;auto_cb_&quot;</span> + std::to_string(key.hash),</div>
 <div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>                    .size = size,</div>
 <div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                    .initialData = data</div>
 <div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                };</div>
@@ -458,7 +466,7 @@ $(function(){initNavTree('_d_x11_buffer_manager_8h_source.html','',''); });
 <div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ab06811456bf9d3e86d400be7459a91ca"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ab06811456bf9d3e86d400be7459a91ca">SFW::ResourceManagerBase&lt; BufferManager, BufferHandle, BufferCreateDesc, BufferData &gt;::slots</a></div><div class="ttdeci">std::vector&lt; Slot &gt; slots</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00352">ResouceManagerBase.hpp:352</a></div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_ae15f0d5d2bed3eb6c9c6d7b6864d78f7"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#ae15f0d5d2bed3eb6c9c6d7b6864d78f7">SFW::ResourceManagerBase&lt; BufferManager, BufferHandle, BufferCreateDesc, BufferData &gt;::AddRef</a></div><div class="ttdeci">void AddRef(BufferHandle h)</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00138">ResouceManagerBase.hpp:138</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_graphics_1_1_d_x11_html"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">SFW::Graphics::DX11</a></div><div class="ttdef"><b>Definition</b> <a href="_d_x11_graphics_8h_source.html#l00034">DX11Graphics.h:35</a></div></div>
-<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00031">AudioService.h:32</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_html_a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9"><div class="ttname"><a href="namespace_s_f_w.html#a832b30f9bb9e1cb1a19a69701f3501bcaec211f7c20af43e742bf2570c3cb84f9">SFW::EApplyLevelSystemOption::Add</a></div><div class="ttdeci">@ Add</div><div class="ttdef"><b>Definition</b> <a href="_world_8hpp_source.html#l00017">World.hpp:17</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_html_ab8cb832ca884cf7f1a3ae8dd04491ffa"><div class="ttname"><a href="namespace_s_f_w.html#ab8cb832ca884cf7f1a3ae8dd04491ffa">SFW::HashBufferContent</a></div><div class="ttdeci">size_t HashBufferContent(const void *data, size_t size)</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00375">ResouceManagerBase.hpp:375</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_buffer_handle_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_buffer_handle.html">SFW::Graphics::BufferHandle</a></div><div class="ttdoc">バッファハンドル構造体</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00043">RenderTypes.h:43</a></div></div>
@@ -495,12 +503,11 @@ $(function(){initNavTree('_d_x11_buffer_manager_8h_source.html','',''); });
 <div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc_html_ad5c0b280047f02b553c758437678d546"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_buffer_update_desc.html#ad5c0b280047f02b553c758437678d546">SFW::Graphics::DX11::BufferUpdateDesc::buffer</a></div><div class="ttdeci">ComPtr&lt; ID3D11Buffer &gt; buffer</div><div class="ttdef"><b>Definition</b> <a href="#l00065">DX11BufferManager.h:65</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="dir_b1727ce268e62d033d50a1c50b50897f.html">DX11</a></li><li class="navelem"><a href="_d_x11_buffer_manager_8h.html">DX11BufferManager.h</a></li>
-    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+    <li class="navelem"><a class="el" href="dir_69161428018e52ad84691a5947f27cc9.html">Github</a></li><li class="navelem"><a class="el" href="dir_b16de0d6cadc5f599d3a1812d4bfc31f.html">Sector3X</a></li><li class="navelem"><a class="el" href="dir_c3d880fd4ea2deebfb73ffb2e2b5a523.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_1145cf039e35774d8481e4ea1d2fa6e0.html">inc</a></li><li class="navelem"><a class="el" href="dir_991437b4ce66300b52a83f76dbdf298e.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_4b5352a26ce7ea1db35fbdafe9f06e3b.html">Graphics</a></li><li class="navelem"><a class="el" href="dir_da4c480f78a7ce53f119c7fba3622a19.html">DX11</a></li><li class="navelem"><a class="el" href="_d_x11_buffer_manager_8h.html">DX11BufferManager.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

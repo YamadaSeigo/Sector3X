@@ -50,6 +50,8 @@ void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a35a067f4
 \begin{DoxyCompactList}\small\item\em フレームごとのインスタンスデータをアップロードする関数 \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a517a7f4033bfccfd1f573427e12420e6}{Execute\+Draw\+Indexed\+Instanced}} (const VecT \&cmds, std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}} $>$ pso\+Override=std\+::nullopt, bool use\+PSORasterizer=true, bool rebind\+PSO=false)
 \begin{DoxyCompactList}\small\item\em インデックス付きインスタンスドローを実行する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_ac8489ee91a8e2ef8ba614dea79befd20}{Execute\+Draw\+Indexed\+Instanced}} (const VecT \&cmds, std\+::span$<$ const uint32\+\_\+t $>$ indices, std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}} $>$ pso\+Override=std\+::nullopt, bool use\+PSORasterizer=true, bool rebind\+PSO=false)
+\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a69cfbab42678e659cb8fa984f97e31cc}{Process\+Deferred\+Deletes}} (uint64\+\_\+t current\+Frame)
 \begin{DoxyCompactList}\small\item\em フレーム終了時に遅延削除を処理する関数 \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a30707e108564c58fe4e93eea0b00fdc0}{Update\+Camera\+Buffer\+Data}} (Buffer buffer, const void \texorpdfstring{$\ast$}{*}data, size\+\_\+t size)
@@ -63,8 +65,6 @@ void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a30707e10
 
 
 
-\label{doc-constructors}
-\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x12_backend_doc-constructors}
 \doxysubsection{構築子と解体子}
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x12_backend_a7b8cec9fae1996779960a42be2d1a1db}\index{SFW::Graphics::DX12Backend@{SFW::Graphics::DX12Backend}!DX12Backend@{DX12Backend}}
 \index{DX12Backend@{DX12Backend}!SFW::Graphics::DX12Backend@{SFW::Graphics::DX12Backend}}
@@ -78,8 +78,6 @@ SFW\+::\+Graphics\+::\+DX12\+Backend\+::\+DX12\+Backend (\begin{DoxyParamCaption
 
 
 
-\label{doc-func-members}
-\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x12_backend_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x12_backend_af18bf2682e4d07880f9247c32c34a996}\index{SFW::Graphics::DX12Backend@{SFW::Graphics::DX12Backend}!BindSRVsImpl@{BindSRVsImpl}}
 \index{BindSRVsImpl@{BindSRVsImpl}!SFW::Graphics::DX12Backend@{SFW::Graphics::DX12Backend}}

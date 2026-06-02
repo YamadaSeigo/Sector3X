@@ -25,113 +25,125 @@
 \DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00026}\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{00026}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{NativeWindowHandle}}\ =\ std::variant<HWND>;}
 \DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{comment}{//======================================================================}}
 \DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00028}00028\ }
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Impl>}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00034}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{00034}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_aead7deb30ab52aef3c7e4cd7968fd58b}{IGraphicsDevice}}\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{protected}:}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00042}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_acd355dc1d7f35212ee71c1e8219be1e0}{00042}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_acd355dc1d7f35212ee71c1e8219be1e0}{Initialize}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{NativeWindowHandle}}\&\ nativeWindowHandle,\ uint32\_t\ width,\ uint32\_t\ height,\ \textcolor{keywordtype}{double}\ fps)\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>InitializeImpl(nativeWindowHandle,\ width,\ height,\ fps);}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00049}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_aead7deb30ab52aef3c7e4cd7968fd58b}{00049}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_aead7deb30ab52aef3c7e4cd7968fd58b}{IGraphicsDevice}}()\ =\ \textcolor{keywordflow}{default};}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<Debug::ImGuiBackendType\ ImGuiBackend>}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00057}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a0f0271012c8d9fe7c508a1f424ead2da}{00057}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a0f0271012c8d9fe7c508a1f424ead2da}{Configure}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{NativeWindowHandle}}\&\ nativeWindowHandle,\ uint32\_t\ width,\ uint32\_t\ height,\ \textcolor{keywordtype}{double}\ fps)}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(!m\_isInitialized\ \&\&\ \textcolor{stringliteral}{"{}IGraphicsDevice\ is\ already\ initialized."{}});}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00060}00060\ }
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_isInitialized\ =\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_acd355dc1d7f35212ee71c1e8219be1e0}{Initialize}}(nativeWindowHandle,\ width,\ height,\ fps);}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00062}00062\ }
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00063}00063\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_imguiLayer\ =\ std::make\_unique<Debug::ImGuiLayer>(std::make\_unique<ImGuiBackend>());}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info}{Debug::ImGuiInitInfo}}\ info\{\};}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ windowPtr\ =\ std::visit([\&](\textcolor{keyword}{auto}\&\ handle)-\/>\textcolor{keywordtype}{void}*\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }T\ =\ std::decay\_t<\textcolor{keyword}{decltype}(handle)>;}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ !=\ m\_imguiLayer-\/>GetWindowType())\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Incompatible\ window\ handle\ type\ for\ ImGui\ initialization."{}});}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00072}00072\ }
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_pointer\_v<T>)\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 例:\ HWND\ /\ GLFWwindow*\ /\ SDL\_Window*\ など}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ handle;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ T*\ →\ void*\ へ暗黙変換（OK）}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 例:\ X11\ Window\ のように整数ハンドルを持たせているならここは再検討}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{void}*\textcolor{keyword}{>}(std::addressof(handle));\ \textcolor{comment}{//\ T*\ →\ void*（OK）}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},\ nativeWindowHandle);}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00082}00082\ }
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!windowPtr)\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Failed\ to\ get\ window\ handle\ for\ ImGui\ initialization."{}});}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ info.\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info_a699036fd33a456a52646216da594a2d6}{platform\_window}}\ =\ windowPtr;}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00088}00088\ }
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//info.platform\_window\ =\ ;\ \ \ \ \ \ \ \ \ \ \ \ //\ SDL3\ なら\ SDL\_Window*}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ device\ =\ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>GetDevice();}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!device)\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Failed\ to\ get\ graphics\ device\ for\ ImGui\ initialization."{}});}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(device)\ !=\ m\_imguiLayer-\/>GetDeviceType())\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Incompatible\ graphics\ device\ type\ for\ ImGui\ initialization."{}});}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00099}00099\ }
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ info.\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info_ab376e48c59938c997573f82d1e5d5867}{device}}\ =\ device;}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ deviceContext\ =\ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>GetDeviceContext();}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!deviceContext)\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Failed\ to\ get\ graphics\ device\ context\ for\ ImGui\ initialization."{}});}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ info.\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info_a6cc23419ad158f8d0be8d88f8fb1a8bf}{device\_context}}\ =\ deviceContext;}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ info.\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info_a2855f7042cc6a7eecf3799e729624e9a}{display\_w}}\ =\ (int)width;}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ info.\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info_a273a91d294286411fed226f381524a11}{display\_h}}\ =\ (int)height;}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ info.\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info_ac0095cc53e5e4976b3a022142205cce5}{dpi\_scale}}\ =\ 1.0f;\ \textcolor{comment}{//\ 必要なら取得して入れる}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00110}00110\ }
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ ok\ =\ m\_imguiLayer-\/>Init(info);}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(ok\ \&\&\ \textcolor{stringliteral}{"{}Imguiの初期化に失敗しました"{}});}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00113}00113\ }
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frameSec\ =\ 1.0f\ /\ (float)fps;}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00115}00115\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_ENABLE\_IMGUI}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00121}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a755ede26c777008d980552218ce96530}{00121}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a755ede26c777008d980552218ce96530}{Clear}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ clearColor[4])\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>ClearImpl(clearColor);}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00124}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3a54c028d48da1a75038656f7dee3394}{00124}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3a54c028d48da1a75038656f7dee3394}{Draw}}()\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>DrawImpl();}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{//=======================================================================}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{//※継承先のクラスで実装されるべき関数の宣言}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ InitializeImpl()\ :\ デバイスの初期化を行う関数。引数はウィンドウハンドル、幅、高さ、FPSなど。戻り値は初期化の成功/失敗。}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ClearImpl()\ :\ 画面をクリアする関数。引数はクリアカラー。}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ DrawImpl()\ :\ 描画を実行する関数。}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PresentImpl()\ :\ 描画結果を画面に表示する関数。}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ SubmitFrameImpl()\ :\ 描画フレームをレンダースレッドに提出する関数。}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ WaitSubmittedFramesImpl()\ :\ 指定したフレームインデックスまでの提出済みフレームの完了を待つ関数。}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =======================================================================}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Impl>}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00045}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{00045}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_aead7deb30ab52aef3c7e4cd7968fd58b}{IGraphicsDevice}}\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00053}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_acd355dc1d7f35212ee71c1e8219be1e0}{00053}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_acd355dc1d7f35212ee71c1e8219be1e0}{Initialize}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{NativeWindowHandle}}\&\ nativeWindowHandle,\ uint32\_t\ width,\ uint32\_t\ height,\ \textcolor{keywordtype}{double}\ fps)\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>InitializeImpl(nativeWindowHandle,\ width,\ height,\ fps);}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00060}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_aead7deb30ab52aef3c7e4cd7968fd58b}{00060}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_aead7deb30ab52aef3c7e4cd7968fd58b}{IGraphicsDevice}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<Debug::ImGuiBackendType\ ImGuiBackend>}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00068}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a0f0271012c8d9fe7c508a1f424ead2da}{00068}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a0f0271012c8d9fe7c508a1f424ead2da}{Configure}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{NativeWindowHandle}}\&\ nativeWindowHandle,\ uint32\_t\ width,\ uint32\_t\ height,\ \textcolor{keywordtype}{double}\ fps)}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(!m\_isInitialized\ \&\&\ \textcolor{stringliteral}{"{}IGraphicsDevice\ is\ already\ initialized."{}});}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 派生クラスのAPIごとの初期化関数を呼び出す}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_isInitialized\ =\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_acd355dc1d7f35212ee71c1e8219be1e0}{Initialize}}(nativeWindowHandle,\ width,\ height,\ fps);}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//imguiの初期化}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00076}00076\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_imguiLayer\ =\ std::make\_unique<Debug::ImGuiLayer>(std::make\_unique<ImGuiBackend>());}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info}{Debug::ImGuiInitInfo}}\ info\{\};}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ windowPtr\ =\ std::visit([\&](\textcolor{keyword}{auto}\&\ handle)-\/>\textcolor{keywordtype}{void}*\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }T\ =\ std::decay\_t<\textcolor{keyword}{decltype}(handle)>;}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ !=\ m\_imguiLayer-\/>GetWindowType())\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Incompatible\ window\ handle\ type\ for\ ImGui\ initialization."{}});}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_pointer\_v<T>)\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 例:\ HWND\ /\ GLFWwindow*\ /\ SDL\_Window*\ など}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ handle;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ T*\ →\ void*\ へ暗黙変換（OK）}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 例:\ X11\ Window\ のように整数ハンドルを持たせているならここは再検討}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{void}*\textcolor{keyword}{>}(std::addressof(handle));\ \textcolor{comment}{//\ T*\ →\ void*（OK）}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},\ nativeWindowHandle);}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!windowPtr)\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Failed\ to\ get\ window\ handle\ for\ ImGui\ initialization."{}});}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ info.\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_im_gui_init_info_a699036fd33a456a52646216da594a2d6}{platform\_window}}\ =\ windowPtr;}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//info.platform\_window\ =\ ;\ \ \ \ \ \ \ \ \ \ \ \ //\ SDL3\ なら\ SDL\_Window*}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ device\ =\ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>GetDevice();}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!device)\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Failed\ to\ get\ graphics\ device\ for\ ImGui\ initialization."{}});}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(device)\ !=\ m\_imguiLayer-\/>GetDeviceType())\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Incompatible\ graphics\ device\ type\ for\ ImGui\ initialization."{}});}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ info.device\ =\ device;}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ deviceContext\ =\ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>GetDeviceContext();}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!deviceContext)\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(\textcolor{keyword}{false}\ \&\&\ \textcolor{stringliteral}{"{}Failed\ to\ get\ graphics\ device\ context\ for\ ImGui\ initialization."{}});}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ info.device\_context\ =\ deviceContext;}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ info.display\_w\ =\ (int)width;}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ info.display\_h\ =\ (int)height;}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ info.dpi\_scale\ =\ 1.0f;\ \textcolor{comment}{//\ 必要なら取得して入れる}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ ok\ =\ m\_imguiLayer-\/>Init(info);}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(ok\ \&\&\ \textcolor{stringliteral}{"{}Imguiの初期化に失敗しました"{}});}
 \DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00126}00126\ }
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00127}00127\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_imguiLayer)\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_imguiLayer-\/>BeginFrame();}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00130}00130\ }
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_imguiLayer-\/>DrawUI(frameSec);}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00132}00132\ }
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_imguiLayer-\/>EndFrame();}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_imguiLayer-\/>Render();}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00136}00136\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_ENABLE\_IMGUI}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00141}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_abcb0602a6cec5134423c8941bd277e46}{00141}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_abcb0602a6cec5134423c8941bd277e46}{Present}}()\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>PresentImpl();}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00149}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3d210c34b525b87e33208989c4aec1d2}{00149}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3d210c34b525b87e33208989c4aec1d2}{SubmitFrame}}(\textcolor{keyword}{const}\ FLOAT\ clearColor[4],\ uint64\_t\ frameIdx)\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>SubmitFrameImpl(clearColor,\ frameIdx);}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00156}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3f13d959dd8c2f9e275cb335764aa17a}{00156}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3f13d959dd8c2f9e275cb335764aa17a}{WaitSubmittedFrames}}(uint64\_t\ uptoFrame)\ \{}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>WaitSubmittedFramesImpl(uptoFrame);}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00162}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a669ea0c8873cf05be43c35d1d10a4412}{00162}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a669ea0c8873cf05be43c35d1d10a4412}{\string~IGraphicsDevice}}()\ =\ \textcolor{keywordflow}{default};}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00167}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a6dd6f41ea22d3d5d01046473a8216961}{00167}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a6dd6f41ea22d3d5d01046473a8216961}{IsInitialized}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_isInitialized;\ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 初期化フラグ}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ m\_isInitialized\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00171}00171\ }
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00172}00172\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<Debug::ImGuiLayer>\ m\_imguiLayer\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ frameSec\ =\ 1.0f\ /\ 60.0f;}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00175}00175\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_ENABLE\_IMGUI}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00177}00177\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00178}00178\ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frameSec\ =\ 1.0f\ /\ (float)fps;}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00128}00128\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00134}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a755ede26c777008d980552218ce96530}{00134}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a755ede26c777008d980552218ce96530}{Clear}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ clearColor[4])\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>ClearImpl(clearColor);}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00137}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3a54c028d48da1a75038656f7dee3394}{00137}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3a54c028d48da1a75038656f7dee3394}{Draw}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>DrawImpl();}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00140}00140\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_imguiLayer)\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_imguiLayer-\/>BeginFrame();}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_imguiLayer-\/>DrawUI(frameSec);}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_imguiLayer-\/>EndFrame();}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_imguiLayer-\/>Render();}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00149}00149\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00154}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_abcb0602a6cec5134423c8941bd277e46}{00154}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_abcb0602a6cec5134423c8941bd277e46}{Present}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>PresentImpl();}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00162}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3d210c34b525b87e33208989c4aec1d2}{00162}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3d210c34b525b87e33208989c4aec1d2}{SubmitFrame}}(\textcolor{keyword}{const}\ FLOAT\ clearColor[4],\ uint64\_t\ frameIdx)\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>SubmitFrameImpl(clearColor,\ frameIdx);}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00169}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3f13d959dd8c2f9e275cb335764aa17a}{00169}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3f13d959dd8c2f9e275cb335764aa17a}{WaitSubmittedFrames}}(uint64\_t\ uptoFrame)\ \{}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}Impl*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>WaitSubmittedFramesImpl(uptoFrame);}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00175}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a669ea0c8873cf05be43c35d1d10a4412}{00175}}\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a669ea0c8873cf05be43c35d1d10a4412}{\string~IGraphicsDevice}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00180}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a6dd6f41ea22d3d5d01046473a8216961}{00180}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a6dd6f41ea22d3d5d01046473a8216961}{IsInitialized}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_isInitialized;\ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 初期化フラグ}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ m\_isInitialized\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00185}00185\ \textcolor{preprocessor}{\#ifdef\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<Debug::ImGuiLayer>\ m\_imguiLayer\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ frameSec\ =\ 1.0f\ /\ 60.0f;}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00188}00188\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_ENABLE\_IMGUI}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00190}00190\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_i_graphics_device_8hpp_source_l00191}00191\ \}}
 
 \end{DoxyCode}

@@ -27,7 +27,7 @@ SFW\+::Game\+Engine\texorpdfstring{$<$}{<} Graphics, Level\+Types \texorpdfstrin
 \mbox{\hyperlink{class_s_f_w_1_1_game_engine}{Game\+Engine}} \& \mbox{\hyperlink{class_s_f_w_1_1_game_engine_ac0fd50b51b4b6597286e6387eb96f0aa}{operator=}} (\mbox{\hyperlink{class_s_f_w_1_1_game_engine}{Game\+Engine}} \&\&)=delete
 \item 
 void \mbox{\hyperlink{class_s_f_w_1_1_game_engine_acca014647ca1ec246d1202a80b9e2354}{Main\+Loop}} (\mbox{\hyperlink{struct_s_f_w_1_1_i_thread_executor}{IThread\+Executor}} \texorpdfstring{$\ast$}{*}executor)
-\begin{DoxyCompactList}\small\item\em メインループ \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em 一定の間隔で更新と描画の関数を呼び出すループ \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_s_f_w_1_1_world}{World\+Type}} \& \mbox{\hyperlink{class_s_f_w_1_1_game_engine_a6402259925794bcc19eaf85aa342b02d}{Get\+World}} () noexcept
 \begin{DoxyCompactList}\small\item\em Worldのインスタンスを取得する \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -43,8 +43,6 @@ class SFW\+::\+Game\+Engine$<$ Graphics, Level\+Types $>$}
 
 
 
-\label{doc-constructors}
-\Hypertarget{class_s_f_w_1_1_game_engine_doc-constructors}
 \doxysubsection{構築子と解体子}
 \Hypertarget{class_s_f_w_1_1_game_engine_ad4ee0d8680803220f4d32c9611ae98d3}\index{SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}!GameEngine@{GameEngine}}
 \index{GameEngine@{GameEngine}!SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}}
@@ -92,8 +90,6 @@ template$<$Graphics\+Type Graphics, typename... Level\+Types$>$ \\
 
 
 
-\label{doc-func-members}
-\Hypertarget{class_s_f_w_1_1_game_engine_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{class_s_f_w_1_1_game_engine_a6402259925794bcc19eaf85aa342b02d}\index{SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}!GetWorld@{GetWorld}}
 \index{GetWorld@{GetWorld}!SFW::GameEngine$<$ Graphics, LevelTypes $>$@{SFW::GameEngine$<$ Graphics, LevelTypes $>$}}
@@ -119,7 +115,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_game_engine}{SFW\+::\+Game\+Engine}}$<$ Gr
 
 
 
-メインループ 
+一定の間隔で更新と描画の関数を呼び出すループ 
 
 
 \begin{DoxyParams}{引数}

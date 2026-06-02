@@ -26,6 +26,8 @@ void \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a88a774331f61b34bd311f8
 {\footnotesize template$<$template$<$ typename $>$ class System\+Type$>$ }\\void \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_a3886f3e1a9cef19f5593ffb2fc8fbbfe}{Remove\+System\+From\+Level}} (const std\+::string level\+Name, \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}} custom\+Func=nullptr)
 \item 
 {\footnotesize template$<$template$<$ typename $>$ class System\+Type$>$ }\\void \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ad07bcb186358d6137f1913e55cf7e03c}{Pause\+Resume\+System\+In\+Level}} (const std\+::string level\+Name, bool pause, \mbox{\hyperlink{class_s_f_w_1_1_world_ad10ba0850af4badeaa5d38c140fb0cb5}{Executed\+Custom\+Func}} custom\+Func=nullptr)
+\item 
+{\footnotesize template$<$typename Func$>$ }\\void \mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_session_ae5d9d7fce198c21f956cfd8f7086ff30}{Execute\+Level\+Session\+Func}} (const std\+::string \&level\+Name, Func \&\&func)
 \end{DoxyCompactItemize}
 
 
@@ -38,8 +40,6 @@ struct SFW\+::\+World$<$ Level\+Types $>$\+::\+Session}
 
 
 
-\label{doc-constructors}
-\Hypertarget{struct_s_f_w_1_1_world_1_1_session_doc-constructors}
 \doxysubsection{構築子と解体子}
 \Hypertarget{struct_s_f_w_1_1_world_1_1_session_a94440d9b6feb407050b8fb9be5c8dab3}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!Session@{Session}}
 \index{Session@{Session}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
@@ -54,8 +54,6 @@ template$<$typename... Level\+Types$>$ \\
 
 
 
-\label{doc-func-members}
-\Hypertarget{struct_s_f_w_1_1_world_1_1_session_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{struct_s_f_w_1_1_world_1_1_session_a4a53574b7739f96734a7fd01cefb7b6b}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!AddGlobalSystem@{AddGlobalSystem}}
 \index{AddGlobalSystem@{AddGlobalSystem}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
@@ -148,6 +146,18 @@ void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>
 
  \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00165}{165}} 行目に定義があります。
 
+\Hypertarget{struct_s_f_w_1_1_world_1_1_session_ae5d9d7fce198c21f956cfd8f7086ff30}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!ExecuteLevelSessionFunc@{ExecuteLevelSessionFunc}}
+\index{ExecuteLevelSessionFunc@{ExecuteLevelSessionFunc}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
+\doxysubsubsection{\texorpdfstring{ExecuteLevelSessionFunc()}{ExecuteLevelSessionFunc()}}
+{\footnotesize\ttfamily \label{struct_s_f_w_1_1_world_1_1_session_ae5d9d7fce198c21f956cfd8f7086ff30} 
+template$<$typename... Level\+Types$>$ \\
+template$<$typename Func$>$ \\
+void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>$\+::\+Session\+::\+Execute\+Level\+Session\+Func (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{level\+Name}{, }\item[{Func \&\&}]{func}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00231}{231}} 行目に定義があります。
+
 \Hypertarget{struct_s_f_w_1_1_world_1_1_session_a43e68e483e4475fa03aa8013ff00042b}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!LoadLevel@{LoadLevel}}
 \index{LoadLevel@{LoadLevel}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
 \doxysubsubsection{\texorpdfstring{LoadLevel()}{LoadLevel()}}
@@ -180,7 +190,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00217}{217}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00216}{216}} 行目に定義があります。
 
 \Hypertarget{struct_s_f_w_1_1_world_1_1_session_a3886f3e1a9cef19f5593ffb2fc8fbbfe}\index{SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}!RemoveSystemFromLevel@{RemoveSystemFromLevel}}
 \index{RemoveSystemFromLevel@{RemoveSystemFromLevel}!SFW::World$<$ LevelTypes $>$::Session@{SFW::World$<$ LevelTypes $>$::Session}}
@@ -192,7 +202,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_world}{SFW\+::\+World}}$<$ Level\+Types $>
 
 
 
- \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00207}{207}} 行目に定義があります。
+ \mbox{\hyperlink{_world_8hpp_source}{World.\+hpp}} の \mbox{\hyperlink{_world_8hpp_source_l00206}{206}} 行目に定義があります。
 
 
 

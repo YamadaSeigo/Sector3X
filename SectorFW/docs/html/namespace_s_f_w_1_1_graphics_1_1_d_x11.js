@@ -92,6 +92,8 @@ var namespace_s_f_w_1_1_graphics_1_1_d_x11 =
     [ "CreateStructuredUInt", "namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a38bd9907fc34339601a9bfbd9d98515d", null ],
     [ "CreateStructuredUInt", "namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a9ea5e70c23e3d9dbfd76643071605f96", null ],
     [ "FillClusterParamsCPU", "namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a10650c2c15bb39698d92136d723ef5a5", null ],
+    [ "GenerateClusterLODs_meshopt", "namespace_s_f_w_1_1_graphics_1_1_d_x11.html#acd17840f6298034d1f72a388a68bdddc", null ],
+    [ "GenerateClusterLODs_meshopt_fast", "namespace_s_f_w_1_1_graphics_1_1_d_x11.html#aeeefbbc2d1bb8375a861dff3d0498ad6", null ],
     [ "InitSplatArrayResources", "namespace_s_f_w_1_1_graphics_1_1_d_x11.html#ae17faf13d92b9700a360fd403306f15a", null ],
     [ "LoadSheetAsTex2D", "namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a122966bf4ae759f40997c64ad27637a5", null ],
     [ "ReadTexture2DToCPU", "namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a093113ac71c73b762c72b6fa6e0a8d61", null ],

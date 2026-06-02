@@ -2,7 +2,7 @@
 \hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{}\label{class_s_f_w_1_1_graphics_1_1_i_graphics_device}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
 
 
-グラフィックデバイスのインターフェース  
+グラフィックデバイスのインターフェース @detials CRTPを用いて、派生クラスで実装されるべき関数を呼び出す。これにより、共通のインターフェースを提供しつつ、派生クラスごとに異なる実装を可能にする。  
 
 
 
@@ -15,7 +15,7 @@
 \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_aead7deb30ab52aef3c7e4cd7968fd58b}{IGraphics\+Device}} ()=default
 \begin{DoxyCompactList}\small\item\em コンストラクタ \end{DoxyCompactList}\item 
 {\footnotesize template$<$Debug\+::\+Im\+Gui\+Backend\+Type Im\+Gui\+Backend$>$ }\\void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a0f0271012c8d9fe7c508a1f424ead2da}{Configure}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{Native\+Window\+Handle}} \&native\+Window\+Handle, uint32\+\_\+t width, uint32\+\_\+t height, double fps)
-\begin{DoxyCompactList}\small\item\em 初期化 \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em 描画デバイスを初期化する。初めにこれを呼び出さないと描画できません。 \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a755ede26c777008d980552218ce96530}{Clear}} (const float clear\+Color\mbox{[}4\mbox{]})
 \begin{DoxyCompactList}\small\item\em 画面をクリア \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3a54c028d48da1a75038656f7dee3394}{Draw}} ()
@@ -34,20 +34,18 @@ bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a6dd6f41ea2
 \begin{DoxyCompactItemize}
 \item 
 bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device_acd355dc1d7f35212ee71c1e8219be1e0}{Initialize}} (const \mbox{\hyperlink{namespace_s_f_w_1_1_graphics_add16cad34908b03f927d070c219d2f4a}{Native\+Window\+Handle}} \&native\+Window\+Handle, uint32\+\_\+t width, uint32\+\_\+t height, double fps)
-\begin{DoxyCompactList}\small\item\em 初期化 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em 継承先のデバイスの初期化を行う関数。これを呼び出す前に、m\+\_\+is\+Initializedがfalseであることを確認してください。 \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{詳解}
 \subsubsection*{template$<$typename Impl$>$\newline
 class SFW\+::\+Graphics\+::\+IGraphics\+Device$<$ Impl $>$}
-グラフィックデバイスのインターフェース 
+グラフィックデバイスのインターフェース @detials CRTPを用いて、派生クラスで実装されるべき関数を呼び出す。これにより、共通のインターフェースを提供しつつ、派生クラスごとに異なる実装を可能にする。 
 
- \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00034}{34}} 行目に定義があります。
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00045}{45}} 行目に定義があります。
 
 
 
-\label{doc-constructors}
-\Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_doc-constructors}
 \doxysubsection{構築子と解体子}
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_aead7deb30ab52aef3c7e4cd7968fd58b}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!IGraphicsDevice@{IGraphicsDevice}}
 \index{IGraphicsDevice@{IGraphicsDevice}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
@@ -73,8 +71,6 @@ template$<$typename Impl$>$ \\
 
 
 
-\label{doc-func-members}
-\Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a755ede26c777008d980552218ce96530}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!Clear@{Clear}}
 \index{Clear@{Clear}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
@@ -94,7 +90,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+G
 \end{DoxyParams}
 
 
- \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00121}{121}} 行目に定義があります。
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00134}{134}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a0f0271012c8d9fe7c508a1f424ead2da}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!Configure@{Configure}}
 \index{Configure@{Configure}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
@@ -106,7 +102,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+G
 
 
 
-初期化 
+描画デバイスを初期化する。初めにこれを呼び出さないと描画できません。 
 
 
 \begin{DoxyParams}{引数}
@@ -119,7 +115,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+G
 \end{DoxyParams}
 
 
- \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00057}{57}} 行目に定義があります。
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00068}{68}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3a54c028d48da1a75038656f7dee3394}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!Draw@{Draw}}
 \index{Draw@{Draw}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
@@ -130,7 +126,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+G
 
 
 
- \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00124}{124}} 行目に定義があります。
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00137}{137}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_acd355dc1d7f35212ee71c1e8219be1e0}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!Initialize@{Initialize}}
 \index{Initialize@{Initialize}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
@@ -141,7 +137,7 @@ bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+G
 
 
 
-初期化 
+継承先のデバイスの初期化を行う関数。これを呼び出す前に、m\+\_\+is\+Initializedがfalseであることを確認してください。 
 
 
 \begin{DoxyParams}{引数}
@@ -154,7 +150,7 @@ bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+G
 \end{DoxyParams}
 
 
- \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00042}{42}} 行目に定義があります。
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00053}{53}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a6dd6f41ea22d3d5d01046473a8216961}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!IsInitialized@{IsInitialized}}
 \index{IsInitialized@{IsInitialized}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
@@ -172,7 +168,7 @@ bool \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+G
 \end{DoxyReturn}
 
 
- \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00167}{167}} 行目に定義があります。
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00180}{180}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_abcb0602a6cec5134423c8941bd277e46}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!Present@{Present}}
 \index{Present@{Present}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
@@ -187,7 +183,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+G
 
 
 
- \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00141}{141}} 行目に定義があります。
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00154}{154}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3d210c34b525b87e33208989c4aec1d2}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!SubmitFrame@{SubmitFrame}}
 \index{SubmitFrame@{SubmitFrame}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
@@ -209,7 +205,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+G
 \end{DoxyParams}
 
 
- \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00149}{149}} 行目に定義があります。
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00162}{162}} 行目に定義があります。
 
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_i_graphics_device_a3f13d959dd8c2f9e275cb335764aa17a}\index{SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}!WaitSubmittedFrames@{WaitSubmittedFrames}}
 \index{WaitSubmittedFrames@{WaitSubmittedFrames}!SFW::Graphics::IGraphicsDevice$<$ Impl $>$@{SFW::Graphics::IGraphicsDevice$<$ Impl $>$}}
@@ -229,7 +225,7 @@ void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+G
 \end{DoxyParams}
 
 
- \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00156}{156}} 行目に定義があります。
+ \mbox{\hyperlink{_i_graphics_device_8hpp_source}{IGraphics\+Device.\+hpp}} の \mbox{\hyperlink{_i_graphics_device_8hpp_source_l00169}{169}} 行目に定義があります。
 
 
 

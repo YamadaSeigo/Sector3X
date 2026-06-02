@@ -26,8 +26,6 @@ var class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device =
     [ "SetMainRenderTargetAndDepth", "class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#ad8ecbad717838b9324832559a9797846", null ],
     [ "SetMainRenderTargetNoDepth", "class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a5a6be44e999078e0fe92d72321ed586d", null ],
     [ "SetRasterizerState", "class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#aaafe50d8157268ed66a6fb086af2658a", null ],
-    [ "StartRenderThread", "class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a3cf4f27906aeb15493d35dbabd84447b", null ],
-    [ "StopRenderThread", "class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#abc8669a07c0f5b56c54218df11e813b0", null ],
     [ "SubmitFrameImpl", "class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#ad43491a04b805c3b6b0ea7aebaf10c8c", null ],
     [ "WaitSubmittedFramesImpl", "class_s_f_w_1_1_graphics_1_1_d_x11_1_1_graphics_device.html#a90c8a484b547dabb5a320186c0bde399", null ]
 ];

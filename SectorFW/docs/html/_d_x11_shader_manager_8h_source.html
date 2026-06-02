@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Graphics/DX11/DX11ShaderManager.h ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -13,6 +13,7 @@
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -34,20 +35,26 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.14.0 -->
+<!-- 構築: Doxygen 1.13.2 -->
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
 </script>
 <script type="text/javascript">
-$(function() { codefold.init(); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
+/* @license-end */
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
@@ -62,9 +69,10 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('_d_x11_shader_manager_8h_source.html','',''); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_d_x11_shader_manager_8h_source.html',''); initResizable(true); });
+/* @license-end */
 </script>
-<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -204,7 +212,7 @@ $(function(){initNavTree('_d_x11_shader_manager_8h_source.html','',''); });
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>            ID3D11Device* device;</div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            std::mutex <a class="code hl_variable" href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">mapMutex</a>;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            std::mutex mapMutex;</div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            <span class="comment">// キー -&gt; ハンドル の検索表</span></div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>            std::unordered_map&lt;size_t, ShaderHandle&gt; keyToHandle;</div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
@@ -223,7 +231,6 @@ $(function(){initNavTree('_d_x11_shader_manager_8h_source.html','',''); });
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_manager_html_ad8bc1eaad2066aad4eaea9d9b6941c72"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_manager.html#ad8bc1eaad2066aad4eaea9d9b6941c72">SFW::Graphics::DX11::ShaderManager::RegisterKey</a></div><div class="ttdeci">void RegisterKey(const ShaderCreateDesc &amp;desc, ShaderHandle h)</div><div class="ttdoc">シェーダーのキーとハンドルを登録する関数</div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_manager_html_af11912bccfd181a4c22e31166ef026a4"><div class="ttname"><a href="class_s_f_w_1_1_graphics_1_1_d_x11_1_1_shader_manager.html#af11912bccfd181a4c22e31166ef026a4">SFW::Graphics::DX11::ShaderManager::CreateResource</a></div><div class="ttdeci">ShaderData CreateResource(const ShaderCreateDesc &amp;desc, ShaderHandle h)</div><div class="ttdoc">シェーダーリソースを作成する関数</div></div>
 <div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html">SFW::ResourceManagerBase</a></div><div class="ttdoc">リソースマネージャーの基底クラス。主にRenderer系で使用する。</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00023">ResouceManagerBase.hpp:23</a></div></div>
-<div class="ttc" id="aclass_s_f_w_1_1_resource_manager_base_html_a2a05fb3cf3b0ea6767b836876caf0793"><div class="ttname"><a href="class_s_f_w_1_1_resource_manager_base.html#a2a05fb3cf3b0ea6767b836876caf0793">SFW::ResourceManagerBase&lt; ShaderManager, ShaderHandle, ShaderCreateDesc, ShaderData &gt;::mapMutex</a></div><div class="ttdeci">std::shared_mutex mapMutex</div><div class="ttdef"><b>Definition</b> <a href="_resouce_manager_base_8hpp_source.html#l00364">ResouceManagerBase.hpp:364</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_graphics_1_1_d_x11_html"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html">SFW::Graphics::DX11</a></div><div class="ttdef"><b>Definition</b> <a href="_d_x11_graphics_8h_source.html#l00034">DX11Graphics.h:35</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_graphics_1_1_d_x11_html_a348912279cf769c7dae41ef10ef31dd8"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a348912279cf769c7dae41ef10ef31dd8">SFW::Graphics::DX11::InputBindingMode</a></div><div class="ttdeci">InputBindingMode</div><div class="ttdoc">シェーダーハンドルの型</div><div class="ttdef"><b>Definition</b> <a href="#l00026">DX11ShaderManager.h:26</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_graphics_1_1_d_x11_html_a348912279cf769c7dae41ef10ef31dd8a00baeaec44806ce028a3b5b2e8a024c9"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics_1_1_d_x11.html#a348912279cf769c7dae41ef10ef31dd8a00baeaec44806ce028a3b5b2e8a024c9">SFW::Graphics::DX11::InputBindingMode::BINDMODE_MAX</a></div><div class="ttdeci">@ BINDMODE_MAX</div><div class="ttdef"><b>Definition</b> <a href="#l00026">DX11ShaderManager.h:26</a></div></div>
@@ -233,7 +240,7 @@ $(function(){initNavTree('_d_x11_shader_manager_8h_source.html','',''); });
 <div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_a15f923fb434f742740bc297d82761eb7"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#a15f923fb434f742740bc297d82761eb7">SFW::Graphics::ShaderStage</a></div><div class="ttdeci">ShaderStage</div><div class="ttdoc">シェーダステージ列挙型</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00220">RenderTypes.h:220</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_afc5edfd2dde8e6f34da6b897a7f0b994"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#afc5edfd2dde8e6f34da6b897a7f0b994">SFW::Graphics::MaterialTemplateID</a></div><div class="ttdeci">MaterialTemplateID</div><div class="ttdoc">マテリアルテンプレートID列挙型</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00126">RenderTypes.h:126</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_graphics_html_afc5edfd2dde8e6f34da6b897a7f0b994af8357427a3733ebed1a8647f3d5fa31b"><div class="ttname"><a href="namespace_s_f_w_1_1_graphics.html#afc5edfd2dde8e6f34da6b897a7f0b994af8357427a3733ebed1a8647f3d5fa31b">SFW::Graphics::MaterialTemplateID::PBR</a></div><div class="ttdeci">@ PBR</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00127">RenderTypes.h:127</a></div></div>
-<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00031">AudioService.h:32</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_semantic_binding_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_semantic_binding.html">SFW::Graphics::DX11::SemanticBinding</a></div><div class="ttdoc">セマンティクバインディングを表す構造体</div><div class="ttdef"><b>Definition</b> <a href="#l00046">DX11ShaderManager.h:46</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_semantic_binding_html_a115752e221774da54cf707c6ac7ca197"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_semantic_binding.html#a115752e221774da54cf707c6ac7ca197">SFW::Graphics::DX11::SemanticBinding::slot</a></div><div class="ttdeci">UINT slot</div><div class="ttdef"><b>Definition</b> <a href="#l00047">DX11ShaderManager.h:47</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_d_x11_1_1_semantic_binding_html_a6f389962d5cf35e9c8e7335189d0f159"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_d_x11_1_1_semantic_binding.html#a6f389962d5cf35e9c8e7335189d0f159">SFW::Graphics::DX11::SemanticBinding::format</a></div><div class="ttdeci">DXGI_FORMAT format</div><div class="ttdef"><b>Definition</b> <a href="#l00048">DX11ShaderManager.h:48</a></div></div>
@@ -270,12 +277,11 @@ $(function(){initNavTree('_d_x11_shader_manager_8h_source.html','',''); });
 <div class="ttc" id="astruct_s_f_w_1_1_graphics_1_1_shader_handle_html"><div class="ttname"><a href="struct_s_f_w_1_1_graphics_1_1_shader_handle.html">SFW::Graphics::ShaderHandle</a></div><div class="ttdoc">シェーダハンドル構造体</div><div class="ttdef"><b>Definition</b> <a href="_render_types_8h_source.html#l00031">RenderTypes.h:31</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_513ad55f99a3c1873a74d9661fa7393b.html">Graphics</a></li><li class="navelem"><a href="dir_b1727ce268e62d033d50a1c50b50897f.html">DX11</a></li><li class="navelem"><a href="_d_x11_shader_manager_8h.html">DX11ShaderManager.h</a></li>
-    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+    <li class="navelem"><a class="el" href="dir_69161428018e52ad84691a5947f27cc9.html">Github</a></li><li class="navelem"><a class="el" href="dir_b16de0d6cadc5f599d3a1812d4bfc31f.html">Sector3X</a></li><li class="navelem"><a class="el" href="dir_c3d880fd4ea2deebfb73ffb2e2b5a523.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_1145cf039e35774d8481e4ea1d2fa6e0.html">inc</a></li><li class="navelem"><a class="el" href="dir_991437b4ce66300b52a83f76dbdf298e.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_4b5352a26ce7ea1db35fbdafe9f06e3b.html">Graphics</a></li><li class="navelem"><a class="el" href="dir_da4c480f78a7ce53f119c7fba3622a19.html">DX11</a></li><li class="navelem"><a class="el" href="_d_x11_shader_manager_8h.html">DX11ShaderManager.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

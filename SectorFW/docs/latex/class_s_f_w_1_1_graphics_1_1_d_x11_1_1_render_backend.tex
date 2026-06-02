@@ -83,6 +83,8 @@ void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a35a067f4
 \begin{DoxyCompactList}\small\item\em フレームごとのインスタンスデータをアップロードする関数 \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a517a7f4033bfccfd1f573427e12420e6}{Execute\+Draw\+Indexed\+Instanced}} (const VecT \&cmds, std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}} $>$ pso\+Override=std\+::nullopt, bool use\+PSORasterizer=true, bool rebind\+PSO=false)
 \begin{DoxyCompactList}\small\item\em インデックス付きインスタンスドローを実行する関数 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_ac8489ee91a8e2ef8ba614dea79befd20}{Execute\+Draw\+Indexed\+Instanced}} (const VecT \&cmds, std\+::span$<$ const uint32\+\_\+t $>$ indices, std\+::optional$<$ \mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_p_s_o_handle}{PSOHandle}} $>$ pso\+Override=std\+::nullopt, bool use\+PSORasterizer=true, bool rebind\+PSO=false)
+\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a69cfbab42678e659cb8fa984f97e31cc}{Process\+Deferred\+Deletes}} (uint64\+\_\+t current\+Frame)
 \begin{DoxyCompactList}\small\item\em フレーム終了時に遅延削除を処理する関数 \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_backend_base_a30707e108564c58fe4e93eea0b00fdc0}{Update\+Camera\+Buffer\+Data}} (Buffer buffer, const void \texorpdfstring{$\ast$}{*}data, size\+\_\+t size)
@@ -101,8 +103,6 @@ DirectX 11レンダリングバックエンドクラス.
 
 
 
-\label{doc-constructors}
-\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_doc-constructors}
 \doxysubsection{構築子と解体子}
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a5d4fb546e7dc91c1e9c88951983f3e8b}\index{SFW::Graphics::DX11::RenderBackend@{SFW::Graphics::DX11::RenderBackend}!RenderBackend@{RenderBackend}}
 \index{RenderBackend@{RenderBackend}!SFW::Graphics::DX11::RenderBackend@{SFW::Graphics::DX11::RenderBackend}}
@@ -139,8 +139,6 @@ SFW\+::\+Graphics\+::\+DX11\+::\+Render\+Backend\+::\+Render\+Backend (\begin{Do
 \end{DoxyParams}
 
 
-\label{doc-func-members}
-\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_doc-func-members}
 \doxysubsection{関数詳解}
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_af2f14c85f7bbc1d0d74f65b5270ab039}\index{SFW::Graphics::DX11::RenderBackend@{SFW::Graphics::DX11::RenderBackend}!AddResourceManagerToRenderServiceImpl@{AddResourceManagerToRenderServiceImpl}}
 \index{AddResourceManagerToRenderServiceImpl@{AddResourceManagerToRenderServiceImpl}!SFW::Graphics::DX11::RenderBackend@{SFW::Graphics::DX11::RenderBackend}}
@@ -455,8 +453,6 @@ void SFW\+::\+Graphics\+::\+DX11\+::\+Render\+Backend\+::\+Update\+Buffer\+Data\
 
 
 
-\label{doc-variable-members}
-\Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_doc-variable-members}
 \doxysubsection{メンバ詳解}
 \Hypertarget{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_render_backend_a008e900bda388ae98c8f955845eae180}\index{SFW::Graphics::DX11::RenderBackend@{SFW::Graphics::DX11::RenderBackend}!MAX\_DRAW\_CALL\_INSTANCES\_NUM@{MAX\_DRAW\_CALL\_INSTANCES\_NUM}}
 \index{MAX\_DRAW\_CALL\_INSTANCES\_NUM@{MAX\_DRAW\_CALL\_INSTANCES\_NUM}!SFW::Graphics::DX11::RenderBackend@{SFW::Graphics::DX11::RenderBackend}}

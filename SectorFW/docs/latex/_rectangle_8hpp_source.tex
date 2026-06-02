@@ -141,24 +141,24 @@
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00142}00142\ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_aff06deb3ef65e775d03eb0906b6df478}{valid}}\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00143}00143\ }
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ x:\ 0..1\ →\ 0..W}}
-\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00145}00145\ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}}\ =\ nx0\ *\ vp.width;}
-\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00146}00146\ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}}\ =\ nx1\ *\ vp.width;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00145}00145\ \ \ \ \ \ \ \ \ r.x0\ =\ nx0\ *\ vp.width;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00146}00146\ \ \ \ \ \ \ \ \ r.x1\ =\ nx1\ *\ vp.width;}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00147}00147\ }
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ y:\ 上端の扱い}}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (vp.originTopLeft)\ \{}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ D3D/UI:\ (0,0)\ が上左。NDC\ +1\ が上、-\/1\ が下\ なので反転してから高さを掛ける}}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ py0\ =\ (1.0f\ -\/\ ny0)\ *\ vp.height;}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ py1\ =\ (1.0f\ -\/\ ny1)\ *\ vp.height;}
-\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}}\ =\ (std::min)(py0,\ py1);}
-\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}}\ =\ (std::max)(py0,\ py1);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ r.y0\ =\ (std::min)(py0,\ py1);}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ r.y1\ =\ (std::max)(py0,\ py1);}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ GL\ 的下原点}}
-\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}}\ =\ ny0\ *\ vp.height;}
-\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}}\ =\ ny1\ *\ vp.height;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ r.y0\ =\ ny0\ *\ vp.height;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ r.y1\ =\ ny1\ *\ vp.height;}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00161}00161\ }
-\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00162}00162\ \ \ \ \ \ \ \ \ r.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a0871c5ec0383f9c480fae7a0afb4bd61}{Normalize}}();}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00162}00162\ \ \ \ \ \ \ \ \ r.Normalize();}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00164}00164\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00165}00165\ }
@@ -313,9 +313,9 @@
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00314}00314\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ rmaxy\ =\ (std::min)(viewportY\ +\ viewportHeight\ +\ clampMargin,\ scrMaxY);}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00315}00315\ }
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00316}00316\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rminx\ <\ rmaxx\ \&\&\ rminy\ <\ rmaxy)\ \{}
-\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6f80b39a40ab32682eb571b3bae07169}{x0}}\ =\ rminx;\ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_ab40385736a5cde5f3f7916c30cf7620a}{y0}}\ =\ rminy;}
-\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a28dea2283dbe1e8ea0f1258a0e4bc7f0}{x1}}\ =\ rmaxx;\ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_a6e7b2b3ebca886a05e999e02cde4e594}{y1}}\ =\ rmaxy;}
-\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle_aff06deb3ef65e775d03eb0906b6df478}{valid}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ out.x0\ =\ rminx;\ out.y0\ =\ rminy;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ out.x1\ =\ rmaxx;\ out.y1\ =\ rmaxy;}
+\DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ out.valid\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
 \DoxyCodeLine{\Hypertarget{_rectangle_8hpp_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ \mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_rectangle}{Rectangle}}\{\};\ \textcolor{comment}{//\ visible=false}}

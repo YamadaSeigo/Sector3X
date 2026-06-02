@@ -34,7 +34,7 @@ var searchData=
   ['projectquadareapx2_5fsimdorscalar_31',['ProjectQuadAreaPx2_SIMDOrScalar',['../namespace_s_f_w_1_1_graphics.html#adc37a5ee69a0d11e84e980a6367b4b35',1,'SFW::Graphics']]],
   ['projectspherestondc_5ffast_5favx2_32',['ProjectSpheresToNdc_Fast_AVX2',['../namespace_s_f_w_1_1_math.html#a6ab8a2a5eede6f10ed1138df98c1d992',1,'SFW::Math']]],
   ['psomanager_33',['PSOManager',['../class_s_f_w_1_1_graphics_1_1_d_x11_1_1_p_s_o_manager.html#a3d75a9b0cbeffd64242c3f265fba47ae',1,'SFW::Graphics::DX11::PSOManager']]],
-  ['publish_34',['publish',['../struct_s_f_w_1_1_debug_1_1_latest.html#aec564f1a4653a285fbd3c48b08d0cd22',1,'SFW::Debug::Latest::publish()'],['../struct_s_f_w_1_1_debug_1_1_latest_3_01std_1_1string_01_4.html#a16c9c00cde5578fd7c8de8fe0f013047',1,'SFW::Debug::Latest&lt; std::string &gt;::publish()']]],
+  ['publish_34',['publish',['../struct_s_f_w_1_1_debug_1_1_latest.html#aec564f1a4653a285fbd3c48b08d0cd22',1,'SFW::Debug::Latest::publish()'],['../struct_s_f_w_1_1_debug_1_1_latest_3_01std_1_1string_01_4.html#a16c9c00cde5578fd7c8de8fe0f013047',1,'SFW::Debug::Latest&lt; std::string &gt;::publish(std::string s)'],['../struct_s_f_w_1_1_debug_1_1_latest.html#aec564f1a4653a285fbd3c48b08d0cd22',1,'SFW::Debug::Latest&lt; std::string &gt;::publish(std::string x) noexcept']]],
   ['publishcpu_35',['PublishCpu',['../namespace_s_f_w_1_1_debug.html#ae62b8d5feb3160cf83ad7102867c899e',1,'SFW::Debug']]],
   ['publishgpu_36',['PublishGpu',['../namespace_s_f_w_1_1_debug.html#adad758e341c01e05d1143fbaa3fed49d',1,'SFW::Debug']]],
   ['publishgpuframems_37',['PublishGpuFrameMs',['../namespace_s_f_w_1_1_debug.html#a9e1a99f1084579cbeab606452559bafe',1,'SFW::Debug']]],

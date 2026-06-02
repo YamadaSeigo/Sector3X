@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SectorFW: C:/work/Github/Sector3X/SectorFW/inc/SectorFW/Math/Matrix.hpp ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -13,6 +13,7 @@
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -34,20 +35,26 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.14.0 -->
+<!-- 構築: Doxygen 1.13.2 -->
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
 </script>
 <script type="text/javascript">
-$(function() { codefold.init(); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
+/* @license-end */
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
@@ -62,9 +69,10 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('_matrix_8hpp_source.html','',''); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_matrix_8hpp_source.html',''); initResizable(true); });
+/* @license-end */
 </script>
-<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -314,7 +322,7 @@ $(function(){initNavTree('_matrix_8hpp_source.html','',''); });
 <div class="foldopen" id="foldopen00216" data-start="{" data-end="}">
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_math.html#aeb7ec46e1bb5d9031b018c51d30b8b92">  216</a></span>        <span class="keyword">constexpr</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_matrix.html">Matrix&lt;C, R, T&gt;</a> <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#aeb7ec46e1bb5d9031b018c51d30b8b92">TransposeMatrix</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_matrix.html">Matrix&lt;R, C, T&gt;</a>&amp; M) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>            <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_matrix.html">Matrix&lt;C, R, T&gt;</a> Rt{};</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; R; ++i) <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> j = 0; j &lt; C; ++j) Rt.m[j][i] = M.m[i][j];</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; R; ++i) <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> j = 0; j &lt; C; ++j) Rt.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_matrix.html#a1513336b5f1081c50db9ae5745943784">m</a>[j][i] = M.m[i][j];</div>
 <div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>            <span class="keywordflow">return</span> Rt;</div>
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        }</div>
 </div>
@@ -343,8 +351,8 @@ $(function(){initNavTree('_matrix_8hpp_source.html','',''); });
 <div class="line"><a id="l00242" name="l00242"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_math.html#a00f807985a4cc86629c66ace6bef2ce9">  242</a></span>        <span class="keyword">inline</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3&lt;T&gt;</a> <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a00f807985a4cc86629c66ace6bef2ce9">operator*</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_matrix.html">Matrix&lt;3, 3, T&gt;</a>&amp; M, <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3&lt;T&gt;</a>&amp; v) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>            <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3&lt;T&gt;</a> out{};</div>
 <div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>            out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a321ecffe7d2fc085be48e383b726d446">x</a> = M.m[0][0] * v.x + M.m[0][1] * v.y + M.m[0][2] * v.z;</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>            out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a50dcb824e1549ed55b4addc65c4e3240">y</a> = M.m[1][0] * v.x + M.m[1][1] * v.y + M.m[1][2] * v.z;</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>            out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec3.html#a0d2709fc022ffd3b0be4fe2fb7914d51">z</a> = M.m[2][0] * v.x + M.m[2][1] * v.y + M.m[2][2] * v.z;</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>            out.y = M.m[1][0] * v.x + M.m[1][1] * v.y + M.m[1][2] * v.z;</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>            out.z = M.m[2][0] * v.x + M.m[2][1] * v.y + M.m[2][2] * v.z;</div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            <span class="keywordflow">return</span> out;</div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        }</div>
 </div>
@@ -357,9 +365,9 @@ $(function(){initNavTree('_matrix_8hpp_source.html','',''); });
 <div class="line"><a id="l00254" name="l00254"></a><span class="lineno"><a class="line" href="namespace_s_f_w_1_1_math.html#abf4434bd2b9c19bcc3055eee587fb619">  254</a></span>        <span class="keyword">inline</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec4.html">Vec4&lt;T&gt;</a> <a class="code hl_function" href="namespace_s_f_w_1_1_math.html#a00f807985a4cc86629c66ace6bef2ce9">operator*</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_matrix.html">Matrix&lt;4, 4, T&gt;</a>&amp; M, <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec4.html">Vec4&lt;T&gt;</a>&amp; v) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>            <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec4.html">Vec4&lt;T&gt;</a> out{};</div>
 <div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>            out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec4.html#a3b73bc23b1366b9bb9fdd5c324eb89ca">x</a> = M.m[0][0] * v.x + M.m[0][1] * v.y + M.m[0][2] * v.z + M.m[0][3] * v.w;</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>            out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec4.html#a322367280913e6d77a4941b968e1c617">y</a> = M.m[1][0] * v.x + M.m[1][1] * v.y + M.m[1][2] * v.z + M.m[1][3] * v.w;</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>            out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec4.html#ad3b5861d4dcef8be1e2b33ec630ab9da">z</a> = M.m[2][0] * v.x + M.m[2][1] * v.y + M.m[2][2] * v.z + M.m[2][3] * v.w;</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>            out.<a class="code hl_variable" href="struct_s_f_w_1_1_math_1_1_vec4.html#a31f3d200b8bce1ffbb3391a001a6861b">w</a> = M.m[3][0] * v.x + M.m[3][1] * v.y + M.m[3][2] * v.z + M.m[3][3] * v.w;</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>            out.y = M.m[1][0] * v.x + M.m[1][1] * v.y + M.m[1][2] * v.z + M.m[1][3] * v.w;</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>            out.z = M.m[2][0] * v.x + M.m[2][1] * v.y + M.m[2][2] * v.z + M.m[2][3] * v.w;</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>            out.w = M.m[3][0] * v.x + M.m[3][1] * v.y + M.m[3][2] * v.z + M.m[3][3] * v.w;</div>
 <div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>            <span class="keywordflow">return</span> out;</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        }</div>
 </div>
@@ -1067,9 +1075,9 @@ $(function(){initNavTree('_matrix_8hpp_source.html','',''); });
 <div class="line"><a id="l00952" name="l00952"></a><span class="lineno">  952</span>            <span class="keyword">const</span> <a class="code hl_struct" href="struct_s_f_w_1_1_math_1_1_vec3.html">Vec3&lt;float&gt;</a> r2{ M.m[2][0],M.m[2][1],M.m[2][2] };</div>
 <div class="line"><a id="l00953" name="l00953"></a><span class="lineno">  953</span>            <span class="keyword">auto</span> near1 = [&amp;](<span class="keywordtype">float</span> v) { <span class="keywordflow">return</span> std::fabs(v - 1.f) &lt;= eps; };</div>
 <div class="line"><a id="l00954" name="l00954"></a><span class="lineno">  954</span>            <span class="keyword">auto</span> near0 = [&amp;](<span class="keywordtype">float</span> v) { <span class="keywordflow">return</span> std::fabs(v) &lt;= eps; };</div>
-<div class="line"><a id="l00955" name="l00955"></a><span class="lineno">  955</span>            <span class="keyword">const</span> <span class="keywordtype">bool</span> ortho = near1(r0.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_vec3.html#a024f89ab5c1cd6815a07933afc89832d">dot</a>(r0)) &amp;&amp; near1(r1.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_vec3.html#a024f89ab5c1cd6815a07933afc89832d">dot</a>(r1)) &amp;&amp; near1(r2.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_vec3.html#a024f89ab5c1cd6815a07933afc89832d">dot</a>(r2)) &amp;&amp;</div>
-<div class="line"><a id="l00956" name="l00956"></a><span class="lineno">  956</span>                near0(r0.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_vec3.html#a024f89ab5c1cd6815a07933afc89832d">dot</a>(r1)) &amp;&amp; near0(r1.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_vec3.html#a024f89ab5c1cd6815a07933afc89832d">dot</a>(r2)) &amp;&amp; near0(r2.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_vec3.html#a024f89ab5c1cd6815a07933afc89832d">dot</a>(r0));</div>
-<div class="line"><a id="l00957" name="l00957"></a><span class="lineno">  957</span>            <span class="keyword">const</span> <span class="keywordtype">float</span> det = r0.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_vec3.html#a024f89ab5c1cd6815a07933afc89832d">dot</a>(r1.<a class="code hl_function" href="struct_s_f_w_1_1_math_1_1_vec3.html#a90b38090396b3f1fbfbb5d9e6238bd5e">cross</a>(r2));</div>
+<div class="line"><a id="l00955" name="l00955"></a><span class="lineno">  955</span>            <span class="keyword">const</span> <span class="keywordtype">bool</span> ortho = near1(r0.dot(r0)) &amp;&amp; near1(r1.dot(r1)) &amp;&amp; near1(r2.dot(r2)) &amp;&amp;</div>
+<div class="line"><a id="l00956" name="l00956"></a><span class="lineno">  956</span>                near0(r0.dot(r1)) &amp;&amp; near0(r1.dot(r2)) &amp;&amp; near0(r2.dot(r0));</div>
+<div class="line"><a id="l00957" name="l00957"></a><span class="lineno">  957</span>            <span class="keyword">const</span> <span class="keywordtype">float</span> det = r0.dot(r1.cross(r2));</div>
 <div class="line"><a id="l00958" name="l00958"></a><span class="lineno">  958</span>            <span class="keywordflow">return</span> ortho &amp;&amp; (std::fabs(det - 1.f) &lt;= 2e-3f); <span class="comment">// det≈+1 もチェック</span></div>
 <div class="line"><a id="l00959" name="l00959"></a><span class="lineno">  959</span>        }</div>
 </div>
@@ -1733,7 +1741,7 @@ $(function(){initNavTree('_matrix_8hpp_source.html','',''); });
 <div class="line"><a id="l01564" name="l01564"></a><span class="lineno"> 1564</span>                M.m[3][0] = 0.f; M.m[3][1] = 0.f; M.m[3][2] = 0.f; M.m[3][3] = 1.f;</div>
 <div class="line"><a id="l01565" name="l01565"></a><span class="lineno"> 1565</span>                outM[i] = M;</div>
 <div class="line"><a id="l01566" name="l01566"></a><span class="lineno"> 1566</span>            }</div>
-<div class="line"><a id="l01567" name="l01567"></a><span class="lineno"> 1567</span>            }</div>
+<div class="line"><a id="l01567" name="l01567"></a><span class="lineno"> 1567</span>        }</div>
 </div>
 <div class="line"><a id="l01568" name="l01568"></a><span class="lineno"> 1568</span> </div>
 <div class="line"><a id="l01569" name="l01569"></a><span class="lineno"> 1569</span>        <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> BuildWorldMatrices3x4_FromSoA_Scalar(</div>
@@ -2408,8 +2416,8 @@ $(function(){initNavTree('_matrix_8hpp_source.html','',''); });
 <div class="line"><a id="l02233" name="l02233"></a><span class="lineno"> 2233</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l02234" name="l02234"></a><span class="lineno"> 2234</span>        }</div>
 </div>
-<div class="line"><a id="l02235" name="l02235"></a><span class="lineno"> 2235</span>        } <span class="comment">// namespace Math</span></div>
-<div class="line"><a id="l02236" name="l02236"></a><span class="lineno"> 2236</span>    } <span class="comment">// namespace SectorFW</span></div>
+<div class="line"><a id="l02235" name="l02235"></a><span class="lineno"> 2235</span>    } <span class="comment">// namespace Math</span></div>
+<div class="line"><a id="l02236" name="l02236"></a><span class="lineno"> 2236</span>} <span class="comment">// namespace SectorFW</span></div>
 <div class="ttc" id="a_a_a_b_b_8hpp_html"><div class="ttname"><a href="_a_a_b_b_8hpp.html">AABB.hpp</a></div><div class="ttdoc">Axis-Aligned Bounding Box (AABB)を定義するクラス</div></div>
 <div class="ttc" id="a_quaternion_8hpp_html"><div class="ttname"><a href="_quaternion_8hpp.html">Quaternion.hpp</a></div><div class="ttdoc">クォータニオンを定義するヘッダーファイル</div></div>
 <div class="ttc" id="a_vector_8hpp_html"><div class="ttname"><a href="_vector_8hpp.html">Vector.hpp</a></div><div class="ttdoc">ベクトルを定義するヘッダーファイル</div></div>
@@ -2464,7 +2472,7 @@ $(function(){initNavTree('_matrix_8hpp_source.html','',''); });
 <div class="ttc" id="anamespace_s_f_w_1_1_math_html_aeb7ec46e1bb5d9031b018c51d30b8b92"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#aeb7ec46e1bb5d9031b018c51d30b8b92">SFW::Math::TransposeMatrix</a></div><div class="ttdeci">constexpr Matrix&lt; C, R, T &gt; TransposeMatrix(const Matrix&lt; R, C, T &gt; &amp;M) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00216">Matrix.hpp:216</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1_math_html_aed798d42f4db7f618c0be25a08073e5d"><div class="ttname"><a href="namespace_s_f_w_1_1_math.html#aed798d42f4db7f618c0be25a08073e5d">SFW::Math::MakeLookAtMatrixRH</a></div><div class="ttdeci">Matrix&lt; 4, 4, T &gt; MakeLookAtMatrixRH(const Vec3&lt; T &gt; &amp;eye, const Vec3&lt; T &gt; &amp;target, const Vec3&lt; T &gt; &amp;up) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l01223">Matrix.hpp:1223</a></div></div>
 <div class="ttc" id="anamespace_s_f_w_1_1detail_html"><div class="ttname"><a href="namespace_s_f_w_1_1detail.html">SFW::detail</a></div><div class="ttdef"><b>Definition</b> <a href="_component_type_registry_8h_source.html#l00018">ComponentTypeRegistry.h:18</a></div></div>
-<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00032">AudioService.h:33</a></div></div>
+<div class="ttc" id="anamespace_s_f_w_html"><div class="ttname"><a href="namespace_s_f_w.html">SFW</a></div><div class="ttdef"><b>Definition</b> <a href="_audio_service_8h_source.html#l00031">AudioService.h:32</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_a_a_b_b_html"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_a_a_b_b.html">SFW::Math::AABB</a></div><div class="ttdef"><b>Definition</b> <a href="_a_a_b_b_8hpp_source.html#l00018">AABB.hpp:18</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_a_a_b_b_html_a9a57667be5229aa0721f9d4f9098d329"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_a_a_b_b.html#a9a57667be5229aa0721f9d4f9098d329">SFW::Math::AABB::ub</a></div><div class="ttdeci">VecT ub</div><div class="ttdef"><b>Definition</b> <a href="_a_a_b_b_8hpp_source.html#l00020">AABB.hpp:20</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_a_a_b_b_html_ac095d3de4746158d4404f353e79ff143"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_a_a_b_b.html#ac095d3de4746158d4404f353e79ff143">SFW::Math::AABB::lb</a></div><div class="ttdeci">VecT lb</div><div class="ttdef"><b>Definition</b> <a href="_a_a_b_b_8hpp_source.html#l00019">AABB.hpp:19</a></div></div>
@@ -2523,18 +2531,14 @@ $(function(){initNavTree('_matrix_8hpp_source.html','',''); });
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec3_html_a90b38090396b3f1fbfbb5d9e6238bd5e"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec3.html#a90b38090396b3f1fbfbb5d9e6238bd5e">SFW::Math::Vec3::cross</a></div><div class="ttdeci">constexpr Vec3 cross(const Vec3 &amp;rhs) const noexcept</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00157">Vector.hpp:157</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec3_html_aa8974881cafa6dd2054b4d8178e28b2a"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec3.html#aa8974881cafa6dd2054b4d8178e28b2a">SFW::Math::Vec3::normalized</a></div><div class="ttdeci">Vec3 normalized() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00147">Vector.hpp:147</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec4_html"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec4.html">SFW::Math::Vec4</a></div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00277">Vector.hpp:277</a></div></div>
-<div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec4_html_a31f3d200b8bce1ffbb3391a001a6861b"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec4.html#a31f3d200b8bce1ffbb3391a001a6861b">SFW::Math::Vec4::w</a></div><div class="ttdeci">T w</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00279">Vector.hpp:279</a></div></div>
-<div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec4_html_a322367280913e6d77a4941b968e1c617"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec4.html#a322367280913e6d77a4941b968e1c617">SFW::Math::Vec4::y</a></div><div class="ttdeci">T y</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00279">Vector.hpp:279</a></div></div>
 <div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec4_html_a3b73bc23b1366b9bb9fdd5c324eb89ca"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec4.html#a3b73bc23b1366b9bb9fdd5c324eb89ca">SFW::Math::Vec4::x</a></div><div class="ttdeci">T x</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00279">Vector.hpp:279</a></div></div>
-<div class="ttc" id="astruct_s_f_w_1_1_math_1_1_vec4_html_ad3b5861d4dcef8be1e2b33ec630ab9da"><div class="ttname"><a href="struct_s_f_w_1_1_math_1_1_vec4.html#ad3b5861d4dcef8be1e2b33ec630ab9da">SFW::Math::Vec4::z</a></div><div class="ttdeci">T z</div><div class="ttdef"><b>Definition</b> <a href="_vector_8hpp_source.html#l00279">Vector.hpp:279</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_8e37b9d33140d6009518b7a0bb5633b7.html">work</a></li><li class="navelem"><a href="dir_30a9b2b190bea3a7c4d6868be4643c48.html">Github</a></li><li class="navelem"><a href="dir_4736dc3e99319dc911df8142b8dc4181.html">Sector3X</a></li><li class="navelem"><a href="dir_6dc34fa19ea3d205f3d7e5ed9b2ae9e1.html">SectorFW</a></li><li class="navelem"><a href="dir_1cd9195ea421a2a0d0a6c94f762463bc.html">inc</a></li><li class="navelem"><a href="dir_818aa680f9ad4ec032385d6deb45b26b.html">SectorFW</a></li><li class="navelem"><a href="dir_9f6ea1ef97a5bfa4f22433f1f9dac857.html">Math</a></li><li class="navelem"><a href="_matrix_8hpp.html">Matrix.hpp</a></li>
-    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+    <li class="navelem"><a class="el" href="dir_69161428018e52ad84691a5947f27cc9.html">Github</a></li><li class="navelem"><a class="el" href="dir_b16de0d6cadc5f599d3a1812d4bfc31f.html">Sector3X</a></li><li class="navelem"><a class="el" href="dir_c3d880fd4ea2deebfb73ffb2e2b5a523.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_1145cf039e35774d8481e4ea1d2fa6e0.html">inc</a></li><li class="navelem"><a class="el" href="dir_991437b4ce66300b52a83f76dbdf298e.html">SectorFW</a></li><li class="navelem"><a class="el" href="dir_a62bef02470824067fd1499f8da5153c.html">Math</a></li><li class="navelem"><a class="el" href="_matrix_8hpp.html">Matrix.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

@@ -527,71 +527,70 @@
 \DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00613}00613\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::memcpy(out.data()\ +\ old,\ pTmp,\ n\ *\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{DrawCommand}}));}
 \DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00614}00614\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00615}00615\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00616}00616\ }
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00617}00617\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::move(pTmp,\ pTmp\ +\ n,\ out.begin()\ +\ old);}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00618}00618\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00619}00619\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00620}00620\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sortContext.Sort(out);}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00621}00621\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00622}00622\ \textcolor{preprocessor}{\#ifndef\ NO\_USE\_PMR\_RENDER\_QUEUE}\textcolor{preprocessor}{}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00629}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a80d85c6a3382a6f46a65a11725a74e82}{00629}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a80d85c6a3382a6f46a65a11725a74e82}{Submit}}(uint32\_t\ slot,\ std::pmr::vector<DrawCommand>\&\ out)\ \{}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00630}00630\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ q\ =\ *queues[slot];}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00631}00631\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ctoken[slot])\ ctoken[slot].emplace(q);}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00632}00632\ }
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00633}00633\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 概算で一撃\ reserve（pmr\ アリーナから確保）}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00634}00634\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}\ approx\ =\ q.size\_approx();\ approx\ >\ 0)\ \{}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00635}00635\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.reserve(out.size()\ +\ approx);}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00636}00636\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00637}00637\ }
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00638}00638\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ pTmp\ =\ tmp.data();}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00639}00639\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ n;}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00640}00640\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ((n\ =\ q.try\_dequeue\_bulk(*ctoken[slot],\ pTmp,\ DRAWCOMMAND\_TMPBUF\_SIZE))\ !=\ 0)\ \{}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00641}00641\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ old\ =\ out.size();}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00642}00642\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.resize(old\ +\ n);}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00643}00643\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_trivially\_copyable\_v<DrawCommand>)\ \{}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00644}00644\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::memcpy(out.data()\ +\ old,\ pTmp,\ n\ *\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{DrawCommand}}));}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00645}00645\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00646}00646\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00647}00647\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::move(pTmp,\ pTmp\ +\ n,\ out.begin()\ +\ old);}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00648}00648\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00649}00649\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00650}00650\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sortContext.Sort(out);}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00651}00651\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00652}00652\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00653}00653\ }
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00658}00658\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::pair<InstancePool*,\ std::atomic<uint32\_t>*>}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00659}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a26d0a5f2e6ae6aff8cf182af45ad5942}{00659}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a26d0a5f2e6ae6aff8cf182af45ad5942}{GetCurrentInstancePoolAccess}}()\ noexcept\ \{}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00660}00660\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ cur\ =\ current.load(std::memory\_order\_acquire);}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00661}00661\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ sharedInstanceArena-\/>Data(cur),\ \&sharedInstanceArena-\/>head[cur]\ \};}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00662}00662\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00663}00663\ }
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00668}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_ad4c776bc0646c58b8cda3eab21d73e7d}{00668}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_ad4c776bc0646c58b8cda3eab21d73e7d}{MaxInstancesPerFrame}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ maxInstancesPerFrame;\ \}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00669}00669\ }
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00670}00670\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00671}00671\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 現在の生産キュー}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00672}00672\ \ \ \ \ \ \ \ \ \ \ \ \ moodycamel::ConcurrentQueue<DrawCommand>\&\ CurQ()\ noexcept\ \{}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00673}00673\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *queues[current.load(std::memory\_order\_acquire)];}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00674}00674\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00675}00675\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00676}00676\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ maxInstancesPerFrame;}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00677}00677\ }
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00678}00678\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<moodycamel::ConcurrentQueue<DrawCommand>>\ queues[RENDER\_BUFFER\_COUNT];}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00679}00679\ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<moodycamel::ConsumerToken>\ ctoken[RENDER\_BUFFER\_COUNT];}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00680}00680\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::atomic<uint16\_t>\&\ current;}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00681}00681\ }
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00682}00682\ \ \ \ \ \ \ \ \ \ \ \ \ SharedInstanceArena*\ sharedInstanceArena\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00683}00683\ }
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00684}00684\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 取り込み用一時バッファ：std::array\ でヒープ確保ゼロ化}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00685}00685\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<DrawCommand,\ DRAWCOMMAND\_TMPBUF\_SIZE>\ tmp\{\};}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00686}00686\ }
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00687}00687\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PMR時は\ tempBuffer\ も同資源で確保されるようにコンストラクト}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00688}00688\ \textcolor{preprocessor}{\#ifndef\ NO\_USE\_PMR\_RENDER\_QUEUE}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00689}00689\ \ \ \ \ \ \ \ \ \ \ \ \ SortContext\ sortContext\{\ std::pmr::get\_default\_resource()\ \};}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00690}00690\ \textcolor{preprocessor}{\#else}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00691}00691\ \ \ \ \ \ \ \ \ \ \ \ \ SortContext\ sortContext;}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00692}00692\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00693}00693\ \ \ \ \ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00694}00694\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00695}00695\ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00616}00616\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::move(pTmp,\ pTmp\ +\ n,\ out.begin()\ +\ old);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00617}00617\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00618}00618\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00619}00619\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sortContext.Sort(out);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00620}00620\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00621}00621\ \textcolor{preprocessor}{\#ifndef\ NO\_USE\_PMR\_RENDER\_QUEUE}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00628}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a80d85c6a3382a6f46a65a11725a74e82}{00628}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a80d85c6a3382a6f46a65a11725a74e82}{Submit}}(uint32\_t\ slot,\ std::pmr::vector<DrawCommand>\&\ out)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00629}00629\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ q\ =\ *queues[slot];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00630}00630\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ctoken[slot])\ ctoken[slot].emplace(q);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00631}00631\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00632}00632\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 概算で一撃\ reserve（pmr\ アリーナから確保）}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00633}00633\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}\ approx\ =\ q.size\_approx();\ approx\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00634}00634\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.reserve(out.size()\ +\ approx);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00635}00635\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00636}00636\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00637}00637\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ pTmp\ =\ tmp.data();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00638}00638\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ n;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00639}00639\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ((n\ =\ q.try\_dequeue\_bulk(*ctoken[slot],\ pTmp,\ DRAWCOMMAND\_TMPBUF\_SIZE))\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00640}00640\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ old\ =\ out.size();}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00641}00641\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.resize(old\ +\ n);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00642}00642\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_trivially\_copyable\_v<DrawCommand>)\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00643}00643\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::memcpy(out.data()\ +\ old,\ pTmp,\ n\ *\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_draw_command}{DrawCommand}}));}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00644}00644\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00645}00645\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00646}00646\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::move(pTmp,\ pTmp\ +\ n,\ out.begin()\ +\ old);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00647}00647\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00648}00648\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00649}00649\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sortContext.Sort(out);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00650}00650\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00651}00651\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00652}00652\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00657}00657\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::pair<InstancePool*,\ std::atomic<uint32\_t>*>}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00658}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a26d0a5f2e6ae6aff8cf182af45ad5942}{00658}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_a26d0a5f2e6ae6aff8cf182af45ad5942}{GetCurrentInstancePoolAccess}}()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00659}00659\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ cur\ =\ current.load(std::memory\_order\_acquire);}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00660}00660\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ sharedInstanceArena-\/>Data(cur),\ \&sharedInstanceArena-\/>head[cur]\ \};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00661}00661\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00662}00662\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00667}\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_ad4c776bc0646c58b8cda3eab21d73e7d}{00667}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_render_queue_ad4c776bc0646c58b8cda3eab21d73e7d}{MaxInstancesPerFrame}}()\ const\ noexcept\ \{\ \textcolor{keywordflow}{return}\ maxInstancesPerFrame;\ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00668}00668\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00669}00669\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00670}00670\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 現在の生産キュー}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00671}00671\ \ \ \ \ \ \ \ \ \ \ \ \ moodycamel::ConcurrentQueue<DrawCommand>\&\ CurQ()\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00672}00672\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *queues[current.load(std::memory\_order\_acquire)];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00673}00673\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00674}00674\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00675}00675\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint32\_t\ maxInstancesPerFrame;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00676}00676\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00677}00677\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<moodycamel::ConcurrentQueue<DrawCommand>>\ queues[RENDER\_BUFFER\_COUNT];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00678}00678\ \ \ \ \ \ \ \ \ \ \ \ \ std::optional<moodycamel::ConsumerToken>\ ctoken[RENDER\_BUFFER\_COUNT];}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00679}00679\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::atomic<uint16\_t>\&\ current;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00680}00680\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00681}00681\ \ \ \ \ \ \ \ \ \ \ \ \ SharedInstanceArena*\ sharedInstanceArena\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00682}00682\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00683}00683\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 取り込み用一時バッファ：std::array\ でヒープ確保ゼロ化}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00684}00684\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<DrawCommand,\ DRAWCOMMAND\_TMPBUF\_SIZE>\ tmp\{\};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00685}00685\ }
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00686}00686\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PMR時は\ tempBuffer\ も同資源で確保されるようにコンストラクト}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00687}00687\ \textcolor{preprocessor}{\#ifndef\ NO\_USE\_PMR\_RENDER\_QUEUE}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00688}00688\ \ \ \ \ \ \ \ \ \ \ \ \ SortContext\ sortContext\{\ std::pmr::get\_default\_resource()\ \};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00689}00689\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00690}00690\ \ \ \ \ \ \ \ \ \ \ \ \ SortContext\ sortContext;}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00691}00691\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00692}00692\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00693}00693\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_render_queue_8h_source_l00694}00694\ \}}
 
 \end{DoxyCode}

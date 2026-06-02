@@ -196,6 +196,7 @@ var hierarchy =
       [ "SFW::World< LevelTypes >::ApplyLevelSystemCommand< SystemType >", "class_s_f_w_1_1_world_1_1_apply_level_system_command.html", null ],
       [ "SFW::World< LevelTypes >::CleanLevelCommand", "class_s_f_w_1_1_world_1_1_clean_level_command.html", null ],
       [ "SFW::World< LevelTypes >::LambdaCommand", "class_s_f_w_1_1_world_1_1_lambda_command.html", null ],
+      [ "SFW::World< LevelTypes >::LevelSessionCommand< Func >", "class_s_f_w_1_1_world_1_1_level_session_command.html", null ],
       [ "SFW::World< LevelTypes >::LoadLevelCommand", "class_s_f_w_1_1_world_1_1_load_level_command.html", null ],
       [ "SFW::World< LevelTypes >::PauseResumeLevelCommand", "class_s_f_w_1_1_world_1_1_pause_resume_level_command.html", null ]
     ] ],

@@ -158,7 +158,7 @@
 \item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service}{SFW\+::\+Graphics\+::\+I2\+DCamera\+Service}} \\*2Dカメラサービスのインターフェース（正射影・回転\+Z・ズーム） }{\pageref{class_s_f_w_1_1_graphics_1_1_i2_d_camera_service}}{}
 \item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}{SFW\+::\+Graphics\+::\+I3\+DCamera\+Service$<$ Type $>$}} \\*3Dカメラサービスのインターフェース。カメラの操作、ビュー行列の計算、カメラバッファの管理を行う。 }{\pageref{class_s_f_w_1_1_graphics_1_1_i3_d_camera_service}}{}
 \item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_e_c_s_1_1_i_commit_service}{SFW\+::\+ECS\+::\+ICommit\+Service}} \\*コミットサービスのインターフェース(Systemを更新した後に呼び出される) }{\pageref{class_s_f_w_1_1_e_c_s_1_1_i_commit_service}}{}
-\item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+Graphics\+::\+IGraphics\+Device$<$ Impl $>$}} \\*グラフィックデバイスのインターフェース }{\pageref{class_s_f_w_1_1_graphics_1_1_i_graphics_device}}{}
+\item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_i_graphics_device}{SFW\+::\+Graphics\+::\+IGraphics\+Device$<$ Impl $>$}} \\*グラフィックデバイスのインターフェース @detials CRTPを用いて、派生クラスで実装されるべき関数を呼び出す。これにより、共通のインターフェースを提供しつつ、派生クラスごとに異なる実装を可能にする。 }{\pageref{class_s_f_w_1_1_graphics_1_1_i_graphics_device}}{}
 \item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_debug_1_1_i_im_gui_backend}{SFW\+::\+Debug\+::\+IIm\+Gui\+Backend}} \\*Im\+Guiのバックエンドインターフェース(抽象クラス) }{\pageref{class_s_f_w_1_1_debug_1_1_i_im_gui_backend}}{}
 \item\contentsline{section}{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_i_lod_selector}{SFW\+::\+Graphics\+::\+ILod\+Selector}} }{\pageref{struct_s_f_w_1_1_graphics_1_1_i_lod_selector}}{}
 \item\contentsline{section}{\mbox{\hyperlink{struct_s_f_w_1_1_graphics_1_1_image_data}{SFW\+::\+Graphics\+::\+Image\+Data}} }{\pageref{struct_s_f_w_1_1_graphics_1_1_image_data}}{}
@@ -197,6 +197,7 @@
 \item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_level}{SFW\+::\+Level$<$ Partition $>$}} \\*レベル(シーン単位)を定義するクラス }{\pageref{class_s_f_w_1_1_level}}{}
 \item\contentsline{section}{\mbox{\hyperlink{struct_s_f_w_1_1_level_context}{SFW\+::\+Level\+Context$<$ Partition $>$}} \\*Systemに渡すレベルの情報や操作を提供する構造体 }{\pageref{struct_s_f_w_1_1_level_context}}{}
 \item\contentsline{section}{\mbox{\hyperlink{struct_s_f_w_1_1_world_1_1_level_holder}{SFW\+::\+World$<$ Level\+Types $>$\+::\+Level\+Holder$<$ T $>$}} }{\pageref{struct_s_f_w_1_1_world_1_1_level_holder}}{}
+\item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_world_1_1_level_session_command}{SFW\+::\+World$<$ Level\+Types $>$\+::\+Level\+Session\+Command$<$ Func $>$}} }{\pageref{class_s_f_w_1_1_world_1_1_level_session_command}}{}
 \item\contentsline{section}{\mbox{\hyperlink{struct_s_f_w_1_1_math_1_1_l_h___z_forward}{SFW\+::\+Math\+::\+LH\+\_\+\+ZForward}} }{\pageref{struct_s_f_w_1_1_math_1_1_l_h___z_forward}}{}
 \item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service}{SFW\+::\+Graphics\+::\+DX11\+::\+Light\+Shadow\+Resource\+Service}} }{\pageref{class_s_f_w_1_1_graphics_1_1_d_x11_1_1_light_shadow_resource_service}}{}
 \item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_graphics_1_1_light_shadow_service}{SFW\+::\+Graphics\+::\+Light\+Shadow\+Service}} }{\pageref{class_s_f_w_1_1_graphics_1_1_light_shadow_service}}{}
@@ -267,7 +268,7 @@
 \item\contentsline{section}{\mbox{\hyperlink{struct_s_f_w_1_1_debug_1_1_perf_h_u_d}{SFW\+::\+Debug\+::\+Perf\+HUD}} \\*パフォーマンス\+HUDを表示するクラス }{\pageref{struct_s_f_w_1_1_debug_1_1_perf_h_u_d}}{}
 \item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_math_1_1_perlin2_d}{SFW\+::\+Math\+::\+Perlin2D}} }{\pageref{class_s_f_w_1_1_math_1_1_perlin2_d}}{}
 \item\contentsline{section}{\mbox{\hyperlink{struct_s_f_w_1_1_e_c_s_1_1_service_locator_1_1_exec_plan_1_1_phase_plan}{SFW\+::\+ECS\+::\+Service\+Locator\+::\+Exec\+Plan\+::\+Phase\+Plan}} }{\pageref{struct_s_f_w_1_1_e_c_s_1_1_service_locator_1_1_exec_plan_1_1_phase_plan}}{}
-\item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_device}{SFW\+::\+Physics\+::\+Physics\+Device}} }{\pageref{class_s_f_w_1_1_physics_1_1_physics_device}}{}
+\item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_device}{SFW\+::\+Physics\+::\+Physics\+Device}} \\*物理関連の処理を管理するクラス。一番上位のインターフェースとして機能する。 }{\pageref{class_s_f_w_1_1_physics_1_1_physics_device}}{}
 \item\contentsline{section}{\mbox{\hyperlink{struct_s_f_w_1_1_physics_1_1_physics_interpolation}{SFW\+::\+Physics\+::\+Physics\+Interpolation}} \\*物理補間コンポーネント }{\pageref{struct_s_f_w_1_1_physics_1_1_physics_interpolation}}{}
 \item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_service}{SFW\+::\+Physics\+::\+Physics\+Service}} \\*物理サービスを提供するクラス。systemから物理\+Deviceを操作するための\+APIを提供する }{\pageref{class_s_f_w_1_1_physics_1_1_physics_service}}{}
 \item\contentsline{section}{\mbox{\hyperlink{class_s_f_w_1_1_physics_1_1_physics_shape_manager}{SFW\+::\+Physics\+::\+Physics\+Shape\+Manager}} }{\pageref{class_s_f_w_1_1_physics_1_1_physics_shape_manager}}{}
