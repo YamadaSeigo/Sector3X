@@ -18,18 +18,17 @@ class TitleSystem : public ITypeSystem<
 	Partition,
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
-		Read<CTitleSprite>,
-		Write<CColor>
+	Read<CTitleSprite>,
+	Write<CColor>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
-		WorldType::RequestService,
-		InputService,
-		TimerService,
-		PlayerService,
-		Graphics::I3DPerCameraService
+	WorldType::RequestService,
+	InputService,
+	TimerService,
+	PlayerService,
+	Graphics::I3DPerCameraService
 	>>{
-
 	using Accessor = ComponentAccessor<Read<CTitleSprite>, Write<CColor>>;
 
 public:
@@ -40,36 +39,33 @@ public:
 
 	static inline constexpr float START_CAMERA_PLAYER_DISTANCE = 20.0f;
 
-
 	void StartImpl(
 		NoDeletePtr<WorldType::RequestService> worldRequestService,
 		NoDeletePtr<InputService> inputService,
 		NoDeletePtr<TimerService> timerService,
 		NoDeletePtr<PlayerService> playerService,
 		NoDeletePtr<Graphics::I3DPerCameraService> perCameraService) {
-
 		//ローディング中のレベルを先にロード
-		{
-			auto loadCmd = worldRequestService->CreateLoadLevelCommand(App::LOADING_LEVEL_NAME);
-			worldRequestService->PushCommand(std::move(loadCmd));
-		}
+			{
+				auto loadCmd = worldRequestService->CreateLoadLevelCommand(App::LOADING_LEVEL_NAME);
+				worldRequestService->PushCommand(std::move(loadCmd));
+			}
 
-		{
-			//ロード完了後のコールバック
-			auto loadedFunc = [&](WorldType::Session* pSession) {
+			{
+				//ロード完了後のコールバック
+				auto loadedFunc = [&](WorldType::Session* pSession) {
+					//ローディングレベルをクリーンアップ
+					pSession->CleanLevel(App::LOADING_LEVEL_NAME);
 
-				//ローディングレベルをクリーンアップ
-				pSession->CleanLevel(App::LOADING_LEVEL_NAME);
+					//メインレベルのプレイヤーシステムを一時停止
+					pSession->PauseResumeSystemInLevel<PlayerSystem>(App::MAIN_LEVEL_NAME, true);
 
-				//メインレベルのプレイヤーシステムを一時停止
-				pSession->PauseResumeSystemInLevel<PlayerSystem>(App::MAIN_LEVEL_NAME, true);
+					loadedMainLevel.store(true, std::memory_order_relaxed);
+					};
 
-				loadedMainLevel.store(true, std::memory_order_relaxed);
-				};
-
-			auto loadCmd = worldRequestService->CreateLoadLevelCommand(App::MAIN_LEVEL_NAME, true, true, loadedFunc);
-			worldRequestService->PushCommand(std::move(loadCmd));
-		}
+				auto loadCmd = worldRequestService->CreateLoadLevelCommand(App::MAIN_LEVEL_NAME, true, true, loadedFunc);
+				worldRequestService->PushCommand(std::move(loadCmd));
+			}
 	}
 
 	//指定したサービスを関数の引数として受け取る
@@ -79,7 +75,6 @@ public:
 		NoDeletePtr<TimerService> timerService,
 		NoDeletePtr<PlayerService> playerService,
 		NoDeletePtr<Graphics::I3DPerCameraService> perCameraService) {
-
 		bool isLoadedMainLevel = loadedMainLevel.load(std::memory_order_relaxed);
 
 		if (isLoadedMainLevel)
@@ -94,7 +89,6 @@ public:
 			auto chunks = query.MatchingChunks<ECS::EntityManager&>(globalEntityManager);
 
 			auto updateFunc = [&](Accessor& accessor, size_t entityCount) {
-
 				auto colorComp = accessor.Get<Write<CColor>>();
 				auto titleComp = accessor.Get<Read<CTitleSprite>>();
 				for (auto i = 0; i < entityCount; ++i)
@@ -127,7 +121,6 @@ public:
 			auto chunks = query.MatchingChunks<ECS::EntityManager&>(globalEntityManager);
 
 			auto updateFunc = [&](Accessor& accessor, size_t entityCount) {
-
 				auto colorComp = accessor.Get<Write<CColor>>();
 				auto titleComp = accessor.Get<Read<CTitleSprite>>();
 				for (auto i = 0; i < entityCount; ++i)

@@ -17,7 +17,6 @@
 #include "graphics/DebugRenderType.h"
 #include "graphics/DeferredRenderingService.h"
 
-
 using namespace SFW;
 
 // 24頂点+36インデックスを生成（中心原点、寸法 w,h,d）
@@ -56,7 +55,6 @@ void MakeCapsuleLines(float radius, float halfHeight,
 	std::vector<Debug::LineVertex>& outVerts,
 	std::vector<uint32_t>& outIndices);
 
-
 class OncePerFrameGate
 {
 public:
@@ -85,27 +83,27 @@ private:
 };
 
 template<typename Partition>
-class DebugRenderSystem : public ITypeSystem<
+class DebugRenderSystem : public ITypeSystem <
 	DebugRenderSystem,
 	Partition,
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
-		Read<Physics::ShapeDims>,
-		Read<Physics::PhysicsInterpolation>,
-		Read<CTransform>,
-		Read<CModel>,
-		Read<CPointLight>,
-		Read<CFireflyVolume>,
-		Read<CLeafVolume>
+	Read<Physics::ShapeDims>,
+	Read<Physics::PhysicsInterpolation>,
+	Read<CTransform>,
+	Read<CModel>,
+	Read<CPointLight>,
+	Read<CFireflyVolume>,
+	Read<CLeafVolume>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
-		Graphics::RenderService,
-		Graphics::I3DPerCameraService,
-		Graphics::I2DCameraService,
-		Graphics::LightShadowService,
-		Graphics::PointLightService,
-		Physics::PhysicsService
+	Graphics::RenderService,
+	Graphics::I3DPerCameraService,
+	Graphics::I2DCameraService,
+	Graphics::LightShadowService,
+	Graphics::PointLightService,
+	Physics::PhysicsService
 	>>
 {
 	using ShapeDimsAccessor = ComponentAccessor<Read<Physics::ShapeDims>, Read<CTransform>>;
@@ -179,7 +177,6 @@ public:
 			.sourcePath = L"__internal__/SphereGreen"
 		};
 		meshMgr->Add(sphereGreenDesc, sphereGreenHandle);
-
 
 		std::vector<LineVertex> capsuleLineVerts;
 		std::vector<uint32_t> capsuleLineIndices;
@@ -324,7 +321,6 @@ public:
 		if (DebugRenderType::drawModelAABB || DebugRenderType::drawOccluderAABB ||
 			DebugRenderType::drawModelRect || DebugRenderType::drawOcclusionRect)
 		{
-
 			this->ForEachFrustumChunkWithAccessor<ModelAccessor>([&](ModelAccessor& accessor, size_t entityCount)
 				{
 					//読み取り専用でTransformSoAのアクセサを取得
@@ -361,7 +357,6 @@ public:
 						std::vector<Math::Vec3f> linePoss;
 						std::vector<uint32_t> lineColors;
 						for (const auto& mesh : modelAsset.ref().subMeshes) {
-
 							Math::Rectangle rect = Math::ProjectAABBToScreenRect(mesh.aabb, viewProj * worldMtx, resolution.x, resolution.y, -resolution.x * 0.5f, -resolution.y * 0.5f);
 							//2D Rect
 							if (DebugRenderType::drawModelRect || DebugRenderType::drawOcclusionRect)
@@ -474,7 +469,6 @@ public:
 
 						line3DCount += (uint32_t)outPoss.size();
 					}
-
 				}, partition, fru);
 		}
 
@@ -496,7 +490,7 @@ public:
 						Math::Vec3f pos(tf->px()[i], tf->py()[i], tf->pz()[i]);
 
 						// 遠すぎるものは描画しない
-						if((cameraPos - pos).lengthSquared() > maxDrawDistance * maxDrawDistance) continue;
+						if ((cameraPos - pos).lengthSquared() > maxDrawDistance * maxDrawDistance) continue;
 
 						auto transMtx = Math::MakeTranslationMatrix(pos);
 						auto rotMtx = Math::MakeRotationMatrix(Math::Quatf(tf->qx()[i], tf->qy()[i], tf->qz()[i], tf->qw()[i]));
@@ -633,7 +627,6 @@ public:
 		{
 			this->ForEachSphereChunkWithAccessor<FireflyAccessor>([&](FireflyAccessor accessor, size_t entityCount)
 				{
-
 					auto fireflyVolume = accessor.Get<Read<CFireflyVolume>>();
 					if (!fireflyVolume.has_value()) [[unlikely]] {
 						return;
@@ -658,7 +651,6 @@ public:
 						cmd.mesh = sphereWhiteHandle.index;
 						uiSession.Push(std::move(cmd));
 					}
-
 				}, partition, cameraPos, 100.0f);
 		}
 

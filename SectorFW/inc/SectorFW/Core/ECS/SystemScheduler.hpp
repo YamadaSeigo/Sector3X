@@ -88,7 +88,6 @@ namespace SFW
 			 * @details 保留された追加・削除・一時停止・再開の処理を適用した後、スケジュールが変更された場合はバッチを再構築し、各バッチごとに並列実行と直列実行を行う。例外は各システム内で握り潰さず、ここで個別捕捉することも可能。
 			 */
 			void UpdateAll(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
-
 				//新しいシステムの取り込み
 				ApplyPendingAdditions(serviceLocator);
 				//削除するシステムの適用
@@ -133,7 +132,6 @@ namespace SFW
 						if (idx >= updateEnabled.size() || !updateEnabled[idx]) continue;
 
 						executor->Submit([&, idx]() noexcept {
-
 							// 実際にシステムの更新関数を呼び出す inc/core/ecs/ISystem.hpp の Update仮装関数
 							updateSystems[idx]->Update(partition, levelCtx, serviceLocator, executor);
 							latch.CountDown();
@@ -151,8 +149,6 @@ namespace SFW
 				}
 			}
 
-
-
 			/**
 			 * @brief すべてのシステムをグローバルに更新する関数
 			 * @param serviceLocator サービスロケーター
@@ -161,7 +157,6 @@ namespace SFW
 			　* @note Partition や LevelContext を必要としないシステムの更新に使用する。これらのシステムは UpdateGlobal をオーバーライドしている必要がある。
 			 */
 			void UpdateGlobal(const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
-
 				//新しいシステムの取り込み
 				ApplyPendingAdditions(serviceLocator);
 				//削除するシステムの適用
@@ -278,7 +273,6 @@ namespace SFW
 			std::vector<std::type_index> pendingPauseTypes;
 			std::vector<std::type_index> pendingResumeTypes;
 
-
 			struct Group {
 				std::vector<uint32_t> serial;
 				std::vector<uint32_t> parallel;
@@ -374,7 +368,6 @@ namespace SFW
 				updateSystems.reserve(updateSystems.size() + newly.size());
 				accessList.reserve(accessList.size() + newly.size());
 				for (auto& uptr : newly) {
-
 					// 空のパーティションでStartを呼ぶ
 					uptr->Start(serviceLocator);
 
@@ -487,8 +480,6 @@ namespace SFW
 					}
 				}
 			}
-
-
 		};
 	}// namespace ECS
 }// namespace SectorFW

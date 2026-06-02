@@ -43,7 +43,7 @@ struct GodRayCB
 	uint32_t gEnableGodRay = 1; // 0/1
 	float _padGR0 = {};
 
-	Math::Vec3f gGodRayTint = {1.0f,0.95f,0.5f}; // 色（例: (1.0, 0.95, 0.8)）
+	Math::Vec3f gGodRayTint = { 1.0f,0.95f,0.5f }; // 色（例: (1.0, 0.95, 0.8)）
 	float gGodRayMaxDepth = 0.9995f; // “空/遠方”判定の深度閾値（例: 0.9995）
 };
 
@@ -59,17 +59,17 @@ struct TimeOfDayKey
 {
 	float t = 0.0f; // 0..1
 
-	Math::Vec3f ambientColor = {1.0f,1.0f,1.0f};
+	Math::Vec3f ambientColor = { 1.0f,1.0f,1.0f };
 	float ambientIntensity = 0.0f;
 
-	Math::Vec3f fogColor = {1.0f,1.0f,1.0f};
+	Math::Vec3f fogColor = { 1.0f,1.0f,1.0f };
 	float fogStart = 0.0f, fogEnd = 1.0f;
 	float heightFogDensity = 1.0f;
 
-	Math::Vec3f sunColor = {1.0f,1.0f,1.0f};
+	Math::Vec3f sunColor = { 1.0f,1.0f,1.0f };
 	float sunIntensity = 1.0f;
 
-	Math::Vec3f godRayTint = {1.0f,1.0f,1.0f};
+	Math::Vec3f godRayTint = { 1.0f,1.0f,1.0f };
 	float godRayIntensity = 1.0f;
 
 	float emissiveBoost = 3.0f;
@@ -120,7 +120,6 @@ struct WeatherStateDesc
 	float maxStaySec = 60.0f;
 	float targetRainIntensity = 0.0f;
 };
-
 
 struct WeatherKey
 {
@@ -195,10 +194,10 @@ public:
 			}
 		}
 		float factor = 0.0f;
-		if (afterKey.t >= beforeKey.t){
+		if (afterKey.t >= beforeKey.t) {
 			factor = (t - beforeKey.t) / (afterKey.t - beforeKey.t);
 		}
-		else{
+		else {
 			// ループしている場合
 			factor = (t - beforeKey.t) / (afterKey.t + 1.0f - beforeKey.t);
 		}
@@ -468,7 +467,7 @@ private:
 	std::vector<TimeOfDayKey> timeOfDayKeys;
 	TimeOfDayKey currentTimeOfDayKey;
 
-	Math::Vec3f m_sunDirection = { 0.0f, -sin(Math::Deg2Rad(START_SUN_ANGLE)) , -cos(Math::Deg2Rad(START_SUN_ANGLE))};
+	Math::Vec3f m_sunDirection = { 0.0f, -sin(Math::Deg2Rad(START_SUN_ANGLE)) , -cos(Math::Deg2Rad(START_SUN_ANGLE)) };
 
 	uint16_t slot = 0;
 	bool isUpdateFogBuffer = false;

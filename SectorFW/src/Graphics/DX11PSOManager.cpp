@@ -6,7 +6,6 @@ namespace SFW
 	namespace Graphics::DX11
 	{
 		std::optional<PSOHandle> PSOManager::FindExisting(const PSOCreateDesc& desc) noexcept {
-
 			std::lock_guard lk(mapMutex);
 			auto it = shaderToPSO_.find(desc.shader.index);
 			if (it != shaderToPSO_.end()) {
@@ -20,7 +19,6 @@ namespace SFW
 		}
 
 		void PSOManager::RegisterKey(const PSOCreateDesc& desc, PSOHandle h) {
-
 			std::lock_guard lk(mapMutex);
 			shaderToPSO_.emplace(desc.shader.index, h);
 		}

@@ -26,7 +26,7 @@ public:
 		float pad = {};
 	};
 
-	PlayerService(Graphics::DX11::BufferManager* bufferMgr): bufferMgr(bufferMgr)
+	PlayerService(Graphics::DX11::BufferManager* bufferMgr) : bufferMgr(bufferMgr)
 	{
 		Graphics::DX11::BufferCreateDesc cbDesc;
 		cbDesc.name = "PlayerFootCB";
@@ -126,7 +126,6 @@ private:
 
 	std::shared_mutex velMutex;
 	Math::Vec3f currentPlayerVel = Math::Vec3f(0.0f, 0.0f, 0.0f);
-
 
 	GrassFootCB grassFoot_buf{};
 	Graphics::BufferHandle hGrassFootCB;

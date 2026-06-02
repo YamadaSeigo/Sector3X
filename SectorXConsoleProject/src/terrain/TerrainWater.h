@@ -5,7 +5,6 @@
 
 #include "../app/appconfig.h"
 
-
 class TerrainWater
 {
 public:
@@ -84,8 +83,8 @@ public:
 		float gDeepColor[4] = { 0.03f, 0.10f, 0.12f, 1.0f };       // optional
 		float fogColor[4] = { 0.62f, 0.70f, 0.76f, 1.0f };
 
-		float gNormalTiling0[2] = {1.0f,1.0f};
-		float gNormalTiling1[2] = {1.0f,1.0f};
+		float gNormalTiling0[2] = { 1.0f,1.0f };
+		float gNormalTiling1[2] = { 1.0f,1.0f };
 
 		float gFlowDir0[2] = { 0.8f,  0.2f };
 		float gFlowDir1[2] = { -0.3f,  0.9f };
@@ -100,17 +99,16 @@ public:
 		float fogStart = 35.0f;
 		float fogEnd = 1200.0f;
 
-		float screenSize[2] = {App::WINDOW_WIDTH, App::WINDOW_HEIGHT};
+		float screenSize[2] = { App::WINDOW_WIDTH, App::WINDOW_HEIGHT };
 		float shoreFadeScale = 1.5f;
 		float pad1;
 
-		float gFoamColor[4] = {0.95f, 1.0, 1.0f};      // 白に少し黄緑や青を混ぜても良い
+		float gFoamColor[4] = { 0.95f, 1.0, 1.0f };      // 白に少し黄緑や青を混ぜても良い
 		float  gFoamDepthStart = 0.02f; // 例: 0.02
 		float  gFoamDepthEnd = 0.25f;   // 例: 0.25
 		float  gFoamIntensity = 0.8f;  // 例: 0.8
 		float  gFoamNoiseScale = 6.0f; // 例: 6.0
 	};
-
 
 	TerrainWater() = default;
 	~TerrainWater() = default;
@@ -146,7 +144,6 @@ public:
 private:
 	std::vector<ClusterNode> waterClusters; // 水面とみなされるクラスターのリスト
 	std::vector<Math::AABB3f> waterClusterBounds; // 水面クラスターのAABBリスト(主にLODの計算に使用する)
-
 
 	BuilderParams params;
 	uint32_t clustersX = 1; // クラスター数X

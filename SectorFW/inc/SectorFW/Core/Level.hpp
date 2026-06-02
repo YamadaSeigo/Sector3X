@@ -241,7 +241,6 @@ namespace SFW
 				return id;
 			}
 
-
 			/**
 			 * @brief 位置を指定してエンティティを追加する関数
 			 * @param location エンティティの位置

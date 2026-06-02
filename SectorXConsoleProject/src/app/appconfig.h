@@ -5,13 +5,13 @@
 
 namespace App
 {
-    constexpr uint32_t WINDOW_WIDTH = uint32_t(1920 / 1.25);
-    constexpr uint32_t WINDOW_HEIGHT = uint32_t(1080 / 1.25);
+	constexpr uint32_t WINDOW_WIDTH = uint32_t(1920 / 1.25);
+	constexpr uint32_t WINDOW_HEIGHT = uint32_t(1080 / 1.25);
 
-    constexpr uint32_t SHADOW_MAP_SIZE = 1024 / 2;
-    constexpr double   FPS_LIMIT = 60.0;
+	constexpr uint32_t SHADOW_MAP_SIZE = 1024 / 2;
+	constexpr double   FPS_LIMIT = 60.0;
 
-    constexpr const char* LOADING_LEVEL_NAME = "Loading";
+	constexpr const char* LOADING_LEVEL_NAME = "Loading";
 
-    constexpr const char* MAIN_LEVEL_NAME = "OpenField";
+	constexpr const char* MAIN_LEVEL_NAME = "OpenField";
 }

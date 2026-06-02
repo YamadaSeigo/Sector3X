@@ -1,4 +1,3 @@
-
 #include "EnvironmentService.h"
 #include <SectorFW/Math/Perlin2D.h>
 
@@ -53,7 +52,6 @@ EnvironmentService::EnvironmentService(Graphics::DX11::BufferManager* bufferMgr_
 	m_weatherStateElapsed = 0.0f;
 	m_nextWeatherDecisionSec = RandomRange(90.0f, 220.0f);
 
-
 	BIND_DEBUG_CHECKBOX("TimeOfDay", "enable", &isUpdateTimeOfDay);
 	BIND_DEBUG_SLIDER_FLOAT("TimeOfDay", "dayLengthSec", &m_dayLengthSec, m_dayLengthSec, 1000.0f, 1.0f);
 
@@ -94,7 +92,6 @@ EnvironmentService::EnvironmentService(Graphics::DX11::BufferManager* bufferMgr_
 
 	BIND_DEBUG_SLIDER_FLOAT("Fog", "windBaseSpeed", &m_fogWindBaseSpeed, 0.0f, 10.0f, 0.01f);
 
-
 	REGISTER_DEBUG_CHECKBOX("GodRay", "gEnableGodRay", cpuGodRayBuf.gEnableGodRay, [&](bool value) { isUpdateGodRayBuffer = true; cpuGodRayBuf.gEnableGodRay = value; });
 
 	BIND_DEBUG_GODRAY_FLOAT_DATA(gGodRayIntensity, 0.0f, 10.0f, 0.005f);
@@ -102,7 +99,6 @@ EnvironmentService::EnvironmentService(Graphics::DX11::BufferManager* bufferMgr_
 	BIND_DEBUG_GODRAY_FLOAT_DATA(gGodRayDensity, 0.0f, 1.0f, 0.001f);
 	BIND_DEBUG_GODRAY_FLOAT_DATA(gGodRayWeight, 0.0f, 0.1f, 0.0001f);
 	BIND_DEBUG_GODRAY_FLOAT_DATA(gGodRayMaxDepth, 0.0f, 1.0f, 0.0001f);
-
 
 	REGISTER_DEBUG_BOUND_SLIDER_FLOAT("Weather", "currentRainIntensity", m_currentRainIntensity, 0.0f, 1.0f, 0.01f,
 		[&](float v) {m_currentRainIntensity = v; }, &m_currentRainIntensity);
@@ -354,7 +350,7 @@ void EnvironmentService::UpdateWeatherState(float dt) noexcept
 		m_nextWeatherDecisionSec = RandomRange(desc.minStaySec, desc.maxStaySec);
 		return;
 	}
-	if(gDebugChangeClearWeather)
+	if (gDebugChangeClearWeather)
 	{
 		gDebugChangeClearWeather = false;
 		m_weatherState = WeatherState::Clear;

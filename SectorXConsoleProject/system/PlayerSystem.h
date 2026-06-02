@@ -22,15 +22,14 @@ class PlayerSystem : public ITypeSystem<
 	ComponentAccess<Write<CTransform>>,//アクセスするコンポーネントの指定
 	//受け取るサービスの指定
 	ServiceContext<
-		Physics::PhysicsService,
-		Graphics::I3DPerCameraService,
-		Graphics::RenderService,
-		InputService,
-		PlayerService,
-		TimerService,
-		Audio::AudioService
+	Physics::PhysicsService,
+	Graphics::I3DPerCameraService,
+	Graphics::RenderService,
+	InputService,
+	PlayerService,
+	TimerService,
+	Audio::AudioService
 	>>{
-
 public:
 	// 入力から希望する速度を計算する（仮実装）
 	Math::Vec3f CalcWishVelocityFromInput(
@@ -54,7 +53,7 @@ public:
 			if (inputService->IsKeyPressed(Input::Key::D)) {
 				inputDir.x += 1.0f;
 			}
-			if (inputService->IsKeyPressed(Input::Key::Space)){
+			if (inputService->IsKeyPressed(Input::Key::Space)) {
 				wishVelocity = PlayerService::GRAVITY * -PlayerService::HOVER_POWER;
 			}
 		}
@@ -159,7 +158,6 @@ public:
 				// 空中制御が欲しいなら XZ だけ補正
 				Math::Vec3f wish = CalcWishVelocityFromInput(cameraService, inputService);
 
-
 				static float stepSoundDelay = 0.0f;
 
 				float wishSquared = wish.lengthSquared();
@@ -179,7 +177,6 @@ public:
 				}
 
 				if (comp.isGrounded) {
-
 					// 地面にいるので縦成分を消す＆坂で滑らせない
 					float vy = v.dot(PlayerService::UP);
 					v -= PlayerService::UP * vy;
@@ -230,14 +227,13 @@ public:
 				physicsService->SetCharacterRotation(entityID, newYawQuat);//回転をリセット
 			}
 
-			if(inputService->IsKeyTrigger(Input::Key::F3))
+			if (inputService->IsKeyTrigger(Input::Key::F3))
 			{
 				Physics::Mat34f tm;
 				tm.pos = cameraService->GetEyePos();
 
 				physicsService->TeleportCharacter(entityID, tm);
 			}
-
 
 			//Pose読み込み & 反映
 			{
@@ -338,7 +334,7 @@ public:
 								cameraService->SetFocusDistance(focusDist);
 								prevCameraHit = 2;
 							}
-							else if(prevCameraHit > 0)
+							else if (prevCameraHit > 0)
 							{
 								prevCameraHit--;
 							}
@@ -350,12 +346,10 @@ public:
 						}
 					}
 
-
 					long dx, dy;
 					inputService->GetMouseDelta(dx, dy);
 					cameraService->SetMouseDelta(static_cast<float>(dx), static_cast<float>(dy));
 				}
-
 
 				//足元の位置をPlayerServiceにセット
 				playerService->SetFootData(playerPos);

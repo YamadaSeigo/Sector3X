@@ -19,11 +19,10 @@ public:
 		if (evs.empty()) return;
 
 		for (const auto& ev : evs) {
-
 			ECS::EntityManager* entityMgr = nullptr;
 
 			// 無効なオーナーはグローバルから検索
-			if(ev.owner.code == SpatialChunkKey::kInvalidCode) {
+			if (ev.owner.code == SpatialChunkKey::kInvalidCode) {
 				entityMgr = &partition.GetGlobalEntityManager();
 			}
 			else {
@@ -36,7 +35,7 @@ public:
 				entityMgr = &owner->GetEntityManager();
 			}
 
-			if(!entityMgr) {
+			if (!entityMgr) {
 				LOG_WARNING("Not Get EntityManager");
 				continue;
 			}

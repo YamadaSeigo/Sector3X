@@ -1,4 +1,3 @@
-
 #include "DebugRenderType.h"
 #include "DeferredRenderingService.h"
 

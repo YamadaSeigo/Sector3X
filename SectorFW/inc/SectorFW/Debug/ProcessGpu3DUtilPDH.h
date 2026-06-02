@@ -5,8 +5,8 @@
  * \date   December 2025
  *********************************************************************/
 
-// Minimal PDH per-process 3D GPU utilization (%)
-// Build: link with pdh.lib
+ // Minimal PDH per-process 3D GPU utilization (%)
+ // Build: link with pdh.lib
 #define NOMINMAX
 #include <windows.h>
 #include <pdh.h>

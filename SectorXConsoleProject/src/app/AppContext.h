@@ -7,11 +7,11 @@ using Microsoft::WRL::ComPtr;
 
 // forward declarations（必要なものだけ include）
 namespace SFW::Graphics::DX11 {
-    class GraphicsDevice;
-    class LightShadowResourceService;
+	class GraphicsDevice;
+	class LightShadowResourceService;
 }
 namespace SFW::Graphics {
-    struct RenderService;
+	struct RenderService;
 	class PointLightService;
 }
 class DeferredRenderingService;
@@ -24,27 +24,27 @@ class RainService;
 
 namespace App
 {
-    struct Context
-    {
-        // 実行フラグ
-        std::atomic<bool> executeCustom{ false };
+	struct Context
+	{
+		// 実行フラグ
+		std::atomic<bool> executeCustom{ false };
 
-        // graphics / render
-        SFW::Graphics::DX11::GraphicsDevice* graphics = nullptr;
-        SFW::Graphics::RenderService* renderService = nullptr;
+		// graphics / render
+		SFW::Graphics::DX11::GraphicsDevice* graphics = nullptr;
+		SFW::Graphics::RenderService* renderService = nullptr;
 
-        // services
-        SFW::Graphics::DX11::LightShadowResourceService* shadowRes = nullptr;
-        SFW::Graphics::PointLightService* pointLight = nullptr;
-        DeferredRenderingService* deferred = nullptr;
-        WindService* wind = nullptr;
-        PlayerService* player = nullptr;
-        EnvironmentService* env = nullptr;
-        FireflyService* firefly = nullptr;
-        LeafService* leaf = nullptr;
+		// services
+		SFW::Graphics::DX11::LightShadowResourceService* shadowRes = nullptr;
+		SFW::Graphics::PointLightService* pointLight = nullptr;
+		DeferredRenderingService* deferred = nullptr;
+		WindService* wind = nullptr;
+		PlayerService* player = nullptr;
+		EnvironmentService* env = nullptr;
+		FireflyService* firefly = nullptr;
+		LeafService* leaf = nullptr;
 		RainService* rain = nullptr;
 
-        // 共有する D3D SRV/CB など（必要なら追加）
-        ComPtr<ID3D11ShaderResourceView> mainDepthSRV;
-    };
+		// 共有する D3D SRV/CB など（必要なら追加）
+		ComPtr<ID3D11ShaderResourceView> mainDepthSRV;
+	};
 }

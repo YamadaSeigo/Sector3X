@@ -16,15 +16,15 @@ class CameraSystem : public ITypeSystem<
 	ComponentAccess<>,
 	//受け取るサービスの指定
 	ServiceContext<
-		InputService,
-		Graphics::I3DPerCameraService,
-		Graphics::I2DCameraService,
-		DeferredRenderingService,
-		FireflyService,
-		LeafService,
-		RainService
+	InputService,
+	Graphics::I3DPerCameraService,
+	Graphics::I2DCameraService,
+	DeferredRenderingService,
+	FireflyService,
+	LeafService,
+	RainService
 #ifdef _DEBUG
-		,Graphics::RenderService
+	, Graphics::RenderService
 #endif
 	>>
 {
@@ -64,7 +64,6 @@ public:
 		}
 
 		if (fixedCamera) {
-
 			Math::Vec3f moveVec = { 0.0f,0.0f, 0.0f };
 
 			Math::Vec3f r, u, f;
@@ -95,10 +94,8 @@ public:
 				moveVec += r * moveSpeed;
 			}
 
-
 			long dx = 0, dy = 0;
 			if (inputService->IsMouseCaptured()) {
-
 				inputService->GetMouseDelta(dx, dy);
 
 				int mouseWheelV, mouseWheelH;
@@ -138,7 +135,6 @@ public:
 				debugRot.Normalize();
 			}
 
-
 			auto currentSlot = renderService->GetProduceSlot();
 
 			auto& buffer = debugCameraBuffer[currentSlot];
@@ -149,7 +145,6 @@ public:
 			float nearClip = perCameraService->GetNearClip();
 			float farClip = perCameraService->GetFarClip();
 			buffer.proj = Math::MakePerspectiveFovT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(fovRad, aspectRatio, nearClip, farClip);
-
 
 			auto bufferManager = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
 
@@ -191,7 +186,6 @@ public:
 			tileCamBufferData.camPos = debugEye;
 			deferredService->UpdateTileCameraBufferData(tileCamBufferData);
 
-
 			FireflyService::RenderCB fireflyCamBuffer{};
 			fireflyCamBuffer.gViewProj = buffer.viewProj;
 			fireflyCamBuffer.gCamRightWS = r.normalized();
@@ -223,7 +217,6 @@ public:
 		inputService->GetMouseWheel(mouseWheelV, mouseWheelH);
 
 		if (inputService->IsRButtonPressed()) {
-
 			if (inputService->IsKeyPressed(Input::Key::E)) {
 				perCameraService->Move(Math::LFAxes::up() * moveSpeed);
 			}

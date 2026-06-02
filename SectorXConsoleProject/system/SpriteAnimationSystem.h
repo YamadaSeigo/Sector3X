@@ -8,14 +8,14 @@ class SpriteAnimationSystem : public ITypeSystem<
 	Partition,
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
-		Write<CSpriteAnimation>,
-		Read<CTransform>,
-		Read<CColor>
+	Write<CSpriteAnimation>,
+	Read<CTransform>,
+	Read<CColor>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
-		SpriteAnimationService,
-		SFW::Graphics::RenderService
+	SpriteAnimationService,
+	SFW::Graphics::RenderService
 	>>{
 	using Accessor = ComponentAccessor<Write<CSpriteAnimation>, Read<CTransform>, Read<CColor>>;
 public:
@@ -38,12 +38,10 @@ public:
 		psoMgr->Add(psoDesc, psoHandle);
 	}
 
-
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
 		NoDeletePtr<SpriteAnimationService> spriteAnimationService,
 		NoDeletePtr< SFW::Graphics::RenderService> renderService) {
-
 		auto uiSession = renderService->GetProducerSession(PassGroupName[GROUP_UI]);
 		auto meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
 		auto materialManager = renderService->GetResourceManager<Graphics::DX11::MaterialManager>();
@@ -56,7 +54,6 @@ public:
 		auto chunks = query.MatchingChunks<ECS::EntityManager&>(globalEntityManager);
 
 		auto updateFunc = [&](Accessor& accessor, size_t entityCount) {
-
 			auto sprite = accessor.Get<Write<CSpriteAnimation>>();
 			auto transform = accessor.Get<Read<CTransform>>();
 			auto color = accessor.Get<Read<CColor>>();

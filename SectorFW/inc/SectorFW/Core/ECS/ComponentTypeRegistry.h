@@ -121,9 +121,8 @@ namespace SFW
 				OneOrMore<ComponentMeta::Structure> meta_structures;
 
 				if constexpr (requires { typename T::soa_type; }) {
-
 					using tuple = typename T::soa_type;
-					
+
 					// 展開ヘルパーを使って static_assert を仕込む
 					TupleTrivialAssert<tuple>();
 					SetSoAComponentMetaTuple<tuple>(meta_structures);

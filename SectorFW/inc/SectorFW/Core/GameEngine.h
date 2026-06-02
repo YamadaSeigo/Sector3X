@@ -106,7 +106,7 @@ namespace SFW
 
 			// サービスの更新
 			m_world.UpdateServiceLocator(delta_time, executor);
-			
+
 			// レベルの更新
 			m_world.UpdateAllLevels(delta_time, executor);
 

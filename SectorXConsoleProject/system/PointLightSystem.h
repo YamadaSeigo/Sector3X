@@ -14,13 +14,13 @@ class PointLightSystem : public ITypeSystem<
 	Partition,
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
-		Read<CPointLight>,
-	    Read<CTransform>
+	Read<CPointLight>,
+	Read<CTransform>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
-		Graphics::PointLightService,
-		Graphics::I3DPerCameraService
+	Graphics::PointLightService,
+	Graphics::I3DPerCameraService
 	>>{
 	using Accessor = ComponentAccessor<Read<CPointLight>, Read<CTransform>>;
 public:
@@ -29,19 +29,18 @@ public:
 	void UpdateImpl(Partition& partition,
 		NoDeletePtr<Graphics::PointLightService> pointLightService,
 		NoDeletePtr<Graphics::I3DPerCameraService> perCameraService) {
-
 		auto camPos = perCameraService->GetEyePos();
 		auto fru = perCameraService->MakeFrustum();
 		fru = fru.ClampedFar(camPos, 100.0f);
 
-		this->ForEachFrustumNearChunkWithAccessor<IsParallel{ false }>([&](Accessor& accessor, size_t entityCount)
+		this->ForEachFrustumNearChunkWithAccessor < IsParallel{ false } > ([&](Accessor& accessor, size_t entityCount)
 			{
 				auto pointLights = accessor.Get<Read<CPointLight>>();
 				auto transforms = accessor.Get<Read<CTransform>>();
 
 				auto readLock = pointLightService->AcquireReadLock();
 
-				for(auto i = 0; i < entityCount; ++i)
+				for (auto i = 0; i < entityCount; ++i)
 				{
 					auto& light = pointLights.value()[i];
 					Math::Vec3f pos = { transforms.value().px()[i], transforms.value().py()[i],transforms.value().pz()[i] };
@@ -53,8 +52,6 @@ public:
 
 					pointLightService->PushShowHandle(light.handle, pos);
 				}
-
 			}, partition, fru, camPos);
 	}
 };
-

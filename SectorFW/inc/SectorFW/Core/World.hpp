@@ -196,7 +196,6 @@ namespace SFW
 
 			template<template<typename> class SystemType>
 			void AddSystemToLevel(const std::string levelName) {
-
 				LevelCustumFunc(levelName, [&](auto& holder) {
 					auto& sc = holder.level->GetScheduler();
 					sc.AddSystem<SystemType>(world.GetServiceLocator());
@@ -227,7 +226,6 @@ namespace SFW
 
 				if (customFunc) customFunc(this);
 			}
-
 
 			template<typename Func>
 			void ExecuteLevelSessionFunc(const std::string& levelName, Func&& func) {
@@ -353,7 +351,6 @@ namespace SFW
 		public:
 			PauseResumeLevelCommand(const std::string& name, bool pause, ExecutedCustomFunc func) : levelName(name), pause(pause), customFunc(func) {}
 			void Execute(Session* pWorldSession, IThreadExecutor* executor) override {
-
 				pWorldSession->PauseResumeSystemInLevel(levelName, pause);
 			}
 		private:
@@ -378,23 +375,24 @@ namespace SFW
 		{
 		public:
 			ApplyLevelSystemCommand(std::string levelName, EApplyLevelSystemOption _option = EApplyLevelSystemOption::Add)
-				: targetLevelName(levelName), option(_option){}
+				: targetLevelName(levelName), option(_option) {
+			}
 
 			void Execute(Session* pWorldSession, IThreadExecutor* executor) override {
 				switch (option)
 				{
-					case EApplyLevelSystemOption::Add:
-						pWorldSession->AddSystemToLevel<SystemType>(targetLevelName);
-						break;
-					case EApplyLevelSystemOption::Remove:
-						pWorldSession->RemoveSystemFromLevel<SystemType>(targetLevelName);
-						break;
-					case EApplyLevelSystemOption::Pause:
-						pWorldSession->PauseResumeSystemInLevel<SystemType>(targetLevelName, true);
-						break;
-					case EApplyLevelSystemOption::Resume:
-						pWorldSession->PauseResumeSystemInLevel<SystemType>(targetLevelName, false);
-						break;
+				case EApplyLevelSystemOption::Add:
+					pWorldSession->AddSystemToLevel<SystemType>(targetLevelName);
+					break;
+				case EApplyLevelSystemOption::Remove:
+					pWorldSession->RemoveSystemFromLevel<SystemType>(targetLevelName);
+					break;
+				case EApplyLevelSystemOption::Pause:
+					pWorldSession->PauseResumeSystemInLevel<SystemType>(targetLevelName, true);
+					break;
+				case EApplyLevelSystemOption::Resume:
+					pWorldSession->PauseResumeSystemInLevel<SystemType>(targetLevelName, false);
+					break;
 				}
 			}
 		private:
@@ -402,11 +400,10 @@ namespace SFW
 			EApplyLevelSystemOption option;
 		};
 
-
 		template<typename Func>
 		class LevelSessionCommand : public IRequestCommand
 		{
-		public :
+		public:
 			LevelSessionCommand(std::string levelName, Func&& func) : levelName(levelName), func(std::forward<Func>(func)) {}
 			void Execute(Session* pWorldSession, IThreadExecutor* executor) override {
 				pWorldSession->ExecuteLevelSessionFunc(levelName, std::move(func));
@@ -626,7 +623,6 @@ namespace SFW
 
 							if (HasAny(levelState, ELevelState::Main)) {
 								mainFunc.push_back([&level](auto& locator, double delta, auto* te) {
-
 									//levelの更新処理。inc/core/Level.hppのLevelクラスのUpdate関数を呼び出す
 									level->Update(locator, delta, te);
 									});

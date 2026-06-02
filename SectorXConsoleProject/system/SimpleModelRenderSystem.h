@@ -80,7 +80,7 @@ public:
 						}
 						else [[likely]] {
 							cmd.instanceIndex = instanceIdx;
-							}
+						}
 
 						cmd.mesh = meshHandel.index;
 						cmd.material = mesh.material.index;

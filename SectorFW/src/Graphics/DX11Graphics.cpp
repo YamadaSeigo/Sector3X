@@ -103,7 +103,6 @@ namespace SFW
 			//wchar_t buf[512];
 			LOG_INFO("Adapter: %ls (VendorId=0x%04X, DeviceId=0x%04X)\n",
 				desc.Description, desc.VendorId, desc.DeviceId);
-
 		}
 
 		bool GraphicsDevice::InitializeImpl(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height, double fps)

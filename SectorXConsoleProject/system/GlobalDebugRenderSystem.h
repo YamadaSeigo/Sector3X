@@ -3,7 +3,6 @@
 #include <SectorFW/Debug/DebugType.h>
 #include "environment/WindService.h"
 
-
 template<typename Partition>
 class GlobalDebugRenderSystem : public ITypeSystem<
 	GlobalDebugRenderSystem,
@@ -11,14 +10,13 @@ class GlobalDebugRenderSystem : public ITypeSystem<
 	ComponentAccess<>,//アクセスするコンポーネントの指定
 	//受け取るサービスの指定
 	ServiceContext<
-		Graphics::RenderService,
-		Graphics::I3DPerCameraService,
-		Graphics::I2DCameraService,
-		DeferredRenderingService,
-		WindService
+	Graphics::RenderService,
+	Graphics::I3DPerCameraService,
+	Graphics::I2DCameraService,
+	DeferredRenderingService,
+	WindService
 	>>
 {
-
 public:
 
 	static constexpr inline uint32_t MAX_CAPACITY_3DLINE = 256;
@@ -29,8 +27,7 @@ public:
 		NoDeletePtr<Graphics::I3DPerCameraService> camera3DService,
 		NoDeletePtr<Graphics::I2DCameraService>,
 		NoDeletePtr<DeferredRenderingService> deferredRenderService,
-		NoDeletePtr<WindService> windService){
-
+		NoDeletePtr<WindService> windService) {
 		using namespace Graphics;
 
 		auto shaderMgr = renderService->GetResourceManager<Graphics::DX11::ShaderManager>();
@@ -194,14 +191,12 @@ public:
 		NoDeletePtr<Graphics::I2DCameraService> camera2DService,
 		NoDeletePtr<DeferredRenderingService> deferredRenderService,
 		NoDeletePtr<WindService> windService) {
-
 		auto uiSession = renderService->GetProducerSession(PassGroupName[GROUP_UI]);
 		auto meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
 
 		Math::Vec2f resolution = camera2DService->GetVirtualResolution();
 
 		constexpr uint32_t showDeferredTextureCount = sizeof(DebugRenderType::ShowDeferredBufferName) / sizeof(DebugRenderType::ShowDeferredBufferName[0]);
-
 
 		uint32_t lineVertexCount = 0;
 
@@ -305,7 +300,7 @@ public:
 				line3DVertices.get()[lineVertexCount++] = { camTarget, 0x0000FFFF };
 				line3DVertices.get()[lineVertexCount++] = { camTarget + windDir * length, 0x00FF00FF };
 				line3DVertices.get()[lineVertexCount++] = { camTarget + windDir * length, 0x00FF00FF };
-				line3DVertices.get()[lineVertexCount++] = { camTarget + windDir * length - (windDir - Math::Vec3f{0.0f,2.0f,0.0f}).normalized() * 1.0f, 0x00FF00FF};
+				line3DVertices.get()[lineVertexCount++] = { camTarget + windDir * length - (windDir - Math::Vec3f{0.0f,2.0f,0.0f}).normalized() * 1.0f, 0x00FF00FF };
 			}
 		}
 

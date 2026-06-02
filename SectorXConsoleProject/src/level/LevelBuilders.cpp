@@ -29,9 +29,7 @@
 
 #include "graphics/SpriteAnimationService.h"
 
-
 constexpr float START_CAMERA_PLAYER_DISTANCE = 20.0f;
-
 
 void Levels::EnqueueGlobalSystems(WorldType& world)
 {
@@ -71,7 +69,6 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 			auto shaderMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::ShaderManager>();
 			auto psoMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::PSOManager>();
 			auto sampMgr = graphics.GetRenderService()->GetResourceManager<Graphics::DX11::SamplerManager>();
-
 
 			DX11::ShaderCreateDesc shaderDesc;
 			shaderDesc.vsPath = L"assets/shader/VS_WindSprite.cso";
@@ -178,7 +175,7 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 
 			auto pp = playerService->GetPlayerPosition();
 
-			Math::Quatf yawRot = Math::Quatf::FromAxisAngle({0.0f,1.0f,0.0f}, Math::Deg2Rad(55.0f));
+			Math::Quatf yawRot = Math::Quatf::FromAxisAngle({ 0.0f,1.0f,0.0f }, Math::Deg2Rad(55.0f));
 
 			auto pitchRot = Math::Quatf::FromAxisAngle({ 1.0f,0.0f,0.0f }, Math::Deg2Rad(-20.0f));
 			auto camRot = yawRot * pitchRot;
@@ -188,13 +185,11 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 			Math::Vec3f r, u, f;
 			Math::ToBasis<float, Math::LH_ZForward>(yawRot, r, u, f);
 
-			perCameraService->SetTarget(pp -f * START_CAMERA_PLAYER_DISTANCE + Math::Vec3f{ 0.0f, 8.0f, 0.0f });
-
+			perCameraService->SetTarget(pp - f * START_CAMERA_PLAYER_DISTANCE + Math::Vec3f{ 0.0f, 8.0f, 0.0f });
 
 			auto& scheduler = pLevel->GetScheduler();
 			scheduler.AddSystem<TitleSystem>(*serviceLocator);
 			scheduler.AddSystem<SpriteRenderSystem>(*serviceLocator);
-
 		});
 
 	// レベル追加コマンドを実行キューにプッシュ
@@ -283,7 +278,6 @@ void Levels::EnqueueLoadingLevel(WorldType& world, App::Context& ctx, const char
 
 			auto& scheduler = pLevel->GetScheduler();
 			scheduler.AddSystem<SpriteAnimationSystem>(*serviceLocator);
-
 		});
 
 	// レベル追加コマンドを実行キューにプッシュ
@@ -307,13 +301,11 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 		std::move(level),
 		//ロード時
 		[&](const ECS::ServiceLocator* serviceLocator, OpenFieldLevel* pLevel) {
-
 			auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11::ModelAssetManager>();
 			auto bufferMgr = graphics.GetRenderService()->GetResourceManager<DX11::BufferManager>();
 			auto shaderMgr = graphics.GetRenderService()->GetResourceManager<DX11::ShaderManager>();
 
 			clock_t start = clock();
-
 
 			//デフォルト描画のPSO生成
 			DX11::ShaderCreateDesc shaderDesc;
@@ -543,7 +535,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				occAABB.ub.z *= 0.4f;
 			}
 
-
 			ModelAssetHandle bridgeModelHandle;
 			modelDesc.path = "assets/model/Static/Bridge/medieval_bridge.gltf";
 			modelDesc.buildOccluders = false;
@@ -559,7 +550,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			//中に入るタイプのモデルのオクル―ダーメッシュはまだできていないのでとりあえずfalse
 			modelDesc.buildOccluders = false;
 			modelAssetMgr->Add(modelDesc, ruinBreakTowerModelHandle);
-
 
 			ModelAssetHandle ruinStoneModelHandle;
 			modelDesc.instancesPeak = 10;
@@ -640,7 +630,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 					return ps->MakeConvexCompound("generated/convex/StylizedNatureMegaKit/Rock_Medium_3.chullbin", true, scale);
 				};
 
-			makeShapeHandleFunc[TreeA] = makeShapeHandleFunc[TreeB]  = makeShapeHandleFunc[TreeC] = [&](Math::Vec3f scale)
+			makeShapeHandleFunc[TreeA] = makeShapeHandleFunc[TreeB] = makeShapeHandleFunc[TreeC] = [&](Math::Vec3f scale)
 				{
 					Physics::ShapeCreateDesc shapeDesc;
 					shapeDesc.shape = Physics::CapsuleDesc{ 10.0f,0.5f };
@@ -673,12 +663,11 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			const double time = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000.0;
 			printf("create entity time %lf[ms]\n", time);
 
-
 			Math::AABB3f grassBounds;
 			std::vector<Math::Vec2f> grassAnchor;
 			{
 				auto data = modelAssetMgr->Get(grassModelHandle);
-				for(auto& mesh : data.ref().subMeshes)
+				for (auto& mesh : data.ref().subMeshes)
 				{
 					grassBounds.expandToInclude(mesh.aabb);
 				}
@@ -731,7 +720,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			for (int j = 0; j < (100 * terrainRank); ++j) {
 				for (int k = 0; k < (100 * terrainRank); ++k) {
 					for (int n = 0; n < 1; ++n) {
-
 						constexpr Math::Vec2f posJitter = Math::Vec2f(0.2f, 0.2f);
 
 						uint32_t hash = BiomeScatterGenerator::Hash2D((uint32_t)j, (uint32_t)k, 1234);
@@ -805,7 +793,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 					}
 				}
 			}
-
 
 			// バイオーム散布用データ準備
 			//=====================================================================================
@@ -899,7 +886,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			scatterConfig.maxInstances = ECS::MAX_ENTITY_NUM;
 			biomeGen.SetConfig(scatterConfig);
 
-
 			// Forest Biome
 			BiomeParams forest;
 			forest.biomeId = Biome_Forest;
@@ -934,7 +920,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			grassLand.biomeId = Biome_Grassland;
 			grassLand.baseDensityPerSquareMeter = 0.04f;
 			{
-
 				BranchGroup trees;
 				trees.spawnProbability = 0.02f;
 				trees.maxSlopeDeg = 25.0f;
@@ -963,7 +948,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			biomeGen.SetBiomes(biomes);
 
 			auto scatterInstance = biomeGen.GenerateAll();
-
 
 			// バイオーム散布Entity生成
 			for (auto& inst : scatterInstance)
@@ -1005,14 +989,13 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 					staticBody.type = Physics::BodyType::Static; // staticにする
 					staticBody.layer = Physics::Layers::NON_MOVING_RAY_IGNORE;
 
-
 					auto shapeHandle = makeShapeHandleFunc[modelIdx](Math::Vec3f(scale, scale, scale));
 #ifdef _ENABLE_IMGUI
 					auto shapeDims = ps->GetShapeDims(shapeHandle);
 #endif
 
 					std::optional<ECS::EntityID> id;
-					if(pMakePointLightDescFunc[modelIdx] != nullptr)
+					if (pMakePointLightDescFunc[modelIdx] != nullptr)
 					{
 						auto plDesc = pMakePointLightDescFunc[modelIdx](location);
 						auto plHandle = pointLightService->Create(plDesc);
@@ -1026,7 +1009,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 							staticBody,
 							CPointLight{ plHandle }
 #ifdef _ENABLE_IMGUI
-							,shapeDims.value()
+							, shapeDims.value()
 #endif
 						);
 					}
@@ -1039,7 +1022,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 							CColor{ {tint, 1.0f} },
 							staticBody
 #ifdef _ENABLE_IMGUI
-							,shapeDims.value()
+							, shapeDims.value()
 #endif
 						);
 					}
@@ -1073,16 +1056,13 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				}
 			}
 
-
 			auto playerService = serviceLocator->Get<PlayerService>();
 			Math::Vec3f playerStartPos = playerService->GetPlayerPosition();
 			auto getTerrainLocation = [&](float u, float v) {
-
 				Math::Vec3f location = { tp.cellsX * tp.cellSize * u, 0.0f, tp.cellsZ * tp.cellSize * v };
 				terrain.SampleHeightNormalBilinear(location.x, location.z, location.y);
 				return location;
 				};
-
 
 			//プレイヤー生成
 			{
@@ -1269,12 +1249,11 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 #ifdef _ENABLE_IMGUI
 						, shapeDims.value()
 #endif
-						);
+					);
 					if (id) {
 						auto chunk = pLevel->GetChunk(fence.position);
 						ps->EnqueueCreateIntent(id.value(), shape, chunk.value()->GetNodeKey());
 					}
-
 				}
 			}
 
@@ -1316,7 +1295,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				auto shape = ps->MakeMesh("generated/meshshape/Static/Bridge/medieval_bridge.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
 				CModel modelComp{ bridgeModelHandle }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
 				addGlobalEntityWithBody({ 0.647f, 0.27f }, 35.0f, modelComp, shape,
-					Math::Quatf::FromAxisAngle({0.0f, 1.0f, 0.0f}, Math::Deg2Rad(140.0f)));
+					Math::Quatf::FromAxisAngle({ 0.0f, 1.0f, 0.0f }, Math::Deg2Rad(140.0f)));
 			}
 
 			//木の橋生成
@@ -1353,7 +1332,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			//家生成
 			{
 				auto shape = ps->MakeMesh("generated/meshshape/Static/House/HouseA.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
-				CModel modelComp{ houseModelHandle[0]}; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+				CModel modelComp{ houseModelHandle[0] }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
 				addGlobalEntityWithBody({ 0.55f, 0.45f }, -1.0f, modelComp, shape, Math::Quatf::FromAxisAngle({ 0.0f,1.0f,0.0f }, Math::Deg2Rad(60.0f)));
 
 				shape = ps->MakeMesh("generated/meshshape/Static/House/HouseB.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
@@ -1436,7 +1415,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				levelSession.AddEntityWithLocation(leafVolume.centerWS, leafVolume, tag);
 			}
 
-
 			// System登録
 			auto& scheduler = pLevel->GetScheduler();
 
@@ -1459,7 +1437,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 			//カスタムの処理を開始
 			ctx.executeCustom.store(true, std::memory_order_relaxed);
-
 		},
 		//アンロード時
 		[&](const ECS::ServiceLocator*, OpenFieldLevel* pLevel)

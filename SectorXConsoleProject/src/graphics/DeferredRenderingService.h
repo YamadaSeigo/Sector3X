@@ -65,7 +65,6 @@ public:
 			assert(false && "Failed to create tile camera buffer");
 		}
 
-
 		DX11::TextureRecipe recipe;
 		recipe.width = w;
 		recipe.height = h;
@@ -166,7 +165,7 @@ public:
 		ID3D11UnorderedAccessView* outLightUAV,
 		ID3D11Buffer* lightCountCB,
 		ID3D11SamplerState* pointSampler
-		)
+	)
 	{
 		// タイルフラスタム構築
 		tiledDeferredRender.BuildTileFrustums(ctx, tileCameraBuffer.Get());
@@ -197,7 +196,7 @@ public:
 
 	TileLightList GetTileLightList(bool cullingZ) const
 	{
-		if(cullingZ) {
+		if (cullingZ) {
 			return TileLightList{
 				tiledDeferredRender.GetLightIndexCounterZ().srv.Get(),
 				tiledDeferredRender.GetLightIndexBufferZ().srv.Get()

@@ -24,7 +24,6 @@ enum class EModelFlag : uint16_t
 	RainOccluder = 1 << 3,
 };
 
-
 struct CModel
 {
 	Graphics::ModelAssetHandle handle;
@@ -35,32 +34,31 @@ struct CModel
 	bool temporalSkip = false;
 };
 
-
 template<typename Partition>
-class ModelRenderSystem : public ITypeSystem<
+class ModelRenderSystem : public ITypeSystem <
 	ModelRenderSystem,
 	Partition,
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
-		Read<TransformSoA>,
-		Write<CModel>,
-		Read<CColor>
+	Read<TransformSoA>,
+	Write<CModel>,
+	Read<CColor>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
-		Graphics::RenderService,
-		Graphics::I3DPerCameraService,
-		Graphics::LightShadowService,
-		RainService
+	Graphics::RenderService,
+	Graphics::I3DPerCameraService,
+	Graphics::LightShadowService,
+	RainService
 	>,
 	//Updateを並列化する
 	IsParallel{ true }
-	>
+>
 {
 	using Accessor = ComponentAccessor<Read<TransformSoA>, Write<CModel>, Read<CColor>>;
 public:
 
-	static constexpr inline uint32_t MAX_OCCLUDER_AABB_NUM  = 64;
+	static constexpr inline uint32_t MAX_OCCLUDER_AABB_NUM = 64;
 
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition,
@@ -70,7 +68,6 @@ public:
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
 		NoDeletePtr<RainService> rainService)
 	{
-
 		//機能を制限したRenderQueueを取得
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
 		auto meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
@@ -121,7 +118,6 @@ public:
 				renderService->RenderingOccluderInMOC(quadMOC);
 			}
 		}
-
 
 		struct KernelParams {
 			Graphics::RenderService* renderService;
@@ -184,7 +180,7 @@ public:
 
 		//アクセスを宣言したコンポーネントにマッチするチャンクに指定した関数を適応する
 
-		this->ForEachFrustumNearChunkWithAccessor<IsParallel{true}>([](Accessor& accessor, size_t entityCount, KernelParams* kp)
+		this->ForEachFrustumNearChunkWithAccessor < IsParallel{ true } > ([](Accessor& accessor, size_t entityCount, KernelParams* kp)
 			{
 				if (entityCount == 0) return;
 
@@ -215,7 +211,6 @@ public:
 				};
 
 				const Math::Vec4f* colorSoA = reinterpret_cast<const Math::Vec4f*>(color.value());
-
 
 				// ワールド行列を一括生成
 				std::vector<float> worldMtxBuffer(12 * entityCount);
@@ -368,7 +363,7 @@ public:
 								if (!castShadow) continue;
 
 								// Visbleはまだ計算していないため、ここで計算
-								if(visRes == BSVisState::Visible) {
+								if (visRes == BSVisState::Visible) {
 									Math::MulPoint_RowMajor_ColVec(
 										worldMtxSoA.AoS(i),
 										centerBS.x, centerBS.y, centerBS.z,
@@ -441,7 +436,6 @@ public:
 									{
 										LOG_WARNING("Occluder AABB buffer overflow");
 									}
-
 								}
 							}
 
@@ -548,10 +542,9 @@ public:
 						{
 							float camDistSqrt = (Math::Vec2f(centerBS.x, centerBS.z) - Math::Vec2f(kp->cp.x, kp->cp.z)).lengthSquared();
 							float bsRadiusSqrt = bsRadiusWS * bsRadiusWS;
-							if(camDistSqrt < kp->rainRadius2 + bsRadiusSqrt)
+							if (camDistSqrt < kp->rainRadius2 + bsRadiusSqrt)
 								cmd.viewMask |= PASS_3DMAIN_RAIN_DEPTH;
 						}
-
 
 						cmd.sortKey = Graphics::MakeSortKey(mesh.pso.index, mesh.material.index, meshHandel.index);
 						producer.Push(std::move(cmd));
@@ -564,7 +557,7 @@ public:
 					}
 				}
 			}, partition, fru, camPos, &kp, threadPool.get()
-		);
+				);
 
 #if PROFILE_MODEL_UPDATE_TIME
 		clock_t end = clock();

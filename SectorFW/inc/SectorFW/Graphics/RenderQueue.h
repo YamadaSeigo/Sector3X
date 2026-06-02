@@ -613,7 +613,6 @@ namespace SFW
 						std::memcpy(out.data() + old, pTmp, n * sizeof(DrawCommand));
 					}
 					else {
-
 						std::move(pTmp, pTmp + n, out.begin() + old);
 					}
 				}

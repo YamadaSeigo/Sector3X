@@ -21,7 +21,6 @@ namespace SFW::Physics {
 	static ObjectVsBroadPhaseLayerFilterImpl      g_ovsbFilter;
 	static ObjectLayerPairFilterImpl              g_pairFilter;
 
-	
 	bool PhysicsDevice::Initialize(const InitParams& p) {
 		assert(!m_initialized && "PhysicsDevice is already initialized!");
 		m_initialized = true;
@@ -147,7 +146,7 @@ namespace SFW::Physics {
 		// 作成完了イベントを貯める（後段で BodyComponent に差し込み）
 		{
 			std::scoped_lock lk(m_createdMutex);
-			m_created[c.owner.level].push_back(CreatedBody{c.e, c.owner, id});
+			m_created[c.owner.level].push_back(CreatedBody{ c.e, c.owner, id });
 		}
 	}
 

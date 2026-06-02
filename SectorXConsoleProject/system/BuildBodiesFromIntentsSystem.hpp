@@ -72,9 +72,8 @@ public:
 		bool stop = false;
 		size_t createCount = 0;
 		for (const auto& in : intents) {
-
 			//チャンクに属さない場合はスキップ
-			if(in.owner.code == SpatialChunkKey::kInvalidCode) {
+			if (in.owner.code == SpatialChunkKey::kInvalidCode) {
 				continue;
 			}
 
@@ -157,7 +156,6 @@ public:
 	}
 
 	void End(Partition& partition, SFW::LevelContext<Partition>& levelCtx, const ECS::ServiceLocator& services) override {
-
 		Query q;
 		q.With<Physics::CPhyBody>();
 		auto chunks = q.MatchingChunks<Partition&>(partition);

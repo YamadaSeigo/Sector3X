@@ -157,7 +157,6 @@ namespace SFW
 			 * @return ShapeHandle 生成された StaticCompoundShape 形状のハンドル
 			 */
 			[[nodiscard]] ShapeHandle MakeConvexCompound(const std::string& path, bool rhFlip = false, ShapeScale s = { {1,1,1} }, float r = 0.05f, float tol = 0.005f) {
-
 				// ヒット率向上のため、スケールを10倍して小数点以下を切り捨てる（整数化）。これにより、わずかなスケール違いで別形状扱いになるのを防ぐ。
 				auto& scale = s.s;
 				scale *= 10.0f;
@@ -364,7 +363,7 @@ namespace SFW
 			 */
 			void EnqueueCreateIntent(Entity e, ShapeHandle h, const SpatialChunkKey& owner, Material mat = {}) {
 				std::scoped_lock lk(m_intentMutex);
-				m_createIntents[owner.level].push_back({e, h, owner, mat});
+				m_createIntents[owner.level].push_back({ e, h, owner, mat });
 			}
 			/**
 			 * @brief 生成インテントを取り出す（Body 作成要求用
@@ -381,7 +380,7 @@ namespace SFW
 				out.swap(it->second); // O(1)
 
 				// 空になったらマップから消す
-				if(it->second.empty()) {
+				if (it->second.empty()) {
 					m_createIntents.erase(it);
 				}
 			}
@@ -474,7 +473,6 @@ namespace SFW
 					m_pendingHead = 0;
 				}
 			}
-
 
 		private:
 			PhysicsDevice& m_device;

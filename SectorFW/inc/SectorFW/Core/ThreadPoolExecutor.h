@@ -5,7 +5,6 @@
  * \date   December 2025
  *********************************************************************/
 
-
 #pragma once
 #include <thread>
 #include <vector>

@@ -1564,7 +1564,7 @@ namespace SFW {
 				M.m[3][0] = 0.f; M.m[3][1] = 0.f; M.m[3][2] = 0.f; M.m[3][3] = 1.f;
 				outM[i] = M;
 			}
-			}
+		}
 
 		static inline void BuildWorldMatrices3x4_FromSoA_Scalar(
 			const float* px, const float* py, const float* pz,
@@ -2232,5 +2232,5 @@ namespace SFW {
 			}
 #endif
 		}
-		} // namespace Math
-	} // namespace SectorFW
+	} // namespace Math
+} // namespace SectorFW

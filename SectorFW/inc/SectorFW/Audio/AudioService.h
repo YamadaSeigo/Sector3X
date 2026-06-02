@@ -5,7 +5,6 @@
  * \date   December 2025
  *********************************************************************/
 
-
 #pragma once
 #include <atomic>
 #include <cstdint>
@@ -22,7 +21,7 @@
 
 #include "../Core/ECS/ServiceContext.hpp"
 
-// ‘O•ûéŒ¾
+ // ‘O•ûéŒ¾
 namespace SoLoud
 {
 	class Soloud;
@@ -31,7 +30,6 @@ namespace SoLoud
 
 namespace SFW::Audio
 {
-
 	class AudioService : public ECS::IUpdateService
 	{
 	public:

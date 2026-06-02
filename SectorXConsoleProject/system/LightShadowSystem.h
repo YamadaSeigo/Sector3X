@@ -9,12 +9,12 @@ class LightShadowSystem : public ITypeSystem<
 	Partition,
 	ComponentAccess<>,//アクセスするコンポーネントの指定
 	ServiceContext<
-		InputService,
-		Graphics::I3DPerCameraService,
-		Graphics::RenderService,
-		Graphics::LightShadowService,
-		Graphics::PointLightService,
-		Graphics::DX11::LightShadowResourceService
+	InputService,
+	Graphics::I3DPerCameraService,
+	Graphics::RenderService,
+	Graphics::LightShadowService,
+	Graphics::PointLightService,
+	Graphics::DX11::LightShadowResourceService
 	>>{//受け取るサービスの指定
 	using Accessor = ComponentAccessor<>;
 public:
@@ -61,7 +61,6 @@ public:
 		NoDeletePtr<Graphics::LightShadowService> lightShadowService,
 		NoDeletePtr<Graphics::PointLightService> pointLightService,
 		NoDeletePtr<Graphics::DX11::LightShadowResourceService> resourceService) {
-
 		bool updateCascade = false;
 		if (inputService->IsKeyPressed(Input::Key::L))
 		{

@@ -42,7 +42,7 @@ namespace SFW
 		~WindowHandler() = default;
 
 #ifdef _CONSOLE
-		
+
 #ifdef _UNICODE
 		/**
 		 * @brief ウィンドウの作成(コンソールアプリケーション、Unicode)
@@ -106,7 +106,7 @@ namespace SFW
 		}
 
 #else // !_CONSOLE
-		
+
 #ifdef _UNICODE
 		/**
 		 * @brief ウィンドウの作成(ウィンドウアプリケーション、Unicode)

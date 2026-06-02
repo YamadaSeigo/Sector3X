@@ -12,14 +12,14 @@ class EnvironmentSystem : public ITypeSystem<
 	ComponentAccess<>,
 	//受け取るサービスの指定
 	ServiceContext<
-		EnvironmentService,
-		WindService,
-		RainService,
-		Graphics::RenderService,
-		Graphics::LightShadowService,
-		Audio::AudioService,
-		Graphics::I3DPerCameraService,
-		TimerService
+	EnvironmentService,
+	WindService,
+	RainService,
+	Graphics::RenderService,
+	Graphics::LightShadowService,
+	Audio::AudioService,
+	Graphics::I3DPerCameraService,
+	TimerService
 	>>
 {
 	using Accessor = ComponentAccessor<>;
@@ -55,7 +55,6 @@ public:
 		windPlayParams.loop = true;
 		windPlayParams.volume = audioVolumeRatio * 1.5f;
 		wind.ticketID = audioService->EnqueuePlay(wind.handle, windPlayParams);
-
 	}
 
 	void UpdateImpl(
@@ -87,7 +86,6 @@ public:
 		Math::Vec3f sunDirWS = environmentService->GetSunDirection();
 
 		if (environmentService->IsUpdateTimeOfDay()) {
-
 			lightShadowService->SetEnvironment(
 				Graphics::DirectionalLight{
 					.directionWS = sunDirWS,

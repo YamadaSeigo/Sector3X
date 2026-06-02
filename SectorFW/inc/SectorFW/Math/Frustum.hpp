@@ -526,5 +526,4 @@ namespace SFW::Math {
 		}
 		return aabb;
 	}
-
 } // namespace SectorFW::Math

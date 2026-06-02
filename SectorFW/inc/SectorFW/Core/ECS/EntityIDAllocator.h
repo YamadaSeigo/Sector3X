@@ -76,7 +76,6 @@ namespace SFW
 			}
 
 			void DestroyBulk(const EntityID* ids, size_t count) {
-
 				std::vector<uint32_t> indices;
 				indices.reserve(count);
 

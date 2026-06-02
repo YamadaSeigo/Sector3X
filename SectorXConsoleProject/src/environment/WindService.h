@@ -2,7 +2,6 @@
 
 #include <SectorFW/Core/ECS/ServiceContext.hpp>
 
-
 //==============================================================
 // 依存関係的によくないがコンパクトにするためにDX11BufferManager(バッファ更新)に依存
 //==============================================================
@@ -11,19 +10,19 @@ class WindService : public SFW::ECS::IUpdateService
 public:
 	using BufferManager = SFW::Graphics::DX11::BufferManager;
 
-    struct WindCB
-    {
+	struct WindCB
+	{
 		float    Time = 0.0f;                       // 経過時間
 		float    NoiseFreq = 0.05f;                 // ノイズ周波数
-        float    BigWaveWeight = 0.3f;              // おおきな波(全体)の重み
+		float    BigWaveWeight = 0.3f;              // おおきな波(全体)の重み
 		float    WindSpeed = 1.0f;                  // 風速
 		float    WindAmplitude = 1.6f;              // 風の振幅
 		Math::Vec3f   WindDir = { 1.0f, 0.0f, 0.3f };   // 風向き(XZ平面)
-    };
+	};
 
-    WindService(BufferManager* bufferMgr) : bufferMgr(bufferMgr)
-    {
-        Graphics::DX11::BufferCreateDesc cd;
+	WindService(BufferManager* bufferMgr) : bufferMgr(bufferMgr)
+	{
+		Graphics::DX11::BufferCreateDesc cd;
 		cd.name = "GrassWindCB";
 		cd.size = sizeof(WindCB);
 		cd.initialData = &m_grassWindCB;
@@ -31,11 +30,11 @@ public:
 		bufferMgr->Add(cd, hBuffer);
 
 		// デバッグUI登録
-        BIND_DEBUG_SLIDER_FLOAT("Wind", "BigWaveWeight", &m_grassWindCB.BigWaveWeight, 0.0f, 1.0f, 0.01f);
+		BIND_DEBUG_SLIDER_FLOAT("Wind", "BigWaveWeight", &m_grassWindCB.BigWaveWeight, 0.0f, 1.0f, 0.01f);
 		BIND_DEBUG_SLIDER_FLOAT("Wind", "NoiseFreq", &m_grassWindCB.NoiseFreq, 0.0f, 1.0f, 0.001f);
 		BIND_DEBUG_SLIDER_FLOAT("Wind", "BaseSpeed", &m_baseWindSpeed, 0.0f, 20.0f, 0.1f);
 		BIND_DEBUG_SLIDER_FLOAT("Wind", "TimeSpeed", &m_windTimeSpeed, 0.0f, 100.0f, 0.01f);
-        BIND_DEBUG_SLIDER_FLOAT("Wind", "Amplitude", &m_grassWindCB.WindAmplitude, 0.0f, 100.0f, 0.1f);
+		BIND_DEBUG_SLIDER_FLOAT("Wind", "Amplitude", &m_grassWindCB.WindAmplitude, 0.0f, 100.0f, 0.1f);
 		BIND_DEBUG_SLIDER_FLOAT("Wind", "EnableAutoWind", &m_autoWindEnable, 0.0f, 1.0f, 1.0f);
 		BIND_DEBUG_SLIDER_FLOAT("Wind", "DirDriftSpeed", &m_dirDriftSpeed, 0.01f, 10.0f, 0.01f);
 		BIND_DEBUG_SLIDER_FLOAT("Wind", "BaseSpeedMulMin", &m_baseSpeedMulMin, 0.01f, 10.0f, 0.01f);
@@ -43,23 +42,22 @@ public:
 		BIND_DEBUG_SLIDER_FLOAT("Wind", "DirTimeScaleBase", &m_dirTimeScaleBase, 0.01f, 10.0f, 0.01f);
 		BIND_DEBUG_SLIDER_FLOAT("Wind", "SpeedTimeScale", &m_speedTimeScale, 0.01f, 1.0f, 0.001f);
 		BIND_DEBUG_SLIDER_FLOAT("Wind", "GustTimeScale", &m_gustTimeScale, 0.01f, 1.0f, 0.001f);
-
-    }
+	}
 
 	void PreUpdate(double deltaTime) noexcept override
 	{
 		// windSpeedを反映させて風の時間変化を進める
 		float mul = powf(m_grassWindCB.WindSpeed * 0.25f, 2.0f) * m_windTimeSpeed;
 
-        m_grassWindCB.Time += static_cast<float>(deltaTime) * mul;
+		m_grassWindCB.Time += static_cast<float>(deltaTime) * mul;
 
 		// 自動風が有効なら、風向き/風速を「それっぽく」時間変化させる
 		UpdateWind(deltaTime);
 	}
 
-    // 風向き/風速を「それっぽく」時間変化させる
-    void UpdateWind(double deltaTime) noexcept
-    {
+	// 風向き/風速を「それっぽく」時間変化させる
+	void UpdateWind(double deltaTime) noexcept
+	{
 		// -------------------------
 		// 小さな 1D 連続ノイズ（value noise + fBm）
 		// -------------------------
@@ -184,26 +182,26 @@ public:
 		// 反映
 		m_grassWindCB.WindDir = newDir;
 		m_grassWindCB.WindSpeed = newSpeed;
-    }
+	}
 
-    /**
-    * @brief バッファをGPUにおくる
-    * @param slot 現在のCPU側のフレーム
-    */
-    void UpdateBufferToGPU(uint16_t slot) noexcept
-    {
-        Graphics::DX11::BufferUpdateDesc updDesc;
-        auto data = bufferMgr->Get(hBuffer);
-        updDesc.buffer = data.ref().buffer;
+	/**
+	* @brief バッファをGPUにおくる
+	* @param slot 現在のCPU側のフレーム
+	*/
+	void UpdateBufferToGPU(uint16_t slot) noexcept
+	{
+		Graphics::DX11::BufferUpdateDesc updDesc;
+		auto data = bufferMgr->Get(hBuffer);
+		updDesc.buffer = data.ref().buffer;
 		updDesc.size = sizeof(WindCB);
-        updDesc.data = &m_grassWindCB;
-        updDesc.isDelete = false;
-        bufferMgr->UpdateBuffer(updDesc, slot);
-    }
+		updDesc.data = &m_grassWindCB;
+		updDesc.isDelete = false;
+		bufferMgr->UpdateBuffer(updDesc, slot);
+	}
 
-    const Graphics::BufferHandle GetBufferHandle() const noexcept {
-        return hBuffer;
-    }
+	const Graphics::BufferHandle GetBufferHandle() const noexcept {
+		return hBuffer;
+	}
 
 	void GetWindDirAndSpeed(Math::Vec3f& outDir, float& outSpeed) const noexcept
 	{
@@ -211,14 +209,14 @@ public:
 		outSpeed = m_grassWindCB.WindSpeed;
 	}
 
-    static std::vector<float> ComputeGrassWeight(const std::vector<Math::Vec3f>& vertices)
-    {
+	static std::vector<float> ComputeGrassWeight(const std::vector<Math::Vec3f>& vertices)
+	{
 		float minY = +FLT_MAX;
 		float maxY = -FLT_MAX;
-        for (const auto v : vertices) {
-            minY = (std::min)(minY, v.y);
-            maxY = (std::max)(maxY, v.y);
-        }
+		for (const auto v : vertices) {
+			minY = (std::min)(minY, v.y);
+			maxY = (std::max)(maxY, v.y);
+		}
 		float height = (std::max)(0.0001f, maxY - minY);
 		std::vector<float> weights;
 		weights.reserve(vertices.size());
@@ -228,87 +226,86 @@ public:
 			weights.push_back(w);
 		}
 		return weights;
-    }
+	}
 
-    static std::vector<float> ComputeTreeWeight(const std::vector<Math::Vec3f>& vertices)
-    {
-        // 最大と最小の座標
-        float minY = +FLT_MAX;
-        float maxY = -FLT_MAX;
-        for (const auto v : vertices) {
-            minY = (std::min)(minY, v.y);
-            maxY = (std::max)(maxY, v.y);
-        }
-        float height = (std::max)(0.0001f, maxY - minY);
+	static std::vector<float> ComputeTreeWeight(const std::vector<Math::Vec3f>& vertices)
+	{
+		// 最大と最小の座標
+		float minY = +FLT_MAX;
+		float maxY = -FLT_MAX;
+		for (const auto v : vertices) {
+			minY = (std::min)(minY, v.y);
+			maxY = (std::max)(maxY, v.y);
+		}
+		float height = (std::max)(0.0001f, maxY - minY);
 
-        // 簡易的に「幹の軸 = 上方向」と仮定
-        Math::Vec3f trunkAxis = Math::Vec3f(0, 1, 0);
+		// 簡易的に「幹の軸 = 上方向」と仮定
+		Math::Vec3f trunkAxis = Math::Vec3f(0, 1, 0);
 
-        // 幹の中心線からの最大半径を測る
-        float maxRadius = 0.0f;
-        for (auto v : vertices) {
-            float t = (v.y - minY) / height;    // 軸方向の正規化位置
-            Math::Vec3f proj = Math::Vec3f(0, minY + t * height, 0); // 超雑な投影（0,y,0）
-            float r = (v - proj).length();
-            maxRadius = (std::max)(maxRadius, r);
-        }
-        maxRadius = (std::max)(maxRadius, 0.0001f);
+		// 幹の中心線からの最大半径を測る
+		float maxRadius = 0.0f;
+		for (auto v : vertices) {
+			float t = (v.y - minY) / height;    // 軸方向の正規化位置
+			Math::Vec3f proj = Math::Vec3f(0, minY + t * height, 0); // 超雑な投影（0,y,0）
+			float r = (v - proj).length();
+			maxRadius = (std::max)(maxRadius, r);
+		}
+		maxRadius = (std::max)(maxRadius, 0.0001f);
 
-        std::vector<float> weights;
-        weights.reserve(vertices.size());
-        for (auto v : vertices) {
-            float t = (v.y - minY) / height; // 0..1 高くなるほど大きく
-            Math::Vec3f proj = Math::Vec3f(0, minY + t * height, 0);
-            float r = (v - proj).length() / maxRadius; // 0..1 幹から遠いほど大きく
+		std::vector<float> weights;
+		weights.reserve(vertices.size());
+		for (auto v : vertices) {
+			float t = (v.y - minY) / height; // 0..1 高くなるほど大きく
+			Math::Vec3f proj = Math::Vec3f(0, minY + t * height, 0);
+			float r = (v - proj).length() / maxRadius; // 0..1 幹から遠いほど大きく
 
-            // 高さと半径をミックス
-            float w = std::pow(t, 2.0f) * 0.1f + std::pow(r, 3.0f) * 1.25f;
-            w = std::clamp(w, 0.0f, 1.0f);
-            weights.push_back(w);
-        }
-        return weights;
-    }
+			// 高さと半径をミックス
+			float w = std::pow(t, 2.0f) * 0.1f + std::pow(r, 3.0f) * 1.25f;
+			w = std::clamp(w, 0.0f, 1.0f);
+			weights.push_back(w);
+		}
+		return weights;
+	}
 
-    static std::vector<float> ComputeGhostWeight(const std::vector<Math::Vec3f>& vertices)
-    {
-        float minY = +FLT_MAX;
-        float maxY = -FLT_MAX;
-        for (const auto v : vertices) {
-            minY = (std::min)(minY, v.y);
-            maxY = (std::max)(maxY, v.y);
-        }
-        float height = (std::max)(0.0001f, maxY - minY);
-        std::vector<float> weights;
-        weights.reserve(vertices.size());
-        for (const auto v : vertices) {
-            float t = (v.y - minY) / height; // 1..0 高くなるほど小さく
-            float w = std::pow(t, 2.0f); // 高さに応じて二次曲線的に増加.しなやかにカーブ
-            weights.push_back(w);
-        }
-        return weights;
-    }
+	static std::vector<float> ComputeGhostWeight(const std::vector<Math::Vec3f>& vertices)
+	{
+		float minY = +FLT_MAX;
+		float maxY = -FLT_MAX;
+		for (const auto v : vertices) {
+			minY = (std::min)(minY, v.y);
+			maxY = (std::max)(maxY, v.y);
+		}
+		float height = (std::max)(0.0001f, maxY - minY);
+		std::vector<float> weights;
+		weights.reserve(vertices.size());
+		for (const auto v : vertices) {
+			float t = (v.y - minY) / height; // 1..0 高くなるほど小さく
+			float w = std::pow(t, 2.0f); // 高さに応じて二次曲線的に増加.しなやかにカーブ
+			weights.push_back(w);
+		}
+		return weights;
+	}
 
 private:
 
-    // ---- Auto wind params/state ----
-    double m_windTimeSec = 0.0;
+	// ---- Auto wind params/state ----
+	double m_windTimeSec = 0.0;
 
 	float m_baseWindSpeed = 1.0f;      // ベースの風速（UIで直接いじる用）
 	float m_windTimeSpeed = 2.0f;      // 風の時間変化の速さ（全体の時間スケール）
 
-    float m_autoWindEnable = 1.0f;     // 0..1（1で自動風フル）
-    float m_dirDriftSpeed = 0.35f;     // 方向の追従（大きいほどスムーズに追う）
-    float m_baseSpeedMulMin = 0.60f;   // 風速の下限倍率（WindSpeedに掛ける）
-    float m_baseSpeedMulMax = 3.00f;   // 風速の上限倍率
-    float m_dirTimeScaleBase = 0.010f; // 方向変化の遅さ（小さいほどゆっくり）
-    float m_speedTimeScale = 0.020f;   // 風速の大域変化
-    float m_gustTimeScale = 0.040f;   // 突風の変化
-
+	float m_autoWindEnable = 1.0f;     // 0..1（1で自動風フル）
+	float m_dirDriftSpeed = 0.35f;     // 方向の追従（大きいほどスムーズに追う）
+	float m_baseSpeedMulMin = 0.60f;   // 風速の下限倍率（WindSpeedに掛ける）
+	float m_baseSpeedMulMax = 3.00f;   // 風速の上限倍率
+	float m_dirTimeScaleBase = 0.010f; // 方向変化の遅さ（小さいほどゆっくり）
+	float m_speedTimeScale = 0.020f;   // 風速の大域変化
+	float m_gustTimeScale = 0.040f;   // 突風の変化
 
 	WindCB m_grassWindCB{};
-    Graphics::BufferHandle hBuffer;
+	Graphics::BufferHandle hBuffer;
 	BufferManager* bufferMgr = nullptr;
 
 public:
-    STATIC_SERVICE_TAG
+	STATIC_SERVICE_TAG
 };

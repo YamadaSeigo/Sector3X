@@ -100,10 +100,10 @@ namespace SFW
 			}
 			else
 #endif
-			if (wParam == VK_ESCAPE && m_mouseInput->IsCaptured()) {
-				m_mouseInput->ToggleCapture(false);
-				return 0; // ©‘O‚ÅŠ®—¹
-			}
+				if (wParam == VK_ESCAPE && m_mouseInput->IsCaptured()) {
+					m_mouseInput->ToggleCapture(false);
+					return 0; // ©‘O‚ÅŠ®—¹
+				}
 			break; // Šù’èˆ—‚É‰ñ‚·
 
 		case WM_INPUT:

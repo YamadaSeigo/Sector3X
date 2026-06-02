@@ -10,7 +10,6 @@ class TestMoveSystem : public ITypeSystem<
 public:
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition, LevelContext& levelCtx, SafePtr<SpatialChunkRegistry> registry) {
-
 		BudgetMover::LocalBatch moveBatch(levelCtx.mover, 200);
 
 		this->ForEachChunkWithAccessorAndEntityIDs([](Accessor& accessor, size_t entityCount,

@@ -16,7 +16,6 @@
 #include <SectorFW/Util/convert_string.h>
 #include <SectorFW/Debug/message.h>
 
-
 #include <vector>
 
 struct RtPack
@@ -45,7 +44,6 @@ bool CreateMRT(ID3D11Device* dev, SFW::Graphics::DX11::TextureManager* texMgr, c
 	}
 	return true;
 }
-
 
 void RenderPipe::Initialize(
 	SFW::Graphics::DX11::GraphicsDevice::RenderGraph* renderGraph,
@@ -335,7 +333,6 @@ void RenderPipe::Initialize(
 		};
 
 	auto createScreenTex = [&](ComPtr<ID3D11ShaderResourceView>& outSRV, ComPtr<ID3D11RenderTargetView>& outRTV, DXGI_FORMAT format, uint32_t w, uint32_t h, TextureHandle* outH = nullptr) {
-
 		DX11::TextureRecipe recipe;
 		recipe.width = w;
 		recipe.height = h;
@@ -484,7 +481,6 @@ void RenderPipe::Initialize(
 	static RainService* rainService = ctx.rain;
 
 	auto drawFullScreen = [](uint64_t frame) {
-
 		// 全画面描画でライティング計算
 		auto ctx = gGraphics->GetDeviceContext();
 
@@ -552,7 +548,7 @@ void RenderPipe::Initialize(
 		};
 		ctx->PSSetShaderResources(15, _countof(psSRVs), psSRVs);
 
-		renderBackend->BindPSCBVs({ invCameraBuffer.Get(), lightShadowResService->GetLightDataCB().Get(), fogBuffer.Get(), godRayBuffer.Get(), rainService->GetWetnessCB().Get(), rainService->GetMatrixCB().Get()}, 7);
+		renderBackend->BindPSCBVs({ invCameraBuffer.Get(), lightShadowResService->GetLightDataCB().Get(), fogBuffer.Get(), godRayBuffer.Get(), rainService->GetWetnessCB().Get(), rainService->GetMatrixCB().Get() }, 7);
 
 		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
 		ctx->PSSetSamplers(1, 1, lightShadowResService->GetShadowSampler().GetAddressOf());
@@ -567,11 +563,9 @@ void RenderPipe::Initialize(
 		ID3D11ShaderResourceView* nullSRV[7] = { nullptr };
 
 		ctx->PSSetShaderResources(11, _countof(nullSRV), nullSRV);
-
 		};
 
 	auto drawComposite = [](uint64_t frame) {
-
 		auto ctx = gGraphics->GetDeviceContext();
 
 		gGraphics->SetBlendState(BlendStateID::Opaque);
@@ -674,7 +668,6 @@ void RenderPipe::Initialize(
 		gGraphics->SetMainRenderTargetAndDepth();
 		};
 
-
 	passDesc.rtvs = ttMRT.rtv;
 	passDesc.dsv = mainDSV;
 	passDesc.cbvs = { BindSlotBuffer{cameraHandle3D} };
@@ -746,7 +739,6 @@ void RenderPipe::Initialize(
 	passDesc.blendState = BlendStateID::Opaque;
 
 	renderGraph->AddPassToGroup(UIGroup, passDesc, PASS_UI_LINE);
-
 
 	//グループとパスの実行順序を設定(現状は登録した順番のインデックスで指定)
 	std::vector<DX11::GraphicsDevice::RenderGraph::PassNode> order = {

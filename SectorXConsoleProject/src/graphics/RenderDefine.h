@@ -1,6 +1,5 @@
 #pragma once
 
-
 enum PassGroup {
 	GROUP_3D_MAIN,
 	GROUP_UI,
@@ -13,21 +12,21 @@ constexpr const char* PassGroupName[GROUP_MAX] = {
 };
 
 enum Pass3DMain : uint16_t {
-	PASS_3DMAIN_CASCADE0 =		1u << 0,
-	PASS_3DMAIN_CASCADE1 =		1u << 1,
-	PASS_3DMAIN_CASCADE2 =		1u << 2,
-	PASS_3DMAIN_RAIN_DEPTH =	1u << 3,
-	PASS_3DMAIN_ZPREPASS =		1u << 4,
-	PASS_3DMAIN_OUTLINE =		1u << 5,
-	PASS_3DMAIN_OPAQUE =		1u << 6,
-	PASS_3DMAIN_TRANSPARENT =	1u << 7,
-	PASS_3DMAIN_HIGHLIGHT =		1u << 8,
+	PASS_3DMAIN_CASCADE0 = 1u << 0,
+	PASS_3DMAIN_CASCADE1 = 1u << 1,
+	PASS_3DMAIN_CASCADE2 = 1u << 2,
+	PASS_3DMAIN_RAIN_DEPTH = 1u << 3,
+	PASS_3DMAIN_ZPREPASS = 1u << 4,
+	PASS_3DMAIN_OUTLINE = 1u << 5,
+	PASS_3DMAIN_OPAQUE = 1u << 6,
+	PASS_3DMAIN_TRANSPARENT = 1u << 7,
+	PASS_3DMAIN_HIGHLIGHT = 1u << 8,
 };
 
 enum PassUI : uint16_t {
-	PASS_UI_3DLINE =			1u << 0,
-	PASS_UI_MAIN =				1u << 1,
-	PASS_UI_LINE =				1u << 2,
+	PASS_UI_3DLINE = 1u << 0,
+	PASS_UI_MAIN = 1u << 1,
+	PASS_UI_LINE = 1u << 2,
 };
 
 constexpr inline const char* DeferredTextureNames[] = {

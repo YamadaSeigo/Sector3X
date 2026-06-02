@@ -5,30 +5,29 @@
 #include "LeafService.h"
 #include "RainService.h"
 
-
 void CreateFireflyVolumeBuffer(
-    ID3D11Device* dev,
-    ID3D11Buffer** outBuf,
-    ID3D11ShaderResourceView** outSRV)
+	ID3D11Device* dev,
+	ID3D11Buffer** outBuf,
+	ID3D11ShaderResourceView** outSRV)
 {
-    D3D11_BUFFER_DESC desc{};
-    desc.ByteWidth = sizeof(FireflyVolumeGPU) * FireflyService::MaxVolumes;
-    desc.Usage = D3D11_USAGE_DYNAMIC;
-    desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-    desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-    desc.StructureByteStride = sizeof(FireflyVolumeGPU);
-    desc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
+	D3D11_BUFFER_DESC desc{};
+	desc.ByteWidth = sizeof(FireflyVolumeGPU) * FireflyService::MaxVolumes;
+	desc.Usage = D3D11_USAGE_DYNAMIC;
+	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	desc.StructureByteStride = sizeof(FireflyVolumeGPU);
+	desc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
 
-    dev->CreateBuffer(&desc, nullptr, outBuf);
+	dev->CreateBuffer(&desc, nullptr, outBuf);
 
-    D3D11_SHADER_RESOURCE_VIEW_DESC srv{};
-    srv.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
-    srv.Format = DXGI_FORMAT_UNKNOWN;
-    srv.Buffer.NumElements = FireflyService::MaxVolumes;
+	D3D11_SHADER_RESOURCE_VIEW_DESC srv{};
+	srv.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
+	srv.Format = DXGI_FORMAT_UNKNOWN;
+	srv.Buffer.NumElements = FireflyService::MaxVolumes;
 
 	if (!*outBuf) return;
 
-    dev->CreateShaderResourceView(*outBuf, &srv, outSRV);
+	dev->CreateShaderResourceView(*outBuf, &srv, outSRV);
 }
 
 #ifdef _DEBUG
@@ -43,32 +42,32 @@ float gDebugFireflyBaseSize = 0.05f;
 #endif
 
 FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,
-    Graphics::DX11::BufferManager* bufferMgr,
-    const wchar_t* csInitFreeListPath,
-    const wchar_t* csSpawnPath,
-    const wchar_t* csUpdatePath,
-    const wchar_t* csArgsPath,
-    const wchar_t* vsPath,
-    const wchar_t* psPath)
-    : m_bufferMgr(bufferMgr)
+	Graphics::DX11::BufferManager* bufferMgr,
+	const wchar_t* csInitFreeListPath,
+	const wchar_t* csSpawnPath,
+	const wchar_t* csUpdatePath,
+	const wchar_t* csArgsPath,
+	const wchar_t* vsPath,
+	const wchar_t* psPath)
+	: m_bufferMgr(bufferMgr)
 {
-    // ボリュームバッファ作成
-    ID3D11Buffer* buf = nullptr;
-    ID3D11ShaderResourceView* srv = nullptr;
-    CreateFireflyVolumeBuffer(
-        pDevice,
-        &buf,
-        &srv);
-    m_volumeBuffer.Attach(buf);
+	// ボリュームバッファ作成
+	ID3D11Buffer* buf = nullptr;
+	ID3D11ShaderResourceView* srv = nullptr;
+	CreateFireflyVolumeBuffer(
+		pDevice,
+		&buf,
+		&srv);
+	m_volumeBuffer.Attach(buf);
 	m_volumeSRV.Attach(srv);
 
-    D3D11_BUFFER_DESC desc{};
-    desc.ByteWidth = sizeof(SpawnCB);
-    desc.Usage = D3D11_USAGE_DYNAMIC;
-    desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-    desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	D3D11_BUFFER_DESC desc{};
+	desc.ByteWidth = sizeof(SpawnCB);
+	desc.Usage = D3D11_USAGE_DYNAMIC;
+	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-    pDevice->CreateBuffer(&desc, nullptr, m_spawnCB.GetAddressOf());
+	pDevice->CreateBuffer(&desc, nullptr, m_spawnCB.GetAddressOf());
 
 	desc.ByteWidth = sizeof(UpdateCB);
 	pDevice->CreateBuffer(&desc, nullptr, m_updateCB.GetAddressOf());
@@ -76,17 +75,17 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
 	desc.ByteWidth = sizeof(RenderCB);
 	pDevice->CreateBuffer(&desc, nullptr, m_renderCB.GetAddressOf());
 
-    auto compileShader = [&](const wchar_t* path, ComPtr<ID3D11ComputeShader>& outCS)
-        {
-            ComPtr<ID3DBlob> csBlob;
-            HRESULT hr = D3DReadFileToBlob(path, csBlob.GetAddressOf());
+	auto compileShader = [&](const wchar_t* path, ComPtr<ID3D11ComputeShader>& outCS)
+		{
+			ComPtr<ID3DBlob> csBlob;
+			HRESULT hr = D3DReadFileToBlob(path, csBlob.GetAddressOf());
 #ifdef _DEBUG
-            std::string msgPath = SFW::WCharToUtf8_portable(path);
-            DYNAMIC_ASSERT_MESSAGE(SUCCEEDED(hr), "Failed to load compute shader file. {%s}", msgPath.c_str());
+			std::string msgPath = SFW::WCharToUtf8_portable(path);
+			DYNAMIC_ASSERT_MESSAGE(SUCCEEDED(hr), "Failed to load compute shader file. {%s}", msgPath.c_str());
 #endif
-            hr = pDevice->CreateComputeShader(csBlob->GetBufferPointer(), csBlob->GetBufferSize(), nullptr, &outCS);
-            assert(SUCCEEDED(hr) && "Failed to create compute shader.");
-        };
+			hr = pDevice->CreateComputeShader(csBlob->GetBufferPointer(), csBlob->GetBufferSize(), nullptr, &outCS);
+			assert(SUCCEEDED(hr) && "Failed to create compute shader.");
+		};
 
 	// コンピュートシェーダー作成
 	compileShader(csInitFreeListPath, m_initFreeListCS);
@@ -94,82 +93,82 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
 	compileShader(csUpdatePath, m_updateCS);
 	compileShader(csArgsPath, m_argsCS);
 
-    ComPtr<ID3DBlob> vsBlob;
-    HRESULT hr = D3DReadFileToBlob(vsPath, vsBlob.GetAddressOf());
+	ComPtr<ID3DBlob> vsBlob;
+	HRESULT hr = D3DReadFileToBlob(vsPath, vsBlob.GetAddressOf());
 #ifdef _DEBUG
-    std::string msgPath = SFW::WCharToUtf8_portable(vsPath);
-    DYNAMIC_ASSERT_MESSAGE(SUCCEEDED(hr), "Failed to load compute shader file. {%s}", msgPath.c_str());
+	std::string msgPath = SFW::WCharToUtf8_portable(vsPath);
+	DYNAMIC_ASSERT_MESSAGE(SUCCEEDED(hr), "Failed to load compute shader file. {%s}", msgPath.c_str());
 #endif
-    hr = pDevice->CreateVertexShader(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), nullptr, &m_fireflyVS);
-    assert(SUCCEEDED(hr) && "Failed to create vertex shader.");
+	hr = pDevice->CreateVertexShader(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), nullptr, &m_fireflyVS);
+	assert(SUCCEEDED(hr) && "Failed to create vertex shader.");
 
-    ComPtr<ID3DBlob> psBlob;
-    hr = D3DReadFileToBlob(psPath, psBlob.GetAddressOf());
+	ComPtr<ID3DBlob> psBlob;
+	hr = D3DReadFileToBlob(psPath, psBlob.GetAddressOf());
 #ifdef _DEBUG
-    msgPath = SFW::WCharToUtf8_portable(psPath);
-    DYNAMIC_ASSERT_MESSAGE(SUCCEEDED(hr), "Failed to load compute shader file. {%s}", msgPath.c_str());
+	msgPath = SFW::WCharToUtf8_portable(psPath);
+	DYNAMIC_ASSERT_MESSAGE(SUCCEEDED(hr), "Failed to load compute shader file. {%s}", msgPath.c_str());
 #endif
-    hr = pDevice->CreatePixelShader(psBlob->GetBufferPointer(), psBlob->GetBufferSize(), nullptr, &m_fireflyPS);
-    assert(SUCCEEDED(hr) && "Failed to create pixel shader.");
+	hr = pDevice->CreatePixelShader(psBlob->GetBufferPointer(), psBlob->GetBufferSize(), nullptr, &m_fireflyPS);
+	assert(SUCCEEDED(hr) && "Failed to create pixel shader.");
 
-    m_particlePool.Create(pDevice);
+	m_particlePool.Create(pDevice);
 
 	// FreeList初期化
-    {
-        struct InitCB
-        {
-            uint32_t gMaxParticles = FireflyParticlePool::MaxParticles;
-            uint32_t padding[3] = {};
-        };
+	{
+		struct InitCB
+		{
+			uint32_t gMaxParticles = FireflyParticlePool::MaxParticles;
+			uint32_t padding[3] = {};
+		};
 
-        ComPtr<ID3D11Buffer> initCB;
+		ComPtr<ID3D11Buffer> initCB;
 
-        D3D11_BUFFER_DESC desc{};
-        desc.ByteWidth = sizeof(SpawnCB);
-        desc.Usage = D3D11_USAGE_IMMUTABLE;
-        desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-        desc.CPUAccessFlags = 0;
+		D3D11_BUFFER_DESC desc{};
+		desc.ByteWidth = sizeof(SpawnCB);
+		desc.Usage = D3D11_USAGE_IMMUTABLE;
+		desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		desc.CPUAccessFlags = 0;
 
-        InitCB initData{};
-        D3D11_SUBRESOURCE_DATA initGPUData{};
-        initGPUData.pSysMem = &initData;
+		InitCB initData{};
+		D3D11_SUBRESOURCE_DATA initGPUData{};
+		initGPUData.pSysMem = &initData;
 
-        pDevice->CreateBuffer(&desc, &initGPUData, initCB.GetAddressOf());
+		pDevice->CreateBuffer(&desc, &initGPUData, initCB.GetAddressOf());
 
-        m_particlePool.InitFreeList(
-            pContext,
-            initCB.Get(),
-            m_initFreeListCS.Get());
-    }
+		m_particlePool.InitFreeList(
+			pContext,
+			initCB.Get(),
+			m_initFreeListCS.Get());
+	}
 
-    // PointLight : RWStructuredBuffer<CPULightData>
-    m_pointLight = CreateStructuredBufferSRVUAV(
-        pDevice,
-        sizeof(Graphics::GpuPointLight),
-        FireflyParticlePool::MaxPointLight,
-        true, true,
-        0,
-        D3D11_USAGE_DEFAULT,
-        0);
+	// PointLight : RWStructuredBuffer<CPULightData>
+	m_pointLight = CreateStructuredBufferSRVUAV(
+		pDevice,
+		sizeof(Graphics::GpuPointLight),
+		FireflyParticlePool::MaxPointLight,
+		true, true,
+		0,
+		D3D11_USAGE_DEFAULT,
+		0);
 
-    D3D11_BUFFER_DESC sdesc{};
-    sdesc.ByteWidth = 4;
-    sdesc.Usage = D3D11_USAGE_STAGING;
-    sdesc.BindFlags = 0;
-    sdesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
-    sdesc.MiscFlags = 0;
-    sdesc.StructureByteStride = 0;
+	D3D11_BUFFER_DESC sdesc{};
+	sdesc.ByteWidth = 4;
+	sdesc.Usage = D3D11_USAGE_STAGING;
+	sdesc.BindFlags = 0;
+	sdesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+	sdesc.MiscFlags = 0;
+	sdesc.StructureByteStride = 0;
 
-    for (int i = 0; i < Graphics::RENDER_BUFFER_COUNT; ++i)
-    {
-        HRESULT hr = pDevice->CreateBuffer(&sdesc, nullptr, &m_stagingCountBuf[i]);
-        assert (SUCCEEDED(hr));
-    }
+	for (int i = 0; i < Graphics::RENDER_BUFFER_COUNT; ++i)
+	{
+		HRESULT hr = pDevice->CreateBuffer(&sdesc, nullptr, &m_stagingCountBuf[i]);
+		assert(SUCCEEDED(hr));
+	}
 
 #ifdef _DEBUG
 	BIND_DEBUG_SLIDER_FLOAT("Firefly", "addSize", &gDebugFireflyAddSize, 0.0f, 1.0f, 0.001f);
-    BIND_DEBUG_SLIDER_FLOAT("Firefly", "lightRange", &gDebugFireflyLightRange, 0.1f, 20.0f, 0.1f);
-    BIND_DEBUG_SLIDER_FLOAT("Firefly", "lightIntensity", &gDebugFireflyLightIntensity, 0.1f, 10.0f, 0.01f);
+	BIND_DEBUG_SLIDER_FLOAT("Firefly", "lightRange", &gDebugFireflyLightRange, 0.1f, 20.0f, 0.1f);
+	BIND_DEBUG_SLIDER_FLOAT("Firefly", "lightIntensity", &gDebugFireflyLightIntensity, 0.1f, 10.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Firefly", "nearPickProb", &gDebugNearPickLightProb, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Firefly", "farPickProb", &gDebugFarPickLightProb, 0.0f, 1.0f, 0.01f);
 	BIND_DEBUG_SLIDER_FLOAT("Firefly", "baseSize", &gDebugFireflyBaseSize, 0.01f, 1.0f, 0.001f);
@@ -178,83 +177,83 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
 
 uint32_t FireflyService::AllocateSlot(uint32_t volumeUID)
 {
-    if (auto it = m_uidToSlot.find(volumeUID); it != m_uidToSlot.end())
-        return it->second;
+	if (auto it = m_uidToSlot.find(volumeUID); it != m_uidToSlot.end())
+		return it->second;
 
-    for (uint32_t i = 0; i < MaxVolumes; ++i)
-    {
-        if (!m_slots[i].used)
-        {
-            m_slots[i].used = true;
-            m_slots[i].volumeUID = volumeUID;
-            m_uidToSlot[volumeUID] = i;
-            return i;
-        }
-    }
+	for (uint32_t i = 0; i < MaxVolumes; ++i)
+	{
+		if (!m_slots[i].used)
+		{
+			m_slots[i].used = true;
+			m_slots[i].volumeUID = volumeUID;
+			m_uidToSlot[volumeUID] = i;
+			return i;
+		}
+	}
 
-    // 上限超過（設計ミス）
-    return UINT32_MAX;
+	// 上限超過（設計ミス）
+	return UINT32_MAX;
 }
 
 void FireflyService::ReleaseUnusedSlots()
 {
-    std::unordered_set<uint32_t> activeSlots;
-    for (auto& v : m_activeVolumes) activeSlots.insert(v.volumeSlot);
+	std::unordered_set<uint32_t> activeSlots;
+	for (auto& v : m_activeVolumes) activeSlots.insert(v.volumeSlot);
 
-    for (uint32_t i = 0; i < MaxVolumes; ++i)
-    {
-        if (m_slots[i].used)
-        {
-            if (activeSlots.find(i) == activeSlots.end()) // ← i は slot
-            {
-                m_slots[i].used = false;
-                m_uidToSlot.erase(m_slots[i].volumeUID);
-            }
-        }
-    }
+	for (uint32_t i = 0; i < MaxVolumes; ++i)
+	{
+		if (m_slots[i].used)
+		{
+			if (activeSlots.find(i) == activeSlots.end()) // ← i は slot
+			{
+				m_slots[i].used = false;
+				m_uidToSlot.erase(m_slots[i].volumeUID);
+			}
+		}
+	}
 }
 
 void FireflyService::PushActiveVolume(uint32_t volumeUID,
-    const FireflyVolumeGPU& src)
+	const FireflyVolumeGPU& src)
 {
-    uint32_t slot = AllocateSlot(volumeUID);
-    if (slot == UINT32_MAX)
-        return;
+	uint32_t slot = AllocateSlot(volumeUID);
+	if (slot == UINT32_MAX)
+		return;
 
-    FireflyVolumeGPU v = src;
-    v.volumeSlot = slot;
+	FireflyVolumeGPU v = src;
+	v.volumeSlot = slot;
 
-    m_activeVolumes.push_back(v);
+	m_activeVolumes.push_back(v);
 }
 
 void FireflyService::Commit(double deltaTime)
 {
-    auto activeSize = static_cast<uint32_t>(m_activeVolumes.size());
+	auto activeSize = static_cast<uint32_t>(m_activeVolumes.size());
 	m_activeVolumeCount[currentSlot] = activeSize;
 
-  /*  if (activeSize == 0)
-        return;*/
+	/*  if (activeSize == 0)
+		  return;*/
 
 	Graphics::DX11::BufferUpdateDesc updateDesc{};
 	updateDesc.buffer = m_volumeBuffer;
 	updateDesc.size = sizeof(FireflyVolumeGPU) * activeSize;
 
-    FireflyVolumeGPU* bufferData = new FireflyVolumeGPU[activeSize];
+	FireflyVolumeGPU* bufferData = new FireflyVolumeGPU[activeSize];
 	std::memcpy(bufferData, m_activeVolumes.data(), sizeof(FireflyVolumeGPU) * activeSize);
 	updateDesc.data = bufferData;
-    updateDesc.isDelete = true;
-    updateDesc.isArray = true;
+	updateDesc.isDelete = true;
+	updateDesc.isArray = true;
 	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
-    auto& spawnBuf = m_cpuSpawnBuffer[currentSlot];
-    auto& updateBuf = m_cpuUpdateBuffer[currentSlot];
-    auto& renderBuf = m_cpuRenderBuffer[currentSlot];
+	auto& spawnBuf = m_cpuSpawnBuffer[currentSlot];
+	auto& updateBuf = m_cpuUpdateBuffer[currentSlot];
+	auto& renderBuf = m_cpuRenderBuffer[currentSlot];
 
-    {
-        std::lock_guard lock(bufMutex);
+	{
+		std::lock_guard lock(bufMutex);
 
-        spawnBuf.gActiveVolumeCount = activeSize;
-        spawnBuf.gTime = m_elapsedTime;
+		spawnBuf.gActiveVolumeCount = activeSize;
+		spawnBuf.gTime = m_elapsedTime;
 
 		updateBuf.gDt = static_cast<float>(deltaTime);
 		updateBuf.gTime = m_elapsedTime;
@@ -269,15 +268,15 @@ void FireflyService::Commit(double deltaTime)
 		updateBuf.gNearPickLightProb = gDebugNearPickLightProb;
 		updateBuf.gFarPickLightProb = gDebugFarPickLightProb;
 
-        renderBuf.gSize = gDebugFireflyBaseSize;
+		renderBuf.gSize = gDebugFireflyBaseSize;
 #endif
-    }
+	}
 
-    updateDesc.buffer = m_spawnCB.Get();
+	updateDesc.buffer = m_spawnCB.Get();
 	updateDesc.size = sizeof(SpawnCB);
 	updateDesc.data = &spawnBuf;
-    updateDesc.isDelete = false;
-    updateDesc.isArray = false;
+	updateDesc.isDelete = false;
+	updateDesc.isArray = false;
 	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
 	updateDesc.buffer = m_updateCB.Get();
@@ -285,32 +284,31 @@ void FireflyService::Commit(double deltaTime)
 	updateDesc.data = &updateBuf;
 	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
-    updateDesc.buffer = m_renderCB.Get();
+	updateDesc.buffer = m_renderCB.Get();
 	updateDesc.size = sizeof(RenderCB);
 	updateDesc.data = &renderBuf;
 	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
-    // 未使用スロット解放
+	// 未使用スロット解放
 	ReleaseUnusedSlots();
 }
 
 void FireflyService::SpawnDrawParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11ShaderResourceView>& heightMap, ComPtr<ID3D11Buffer>& terrainCB, uint32_t slot)
 {
 	m_particlePool.Spawn(
-        ctx, m_spawnCS.Get(),
-        m_updateCS.Get(),
-        m_argsCS.Get(),
-        m_volumeSRV.Get(),
-        heightMap.Get(),
-        m_pointLight.uav.Get(),
-        m_spawnCB.Get(),
+		ctx, m_spawnCS.Get(),
+		m_updateCS.Get(),
+		m_argsCS.Get(),
+		m_volumeSRV.Get(),
+		heightMap.Get(),
+		m_pointLight.uav.Get(),
+		m_spawnCB.Get(),
 		terrainCB.Get(),
-        m_updateCB.Get(),
-        m_stagingCountBuf[slot].Get(),
-        m_fireflyVS.Get(),
+		m_updateCB.Get(),
+		m_stagingCountBuf[slot].Get(),
+		m_fireflyVS.Get(),
 		m_fireflyPS.Get(),
 		m_renderCB.Get(),
-        m_activeVolumeCount[slot]
-    );
+		m_activeVolumeCount[slot]
+	);
 }
-

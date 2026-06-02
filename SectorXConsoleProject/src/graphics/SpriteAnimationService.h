@@ -1,8 +1,6 @@
 #pragma once
 
-
 struct CSpriteAnimation {
-
 	Graphics::MaterialHandle hMat = {};
 
 	struct alignas(4) Buffer {
@@ -17,8 +15,7 @@ struct CSpriteAnimation {
 	uint32_t layer = 0;
 };
 
-class SpriteAnimationService : public IUpdateService, public ICommitService{
-
+class SpriteAnimationService : public IUpdateService, public ICommitService {
 public:
 	static inline constexpr const char* BUFFER_NAME = "SpriteAnimationInstanceBuffer";
 
@@ -43,7 +40,6 @@ public:
 	}
 
 	void PreUpdate(double deltaTime) override {
-
 		m_deltaTime = static_cast<float>(deltaTime);
 
 		currentSlot = (currentSlot + 1) % Graphics::RENDER_BUFFER_COUNT;
@@ -53,7 +49,6 @@ public:
 	}
 
 	void Commit(double deltaTime) override {
-
 		auto instCount = instanceCounts.load(std::memory_order_relaxed);
 
 		if (instCount == 0) {
@@ -70,7 +65,6 @@ public:
 		updateDesc.size = instCount;
 		updateDesc.isDelete = false;
 		updateDesc.customUpdateFunc = [](void* dst, const void* src, size_t size) {
-
 			CSpriteAnimation::Buffer* dstBuf = static_cast<CSpriteAnimation::Buffer*>(dst);
 			const InstanceBuffer* srcBuf = static_cast<const InstanceBuffer*>(src);
 
@@ -84,7 +78,6 @@ public:
 	}
 
 	void PushSpriteAnimationInstance(CSpriteAnimation& animation, Graphics::InstanceIndex idx) {
-
 		auto& frameTime = animation.frameTime;
 		frameTime += m_deltaTime;
 		float duration = (std::max)(animation.duration, MIN_FRAME_DURATION);

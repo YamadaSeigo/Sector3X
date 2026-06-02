@@ -21,12 +21,10 @@ float gDebugFoamDepthEnd = 0.25f;
 float gDebugFoamIntensity = 0.8f;
 float gDebugFoamNoiseScale = 6.0f;
 
-
 #endif
 
 void TerrainWater::BuildCluster(BuilderParams& p)
 {
-
 	//本当はよくないがいったん確認のためにここで定義
 #ifdef _DEBUG
 
@@ -55,7 +53,6 @@ void TerrainWater::BuildCluster(BuilderParams& p)
 	auto imgData = Graphics::LoadImageFromFile(p.heigthMapPath, 1, // 1 チャネルで読み込む（グレースケール）
 		false
 	);
-
 
 	float clusterWorldSizeX = p.clusterCellsX * p.cellSize;
 	float clusterWorldSizeZ = p.clusterCellsZ * p.cellSize;
@@ -100,12 +97,10 @@ void TerrainWater::BuildCluster(BuilderParams& p)
 				}
 			}
 
-
 			// 最大高さが閾値以下なら水面クラスターとみなさない
 			if (maxHeight < HEIGHT_CLUSTER_THRESHOLD) continue;
 
 			waterClusters.push_back({ (uint32_t)x, (uint32_t)z });
-
 
 			// クラスターのワールド座標範囲を計算して AABB を作成
 			// XZはクラスターの位置から計算、Yは最大高さに基づいて設定
@@ -131,8 +126,6 @@ void TerrainWater::BuildCluster(BuilderParams& p)
 			waterClusterBounds.push_back(bounds);
 		}
 	}
-
-
 }
 
 bool TerrainWater::CompileShader(ID3D11Device* dev, const wchar_t* csBuildPath, const wchar_t* csArgPath, const wchar_t* vsPath, const wchar_t* psPath)
@@ -154,7 +147,6 @@ bool TerrainWater::CompileShader(ID3D11Device* dev, const wchar_t* csBuildPath, 
 	hr = D3DReadFileToBlob(vsPath, blob.GetAddressOf()); if (FAILED(hr)) return false;
 	hr = dev->CreateVertexShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &vs);
 	if (FAILED(hr)) return false;
-
 
 	blob.Reset();
 	hr = D3DReadFileToBlob(psPath, blob.GetAddressOf()); if (FAILED(hr)) return false;
@@ -225,7 +217,6 @@ bool TerrainWater::CreateResource(SFW::Graphics::DX11::GraphicsDevice& graphics)
 	auto indexSRVUAV = CreateStructuredBufferSRVUAV(dev, sizeof(uint32_t), maxIndexCount, true, true, 0, D3D11_USAGE_DEFAULT, 0);
 	indexSRV = indexSRVUAV.srv;
 	indexUAV = indexSRVUAV.uav;
-
 
 	auto makeCB = [&](UINT bytes, ComPtr<ID3D11Buffer>& cb, const void* initData = nullptr) {
 		D3D11_BUFFER_DESC d{};
@@ -374,7 +365,6 @@ void TerrainWater::ComputeVisibleIndices(ComputeContext& ctx, ComPtr<ID3D11Buffe
 			ctx.devCtx->CSSetUnorderedAccessViews(0, 2, nullU, zeroI);
 		}
 
-
 		ctx.devCtx->CSSetShader(nullptr, nullptr, 0);
 	}
 
@@ -406,7 +396,6 @@ void TerrainWater::Render(ID3D11DeviceContext* devCtx,
 		frameCBData.fogStart = fogStart;
 		frameCBData.fogEnd = fogEnd;
 
-
 #ifdef _DEBUG
 		frameCBData.gFlowSpeed0 = gDebugFlowSpeed0;
 		frameCBData.gFlowSpeed1 = gDebugFlowSpeed1;
@@ -421,7 +410,7 @@ void TerrainWater::Render(ID3D11DeviceContext* devCtx,
 		frameCBData.gFoamNoiseScale = gDebugFoamNoiseScale;
 #endif
 
-		*frameCB = frameCBData;
+		* frameCB = frameCBData;
 		devCtx->Unmap(cbFrame.Get(), 0);
 	}
 

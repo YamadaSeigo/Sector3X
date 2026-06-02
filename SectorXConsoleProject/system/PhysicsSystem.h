@@ -5,7 +5,6 @@
 #include <SectorFW/Math/sx_math.h>
 #include <SectorFW/SIMD/simd_api.h>
 
-
 //#define USE_LERP_SIMD
 
 template<typename Partition>
@@ -14,23 +13,22 @@ class PhysicsSystem : public ITypeSystem<
 	Partition,
 	//アクセスするコンポーネントの指定
 	ComponentAccess<
-		Write<CTransform>,
-		Write<Physics::PhysicsInterpolation>,
-		Read<Physics::CPhyBody>,
-		Write<CSpatialMotionTag>
+	Write<CTransform>,
+	Write<Physics::PhysicsInterpolation>,
+	Read<Physics::CPhyBody>,
+	Write<CSpatialMotionTag>
 	>,
 	//受け取るサービスの指定
 	ServiceContext<
-		Physics::PhysicsService,
-		SpatialChunkRegistry>
-	>
+	Physics::PhysicsService,
+	SpatialChunkRegistry>
+>
 {
 	using Accessor = ComponentAccessor<Write<CTransform>, Write<Physics::PhysicsInterpolation>, Read<Physics::CPhyBody>, Write<CSpatialMotionTag>>;
 public:
 	//指定したサービスを関数の引数として受け取る
 	void UpdateImpl(Partition& partition, LevelContext<Partition>& levelCtx, NoDeletePtr<Physics::PhysicsService> physicsService,
 		NoDeletePtr<SpatialChunkRegistry> chunkReg) {
-
 		BudgetMover::LocalBatch moveBatch(levelCtx.mover, 200);
 
 		this->ForEachChunkWithAccessorAndEntityIDs([](Accessor& accessor, size_t entityCount,
@@ -127,7 +125,6 @@ public:
 					SFW::MoveIfCrossed_Deferred(entityIDs[i], newPos, *partition, *registry, levelCtx->GetID(), tag.handle, *moveBatch);
 				}
 #endif // USE_LERP_SIMD
-
 			}, partition, physicsService.get(), chunkReg.get(), &partition, &levelCtx, &moveBatch);
 	}
 };
