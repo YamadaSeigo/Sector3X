@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "dx12inc.h"
 #include "../RenderBackend.hpp"

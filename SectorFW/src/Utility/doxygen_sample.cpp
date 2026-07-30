@@ -1,22 +1,22 @@
-/**
+ï»¿/**
 * @file sample.cpp
-* @brief ƒTƒ“ƒvƒ‹ƒtƒ@ƒCƒ‹
+* @brief ã‚µãƒ³ãƒ—ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«
 * @author Taro
 * @date 05Apr2021
-* @detailss doxygen‚ğà–¾‚·‚é‚½‚ß‚ÌƒTƒ“ƒvƒ‹ƒtƒ@ƒCƒ‹
+* @detailss doxygenã‚’èª¬æ˜ã™ã‚‹ãŸã‚ã®ã‚µãƒ³ãƒ—ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«
 */
 
 #include "doxygen_sample.h"
 
-//! •Ï”‚Ìà–¾‚Í’¼‘O‚É‘‚­
+//! å¤‰æ•°ã®èª¬æ˜ã¯ç›´å‰ã«æ›¸ã
 int a;
 
 /**
-* @brief —^‚¦‚ç‚ê‚½2’l‚ğ‰ÁZ‚·‚é
+* @brief ä¸ãˆã‚‰ã‚ŒãŸ2å€¤ã‚’åŠ ç®—ã™ã‚‹
 * @param[in] a , b
-* @param[out] ‡Œv’l
-* @return int ‰ÁZ‚µ‚½‡Œv’l
-* @detailss Ú×‚Èà–¾‚ª‚ ‚éê‡‚Í‚±‚±‚É‘‚­
+* @param[out] åˆè¨ˆå€¤
+* @return int åŠ ç®—ã—ãŸåˆè¨ˆå€¤
+* @detailss è©³ç´°ãªèª¬æ˜ãŒã‚ã‚‹å ´åˆã¯ã“ã“ã«æ›¸ã
 */
 int sum(int a, int b) {
 	return a + b;

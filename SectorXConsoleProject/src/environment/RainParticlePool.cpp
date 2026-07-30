@@ -1,15 +1,15 @@
-// FireflyParticlePool.cpp
+ï»¿// FireflyParticlePool.cpp
 #include "RainParticlePool.h"
-#include <utility>//@swap
+#include <utility>//ã€€swap
 
 #ifdef _DEBUG
-// ƒfƒoƒbƒO—p: AliveCount ‚ğCPU‚Å“Ç‚ñ‚ÅŠm”F‚·‚é‹@”\‚ğ—LŒø‰»
+// ãƒ‡ãƒãƒƒã‚°ç”¨: AliveCount ã‚’CPUã§èª­ã‚“ã§ç¢ºèªã™ã‚‹æ©Ÿèƒ½ã‚’æœ‰åŠ¹åŒ–
 #define DEBUG_READ_ALIVE_COUNT 0
 #endif
 
 #if DEBUG_READ_ALIVE_COUNT
 
-// 4ƒoƒCƒgiuintj‚ğCPU‚Å“Ç‚Ş‚½‚ß‚Ì staging
+// 4ãƒã‚¤ãƒˆï¼ˆuintï¼‰ã‚’CPUã§èª­ã‚€ãŸã‚ã® staging
 Microsoft::WRL::ComPtr<ID3D11Buffer> gAliveCountReadback;
 
 void CreateReadbackBuffer(ID3D11Device* dev)
@@ -22,20 +22,20 @@ void CreateReadbackBuffer(ID3D11Device* dev)
 	bd.MiscFlags = 0;
 
 	HRESULT hr = dev->CreateBuffer(&bd, nullptr, gAliveCountReadback.GetAddressOf());
-	// ¸”s‚ÍƒƒO/ASSERT
+	// å¤±æ•—æ™‚ã¯ãƒ­ã‚°/ASSERT
 }
 
 uint32_t ReadAliveCount(
 	ID3D11DeviceContext* ctx,
-	ID3D11Buffer* aliveCountRawDefaultBuf,   // CopyStructureCount ‚Ìo—Íæ
-	ID3D11Buffer* aliveCountReadbackStaging) // ã‚Åì‚Á‚½ staging
+	ID3D11Buffer* aliveCountRawDefaultBuf,   // CopyStructureCount ã®å‡ºåŠ›å…ˆ
+	ID3D11Buffer* aliveCountReadbackStaging) // ä¸Šã§ä½œã£ãŸ staging
 {
-	// GPU‚ÌDEFAULTƒoƒbƒtƒ@ ¨ CPU“Ç‚İæ‚è—p staging ‚ÖƒRƒs[
+	// GPUã®DEFAULTãƒãƒƒãƒ•ã‚¡ â†’ CPUèª­ã¿å–ã‚Šç”¨ staging ã¸ã‚³ãƒ”ãƒ¼
 	ctx->CopyResource(aliveCountReadbackStaging, aliveCountRawDefaultBuf);
 
-	// ‚±‚±‚Å•K—v‚È‚ç GPUŠ®—¹‘Ò‚¿iƒfƒoƒbƒO‚Ì‚İ„§j
-	// ctx->Flush(); ‚¾‚¯‚Å‚ÍŠ®—¹•ÛØ‚Å‚Í‚È‚¢‚Å‚·‚ªA‚Ü‚¸‚ÌØ‚è•ª‚¯‚É‚Í–ğ—§‚Â‚±‚Æ‚ª‘½‚¢‚Å‚·B
-	// ‚æ‚èŠmÀ‚É‚Í D3D11_QUERY_EVENT ‚ğg‚¤i‰º‚ÉÚ‚¹‚Ü‚·j
+	// ã“ã“ã§å¿…è¦ãªã‚‰ GPUå®Œäº†å¾…ã¡ï¼ˆãƒ‡ãƒãƒƒã‚°æ™‚ã®ã¿æ¨å¥¨ï¼‰
+	// ctx->Flush(); ã ã‘ã§ã¯å®Œäº†ä¿è¨¼ã§ã¯ãªã„ã§ã™ãŒã€ã¾ãšã®åˆ‡ã‚Šåˆ†ã‘ã«ã¯å½¹ç«‹ã¤ã“ã¨ãŒå¤šã„ã§ã™ã€‚
+	// ã‚ˆã‚Šç¢ºå®Ÿã«ã¯ D3D11_QUERY_EVENT ã‚’ä½¿ã†ï¼ˆä¸‹ã«è¼‰ã›ã¾ã™ï¼‰
 
 	D3D11_MAPPED_SUBRESOURCE ms{};
 	HRESULT hr = ctx->Map(aliveCountReadbackStaging, 0, D3D11_MAP_READ, 0, &ms);
@@ -86,13 +86,13 @@ void RainParticlePool::Create(ID3D11Device* dev)
 		true, true, D3D11_BUFFER_UAV_FLAG_APPEND,
 		D3D11_USAGE_DEFAULT, 0);
 
-	// AliveCountRaw: 4 bytesi1 uintj
+	// AliveCountRaw: 4 bytesï¼ˆ1 uintï¼‰
 	m_aliveCountRaw = CreateRawBufferSRVUAV(
 		dev, 4,
 		D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS,
 		true, false);
 
-	// DrawArgsRaw: 16 bytesi4 uintj+ DRAWINDIRECT
+	// DrawArgsRaw: 16 bytesï¼ˆ4 uintï¼‰+ DRAWINDIRECT
 	m_drawArgsRaw = CreateRawBufferSRVUAV(
 		dev, 16,
 		D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS | D3D11_RESOURCE_MISC_DRAWINDIRECT_ARGS,
@@ -111,7 +111,7 @@ void RainParticlePool::Create(ID3D11Device* dev)
 
 void RainParticlePool::InitFreeList(ID3D11DeviceContext* ctx, ID3D11Buffer* initCB, ID3D11ComputeShader* initCS)
 {
-	// FreeList ‚Ì counter ‚ğ 0 ‚É‚µ‚Ä‚©‚ç initCS ‚Å Append(i) ‚·‚é
+	// FreeList ã® counter ã‚’ 0 ã«ã—ã¦ã‹ã‚‰ initCS ã§ Append(i) ã™ã‚‹
 	ID3D11UnorderedAccessView* uavs[1] = { m_free.uav.Get() };
 	UINT initialCounts[1] = { 0 }; // counter reset
 	ctx->CSSetUnorderedAccessViews(0, 1, uavs, initialCounts);
@@ -124,7 +124,7 @@ void RainParticlePool::InitFreeList(ID3D11DeviceContext* ctx, ID3D11Buffer* init
 	uint32_t groups = (MaxParticles + threads - 1) / threads;
 	ctx->Dispatch(groups, 1, 1);
 
-	// UAV‰ğœi‚¨ì–@j
+	// UAVè§£é™¤ï¼ˆãŠä½œæ³•ï¼‰
 	ID3D11UnorderedAccessView* nullUAV[1] = { nullptr };
 	UINT dummy[1] = { 0 };
 	ctx->CSSetUnorderedAccessViews(0, 1, nullUAV, dummy);
@@ -146,23 +146,23 @@ void RainParticlePool::Spawn(
 	uint32_t frameSpawnCount)
 {
 	// -----------------------------
-	// (0) g‘‚«‚İæh AlivePong ‚ğ 0 ƒŠƒZƒbƒg
+	// (0) â€œæ›¸ãè¾¼ã¿å…ˆâ€ AlivePong ã‚’ 0 ãƒªã‚»ãƒƒãƒˆ
 	// -----------------------------
 	{
 		ID3D11UnorderedAccessView* uav = m_alivePong.uav.Get();
 		UINT initCount = 0;
-		// slot‚Í‚Ç‚±‚Å‚àOKB‚±‚±‚Å‚Í u1 ‘Š“–‚ÌêŠ‚Åˆê’U“–‚Ä‚ÄƒŠƒZƒbƒg‚·‚é
+		// slotã¯ã©ã“ã§ã‚‚OKã€‚ã“ã“ã§ã¯ u1 ç›¸å½“ã®å ´æ‰€ã§ä¸€æ—¦å½“ã¦ã¦ãƒªã‚»ãƒƒãƒˆã™ã‚‹
 		ctx->CSSetUnorderedAccessViews(1, 1, &uav, &initCount);
 	}
 
 	// -----------------------------
-   // (1) gAlivePingi‘OƒtƒŒ[ƒ€¶‘¶jh ‚Ì count ‚ğæ‚é
-   // ¦ Spawn ‚Å‚Í Ping ‚ğG‚ç‚È‚¢i‚±‚±‚ªd—vj
+   // (1) â€œAlivePingï¼ˆå‰ãƒ•ãƒ¬ãƒ¼ãƒ ç”Ÿå­˜ï¼‰â€ ã® count ã‚’å–ã‚‹
+   // â€» Spawn ã§ã¯ Ping ã‚’è§¦ã‚‰ãªã„ï¼ˆã“ã“ãŒé‡è¦ï¼‰
    // -----------------------------
 	ctx->CopyStructureCount(m_aliveCountRaw.buf.Get(), 0, m_alivePing.uav.Get());
 
 	// -----------------------------
-	// (2) Spawn: AlivePong ‚É AppendiV‹K¶¬j
+	// (2) Spawn: AlivePong ã« Appendï¼ˆæ–°è¦ç”Ÿæˆï¼‰
 	// -----------------------------
 	{
 		// SRV
@@ -172,10 +172,10 @@ void RainParticlePool::Spawn(
 		ID3D11UnorderedAccessView* uavs[4] =
 		{
 			m_particles.uav.Get(),     // u0
-			m_alivePong.uav.Get(),     // u1 (Append)  © Pong‚Ö
+			m_alivePong.uav.Get(),     // u1 (Append)  â† Pongã¸
 			m_free.uav.Get(),          // u2 (Consume)
 		};
-		// Pong ‚Í‚³‚Á‚«ƒŠƒZƒbƒgÏ‚İ‚¾‚ªA‚±‚±‚ÅŠmÀ‚É 0 ‚ğw’è‚µ‚Ä‚àOK
+		// Pong ã¯ã•ã£ããƒªã‚»ãƒƒãƒˆæ¸ˆã¿ã ãŒã€ã“ã“ã§ç¢ºå®Ÿã« 0 ã‚’æŒ‡å®šã—ã¦ã‚‚OK
 		UINT initialCounts[4] = { (UINT)-1, 0, (UINT)-1, (UINT)-1 };
 		ctx->CSSetUnorderedAccessViews(0, 4, uavs, initialCounts);
 
@@ -183,29 +183,29 @@ void RainParticlePool::Spawn(
 
 		ctx->CSSetShader(spawnCS, nullptr, 0);
 
-		uint32_t totalThreads = (std::min)(frameSpawnCount, MaxSpawnPerFrame); // CB‚Æˆê’v‚³‚¹‚é
+		uint32_t totalThreads = (std::min)(frameSpawnCount, MaxSpawnPerFrame); // CBã¨ä¸€è‡´ã•ã›ã‚‹
 		uint32_t groups = (totalThreads + 64 - 1) / 64;             // SpawnCS: [numthreads(64,1,1)]
 		if (groups > 0)
 			ctx->Dispatch(groups, 1, 1);
 	}
 
 #if DEBUG_READ_ALIVE_COUNT
-	// ƒfƒoƒbƒO“Ç‚İæ‚è
+	// ãƒ‡ãƒãƒƒã‚°èª­ã¿å–ã‚Š
 	uint32_t aliveCountCPU = ReadAliveCount(ctx, m_aliveCountRaw.buf.Get(), gAliveCountReadback.Get());
 	LOG_INFO("aliveCount = %u", aliveCountCPU);
 #endif
 
 	// UpdateCS bindings:
-	// t0 = volumeSRV (¦slotQÆ‚Å‚«‚éŒ`‚Ìvolume buffer‚ª•K—v)
-	// t1 = alivePingSRV (‘OƒtƒŒ[ƒ€‚Ì¶‘¶)
-	// t2 = aliveCountRawSRV (‘OƒtƒŒ[ƒ€‚Ì¶‘¶”)
+	// t0 = volumeSRV (â€»slotå‚ç…§ã§ãã‚‹å½¢ã®volume bufferãŒå¿…è¦)
+	// t1 = alivePingSRV (å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã®ç”Ÿå­˜)
+	// t2 = aliveCountRawSRV (å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã®ç”Ÿå­˜æ•°)
 	// u0 = particlesUAV
-	// u1 = alivePongUAV (append)  © Spawn‚Å“ü‚ê‚½Pong‚Ö‚³‚ç‚É‹l‚ß‚é
-	// u2 = freeListUAV (append•Ô‹p)
+	// u1 = alivePongUAV (append)  â† Spawnã§å…¥ã‚ŒãŸPongã¸ã•ã‚‰ã«è©°ã‚ã‚‹
+	// u2 = freeListUAV (appendè¿”å´)
 	// u3 = volumeCountUAV
 
 	// -----------------------------
-	// (3) Update: AlivePing(SRV) ¨ AlivePong(Append)
+	// (3) Update: AlivePing(SRV) â†’ AlivePong(Append)
 	// -----------------------------
 	{
 		ID3D11ShaderResourceView* updateSrvs[3] = {
@@ -217,10 +217,10 @@ void RainParticlePool::Spawn(
 
 		ID3D11UnorderedAccessView* updateUavs[3] = {
 		m_particles.uav.Get(),      // u0
-		m_alivePong.uav.Get(),      // u1 (Append)  ¦‚±‚±‚Í -1 ‚Å•Ûi0‚É‚µ‚È‚¢j
-		m_free.uav.Get(),           // u2 (Append‚Å•Ô‹p)
+		m_alivePong.uav.Get(),      // u1 (Append)  â€»ã“ã“ã¯ -1 ã§ä¿æŒï¼ˆ0ã«ã—ãªã„ï¼‰
+		m_free.uav.Get(),           // u2 (Appendã§è¿”å´)
 		};
-		// Pong‚ÍSpawn‚Å0ƒŠƒZƒbƒgÏ‚İ{Spawn‚ªŠù‚ÉAppend‚µ‚½‚Ì‚ÅA‚±‚±‚Å0‚É‚·‚é‚ÆSpawn•ª‚ªÁ‚¦‚éB
+		// Pongã¯Spawnã§0ãƒªã‚»ãƒƒãƒˆæ¸ˆã¿ï¼‹SpawnãŒæ—¢ã«Appendã—ãŸã®ã§ã€ã“ã“ã§0ã«ã™ã‚‹ã¨Spawnåˆ†ãŒæ¶ˆãˆã‚‹ã€‚
 		UINT updateInitialCounts[3] = { (UINT)-1, (UINT)-1, (UINT)-1 };
 		ctx->CSSetUnorderedAccessViews(0, 3, updateUavs, updateInitialCounts);
 
@@ -232,13 +232,13 @@ void RainParticlePool::Spawn(
 
 		ctx->CSSetShader(updateCS, nullptr, 0);
 
-		// ‚Ü‚¸‚ÍŒÅ’èÅ‘ådispatch‚Å‚àOKishader‘¤‚Å aliveCount ‚ğŒ©‚Ä’e‚­j
+		// ã¾ãšã¯å›ºå®šæœ€å¤§dispatchã§ã‚‚OKï¼ˆshaderå´ã§ aliveCount ã‚’è¦‹ã¦å¼¾ãï¼‰
 		uint32_t updateGroups = (MaxParticles + 256 - 1) / 256; // UpdateCS: [numthreads(256,1,1)]
 		if (updateGroups > 0)
 			ctx->Dispatch(updateGroups, 1, 1);
 	}
 
-	// CSƒoƒCƒ“ƒh‰ğœiŒã‘±‚ÌCopyStructureCount/Draw‚Å–ŒÌ‚è‚É‚­‚­‚·‚éj
+	// CSãƒã‚¤ãƒ³ãƒ‰è§£é™¤ï¼ˆå¾Œç¶šã®CopyStructureCount/Drawã§äº‹æ•…ã‚Šã«ããã™ã‚‹ï¼‰
 	{
 		ID3D11ShaderResourceView* nullSrvs[4] = { nullptr };
 		ctx->CSSetShaderResources(0, 4, nullSrvs);
@@ -249,12 +249,12 @@ void RainParticlePool::Spawn(
 	}
 
 	// -----------------------------
-	// (4) Ping/Pong ‚ğ swapFAlivePing ‚ª g¡ƒtƒŒ[ƒ€¶‘¶h ‚É‚È‚é
+	// (4) Ping/Pong ã‚’ swapï¼šAlivePing ãŒ â€œä»Šãƒ•ãƒ¬ãƒ¼ãƒ ç”Ÿå­˜â€ ã«ãªã‚‹
 	// -----------------------------
 	std::swap(m_alivePing, m_alivePong);
 
 	// -----------------------------
-	// (5) •`‰æ—p‚É AlivePing ‚Ì count ‚ğæ‚èAArgsCS ‚Å DrawArgs ‚ğXV
+	// (5) æç”»ç”¨ã« AlivePing ã® count ã‚’å–ã‚Šã€ArgsCS ã§ DrawArgs ã‚’æ›´æ–°
 	// -----------------------------
 	ctx->CopyStructureCount(m_aliveCountRaw.buf.Get(), 0, m_alivePing.uav.Get());
 
@@ -280,7 +280,7 @@ void RainParticlePool::Spawn(
 	}
 
 	// 6) Draw: Billboard
-	// IA: ’¸“_ƒoƒbƒtƒ@–³‚µinulljAIndex–³‚µ
+	// IA: é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ç„¡ã—ï¼ˆnullï¼‰ã€Indexç„¡ã—
 	ctx->IASetInputLayout(nullptr);
 	ctx->IASetVertexBuffers(0, 0, nullptr, nullptr, nullptr);
 	ctx->IASetIndexBuffer(nullptr, DXGI_FORMAT_UNKNOWN, 0);
@@ -294,7 +294,7 @@ void RainParticlePool::Spawn(
 	ctx->VSSetShaderResources(0, 2, vsSrvs);
 
 	// VS/PS set shaders + CBCamera
-	// Blend additive „§
+	// Blend additive æ¨å¥¨
 
 	ctx->VSSetConstantBuffers(0, 1, &cbRenderData);
 
@@ -318,7 +318,7 @@ void RainParticlePool::Spawn(
 
 	ctx->DrawInstancedIndirect(m_drawArgsRaw.buf.Get(), 0);
 
-	// VS SRV unbindiŸ‚ÌƒpƒX‚Å‹£‡‚µ‚É‚­‚­‚·‚éj
+	// VS SRV unbindï¼ˆæ¬¡ã®ãƒ‘ã‚¹ã§ç«¶åˆã—ã«ããã™ã‚‹ï¼‰
 	{
 		ID3D11ShaderResourceView* nullVsSrvs[4] = { nullptr };
 		ctx->VSSetShaderResources(0, 2, nullVsSrvs);

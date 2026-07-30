@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * \file   convert_string.h
- * \brief •¶š—ñ‚Ì•ÏŠ·ƒ†[ƒeƒBƒŠƒeƒBBwchar_t ‚©‚ç UTF-8 ‚Ö‚Ì•ÏŠ·‚ğ’ñ‹Ÿ‚µ‚Ü‚·B
+ * \brief æ–‡å­—åˆ—ã®å¤‰æ›ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ã€‚wchar_t ã‹ã‚‰ UTF-8 ã¸ã®å¤‰æ›ã‚’æä¾›ã—ã¾ã™ã€‚
  * \author seigo
  * \date   December 2025
  *********************************************************************/
@@ -38,13 +38,13 @@ namespace SFW
 		std::string out;
 		out.reserve(64);
 
-		// wchar_t ‚ª 2byte(UTF-16) ‚© 4byte(UTF-32) ‚©‚Åˆ—‚ğ•ª‚¯‚é
+		// wchar_t ãŒ 2byte(UTF-16) ã‹ 4byte(UTF-32) ã‹ã§å‡¦ç†ã‚’åˆ†ã‘ã‚‹
 		if constexpr (sizeof(wchar_t) == 2) {
 			// UTF-16
 			for (const uint16_t* p = (const uint16_t*)w; *p; ) {
 				uint32_t u = *p++;
 
-				// ƒTƒƒQ[ƒgƒyƒA
+				// ã‚µãƒ­ã‚²ãƒ¼ãƒˆãƒšã‚¢
 				if (0xD800 <= u && u <= 0xDBFF) {
 					uint32_t lo = *p;
 					if (0xDC00 <= lo && lo <= 0xDFFF) {
@@ -53,12 +53,12 @@ namespace SFW
 						AppendUtf8(out, cp);
 					}
 					else {
-						// ‰ó‚ê‚½ƒTƒƒQ[ƒgFU+FFFD
+						// å£Šã‚ŒãŸã‚µãƒ­ã‚²ãƒ¼ãƒˆï¼šU+FFFD
 						AppendUtf8(out, 0xFFFD);
 					}
 				}
 				else if (0xDC00 <= u && u <= 0xDFFF) {
-					// ’P‘Ì‚Ì‰ºˆÊƒTƒƒQ[ƒgFU+FFFD
+					// å˜ä½“ã®ä¸‹ä½ã‚µãƒ­ã‚²ãƒ¼ãƒˆï¼šU+FFFD
 					AppendUtf8(out, 0xFFFD);
 				}
 				else {
@@ -67,10 +67,10 @@ namespace SFW
 			}
 		}
 		else {
-			// UTF-32 (ˆê”Ê‚É Linux/macOS)
+			// UTF-32 (ä¸€èˆ¬ã« Linux/macOS)
 			for (const uint32_t* p = (const uint32_t*)w; *p; ++p) {
 				uint32_t cp = *p;
-				// •s³”ÍˆÍ‚ğŒy‚­ƒPƒA
+				// ä¸æ­£ç¯„å›²ã‚’è»½ãã‚±ã‚¢
 				if (cp > 0x10FFFF || (0xD800 <= cp && cp <= 0xDFFF)) cp = 0xFFFD;
 				AppendUtf8(out, cp);
 			}

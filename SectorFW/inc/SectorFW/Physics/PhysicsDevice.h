@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   PhysicsDevice.h
- * @brief •¨—ƒfƒoƒCƒX‚Ìƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ç‰©ç†ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -31,14 +31,14 @@
 #include "../Core/ECS/EntityManager.h"
 #include "../Core/RegistryTypes.h"
 
-// ƒLƒƒƒ‰ƒNƒ^[—p ContactListener ‚ğ—LŒø‰»‚·‚é‚©
+// ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ç”¨ ContactListener ã‚’æœ‰åŠ¹åŒ–ã™ã‚‹ã‹
 //#define ENABLE_CHARACTER_CONTACT_LISTENER
 
 namespace SFW
 {
 	namespace Physics
 	{
-		// ===== “à•”ƒoƒbƒtƒ@iƒXƒiƒbƒvƒVƒ‡ƒbƒg‘O‚É—­‚ß‚éj =====
+		// ===== å†…éƒ¨ãƒãƒƒãƒ•ã‚¡ï¼ˆã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆå‰ã«æºœã‚ã‚‹ï¼‰ =====
 		struct PendingRayHit {
 			uint32_t requestId;
 			bool     hit{ false };
@@ -48,7 +48,7 @@ namespace SFW
 			float    distance{ 0 };
 		};
 
-		class PhysicsDevice; // ‘O•ûéŒ¾
+		class PhysicsDevice; // å‰æ–¹å®£è¨€
 
 		class MyContactListenerOwner {
 		public:
@@ -56,25 +56,25 @@ namespace SFW
 			MyContactListenerOwner(PhysicsDevice* dev) : listener(dev) {}
 		};
 
-		// SoA ƒoƒbƒtƒ@iArchetype ƒ`ƒƒƒ“ƒN‚ª‚Âƒrƒ…[j
+		// SoA ãƒãƒƒãƒ•ã‚¡ï¼ˆArchetype ãƒãƒ£ãƒ³ã‚¯ãŒæŒã¤ãƒ“ãƒ¥ãƒ¼ï¼‰
 		struct PoseBatchView {
-			// N ŒÂ‚ÌƒGƒ“ƒeƒBƒeƒB•ª‚Ìƒ|ƒCƒ“ƒ^i˜A‘±”z—ñj
+			// N å€‹ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£åˆ†ã®ãƒã‚¤ãƒ³ã‚¿ï¼ˆé€£ç¶šé…åˆ—ï¼‰
 			float* posX; float* posY; float* posZ;
 			float* rotX; float* rotY; float* rotZ; float* rotW;
-			uint32_t* updatedMask; // ‘‚«‚İ‚ª‚ ‚Á‚½‚ç 1 ‚ğ—§‚Ä‚éi”CˆÓj
+			uint32_t* updatedMask; // æ›¸ãè¾¼ã¿ãŒã‚ã£ãŸã‚‰ 1 ã‚’ç«‹ã¦ã‚‹ï¼ˆä»»æ„ï¼‰
 			size_t  count;
 
-			// ‘Î‰‚·‚é BodyID ‚ª SoA ‚Æ“¯‚¶‡˜‚Å•À‚ñ‚Å‚¢‚é‘O’ñi’´d—vj
+			// å¯¾å¿œã™ã‚‹ BodyID ãŒ SoA ã¨åŒã˜é †åºã§ä¸¦ã‚“ã§ã„ã‚‹å‰æï¼ˆè¶…é‡è¦ï¼‰
 			const JPH::BodyID* bodyIDs;
-			const uint8_t* isStaticMask;  // Ã“I‚È‚ç 1 ¨ “Ç‚İ”ò‚Î‚·i”CˆÓj
+			const uint8_t* isStaticMask;  // é™çš„ãªã‚‰ 1 â†’ èª­ã¿é£›ã°ã™ï¼ˆä»»æ„ï¼‰
 		};
 
-		// Kinematic ƒ^[ƒQƒbƒg‚ğ SoA ‚©‚ç‚Ü‚Æ‚ß‚Ä“K—pi•¨—ŒÅ’èƒXƒeƒbƒv‚Ì PreStep ‚Åj
+		// Kinematic ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ SoA ã‹ã‚‰ã¾ã¨ã‚ã¦é©ç”¨ï¼ˆç‰©ç†å›ºå®šã‚¹ãƒ†ãƒƒãƒ—ã® PreStep ã§ï¼‰
 		struct KinematicBatchView {
-			const JPH::BodyID* bodyIDs; // SoA‡
+			const JPH::BodyID* bodyIDs; // SoAé †
 			const float* posX; const float* posY; const float* posZ;
 			const float* rotX; const float* rotY; const float* rotZ; const float* rotW;
-			const uint8_t* maskKinematic; // 1:ƒLƒlƒ}‚Ì‚İ“K—p
+			const uint8_t* maskKinematic; // 1:ã‚­ãƒãƒã®ã¿é©ç”¨
 			size_t count;
 		};
 
@@ -100,7 +100,7 @@ namespace SFW
 		};
 
 		/**
-		 * @brief •¨—ŠÖ˜A‚Ìˆ—‚ğŠÇ—‚·‚éƒNƒ‰ƒXBˆê”ÔãˆÊ‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX‚Æ‚µ‚Ä‹@”\‚·‚éB
+		 * @brief ç‰©ç†é–¢é€£ã®å‡¦ç†ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹ã€‚ä¸€ç•ªä¸Šä½ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã¨ã—ã¦æ©Ÿèƒ½ã™ã‚‹ã€‚
 		 */
 		class PhysicsDevice {
 			struct BodyIDHash {
@@ -116,7 +116,7 @@ namespace SFW
 			};
 
 		public:
-			// Body ì¬Š®—¹ƒCƒxƒ“ƒgi·‚µ‚İ—pj
+			// Body ä½œæˆå®Œäº†ã‚¤ãƒ™ãƒ³ãƒˆï¼ˆå·®ã—è¾¼ã¿ç”¨ï¼‰
 			struct CreatedBody {
 				Entity                          e;
 				SpatialChunkKey				 owner;
@@ -128,7 +128,7 @@ namespace SFW
 				uint32_t maxBodyPairs = 1024 * 64;
 				uint32_t maxContactConstraints = 1024 * 64;
 				int      workerThreads = -1; // -1 = auto
-				// BroadPhaseLayerInterface, Filters, ‚È‚Ç‚ÍŒã‚ÅƒZƒbƒg‚Å‚à‰Â
+				// BroadPhaseLayerInterface, Filters, ãªã©ã¯å¾Œã§ã‚»ãƒƒãƒˆã§ã‚‚å¯
 			};
 
 			struct CharacterVirtualInfo
@@ -141,35 +141,35 @@ namespace SFW
 			~PhysicsDevice() { Shutdown(); }
 
 			/**
-			 * @brief Jolt‚Ì‰Šú‰»B¸”s‚·‚é‰Â”\«‚ª‚ ‚é‚Ì‚ÅA–ß‚è’l‚Å¬Œ÷‚ğ•Ô‚·B
-			 * @param p ‰Šú‰»ƒpƒ‰ƒ[ƒ^
-			 * @return ¬Œ÷‚µ‚½ê‡‚Í trueA¸”s‚µ‚½ê‡‚Í false
+			 * @brief Joltã®åˆæœŸåŒ–ã€‚å¤±æ•—ã™ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§ã€æˆ»ã‚Šå€¤ã§æˆåŠŸã‚’è¿”ã™ã€‚
+			 * @param p åˆæœŸåŒ–ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
+			 * @return æˆåŠŸã—ãŸå ´åˆã¯ trueã€å¤±æ•—ã—ãŸå ´åˆã¯ false
 			 */
 			bool Initialize(const InitParams& p);
 			bool IsInitialized() const noexcept { return m_initialized; }
 
 			/**
-			 * @brief Jolt‚ÌƒVƒƒƒbƒgƒ_ƒEƒ“B“à•”ƒŠƒ\[ƒX‚ğ‰ğ•ú‚·‚éB
+			 * @brief Joltã®ã‚·ãƒ£ãƒƒãƒˆãƒ€ã‚¦ãƒ³ã€‚å†…éƒ¨ãƒªã‚½ãƒ¼ã‚¹ã‚’è§£æ”¾ã™ã‚‹ã€‚
 			 */
 			void Shutdown();
 
-			// 1 fixed-step ’†‚ÉŒÄ‚ÔF–‘OƒLƒ…[‚ğ“K—p
+			// 1 fixed-step ä¸­ã«å‘¼ã¶ï¼šäº‹å‰ã‚­ãƒ¥ãƒ¼ã‚’é©ç”¨
 			void ApplyCommand(const PhysicsCommand& cmd);
 
-			// •¨—‚ğ1ƒXƒeƒbƒvi‚ß‚é
+			// ç‰©ç†ã‚’1ã‚¹ãƒ†ãƒƒãƒ—é€²ã‚ã‚‹
 			void Step(float fixed_dt, int substeps);
 
-			// ƒXƒiƒbƒvƒVƒ‡ƒbƒg’Šoicontacts / rayHitsj
+			// ã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆæŠ½å‡ºï¼ˆcontacts / rayHitsï¼‰
 			void BuildSnapshot(PhysicsSnapshot& out);
 
 			void ReadPosesBatch(const PoseBatchView& out_soav);
 
 			void ApplyKinematicTargetsBatch(const KinematicBatchView& v, float fixed_dt);
 
-			// --- Entity <-> BodyID •R•t‚¯iŠO•”‚Íg‚í‚È‚¢‘z’è‚Å‚àOKj
+			// --- Entity <-> BodyID ç´ä»˜ã‘ï¼ˆå¤–éƒ¨ã¯ä½¿ã‚ãªã„æƒ³å®šã§ã‚‚OKï¼‰
 			std::optional<JPH::BodyID> FindBody(Entity e) const;
 
-			// ContactListener ‚©‚çg‚¤¬‚³‚ÈƒAƒNƒZƒTi•¨—ƒXƒŒƒbƒh“à‚Ì‚İŒÄ‚Ô‘z’èj
+			// ContactListener ã‹ã‚‰ä½¿ã†å°ã•ãªã‚¢ã‚¯ã‚»ã‚µï¼ˆç‰©ç†ã‚¹ãƒ¬ãƒƒãƒ‰å†…ã®ã¿å‘¼ã¶æƒ³å®šï¼‰
 			void   PushContactEvent(const ContactEvent& ev) {
 				std::scoped_lock lk(m_pendingContactsMutex);
 				m_pendingContacts.push_back(ev);
@@ -181,14 +181,14 @@ namespace SFW
 
 			void SetShapeResolver(const IShapeResolver* r) noexcept { m_shapeResolver = r; }
 
-			// ===== •â•: Entity ¨ BodyID ‚ÌQÆi‘¶İ‚µ‚È‚¯‚ê‚Î nulloptj=====
+			// ===== è£œåŠ©: Entity â†’ BodyID ã®å‚ç…§ï¼ˆå­˜åœ¨ã—ãªã‘ã‚Œã° nulloptï¼‰=====
 			std::optional<JPH::BodyID> TryGetBodyID(Entity e) const noexcept {
 				auto it = m_e2b.find(e);
 				if (it == m_e2b.end()) return std::nullopt;
 				return it->second;
 			}
 
-			// ===== ì¬Š®—¹ƒCƒxƒ“ƒg‚ğæ‚èo‚·iƒXƒŒƒbƒhˆÀ‘SEO(1) swapj=====
+			// ===== ä½œæˆå®Œäº†ã‚¤ãƒ™ãƒ³ãƒˆã‚’å–ã‚Šå‡ºã™ï¼ˆã‚¹ãƒ¬ãƒƒãƒ‰å®‰å…¨ãƒ»O(1) swapï¼‰=====
 			void ConsumeCreatedBodies(LevelID id, std::vector<CreatedBody>& out) {
 				std::scoped_lock lk(m_createdMutex);
 				auto it = m_created.find(id);
@@ -207,22 +207,22 @@ namespace SFW
 				return (it != m_charToEntity.end()) ? it->second : Entity{};
 			}
 
-			// ƒLƒƒƒ‰ƒNƒ^[‚Ìƒ|[ƒY“Ç‚İo‚µ
+			// ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ãƒãƒ¼ã‚ºèª­ã¿å‡ºã—
 			std::optional<CharacterPose> GetCharacterPose(Entity e);
 		private:
-			// Jolt–{‘Ì
+			// Joltæœ¬ä½“
 			JPH::PhysicsSystem         m_physics;
 			JPH::TempAllocatorImpl* m_tempAlloc = nullptr;
 			JPH::JobSystemThreadPool* m_jobs = nullptr;
 
-			// ‰ÁH‚µ‚â‚·‚¢QÆ
+			// åŠ å·¥ã—ã‚„ã™ã„å‚ç…§
 			JPH::BodyInterface* m_bi = nullptr;
 
 			// Entity <-> BodyID
 			std::unordered_map<Entity, JPH::BodyID> m_e2b;
 			std::unordered_map<JPH::BodyID, Entity, BodyIDHash, BodyIDEq> m_b2e;
 
-			// ì¬Š®—¹ƒCƒxƒ“ƒg
+			// ä½œæˆå®Œäº†ã‚¤ãƒ™ãƒ³ãƒˆ
 			std::mutex              m_createdMutex;
 			std::unordered_map<LevelID, std::vector<CreatedBody>> m_created;
 
@@ -241,7 +241,7 @@ namespace SFW
 
 			bool m_initialized = false;
 
-			// ---- ‚±‚±‚©‚ç‰º‚ÍÀ‘•‚ÌƒtƒbƒN ----
+			// ---- ã“ã“ã‹ã‚‰ä¸‹ã¯å®Ÿè£…ã®ãƒ•ãƒƒã‚¯ ----
 			void ApplyCreate(const CreateBodyCmd& c);
 			void ApplyDestroy(const DestroyBodyCmd& c);
 			void ApplyTeleport(const TeleportCmd& c);
@@ -261,26 +261,26 @@ namespace SFW
 
 			const IShapeResolver* m_shapeResolver = nullptr;
 
-			// Œ`óæ“¾i‚ ‚È‚½‚Ì ShapeManager ‚©‚çˆø‚¢‚Ä JPH::RefConst<Shape> ‚ğ•Ô‚·‘z’èj
+			// å½¢çŠ¶å–å¾—ï¼ˆã‚ãªãŸã® ShapeManager ã‹ã‚‰å¼•ã„ã¦ JPH::RefConst<Shape> ã‚’è¿”ã™æƒ³å®šï¼‰
 			JPH::RefConst<JPH::Shape> ResolveShape(ShapeHandle h) const {
-				// ƒeƒXƒg—eˆÕ«‚Ì‚½‚ß‚±‚±Œo—R‚É‚·‚é
+				// ãƒ†ã‚¹ãƒˆå®¹æ˜“æ€§ã®ãŸã‚ã“ã“çµŒç”±ã«ã™ã‚‹
 				if (!m_shapeResolver) return nullptr;
 				return m_shapeResolver->Resolve(h);
 			}
 
-			// ContactListener ‚È‚Ç‚Íƒƒ“ƒo‚É‚Á‚ÄAStep ’†‚ÉƒCƒxƒ“ƒg‚ğƒoƒbƒtƒ@‚Ö
-			// i‚±‚±‚Å‚ÍŠÈ—ª‰»FBuildSnapshot ‚Å m_physics ‚©‚çƒ|[ƒY‚¾‚¯‹z‚¢ã‚°‚é—áj
+			// ContactListener ãªã©ã¯ãƒ¡ãƒ³ãƒã«æŒã£ã¦ã€Step ä¸­ã«ã‚¤ãƒ™ãƒ³ãƒˆã‚’ãƒãƒƒãƒ•ã‚¡ã¸
+			// ï¼ˆã“ã“ã§ã¯ç°¡ç•¥åŒ–ï¼šBuildSnapshot ã§ m_physics ã‹ã‚‰ãƒãƒ¼ã‚ºã ã‘å¸ã„ä¸Šã’ã‚‹ä¾‹ï¼‰
 		};
 
 		struct UpdateSet {
-			// 0/1 ƒ}ƒXƒNi–§ƒ‹[ƒg—pjB‘aƒ‹[ƒg‚Å‚ÍÈ—ª‰Â
+			// 0/1 ãƒã‚¹ã‚¯ï¼ˆå¯†ãƒ«ãƒ¼ãƒˆç”¨ï¼‰ã€‚ç–ãƒ«ãƒ¼ãƒˆã§ã¯çœç•¥å¯
 			const uint32_t* mask01 = nullptr;
-			// XVƒCƒ“ƒfƒbƒNƒX”z—ñi‘aƒ‹[ƒg—pjB‚ ‚ê‚ÎÅ‘¬
+			// æ›´æ–°ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—ï¼ˆç–ãƒ«ãƒ¼ãƒˆç”¨ï¼‰ã€‚ã‚ã‚Œã°æœ€é€Ÿ
 			const uint32_t* indices = nullptr;
-			size_t updateCount = 0; // XVŒ”
+			size_t updateCount = 0; // æ›´æ–°ä»¶æ•°
 		};
 
-		// ===== ˆÊ’u/ƒXƒJƒ‰[: lerp(a,b,alpha) ‚ğÅ‘¬XV =====
+		// ===== ä½ç½®/ã‚¹ã‚«ãƒ©ãƒ¼: lerp(a,b,alpha) ã‚’æœ€é€Ÿæ›´æ–° =====
 		inline void update_scalar_lerp(
 			float* __restrict dst,
 			const float* __restrict a,
@@ -288,7 +288,7 @@ namespace SFW
 			size_t N,
 			float alpha,
 			const UpdateSet& upd,
-			float sparseThreshold = 0.30f)   // 30% –¢–‚È‚ç‘a‚Æ‚İ‚È‚·
+			float sparseThreshold = 0.30f)   // 30% æœªæº€ãªã‚‰ç–ã¨ã¿ãªã™
 		{
 #if defined(__AVX2__)
 			const __m256 vA = _mm256_set1_ps(alpha);
@@ -297,7 +297,7 @@ namespace SFW
 			const float density = (N == 0) ? 0.f : float(upd.updateCount) / float(N);
 
 			if (!hasIdx || density >= sparseThreshold) {
-				// ==== –§ƒ‹[ƒg: ‘S‘–¸ + ƒuƒŒƒ“ƒh ====
+				// ==== å¯†ãƒ«ãƒ¼ãƒˆ: å…¨èµ°æŸ» + ãƒ–ãƒ¬ãƒ³ãƒ‰ ====
 				const __m256i vZeroI = _mm256_setzero_si256();
 				size_t i = 0;
 				for (; i + 8 <= N; i += 8) {
@@ -306,7 +306,7 @@ namespace SFW
 					const __m256 vold = _mm256_loadu_ps(dst + i);
 					const __m256 vlerp = _mm256_fmadd_ps(_mm256_sub_ps(vb, va), vA, va);
 
-					__m256 vm = _mm256_castsi256_ps(vZeroI); // ƒfƒtƒHƒ‹ƒg‚Í 0 ƒ}ƒXƒN
+					__m256 vm = _mm256_castsi256_ps(vZeroI); // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ 0 ãƒã‚¹ã‚¯
 					if (upd.mask01) {
 						const __m256i mi = _mm256_cmpgt_epi32(
 							_mm256_loadu_si256((const __m256i*)(upd.mask01 + i)),
@@ -314,7 +314,7 @@ namespace SFW
 						vm = _mm256_castsi256_ps(mi);
 					}
 					else {
-						// ƒ}ƒXƒN‚ª–³‚¯‚ê‚Î‘SXV
+						// ãƒã‚¹ã‚¯ãŒç„¡ã‘ã‚Œã°å…¨æ›´æ–°
 						vm = _mm256_castsi256_ps(_mm256_cmpeq_epi32(vZeroI, vZeroI));
 					}
 					const __m256 vout = _mm256_blendv_ps(vold, vlerp, vm);
@@ -326,7 +326,7 @@ namespace SFW
 				}
 			}
 			else {
-				// ==== ‘aƒ‹[ƒg: indices ‚ğg‚Á‚Ä gather XV ====
+				// ==== ç–ãƒ«ãƒ¼ãƒˆ: indices ã‚’ä½¿ã£ã¦ gather æ›´æ–° ====
 				const int scale = 4; // float*
 				size_t i = 0;
 				for (; i + 8 <= upd.updateCount; i += 8) {
@@ -335,7 +335,7 @@ namespace SFW
 					__m256 vb = _mm256_i32gather_ps(b, vidx, scale);
 					__m256 vlerp = _mm256_fmadd_ps(_mm256_sub_ps(vb, va), vA, va);
 
-					// scatteriƒlƒCƒeƒBƒu–½—ß‚ª–³‚¢¢‘ãj¨ 1—v‘f‚¸‚ÂƒXƒgƒA
+					// scatterï¼ˆãƒã‚¤ãƒ†ã‚£ãƒ–å‘½ä»¤ãŒç„¡ã„ä¸–ä»£ï¼‰â†’ 1è¦ç´ ãšã¤ã‚¹ãƒˆã‚¢
 					alignas(32) uint32_t idxbuf[8];
 					_mm256_store_si256((__m256i*)idxbuf, vidx);
 					alignas(32) float tmp[8];
@@ -348,7 +348,7 @@ namespace SFW
 				}
 			}
 #else
-			// AVX2 ‚È‚µ ¨ ŠÈˆÕƒtƒH[ƒ‹ƒoƒbƒN
+			// AVX2 ãªã— â†’ ç°¡æ˜“ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯
 			const bool hasIdx = (upd.indices && upd.updateCount > 0);
 			const float density = (N == 0) ? 0.f : float(upd.updateCount) / float(N);
 			if (!hasIdx || density >= sparseThreshold) {
@@ -366,8 +366,8 @@ namespace SFW
 #endif
 		}
 
-		// ===== ƒNƒH[ƒ^ƒjƒIƒ“: Å’ZŒo˜H nlerp + ³‹K‰» =====
-		// prev(ax..aw), curr(bx..bw) ¨ dst(qx..qw)
+		// ===== ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³: æœ€çŸ­çµŒè·¯ nlerp + æ­£è¦åŒ– =====
+		// prev(ax..aw), curr(bx..bw) â†’ dst(qx..qw)
 		inline void update_quat_nlerp_shortest(
 			float* __restrict qx, float* __restrict qy, float* __restrict qz, float* __restrict qw,
 			const float* __restrict ax, const float* __restrict ay, const float* __restrict az, const float* __restrict aw,
@@ -382,7 +382,7 @@ namespace SFW
 			const float density = (N == 0) ? 0.f : float(upd.updateCount) / float(N);
 
 			auto do_one = [&](uint32_t id) {
-				// Å’ZŒo˜H: dot(a,b) < 0 ¨ b ‚ğ”½“]
+				// æœ€çŸ­çµŒè·¯: dot(a,b) < 0 â†’ b ã‚’åè»¢
 				float dx = ax[id] * bx[id] + ay[id] * by[id] + az[id] * bz[id] + aw[id] * bw[id];
 				float sx = bx[id], sy = by[id], sz = bz[id], sw = bw[id];
 				if (dx < 0.f) { sx = -sx; sy = -sy; sz = -sz; sw = -sw; }
@@ -395,10 +395,10 @@ namespace SFW
 				};
 
 			if (!hasIdx || density >= sparseThreshold) {
-				const __m256 vHalf = _mm256_set1_ps(0.5f); //i•K—v‚È‚ç rsqrt ‰ü—Ç‚Ég—pj
+				const __m256 vHalf = _mm256_set1_ps(0.5f); //ï¼ˆå¿…è¦ãªã‚‰ rsqrt æ”¹è‰¯ã«ä½¿ç”¨ï¼‰
 				size_t i = 0;
 				for (; i + 8 <= N; i += 8) {
-					// a ‚Æ b ‚Ìƒ[ƒh
+					// a ã¨ b ã®ãƒ­ãƒ¼ãƒ‰
 					__m256 axv = _mm256_loadu_ps(ax + i), ayv = _mm256_loadu_ps(ay + i), azv = _mm256_loadu_ps(az + i), awv = _mm256_loadu_ps(aw + i);
 					__m256 bxv = _mm256_loadu_ps(bx + i), byv = _mm256_loadu_ps(by + i), bzv = _mm256_loadu_ps(bz + i), bwv = _mm256_loadu_ps(bw + i);
 
@@ -407,9 +407,9 @@ namespace SFW
 						_mm256_fmadd_ps(ayv, byv,
 							_mm256_fmadd_ps(azv, bzv, _mm256_mul_ps(awv, bwv))));
 
-					// dot<0 ¨ b ‚ğ”½“]
+					// dot<0 â†’ b ã‚’åè»¢
 					__m256 maskNeg = _mm256_castsi256_ps(_mm256_cmpgt_epi32(_mm256_setzero_si256(), _mm256_castps_si256(dot)));
-					// •„†”½“]‚Í XOR( signMask )
+					// ç¬¦å·åè»¢ã¯ XOR( signMask )
 					const __m256 signMask = _mm256_set1_ps(-0.0f);
 					bxv = _mm256_xor_ps(bxv, _mm256_and_ps(signMask, maskNeg));
 					byv = _mm256_xor_ps(byv, _mm256_and_ps(signMask, maskNeg));
@@ -427,7 +427,7 @@ namespace SFW
 						_mm256_fmadd_ps(ly, ly,
 							_mm256_fmadd_ps(lz, lz, _mm256_mul_ps(lw, lw))));
 					__m256 invL = _mm256_rsqrt_ps(len2);
-					//i•K—v‚ª‚ ‚ê‚Î 1-step Newton: invL *= (1.5 - 0.5*len2*invL*invL); ‚ğ“ü‚ê‚éj
+					//ï¼ˆå¿…è¦ãŒã‚ã‚Œã° 1-step Newton: invL *= (1.5 - 0.5*len2*invL*invL); ã‚’å…¥ã‚Œã‚‹ï¼‰
 					lx = _mm256_mul_ps(lx, invL);
 					ly = _mm256_mul_ps(ly, invL);
 					lz = _mm256_mul_ps(lz, invL);
@@ -438,7 +438,7 @@ namespace SFW
 							_mm256_loadu_si256((const __m256i*)(upd.mask01 + i)),
 							_mm256_setzero_si256());
 						const __m256 vm = _mm256_castsi256_ps(mi);
-						// ‹Œ’l‚ÆƒuƒŒƒ“ƒh
+						// æ—§å€¤ã¨ãƒ–ãƒ¬ãƒ³ãƒ‰
 						__m256 ox = _mm256_loadu_ps(qx + i), oy = _mm256_loadu_ps(qy + i), oz = _mm256_loadu_ps(qz + i), ow = _mm256_loadu_ps(qw + i);
 						_mm256_storeu_ps(qx + i, _mm256_blendv_ps(ox, lx, vm));
 						_mm256_storeu_ps(qy + i, _mm256_blendv_ps(oy, ly, vm));
@@ -455,7 +455,7 @@ namespace SFW
 				for (; i < N; ++i) { if (!upd.mask01 || upd.mask01[i]) do_one((uint32_t)i); }
 			}
 			else {
-				// ‘a: indices g—pigather ‚ÍƒRƒXƒg‚ª‚ ‚é‚ª‘a‚È‚ç—L—˜j
+				// ç–: indices ä½¿ç”¨ï¼ˆgather ã¯ã‚³ã‚¹ãƒˆãŒã‚ã‚‹ãŒç–ãªã‚‰æœ‰åˆ©ï¼‰
 				size_t j = 0;
 				for (; j + 8 <= upd.updateCount; j += 8) {
 					__m256i vidx = _mm256_loadu_si256((const __m256i*)(upd.indices + j));
@@ -497,7 +497,7 @@ namespace SFW
 				for (; j < upd.updateCount; ++j) do_one(upd.indices[j]);
 			}
 #else
-			// ƒXƒJƒ‰”ÅiÅ’ZŒo˜H + nlerpj
+			// ã‚¹ã‚«ãƒ©ç‰ˆï¼ˆæœ€çŸ­çµŒè·¯ + nlerpï¼‰
 			const bool hasIdx = (upd.indices && upd.updateCount > 0);
 			const float density = (N == 0) ? 0.f : float(upd.updateCount) / float(N);
 			if (!hasIdx || density >= sparseThreshold) {
@@ -520,7 +520,7 @@ namespace SFW
 					float sx = bx[id], sy = by[id], sz = bz[id], sw = bw[id];
 					if (dx < 0.f) { sx = -sx; sy = -sy; sz = -sz; sw = -sw; }
 					float x = ax[id] + (sx - ax[id]) * alpha, y = ay[id] + (sy - ay[id]) * alpha;
-					float z = az[id] + (sz - ax[id + 2]) * alpha; // ©Œë: ƒRƒsƒy‚É’ˆÓ
+					float z = az[id] + (sz - ax[id + 2]) * alpha; // â†èª¤: ã‚³ãƒ”ãƒšã«æ³¨æ„
 				}
 			}
 #endif

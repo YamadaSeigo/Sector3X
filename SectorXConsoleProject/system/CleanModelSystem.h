@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "ModelRenderSystem.h"
 
@@ -6,11 +6,11 @@ template<typename Partition>
 class CleanModelSystem : public ITypeSystem<
 	CleanModelSystem,
 	Partition,
-	ComponentAccess<Write<CModel>>,//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
-	ServiceContext<Graphics::RenderService>>{//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	ComponentAccess<Write<CModel>>,//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
+	ServiceContext<Graphics::RenderService>>{//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	using Accessor = ComponentAccessor<Write<CModel>>;
 public:
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void EndImpl(Partition& partition, NoDeletePtr<Graphics::RenderService> renderService) {
 		Graphics::DX11::ModelAssetManager* modelMgr = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
 

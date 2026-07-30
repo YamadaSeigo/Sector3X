@@ -1,8 +1,8 @@
-// LeafService.h
+ï»¿// LeafService.h
 
 #pragma once
 
-#include "LeafParticlePool.h"   // FreeList/Alive ƒoƒbƒtƒ@‚Ìd‘g‚İ‚ğ—˜—p
+#include "LeafParticlePool.h"   // FreeList/Alive ãƒãƒƒãƒ•ã‚¡ã®ä»•çµ„ã¿ã‚’åˆ©ç”¨
 #include <vector>
 #include <unordered_map>
 #include <mutex>
@@ -15,10 +15,10 @@ struct LeafVolumeGPU
 	Math::Vec3f color = { 1.0f, 1.0f, 1.0f };
 	float       intensity = 1.0f;
 
-	float       targetCount = 100.0f;     // LODŒã‚ÌÅIŒÂ”
-	float       speed = 20.0f;      // •—‚Å‚ÌˆÚ“®‘¬“x
+	float       targetCount = 100.0f;     // LODå¾Œã®æœ€çµ‚å€‹æ•°
+	float       speed = 20.0f;      // é¢¨ã§ã®ç§»å‹•é€Ÿåº¦
 	float       noiseScale = 0.5f;
-	uint32_t    volumeSlot = 0;         // GPU‘¤ slot index
+	uint32_t    volumeSlot = 0;         // GPUå´ slot index
 
 	uint32_t    seed = 0;
 	uint32_t pad0 = 0;
@@ -45,26 +45,26 @@ public:
 		uint32_t gActiveVolumeCount = 0;
 		uint32_t gClumpsPerVolume = ClumpsPerVolume;
 
-		uint32_t gCurvesPerVolume = CurvePerVolume; // 0‚È‚ç‘S‘Ì‹¤—L‚Æ‚İ‚È‚·
-		float gClumpLength01 = 12.0f; // —±q‘¤‚Åg‚¤: cl.s ‚©‚ç‚Ì‘OŒãU‚ç‚µ•i‚±‚±‚Å‚Íg—p‚µ‚È‚¢j
+		uint32_t gCurvesPerVolume = CurvePerVolume; // 0ãªã‚‰å…¨ä½“å…±æœ‰ã¨ã¿ãªã™
+		float gClumpLength01 = 12.0f; // ç²’å­å´ã§ä½¿ã†: cl.s ã‹ã‚‰ã®å‰å¾Œæ•£ã‚‰ã—å¹…ï¼ˆã“ã“ã§ã¯ä½¿ç”¨ã—ãªã„ï¼‰
 
 		// ---- Swarm / wobble ----
-		float gClumpLaneAmp = 1.0f; // —á: 0.2`1.0iradius‚É‘Î‚µ‚Äj
-		float gClumpRadialAmp = 0.3f; // —á: 0.05`0.3
-		float gClumpLaneFreq = 0.7f; // —á: 0.7
-		float gClumpRadialFreq = 0.9f; // —á: 0.9
+		float gClumpLaneAmp = 1.0f; // ä¾‹: 0.2ï½1.0ï¼ˆradiusã«å¯¾ã—ã¦ï¼‰
+		float gClumpRadialAmp = 0.3f; // ä¾‹: 0.05ï½0.3
+		float gClumpLaneFreq = 0.7f; // ä¾‹: 0.7
+		float gClumpRadialFreq = 0.9f; // ä¾‹: 0.9
 
 		// ---- Ground follow ----
-		float gGroundBase = 0.25f; // —á: 0.25 (m above ground)
-		float gGroundWaveAmp = 0.35f; // —á: 0.35
-		float gGroundWaveFreq = 0.8f; // —á: 0.8
-		float gGroundFollowK = 6.0f; // —á: 6.0 (spring strength)
-		float gGroundFollowD = 1.2f; // —á: 1.2 (damping on y-velocity)
+		float gGroundBase = 0.25f; // ä¾‹: 0.25 (m above ground)
+		float gGroundWaveAmp = 0.35f; // ä¾‹: 0.35
+		float gGroundWaveFreq = 0.8f; // ä¾‹: 0.8
+		float gGroundFollowK = 6.0f; // ä¾‹: 6.0 (spring strength)
+		float gGroundFollowD = 1.2f; // ä¾‹: 1.2 (damping on y-velocity)
 
 		// ---- Limits ----
-		float gLaneLimitScale = 1.0f; // —á: 1.0 (lane limit = radius*scale)
-		float gRadialLimitScale = 0.5f; // —á: 0.5
-		float gMaxYOffset = 5.0f; // —á: 5.0 (safety clamp)
+		float gLaneLimitScale = 1.0f; // ä¾‹: 1.0 (lane limit = radius*scale)
+		float gRadialLimitScale = 0.5f; // ä¾‹: 0.5
+		float gMaxYOffset = 5.0f; // ä¾‹: 5.0 (safety clamp)
 
 		float pad[2] = {};
 	};
@@ -76,15 +76,15 @@ public:
 
 		uint32_t gActiveVolumeCount = 0;
 		uint32_t gMaxSpawnPerVolumePerFrame = LeafParticlePool::MaxSpawnPerVol;
-		uint32_t gClumpsPerVolume = ClumpsPerVolume; // 1ƒNƒ‰ƒXƒ^‚ ‚½‚è‚ÌŒQ‚ê‚Ì‰ò”
-		float    gAddSizeScale = 0.05f; // —t‚Á‚Ï‚ÌƒTƒCƒY‚Î‚ç‚Â‚«]
+		uint32_t gClumpsPerVolume = ClumpsPerVolume; // 1ã‚¯ãƒ©ã‚¹ã‚¿ã‚ãŸã‚Šã®ç¾¤ã‚Œã®å¡Šæ•°
+		float    gAddSizeScale = 0.05f; // è‘‰ã£ã±ã®ã‚µã‚¤ã‚ºã°ã‚‰ã¤ã]
 
 		float gLaneMin = 0.6f;
 		float gLaneMax = 1.2f;
 		float gRadialMin = 0.05f;
 		float gRadialMax = 0.25f;
 
-		uint32_t gMaxParticles = LeafParticlePool::MaxParticles; // •ÛŒ¯—piGPU‘¤‚Å‚ÌSpawn§ŒÀ‚Æ‚Í•Êj
+		uint32_t gMaxParticles = LeafParticlePool::MaxParticles; // ä¿é™ºç”¨ï¼ˆGPUå´ã§ã®Spawnåˆ¶é™ã¨ã¯åˆ¥ï¼‰
 		uint32_t pad000[3] = {};
 	};
 
@@ -95,26 +95,26 @@ public:
 		float       pad00[2] = {};
 
 		Math::Vec3f gPlayerPosWS = {};
-		float       gPlayerRepelRadius = 2.0f;   // ƒvƒŒƒCƒ„[‚Ì‘«Œ³‚ğ‹ó‚¯‚é‚È‚ç
+		float       gPlayerRepelRadius = 2.0f;   // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¶³å…ƒã‚’ç©ºã‘ã‚‹ãªã‚‰
 
-		uint32_t  gClumpsPerVolume = ClumpsPerVolume;     // —á: 16
-		uint32_t  gCurvesPerVolume = CurvePerVolume;     // —á: 32ivolume‚²‚Æ‚É‹Èü‚ª‚Ü‚Æ‚Ü‚Á‚Ä‚éê‡j
-		uint32_t  gTotalClumps = TotalClumps;         // activeVolumeCount*gClumpsPerVolumei•ÛŒ¯—pj
-		float gClumpLength01 = 0.12f;       // —á: 0.12i‰ò‚Ìg’·‚³h= s•ûŒü‚ÌL‚ª‚èj
+		uint32_t  gClumpsPerVolume = ClumpsPerVolume;     // ä¾‹: 16
+		uint32_t  gCurvesPerVolume = CurvePerVolume;     // ä¾‹: 32ï¼ˆvolumeã”ã¨ã«æ›²ç·šãŒã¾ã¨ã¾ã£ã¦ã‚‹å ´åˆï¼‰
+		uint32_t  gTotalClumps = TotalClumps;         // activeVolumeCount*gClumpsPerVolumeï¼ˆä¿é™ºç”¨ï¼‰
+		float gClumpLength01 = 0.12f;       // ä¾‹: 0.12ï¼ˆå¡Šã®â€œé•·ã•â€= sæ–¹å‘ã®åºƒãŒã‚Šï¼‰
 	};
 
 	struct RenderCB
 	{
 		Math::Matrix4x4f gViewProj = {};
 		Math::Vec3f      gCamRightWS = {};
-		float            gSize = 0.15f; // —t‚Á‚Ï‚Ì”¼ƒTƒCƒY
+		float            gSize = 0.15f; // è‘‰ã£ã±ã®åŠã‚µã‚¤ã‚º
 		Math::Vec3f      gCamUpWS = { 0, 1, 0 };
 		float            gTime = 0.0f;
 
 		Math::Vec3f gCameraPosWS = {};
 		float _padCam0 = {};
-		Math::Vec2f gNearFar = { 0.1f, 1000.0f }; // (near, far)  ¦üŒ`‰»‚Ég‚¤
-		uint32_t gDepthIsLinear01 = 0; // 1: ‚·‚Å‚ÉüŒ`(0..1) / 0: D3D‚Ìƒn[ƒhƒEƒFƒA[“x
+		Math::Vec2f gNearFar = { 0.1f, 1000.0f }; // (near, far)  â€»ç·šå½¢åŒ–ã«ä½¿ã†
+		uint32_t gDepthIsLinear01 = 0; // 1: ã™ã§ã«ç·šå½¢(0..1) / 0: D3Dã®ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢æ·±åº¦
 		float _padCam1 = {};
 	};
 
@@ -130,12 +130,12 @@ public:
 	struct CurveParams
 	{
 		float length = 15.0f;
-		float bend = 1.0f; //‹È‚ª‚è‹ï‡
+		float bend = 1.0f; //æ›²ãŒã‚Šå…·åˆ
 		Math::Vec2f startOffXZ = {};
 		Math::Vec2f endOffXZ = {};
 
-		float t1 = 0.4f, t2 = 0.6f; //p1/p2‚Ìz”ä—¦
-		float bendAsym = 1.0f; // ‹È‚ª‚è‚Ì”ñ‘ÎÌ“x
+		float t1 = 0.4f, t2 = 0.6f; //p1/p2ã®zæ¯”ç‡
+		float bendAsym = 1.0f; // æ›²ãŒã‚Šã®éå¯¾ç§°åº¦
 	};
 
 	struct Clump
@@ -153,7 +153,7 @@ public:
 		float yOffset;
 		float yVel;
 
-		Math::Vec2f anchorXZ = {};   // clump‚Ì…•½ƒAƒ“ƒJ[iƒ{ƒŠƒ…[ƒ€’†S‚©‚ç‚ÌƒIƒtƒZƒbƒgj
+		Math::Vec2f anchorXZ = {};   // clumpã®æ°´å¹³ã‚¢ãƒ³ã‚«ãƒ¼ï¼ˆãƒœãƒªãƒ¥ãƒ¼ãƒ ä¸­å¿ƒã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆï¼‰
 		Math::Vec2f anchorVelXZ = {};
 	};
 
@@ -169,7 +169,7 @@ public:
 		const wchar_t* vsPath,
 		const wchar_t* psPath);
 
-	// ƒAƒNƒeƒBƒu‚È Volume ‚ğ“o˜^iFirefly ‚Æ“¯‚¶ƒpƒ^[ƒ“j
+	// ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãª Volume ã‚’ç™»éŒ²ï¼ˆFirefly ã¨åŒã˜ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼‰
 	void PushActiveVolume(uint32_t volumeUID, const LeafVolumeGPU& volume);
 
 	void PreUpdate(double deltaTime) override
@@ -195,7 +195,7 @@ public:
 
 	void Commit(double deltaTime) override;
 
-	// FireflyService::SpawnParticles ‚Æ“¯‚¶‚æ‚¤‚ÈŒ`
+	// FireflyService::SpawnParticles ã¨åŒã˜ã‚ˆã†ãªå½¢
 	void SpawnDrawParticles(
 		ID3D11DeviceContext* ctx,
 		ComPtr<ID3D11ShaderResourceView>& heightMap,
@@ -231,13 +231,13 @@ private:
 		bool     used = false;
 	};
 
-	// CPU ‘¤‚ÌŠÇ—
+	// CPU å´ã®ç®¡ç†
 	std::vector<LeafVolumeGPU> m_activeVolumes;
 	std::unordered_map<uint32_t, uint32_t> m_uidToSlot;
 	VolumeSlot  m_slots[MaxVolumes]{};
 	uint32_t    m_activeVolumeCount[Graphics::RENDER_BUFFER_COUNT] = { 0 };
 
-	// GPU ƒŠƒ\[ƒX
+	// GPU ãƒªã‚½ãƒ¼ã‚¹
 	ComPtr<ID3D11Buffer>            m_volumeBuffer;
 	ComPtr<ID3D11ShaderResourceView> m_volumeSRV;
 
@@ -292,16 +292,16 @@ private:
 
 	void InitClumpsCPU(
 		uint32_t baseSeed,
-		float laneMax,      // —á: 1.5
-		float radialMax     // —á: 0.25
+		float laneMax,      // ä¾‹: 1.5
+		float radialMax     // ä¾‹: 0.25
 	);
 
-	// –ˆƒtƒŒ[ƒ€XViÅ’áŒÀFs‚ği‚ß‚é{lane/radial‚ğ‚ä‚ç‚·j
+	// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°ï¼ˆæœ€ä½é™ï¼šsã‚’é€²ã‚ã‚‹ï¼‹lane/radialã‚’ã‚†ã‚‰ã™ï¼‰
 	void UpdateClumpsCPU(
 		float dt,
 		uint32_t activeVolumeCount,
-		float laneAmp,         // —á: 0.6
-		float radialAmp        // —á: 0.15
+		float laneAmp,         // ä¾‹: 0.6
+		float radialAmp        // ä¾‹: 0.15
 	);
 
 public:

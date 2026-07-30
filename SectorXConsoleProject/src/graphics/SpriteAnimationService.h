@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 struct CSpriteAnimation {
 	Graphics::MaterialHandle hMat = {};
@@ -19,7 +19,7 @@ class SpriteAnimationService : public IUpdateService, public ICommitService {
 public:
 	static inline constexpr const char* BUFFER_NAME = "SpriteAnimationInstanceBuffer";
 
-	static inline constexpr float MIN_FRAME_DURATION = 0.01f; //ƒfƒtƒHƒ‹ƒg‚ÌƒtƒŒ[ƒ€ŠÔ
+	static inline constexpr float MIN_FRAME_DURATION = 0.01f; //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“
 
 	struct InstanceBuffer {
 		CSpriteAnimation::Buffer buf;
@@ -44,7 +44,7 @@ public:
 
 		currentSlot = (currentSlot + 1) % Graphics::RENDER_BUFFER_COUNT;
 
-		//ƒCƒ“ƒXƒ^ƒ“ƒXƒJƒEƒ“ƒgƒŠƒZƒbƒg
+		//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚«ã‚¦ãƒ³ãƒˆãƒªã‚»ãƒƒãƒˆ
 		instanceCounts.store(0, std::memory_order_relaxed);
 	}
 
@@ -52,13 +52,13 @@ public:
 		auto instCount = instanceCounts.load(std::memory_order_relaxed);
 
 		if (instCount == 0) {
-			//XV•s—v
+			//æ›´æ–°ä¸è¦
 			return;
 		}
 
 		auto bufData = bufferManager->Get(instanceBufferHandle);
 
-		// ƒoƒbƒtƒ@XV
+		// ãƒãƒƒãƒ•ã‚¡æ›´æ–°
 		Graphics::DX11::BufferUpdateDesc updateDesc{};
 		updateDesc.buffer = bufData.ref().buffer;
 		updateDesc.data = cpuInstanceBuffers[currentSlot].data();
@@ -89,7 +89,7 @@ public:
 			auto& frameY = animation.buf.frameY;
 			auto divX = animation.buf.divX;
 			auto divY = animation.buf.divY;
-			// frame ‚ğ 1 ‚Âi‚ß‚é
+			// frame ã‚’ 1 ã¤é€²ã‚ã‚‹
 			uint32_t index = frameY * divX + frameX;
 			index = (index + 1) % (divX * divY);
 
@@ -99,7 +99,7 @@ public:
 
 		auto i = instanceCounts.fetch_add(1, std::memory_order_relaxed);
 		if (i >= Graphics::MAX_INSTANCES_PER_FRAME) {
-			// ’´‰ß
+			// è¶…é
 			return;
 		}
 
@@ -119,7 +119,7 @@ private:
 	Graphics::DX11::BufferManager* bufferManager;
 	Graphics::BufferHandle instanceBufferHandle;
 
-	//‚Å‚©‚·‚¬‚Ì‚Åƒq[ƒv‚Å•Û
+	//ã§ã‹ã™ãã®ã§ãƒ’ãƒ¼ãƒ—ã§ä¿æŒ
 	std::vector<std::array<InstanceBuffer, Graphics::MAX_INSTANCES_PER_FRAME>> cpuInstanceBuffers = std::vector<std::array<InstanceBuffer, Graphics::MAX_INSTANCES_PER_FRAME>>(Graphics::RENDER_BUFFER_COUNT);
 	std::atomic<uint32_t> instanceCounts = 0;
 public:

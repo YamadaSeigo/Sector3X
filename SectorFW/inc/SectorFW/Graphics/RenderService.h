@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   RenderService.h
- * @brief •`‰æŠÖ˜A‚ğ’ñ‹Ÿ‚·‚éƒT[ƒrƒXƒNƒ‰ƒX
+ * @brief æç”»é–¢é€£ã‚’æä¾›ã™ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -26,24 +26,24 @@ namespace SFW
 	{
 		using MOC = MaskedOcclusionCulling;
 
-		// --- MOC ’ño—p‚ÌÅ¬ƒoƒbƒ` ---
+		// --- MOC æå‡ºç”¨ã®æœ€å°ãƒãƒƒãƒ ---
 		struct MocQuadBatch {
-			SFW::Math::Vec4f clip[4];  // (x, y, z, w) ‚¾‚ª MOC ‚ªg‚¤‚Ì‚Í x,y,w
-			uint32_t indices[6];            // 0-1-2, 2-1-3 ‚Ì2–‡iCCWj
+			SFW::Math::Vec4f clip[4];  // (x, y, z, w) ã ãŒ MOC ãŒä½¿ã†ã®ã¯ x,y,w
+			uint32_t indices[6];            // 0-1-2, 2-1-3 ã®2æšï¼ˆCCWï¼‰
 			int      numTriangles = 2;
-			bool     valid = true;          // ‹ßƒNƒŠƒbƒv‘S–Ê— ‚È‚Ç‚È‚ç false
+			bool     valid = true;          // è¿‘ã‚¯ãƒªãƒƒãƒ—å…¨é¢è£ãªã©ãªã‚‰ false
 		};
 
 		struct MocTriBatch {
-			const float* clipVertices = nullptr; // (x, y, z, w) ”z—ñ
-			const uint32_t* indices = nullptr;   // ƒCƒ“ƒfƒbƒNƒX”z—ñ
+			const float* clipVertices = nullptr; // (x, y, z, w) é…åˆ—
+			const uint32_t* indices = nullptr;   // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—
 			uint32_t      numTriangles = 0;
-			bool          valid = true;          // ‹ßƒNƒŠƒbƒv‘S–Ê— ‚È‚Ç‚È‚ç false
+			bool          valid = true;          // è¿‘ã‚¯ãƒªãƒƒãƒ—å…¨é¢è£ãªã©ãªã‚‰ false
 		};
 
 		/**
-		 * @brief System‚ªˆË‘¶‚·‚éƒŒƒ“ƒ_[ƒT[ƒrƒX‚ğŠÇ—‚·‚éƒNƒ‰ƒX
-		 * @details MOC‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğŠÇ—‚·‚é
+		 * @brief SystemãŒä¾å­˜ã™ã‚‹ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚µãƒ¼ãƒ“ã‚¹ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
+		 * @details MOCã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç®¡ç†ã™ã‚‹
 		 */
 		struct RenderService : public ECS::IUpdateService
 		{
@@ -53,20 +53,20 @@ namespace SFW
 			template<typename Backend, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template <typename> class ViewHandle>
 			friend class RenderGraph;
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 			 */
 			explicit RenderService(MOC* moc) : queueMutex(std::make_unique<std::shared_mutex>()), moc(moc) {}
 
 			/**
-			 * @brief ƒfƒXƒgƒ‰ƒNƒ^
-			 * @detial MOC‚Ì‰ğ•ú
+			 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @detial MOCã®è§£æ”¾
 			 */
 			~RenderService() {
 				MOC::Destroy(moc);
 			}
 		private:
 			/**
-			 * @brief MOC‚ÌXV
+			 * @brief MOCã®æ›´æ–°
 			 */
 			void PreUpdate(double deltaTime) override final
 			{
@@ -77,8 +77,8 @@ namespace SFW
 				if (updateFunc) updateFunc(this);
 			}
 			/**
-			 * @brief ƒJƒXƒ^ƒ€ŠÖ”‚ÌXV
-			 * @details RenderGraph‚ÅŒÄ‚Ño‚³‚ê‚é
+			 * @brief ã‚«ã‚¹ã‚¿ãƒ é–¢æ•°ã®æ›´æ–°
+			 * @details RenderGraphã§å‘¼ã³å‡ºã•ã‚Œã‚‹
 			 */
 			void CallPreDrawCustomFunc(uint32_t slot) noexcept
 			{
@@ -87,9 +87,9 @@ namespace SFW
 
 		public:
 			/**
-			 * @brief RenderQueue‚ÌProducerSession‚ğæ“¾‚·‚éŠÖ”
-			 * @param groupName@ƒOƒ‹[ƒv–¼
-			 * @return@RenderQueue::ProducerSession ƒŒƒ“ƒ_[ƒNƒGƒŠ‚Ìƒvƒƒfƒ…[ƒT[ƒZƒbƒVƒ‡ƒ“
+			 * @brief RenderQueueã®ProducerSessionã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @param groupNameã€€ã‚°ãƒ«ãƒ¼ãƒ—å
+			 * @returnã€€RenderQueue::ProducerSession ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¯ã‚¨ãƒªã®ãƒ—ãƒ­ãƒ‡ãƒ¥ãƒ¼ã‚µãƒ¼ã‚»ãƒƒã‚·ãƒ§ãƒ³
 			 */
 			RenderQueue::ProducerSession GetProducerSession(const std::string& groupName)
 			{
@@ -103,10 +103,10 @@ namespace SFW
 				return renderQueues[it->second]->MakeProducer();
 			}
 			/**
-			 * @brief RenderQueue‚ÌProducerSessionExternal‚ğæ“¾‚·‚éŠÖ”
-			 * @param groupName@ƒOƒ‹[ƒv–¼
-			 * @param buf ƒoƒbƒtƒ@
-			 * @return@RenderQueue::ProducerSession ƒŒƒ“ƒ_[ƒNƒGƒŠ‚Ìƒvƒƒfƒ…[ƒT[ƒZƒbƒVƒ‡ƒ“
+			 * @brief RenderQueueã®ProducerSessionExternalã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @param groupNameã€€ã‚°ãƒ«ãƒ¼ãƒ—å
+			 * @param buf ãƒãƒƒãƒ•ã‚¡
+			 * @returnã€€RenderQueue::ProducerSession ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¯ã‚¨ãƒªã®ãƒ—ãƒ­ãƒ‡ãƒ¥ãƒ¼ã‚µãƒ¼ã‚»ãƒƒã‚·ãƒ§ãƒ³
 			 */
 			RenderQueue::ProducerSessionExternal GetProducerSession(const std::string& groupName,
 				RenderQueue::ProducerSessionExternal::SmallBuf& buf)
@@ -122,8 +122,8 @@ namespace SFW
 			}
 
 			/**
-			 * @brief w’è‚µ‚½Œ^‚ÌResouceManager‚ğæ“¾‚·‚éŠÖ”
-			 * @return ResourceType* w’è‚µ‚½Œ^‚ÌResouceManager‚Ìƒ|ƒCƒ“ƒ^(Œ©‚Â‚©‚ç‚È‚¢ê‡‚Ínullptr)
+			 * @brief æŒ‡å®šã—ãŸå‹ã®ResouceManagerã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return ResourceType* æŒ‡å®šã—ãŸå‹ã®ResouceManagerã®ãƒã‚¤ãƒ³ã‚¿(è¦‹ã¤ã‹ã‚‰ãªã„å ´åˆã¯nullptr)
 			 */
 			template<typename ResourceType>
 			ResourceType* GetResourceManager() noexcept
@@ -137,17 +137,17 @@ namespace SFW
 			}
 
 			/**
-			 * @brief MOC‚Å‰Â‹”»’è‚ğs‚¤ŠÖ”
-			 * @param ndc NDC‹óŠÔ‚Å‚Ì‹éŒ`iwmin•t‚«j
-			 * @return bool ‰Â‹‚È‚çtrueA•s‰Â‹‚È‚çfalse
+			 * @brief MOCã§å¯è¦–åˆ¤å®šã‚’è¡Œã†é–¢æ•°
+			 * @param ndc NDCç©ºé–“ã§ã®çŸ©å½¢ï¼ˆwminä»˜ãï¼‰
+			 * @return bool å¯è¦–ãªã‚‰trueã€ä¸å¯è¦–ãªã‚‰false
 			 */
 			auto IsVisibleInMOC(const Math::NdcRectWithW& ndc) const
 			{
 				return moc->TestRect(ndc.xmin, ndc.ymin, ndc.xmax, ndc.ymax, ndc.wmin);
 			}
 			/**
-			 * @brief MOC‚ÉƒIƒNƒ‹[ƒ_[‚ğ’ño‚·‚éŠÖ”
-			 * @param quad ƒIƒNƒ‹[ƒ_[‚ÌƒNƒAƒbƒhî•ñ
+			 * @brief MOCã«ã‚ªã‚¯ãƒ«ãƒ¼ãƒ€ãƒ¼ã‚’æå‡ºã™ã‚‹é–¢æ•°
+			 * @param quad ã‚ªã‚¯ãƒ«ãƒ¼ãƒ€ãƒ¼ã®ã‚¯ã‚¢ãƒƒãƒ‰æƒ…å ±
 			 */
 			void RenderingOccluderInMOC(MocQuadBatch& quad)
 			{
@@ -167,8 +167,8 @@ namespace SFW
 				);
 			}
 			/**
-			 * @brief MOC‚ÉƒIƒNƒ‹[ƒ_[‚ğ’ño‚·‚éŠÖ”
-			 * @param tri ƒIƒNƒ‹[ƒ_[‚ÌOŠpŒ`î•ñ
+			 * @brief MOCã«ã‚ªã‚¯ãƒ«ãƒ¼ãƒ€ãƒ¼ã‚’æå‡ºã™ã‚‹é–¢æ•°
+			 * @param tri ã‚ªã‚¯ãƒ«ãƒ¼ãƒ€ãƒ¼ã®ä¸‰è§’å½¢æƒ…å ±
 			 */
 			void RenderingOccluderInMOC(MocTriBatch& tri)
 			{
@@ -183,14 +183,14 @@ namespace SFW
 				);
 			}
 			/**
-			 * @brief MOC‚Ì‹ßƒNƒŠƒbƒv•½–Ê‚ğæ“¾‚·‚éŠÖ”
-			 * @return float ‹ßƒNƒŠƒbƒv•½–Ê‚Ì‹——£
+			 * @brief MOCã®è¿‘ã‚¯ãƒªãƒƒãƒ—å¹³é¢ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return float è¿‘ã‚¯ãƒªãƒƒãƒ—å¹³é¢ã®è·é›¢
 			 */
 			float GetNearClipPlane() const { return moc->GetNearClipPlane(); }
 			/**
-			 * @brief MOC‚Ì[“xƒoƒbƒtƒ@‚ğæ“¾‚·‚éŠÖ”
-			 * @detial ƒTƒCƒY‚ª‘«‚è‚È‚¢ê‡‚ÍƒŠƒTƒCƒY‚·‚é
-			 * @param buffer [“xƒoƒbƒtƒ@‚ğŠi”[‚·‚éƒxƒNƒ^[
+			 * @brief MOCã®æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @detial ã‚µã‚¤ã‚ºãŒè¶³ã‚Šãªã„å ´åˆã¯ãƒªã‚µã‚¤ã‚ºã™ã‚‹
+			 * @param buffer æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚’æ ¼ç´ã™ã‚‹ãƒ™ã‚¯ã‚¿ãƒ¼
 			 */
 			void GetDepthBuffer(std::vector<float>& buffer) const
 			{
@@ -201,20 +201,20 @@ namespace SFW
 				moc->ComputePixelDepthBuffer(buffer.data(), false);
 			}
 			/**
-			* @ brief Œ»İ‚Ì¶YƒXƒƒbƒg‚ğæ“¾‚·‚é
-			* @ return int ¶YƒXƒƒbƒg‚ÌƒCƒ“ƒfƒbƒNƒX
+			* @ brief ç¾åœ¨ã®ç”Ÿç”£ã‚¹ãƒ­ãƒƒãƒˆã‚’å–å¾—ã™ã‚‹
+			* @ return int ç”Ÿç”£ã‚¹ãƒ­ãƒƒãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			 */
 			uint16_t GetProduceSlot() const noexcept { return produceSlot.load(std::memory_order_acquire); }
 			/**
-			* @ brief UpdateƒJƒXƒ^ƒ€ŠÖ”‚Ìİ’è
-			* @ param func ƒJƒXƒ^ƒ€ŠÖ”
+			* @ brief Updateã‚«ã‚¹ã‚¿ãƒ é–¢æ•°ã®è¨­å®š
+			* @ param func ã‚«ã‚¹ã‚¿ãƒ é–¢æ•°
 			 */
 			void SetCustomUpdateFunction(UpdateFuncType func) noexcept {
 				updateFunc = func;
 			}
 			/**
-			* @ brief •`‰æ‘Oƒhƒ[ƒJƒXƒ^ƒ€ŠÖ”‚Ìİ’è
-			* @ param func ƒJƒXƒ^ƒ€ŠÖ”
+			* @ brief æç”»å‰ãƒ‰ãƒ­ãƒ¼ã‚«ã‚¹ã‚¿ãƒ é–¢æ•°ã®è¨­å®š
+			* @ param func ã‚«ã‚¹ã‚¿ãƒ é–¢æ•°
 			 */
 			void SetCustomPreDrawFunction(PreDrawFuncType func) noexcept {
 				preDrawFunc = func;
@@ -236,11 +236,11 @@ namespace SFW
 			}
 		private:
 			std::unordered_map<std::string, size_t> queueIndex;
-			std::vector<std::unique_ptr<RenderQueue>> renderQueues; // ‘S‚Ä‚ÌƒŒƒ“ƒ_[ƒNƒGƒŠ‚ğ•Û‚·‚é
+			std::vector<std::unique_ptr<RenderQueue>> renderQueues; // å…¨ã¦ã®ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¯ã‚¨ãƒªã‚’ä¿æŒã™ã‚‹
 			std::unique_ptr<std::shared_mutex> queueMutex;
 			std::unordered_map<std::type_index, void*> resourceManagers;
 
-			MOC* moc = nullptr; // Masked Occlusion Culling ‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
+			MOC* moc = nullptr; // Masked Occlusion Culling ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 
 			std::atomic<uint16_t> produceSlot{ 0 };
 
@@ -251,11 +251,11 @@ namespace SFW
 				DEFINE_UPDATESERVICE_GROUP(GROUP_GRAPHICS)
 		};
 
-		// AABBFrontFaceQuad ‚ğ 2ƒgƒ‰ƒC‚Å’ño‚Å‚«‚éƒoƒbƒ`‚É•ÏŠ·
+		// AABBFrontFaceQuad ã‚’ 2ãƒˆãƒ©ã‚¤ã§æå‡ºã§ãã‚‹ãƒãƒƒãƒã«å¤‰æ›
 		inline MocQuadBatch ConvertAABBFrontFaceQuadToMoc(
 			const Math::Vec4f* clips,
 			const SFW::Math::Matrix<4, 4, float>& viewProj,
-			float nearClipW /* = moc->GetNearClipPlane() ‚Æˆê’v‚³‚¹‚é‚Ì‚ª—‘z */
+			float nearClipW /* = moc->GetNearClipPlane() ã¨ä¸€è‡´ã•ã›ã‚‹ã®ãŒç†æƒ³ */
 		)
 		{
 			using Vec3 = SFW::Math::Vec3f;
@@ -265,8 +265,8 @@ namespace SFW
 
 			std::memcpy(out.clip, clips, sizeof(Vec4) * 4);
 
-			// 2) ‹ßƒNƒŠƒbƒv®‡i‘S’¸“_‚ª near ‚æ‚è‰œ‘¤‚È‚ç–³Œøj
-			//    MOC ‚Í depth = 1/wi‹t[“xj‚È‚Ì‚ÅAnear ‚Æ‡‚í‚¹‚é‚È‚ç w > near ‚ğ‰Â‹‹óŠÔ‚Æ‚İ‚È‚·B
+			// 2) è¿‘ã‚¯ãƒªãƒƒãƒ—æ•´åˆï¼ˆå…¨é ‚ç‚¹ãŒ near ã‚ˆã‚Šå¥¥å´ãªã‚‰ç„¡åŠ¹ï¼‰
+			//    MOC ã¯ depth = 1/wï¼ˆé€†æ·±åº¦ï¼‰ãªã®ã§ã€near ã¨åˆã‚ã›ã‚‹ãªã‚‰ w > near ã‚’å¯è¦–ç©ºé–“ã¨ã¿ãªã™ã€‚
 			int countFront = 0;
 			for (int i = 0; i < 4; ++i) if (out.clip[i].w > nearClipW) ++countFront;
 			if (countFront == 0) {
@@ -274,29 +274,29 @@ namespace SFW
 				return out;
 			}
 
-			// 3) ƒXƒNƒŠ[ƒ“‹óŠÔ‚ÌŠª‚«•ûŒü‚ğˆÀ’è‚³‚¹‚éiCCW‘z’èj
-			//    NDC ‚Ì x,y ‚ğg‚Á‚Ä•„†•t‚«–ÊÏ‚Å CCW ‚ğ”»’è‚µACW ‚È‚ç‘ÎŠp‚ğ“ü‚ê‘Ö‚¦‚éB
+			// 3) ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ç©ºé–“ã®å·»ãæ–¹å‘ã‚’å®‰å®šã•ã›ã‚‹ï¼ˆCCWæƒ³å®šï¼‰
+			//    NDC ã® x,y ã‚’ä½¿ã£ã¦ç¬¦å·ä»˜ãé¢ç©ã§ CCW ã‚’åˆ¤å®šã—ã€CW ãªã‚‰å¯¾è§’ã‚’å…¥ã‚Œæ›¿ãˆã‚‹ã€‚
 			auto ndcXY_stable = [&](int i) {
-				// CCW”»’è—p“r‚È‚Ì‚ÅuŠ„‚èZ‚ª”š”­‚µ‚È‚¢v‚±‚Æ‚ğ—Dæ
-				const float w = (std::max)(out.clip[i].w, nearClipW); // near ‚ÅƒNƒ‰ƒ“ƒv
+				// CCWåˆ¤å®šç”¨é€”ãªã®ã§ã€Œå‰²ã‚Šç®—ãŒçˆ†ç™ºã—ãªã„ã€ã“ã¨ã‚’å„ªå…ˆ
+				const float w = (std::max)(out.clip[i].w, nearClipW); // near ã§ã‚¯ãƒ©ãƒ³ãƒ—
 				const float invw = 1.0f / w;
 				return SFW::Math::Vec2f{ out.clip[i].x * invw, out.clip[i].y * invw };
 				};
 
 			auto triArea2 = [](SFW::Math::Vec2f p, SFW::Math::Vec2f q, SFW::Math::Vec2f r) {
-				// 2”{–ÊÏiz¬•ªj: (q - p) ~ (r - p)
+				// 2å€é¢ç©ï¼ˆzæˆåˆ†ï¼‰: (q - p) Ã— (r - p)
 				return (q.x - p.x) * (r.y - p.y) - (q.y - p.y) * (r.x - p.x);
 				};
 
 			const auto a = ndcXY_stable(0), b = ndcXY_stable(1), c = ndcXY_stable(2), d = ndcXY_stable(3);
 			float area = triArea2(a, b, c) + triArea2(a, c, d);
 			bool ccw = (area > 0.0f);
-			// CCW ‚Å‚È‚¯‚ê‚Î 1 ‚Æ 2 ‚ğ“ü‚ê‘Ö‚¦‚éi0,1,2 / 2,1,3 -> 0,2,1 / 1,2,3j
+			// CCW ã§ãªã‘ã‚Œã° 1 ã¨ 2 ã‚’å…¥ã‚Œæ›¿ãˆã‚‹ï¼ˆ0,1,2 / 2,1,3 -> 0,2,1 / 1,2,3ï¼‰
 			if (!ccw) {
 				std::swap(out.clip[0], out.clip[2]);
 			}
 
-			// 4) ƒCƒ“ƒfƒbƒNƒXiCCWj
+			// 4) ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ï¼ˆCCWï¼‰
 			out.indices[0] = 0; out.indices[1] = 2; out.indices[2] = 1;
 			out.indices[3] = 2; out.indices[4] = 0; out.indices[5] = 3;
 

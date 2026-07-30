@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   EntityManager.h
- * @brief ƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -29,18 +29,18 @@ namespace SFW
 	namespace ECS
 	{
 		/**
-		 * @brief ƒGƒ“ƒeƒBƒeƒB‚Ì¶¬‚Æ”jŠüAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’Ç‰ÁEíœ‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+		 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ç”Ÿæˆã¨ç ´æ£„ã€ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®è¿½åŠ ãƒ»å‰Šé™¤ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 		 */
 		class EntityManager {
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 			 */
 			EntityManager() = default;
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚Ì’Ç‰Á
-			 * @param ...components ’Ç‰Á‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì‰Â•Ïˆø”
-			 * @return EntityID V‚µ‚­’Ç‰Á‚³‚ê‚½ƒGƒ“ƒeƒBƒeƒB‚ÌID
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®è¿½åŠ 
+			 * @param ...components è¿½åŠ ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å¯å¤‰å¼•æ•°
+			 * @return EntityID æ–°ã—ãè¿½åŠ ã•ã‚ŒãŸã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ID
 			 */
 			template<typename... Components>
 			[[nodiscard]] EntityID AddEntity(const Components&... components) {
@@ -65,10 +65,10 @@ namespace SFW
 				return id;
 			}
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚Ì’Ç‰Á(ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN‚ğw’è)
-			 * @param mask ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
-			 * @param ...components ’Ç‰Á‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì‰Â•Ïˆø”
-			 * @return EntityID V‚µ‚­’Ç‰Á‚³‚ê‚½ƒGƒ“ƒeƒBƒeƒB‚ÌID
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®è¿½åŠ (ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯ã‚’æŒ‡å®š)
+			 * @param mask ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
+			 * @param ...components è¿½åŠ ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å¯å¤‰å¼•æ•°
+			 * @return EntityID æ–°ã—ãè¿½åŠ ã•ã‚ŒãŸã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ID
 			 */
 			template<typename... Components>
 			[[nodiscard]] EntityID AddEntity(ComponentMask mask, const Components&... components) {
@@ -90,19 +90,19 @@ namespace SFW
 				return id;
 			}
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚Ìíœ
-			 * @param id íœ‚·‚éƒGƒ“ƒeƒBƒeƒB‚ÌID
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®å‰Šé™¤
+			 * @param id å‰Šé™¤ã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ID
 			 */
 			void DestroyEntity(EntityID id);
 
 			/**
-			 * @brief ‚·‚×‚Ä‚ÌƒGƒ“ƒeƒBƒeƒB‚Ìíœ
+			 * @brief ã™ã¹ã¦ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®å‰Šé™¤
 			 */
 			void CleanAllEntity();
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚ÉƒRƒ“ƒ|\ƒlƒ“ƒg‚ª‚ ‚é‚©‚Ç‚¤‚©‚ğŠm”F‚·‚éŠÖ”
-			 * @param id ƒGƒ“ƒeƒBƒeƒBID
-			 * @return bool ƒRƒ“ƒ|[ƒlƒ“ƒg‚ª‚ ‚éê‡‚ÍtrueA‚È‚¢ê‡‚Ífalse
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã«ã‚³ãƒ³ãƒâ€•ãƒãƒ³ãƒˆãŒã‚ã‚‹ã‹ã©ã†ã‹ã‚’ç¢ºèªã™ã‚‹é–¢æ•°
+			 * @param id ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
+			 * @return bool ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒã‚ã‚‹å ´åˆã¯trueã€ãªã„å ´åˆã¯false
 			 */
 			template<typename T>
 			bool HasComponent(EntityID id) const noexcept {
@@ -121,11 +121,11 @@ namespace SFW
 				return false;
 			}
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚©‚çƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾‚·‚éŠÖ”
-			 * @param id ƒGƒ“ƒeƒBƒeƒBID
-			 * @details ƒRƒ“ƒ|[ƒlƒ“ƒg‚ªŒ©‚Â‚©‚ç‚È‚¢ê‡nullptr‚ğ•Ô‚·
-			 * @details System‚©‚çƒAƒNƒZƒX‚·‚éê‡‚Í•K‚¸ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚É’Ç‰Á‚·‚é
-			 * @return std::optional<T> ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’l
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã‹ã‚‰ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @param id ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
+			 * @details ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒè¦‹ã¤ã‹ã‚‰ãªã„å ´åˆnullptrã‚’è¿”ã™
+			 * @details Systemã‹ã‚‰ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹å ´åˆã¯å¿…ãšã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã«è¿½åŠ ã™ã‚‹
+			 * @return std::optional<T> ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å€¤
 			 */
 			template<typename T>
 			std::optional<T> ReadComponent(EntityID id) noexcept {
@@ -145,7 +145,7 @@ namespace SFW
 
 				const auto loc = it->second;
 
-				// SoA ƒRƒ“ƒ|[ƒlƒ“ƒg
+				// SoA ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
 				if constexpr (IsSoAComponent<T>) {
 					ComponentAccessor<Read<T>> accessor(loc.chunk);
 					auto soaPtrOpt = accessor.Get<Read<T>>();
@@ -154,7 +154,7 @@ namespace SFW
 					}
 					return ComponentAccessorBase::ConvertSoAToAoSComponent<T>(*soaPtrOpt, loc.index);
 				}
-				// ’Êí AoS
+				// é€šå¸¸ AoS
 				else {
 					auto col = loc.chunk->GetColumn<T>();
 					if (!col) [[unlikely]] {
@@ -164,10 +164,10 @@ namespace SFW
 				}
 			}
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ‘‚«Š·‚¦‚éŠÖ”
-			 * @param id ƒGƒ“ƒeƒBƒeƒBID
-			 * @param value ‘‚«Š·‚¦‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’l
-			 * @details System‚©‚çƒAƒNƒZƒX‚·‚éê‡‚Í•K‚¸ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚É’Ç‰Á‚·‚é
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’æ›¸ãæ›ãˆã‚‹é–¢æ•°
+			 * @param id ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
+			 * @param value æ›¸ãæ›ãˆã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å€¤
+			 * @details Systemã‹ã‚‰ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹å ´åˆã¯å¿…ãšã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã«è¿½åŠ ã™ã‚‹
 			 */
 			template<typename T>
 			void WriteComponent(EntityID id, const T& value) noexcept
@@ -215,7 +215,7 @@ namespace SFW
 
 					const auto loc = it->second;
 
-					// SoA ƒRƒ“ƒ|[ƒlƒ“ƒg
+					// SoA ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
 					if constexpr (IsSoAComponent<T>) {
 						ComponentAccessor<Read<T>> accessor(loc.chunk);
 						auto soaPtrOpt = accessor.Get<Read<T>>();
@@ -225,7 +225,7 @@ namespace SFW
 						}
 						readValue = ComponentAccessorBase::ConvertSoAToAoSComponent<T>(*soaPtrOpt, loc.index);
 					}
-					// ’Êí AoS
+					// é€šå¸¸ AoS
 					else {
 						auto col = loc.chunk->GetColumn<T>();
 						if (!col) [[unlikely]] {
@@ -241,10 +241,10 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚ÉƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ’Ç‰Á‚·‚éŠÖ”
-			 * @param id ƒGƒ“ƒeƒBƒeƒBID
-			 * @details ¦archetype‚ÌˆÚ“®‚ª‚ ‚é‚½‚ß‚•‰‰×
-			 * @param value ’Ç‰Á‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’l
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã«ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è¿½åŠ ã™ã‚‹é–¢æ•°
+			 * @param id ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
+			 * @details â€»archetypeã®ç§»å‹•ãŒã‚ã‚‹ãŸã‚é«˜è² è·
+			 * @param value è¿½åŠ ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å€¤
 			 */
 			template<typename T>
 			void AddComponent(EntityID id, const T& value) {
@@ -260,7 +260,7 @@ namespace SFW
 				Archetype* newArch = archetypeManager.GetOrCreate(currentMask);
 				ArchetypeChunk* newChunk = newArch->GetOrCreateChunk();
 
-				// ‹ŒƒƒP[ƒVƒ‡ƒ“‚Í‹¤—LƒƒbƒN‚Åæ“¾id‚¢ˆÚ“®ˆ—‚ÍƒƒbƒNŠO‚ÅÀsj
+				// æ—§ãƒ­ã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã¯å…±æœ‰ãƒ­ãƒƒã‚¯ã§å–å¾—ï¼ˆé‡ã„ç§»å‹•å‡¦ç†ã¯ãƒ­ãƒƒã‚¯å¤–ã§å®Ÿè¡Œï¼‰
 				EntityLocation oldLoc;
 				{
 					std::shared_lock<std::shared_mutex> rlock(locationsMutex);
@@ -271,7 +271,7 @@ namespace SFW
 
 				size_t newIndex = newChunk->AddEntity(id);
 
-				// •K—v‚Èƒf[ƒ^‚Ì‚İˆÚ“®
+				// å¿…è¦ãªãƒ‡ãƒ¼ã‚¿ã®ã¿ç§»å‹•
 				auto& oldChunkLayout = ArchetypeChunk::Accessor::GetLayoutInfo(oldChunk);
 				auto& oldChunkLayoutIdx = ArchetypeChunk::Accessor::GetLayoutInfoIdx(oldChunk);
 				auto& newChunkLayout = ArchetypeChunk::Accessor::GetLayoutInfo(newChunk);
@@ -286,15 +286,15 @@ namespace SFW
 						auto dst = ArchetypeChunk::Accessor::GetBuffer(newChunk) + newInfo.get(index).value().get().offset;
 						auto* dstElem = static_cast<uint8_t*>(dst) + newIndex * i.stride;
 						auto* srcElem = static_cast<const uint8_t*>(src) + oldIndex * i.stride;
-						// i.stride ’PˆÊ=1—v‘f‚ÌƒTƒCƒY‚Æ‚¢‚¤‘O’ñ
-							// ƒƒ^‚Éu—ñ‚Ì element_size / trivial ƒtƒ‰ƒOv‚ª‚Ä‚é‚È‚ç‚»‚ê‚ğg‚¤B
+						// i.stride å˜ä½=1è¦ç´ ã®ã‚µã‚¤ã‚ºã¨ã„ã†å‰æ
+							// ãƒ¡ã‚¿ã«ã€Œåˆ—ã® element_size / trivial ãƒ•ãƒ©ã‚°ã€ãŒæŒã¦ã‚‹ãªã‚‰ãã‚Œã‚’ä½¿ã†ã€‚
 						if (/* element is trivially copyable */ true) {
 							std::memcpy(dstElem, srcElem, i.stride);
 						}
 						else {
-							// —v‘fŒ^‚ª•ª‚©‚ç‚È‚¢ê‡‚ÍA—ñ‘¤‚Éuƒ€[ƒu/ƒRƒs[ŠÖ”ƒ|ƒCƒ“ƒ^v‚ğ‚½‚¹‚éİŒv‚ÉŠñ‚¹‚é‚ÆˆÀ‘S
+							// è¦ç´ å‹ãŒåˆ†ã‹ã‚‰ãªã„å ´åˆã¯ã€åˆ—å´ã«ã€Œãƒ ãƒ¼ãƒ–/ã‚³ãƒ”ãƒ¼é–¢æ•°ãƒã‚¤ãƒ³ã‚¿ã€ã‚’æŒãŸã›ã‚‹è¨­è¨ˆã«å¯„ã›ã‚‹ã¨å®‰å…¨
 								// new (dstElem) ElemType(*reinterpret_cast<const ElemType*>(srcElem));
-								// reinterpret_cast<const ElemType*>(srcElem)->~ElemType(); // swap-pop‘¤‚ª”jŠü‚·‚é‚È‚ç•s—v
+								// reinterpret_cast<const ElemType*>(srcElem)->~ElemType(); // swap-popå´ãŒç ´æ£„ã™ã‚‹ãªã‚‰ä¸è¦
 						}
 
 						index++;
@@ -303,7 +303,7 @@ namespace SFW
 
 				newChunk->GetColumn<T>()[newIndex] = value;
 
-				// ƒXƒƒbƒv‘Šè‚ÌƒƒP[ƒVƒ‡ƒ“XV‚Æ©•ª‚ÌXV‚Íu”r‘¼ƒƒbƒNv‰º‚Åˆê‹C‚É
+				// ã‚¹ãƒ¯ãƒƒãƒ—ç›¸æ‰‹ã®ãƒ­ã‚±ãƒ¼ã‚·ãƒ§ãƒ³æ›´æ–°ã¨è‡ªåˆ†ã®æ›´æ–°ã¯ã€Œæ’ä»–ãƒ­ãƒƒã‚¯ã€ä¸‹ã§ä¸€æ°—ã«
 				{
 					const size_t lastIndexBefore = oldChunk->GetEntityCount() - 1;
 					std::unique_lock<std::shared_mutex> wlock(locationsMutex);
@@ -318,15 +318,15 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚©‚çƒRƒ“ƒ|[ƒlƒ“ƒg‚ğíœ‚·‚éŠÖ”
-			 * @details ¦Archetype‚ğˆÚ“®‚·‚éˆ—‚ª‚ ‚é‚Ì‚Å‚•‰‰×
-			 * @param id ƒGƒ“ƒeƒBƒeƒBID
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã‹ã‚‰ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å‰Šé™¤ã™ã‚‹é–¢æ•°
+			 * @details â€»Archetypeã‚’ç§»å‹•ã™ã‚‹å‡¦ç†ãŒã‚ã‚‹ã®ã§é«˜è² è·
+			 * @param id ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
 			 */
 			template<typename T>
 			void RemoveComponent(EntityID id) {
 				ComponentTypeID typeID = ComponentTypeRegistry::GetID<T>();
 				ComponentMask oldMask = GetMask(id);
-				if (!oldMask.test(typeID)) return; // ‚Á‚Ä‚È‚¢‚È‚ç‰½‚à‚µ‚È‚¢
+				if (!oldMask.test(typeID)) return; // æŒã£ã¦ãªã„ãªã‚‰ä½•ã‚‚ã—ãªã„
 
 				ComponentMask newMask = oldMask;
 				newMask.reset(typeID);
@@ -336,7 +336,7 @@ namespace SFW
 					return;
 				}
 
-				// ‹ŒƒƒP[ƒVƒ‡ƒ“‚Í‹¤—LƒƒbƒN‚Åæ“¾
+				// æ—§ãƒ­ã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã¯å…±æœ‰ãƒ­ãƒƒã‚¯ã§å–å¾—
 				EntityLocation oldLoc;
 				{
 					std::shared_lock<std::shared_mutex> rlock(locationsMutex);
@@ -349,7 +349,7 @@ namespace SFW
 				ArchetypeChunk* newChunk = newArch->GetOrCreateChunk();
 				size_t newIndex = newChunk->AddEntity(id);
 
-				// •K—v‚Èƒf[ƒ^‚Ì‚İˆÚ“®
+				// å¿…è¦ãªãƒ‡ãƒ¼ã‚¿ã®ã¿ç§»å‹•
 				auto& oldChunkLayout = ArchetypeChunk::Accessor::GetLayoutInfo(oldChunk);
 				auto& oldChunkLayoutIdx = ArchetypeChunk::Accessor::GetLayoutInfoIdx(oldChunk);
 				auto& newChunkLayout = ArchetypeChunk::Accessor::GetLayoutInfo(newChunk);
@@ -385,25 +385,25 @@ namespace SFW
 				}
 			}
 			/**
-			 * @brief ‚·‚×‚Ä‚Ì Sparse ‚ğ this->dst ‚ÉˆêŠ‡ moveiŒ^Á‹‚Åˆ—j
+			 * @brief ã™ã¹ã¦ã® Sparse ã‚’ this->dst ã«ä¸€æ‹¬ moveï¼ˆå‹æ¶ˆå»ã§å‡¦ç†ï¼‰
 			 */
 			void MoveAllSparseTo(EntityManager& dst);
 			/**
-			 * @brief w’è ID ŒQ‚Ì Sparse ‚ğ this->dst ‚ÉˆêŠ‡ moveiŒ^Á‹‚Åˆ—j
+			 * @brief æŒ‡å®š ID ç¾¤ã® Sparse ã‚’ this->dst ã«ä¸€æ‹¬ moveï¼ˆå‹æ¶ˆå»ã§å‡¦ç†ï¼‰
 			 */
 			void MoveSparseIDsTo(EntityManager& dst, const std::vector<EntityID>& ids);
 
-			// src ‚Ì‘SƒGƒ“ƒeƒBƒeƒB‚ğ this ‚Ö“‡B–ß‚è’l: ˆÚ‘—Œ”
-			// è‡: 1) Sparse ‘SŒ^‚ğˆêŠ‡ move  2) ”ñƒXƒp[ƒX‚ğƒ`ƒƒƒ“ƒN—ñ memcpy ‚ÅˆÚ‘—  3) src ‚ğƒ[ƒJƒ‹œ‹
+			// src ã®å…¨ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã‚’ this ã¸çµ±åˆã€‚æˆ»ã‚Šå€¤: ç§»é€ä»¶æ•°
+			// æ‰‹é †: 1) Sparse å…¨å‹ã‚’ä¸€æ‹¬ move  2) éã‚¹ãƒ‘ãƒ¼ã‚¹ã‚’ãƒãƒ£ãƒ³ã‚¯åˆ— memcpy ã§ç§»é€  3) src ã‚’ãƒ­ãƒ¼ã‚«ãƒ«é™¤å»
 			size_t MergeFromAll(EntityManager& src);
 
-			// ƒ‹[ƒ^: router(EntityID id, const ComponentMask& mask) -> EntityManager&
-			// •Ô‚³‚ê‚½ˆ¶æ‚²‚Æ‚É•ªŠ„B–ß‚è’l: ˆÚ‘—Œ”
+			// ãƒ«ãƒ¼ã‚¿: router(EntityID id, const ComponentMask& mask) -> EntityManager&
+			// è¿”ã•ã‚ŒãŸå®›å…ˆã”ã¨ã«åˆ†å‰²ã€‚æˆ»ã‚Šå€¤: ç§»é€ä»¶æ•°
 			template<typename Router>
 			size_t SplitByAll(Router&& router) {
-				// 1) ˆ¶æ‚²‚Æ‚É ID ‚ğƒoƒPƒbƒg‚µ‚Â‚ÂA”ñƒXƒp[ƒX‚¾‚¯æ‚ÉˆÚ‘—
+				// 1) å®›å…ˆã”ã¨ã« ID ã‚’ãƒã‚±ãƒƒãƒˆã—ã¤ã¤ã€éã‚¹ãƒ‘ãƒ¼ã‚¹ã ã‘å…ˆã«ç§»é€
 				std::unordered_map<EntityManager*, std::vector<EntityID>> buckets;
-				const auto ids = GetAllEntityIDs(); // ƒXƒiƒbƒvƒVƒ‡ƒbƒg
+				const auto ids = GetAllEntityIDs(); // ã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆ
 				size_t moved = 0;
 				for (EntityID id : ids) {
 					auto locOpt = TryGetLocation(id);
@@ -417,17 +417,17 @@ namespace SFW
 					if (dst == this) continue;
 					if (InsertWithID_ForManagerMove(id, *this, *dst)) { buckets[dst].push_back(id); ++moved; }
 				}
-				// 2) Sparse ‚Íˆ¶æ‚²‚Æ‚É + ID ƒoƒPƒbƒg‚ğg‚Á‚ÄˆêŠ‡ move
+				// 2) Sparse ã¯å®›å…ˆã”ã¨ã« + ID ãƒã‚±ãƒƒãƒˆã‚’ä½¿ã£ã¦ä¸€æ‹¬ move
 				for (auto& [dst, idvec] : buckets) { MoveSparseIDsTo(*dst, idvec); }
 				return moved;
 			}
 
-			// ‚·‚×‚Ä‚ÌƒGƒ“ƒeƒBƒeƒBID‚ğ—ñ‹“ilocations  ‘Sƒ`ƒƒƒ“ƒN‚ğ•âŠ®j
+			// ã™ã¹ã¦ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã‚’åˆ—æŒ™ï¼ˆlocations  å…¨ãƒãƒ£ãƒ³ã‚¯ã‚’è£œå®Œï¼‰
 			std::vector<EntityID> GetAllEntityIDs() const;
 
 			/**
-			 * @brief ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾‚·‚éŠÖ”
-			 * @return ReadWriteView<std::unordered_map<EntityID, T>> ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒrƒ…[
+			 * @brief ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return ReadWriteView<std::unordered_map<EntityID, T>> ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ“ãƒ¥ãƒ¼
 			 */
 			template<typename T>
 				requires SparseComponent<T>
@@ -436,23 +436,23 @@ namespace SFW
 				return components;
 			}
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚ÌƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN‚ğæ“¾‚·‚éŠÖ”
-			 * @param id ƒGƒ“ƒeƒBƒeƒBID
-			 * @return ComponentMask ƒGƒ“ƒeƒBƒeƒB‚ÌƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @param id ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
+			 * @return ComponentMask ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
 			 */
 			ComponentMask GetMask(EntityID id) const noexcept;
 			/**
-			 * @brief ƒA[ƒLƒ^ƒCƒvƒ}ƒl[ƒWƒƒ[‚ğæ“¾‚·‚éŠÖ”
-			 * @return const ArchetypeManager& ƒA[ƒLƒ^ƒCƒvƒ}ƒl[ƒWƒƒ[‚Ö‚ÌQÆ
+			 * @brief ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return const ArchetypeManager& ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã¸ã®å‚ç…§
 			 */
 			const ArchetypeManager& GetArchetypeManager() const noexcept { return archetypeManager; }
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒBIDƒAƒƒP[ƒ^‚ğæ“¾‚·‚éŠÖ”
-			 * @return const EntityIDAllocator& ƒGƒ“ƒeƒBƒeƒBIDƒAƒƒP[ƒ^‚Ö‚ÌQÆ
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return const EntityIDAllocator& ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã¸ã®å‚ç…§
 			 */
 			static const EntityIDAllocator& GetEntityAllocator() noexcept { return entityAllocator; }
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚ÌŒ»İˆÊ’uiChunk ‚Æsj‚ğ O(1) ‚Åæ“¾i‹¤—LƒƒbƒNj
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ç¾åœ¨ä½ç½®ï¼ˆChunk ã¨è¡Œï¼‰ã‚’ O(1) ã§å–å¾—ï¼ˆå…±æœ‰ãƒ­ãƒƒã‚¯ï¼‰
 			 */
 			std::optional<EntityLocation> TryGetLocation(EntityID id) const noexcept {
 				std::shared_lock<std::shared_mutex> rlock(locationsMutex);
@@ -466,26 +466,26 @@ namespace SFW
 				return locations.size();
 			}
 			/**
-				 * @brief ID‚ğ•Û‚µ‚½‚Ü‚Ü dst ‘¤‚É1sŠm•Û‚µA”ñƒXƒp[ƒX‚ğƒRƒs[imanagerŠÔˆÚ‘——pj
-				 * @param id ƒGƒ“ƒeƒBƒeƒBID
-				 * @param src Œ³‚ÌƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[
-				 * @param dst ˆÚ“®æ‚ÌƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[
-				 * @return bool ˆÚ“®‚É¬Œ÷‚µ‚½ê‡‚ÍtrueA¸”s‚µ‚½ê‡‚Ífalse
+				 * @brief IDã‚’ä¿æŒã—ãŸã¾ã¾ dst å´ã«1è¡Œç¢ºä¿ã—ã€éã‚¹ãƒ‘ãƒ¼ã‚¹ã‚’ã‚³ãƒ”ãƒ¼ï¼ˆmanageré–“ç§»é€ç”¨ï¼‰
+				 * @param id ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
+				 * @param src å…ƒã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+				 * @param dst ç§»å‹•å…ˆã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+				 * @return bool ç§»å‹•ã«æˆåŠŸã—ãŸå ´åˆã¯trueã€å¤±æ•—ã—ãŸå ´åˆã¯false
 				 */
 			static bool InsertWithID_ForManagerMove(EntityID id, EntityManager& src, EntityManager& dst);
 		private:
 			/**
-			 * @brief ƒƒ‚ƒŠã‚Ìƒ`ƒƒƒ“ƒN‚É’l‚ğİ’è‚·‚éŠÖ”(SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Å‚Í‚È‚¢ê‡)
-			 * @param chunk ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚Ö‚Ìƒ|ƒCƒ“ƒ^
-			 * @param index ƒ`ƒƒƒ“ƒN“à‚ÌƒCƒ“ƒfƒbƒNƒX
-			 * @param value İ’è‚·‚é’l
+			 * @brief ãƒ¡ãƒ¢ãƒªä¸Šã®ãƒãƒ£ãƒ³ã‚¯ã«å€¤ã‚’è¨­å®šã™ã‚‹é–¢æ•°(SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã§ã¯ãªã„å ´åˆ)
+			 * @param chunk ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+			 * @param index ãƒãƒ£ãƒ³ã‚¯å†…ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			 * @param value è¨­å®šã™ã‚‹å€¤
 			 */
 			template<typename T>
 				requires (!requires { typename T::soa_type; })
 			void MemorySetChunk(ArchetypeChunk* chunk, size_t index, const T& value) noexcept {
 				auto column = chunk->GetColumn<T>();
 				if (!column) [[unlikely]] {
-					LOG_ERROR("ƒRƒ“ƒ|[ƒlƒ“ƒgƒ^ƒCƒv{ %d }‚ªƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚ÉŒ©‚Â‚©‚è‚Ü‚¹‚ñ", ComponentTypeRegistry::GetID<T>());
+					LOG_ERROR("ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚¿ã‚¤ãƒ—{ %d }ãŒã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã«è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“", ComponentTypeRegistry::GetID<T>());
 					return;
 				}
 
@@ -493,7 +493,7 @@ namespace SFW
 					std::memcpy(&column.value()[index], &value, sizeof(T));
 				}
 				else if constexpr (std::is_move_constructible_v<T>) {
-					// Šù‘¶ƒIƒuƒWƒFƒNƒg‚ª‚ ‚é‘z’è‚È‚ç–¾¦”jŠü ¨ ƒvƒŒ[ƒXƒƒ“ƒgnew
+					// æ—¢å­˜ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒã‚ã‚‹æƒ³å®šãªã‚‰æ˜ç¤ºç ´æ£„ â†’ ãƒ—ãƒ¬ãƒ¼ã‚¹ãƒ¡ãƒ³ãƒˆnew
 					column.value()[index].~T();
 					new (&column.value()[index]) T(value);
 				}
@@ -503,17 +503,17 @@ namespace SFW
 				}
 			}
 			/**
-			 * @brief ƒƒ‚ƒŠã‚Ìƒ`ƒƒƒ“ƒN‚É’l‚ğİ’è‚·‚éŠÖ”(SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìê‡)
-			 * @param chunk ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚Ö‚Ìƒ|ƒCƒ“ƒ^
-			 * @param index ƒ`ƒƒƒ“ƒN“à‚ÌƒCƒ“ƒfƒbƒNƒX
-			 * @param value İ’è‚·‚é’l
+			 * @brief ãƒ¡ãƒ¢ãƒªä¸Šã®ãƒãƒ£ãƒ³ã‚¯ã«å€¤ã‚’è¨­å®šã™ã‚‹é–¢æ•°(SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å ´åˆ)
+			 * @param chunk ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+			 * @param index ãƒãƒ£ãƒ³ã‚¯å†…ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			 * @param value è¨­å®šã™ã‚‹å€¤
 			 */
 			template<typename T>
 				requires IsSoAComponent<T>
 			void MemorySetChunk(ArchetypeChunk* chunk, size_t index, const T& value) {
 				auto column = chunk->GetColumn<T>();
 				if (!column) [[unlikely]] {
-					LOG_ERROR("ƒRƒ“ƒ|[ƒlƒ“ƒgƒ^ƒCƒv{ %d }‚ªƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚ÉŒ©‚Â‚©‚è‚Ü‚¹‚ñ", ComponentTypeRegistry::GetID<T>());
+					LOG_ERROR("ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚¿ã‚¤ãƒ—{ %d }ãŒã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã«è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“", ComponentTypeRegistry::GetID<T>());
 					return;
 				}
 				size_t capacity = chunk->GetCapacity();
@@ -523,17 +523,17 @@ namespace SFW
 				);
 			}
 			/**
-			 * @brief SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ“ƒo[‚ğ“WŠJ‚µ‚Ä’l‚ğæ“¾‚·‚éŠÖ”
-			 * @param vec ’l‚ğŠi”[‚·‚éƒxƒNƒ^[
-			 * @param value SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’l
+			 * @brief SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ãƒ³ãƒãƒ¼ã‚’å±•é–‹ã—ã¦å€¤ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @param vec å€¤ã‚’æ ¼ç´ã™ã‚‹ãƒ™ã‚¯ã‚¿ãƒ¼
+			 * @param value SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å€¤
 			 */
 			template<typename Variant, typename U, size_t Index>
 			void ExpansionMemberImpl(std::vector<Variant>& vec, U& value) {
 				auto ptr = std::get<Index>(U::member_ptr_tuple);
-				static_assert(std::is_member_object_pointer_v<decltype(ptr)>);	// ƒƒ“ƒo[ƒIƒuƒWƒFƒNƒgƒ|ƒCƒ“ƒ^‚Å‚ ‚é‚±‚Æ‚ğŠm”F
+				static_assert(std::is_member_object_pointer_v<decltype(ptr)>);	// ãƒ¡ãƒ³ãƒãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒã‚¤ãƒ³ã‚¿ã§ã‚ã‚‹ã“ã¨ã‚’ç¢ºèª
 				auto& member = value.*ptr;
 
-				using MemberT = std::remove_cvref_t<decltype(member)>; //const‚ÆQÆ‚ğœ‹‚µ‚½Œ^
+				using MemberT = std::remove_cvref_t<decltype(member)>; //constã¨å‚ç…§ã‚’é™¤å»ã—ãŸå‹
 
 				if constexpr (IsSoAComponent<MemberT>) {
 					ExpansionMember<Variant>(vec, member, std::make_index_sequence<std::tuple_size_v<typename MemberT::tuple_type>>{});
@@ -546,19 +546,19 @@ namespace SFW
 				}
 			}
 			/**
-			 * @brief SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ“ƒo[‚ğ“WŠJ‚µ‚Ä’l‚ğæ“¾‚·‚éŠÖ”(ƒCƒ“ƒfƒbƒNƒXƒV[ƒPƒ“ƒX‚ğg—p)
-			 * @param vec ’l‚ğŠi”[‚·‚éƒxƒNƒ^[
-			 * @param value SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’l
-			 * @param Is ƒCƒ“ƒfƒbƒNƒXƒV[ƒPƒ“ƒX
+			 * @brief SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ãƒ³ãƒãƒ¼ã‚’å±•é–‹ã—ã¦å€¤ã‚’å–å¾—ã™ã‚‹é–¢æ•°(ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã‚’ä½¿ç”¨)
+			 * @param vec å€¤ã‚’æ ¼ç´ã™ã‚‹ãƒ™ã‚¯ã‚¿ãƒ¼
+			 * @param value SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å€¤
+			 * @param Is ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚·ãƒ¼ã‚±ãƒ³ã‚¹
 			 */
 			template<typename Variant, typename U, size_t... Is>
 			void ExpansionMember(std::vector<Variant>& vec, U& value, std::index_sequence<Is...>) {
 				(ExpansionMemberImpl<Variant, U, Is>(vec, value), ...);
 			}
 			/**
-			 * @brief SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ“ƒo[‚ğ“WŠJ‚µ‚Ä’l‚ğæ“¾‚·‚éŠÖ”
-			 * @param t SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’l
-			 * @return std::vector<typename T::variant_type> SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ“ƒo[‚Ì’l‚ğŠi”[‚µ‚½ƒxƒNƒ^[
+			 * @brief SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ãƒ³ãƒãƒ¼ã‚’å±•é–‹ã—ã¦å€¤ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @param t SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å€¤
+			 * @return std::vector<typename T::variant_type> SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ãƒ³ãƒãƒ¼ã®å€¤ã‚’æ ¼ç´ã—ãŸãƒ™ã‚¯ã‚¿ãƒ¼
 			 */
 			template<IsSoAComponent T>
 			auto GetMember(T& t) -> std::vector<typename T::variant_type> {
@@ -567,12 +567,12 @@ namespace SFW
 				return member_values;
 			}
 			/**
-			 * @brief SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ‚ƒŠã‚Ìƒ`ƒƒƒ“ƒN‚É’l‚ğİ’è‚·‚éŠÖ”
-			 * @param base SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒx[ƒXƒ|ƒCƒ“ƒ^
-			 * @param index ƒ`ƒƒƒ“ƒN“à‚ÌƒCƒ“ƒfƒbƒNƒX
-			 * @param value İ’è‚·‚é’l
-			 * @param capacity ƒ`ƒƒƒ“ƒN‚Ì—e—Ê
-			 * @param Is ƒCƒ“ƒfƒbƒNƒXƒV[ƒPƒ“ƒX
+			 * @brief SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ãƒ¢ãƒªä¸Šã®ãƒãƒ£ãƒ³ã‚¯ã«å€¤ã‚’è¨­å®šã™ã‚‹é–¢æ•°
+			 * @param base SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ™ãƒ¼ã‚¹ãƒã‚¤ãƒ³ã‚¿
+			 * @param index ãƒãƒ£ãƒ³ã‚¯å†…ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			 * @param value è¨­å®šã™ã‚‹å€¤
+			 * @param capacity ãƒãƒ£ãƒ³ã‚¯ã®å®¹é‡
+			 * @param Is ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚·ãƒ¼ã‚±ãƒ³ã‚¹
 			 */
 			template<typename T, typename SoATuple, std::size_t... Is>
 			void MemorySetChunkSoA(T* base, size_t index, const T& value, size_t capacity, std::index_sequence<Is...>) {
@@ -589,12 +589,12 @@ namespace SFW
 				}
 			}
 			/**
-			 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğƒ`ƒƒƒ“ƒN‚ÉŠi”[‚·‚éŠÖ”
-			 * @param chunk ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚Ö‚Ìƒ|ƒCƒ“ƒ^
-			 * @param id ƒGƒ“ƒeƒBƒeƒBID
-			 * @param index ƒ`ƒƒƒ“ƒN“à‚ÌƒCƒ“ƒfƒbƒNƒX
-			 * @param value Ši”[‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’l
-			 * @details ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚©‚Ç‚¤‚©‚Åˆ—‚ğ•ª‚¯‚é
+			 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’ãƒãƒ£ãƒ³ã‚¯ã«æ ¼ç´ã™ã‚‹é–¢æ•°
+			 * @param chunk ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+			 * @param id ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
+			 * @param index ãƒãƒ£ãƒ³ã‚¯å†…ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			 * @param value æ ¼ç´ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å€¤
+			 * @details ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‹ã©ã†ã‹ã§å‡¦ç†ã‚’åˆ†ã‘ã‚‹
 			 */
 			template<typename T>
 			void StoreComponent(ArchetypeChunk* chunk, EntityID id, size_t index, const T& value) {
@@ -607,29 +607,29 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒXƒp[ƒX‚ğG‚ç‚¸‚Éƒ[ƒJƒ‹‚©‚çœ‹iID”jŠü‚µ‚È‚¢j
-			 * @param id œ‹‚·‚éƒGƒ“ƒeƒBƒeƒB‚ÌID
-			 * @return bool œ‹‚É¬Œ÷‚µ‚½ê‡‚ÍtrueA¸”s‚µ‚½ê‡‚Ífalse
+			 * @brief ã‚¹ãƒ‘ãƒ¼ã‚¹ã‚’è§¦ã‚‰ãšã«ãƒ­ãƒ¼ã‚«ãƒ«ã‹ã‚‰é™¤å»ï¼ˆIDç ´æ£„ã—ãªã„ï¼‰
+			 * @param id é™¤å»ã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ID
+			 * @return bool é™¤å»ã«æˆåŠŸã—ãŸå ´åˆã¯trueã€å¤±æ•—ã—ãŸå ´åˆã¯false
 			 */
 			bool EraseEntityLocalNoSparse(EntityID id);
 			/**
-			 * @brief ”ñƒXƒp[ƒX—ñiƒ`ƒƒƒ“ƒN—ñj‚ğ src->dst ‚ÉƒRƒs[
+			 * @brief éã‚¹ãƒ‘ãƒ¼ã‚¹åˆ—ï¼ˆãƒãƒ£ãƒ³ã‚¯åˆ—ï¼‰ã‚’ src->dst ã«ã‚³ãƒ”ãƒ¼
 			 */
 			static void CopyEntityColumns(ArchetypeChunk* srcChunk, size_t srcIndex,
 				ArchetypeChunk* dstChunk, size_t dstIndex);
-			//ƒGƒ“ƒeƒBƒeƒBIDƒAƒƒP[ƒ^
+			//ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã‚¢ãƒ­ã‚±ãƒ¼ã‚¿
 			static inline EntityIDAllocator entityAllocator = EntityIDAllocator(MAX_ENTITY_NUM);
-			//ƒA[ƒLƒ^ƒCƒvƒ}ƒl[ƒWƒƒ[
+			//ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 			ArchetypeManager archetypeManager;
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚ÌˆÊ’u‚ğŠÇ—‚·‚éƒ}ƒbƒv
-			 * @details EntityID‚ğƒL[‚ÉAEntityLocation‚ğ’l‚Æ‚·‚éƒ}ƒbƒv
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ä½ç½®ã‚’ç®¡ç†ã™ã‚‹ãƒãƒƒãƒ—
+			 * @details EntityIDã‚’ã‚­ãƒ¼ã«ã€EntityLocationã‚’å€¤ã¨ã™ã‚‹ãƒãƒƒãƒ—
 			 */
 			std::unordered_map<EntityID, EntityLocation> locations;
-			//locations ‚Ì•ÀsƒAƒNƒZƒX‚ğç‚éƒƒbƒNi“Çæ‘½”E‘­”‚ğ‘z’èj
+			//locations ã®ä¸¦è¡Œã‚¢ã‚¯ã‚»ã‚¹ã‚’å®ˆã‚‹ãƒ­ãƒƒã‚¯ï¼ˆèª­å–å¤šæ•°ãƒ»æ›¸è¾¼å°‘æ•°ã‚’æƒ³å®šï¼‰
 			mutable std::shared_mutex locationsMutex;
 			/**
-			 * @brief ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒgƒXƒgƒA‚ğæ“¾‚·‚é‚½‚ß‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX
+			 * @brief ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚¹ãƒˆã‚¢ã‚’å–å¾—ã™ã‚‹ãŸã‚ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 			 */
 			struct ISparseWrapper {
 				virtual void Remove(EntityID id) = 0;
@@ -638,23 +638,23 @@ namespace SFW
 				virtual ~ISparseWrapper() = default;
 			};
 			/**
-			 * @brief ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒgƒXƒgƒA‚ğŠi”[‚·‚éƒ}ƒbƒv
+			 * @brief ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚¹ãƒˆã‚¢ã‚’æ ¼ç´ã™ã‚‹ãƒãƒƒãƒ—
 			 */
 			std::unordered_map<ComponentTypeID, std::shared_ptr<struct ISparseWrapper>> sparseStores;
 			/**
-			 * @brief ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒgƒXƒgƒA‚Ìƒ‰ƒbƒp[ƒNƒ‰ƒX
+			 * @brief ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚¹ãƒˆã‚¢ã®ãƒ©ãƒƒãƒ‘ãƒ¼ã‚¯ãƒ©ã‚¹
 			 */
 			template<typename T>
 			struct SparseWrapper : ISparseWrapper {
 				SparseComponentStore<T> store;
 				/**
-				 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğíœ‚·‚éŠÖ”
-				 * @param id íœ‚·‚éƒGƒ“ƒeƒBƒeƒB‚ÌID
+				 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å‰Šé™¤ã™ã‚‹é–¢æ•°
+				 * @param id å‰Šé™¤ã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ID
 				 */
 				void Remove(EntityID id) override { store.Remove(id); }
 				/**
-				 * @brief ‚·‚×‚Ä‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ•Ê‚ÌƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[‚ÉˆÚ“®‚·‚éŠÖ”
-				 * @param dst ˆÚ“®æ‚ÌƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[
+				 * @brief ã™ã¹ã¦ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’åˆ¥ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç§»å‹•ã™ã‚‹é–¢æ•°
+				 * @param dst ç§»å‹•å…ˆã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 				 */
 				void MoveAllTo(EntityManager& dst) override {
 					auto& srcMap = store.GetComponents();
@@ -666,10 +666,10 @@ namespace SFW
 					srcMap.clear();
 				}
 				/**
-				 * @brief w’è‚³‚ê‚½ID‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ•Ê‚ÌƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[‚ÉˆÚ“®‚·‚éŠÖ”
-				 * @param dst ˆÚ“®æ‚ÌƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[
-				 * @param ids ˆÚ“®‚·‚éƒGƒ“ƒeƒBƒeƒB‚ÌID‚Ì”z—ñ
-				 * @param n ”z—ñ‚Ì—v‘f”
+				 * @brief æŒ‡å®šã•ã‚ŒãŸIDã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’åˆ¥ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç§»å‹•ã™ã‚‹é–¢æ•°
+				 * @param dst ç§»å‹•å…ˆã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+				 * @param ids ç§»å‹•ã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®IDã®é…åˆ—
+				 * @param n é…åˆ—ã®è¦ç´ æ•°
 				 */
 				void MoveManyTo(EntityManager& dst, const EntityID* ids, size_t n) override {
 					auto& srcMap = store.GetComponents();
@@ -685,8 +685,8 @@ namespace SFW
 				}
 			};
 			/**
-			 * @brief ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒgƒXƒgƒA‚ğæ“¾‚·‚éŠÖ”
-			 * @return SparseComponentStore<T>& ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒgƒXƒgƒA‚Ö‚ÌQÆ
+			 * @brief ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚¹ãƒˆã‚¢ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return SparseComponentStore<T>& ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚¹ãƒˆã‚¢ã¸ã®å‚ç…§
 			 */
 			template<typename T>
 			SparseComponentStore<T>& GetSparseStore() noexcept {
@@ -711,7 +711,7 @@ namespace SFW
 				const ComponentMask& mask = arch->GetMask();
 				if ((mask & required) == required && (mask & excluded).none()) {
 					const auto& chunks = arch->GetChunks();
-					// æ‚É•K—v•ª‚¾‚¯‚Ü‚Æ‚ß‚ÄŠg’£i•½‹Ï“I‚ÉÄŠm•Û‚ğŒ¸‚ç‚·j
+					// å…ˆã«å¿…è¦åˆ†ã ã‘ã¾ã¨ã‚ã¦æ‹¡å¼µï¼ˆå¹³å‡çš„ã«å†ç¢ºä¿ã‚’æ¸›ã‚‰ã™ï¼‰
 					result.reserve(result.size() + chunks.size());
 					for (const auto& ch : chunks) {
 						result.push_back(ch.get());

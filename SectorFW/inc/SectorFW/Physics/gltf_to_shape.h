@@ -1,12 +1,12 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   gltf_to_shape.h
- * @brief cgltf ‚ÌƒƒbƒVƒ…ƒf[ƒ^‚©‚ç Physics::ShapeCreateDesc ‚ğ\’z‚·‚éƒ†[ƒeƒBƒŠƒeƒB
+ * @brief cgltf ã®ãƒ¡ãƒƒã‚·ãƒ¥ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ Physics::ShapeCreateDesc ã‚’æ§‹ç¯‰ã™ã‚‹ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
 #pragma once
 #include "PhysicsTypes.h"
-#include "../external/cgltf/cgltf.h" // –‘O‚É cgltf ‚ğ‘g‚İ‚İÏ‚İ‚Å‚ ‚é‚±‚Æ
+#include "../external/cgltf/cgltf.h" // äº‹å‰ã« cgltf ã‚’çµ„ã¿è¾¼ã¿æ¸ˆã¿ã§ã‚ã‚‹ã“ã¨
 #include <vector>
 #include <cstdint>
 #include <cstring>
@@ -17,10 +17,10 @@ namespace SFW
 	namespace Physics
 	{
 		/**
-		 * @brief ƒAƒNƒZƒT‚©‚ç float3 ‚ğ“Ç‚İo‚·iˆÊ’uê—pAŒ^‚ÍFLOAT / COUNT = 3‚ğ‘z’èj
+		 * @brief ã‚¢ã‚¯ã‚»ã‚µã‹ã‚‰ float3 ã‚’èª­ã¿å‡ºã™ï¼ˆä½ç½®å°‚ç”¨ã€å‹ã¯FLOAT / COUNT = 3ã‚’æƒ³å®šï¼‰
 		 * @param acc cgltf_accessor
-		 * @param out o—ÍæƒxƒNƒ^[
-		 * @return ¬Œ÷/¸”s
+		 * @param out å‡ºåŠ›å…ˆãƒ™ã‚¯ã‚¿ãƒ¼
+		 * @return æˆåŠŸ/å¤±æ•—
 		 */
 		inline bool ReadPositions(const cgltf_accessor* acc, std::vector<Vec3f>& out) {
 			if (!acc || acc->type != cgltf_type_vec3) return false;
@@ -34,11 +34,11 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒCƒ“ƒfƒbƒNƒXiU16 / U32j‚ğæ‚èo‚·iƒgƒ‰ƒCƒAƒ“ƒOƒ‹‘O’ñj
+		 * @brief ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ï¼ˆU16 / U32ï¼‰ã‚’å–ã‚Šå‡ºã™ï¼ˆãƒˆãƒ©ã‚¤ã‚¢ãƒ³ã‚°ãƒ«å‰æï¼‰
 		 * @param acc cgltf_accessor
-		 * @param out o—ÍæƒxƒNƒ^[
-		 * @param baseVertex baseVertex •ª‚ğ‰ÁZ‚µ‚ÄŠi”[
-		 * @return ¬Œ÷/¸”s
+		 * @param out å‡ºåŠ›å…ˆãƒ™ã‚¯ã‚¿ãƒ¼
+		 * @param baseVertex baseVertex åˆ†ã‚’åŠ ç®—ã—ã¦æ ¼ç´
+		 * @return æˆåŠŸ/å¤±æ•—
 		 */
 		inline bool ReadIndices(const cgltf_accessor* acc, std::vector<uint32_t>& out, uint32_t baseVertex) {
 			if (!acc) return false;
@@ -51,10 +51,10 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ˆê‚Â‚Ì cgltf_mesh ‚©‚ç MeshDesc ‚ğ\’zi‚·‚×‚Ä‚Ì primitive ‚ğŒ‹‡j
+		 * @brief ä¸€ã¤ã® cgltf_mesh ã‹ã‚‰ MeshDesc ã‚’æ§‹ç¯‰ï¼ˆã™ã¹ã¦ã® primitive ã‚’çµåˆï¼‰
 		 * @param mesh cgltf_mesh
-		 * @param out o—Íæ MeshDesc
-		 * @return ¬Œ÷/¸”s
+		 * @param out å‡ºåŠ›å…ˆ MeshDesc
+		 * @return æˆåŠŸ/å¤±æ•—
 		 */
 		inline bool BuildMeshDescFromGLTFMesh(const cgltf_mesh* mesh, MeshDesc& out) {
 			if (!mesh) return false;
@@ -65,7 +65,7 @@ namespace SFW
 
 			for (cgltf_size p = 0; p < mesh->primitives_count; ++p) {
 				const cgltf_primitive& prim = mesh->primitives[p];
-				// triangles ‚Ì‚İ‘ÎÛi‚»‚Ì‘¼‚ÍƒXƒLƒbƒv or •ÏŠ·j
+				// triangles ã®ã¿å¯¾è±¡ï¼ˆãã®ä»–ã¯ã‚¹ã‚­ãƒƒãƒ— or å¤‰æ›ï¼‰
 				if (prim.type != cgltf_primitive_type_triangles) continue;
 
 				// POSITION
@@ -76,16 +76,16 @@ namespace SFW
 				}
 				if (!posAcc) continue;
 
-				// ’¸“_
+				// é ‚ç‚¹
 				std::vector<Vec3f> localPos;
 				if (!ReadPositions(posAcc, localPos)) continue;
 
-				// indicesi–³‚¯‚ê‚Î 0..N-1 ˜A”Ôj
+				// indicesï¼ˆç„¡ã‘ã‚Œã° 0..N-1 é€£ç•ªï¼‰
 				if (prim.indices) {
 					ReadIndices(prim.indices, allIdx, baseVertex);
 				}
 				else {
-					// ˜A”Ô
+					// é€£ç•ª
 					for (uint32_t i = 0; i + 2 < (uint32_t)localPos.size(); i += 3) {
 						allIdx.push_back(baseVertex + i + 0);
 						allIdx.push_back(baseVertex + i + 1);
@@ -93,7 +93,7 @@ namespace SFW
 					}
 				}
 
-				// ––”ö‚É˜AŒ‹
+				// æœ«å°¾ã«é€£çµ
 				allPos.insert(allPos.end(), localPos.begin(), localPos.end());
 				baseVertex += (uint32_t)localPos.size();
 			}
@@ -105,13 +105,13 @@ namespace SFW
 		}
 
 		/**
-		 * @brief GLTF ¨ ShapeCreateDesciƒƒbƒVƒ… or “Ê•ïj
-		 * @param data cgltf_data icgltf_parse ‚È‚Ç‚Åæ“¾‚µ‚½‚à‚Ìj
-		 * @param meshIndex data->meshes[] ‚Ì‰½”Ô–Ú‚ğg‚¤‚©
-		 * @param asConvex false: MeshDesc ‚ğg‚¤iƒgƒ‰ƒCƒƒbƒVƒ…j true : ConvexHullDesc ‚ğg‚¤i“Ê•ïj
-		 * @param scale ƒXƒP[ƒ‹
-		 * @param out o—Íæ ShapeCreateDesc
-		 * @return ¬Œ÷/¸”s
+		 * @brief GLTF â†’ ShapeCreateDescï¼ˆãƒ¡ãƒƒã‚·ãƒ¥ or å‡¸åŒ…ï¼‰
+		 * @param data cgltf_data ï¼ˆcgltf_parse ãªã©ã§å–å¾—ã—ãŸã‚‚ã®ï¼‰
+		 * @param meshIndex data->meshes[] ã®ä½•ç•ªç›®ã‚’ä½¿ã†ã‹
+		 * @param asConvex false: MeshDesc ã‚’ä½¿ã†ï¼ˆãƒˆãƒ©ã‚¤ãƒ¡ãƒƒã‚·ãƒ¥ï¼‰ true : ConvexHullDesc ã‚’ä½¿ã†ï¼ˆå‡¸åŒ…ï¼‰
+		 * @param scale ã‚¹ã‚±ãƒ¼ãƒ«
+		 * @param out å‡ºåŠ›å…ˆ ShapeCreateDesc
+		 * @return æˆåŠŸ/å¤±æ•—
 		 */
 		inline bool BuildShapeCreateDescFromGLTF(
 			const cgltf_data* data,
@@ -131,12 +131,12 @@ namespace SFW
 				return true;
 			}
 			else {
-				// “Ê•ï‚Íg’¸“_W‡‚Ì‚İh‚Å—Ç‚¢
+				// å‡¸åŒ…ã¯â€œé ‚ç‚¹é›†åˆã®ã¿â€ã§è‰¯ã„
 				MeshDesc md;
 				if (!BuildMeshDescFromGLTFMesh(mesh, md)) return false;
 				ConvexHullDesc ch;
-				ch.points = std::move(md.vertices); // ‘S’¸“_‚ğŒó•â‚É“Š‚°‚éiJolt ‚ª“Ê•ï‰»j
-				// ch.maxConvexRadius / ch.hullTolerance ‚Í•K—v‚É‰‚¶‚Ä’²®
+				ch.points = std::move(md.vertices); // å…¨é ‚ç‚¹ã‚’å€™è£œã«æŠ•ã’ã‚‹ï¼ˆJolt ãŒå‡¸åŒ…åŒ–ï¼‰
+				// ch.maxConvexRadius / ch.hullTolerance ã¯å¿…è¦ã«å¿œã˜ã¦èª¿æ•´
 				out.shape = std::move(ch);
 				out.scale = scale;
 				return true;

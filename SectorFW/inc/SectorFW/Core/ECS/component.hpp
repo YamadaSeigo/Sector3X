@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   component.hpp
- * @brief  ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’è‹`‚ÆŠÖ˜A‚·‚éƒ†[ƒeƒBƒŠƒeƒB‚ğ’ñ‹Ÿ‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief  ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å®šç¾©ã¨é–¢é€£ã™ã‚‹ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ã‚’æä¾›ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -22,90 +22,90 @@ namespace SFW
 	namespace ECS
 	{
 		/**
-		 * @brief Å‘åƒRƒ“ƒ|[ƒlƒ“ƒg”‚ğ’è‹`‚·‚é’è”
+		 * @brief æœ€å¤§ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆæ•°ã‚’å®šç¾©ã™ã‚‹å®šæ•°
 		 */
 #ifdef MAX_COMPONENTS_NUM
 		constexpr size_t MaxComponents = MAX_COMPONENTS_NUM;
 #else
 		 /**
-		  * @brief Å‘åƒRƒ“ƒ|[ƒlƒ“ƒg”‚ğ’è‹`‚·‚é’è”
+		  * @brief æœ€å¤§ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆæ•°ã‚’å®šç¾©ã™ã‚‹å®šæ•°
 		  */
 		constexpr size_t MaxComponents = 64;
 #endif
 		/**
-		 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^ID‚ğ’è‹`‚·‚éŒ^
+		 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹IDã‚’å®šç¾©ã™ã‚‹å‹
 		 */
 		using ComponentTypeID = uint32_t;
 		/**
-		 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN‚ğ’è‹`‚·‚éƒrƒbƒgƒZƒbƒgŒ^
+		 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯ã‚’å®šç¾©ã™ã‚‹ãƒ“ãƒƒãƒˆã‚»ãƒƒãƒˆå‹
 		 */
 		using ComponentMask = std::bitset<MaxComponents>;
 		/**
-		 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌƒŒƒCƒAƒEƒg‚ğ’è‹`‚·‚é\‘¢‘Ì
+		 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’å®šç¾©ã™ã‚‹æ§‹é€ ä½“
 		 */
 		struct ComponentInfo {
 			size_t offset;
 			size_t stride;
 		};
 		/**
-		 * @brief ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ¯•Ê‚·‚éƒ^ƒO
+		 * @brief ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è­˜åˆ¥ã™ã‚‹ã‚¿ã‚°
 		 */
 		struct SparseComponentTag {};
 		/**
-		 * @brief ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ¯•Ê‚·‚é‚½‚ß‚ÌƒgƒŒƒCƒg
+		 * @brief ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è­˜åˆ¥ã™ã‚‹ãŸã‚ã®ãƒˆãƒ¬ã‚¤ãƒˆ
 		 */
 		template<typename, typename = void>
 		struct is_sparse_component : std::false_type {};
 		/**
-		 * @brief@‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ¯•Ê‚·‚é‚½‚ß‚ÌƒgƒŒƒCƒg‚Ì“Áê‰»
+		 * @briefã€€ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è­˜åˆ¥ã™ã‚‹ãŸã‚ã®ãƒˆãƒ¬ã‚¤ãƒˆã®ç‰¹æ®ŠåŒ–
 		 */
 		template<typename T>
 		struct is_sparse_component<T, std::void_t<typename T::sparse_tag>>
 			: std::is_same<typename T::sparse_tag, SparseComponentTag> {
 		};
 		/**
-		 * @brief ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ¯•Ê‚·‚é‚½‚ß‚ÌƒgƒŒƒCƒg‚Ì’l
+		 * @brief ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è­˜åˆ¥ã™ã‚‹ãŸã‚ã®ãƒˆãƒ¬ã‚¤ãƒˆã®å€¤
 		 */
 		template<typename T>
 		constexpr bool is_sparse_component_v = is_sparse_component<T>::value;
 		/**
-		 * @brief SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ¯•Ê‚·‚é‚½‚ß‚ÌƒgƒŒƒCƒg
+		 * @brief SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è­˜åˆ¥ã™ã‚‹ãŸã‚ã®ãƒˆãƒ¬ã‚¤ãƒˆ
 		 */
 		template<typename T, typename = void>
 		struct is_soa_component : std::false_type {};
 		/**
-		 * @brief SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ¯•Ê‚·‚é‚½‚ß‚ÌƒgƒŒƒCƒg‚Ì“Áê‰»
+		 * @brief SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è­˜åˆ¥ã™ã‚‹ãŸã‚ã®ãƒˆãƒ¬ã‚¤ãƒˆã®ç‰¹æ®ŠåŒ–
 		 */
 		template<typename T>
 		struct is_soa_component<T, std::void_t<typename T::soa_type>> : std::true_type {};
 		/**
-		 * @brief SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ¯•Ê‚·‚é‚½‚ß‚ÌƒgƒŒƒCƒg‚Ì’l
+		 * @brief SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è­˜åˆ¥ã™ã‚‹ãŸã‚ã®ãƒˆãƒ¬ã‚¤ãƒˆã®å€¤
 		 */
 		template<typename T>
 		constexpr bool is_soa_component_v = is_soa_component<T>::value;
 		/**
-		 * @brief ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ¯•Ê‚·‚é‚½‚ß‚ÌƒRƒ“ƒZƒvƒg
+		 * @brief ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è­˜åˆ¥ã™ã‚‹ãŸã‚ã®ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 		 */
 		template <typename T>
 		concept SparseComponent = is_sparse_component_v<T>;
 		/**
-		 * @brief SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ¯•Ê‚·‚é‚½‚ß‚ÌƒRƒ“ƒZƒvƒg
+		 * @brief SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è­˜åˆ¥ã™ã‚‹ãŸã‚ã®ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 		 */
 		template<typename T>
 		concept IsSoAComponent = requires {
-			typename T::soa_type;					 // T::soa_type ‚ª‘¶İ‚·‚é
-			typename T::variant_type;                // T::variant_type ‚ª‘¶İ‚·‚é
-			{ T::member_ptr_tuple } -> std::convertible_to<decltype(T::member_ptr_tuple)>; // Ã“Iƒƒ“ƒo•Ï”‚Æ‚µ‚Ä‘¶İ
+			typename T::soa_type;					 // T::soa_type ãŒå­˜åœ¨ã™ã‚‹
+			typename T::variant_type;                // T::variant_type ãŒå­˜åœ¨ã™ã‚‹
+			{ T::member_ptr_tuple } -> std::convertible_to<decltype(T::member_ptr_tuple)>; // é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°ã¨ã—ã¦å­˜åœ¨
 		};
 		/**
-		 * @brief SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒ|ƒCƒ“ƒ^Œ^‚ğ’è‹`‚·‚éƒeƒ“ƒvƒŒ[ƒg
+		 * @brief SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒã‚¤ãƒ³ã‚¿å‹ã‚’å®šç¾©ã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 		 */
 		template<typename T, typename = void>
 		struct SoAPtr {
 			using type = T*;
 		};
 		/**
-		 * @brief SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒ|ƒCƒ“ƒ^Œ^‚ğ’è‹`‚·‚éƒeƒ“ƒvƒŒ[ƒg‚Ì“Áê‰»
+		 * @brief SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒã‚¤ãƒ³ã‚¿å‹ã‚’å®šç¾©ã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®ç‰¹æ®ŠåŒ–
 		 */
 		template<typename T>
 			requires IsSoAComponent<T>
@@ -113,7 +113,7 @@ namespace SFW
 			using type = typename T::ToPtr;
 		};
 		/**
-		 * @brief T ‚ªƒ|ƒCƒ“ƒ^‚È‚ç const T::element_type*A‚»‚¤‚Å‚È‚¯‚ê‚Î const T
+		 * @brief T ãŒãƒã‚¤ãƒ³ã‚¿ãªã‚‰ const T::element_type*ã€ãã†ã§ãªã‘ã‚Œã° const T
 		 */
 		template<typename T>
 		using ConstReturnType = std::conditional_t<
@@ -122,21 +122,21 @@ namespace SFW
 			std::add_const_t<T>
 		>;
 
-		//‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ¯•Ê‚·‚é‚½‚ß‚Ìƒ^ƒO‚ğ’è‹`‚·‚éƒ}ƒNƒ
+		//ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è­˜åˆ¥ã™ã‚‹ãŸã‚ã®ã‚¿ã‚°ã‚’å®šç¾©ã™ã‚‹ãƒã‚¯ãƒ­
 #define SPARSE_TAG using sparse_tag = SFW::ECS::SparseComponentTag;
-		//ƒƒ“ƒo•Ï”‚ğ’è‹`‚·‚éƒ}ƒNƒ
+		//ãƒ¡ãƒ³ãƒå¤‰æ•°ã‚’å®šç¾©ã™ã‚‹ãƒã‚¯ãƒ­
 #define WRAP_MEMBER(var,name) &name::var
-		//ƒƒ“ƒo•Ï”‚Ìƒ|ƒCƒ“ƒ^‚ğ’è‹`‚·‚éƒ}ƒNƒ
+		//ãƒ¡ãƒ³ãƒå¤‰æ•°ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å®šç¾©ã™ã‚‹ãƒã‚¯ãƒ­
 #define WRAP_MEMBER_PTR(var,name) &name::p_##var
-		//“n‚³‚ê‚½ˆø”‚ğƒRƒ“ƒ}‚Å‹æØ‚Á‚Ä“WŠJ‚·‚éƒ}ƒNƒ
+		//æ¸¡ã•ã‚ŒãŸå¼•æ•°ã‚’ã‚³ãƒ³ãƒã§åŒºåˆ‡ã£ã¦å±•é–‹ã™ã‚‹ãƒã‚¯ãƒ­
 #define WRAP_MEMBER_FOREACH(className, macro, ...) FOR_EACH_ARG(macro, className,COMMA,__VA_ARGS__)
-		//ˆø”‚ğdecltype‚Åƒ‰ƒbƒv‚·‚éƒ}ƒNƒ
+		//å¼•æ•°ã‚’decltypeã§ãƒ©ãƒƒãƒ—ã™ã‚‹ãƒã‚¯ãƒ­
 #define WRAP_DECLTYPE(x) decltype(x)
-		//ˆø”‚ğSoAPtr‚Åƒ‰ƒbƒv‚µ‚Äƒ|ƒCƒ“ƒ^Œ^‚ğæ“¾‚·‚éƒ}ƒNƒ
+		//å¼•æ•°ã‚’SoAPtrã§ãƒ©ãƒƒãƒ—ã—ã¦ãƒã‚¤ãƒ³ã‚¿å‹ã‚’å–å¾—ã™ã‚‹ãƒã‚¯ãƒ­
 #define WRAP_DECLTYPE_PTR(x) SFW::ECS::SoAPtr<decltype(x)>::type p_##x
-		//ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ“ƒo[‚ğæ“¾‚·‚é‚½‚ßŠÖ”’è‹`ƒ}ƒNƒ
+		//ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ãƒ³ãƒãƒ¼ã‚’å–å¾—ã™ã‚‹ãŸã‚é–¢æ•°å®šç¾©ãƒã‚¯ãƒ­
 #define DEFINE_GET_FUNCTION(x) inline decltype(p_##x) x##() noexcept {return p_##x;} inline SFW::ECS::ConstReturnType<decltype(p_##x)> x##() const noexcept {return p_##x;}
-		//SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’è‹`ƒ}ƒNƒ
+		//SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å®šç¾©ãƒã‚¯ãƒ­
 #define DEFINE_SOA(className, ...)\
 		using tuple_type = std::tuple<FOR_EACH(WRAP_DECLTYPE,COMMA,__VA_ARGS__)>;\
 		using soa_type = SFW::FlattenT<tuple_type>;\

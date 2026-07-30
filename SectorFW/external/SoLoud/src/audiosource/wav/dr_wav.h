@@ -1,4 +1,4 @@
-/*
+﻿/*
 WAV audio loader and writer. Choice of public domain or MIT-0. See license statements at the end of this file.
 dr_wav - v0.11.4 - 2020-01-29
 

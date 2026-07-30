@@ -1,4 +1,4 @@
-#include <bit>
+ï»¿#include <bit>
 
 #include "Core/ECS/ComponentLayoutRegistry.h"
 #include "Core/ECS/ComponentTypeRegistry.h"
@@ -34,7 +34,7 @@ namespace SFW
 
 			bool hasSoA = false;
 
-			// Å¬ƒ‹[ƒv‚Åƒrƒbƒg‘–¸
+			// æœ€å°ãƒ«ãƒ¼ãƒ—ã§ãƒ“ãƒƒãƒˆèµ°æŸ»
 			ComponentMask working = mask;
 			while (working.any()) {
 				ComponentTypeID index = static_cast<ComponentTypeID>(std::countr_zero(working.to_ullong()));
@@ -109,11 +109,11 @@ namespace SFW
 					size_t offset = 0;
 					bool fits = true;
 					for (auto& c : component) {
-						// SoA‚Í‚±‚±‚Å‚Íˆ—‚µ‚È‚¢
+						// SoAã¯ã“ã“ã§ã¯å‡¦ç†ã—ãªã„
 						assert(c.meta.isSoA == false);
 
 						for (const auto& structure : c.meta.structure) {
-							if (structure.size == 0) continue; // ƒTƒCƒY‚ª0‚Ì\‘¢‘Ì‚ÍƒXƒLƒbƒv
+							if (structure.size == 0) continue; // ã‚µã‚¤ã‚ºãŒ0ã®æ§‹é€ ä½“ã¯ã‚¹ã‚­ãƒƒãƒ—
 							offset = AlignTo(offset, structure.align);
 							if (offset + structure.size * layout.capacity > ChunkSizeBytes) {
 								fits = false;

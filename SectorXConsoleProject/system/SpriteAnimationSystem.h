@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "graphics/SpriteAnimationService.h"
 
@@ -6,13 +6,13 @@ template<typename Partition>
 class SpriteAnimationSystem : public ITypeSystem<
 	SpriteAnimationSystem,
 	Partition,
-	//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
+	//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
 	ComponentAccess<
 	Write<CSpriteAnimation>,
 	Read<CTransform>,
 	Read<CColor>
 	>,
-	//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	ServiceContext<
 	SpriteAnimationService,
 	SFW::Graphics::RenderService
@@ -38,7 +38,7 @@ public:
 		psoMgr->Add(psoDesc, psoHandle);
 	}
 
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(Partition& partition,
 		NoDeletePtr<SpriteAnimationService> spriteAnimationService,
 		NoDeletePtr< SFW::Graphics::RenderService> renderService) {
@@ -64,7 +64,7 @@ public:
 					transform->sx(), transform->sy(), transform->sz()
 			};
 
-			// ƒ[ƒ‹ƒhs—ñ‚ğˆêŠ‡¶¬
+			// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’ä¸€æ‹¬ç”Ÿæˆ
 			std::vector<float> worldMtxBuffer(12 * entityCount);
 			Math::Matrix3x4fSoA worldMtxSoA(worldMtxBuffer.data(), entityCount);
 			Math::BuildWorldMatrixSoA_FromTransformSoA(mtf, worldMtxSoA, false);
@@ -83,7 +83,7 @@ public:
 
 				auto instIdx = instanceIndices[i];
 
-				// ƒXƒvƒ‰ƒCƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ÌƒCƒ“ƒXƒ^ƒ“ƒX“o˜^(Timeã‘‚«)
+				// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç™»éŒ²(Timeä¸Šæ›¸ã)
 				spriteAnimationService->PushSpriteAnimationInstance(sp, instIdx);
 
 				cmd.material = sp.hMat.index;

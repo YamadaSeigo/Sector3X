@@ -1,4 +1,4 @@
-#include "Graphics/DX11/DX11ShaderManager.h"
+ï»¿#include "Graphics/DX11/DX11ShaderManager.h"
 
 #include <cassert>
 
@@ -11,7 +11,7 @@ namespace SFW
 	namespace Graphics::DX11
 	{
 		std::filesystem::path ShaderManager::Canonicalize(const std::wstring& w) {
-			// weakly_canonical ‚Í‘¶İ‚µ‚È‚¢ƒpƒX‚Å‚à³‹K‰»‚µ‚Ä‚­‚ê‚é
+			// weakly_canonical ã¯å­˜åœ¨ã—ãªã„ãƒ‘ã‚¹ã§ã‚‚æ­£è¦åŒ–ã—ã¦ãã‚Œã‚‹
 			std::error_code ec{};
 			auto p = std::filesystem::path(w);
 			auto c = std::filesystem::weakly_canonical(p, ec);
@@ -19,7 +19,7 @@ namespace SFW
 		}
 
 		size_t ShaderManager::MakeKey(const ShaderCreateDesc& desc) const {
-			// ƒpƒX‚Í³‹K‰» & lowercaseiWindows‘z’è‚Ì‘å•¶š¬•¶š·ˆÙ‚Ì‹zûj
+			// ãƒ‘ã‚¹ã¯æ­£è¦åŒ– & lowercaseï¼ˆWindowsæƒ³å®šã®å¤§æ–‡å­—å°æ–‡å­—å·®ç•°ã®å¸åï¼‰
 			auto vsCan = Canonicalize(desc.vsPath).generic_wstring();
 			auto psCan = Canonicalize(desc.psPath).generic_wstring();
 			std::transform(vsCan.begin(), vsCan.end(), vsCan.begin(), ::towlower);
@@ -83,7 +83,7 @@ namespace SFW
 
 			// === Compile PS ===
 			Microsoft::WRL::ComPtr<ID3DBlob> psBlob;
-			if (desc.psPath.empty()) return shader; // ƒsƒNƒZƒ‹ƒVƒF[ƒ_[–³‚µ‹–—e
+			if (desc.psPath.empty()) return shader; // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç„¡ã—è¨±å®¹
 
 			hr = D3DReadFileToBlob(desc.psPath.c_str(), psBlob.GetAddressOf());
 			if (FAILED(hr)) {
@@ -109,15 +109,15 @@ namespace SFW
 			return semanticName.starts_with(ShaderManager::INSTANCE_SEMANTIC_NAME);
 		}
 
-		// System-Value(SV_*) ‚Í IA ‚Å‚Í‚È‚­ƒpƒCƒvƒ‰ƒCƒ“‚ª©“®‹Ÿ‹‹‚·‚é ¨ InputLayout ‚©‚çœŠO
+		// System-Value(SV_*) ã¯ IA ã§ã¯ãªããƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ãŒè‡ªå‹•ä¾›çµ¦ã™ã‚‹ â†’ InputLayout ã‹ã‚‰é™¤å¤–
 		static inline bool IsIAConsumed(const D3D11_SIGNATURE_PARAMETER_DESC& p) noexcept
 		{
-			// D3D_NAME_UNDEFINED c ’ÊíƒZƒ}ƒ“ƒeƒBƒNiPOSITION/NORMAL/TEXCOORD/cj
-			// ‚»‚êˆÈŠOiSV_Position, SV_VertexID, SV_InstanceID ‚È‚Çj‚Í IA ”ñ‘ÎÛ
+			// D3D_NAME_UNDEFINED â€¦ é€šå¸¸ã‚»ãƒãƒ³ãƒ†ã‚£ã‚¯ï¼ˆPOSITION/NORMAL/TEXCOORD/â€¦ï¼‰
+			// ãã‚Œä»¥å¤–ï¼ˆSV_Position, SV_VertexID, SV_InstanceID ãªã©ï¼‰ã¯ IA éå¯¾è±¡
 			return p.SystemValueType == D3D_NAME_UNDEFINED;
 		}
 
-		// gTEXCOORDh ‚Ì‚æ‚¤‚É Index ‚ªÈ—ª/0 ‚Ì•\‹L‚ä‚ê‘Îôi”CˆÓj
+		// â€œTEXCOORDâ€ ã®ã‚ˆã†ã« Index ãŒçœç•¥/0 ã®è¡¨è¨˜ã‚†ã‚Œå¯¾ç­–ï¼ˆä»»æ„ï¼‰
 		static inline bool IsTexcoord(std::string_view s) noexcept {
 			return s == "TEXCOORD" || s.rfind("TEXCOORD", 0) == 0;
 		}
@@ -143,7 +143,7 @@ namespace SFW
 			D3D11_SHADER_DESC shaderDesc;
 			hr = reflector->GetDesc(&shaderDesc);
 
-			semanticNames.reserve(shaderDesc.InputParameters); // emplace_back‚ÅÄ\’z‚³‚ê‚È‚¢‚æ‚¤‚É–‘O‚ÉƒTƒCƒY‚ğŠm•Û
+			semanticNames.reserve(shaderDesc.InputParameters); // emplace_backã§å†æ§‹ç¯‰ã•ã‚Œãªã„ã‚ˆã†ã«äº‹å‰ã«ã‚µã‚¤ã‚ºã‚’ç¢ºä¿
 
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to get shader description: %s", hr);
@@ -158,19 +158,19 @@ namespace SFW
 				D3D11_SIGNATURE_PARAMETER_DESC p{};
 				reflector->GetInputParameterDesc(i, &p);
 
-				// 1. SV_* ‚Í IA ‚Å‹Ÿ‹‹‚µ‚È‚¢ ¨ Š®‘SƒXƒLƒbƒvirequiredInputs ‚É‚à“ü‚ê‚È‚¢j
+				// 1. SV_* ã¯ IA ã§ä¾›çµ¦ã—ãªã„ â†’ å®Œå…¨ã‚¹ã‚­ãƒƒãƒ—ï¼ˆrequiredInputs ã«ã‚‚å…¥ã‚Œãªã„ï¼‰
 				if (!IsIAConsumed(p)) {
 					continue;
 				}
 
-				// ˆÈ~‚Í IA ‚ªÁ”ï‚·‚é’Êí“ü—Í‚¾‚¯
+				// ä»¥é™ã¯ IA ãŒæ¶ˆè²»ã™ã‚‹é€šå¸¸å…¥åŠ›ã ã‘
 				semanticNames.emplace_back(p.SemanticName);
 				auto& s = semanticNames.back();
 				const UINT semIndex = p.SemanticIndex;
 
 				required.push_back({ s, semIndex });
 
-				// Šù’m or ƒI[ƒo[ƒ‰ƒCƒhŠm”Fi¦‚±‚±‚Å g–¢’mh ƒtƒ‰ƒO‚ğ—§‚Ä‚éj
+				// æ—¢çŸ¥ or ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ç¢ºèªï¼ˆâ€»ã“ã“ã§ â€œæœªçŸ¥â€ ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹ï¼‰
 				const bool known = IsKnownSemantic(s) || overrides_.count({ s, semIndex }) > 0;
 				allKnown = allKnown && known;
 
@@ -178,7 +178,7 @@ namespace SFW
 				e.SemanticName = s.c_str();
 				e.SemanticIndex = semIndex;
 
-				// ‰Šú Format „’èiŒã‚ÅƒZƒ}ƒ“ƒeƒBƒN‚Åã‘‚«j
+				// åˆæœŸ Format æ¨å®šï¼ˆå¾Œã§ã‚»ãƒãƒ³ãƒ†ã‚£ã‚¯ã§ä¸Šæ›¸ãï¼‰
 				if (p.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32) {
 					UINT n = (p.Mask & 0x8 ? 4 : p.Mask & 0x4 ? 3 : p.Mask & 0x2 ? 2 : 1);
 					e.Format = (n == 4) ? DXGI_FORMAT_R32G32B32A32_FLOAT
@@ -186,7 +186,7 @@ namespace SFW
 						: DXGI_FORMAT_R32G32_FLOAT;
 				}
 				else if (p.ComponentType == D3D_REGISTER_COMPONENT_UINT32) {
-					// —áFCOLOR ‚ğ uint Œn‚Åó‚¯‚éƒP[ƒX‚É”õ‚¦‚½‰Šú’l
+					// ä¾‹ï¼šCOLOR ã‚’ uint ç³»ã§å—ã‘ã‚‹ã‚±ãƒ¼ã‚¹ã«å‚™ãˆãŸåˆæœŸå€¤
 					e.Format = DXGI_FORMAT_R32G32B32A32_UINT;
 				}
 				else if (p.ComponentType == D3D_REGISTER_COMPONENT_SINT32) {
@@ -196,7 +196,7 @@ namespace SFW
 					e.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 				}
 
-				// 2. ƒI[ƒo[ƒ‰ƒCƒh‚ª‚ ‚ê‚ÎÅ—Dæ
+				// 2. ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãŒã‚ã‚Œã°æœ€å„ªå…ˆ
 				if (auto it = overrides_.find({ s, semIndex }); it != overrides_.end()) {
 					const auto& ov = it->second;
 					e.InputSlot = ov.slot;
@@ -206,27 +206,27 @@ namespace SFW
 					e.Format = ov.format;
 				}
 				else {
-					// 3. Šù’mƒZƒ}ƒ“ƒeƒBƒN‚Í‹K–ñ‚Ì Slot/Format ‚ğ“K—p
+					// 3. æ—¢çŸ¥ã‚»ãƒãƒ³ãƒ†ã‚£ã‚¯ã¯è¦ç´„ã® Slot/Format ã‚’é©ç”¨
 					e.InputSlot = DecideInputSlotFromSemantic(s, semIndex);
 					e.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
 					e.InputSlotClass = (s.rfind("INSTANCE_", 0) == 0)
 						? D3D11_INPUT_PER_INSTANCE_DATA : D3D11_INPUT_PER_VERTEX_DATA;
 					e.InstanceDataStepRate = (e.InputSlotClass == D3D11_INPUT_PER_INSTANCE_DATA) ? 1 : 0;
 
-					// Šù’m‚Ìˆ³kŒ`®‚É‘µ‚¦‚éiŒÅ’èƒ}ƒbƒv‚É‡‚í‚¹‚Äj
+					// æ—¢çŸ¥ã®åœ§ç¸®å½¢å¼ã«æƒãˆã‚‹ï¼ˆå›ºå®šãƒãƒƒãƒ—ã«åˆã‚ã›ã¦ï¼‰
 					if (s == "TANGENT")         e.Format = DXGI_FORMAT_R8G8B8A8_SNORM;
 					else if (s == "NORMAL")     e.Format = DXGI_FORMAT_R8G8B8A8_SNORM;
 					else if (IsTexcoord(s))     e.Format = DXGI_FORMAT_R16G16_FLOAT; // TEXCOORD*, half2
 					else if (s == "BLENDINDICES") e.Format = DXGI_FORMAT_R8G8B8A8_UINT;
 					else if (s == "BLENDWEIGHT")  e.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-					// COLOR ‚Í‰^—p•ûj‚ÅFfloat4‰^—p¨UNORMAuint4‰^—p¨UINT
+					// COLOR ã¯é‹ç”¨æ–¹é‡ã§ï¼šfloat4é‹ç”¨â†’UNORMã€uint4é‹ç”¨â†’UINT
 					else if (s == "COLOR")      e.Format = DXGI_FORMAT_R8G8B8A8_UNORM; // or R8G8B8A8_UINT
 				}
 
 				outDesc.push_back(e);
 			}
 
-			// 4. ƒ‚[ƒh”»’è‚Í gIA“ü—Í‚¾‚¯h ‚ğŠî€‚És‚¤
+			// 4. ãƒ¢ãƒ¼ãƒ‰åˆ¤å®šã¯ â€œIAå…¥åŠ›ã ã‘â€ ã‚’åŸºæº–ã«è¡Œã†
 			auto& sd = currentShaderData;
 			sd.requiredInputs = std::move(required);
 			sd.bindingMode = allKnown ? InputBindingMode::BINDMODE_AUTOSTREAMS
@@ -236,20 +236,20 @@ namespace SFW
 
 		unsigned int ShaderManager::DecideInputSlotFromSemantic(std::string_view name, unsigned int semanticIndex) noexcept
 		{
-			// ‚´‚Á‚­‚è‹K–ñF
+			// ã–ã£ãã‚Šè¦ç´„ï¼š
 			// POSITION        -> slot 0
-			// TANGENT		   -> slot 1i“¯VB“àƒIƒtƒZƒbƒg‚Å‹¤‘¶‰Âj
-			// NORMAL		   -> slot 5iR8G8B8A8_SNORM‚Ì‚½‚ß,‚í‚¯‚éj
-			// TEXCOORD*       -> slot 2iuv0/uv1 ‚à‚±‚±j
-			// BLEND*          -> slot 3iƒXƒLƒjƒ“ƒOj
-			// INSTANCE_*      -> slot 4 ˆÈ~‚Å‚à—Ç‚¢‚ªAŠÈ’P‚É 1 ‚ÉŠñ‚¹‚½‚¢‚È‚ç‚±‚±‚ÅŒÅ’è‚µ‚È‚¢
-			// ¡‰ñ‚Í INSTANCE_* ‚Í Reflect “à‚Å PER_INSTANCE ‚ÉØ‘Ö{slot=1ŒÅ’è‚É‚·‚éiŠù‘¶‹““®‚É‰ˆ‚¤j
+			// TANGENT		   -> slot 1ï¼ˆåŒVBå†…ã‚ªãƒ•ã‚»ãƒƒãƒˆã§å…±å­˜å¯ï¼‰
+			// NORMAL		   -> slot 5ï¼ˆR8G8B8A8_SNORMã®ãŸã‚,ã‚ã‘ã‚‹ï¼‰
+			// TEXCOORD*       -> slot 2ï¼ˆuv0/uv1 ã‚‚ã“ã“ï¼‰
+			// BLEND*          -> slot 3ï¼ˆã‚¹ã‚­ãƒ‹ãƒ³ã‚°ï¼‰
+			// INSTANCE_*      -> slot 4 ä»¥é™ã§ã‚‚è‰¯ã„ãŒã€ç°¡å˜ã« 1 ã«å¯„ã›ãŸã„ãªã‚‰ã“ã“ã§å›ºå®šã—ãªã„
+			// ä»Šå›ã¯ INSTANCE_* ã¯ Reflect å†…ã§ PER_INSTANCE ã«åˆ‡æ›¿ï¼‹slot=1å›ºå®šã«ã™ã‚‹ï¼ˆæ—¢å­˜æŒ™å‹•ã«æ²¿ã†ï¼‰
 			if (name == "POSITION") return 0;
 			if (name == "TANGENT") return 1;  // TANGENT: slot1
-			if (name == "NORMAL")  return 5;  // NORMAL : slot5iVB‚ğ•ª‚¯‚½ê‡j
-			if (name == "TEXCOORD") return 2; // *Index ‚Í InputElement ‚Ì SemanticIndex ‚É“ü‚é
+			if (name == "NORMAL")  return 5;  // NORMAL : slot5ï¼ˆVBã‚’åˆ†ã‘ãŸå ´åˆï¼‰
+			if (name == "TEXCOORD") return 2; // *Index ã¯ InputElement ã® SemanticIndex ã«å…¥ã‚‹
 			if (name == "BLENDINDICES" || name == "BLENDWEIGHT") return 3;
-			// ‚»‚Ì‘¼‚Í0‚ÖiƒJƒXƒ^ƒ€‚Í“K‹XŠg’£j
+			// ãã®ä»–ã¯0ã¸ï¼ˆã‚«ã‚¹ã‚¿ãƒ ã¯é©å®œæ‹¡å¼µï¼‰
 			return 0;
 		}
 
@@ -276,10 +276,10 @@ namespace SFW
 		}
 
 		bool ShaderManager::IsKnownSemantic(std::string_view s) const noexcept {
-			// •K—v‚È‚ç¬•¶š‰»
+			// å¿…è¦ãªã‚‰å°æ–‡å­—åŒ–
 			if (s == "POSITION" || s == "NORMAL" || s == "TANGENT" || s == "BLENDINDICES" || s == "BLENDWEIGHT") return true;
 			if (s.rfind("TEXCOORD", 0) == 0) return true;     // TEXCOORD0,1,...
-			if (s.rfind("INSTANCE_", 0) == 0) return true;    // INSTANCE_MAT* ‚È‚Ç
+			if (s.rfind("INSTANCE_", 0) == 0) return true;    // INSTANCE_MAT* ãªã©
 			return false;
 		}
 

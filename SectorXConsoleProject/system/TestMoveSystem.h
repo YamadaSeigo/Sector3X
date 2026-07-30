@@ -1,14 +1,14 @@
-#pragma once
+ï»¿#pragma once
 
 template<typename Partition>
 class TestMoveSystem : public ITypeSystem<
 	TestMoveSystem,
 	Partition,
-	ComponentAccess<Write<CTransform>, Write<CSpatialMotionTag>>,//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
-	ServiceContext<SpatialChunkRegistry>>{//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	ComponentAccess<Write<CTransform>, Write<CSpatialMotionTag>>,//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
+	ServiceContext<SpatialChunkRegistry>>{//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	using Accessor = ComponentAccessor<Write<CTransform>, Write<CSpatialMotionTag>>;
 public:
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(Partition& partition, LevelContext& levelCtx, SafePtr<SpatialChunkRegistry> registry) {
 		BudgetMover::LocalBatch moveBatch(levelCtx.mover, 200);
 

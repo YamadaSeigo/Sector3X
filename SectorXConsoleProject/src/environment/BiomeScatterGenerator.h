@@ -1,4 +1,4 @@
-// BiomeScatterGenerator.h
+ï»¿// BiomeScatterGenerator.h
 #pragma once
 #include <cstdint>
 #include <vector>
@@ -10,14 +10,14 @@
 
 struct Rgba8 { uint8_t r = 0, g = 0, b = 0, a = 0; };
 
-/// ŠO•”‚Ì”z—ñ‚ğu‰æ‘œv‚Æ‚µ‚Äˆµ‚¤‚½‚ß‚ÌŒy‚¢ƒrƒ…[
+/// å¤–éƒ¨ã®é…åˆ—ã‚’ã€Œç”»åƒã€ã¨ã—ã¦æ‰±ã†ãŸã‚ã®è»½ã„ãƒ“ãƒ¥ãƒ¼
 template<class T>
 struct Image2D
 {
 	const T* data = nullptr;
 	int w = 0;
 	int h = 0;
-	int stride = 0; // 0‚È‚ç w ‚Æ“¯‚¶
+	int stride = 0; // 0ãªã‚‰ w ã¨åŒã˜
 
 	const T& at(int x, int y) const
 	{
@@ -29,7 +29,7 @@ struct Image2D
 	}
 };
 
-/// ƒTƒ“ƒvƒ‹Œ‹‰Êi0..1j
+/// ã‚µãƒ³ãƒ—ãƒ«çµæœï¼ˆ0..1ï¼‰
 struct GroundSample
 {
 	float grass = 0; // R
@@ -38,10 +38,10 @@ struct GroundSample
 	float snow = 0; // A
 };
 
-/// ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹‚ÍƒGƒ“ƒWƒ“‘¤‚ÌŒ^‚É’u‚«Š·‚¦‚ÄOK
+/// ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã¯ã‚¨ãƒ³ã‚¸ãƒ³å´ã®å‹ã«ç½®ãæ›ãˆã¦OK
 using ModelHandle = uint32_t;
 
-/// ¶¬‚³‚ê‚éƒCƒ“ƒXƒ^ƒ“ƒXi‚ ‚È‚½‚ªŒ¾‚Á‚Ä‚½€–Új
+/// ç”Ÿæˆã•ã‚Œã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ï¼ˆã‚ãªãŸãŒè¨€ã£ã¦ãŸé …ç›®ï¼‰
 struct ScatterInstance
 {
 	ModelHandle     model = 0;
@@ -52,84 +52,84 @@ struct ScatterInstance
 	float           roughness = 0.5f;
 };
 
-/// ƒoƒCƒI[ƒ€“à‚Ìu}•ª‚©‚êƒOƒ‹[ƒvv(–Ø/’á–Ø/Šâ¬•¨c‚È‚Ç)
+/// ãƒã‚¤ã‚ªãƒ¼ãƒ å†…ã®ã€Œæåˆ†ã‹ã‚Œã‚°ãƒ«ãƒ¼ãƒ—ã€(æœ¨/ä½æœ¨/å²©å°ç‰©â€¦ãªã©)
 struct BranchGroup
 {
-	// ‚±‚ÌƒOƒ‹[ƒv‚ªgŒó•â“_1‚Âh‚É‘Î‚µ‚ÄoŒ»‚ğ‚İ‚éŠm—¦i0..1j
+	// ã“ã®ã‚°ãƒ«ãƒ¼ãƒ—ãŒâ€œå€™è£œç‚¹1ã¤â€ã«å¯¾ã—ã¦å‡ºç¾ã‚’è©¦ã¿ã‚‹ç¢ºç‡ï¼ˆ0..1ï¼‰
 	float spawnProbability = 0.25f;
 
-	// Œó•â“_‚ªó—‚³‚ê‚½‚Æ‚«‚ÌƒXƒP[ƒ‹”ÍˆÍ
+	// å€™è£œç‚¹ãŒå—ç†ã•ã‚ŒãŸã¨ãã®ã‚¹ã‚±ãƒ¼ãƒ«ç¯„å›²
 	float scaleMin = 0.8f;
 	float scaleMax = 1.2f;
 
-	// roughness ”ÍˆÍiŒÂ‘Ì·j
+	// roughness ç¯„å›²ï¼ˆå€‹ä½“å·®ï¼‰
 	float roughnessMin = 0.35f;
 	float roughnessMax = 0.8f;
 
-	// tint ‚Ì—h‚ç‚¬i}j
+	// tint ã®æºã‚‰ãï¼ˆÂ±ï¼‰
 	Math::Vec3f tintJitter = { 0.05f, 0.05f, 0.05f };
 
-	// ’n•\‚Æ‚ÌŠÖŒWiŠÈˆÕj
-	// grass/dirt/rock/snow ‚ğd‚İ‚ÉŠ|‚¯‚éŒW”i0..2‚­‚ç‚¢‘z’èj
+	// åœ°è¡¨ã¨ã®é–¢ä¿‚ï¼ˆç°¡æ˜“ï¼‰
+	// grass/dirt/rock/snow ã‚’é‡ã¿ã«æ›ã‘ã‚‹ä¿‚æ•°ï¼ˆ0..2ãã‚‰ã„æƒ³å®šï¼‰
 	float wGrass = 0.0f;
 	float wDirt = 0.0f;
 	float wRock = 0.0f;
 	float wSnow = 0.0f;
 
-	// ¼‚è‹C‚É‚æ‚éd‚İi0..2‚­‚ç‚¢j
+	// æ¹¿ã‚Šæ°—ã«ã‚ˆã‚‹é‡ã¿ï¼ˆ0..2ãã‚‰ã„ï¼‰
 	float wWetness = 1.0f;
 
-	// Î–Ê§ŒÀi“x”–@‚Åw’èj
+	// æ–œé¢åˆ¶é™ï¼ˆåº¦æ•°æ³•ã§æŒ‡å®šï¼‰
 	float maxSlopeDeg = 35.0f;
 
-	// ƒ‚ƒfƒ‹Œó•â‚Æd‚İ
+	// ãƒ¢ãƒ‡ãƒ«å€™è£œã¨é‡ã¿
 	struct ModelChoice { ModelHandle handle; float weight; };
 	std::vector<ModelChoice> models;
 };
 
-/// ƒoƒCƒI[ƒ€‚²‚Æ‚Ìƒpƒ‰ƒ[ƒ^
+/// ãƒã‚¤ã‚ªãƒ¼ãƒ ã”ã¨ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 struct BiomeParams
 {
 	uint16_t biomeId = 0;
-	float    baseDensityPerSquareMeter = 0.03f; // gŒó•â“_–§“xh‚Ì–ÚˆÀ
+	float    baseDensityPerSquareMeter = 0.03f; // â€œå€™è£œç‚¹å¯†åº¦â€ã®ç›®å®‰
 	std::vector<BranchGroup> branches;
 };
 
-/// ƒ[ƒ‹ƒhã‚ÌŠeƒ}ƒbƒv‚Ì‰ğß
+/// ãƒ¯ãƒ¼ãƒ«ãƒ‰ä¸Šã®å„ãƒãƒƒãƒ—ã®è§£é‡ˆ
 struct ScatterInputs
 {
-	// ƒ[ƒ‹ƒhƒTƒCƒYiX,Zj
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ã‚µã‚¤ã‚ºï¼ˆX,Zï¼‰
 	Math::Vec2f worldSize = { 4096.0f, 4096.0f };
 
-	// ‚±‚ê‚ç‚Í gƒ[ƒ‹ƒh‘S‘Ìh ‚ğƒJƒo[‚·‚é0..1‘z’è‚ÌCPU”z—ñ
-	Image2D<Rgba8> groundRgba;   // RGBA=‘/“y/Šâ/á
+	// ã“ã‚Œã‚‰ã¯ â€œãƒ¯ãƒ¼ãƒ«ãƒ‰å…¨ä½“â€ ã‚’ã‚«ãƒãƒ¼ã™ã‚‹0..1æƒ³å®šã®CPUé…åˆ—
+	Image2D<Rgba8> groundRgba;   // RGBA=è‰/åœŸ/å²©/é›ª
 	Image2D<uint8_t> wetness;    // 0..255
 	Image2D<uint8_t> noVegetation; // 0..255
-	Image2D<uint16_t> biomeId;   // 2DƒoƒCƒI[ƒ€ID
+	Image2D<uint16_t> biomeId;   // 2Dãƒã‚¤ã‚ªãƒ¼ãƒ ID
 
-	// ‚‚³E–@üEŒXÎ‚ÍƒvƒƒWƒFƒNƒgŸ‘æ‚È‚Ì‚ÅƒR[ƒ‹ƒoƒbƒN‚Å“n‚·‚Ì‚ªˆê”Ô‹­‚¢
-	// ‚±‚±‚Å‚Íu‚‚³v‚ÆuŒXÎi“xjv‚ğŠÖ”‚Å–â‚¢‡‚í‚¹‚é‘O’ñ
+	// é«˜ã•ãƒ»æ³•ç·šãƒ»å‚¾æ–œã¯ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆæ¬¡ç¬¬ãªã®ã§ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã§æ¸¡ã™ã®ãŒä¸€ç•ªå¼·ã„
+	// ã“ã“ã§ã¯ã€Œé«˜ã•ã€ã¨ã€Œå‚¾æ–œï¼ˆåº¦ï¼‰ã€ã‚’é–¢æ•°ã§å•ã„åˆã‚ã›ã‚‹å‰æ
 	float (*sampleHeight)(float x, float z, void* user) = nullptr;
 	float (*sampleSlopeDeg)(float x, float z, void* user) = nullptr;
 	void* heightUser = nullptr;
 
-	// —”‚Ìƒx[ƒXƒV[ƒhiÄŒ»«j
+	// ä¹±æ•°ã®ãƒ™ãƒ¼ã‚¹ã‚·ãƒ¼ãƒ‰ï¼ˆå†ç¾æ€§ï¼‰
 	uint32_t globalSeed = 1;
 };
 
 struct ScatterConfig
 {
-	// Œó•â“_¶¬‚ÌƒZƒ‹ƒTƒCƒYimjB¬‚³‚¢‚Ù‚Ç–§“x‚ª×‚©‚­’²®‚Å‚«‚é‚ªd‚¢
+	// å€™è£œç‚¹ç”Ÿæˆã®ã‚»ãƒ«ã‚µã‚¤ã‚ºï¼ˆmï¼‰ã€‚å°ã•ã„ã»ã©å¯†åº¦ãŒç´°ã‹ãèª¿æ•´ã§ãã‚‹ãŒé‡ã„
 	float candidateCellSize = 4.0f;
 
-	// noVegetation‚ª‚±‚Ì’lˆÈã‚È‚çŠü‹pi0..1j
+	// noVegetationãŒã“ã®å€¤ä»¥ä¸Šãªã‚‰æ£„å´ï¼ˆ0..1ï¼‰
 	float noVegRejectThreshold = 0.5f;
 
-	// Wetness (0..1) ‚ğ‚»‚Ì‚Ü‚Ü}‚Ìd‚İ‚ÉŠ|‚¯‚é‚½‚ß‚Ì‹ÈüŒW”
-	// 1.0=‚»‚Ì‚Ü‚ÜA>1‚Å‹­’²A<1‚Åã‚ß
+	// Wetness (0..1) ã‚’ãã®ã¾ã¾æã®é‡ã¿ã«æ›ã‘ã‚‹ãŸã‚ã®æ›²ç·šä¿‚æ•°
+	// 1.0=ãã®ã¾ã¾ã€>1ã§å¼·èª¿ã€<1ã§å¼±ã‚
 	float wetnessPower = 1.0f;
 
-	// ¶¬ãŒÀi–\‘––h~j
+	// ç”Ÿæˆä¸Šé™ï¼ˆæš´èµ°é˜²æ­¢ï¼‰
 	uint32_t maxInstances = 2'000'000;
 };
 
@@ -140,7 +140,7 @@ public:
 	void SetConfig(const ScatterConfig& cfg) { m_cfg = cfg; }
 	void SetBiomes(std::span<const BiomeParams> biomes);
 
-	// ƒ[ƒ‹ƒh‘Sˆæ‚Ì¶¬
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰å…¨åŸŸã®ç”Ÿæˆ
 	[[nodiscard]] std::vector<ScatterInstance> GenerateAll() const;
 
 private:
@@ -150,7 +150,7 @@ private:
 
 	const BiomeParams* FindBiome(uint16_t id) const;
 
-	// ƒTƒ“ƒvƒŠƒ“ƒO
+	// ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°
 	uint16_t SampleBiomeId(float x, float z) const;
 	GroundSample SampleGround(float x, float z) const;
 	float SampleWetness01(float x, float z) const;
@@ -164,9 +164,9 @@ public:
 	static float    URange(uint32_t& state, float a, float b);
 
 private:
-	// ’Š‘I
+	// æŠ½é¸
 	static int WeightedPickIndex(std::span<const BranchGroup::ModelChoice> items, uint32_t& rng);
 
-	// Œó•â“_¶¬iƒOƒŠƒbƒh + ƒWƒbƒ^[j
+	// å€™è£œç‚¹ç”Ÿæˆï¼ˆã‚°ãƒªãƒƒãƒ‰ + ã‚¸ãƒƒã‚¿ãƒ¼ï¼‰
 	void GenerateCandidates(std::vector<Math::Vec2f>& out) const;
 };

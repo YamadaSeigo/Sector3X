@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * \file   DX11LightShadowResourceService.h
- * \brief DirectX11 —p‚Ìƒ‰ƒCƒgAƒVƒƒƒhƒEEƒŠƒ\[ƒXŠÇ—ƒT[ƒrƒX
+ * \brief DirectX11 ç”¨ã®ãƒ©ã‚¤ãƒˆã€ã‚·ãƒ£ãƒ‰ã‚¦ãƒ»ãƒªã‚½ãƒ¼ã‚¹ç®¡ç†ã‚µãƒ¼ãƒ“ã‚¹
  * \author seigo
  * \date   December 2025
  *********************************************************************/
@@ -24,8 +24,8 @@ namespace SFW
 		{
 			std::uint32_t width = 2048;
 			std::uint32_t height = 2048;
-			std::uint32_t cascadeCount = kMaxShadowCascades; // LightShadowService ‚Æ“¯‚¶ãŒÀ
-			DXGI_FORMAT   texFormat = DXGI_FORMAT_R32_TYPELESS; // ƒeƒNƒXƒ`ƒƒ–{‘Ì
+			std::uint32_t cascadeCount = kMaxShadowCascades; // LightShadowService ã¨åŒã˜ä¸Šé™
+			DXGI_FORMAT   texFormat = DXGI_FORMAT_R32_TYPELESS; // ãƒ†ã‚¯ã‚¹ãƒãƒ£æœ¬ä½“
 			DXGI_FORMAT   dsvFormat = DXGI_FORMAT_D32_FLOAT;
 			DXGI_FORMAT   srvFormat = DXGI_FORMAT_R32_FLOAT;
 		};
@@ -38,7 +38,7 @@ namespace SFW
 			float dir[3] = {};
 		};
 
-		// DirectX11 —p‚Ìƒ‰ƒCƒgAƒVƒƒƒhƒEEƒŠƒ\[ƒXŠÇ—ƒT[ƒrƒX
+		// DirectX11 ç”¨ã®ãƒ©ã‚¤ãƒˆã€ã‚·ãƒ£ãƒ‰ã‚¦ãƒ»ãƒªã‚½ãƒ¼ã‚¹ç®¡ç†ã‚µãƒ¼ãƒ“ã‚¹
 		class LightShadowResourceService
 		{
 		public:
@@ -46,7 +46,7 @@ namespace SFW
 
 			bool Initialize(ID3D11Device* device, const ShadowMapConfig& cfg);
 
-			// ‰ğ‘œ“x•ÏX‚µ‚½‚¢‚Æ‚«—pi•K—v‚È‚¯‚ê‚ÎŒÄ‚Î‚È‚­‚ÄOKj
+			// è§£åƒåº¦å¤‰æ›´ã—ãŸã„ã¨ãç”¨ï¼ˆå¿…è¦ãªã‘ã‚Œã°å‘¼ã°ãªãã¦OKï¼‰
 			bool Resize(ID3D11Device* device, std::uint32_t width, std::uint32_t height);
 
 			void ClearDepthBuffer(ID3D11DeviceContext* context, float clearValue = 1.0f)
@@ -114,7 +114,7 @@ namespace SFW
 				return m_cbShadowCascades;
 			}
 
-			// ------------ ƒƒCƒ“ƒpƒX‚©‚ç—˜—p‚·‚éî•ñ ------------
+			// ------------ ãƒ¡ã‚¤ãƒ³ãƒ‘ã‚¹ã‹ã‚‰åˆ©ç”¨ã™ã‚‹æƒ…å ± ------------
 
 			ComPtr<ID3D11ShaderResourceView> GetShadowMapSRV() const noexcept
 			{
@@ -131,7 +131,7 @@ namespace SFW
 				return m_shadowRS;
 			}
 
-			// ƒJƒXƒP[ƒh—pƒ‰ƒCƒgs—ñ / split ‚ª“ü‚Á‚½’è”ƒoƒbƒtƒ@
+			// ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰ç”¨ãƒ©ã‚¤ãƒˆè¡Œåˆ— / split ãŒå…¥ã£ãŸå®šæ•°ãƒãƒƒãƒ•ã‚¡
 			ComPtr<ID3D11Buffer> GetShadowCascadesCB() const noexcept
 			{
 				return m_cbShadowCascades;
@@ -139,7 +139,7 @@ namespace SFW
 
 			std::uint32_t GetCascadeCount() const noexcept { return m_cascadeCount; }
 
-			// Terrain ‚âƒƒbƒVƒ…‚ÌƒVƒƒƒhƒEƒpƒX‚©‚ç DSV ‚ğ’¼ÚG‚è‚½‚¢ê‡—p
+			// Terrain ã‚„ãƒ¡ãƒƒã‚·ãƒ¥ã®ã‚·ãƒ£ãƒ‰ã‚¦ãƒ‘ã‚¹ã‹ã‚‰ DSV ã‚’ç›´æ¥è§¦ã‚ŠãŸã„å ´åˆç”¨
 			std::array<ComPtr<ID3D11DepthStencilView>, kMaxShadowCascades>& GetCascadeDSV() noexcept
 			{
 				return m_cascadeDSV;
@@ -178,25 +178,25 @@ namespace SFW
 			ShadowMapConfig m_config{};
 			std::uint32_t m_cascadeCount = 0;
 
-			// ƒVƒƒƒhƒEƒ}ƒbƒv–{‘Ì (Texture2DArray)
+			// ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—æœ¬ä½“ (Texture2DArray)
 			ComPtr<ID3D11Texture2D> m_shadowTex;
 
-			// ŠeƒXƒ‰ƒCƒX‚Ì DSV
+			// å„ã‚¹ãƒ©ã‚¤ã‚¹ã® DSV
 			std::array<ComPtr<ID3D11DepthStencilView>, kMaxShadowCascades> m_cascadeDSV{};
 
-			// ‘SƒXƒ‰ƒCƒX‚Ü‚Æ‚ß‚ÄQÆ‚·‚é SRV
+			// å…¨ã‚¹ãƒ©ã‚¤ã‚¹ã¾ã¨ã‚ã¦å‚ç…§ã™ã‚‹ SRV
 			ComPtr<ID3D11ShaderResourceView> m_shadowSRV;
 
-			// ƒJƒXƒP[ƒh‚Ìƒrƒ…[ƒ|[ƒg
+			// ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰ã®ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆ
 			D3D11_VIEWPORT m_cascadeViewport{};
 
-			// ”äŠrƒTƒ“ƒvƒ‰iƒVƒƒƒhƒEƒtƒFƒbƒ`—pj
+			// æ¯”è¼ƒã‚µãƒ³ãƒ—ãƒ©ï¼ˆã‚·ãƒ£ãƒ‰ã‚¦ãƒ•ã‚§ãƒƒãƒç”¨ï¼‰
 			ComPtr<ID3D11SamplerState> m_shadowSampler;
 
-			// DepthBias •t‚«ƒ‰ƒXƒ^ƒ‰ƒCƒU
+			// DepthBias ä»˜ããƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶
 			ComPtr<ID3D11RasterizerState> m_shadowRS;
 
-			// ƒVƒƒƒhƒEƒJƒXƒP[ƒhî•ñ—p‚Ì’è”ƒoƒbƒtƒ@
+			// ã‚·ãƒ£ãƒ‰ã‚¦ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰æƒ…å ±ç”¨ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡
 			ComPtr<ID3D11Buffer> m_cbShadowCascades;
 
 			ComPtr<ID3D11Buffer> m_cbLightData;

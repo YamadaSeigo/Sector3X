@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   PhysicsService.h
- * @brief •¨—ƒT[ƒrƒX‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief ç‰©ç†ã‚µãƒ¼ãƒ“ã‚¹ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -18,16 +18,16 @@ namespace SFW
 	namespace Physics
 	{
 		/**
-		 * @brief •¨—ƒT[ƒrƒX‚ğ’ñ‹Ÿ‚·‚éƒNƒ‰ƒXBsystem‚©‚ç•¨—Device‚ğ‘€ì‚·‚é‚½‚ß‚ÌAPI‚ğ’ñ‹Ÿ‚·‚é
+		 * @brief ç‰©ç†ã‚µãƒ¼ãƒ“ã‚¹ã‚’æä¾›ã™ã‚‹ã‚¯ãƒ©ã‚¹ã€‚systemã‹ã‚‰ç‰©ç†Deviceã‚’æ“ä½œã™ã‚‹ãŸã‚ã®APIã‚’æä¾›ã™ã‚‹
 		 */
 		class PhysicsService : public ECS::IUpdateService {
 		public:
 			struct Plan {
 				float fixed_dt = 1.0f / 60.0f;
 				int   substeps = 1;
-				bool  collect_debug = false; // Œã‚ÅƒfƒoƒbƒOƒ‰ƒCƒ““™‚ğE‚¤—p
+				bool  collect_debug = false; // å¾Œã§ãƒ‡ãƒãƒƒã‚°ãƒ©ã‚¤ãƒ³ç­‰ã‚’æ‹¾ã†ç”¨
 
-				// 1 fixed step ‚ ‚½‚è‚É Jolt ‚É—¬‚·ƒRƒ}ƒ“ƒhãŒÀ
+				// 1 fixed step ã‚ãŸã‚Šã« Jolt ã«æµã™ã‚³ãƒãƒ³ãƒ‰ä¸Šé™
 				int   command_budget_per_step = 4096;
 			};
 
@@ -39,22 +39,22 @@ namespace SFW
 			};
 
 			/**
-			 * @brief ¶¬ƒCƒ“ƒeƒ“ƒgF”­¶Œ¹‚Åu‚±‚Ì Entity ‚ğì‚Á‚Äv‚ÆÏ‚ñ‚Å‚¨‚­
+			 * @brief ç”Ÿæˆã‚¤ãƒ³ãƒ†ãƒ³ãƒˆï¼šç™ºç”Ÿæºã§ã€Œã“ã® Entity ã‚’ä½œã£ã¦ã€ã¨ç©ã‚“ã§ãŠã
 			 */
 			struct CreateIntent {
 				Entity     e;
 				ShapeHandle h;
 				SpatialChunkKey owner;
 
-				// •¨—ƒ}ƒeƒŠƒAƒ‹iŒã‚Åƒ}ƒeƒŠƒAƒ‹ID‚Æ‚©‚É‚µ‚Ä‚à‚¢‚¢j
+				// ç‰©ç†ãƒãƒ†ãƒªã‚¢ãƒ«ï¼ˆå¾Œã§ãƒãƒ†ãƒªã‚¢ãƒ«IDã¨ã‹ã«ã—ã¦ã‚‚ã„ã„ï¼‰
 				Material mat;
 			};
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param device •¨—ƒfƒoƒCƒX
-			 * @param shapeMgr Œ`óƒ}ƒl[ƒWƒƒ[
-			 * @param plan •¨—ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚ÌŒv‰æiŒÅ’èŠÔƒXƒeƒbƒv“™j
-			 * @param queueCapacityPow2 ƒRƒ}ƒ“ƒhƒLƒ…[‚Ì—e—Êi2‚Ì—İæAƒfƒtƒHƒ‹ƒg‚Í4096j
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param device ç‰©ç†ãƒ‡ãƒã‚¤ã‚¹
+			 * @param shapeMgr å½¢çŠ¶ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+			 * @param plan ç‰©ç†ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã®è¨ˆç”»ï¼ˆå›ºå®šæ™‚é–“ã‚¹ãƒ†ãƒƒãƒ—ç­‰ï¼‰
+			 * @param queueCapacityPow2 ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼ã®å®¹é‡ï¼ˆ2ã®ç´¯ä¹—ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯4096ï¼‰
 			 */
 			explicit PhysicsService(PhysicsDevice& device, PhysicsShapeManager& shapeMgr,
 				Plan plan = { 1.0f / 60.0f, 1, false }, size_t queueCapacityPow2 = 4096)
@@ -62,37 +62,37 @@ namespace SFW
 				m_device.SetShapeResolver(m_mgr);
 			}
 			/**
-			 * @brief w’è‚µ‚½Œ`ó‚ğ¶¬‚·‚é
-			 * @param desc Œ`ó¶¬‹Lqq
-			 * @return ShapeHandle ¶¬‚³‚ê‚½Œ`ó‚Ìƒnƒ“ƒhƒ‹
+			 * @brief æŒ‡å®šã—ãŸå½¢çŠ¶ã‚’ç”Ÿæˆã™ã‚‹
+			 * @param desc å½¢çŠ¶ç”Ÿæˆè¨˜è¿°å­
+			 * @return ShapeHandle ç”Ÿæˆã•ã‚ŒãŸå½¢çŠ¶ã®ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			[[nodiscard]] ShapeHandle MakeShape(const ShapeCreateDesc& desc) {
 				ShapeHandle h; m_mgr->Add(desc, h); return h;
 			}
 			/**
-			 * @brief Box Œ`ó‚ğ¶¬‚·‚é
-			 * @param he ƒ{ƒbƒNƒXƒTƒCƒY‚Ì”¼•ª‚Ì’·‚³iVec3fj
-			 * @param s ƒXƒP[ƒ‹iƒfƒtƒHƒ‹ƒg‚Í {1,1,1}j
-			 * @return ShapeHandle ¶¬‚³‚ê‚½ƒ{ƒbƒNƒXŒ`ó‚Ìƒnƒ“ƒhƒ‹
+			 * @brief Box å½¢çŠ¶ã‚’ç”Ÿæˆã™ã‚‹
+			 * @param he ãƒœãƒƒã‚¯ã‚¹ã‚µã‚¤ã‚ºã®åŠåˆ†ã®é•·ã•ï¼ˆVec3fï¼‰
+			 * @param s ã‚¹ã‚±ãƒ¼ãƒ«ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ {1,1,1}ï¼‰
+			 * @return ShapeHandle ç”Ÿæˆã•ã‚ŒãŸãƒœãƒƒã‚¯ã‚¹å½¢çŠ¶ã®ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			[[nodiscard]] ShapeHandle MakeBox(Vec3f he, ShapeScale s = { {1,1,1} }) {
 				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ BoxDesc{he }, s }, h); return h;
 			}
 			/**
-			 * @brief ‹…Œ`ó‚ğ¶¬‚·‚é
-			 * @param radius ‹…‚Ì”¼Œa
-			 * @param s ƒXƒP[ƒ‹iƒfƒtƒHƒ‹ƒg‚Í {1,1,1}j
-			 * @return ShapeHandle ¶¬‚³‚ê‚½‹…Œ`ó‚Ìƒnƒ“ƒhƒ‹
+			 * @brief çƒå½¢çŠ¶ã‚’ç”Ÿæˆã™ã‚‹
+			 * @param radius çƒã®åŠå¾„
+			 * @param s ã‚¹ã‚±ãƒ¼ãƒ«ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ {1,1,1}ï¼‰
+			 * @return ShapeHandle ç”Ÿæˆã•ã‚ŒãŸçƒå½¢çŠ¶ã®ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			[[nodiscard]] ShapeHandle MakeSphere(float radius, ShapeScale s = { {1,1,1} }) {
 				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ SphereDesc{radius}, s }, h); return h;
 			}
 			/**
-			 * @brief ƒJƒvƒZƒ‹Œ`ó‚ğ¶¬‚·‚é
-			 * @param halfHeight ”¼•ª‚Ì‚‚³
-			 * @param radius ‹…‚Ì”¼Œa
-			 * @param s ƒXƒP[ƒ‹iƒfƒtƒHƒ‹ƒg‚Í {1,1,1}j
-			 * @return ShapeHandle ¶¬‚³‚ê‚½‹…Œ`ó‚Ìƒnƒ“ƒhƒ‹
+			 * @brief ã‚«ãƒ—ã‚»ãƒ«å½¢çŠ¶ã‚’ç”Ÿæˆã™ã‚‹
+			 * @param halfHeight åŠåˆ†ã®é«˜ã•
+			 * @param radius çƒã®åŠå¾„
+			 * @param s ã‚¹ã‚±ãƒ¼ãƒ«ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ {1,1,1}ï¼‰
+			 * @return ShapeHandle ç”Ÿæˆã•ã‚ŒãŸçƒå½¢çŠ¶ã®ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			[[nodiscard]] ShapeHandle MakeCapsule(float halfHeight, float radius, ShapeScale s = { {1,1,1} })
 			{
@@ -100,64 +100,64 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒƒbƒVƒ…Œ`ó‚ğ¶¬‚·‚é
-			 * @param vertex ’¸“_ŒQ
-			 * @param indices ’¸“_ƒCƒ“ƒfƒbƒNƒXŒQ
-			 * @param s ƒXƒP[ƒ‹iƒfƒtƒHƒ‹ƒg‚Í {1,1,1}j
-			 * @return ShapeHandle ¶¬‚³‚ê‚½ƒƒbƒVƒ…Œ`ó‚Ìƒnƒ“ƒhƒ‹
+			 * @brief ãƒ¡ãƒƒã‚·ãƒ¥å½¢çŠ¶ã‚’ç”Ÿæˆã™ã‚‹
+			 * @param vertex é ‚ç‚¹ç¾¤
+			 * @param indices é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç¾¤
+			 * @param s ã‚¹ã‚±ãƒ¼ãƒ«ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ {1,1,1}ï¼‰
+			 * @return ShapeHandle ç”Ÿæˆã•ã‚ŒãŸãƒ¡ãƒƒã‚·ãƒ¥å½¢çŠ¶ã®ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			[[nodiscard]] ShapeHandle MakeMesh(const std::vector<Vec3f>& vertex, const std::vector<uint32_t>& indices, bool rhFlip = false, ShapeScale s = { {1,1,1} }) {
 				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ MeshDesc{vertex, indices, rhFlip}, s }, h); return h;
 			}
 
 			/**
-			 * @brief ƒƒbƒVƒ…Œ`ó‚ğ¶¬‚·‚éiƒtƒ@ƒCƒ‹“Ç‚İ‚İ”Åj
-			 * @param path ƒƒbƒVƒ…ƒtƒ@ƒCƒ‹‚ÌƒpƒX
-			 * @param rhFlip ‰EèŒn•ÏŠ·‚ª•K—v‚È‚ç true
-			 * @param s ƒXƒP[ƒ‹iƒfƒtƒHƒ‹ƒg‚Í {1,1,1}j
-			 * @return ShapeHandle ¶¬‚³‚ê‚½ƒƒbƒVƒ…Œ`ó‚Ìƒnƒ“ƒhƒ‹
+			 * @brief ãƒ¡ãƒƒã‚·ãƒ¥å½¢çŠ¶ã‚’ç”Ÿæˆã™ã‚‹ï¼ˆãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿ç‰ˆï¼‰
+			 * @param path ãƒ¡ãƒƒã‚·ãƒ¥ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
+			 * @param rhFlip å³æ‰‹ç³»å¤‰æ›ãŒå¿…è¦ãªã‚‰ true
+			 * @param s ã‚¹ã‚±ãƒ¼ãƒ«ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ {1,1,1}ï¼‰
+			 * @return ShapeHandle ç”Ÿæˆã•ã‚ŒãŸãƒ¡ãƒƒã‚·ãƒ¥å½¢çŠ¶ã®ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			[[nodiscard]] ShapeHandle MakeMesh(const std::string& path, bool rhFlip = false, ShapeScale s = { {1,1,1} }) {
 				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ MeshFileDesc{path, rhFlip}, s }, h); return h;
 			}
 
 			/**
-			 * @brief “ÊŒ`ó‚ğ¶¬‚·‚é
-			 * @param pts “ÊŒ`ó‚ğì¬‚·‚é’¸“_ŒQ
-			 * @param idx ’¸“_ƒCƒ“ƒfƒbƒNƒXŒQ
-			 * @param s ƒXƒP[ƒ‹iƒfƒtƒHƒ‹ƒg‚Í {1,1,1}j
-			 * @param r  ƒVƒ…ƒŠƒ“ƒN”¼ŒaiƒfƒtƒHƒ‹ƒg‚Í 0.05fj
-			 * @param tol ‹–—eŒë·iƒfƒtƒHƒ‹ƒg‚Í 0.005fj
-			 * @return ShapeHandle ¶¬‚³‚ê‚½ƒJƒvƒZƒ‹Œ`ó‚Ìƒnƒ“ƒhƒ‹
+			 * @brief å‡¸å½¢çŠ¶ã‚’ç”Ÿæˆã™ã‚‹
+			 * @param pts å‡¸å½¢çŠ¶ã‚’ä½œæˆã™ã‚‹é ‚ç‚¹ç¾¤
+			 * @param idx é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç¾¤
+			 * @param s ã‚¹ã‚±ãƒ¼ãƒ«ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ {1,1,1}ï¼‰
+			 * @param r  ã‚·ãƒ¥ãƒªãƒ³ã‚¯åŠå¾„ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ 0.05fï¼‰
+			 * @param tol è¨±å®¹èª¤å·®ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ 0.005fï¼‰
+			 * @return ShapeHandle ç”Ÿæˆã•ã‚ŒãŸã‚«ãƒ—ã‚»ãƒ«å½¢çŠ¶ã®ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			[[nodiscard]] ShapeHandle MakeConvex(const std::vector<Vec3f>& pts, const std::vector<uint32_t>& idx, float r = 0.05f, float tol = 0.005f) {
 				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ ConvexHullDesc{pts, idx, r, tol}, {{1.0f,1.0f,1.0f}} }, h); return h;
 			}
 
 			/**
-			 * @brief “ÊŒ`óŒQ‚©‚ç StaticCompoundShape ‚ğ¶¬‚·‚é
-			 * @param hulls “ÊŒ`óŒQ
-			 * @param rhFlip ‰EèŒn•ÏŠ·‚ª•K—v‚È‚ç true
-			 * @param s ƒXƒP[ƒ‹iƒfƒtƒHƒ‹ƒg‚Í {1,1,1}j
-			 * @param r  ƒVƒ…ƒŠƒ“ƒN”¼ŒaiƒfƒtƒHƒ‹ƒg‚Í 0.05fj
-			 * @param tol ‹–—eŒë·iƒfƒtƒHƒ‹ƒg‚Í 0.005fj
-			 * @return ShapeHandle ¶¬‚³‚ê‚½ StaticCompoundShape Œ`ó‚Ìƒnƒ“ƒhƒ‹
+			 * @brief å‡¸å½¢çŠ¶ç¾¤ã‹ã‚‰ StaticCompoundShape ã‚’ç”Ÿæˆã™ã‚‹
+			 * @param hulls å‡¸å½¢çŠ¶ç¾¤
+			 * @param rhFlip å³æ‰‹ç³»å¤‰æ›ãŒå¿…è¦ãªã‚‰ true
+			 * @param s ã‚¹ã‚±ãƒ¼ãƒ«ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ {1,1,1}ï¼‰
+			 * @param r  ã‚·ãƒ¥ãƒªãƒ³ã‚¯åŠå¾„ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ 0.05fï¼‰
+			 * @param tol è¨±å®¹èª¤å·®ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ 0.005fï¼‰
+			 * @return ShapeHandle ç”Ÿæˆã•ã‚ŒãŸ StaticCompoundShape å½¢çŠ¶ã®ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			[[nodiscard]] ShapeHandle MakeConvexCompound(const std::vector<VHACDHull>& hulls, bool rhFlip = false, ShapeScale s = { {1,1,1} }, float r = 0.05f, float tol = 0.005f) {
 				ShapeHandle h; m_mgr->Add(ShapeCreateDesc{ ConvexCompoundDesc{hulls, r, tol, rhFlip}, s }, h); return h;
 			}
 
 			/**
-			 * @brief VHACD ƒoƒCƒiƒŠƒtƒ@ƒCƒ‹‚©‚ç“ÊŒ`óŒQ‚ğ“Ç‚İ‚İAStaticCompoundShape ‚ğ¶¬‚·‚é
-			 * @param path “ÊŒ`óƒoƒCƒiƒŠƒtƒ@ƒCƒ‹‚ÌƒpƒX
-			 * @param rhFlip ‰EèŒn•ÏŠ·‚ª•K—v‚È‚ç true
-			 * @param s ƒXƒP[ƒ‹iƒfƒtƒHƒ‹ƒg‚Í {1,1,1}j
-			 * @param r  ƒVƒ…ƒŠƒ“ƒN”¼ŒaiƒfƒtƒHƒ‹ƒg‚Í 0.05fj
-			 * @param tol ‹–—eŒë·iƒfƒtƒHƒ‹ƒg‚Í 0.005fj
-			 * @return ShapeHandle ¶¬‚³‚ê‚½ StaticCompoundShape Œ`ó‚Ìƒnƒ“ƒhƒ‹
+			 * @brief VHACD ãƒã‚¤ãƒŠãƒªãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰å‡¸å½¢çŠ¶ç¾¤ã‚’èª­ã¿è¾¼ã¿ã€StaticCompoundShape ã‚’ç”Ÿæˆã™ã‚‹
+			 * @param path å‡¸å½¢çŠ¶ãƒã‚¤ãƒŠãƒªãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
+			 * @param rhFlip å³æ‰‹ç³»å¤‰æ›ãŒå¿…è¦ãªã‚‰ true
+			 * @param s ã‚¹ã‚±ãƒ¼ãƒ«ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ {1,1,1}ï¼‰
+			 * @param r  ã‚·ãƒ¥ãƒªãƒ³ã‚¯åŠå¾„ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ 0.05fï¼‰
+			 * @param tol è¨±å®¹èª¤å·®ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ 0.005fï¼‰
+			 * @return ShapeHandle ç”Ÿæˆã•ã‚ŒãŸ StaticCompoundShape å½¢çŠ¶ã®ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			[[nodiscard]] ShapeHandle MakeConvexCompound(const std::string& path, bool rhFlip = false, ShapeScale s = { {1,1,1} }, float r = 0.05f, float tol = 0.005f) {
-				// ƒqƒbƒg—¦Œüã‚Ì‚½‚ßAƒXƒP[ƒ‹‚ğ10”{‚µ‚Ä¬”“_ˆÈ‰º‚ğØ‚èÌ‚Ä‚éi®”‰»jB‚±‚ê‚É‚æ‚èA‚í‚¸‚©‚ÈƒXƒP[ƒ‹ˆá‚¢‚Å•ÊŒ`óˆµ‚¢‚É‚È‚é‚Ì‚ğ–h‚®B
+				// ãƒ’ãƒƒãƒˆç‡å‘ä¸Šã®ãŸã‚ã€ã‚¹ã‚±ãƒ¼ãƒ«ã‚’10å€ã—ã¦å°æ•°ç‚¹ä»¥ä¸‹ã‚’åˆ‡ã‚Šæ¨ã¦ã‚‹ï¼ˆæ•´æ•°åŒ–ï¼‰ã€‚ã“ã‚Œã«ã‚ˆã‚Šã€ã‚ãšã‹ãªã‚¹ã‚±ãƒ¼ãƒ«é•ã„ã§åˆ¥å½¢çŠ¶æ‰±ã„ã«ãªã‚‹ã®ã‚’é˜²ãã€‚
 				auto& scale = s.s;
 				scale *= 10.0f;
 				scale.x = std::floor(scale.x) / 10.0f;
@@ -168,47 +168,47 @@ namespace SFW
 			}
 
 			/**
-			 * @brief Œ`ó‚ğ‰ğ•ú‚·‚é
-			 * @param h ‰ğ•ú‚·‚éŒ`ó‚Ìƒnƒ“ƒhƒ‹
-			 * @param sync “¯Šú—p‚ÌƒVƒOƒiƒ‹iƒfƒtƒHƒ‹ƒg‚Í0A–¢g—p
+			 * @brief å½¢çŠ¶ã‚’è§£æ”¾ã™ã‚‹
+			 * @param h è§£æ”¾ã™ã‚‹å½¢çŠ¶ã®ãƒãƒ³ãƒ‰ãƒ«
+			 * @param sync åŒæœŸç”¨ã®ã‚·ã‚°ãƒŠãƒ«ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯0ã€æœªä½¿ç”¨
 			 */
 			void ReleaseShape(ShapeHandle h, uint64_t sync = 0) { m_mgr->Release(h, sync); }
 
-			// ====== ƒQ[ƒ€‘¤ APIiƒRƒ}ƒ“ƒh‚ğÏ‚Ş‚¾‚¯j======
+			// ====== ã‚²ãƒ¼ãƒ å´ APIï¼ˆã‚³ãƒãƒ³ãƒ‰ã‚’ç©ã‚€ã ã‘ï¼‰======
 			/**
-			 * @brief •¨—ƒ{ƒfƒB‚ğì¬‚·‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param c ì¬ƒRƒ}ƒ“ƒh
+			 * @brief ç‰©ç†ãƒœãƒ‡ã‚£ã‚’ä½œæˆã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param c ä½œæˆã‚³ãƒãƒ³ãƒ‰
 			 */
 			bool CreateBody(const CreateBodyCmd& c) { return TryEnqueue(c); }
 			/**
-			 * @brief •¨—ƒ{ƒfƒB‚ğ”jŠü‚·‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É•K‚¸’Ç‰Á‚·‚é
-			 * @param e ”jŠü‚·‚éƒGƒ“ƒeƒBƒeƒB
+			 * @brief ç‰©ç†ãƒœãƒ‡ã‚£ã‚’ç ´æ£„ã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«å¿…ãšè¿½åŠ ã™ã‚‹
+			 * @param e ç ´æ£„ã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
 			 */
 			bool DestroyBody(Entity e) { return Enqueue(DestroyBodyCmd{ e }); }
 			/**
-			 * @brief •¨—ƒ{ƒfƒB‚ğƒeƒŒƒ|[ƒg‚·‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param e ƒeƒŒƒ|[ƒg‚·‚éƒGƒ“ƒeƒBƒeƒB
-			 * @param tm ƒeƒŒƒ|[ƒgæ‚Ì•ÏŠ·s—ñ
-			 * @param wake ƒeƒŒƒ|[ƒgŒã‚É‹N‚±‚·‚©‚Ç‚¤‚©iƒfƒtƒHƒ‹ƒg‚Í truej
+			 * @brief ç‰©ç†ãƒœãƒ‡ã‚£ã‚’ãƒ†ãƒ¬ãƒãƒ¼ãƒˆã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param e ãƒ†ãƒ¬ãƒãƒ¼ãƒˆã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
+			 * @param tm ãƒ†ãƒ¬ãƒãƒ¼ãƒˆå…ˆã®å¤‰æ›è¡Œåˆ—
+			 * @param wake ãƒ†ãƒ¬ãƒãƒ¼ãƒˆå¾Œã«èµ·ã“ã™ã‹ã©ã†ã‹ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ trueï¼‰
 			 */
 			bool Teleport(Entity e, const Mat34f& tm, bool wake = true) { return TryEnqueue(TeleportCmd{ e, wake, tm }); }
 			/**
-			 * @brief •¨—ƒ{ƒfƒB‚ÌüŒ`‘¬“x‚ğİ’è‚·‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param e İ’è‚·‚éƒGƒ“ƒeƒBƒeƒB
-			 * @param v İ’è‚·‚éüŒ`‘¬“xiVec3fj
+			 * @brief ç‰©ç†ãƒœãƒ‡ã‚£ã®ç·šå½¢é€Ÿåº¦ã‚’è¨­å®šã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param e è¨­å®šã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
+			 * @param v è¨­å®šã™ã‚‹ç·šå½¢é€Ÿåº¦ï¼ˆVec3fï¼‰
 			 */
 			bool SetLinearVelocity(Entity e, Vec3f v) { return TryEnqueue(SetLinearVelocityCmd{ e, v }); }
 			/**
-			 * @brief •¨—ƒ{ƒfƒB‚ÌŠp‘¬“x‚ğİ’è‚·‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param e İ’è‚·‚éƒGƒ“ƒeƒBƒeƒB
-			 * @param w İ’è‚·‚éŠp‘¬“xiVec3fj
+			 * @brief ç‰©ç†ãƒœãƒ‡ã‚£ã®è§’é€Ÿåº¦ã‚’è¨­å®šã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param e è¨­å®šã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
+			 * @param w è¨­å®šã™ã‚‹è§’é€Ÿåº¦ï¼ˆVec3fï¼‰
 			 */
 			bool SetAngularVelocity(Entity e, Vec3f w) { return TryEnqueue(SetAngularVelocityCmd{ e, w }); }
 			/**
-			 * @brief •¨—ƒ{ƒfƒB‚É—Í‚ğ‰Á‚¦‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param e —Í‚ğ‰Á‚¦‚éƒGƒ“ƒeƒBƒeƒB
-			 * @param f ‰Á‚¦‚é—ÍiVec3fj
-			 * @param at —Í‚ğ‰Á‚¦‚éˆÊ’uiƒ[ƒ‹ƒhÀ•WAƒfƒtƒHƒ‹ƒg‚Íƒ{ƒfƒB’†Sj
+			 * @brief ç‰©ç†ãƒœãƒ‡ã‚£ã«åŠ›ã‚’åŠ ãˆã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param e åŠ›ã‚’åŠ ãˆã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
+			 * @param f åŠ ãˆã‚‹åŠ›ï¼ˆVec3fï¼‰
+			 * @param at åŠ›ã‚’åŠ ãˆã‚‹ä½ç½®ï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ãƒœãƒ‡ã‚£ä¸­å¿ƒï¼‰
 			 */
 			bool AddForce(Entity e, Vec3f f, std::optional<Vec3f> at = std::nullopt) {
 				AddForceCmd cmd{ e, f, {}, false };
@@ -216,10 +216,10 @@ namespace SFW
 				return TryEnqueue(cmd);
 			}
 			/**
-			 * @brief •¨—ƒ{ƒfƒB‚ÉƒCƒ“ƒpƒ‹ƒX‚ğ‰Á‚¦‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param e ƒCƒ“ƒpƒ‹ƒX‚ğ‰Á‚¦‚éƒGƒ“ƒeƒBƒeƒB
-			 * @param p ‰Á‚¦‚éƒCƒ“ƒpƒ‹ƒXiVec3fj
-			 * @param at ƒCƒ“ƒpƒ‹ƒX‚ğ‰Á‚¦‚éˆÊ’uiƒ[ƒ‹ƒhÀ•WAƒfƒtƒHƒ‹ƒg‚Íƒ{ƒfƒB’†Sj
+			 * @brief ç‰©ç†ãƒœãƒ‡ã‚£ã«ã‚¤ãƒ³ãƒ‘ãƒ«ã‚¹ã‚’åŠ ãˆã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param e ã‚¤ãƒ³ãƒ‘ãƒ«ã‚¹ã‚’åŠ ãˆã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
+			 * @param p åŠ ãˆã‚‹ã‚¤ãƒ³ãƒ‘ãƒ«ã‚¹ï¼ˆVec3fï¼‰
+			 * @param at ã‚¤ãƒ³ãƒ‘ãƒ«ã‚¹ã‚’åŠ ãˆã‚‹ä½ç½®ï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ãƒœãƒ‡ã‚£ä¸­å¿ƒï¼‰
 			 */
 			bool AddImpulse(Entity e, Vec3f p, std::optional<Vec3f> at = std::nullopt) {
 				AddImpulseCmd cmd{ e, p, {}, false };
@@ -227,147 +227,147 @@ namespace SFW
 				return TryEnqueue(cmd);
 			}
 			/**
-			 * @brief •¨—ƒ{ƒfƒB‚Éƒgƒ‹ƒN‚ğ‰Á‚¦‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param e ƒgƒ‹ƒN‚ğ‰Á‚¦‚éƒGƒ“ƒeƒBƒeƒB
-			 * @param tm ‰Á‚¦‚éƒgƒ‹ƒNiVec3fj
+			 * @brief ç‰©ç†ãƒœãƒ‡ã‚£ã«ãƒˆãƒ«ã‚¯ã‚’åŠ ãˆã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param e ãƒˆãƒ«ã‚¯ã‚’åŠ ãˆã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
+			 * @param tm åŠ ãˆã‚‹ãƒˆãƒ«ã‚¯ï¼ˆVec3fï¼‰
 			 */
 			bool SetKinematicTarget(Entity e, const Mat34f& tm) { return TryEnqueue(SetKinematicTargetCmd{ e, tm }); }
 			/**
-			 * @brief •¨—ƒ{ƒfƒB‚ÌÕ“Ëƒ}ƒXƒN‚ğİ’è‚·‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param e İ’è‚·‚éƒGƒ“ƒeƒBƒeƒB
-			 * @param mask İ’è‚·‚éÕ“Ëƒ}ƒXƒN
+			 * @brief ç‰©ç†ãƒœãƒ‡ã‚£ã®è¡çªãƒã‚¹ã‚¯ã‚’è¨­å®šã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param e è¨­å®šã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
+			 * @param mask è¨­å®šã™ã‚‹è¡çªãƒã‚¹ã‚¯
 			 */
 			bool SetCollisionMask(Entity e, uint32_t mask) { return TryEnqueue(SetCollisionMaskCmd{ e, mask }); }
 			/**
-			 * @brief •¨—ƒ{ƒfƒB‚ÌƒŒƒCƒ„[‚ğİ’è‚·‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param e İ’è‚·‚éƒGƒ“ƒeƒBƒeƒB
-			 * @param layer ƒŒƒCƒ„[
-			 * @param broad ƒuƒ[ƒhƒtƒF[ƒYƒŒƒCƒ„[
+			 * @brief ç‰©ç†ãƒœãƒ‡ã‚£ã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’è¨­å®šã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param e è¨­å®šã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
+			 * @param layer ãƒ¬ã‚¤ãƒ¤ãƒ¼
+			 * @param broad ãƒ–ãƒ­ãƒ¼ãƒ‰ãƒ•ã‚§ãƒ¼ã‚ºãƒ¬ã‚¤ãƒ¤ãƒ¼
 			 */
 			bool SetObjectLayer(Entity e, uint16_t layer, uint16_t broad) { return TryEnqueue(SetObjectLayerCmd{ e, layer, broad }); }
 			/**
-			 * @brief ƒŒƒCƒLƒƒƒXƒg‚ğÀs‚·‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param reqId ƒŠƒNƒGƒXƒgIDi‰“š‚É•Ô‚³‚ê‚éj
-			 * @param o ŠJnˆÊ’uiVec3fj
-			 * @param dir •ûŒüƒxƒNƒgƒ‹i³‹K‰»‚³‚ê‚Ä‚¢‚é‚±‚ÆAVec3fj
-			 * @param maxDist Å‘å‹——£
+			 * @brief ãƒ¬ã‚¤ã‚­ãƒ£ã‚¹ãƒˆã‚’å®Ÿè¡Œã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param reqId ãƒªã‚¯ã‚¨ã‚¹ãƒˆIDï¼ˆå¿œç­”æ™‚ã«è¿”ã•ã‚Œã‚‹ï¼‰
+			 * @param o é–‹å§‹ä½ç½®ï¼ˆVec3fï¼‰
+			 * @param dir æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ï¼ˆæ­£è¦åŒ–ã•ã‚Œã¦ã„ã‚‹ã“ã¨ã€Vec3fï¼‰
+			 * @param maxDist æœ€å¤§è·é›¢
 			 */
 			bool RayCast(uint32_t reqId, Vec3f o, Vec3f dir, float maxDist) { return TryEnqueue(RayCastCmd{ reqId, o, dir, maxDist }); }
 
 			/**
-			 * @brief ƒŒƒCƒLƒƒƒXƒg‚ğÀs‚·‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param c ƒŒƒCƒLƒƒƒXƒgƒRƒ}ƒ“ƒh
+			 * @brief ãƒ¬ã‚¤ã‚­ãƒ£ã‚¹ãƒˆã‚’å®Ÿè¡Œã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param c ãƒ¬ã‚¤ã‚­ãƒ£ã‚¹ãƒˆã‚³ãƒãƒ³ãƒ‰
 			 */
 			bool RayCast(const RayCastCmd& c) {
 				return TryEnqueue(c);
 			}
 
 			/**
-			 * @brief ƒLƒƒƒ‰ƒNƒ^[‚ğ¶¬‚·‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param c ƒLƒƒƒ‰ƒNƒ^[¶¬ƒRƒ}ƒ“ƒh
+			 * @brief ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã‚’ç”Ÿæˆã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param c ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ç”Ÿæˆã‚³ãƒãƒ³ãƒ‰
 			 */
 			bool CreateCharacter(const CreateCharacterCmd& c) {
 				return TryEnqueue(c);
 			}
 			/**
-			 * @brief ƒLƒƒƒ‰ƒNƒ^[‚Ì‘¬“x‚ğİ’è‚·‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param e ‘ÎÛ‚ÌƒGƒ“ƒeƒBƒeƒB
-			 * @param v İ’è‚·‚é‘¬“xiVec3fj
+			 * @brief ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®é€Ÿåº¦ã‚’è¨­å®šã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param e å¯¾è±¡ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
+			 * @param v è¨­å®šã™ã‚‹é€Ÿåº¦ï¼ˆVec3fï¼‰
 			 */
 			bool SetCharacterVelocity(Entity e, Vec3f v) {
 				return TryEnqueue(SetCharacterVelocityCmd{ e, v });
 			}
 			/**
-			 * @brief ƒLƒƒƒ‰ƒNƒ^[‚Ì‰ñ“]‚ğİ’è‚·‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param e ‘ÎÛ‚ÌƒGƒ“ƒeƒBƒeƒB
-			 * @param q İ’è‚·‚é‰ñ“]iQuatfj
+			 * @brief ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®å›è»¢ã‚’è¨­å®šã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param e å¯¾è±¡ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
+			 * @param q è¨­å®šã™ã‚‹å›è»¢ï¼ˆQuatfï¼‰
 			 */
 			bool SetCharacterRotation(Entity e, const Quatf& q) {
 				return TryEnqueue(SetCharacterRotationCmd{ e, q });
 			}
 			/**
-			 * @brief ƒLƒƒƒ‰ƒNƒ^[‚ğƒeƒŒƒ|[ƒg‚·‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É’Ç‰Á‚·‚é
-			 * @param e ‘ÎÛ‚ÌƒGƒ“ƒeƒBƒeƒB
-			 * @param tm ƒeƒŒƒ|[ƒgæ‚Ì•ÏŠ·s—ñ
+			 * @brief ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã‚’ãƒ†ãƒ¬ãƒãƒ¼ãƒˆã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹
+			 * @param e å¯¾è±¡ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
+			 * @param tm ãƒ†ãƒ¬ãƒãƒ¼ãƒˆå…ˆã®å¤‰æ›è¡Œåˆ—
 			 */
 			bool TeleportCharacter(Entity e, const Mat34f& tm) {
 				return TryEnqueue(TeleportCharacterCmd{ e, tm });
 			}
 			/**
-			 * @brief ƒLƒƒƒ‰ƒNƒ^[‚ğ”jŠü‚·‚éƒRƒ}ƒ“ƒh‚ğƒLƒ…[‚É•K‚¸’Ç‰Á‚·‚é
-			 * @param e ‘ÎÛ‚ÌƒGƒ“ƒeƒBƒeƒB
+			 * @brief ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã‚’ç ´æ£„ã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚­ãƒ¥ãƒ¼ã«å¿…ãšè¿½åŠ ã™ã‚‹
+			 * @param e å¯¾è±¡ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
 			 */
 			bool DestroyCharacter(Entity e) {
 				return Enqueue(DestroyCharacterCmd{ e });
 			}
 			/**
-			 * @brief ƒLƒƒƒ‰ƒNƒ^[‚Ìƒ|[ƒY‚ğæ“¾‚·‚é
-			 * @param e ‘ÎÛ‚ÌƒGƒ“ƒeƒBƒeƒB
-			 * @return std::optional<CharacterPose> ƒLƒƒƒ‰ƒNƒ^[ƒ|[ƒYi‘¶İ‚µ‚È‚¢ê‡‚Í std::nulloptj
+			 * @brief ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ãƒãƒ¼ã‚ºã‚’å–å¾—ã™ã‚‹
+			 * @param e å¯¾è±¡ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
+			 * @return std::optional<CharacterPose> ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ãƒãƒ¼ã‚ºï¼ˆå­˜åœ¨ã—ãªã„å ´åˆã¯ std::nulloptï¼‰
 			 */
 			std::optional<CharacterPose> ReadCharacterPose(Entity e) {
 				return m_device.GetCharacterPose(e);
 			}
 
 			/**
-			 * @brief •¨—ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚ğXV‚·‚éiIUpdateService À‘•j
-			 * @param dt ‰Â•ÏƒtƒŒ[ƒ€ŠÔiƒQ[ƒ€ƒ‹[ƒv‚©‚çŒÄ‚Ôj
+			 * @brief ç‰©ç†ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã‚’æ›´æ–°ã™ã‚‹ï¼ˆIUpdateService å®Ÿè£…ï¼‰
+			 * @param dt å¯å¤‰ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“ï¼ˆã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—ã‹ã‚‰å‘¼ã¶ï¼‰
 			 */
 			void PreUpdate(double dt) override {
 				m_accum += static_cast<float>(dt);
 
-				while (m_accum + 1e-6f >= plan.fixed_dt) { // •‚“®Œë·‘Îô‚Ì”÷¬ƒ}[ƒWƒ“
-					DrainBudgetToDevice(plan.command_budget_per_step); // ‚±‚±‚ÅˆêŠ‡“K—p
+				while (m_accum + 1e-6f >= plan.fixed_dt) { // æµ®å‹•èª¤å·®å¯¾ç­–ã®å¾®å°ãƒãƒ¼ã‚¸ãƒ³
+					DrainBudgetToDevice(plan.command_budget_per_step); // ã“ã“ã§ä¸€æ‹¬é©ç”¨
 					m_device.Step(plan.fixed_dt, plan.substeps);
 
-					// ƒXƒiƒbƒvƒVƒ‡ƒbƒg‚ğ‘g‚İ—§‚Ä‚é
+					// ã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆã‚’çµ„ã¿ç«‹ã¦ã‚‹
 					m_device.BuildSnapshot(m_snapshot);
-					m_prevSnapshot = std::move(m_currSnapshot); // ‘OƒtƒŒ[ƒ€‚ÌƒXƒiƒbƒvƒVƒ‡ƒbƒg‚ğ•Û‘¶
-					m_currSnapshot = std::move(m_snapshot);      // ¡‰ñ‚ÌƒXƒiƒbƒvƒVƒ‡ƒbƒg‚ğXV
+					m_prevSnapshot = std::move(m_currSnapshot); // å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã®ã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆã‚’ä¿å­˜
+					m_currSnapshot = std::move(m_snapshot);      // ä»Šå›ã®ã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆã‚’æ›´æ–°
 
 					m_accum -= plan.fixed_dt;
 				}
 			}
 			/**
-			 * @brief ƒ|[ƒYƒoƒbƒ`‚ğ\’z‚·‚éi•`‰æƒtƒŒ[ƒ€‚ÅŒÄ‚Ôj
-			 * @param v ƒ|[ƒYƒoƒbƒ`ƒrƒ…[‚ÌQÆ
+			 * @brief ãƒãƒ¼ã‚ºãƒãƒƒãƒã‚’æ§‹ç¯‰ã™ã‚‹ï¼ˆæç”»ãƒ•ãƒ¬ãƒ¼ãƒ ã§å‘¼ã¶ï¼‰
+			 * @param v ãƒãƒ¼ã‚ºãƒãƒƒãƒãƒ“ãƒ¥ãƒ¼ã®å‚ç…§
 			 */
 			void BuildPoseBatch(PoseBatchView& v) const {
 				m_device.ReadPosesBatch(v);
 			}
 			/**
-			 * @brief •âŠÔ‚Ég‚¤‚½‚ß‚Ì ƒ¿ ‚ğæ“¾i•`‰æƒtƒŒ[ƒ€‚Åg‚¤j
-			 * @return float •âŠÔŒW” ƒ¿ (0.0 ` 1.0)
+			 * @brief è£œé–“ã«ä½¿ã†ãŸã‚ã® Î± ã‚’å–å¾—ï¼ˆæç”»ãƒ•ãƒ¬ãƒ¼ãƒ ã§ä½¿ã†ï¼‰
+			 * @return float è£œé–“ä¿‚æ•° Î± (0.0 ï½ 1.0)
 			 */
 			float GetAlpha() const {
 				return (plan.fixed_dt > 0.0f) ? (m_accum / plan.fixed_dt) : 0.0f;
 			}
 
-			// Œ»İiÅŒã‚Ì fixed step Œãj‚ÌƒXƒiƒbƒvƒVƒ‡ƒbƒgQÆ‚ğ•Ô‚·
+			// ç¾åœ¨ï¼ˆæœ€å¾Œã® fixed step å¾Œï¼‰ã®ã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆå‚ç…§ã‚’è¿”ã™
 			const PhysicsSnapshot& CurrentSnapshot() const { return m_currSnapshot; }
 			const PhysicsSnapshot& PreviousSnapshot() const { return m_prevSnapshot; }
 
 			/**
-			 * @brief ¶¬Ï‚İ BodyID ‚ÌQÆi·‚µ‚İ—p
-			 * @param e ƒGƒ“ƒeƒBƒeƒB
-			 * @return std::optional<JPH::BodyID> ¶¬Ï‚İ BodyIDi‘¶İ‚µ‚È‚¢ê‡‚Í std::nullopt
+			 * @brief ç”Ÿæˆæ¸ˆã¿ BodyID ã®å‚ç…§ï¼ˆå·®ã—è¾¼ã¿ç”¨
+			 * @param e ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
+			 * @return std::optional<JPH::BodyID> ç”Ÿæˆæ¸ˆã¿ BodyIDï¼ˆå­˜åœ¨ã—ãªã„å ´åˆã¯ std::nullopt
 			 */
 			std::optional<JPH::BodyID> TryGetBodyID(Entity e) const noexcept {
 				return m_device.TryGetBodyID(e);
 			}
 			/**
-			 * @brief ¶¬ƒCƒ“ƒeƒ“ƒg‚ğƒLƒ…[‚É’Ç‰Á‚·‚éiBody ì¬—v‹—p
-			 * @param e ‘ÎÛ‚ÌƒGƒ“ƒeƒBƒeƒB
-			 * @param h Œ`óƒnƒ“ƒhƒ‹
-			 * @param owner Š—Lƒ`ƒƒƒ“ƒNƒL[
+			 * @brief ç”Ÿæˆã‚¤ãƒ³ãƒ†ãƒ³ãƒˆã‚’ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ ã™ã‚‹ï¼ˆBody ä½œæˆè¦æ±‚ç”¨
+			 * @param e å¯¾è±¡ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£
+			 * @param h å½¢çŠ¶ãƒãƒ³ãƒ‰ãƒ«
+			 * @param owner æ‰€æœ‰ãƒãƒ£ãƒ³ã‚¯ã‚­ãƒ¼
 			 */
 			void EnqueueCreateIntent(Entity e, ShapeHandle h, const SpatialChunkKey& owner, Material mat = {}) {
 				std::scoped_lock lk(m_intentMutex);
 				m_createIntents[owner.level].push_back({ e, h, owner, mat });
 			}
 			/**
-			 * @brief ¶¬ƒCƒ“ƒeƒ“ƒg‚ğæ‚èo‚·iBody ì¬—v‹—p
-			 * @param out æ‚èo‚µæ‚ÌƒxƒNƒ^[
+			 * @brief ç”Ÿæˆã‚¤ãƒ³ãƒ†ãƒ³ãƒˆã‚’å–ã‚Šå‡ºã™ï¼ˆBody ä½œæˆè¦æ±‚ç”¨
+			 * @param out å–ã‚Šå‡ºã—å…ˆã®ãƒ™ã‚¯ã‚¿ãƒ¼
 			 */
 			void SwapCreateIntents(LevelID id, std::vector<CreateIntent>& out) {
 				std::scoped_lock lk(m_intentMutex);
@@ -379,18 +379,18 @@ namespace SFW
 
 				out.swap(it->second); // O(1)
 
-				// ‹ó‚É‚È‚Á‚½‚çƒ}ƒbƒv‚©‚çÁ‚·
+				// ç©ºã«ãªã£ãŸã‚‰ãƒãƒƒãƒ—ã‹ã‚‰æ¶ˆã™
 				if (it->second.empty()) {
 					m_createIntents.erase(it);
 				}
 			}
 			/**
-			 * @brief Body ì¬Š®—¹ƒCƒxƒ“ƒg‚Ìæ‚èo‚µiWriteBack—pj
+			 * @brief Body ä½œæˆå®Œäº†ã‚¤ãƒ™ãƒ³ãƒˆã®å–ã‚Šå‡ºã—ï¼ˆWriteBackç”¨ï¼‰
 			 */
 			struct CreatedBody { Entity e; SpatialChunkKey owner; JPH::BodyID id; };
 			/**
-			 * @brief ¶¬Ï‚İ Body ƒCƒxƒ“ƒg‚ğæ‚èo‚·
-			 * @param out æ‚èo‚µæ‚ÌƒxƒNƒ^[
+			 * @brief ç”Ÿæˆæ¸ˆã¿ Body ã‚¤ãƒ™ãƒ³ãƒˆã‚’å–ã‚Šå‡ºã™
+			 * @param out å–ã‚Šå‡ºã—å…ˆã®ãƒ™ã‚¯ã‚¿ãƒ¼
 			 */
 			void ConsumeCreatedBodies(LevelID id, std::vector<CreatedBody>& out) {
 				std::vector<PhysicsDevice::CreatedBody> tmp;
@@ -399,14 +399,14 @@ namespace SFW
 				for (auto& x : tmp) out.push_back(CreatedBody{ x.e, x.owner, x.id });
 			}
 			/**
-			 * @brief Œ`óƒ}ƒl[ƒWƒƒ[‚ÌQÆ‚ğæ“¾‚·‚é
-			 * @return const PhysicsShapeManager* Œ`óƒ}ƒl[ƒWƒƒ[‚ÌQÆ
+			 * @brief å½¢çŠ¶ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®å‚ç…§ã‚’å–å¾—ã™ã‚‹
+			 * @return const PhysicsShapeManager* å½¢çŠ¶ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®å‚ç…§
 			 */
 			const PhysicsShapeManager* GetShapeManager() const noexcept { return m_mgr; }
 			/**
-			 * @brief Œ`ó‚Ì¡–@‚ğæ“¾‚·‚é
-			 * @param h Œ`óƒnƒ“ƒhƒ‹
-			 * @return std::optional<ShapeDims> Œ`ó‚Ì¡–@i‘¶İ‚µ‚È‚¢ê‡‚Í std::nullopt
+			 * @brief å½¢çŠ¶ã®å¯¸æ³•ã‚’å–å¾—ã™ã‚‹
+			 * @param h å½¢çŠ¶ãƒãƒ³ãƒ‰ãƒ«
+			 * @return std::optional<ShapeDims> å½¢çŠ¶ã®å¯¸æ³•ï¼ˆå­˜åœ¨ã—ãªã„å ´åˆã¯ std::nullopt
 			 */
 			std::optional<ShapeDims> GetShapeDims(ShapeHandle h) const {
 				auto shape = m_mgr->Resolve(h);
@@ -415,9 +415,9 @@ namespace SFW
 
 #ifdef CACHE_SHAPE_WIRE_DATA
 			/**
-			 * @brief Œ`ó‚ÌƒƒCƒ„[ƒtƒŒ[ƒ€ƒf[ƒ^‚ğæ“¾‚·‚é
-			 * @param h Œ`óƒnƒ“ƒhƒ‹
-			 * @return std::optional<WireframeData> ƒƒCƒ„[ƒtƒŒ[ƒ€ƒf[ƒ^i‘¶İ‚µ‚È‚¢ê‡‚Í std::nullopt
+			 * @brief å½¢çŠ¶ã®ãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
+			 * @param h å½¢çŠ¶ãƒãƒ³ãƒ‰ãƒ«
+			 * @return std::optional<WireframeData> ãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ï¼ˆå­˜åœ¨ã—ãªã„å ´åˆã¯ std::nullopt
 			 */
 			std::optional<ShareWireframeData> GetShapeWireframeData(ShapeHandle h) const {
 				return m_mgr->GetShapeWireframeData(h);
@@ -427,7 +427,7 @@ namespace SFW
 			template<class T>
 			bool TryEnqueue(const T& c) {
 				const PhysicsCommand& cmd = c;
-				// ¸”si–”tj‚Ìê‡‚ÍƒŠƒgƒ‰ƒC or ˆê“I‚ÉƒuƒƒbƒLƒ“ƒO‚ÉØ‘Ö‚È‚ÇA‰^—pƒ|ƒŠƒV[Ÿ‘æ
+				// å¤±æ•—ï¼ˆæº€æ¯ï¼‰ã®å ´åˆã¯ãƒªãƒˆãƒ©ã‚¤ or ä¸€æ™‚çš„ã«ãƒ–ãƒ­ãƒƒã‚­ãƒ³ã‚°ã«åˆ‡æ›¿ãªã©ã€é‹ç”¨ãƒãƒªã‚·ãƒ¼æ¬¡ç¬¬
 				return m_queue.push(cmd);
 			}
 
@@ -435,10 +435,10 @@ namespace SFW
 			bool Enqueue(const T& c) {
 				const PhysicsCommand& cmd = c;
 
-				// ‚Ü‚¸ ring ‚É“ü‚é‚È‚ç“ü‚ê‚é
+				// ã¾ãš ring ã«å…¥ã‚‹ãªã‚‰å…¥ã‚Œã‚‹
 				if (m_queue.push(cmd)) return true;
 
-				// ˆì‚ê‚½‚ç pending ‚ÉÏ‚ñ‚Å gó—h ‚Í•Ô‚·
+				// æº¢ã‚ŒãŸã‚‰ pending ã«ç©ã‚“ã§ â€œå—ç†â€ ã¯è¿”ã™
 				m_pendingCmds.push_back(cmd);
 				return true;
 			}
@@ -452,7 +452,7 @@ namespace SFW
 			void DrainBudgetToDevice(int budget) {
 				int used = 0;
 
-				// 1) ring ‚ğæ‚É—¬‚·i‡˜‚ª©‘Rj
+				// 1) ring ã‚’å…ˆã«æµã™ï¼ˆé †åºãŒè‡ªç„¶ï¼‰
 				while (used < budget) {
 					auto cmd = m_queue.pop();
 					if (!cmd) break;
@@ -460,14 +460,14 @@ namespace SFW
 					++used;
 				}
 
-				// 2) pending ‚ğc‚è˜g‚Å—¬‚·
+				// 2) pending ã‚’æ®‹ã‚Šæ ã§æµã™
 				while (used < budget && m_pendingHead < m_pendingCmds.size()) {
 					m_device.ApplyCommand(m_pendingCmds[m_pendingHead]);
 					++m_pendingHead;
 					++used;
 				}
 
-				// pending ‚Ìæ“ª‚ğÁ”ï‚µ‘±‚¯‚Ä‚¢‚é‚Ì‚ÅA“K“–‚É‹l‚ß’¼‚µ
+				// pending ã®å…ˆé ­ã‚’æ¶ˆè²»ã—ç¶šã‘ã¦ã„ã‚‹ã®ã§ã€é©å½“ã«è©°ã‚ç›´ã—
 				if (m_pendingHead > 1024 && m_pendingHead * 2 > m_pendingCmds.size()) {
 					m_pendingCmds.erase(m_pendingCmds.begin(), m_pendingCmds.begin() + m_pendingHead);
 					m_pendingHead = 0;
@@ -476,14 +476,14 @@ namespace SFW
 
 		private:
 			PhysicsDevice& m_device;
-			PhysicsShapeManager* m_mgr{ nullptr }; // Š—L‚µ‚È‚¢
+			PhysicsShapeManager* m_mgr{ nullptr }; // æ‰€æœ‰ã—ãªã„
 			SpscRing<PhysicsCommand> m_queue;
 
-			// SpscRing ‚ªˆì‚ê‚½•ª‚ğŸƒtƒŒ[ƒ€‚Ö‚¿‰z‚·
+			// SpscRing ãŒæº¢ã‚ŒãŸåˆ†ã‚’æ¬¡ãƒ•ãƒ¬ãƒ¼ãƒ ã¸æŒã¡è¶Šã™
 			std::vector<PhysicsCommand> m_pendingCmds;
 			size_t m_pendingHead = 0;
 
-			// ¶¬ƒCƒ“ƒeƒ“ƒg
+			// ç”Ÿæˆã‚¤ãƒ³ãƒ†ãƒ³ãƒˆ
 			mutable std::mutex         m_intentMutex;
 			std::unordered_map<LevelID, std::vector<CreateIntent>>  m_createIntents;
 
@@ -491,9 +491,9 @@ namespace SFW
 
 			float m_accum = 0.0f;
 
-			PhysicsSnapshot m_snapshot;     // ¡‰ñƒXƒeƒbƒv‚Å‘g‚İ—§‚Ä‚½ˆê
-			PhysicsSnapshot m_prevSnapshot; // ‘OƒtƒŒ[ƒ€
-			PhysicsSnapshot m_currSnapshot; // Œ»ƒtƒŒ[ƒ€
+			PhysicsSnapshot m_snapshot;     // ä»Šå›ã‚¹ãƒ†ãƒƒãƒ—ã§çµ„ã¿ç«‹ã¦ãŸä¸€æ™‚
+			PhysicsSnapshot m_prevSnapshot; // å‰ãƒ•ãƒ¬ãƒ¼ãƒ 
+			PhysicsSnapshot m_currSnapshot; // ç¾ãƒ•ãƒ¬ãƒ¼ãƒ 
 		public:
 			STATIC_SERVICE_TAG
 				DEFINE_UPDATESERVICE_GROUP(GROUP_PHYSICS)

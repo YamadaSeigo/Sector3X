@@ -1,4 +1,4 @@
-#include "Graphics/DX11/DX11TextureManager.h"
+ï»¿#include "Graphics/DX11/DX11TextureManager.h"
 
 #ifdef _DEBUG
 #include "../../third_party/DirectXTex/MDdx64/include/DirectXTex.h"
@@ -18,7 +18,7 @@ using namespace DirectX;
 
 namespace SFW {
 	namespace Graphics::DX11 {
-		//==================== ¬ƒwƒ‹ƒp ====================
+		//==================== å°ãƒ˜ãƒ«ãƒ‘ ====================
 
 		// UTF-8 -> Wide
 		std::wstring TextureManager::Utf8ToWide(std::string_view s) {
@@ -29,7 +29,7 @@ namespace SFW {
 			return w;
 		}
 
-		// gƒtƒBƒ‹ƒ^”ñ‘Î‰h‚©”»’è
+		// â€œãƒ•ã‚£ãƒ«ã‚¿éå¯¾å¿œâ€ã‹åˆ¤å®š
 		static bool IsNonFilterable(DXGI_FORMAT f) {
 			return IsCompressed(f) || IsTypeless(f) || IsPlanar(f) || IsPalettized(f) ||
 				f == DXGI_FORMAT_B8G8R8X8_UNORM || f == DXGI_FORMAT_B8G8R8X8_UNORM_SRGB ||
@@ -39,7 +39,7 @@ namespace SFW {
 				f == DXGI_FORMAT_R8G8_UNORM;
 		}
 
-		// BGRX ¨ BGRA ‚É‹¸³iX ‚ğ A=1 ‚É–„‚ß‚éj
+		// BGRX â†’ BGRA ã«çŸ¯æ­£ï¼ˆX ã‚’ A=1 ã«åŸ‹ã‚ã‚‹ï¼‰
 		static HRESULT EnsureBGRAIfBGRX(ScratchImage& img, TexMetadata& meta) {
 			if (meta.format == DXGI_FORMAT_B8G8R8X8_UNORM ||
 				meta.format == DXGI_FORMAT_B8G8R8X8_UNORM_SRGB) {
@@ -56,10 +56,10 @@ namespace SFW {
 			return S_OK;
 		}
 
-		// sRGB ‚ğ gmetadata ‚¾‚¯‚Å‚È‚­‰æ‘œƒf[ƒ^‚àh •ÏŠ·‚µ‚Äˆê’v‚³‚¹‚é
+		// sRGB ã‚’ â€œmetadata ã ã‘ã§ãªãç”»åƒãƒ‡ãƒ¼ã‚¿ã‚‚â€ å¤‰æ›ã—ã¦ä¸€è‡´ã•ã›ã‚‹
 		static HRESULT ForceSRGBConvert(ScratchImage& img, TexMetadata& meta) {
 			DXGI_FORMAT s = MakeSRGB(meta.format);
-			if (s == DXGI_FORMAT_UNKNOWN || s == meta.format) return S_OK; // •ÏŠ·•s—v
+			if (s == DXGI_FORMAT_UNKNOWN || s == meta.format) return S_OK; // å¤‰æ›ä¸è¦
 
 			ScratchImage tmp;
 			HRESULT hr = Convert(img.GetImages(), img.GetImageCount(), meta,
@@ -70,19 +70,19 @@ namespace SFW {
 			return S_OK;
 		}
 
-		// ƒ~ƒbƒvƒ`ƒF[ƒ“¶¬iŒ˜˜S”Åj
+		// ãƒŸãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³ç”Ÿæˆï¼ˆå …ç‰¢ç‰ˆï¼‰
 		static void EnsureMipChain(ScratchImage& img,
 			TexMetadata& meta,
 			bool forceSRGB,
 			size_t maxGeneratedMips)
 		{
-			// Šù‚Éƒ~ƒbƒv‚ ‚è‚È‚ç‰½‚à‚µ‚È‚¢
+			// æ—¢ã«ãƒŸãƒƒãƒ—ã‚ã‚Šãªã‚‰ä½•ã‚‚ã—ãªã„
 			if (meta.mipLevels > 1) return;
 
-			// 1) BGRX¨BGRA
+			// 1) BGRXâ†’BGRA
 			EnsureBGRAIfBGRX(img, meta);
 
-			// 2) ”ñƒtƒBƒ‹ƒ^Œ`®‚Í–‘O‚ÉƒtƒBƒ‹ƒ^‰Â”\Œ`®‚Ö
+			// 2) éãƒ•ã‚£ãƒ«ã‚¿å½¢å¼ã¯äº‹å‰ã«ãƒ•ã‚£ãƒ«ã‚¿å¯èƒ½å½¢å¼ã¸
 			if (IsNonFilterable(meta.format)) {
 				const bool wantSRGB = forceSRGB || IsSRGB(meta.format);
 				const DXGI_FORMAT target = wantSRGB ? DXGI_FORMAT_R8G8B8A8_UNORM_SRGB
@@ -96,18 +96,18 @@ namespace SFW {
 				}
 			}
 
-			// 3) sRGB ‹­§‚Í g•K‚¸ Converth ‚Å format/‰æ‘œ‚ğˆê’v
+			// 3) sRGB å¼·åˆ¶ã¯ â€œå¿…ãš Convertâ€ ã§ format/ç”»åƒã‚’ä¸€è‡´
 			if (forceSRGB) {
 				ForceSRGBConvert(img, meta);
 			}
 
-			// 4) ƒtƒBƒ‹ƒ^İ’èisRGB “ü—Í‚È‚çƒKƒ“ƒ}•â³j
+			// 4) ãƒ•ã‚£ãƒ«ã‚¿è¨­å®šï¼ˆsRGB å…¥åŠ›ãªã‚‰ã‚¬ãƒ³ãƒè£œæ­£ï¼‰
 			TEX_FILTER_FLAGS filter = TEX_FILTER_DEFAULT;
 			if (IsSRGB(meta.format)) filter |= TEX_FILTER_SRGB;
 			if (meta.GetAlphaMode() == TEX_ALPHA_MODE_PREMULTIPLIED)
 				filter |= TEX_FILTER_SEPARATE_ALPHA;
 
-			// 5) ¶¬
+			// 5) ç”Ÿæˆ
 			ScratchImage mip;
 			HRESULT hr = GenerateMipMaps(img.GetImages(), img.GetImageCount(), meta,
 				filter,
@@ -119,7 +119,7 @@ namespace SFW {
 				return;
 			}
 
-			// 6) ‚»‚ê‚Å‚à¸”s ¨ ˆÀ‘SŒ`®‚Ö—‚Æ‚µ‚ÄÄs
+			// 6) ãã‚Œã§ã‚‚å¤±æ•— â†’ å®‰å…¨å½¢å¼ã¸è½ã¨ã—ã¦å†è©¦è¡Œ
 			{
 				const bool wantSRGB = IsSRGB(meta.format);
 				const DXGI_FORMAT target = wantSRGB ? DXGI_FORMAT_R8G8B8A8_UNORM_SRGB
@@ -131,7 +131,7 @@ namespace SFW {
 					img = std::move(conv2);
 					meta = img.GetMetadata();
 
-					// sRGB Äİ’è
+					// sRGB å†è¨­å®š
 					filter = TEX_FILTER_DEFAULT;
 					if (IsSRGB(meta.format)) filter |= TEX_FILTER_SRGB;
 					if (meta.GetAlphaMode() == TEX_ALPHA_MODE_PREMULTIPLIED)
@@ -150,7 +150,7 @@ namespace SFW {
 				}
 			}
 
-			// 7) ‚±‚±‚Ü‚Å¸”s ¨ ƒ~ƒbƒv–³‚µ‚Å‘±siƒƒOo—Íj
+			// 7) ã“ã“ã¾ã§å¤±æ•— â†’ ãƒŸãƒƒãƒ—ç„¡ã—ã§ç¶šè¡Œï¼ˆãƒ­ã‚°å‡ºåŠ›ï¼‰
 			char buf[256];
 			sprintf_s(buf,
 				"[MipGen] E_FAIL: fmt=%d w=%zu h=%zu mips=%zu arr=%zu depth=%zu alpha=%d\n",
@@ -159,13 +159,13 @@ namespace SFW {
 			OutputDebugStringA(buf);
 		}
 
-		//==================== SRV ì¬ ====================
+		//==================== SRV ä½œæˆ ====================
 		ComPtr<ID3D11ShaderResourceView>
 			CreateSRV(ID3D11Resource* tex, const TexMetadata& md, ID3D11Device* device, bool forceSRGB) {
 			D3D11_SHADER_RESOURCE_VIEW_DESC sd = {};
 			sd.Format = md.format;
 
-			// --- SRGBƒtƒ‰ƒO•t‚¯ ---
+			// --- SRGBãƒ•ãƒ©ã‚°ä»˜ã‘ ---
 			if (forceSRGB) {
 				DXGI_FORMAT srgbFmt = MakeSRGB(sd.Format);
 				if (srgbFmt != DXGI_FORMAT_UNKNOWN) {
@@ -237,14 +237,14 @@ namespace SFW {
 			return srv;
 		}
 
-		//==================== –{‘Ì ====================
+		//==================== æœ¬ä½“ ====================
 
 		TextureManager::TextureManager(ID3D11Device* device, ID3D11DeviceContext* context, std::filesystem::path convertedDir) noexcept
 			: device(device), context(context), convertedDir(convertedDir) {
 		}
 
 		TextureData TextureManager::CreateResource(const TextureCreateDesc& desc, TextureHandle) {
-			// ƒpƒX‚ª‚ ‚éê‡‚Í‚»‚¿‚ç‚ğ—Dæ
+			// ãƒ‘ã‚¹ãŒã‚ã‚‹å ´åˆã¯ãã¡ã‚‰ã‚’å„ªå…ˆ
 			if (!desc.path.empty())
 			{
 				TexMetadata meta{};
@@ -267,18 +267,18 @@ namespace SFW {
 					hr = LoadFromHDRFile(wpath.c_str(), &meta, img);
 				}
 				else {
-					// WIC (PNG/JPG/BMP “™) ‚Í RGB “WŠJ‚ğ‹­§
+					// WIC (PNG/JPG/BMP ç­‰) ã¯ RGB å±•é–‹ã‚’å¼·åˆ¶
 					WIC_FLAGS wicFlags = WIC_FLAGS_FORCE_RGB;
-					// sRGB ‹­§‚ğ‚©‚¯‚éê‡‚à‚±‚±‚Å‚Í g“Ç‚İ‚İƒtƒ‰ƒOh ‚Æ‚µ‚Ä“n‚·iWIC ‚ÌF‹óŠÔƒ^ƒO‘Îôj
+					// sRGB å¼·åˆ¶ã‚’ã‹ã‘ã‚‹å ´åˆã‚‚ã“ã“ã§ã¯ â€œèª­ã¿è¾¼ã¿ãƒ•ãƒ©ã‚°â€ ã¨ã—ã¦æ¸¡ã™ï¼ˆWIC ã®è‰²ç©ºé–“ã‚¿ã‚°å¯¾ç­–ï¼‰
 					if (desc.forceSRGB) wicFlags |= WIC_FLAGS_FORCE_SRGB;
 					hr = LoadFromWICFile(wpath.c_str(), wicFlags, &meta, img);
 				}
 				if (FAILED(hr)) throw std::runtime_error("Failed to load image.");
 
-				// ---- ‚±‚±‚©‚çƒ~ƒbƒv¶¬iŒ˜˜Sƒtƒ[j ----
+				// ---- ã“ã“ã‹ã‚‰ãƒŸãƒƒãƒ—ç”Ÿæˆï¼ˆå …ç‰¢ãƒ•ãƒ­ãƒ¼ï¼‰ ----
 				EnsureMipChain(img, meta, desc.forceSRGB, maxGeneratedMips_);
 
-				// GPU ƒeƒNƒXƒ`ƒƒ‰»
+				// GPU ãƒ†ã‚¯ã‚¹ãƒãƒ£åŒ–
 				ComPtr<ID3D11Resource> tex;
 				hr = CreateTexture(device, img.GetImages(), img.GetImageCount(), meta, tex.GetAddressOf());
 				if (FAILED(hr)) {
@@ -294,7 +294,7 @@ namespace SFW {
 				// SRV
 				ComPtr<ID3D11ShaderResourceView> srv = CreateSRV(tex.Get(), meta, device, desc.forceSRGB);
 
-				// •Ô‹p
+				// è¿”å´
 				TextureData out{};
 				out.path = desc.path;
 				out.srv = std::move(srv);
@@ -302,13 +302,13 @@ namespace SFW {
 				return out;
 			}
 
-			// B) ƒƒ‚ƒŠ‚©‚çˆ³k‰æ‘œ‚ğ“Ç‚Ş
+			// B) ãƒ¡ãƒ¢ãƒªã‹ã‚‰åœ§ç¸®ç”»åƒã‚’èª­ã‚€
 			if (desc.memory && desc.memorySize > 0) {
 				TexMetadata meta{};
 				ScratchImage img{};
 				HRESULT hr = E_FAIL;
 
-				// ƒqƒ“ƒg‚É‰‚¶‚ÄŒÄ‚Ñ•ª‚¯
+				// ãƒ’ãƒ³ãƒˆã«å¿œã˜ã¦å‘¼ã³åˆ†ã‘
 				using MH = TextureCreateDesc::MemoryHint;
 				MH hint = desc.memoryHint;
 
@@ -325,7 +325,7 @@ namespace SFW {
 					hr = LoadFromHDRMemory(pMemory, desc.memorySize, &meta, img);
 				}
 				else {
-					// Auto/WIC ‚Í‚Æ‚è‚ ‚¦‚¸ WIC ‚É“Š‚°‚é
+					// Auto/WIC ã¯ã¨ã‚Šã‚ãˆãš WIC ã«æŠ•ã’ã‚‹
 					WIC_FLAGS flags = WIC_FLAGS_FORCE_RGB;
 					if (desc.forceSRGB) flags |= WIC_FLAGS_FORCE_SRGB;
 					hr = LoadFromWICMemory(static_cast<const std::byte*>(desc.memory), desc.memorySize, flags, &meta, img);
@@ -342,26 +342,26 @@ namespace SFW {
 				ComPtr<ID3D11ShaderResourceView> srv = CreateSRV(tex.Get(), meta, device, desc.forceSRGB);
 
 				TextureData out{};
-				out.path.clear();       // ƒƒ‚ƒŠ—R—ˆ‚È‚Ì‚ÅƒpƒX–³‚µ
+				out.path.clear();       // ãƒ¡ãƒ¢ãƒªç”±æ¥ãªã®ã§ãƒ‘ã‚¹ç„¡ã—
 				out.srv = std::move(srv);
 				out.resource = std::move(tex);
 				return out;
 			}
 
-			assert(desc.recipe != nullptr && "not reference of recipe instance"); // recipe •K{
+			assert(desc.recipe != nullptr && "not reference of recipe instance"); // recipe å¿…é ˆ
 
 			//==============================
-			// C) ƒpƒX–³‚µF‰ğ‘œ“x‚©‚ç¶¬
+			// C) ãƒ‘ã‚¹ç„¡ã—ï¼šè§£åƒåº¦ã‹ã‚‰ç”Ÿæˆ
 			//==============================
 			D3D11_TEXTURE2D_DESC td{};
 			td.Width = desc.recipe->width;
 			td.Height = desc.recipe->height;
-			td.MipLevels = (desc.recipe->mipLevels == 0) ? 0 : desc.recipe->mipLevels; // 0=ƒtƒ‹ƒ`ƒF[ƒ“
+			td.MipLevels = (desc.recipe->mipLevels == 0) ? 0 : desc.recipe->mipLevels; // 0=ãƒ•ãƒ«ãƒã‚§ãƒ¼ãƒ³
 			td.ArraySize = (std::max)(1u, desc.recipe->arraySize);
 			td.Format = desc.recipe->format;
 			td.SampleDesc.Count = 1;
 			td.Usage = desc.recipe->usage;
-			td.BindFlags = desc.recipe->bindFlags | D3D11_BIND_SHADER_RESOURCE; // SRV ‚Í•t‚¯‚Ä‚¨‚­
+			td.BindFlags = desc.recipe->bindFlags | D3D11_BIND_SHADER_RESOURCE; // SRV ã¯ä»˜ã‘ã¦ãŠã
 			td.CPUAccessFlags = desc.recipe->cpuAccessFlags;
 			td.MiscFlags = desc.recipe->miscFlags;
 
@@ -378,7 +378,7 @@ namespace SFW {
 			}
 			if (FAILED(hr)) throw std::runtime_error("CreateTexture2D failed.");
 
-			// SRV İ’èimipLevels=0 ‚Ìê‡‚Í‘S’i SRVj
+			// SRV è¨­å®šï¼ˆmipLevels=0 ã®å ´åˆã¯å…¨æ®µ SRVï¼‰
 			D3D11_SHADER_RESOURCE_VIEW_DESC sd{};
 			sd.Format = td.Format;
 			if (td.ArraySize > 1) {
@@ -398,7 +398,7 @@ namespace SFW {
 			if (FAILED(hr)) throw std::runtime_error("CreateShaderResourceView failed.");
 
 			TextureData out{};
-			out.path.clear();        // ¶¬•¨‚ÍƒpƒX–³‚µ
+			out.path.clear();        // ç”Ÿæˆç‰©ã¯ãƒ‘ã‚¹ç„¡ã—
 			out.srv = std::move(srv);
 			out.resource = std::move(tex2D);
 			return out;
@@ -419,7 +419,7 @@ namespace SFW {
 			if (d.resource) d.resource.Reset();
 		}
 
-		//================ ’x‰„XV À‘• ================
+		//================ é…å»¶æ›´æ–° å®Ÿè£… ================
 		void TextureManager::UpdateTexture(const TextureUpdateDesc& desc)
 		{
 			std::lock_guard<std::mutex> lock(updateMx_);
@@ -451,13 +451,13 @@ namespace SFW {
 
 		void TextureManager::PendingUpdates()
 		{
-			// ƒ†ƒj[ƒN‰»F (tex, subresource) ‚ÅÅV‚¾‚¯c‚·
+			// ãƒ¦ãƒ‹ãƒ¼ã‚¯åŒ–ï¼š (tex, subresource) ã§æœ€æ–°ã ã‘æ®‹ã™
 			std::vector<TextureUpdateDesc> work;
 			{
 				std::lock_guard<std::mutex> lock(updateMx_);
 				if (pendingTexUpdates_.empty() && pendingGenMips_.empty()) return;
 
-				// ŒãŸ‚¿ƒ}ƒbƒvi“¯‚¶ƒL[‚ª•¡”‰ñ‚ ‚Á‚Ä‚àÅŒã‚Ì‚à‚Ì‚¾‚¯“K—pj
+				// å¾Œå‹ã¡ãƒãƒƒãƒ—ï¼ˆåŒã˜ã‚­ãƒ¼ãŒè¤‡æ•°å›ã‚ã£ã¦ã‚‚æœ€å¾Œã®ã‚‚ã®ã ã‘é©ç”¨ï¼‰
 				struct Key {
 					ID3D11Resource* r; UINT s;
 					bool operator==(const Key& other) const noexcept {
@@ -470,35 +470,35 @@ namespace SFW {
 					}
 				};
 				std::unordered_map<Key, size_t, KeyHash> lastIndex;
-				work = pendingTexUpdates_; // ˆê’UƒRƒs[
+				work = pendingTexUpdates_; // ä¸€æ—¦ã‚³ãƒ”ãƒ¼
 				for (size_t i = 0; i < work.size(); ++i) {
 					lastIndex[Key{ work[i].tex.Get(), work[i].subresource }] = i;
 				}
-				// ƒtƒBƒ‹ƒ^‚µ‚ÄuÅŒã‚Ì‚à‚Ì‚¾‚¯vc‚·
+				// ãƒ•ã‚£ãƒ«ã‚¿ã—ã¦ã€Œæœ€å¾Œã®ã‚‚ã®ã ã‘ã€æ®‹ã™
 				std::vector<TextureUpdateDesc> filtered;
 				filtered.reserve(lastIndex.size());
 				for (auto& [k, idx] : lastIndex) filtered.push_back(std::move(work[idx]));
 				work.swap(filtered);
 			}
 
-			// “K—pFUpdateSubresource
+			// é©ç”¨ï¼šUpdateSubresource
 			for (auto& u : work) {
 				if (!u.tex) continue;
 				if (u.useBox) {
-					// •”•ªXV
+					// éƒ¨åˆ†æ›´æ–°
 					context->UpdateSubresource(u.tex.Get(), u.subresource, &u.box, u.pData, u.rowPitch, u.depthPitch);
 				}
 				else {
-					// ‘S‘ÌXV
+					// å…¨ä½“æ›´æ–°
 					context->UpdateSubresource(u.tex.Get(), u.subresource, nullptr, u.pData, u.rowPitch, u.depthPitch);
 				}
 				if (u.pData && u.isDelete) {
-					// BufferManager ‚Æ“¯—l‚Ìõ–½ŠÇ—
+					// BufferManager ã¨åŒæ§˜ã®å¯¿å‘½ç®¡ç†
 					delete[] reinterpret_cast<const std::byte*>(u.pData);
 				}
 			}
 
-			// ¶¬ƒ~ƒbƒv
+			// ç”ŸæˆãƒŸãƒƒãƒ—
 			std::vector<GenMipsItem> gen;
 			{
 				std::lock_guard<std::mutex> lock(updateMx_);
@@ -516,7 +516,7 @@ namespace SFW {
 			fs::path p = original;
 			auto ext = p.extension().string();
 
-			// —áŠO‚ğ”ğ‚¯‚½‚¢ê‡
+			// ä¾‹å¤–ã‚’é¿ã‘ãŸã„å ´åˆ
 			std::error_code ec;
 			fs::path rel = fs::relative(p.parent_path(), assetsDir, ec);
 			if (ec) {
@@ -524,35 +524,35 @@ namespace SFW {
 				return original;
 			}
 
-			// •ÏŠ·Œã‚ÌDDSƒpƒXŒó•â
+			// å¤‰æ›å¾Œã®DDSãƒ‘ã‚¹å€™è£œ
 			fs::path candidate = convertedDir / rel / p.stem();
 			candidate.replace_extension(".dds");
 
 			if (fs::exists(candidate)) {
-				return candidate.string(); // DDS ‚ğ—Dæ
+				return candidate.string(); // DDS ã‚’å„ªå…ˆ
 			}
-			return original; // ‚È‚¯‚ê‚ÎƒIƒŠƒWƒiƒ‹‚Ì PNG/JPG
+			return original; // ãªã‘ã‚Œã°ã‚ªãƒªã‚¸ãƒŠãƒ«ã® PNG/JPG
 		}
 
-		// ms: D3D11_MAPPED_SUBRESOURCEiBCˆ³k‚ÌmipƒTƒuƒŠƒ\[ƒX‚ğMap‚µ‚½Œ‹‰Êj
-		// descFmt: —á DXGI_FORMAT_BC7_UNORM / _SRGB ‚È‚Ç
-		// width,height: ‚»‚Ìmip‚Ì•/‚‚³imip‚ğ“Ç‚Ş‚È‚çŒ³ƒTƒCƒY>>mipj
+		// ms: D3D11_MAPPED_SUBRESOURCEï¼ˆBCåœ§ç¸®ã®mipã‚µãƒ–ãƒªã‚½ãƒ¼ã‚¹ã‚’Mapã—ãŸçµæœï¼‰
+		// descFmt: ä¾‹ DXGI_FORMAT_BC7_UNORM / _SRGB ãªã©
+		// width,height: ãã®mipã®å¹…/é«˜ã•ï¼ˆmipã‚’èª­ã‚€ãªã‚‰å…ƒã‚µã‚¤ã‚º>>mipï¼‰
 		static bool DecompressMappedBCToRGBA8(
 			const D3D11_MAPPED_SUBRESOURCE& ms,
 			DXGI_FORMAT descFmt,
 			uint32_t width, uint32_t height,
 			ScratchImage& outRGBA8) // out
 		{
-			// 1) “ü—ÍImageiˆ³kj‚Ìƒƒ^‚ğ‘g‚İ—§‚Ä
+			// 1) å…¥åŠ›Imageï¼ˆåœ§ç¸®ï¼‰ã®ãƒ¡ã‚¿ã‚’çµ„ã¿ç«‹ã¦
 			Image src{};
 			src.width = width;
 			src.height = height;
-			src.format = descFmt;          // DXGI_FORMAT_BC? ‚Å‚ ‚é‚±‚Æ
-			src.rowPitch = ms.RowPitch;      // 1ƒuƒƒbƒNs‚ ‚½‚è‚ÌƒoƒCƒg”iBC“Á—Lj
-			src.slicePitch = ms.DepthPitch;    // ƒTƒuƒŠƒ\[ƒX‘S‘Ì‚ÌƒoƒCƒg”
+			src.format = descFmt;          // DXGI_FORMAT_BC? ã§ã‚ã‚‹ã“ã¨
+			src.rowPitch = ms.RowPitch;      // 1ãƒ–ãƒ­ãƒƒã‚¯è¡Œã‚ãŸã‚Šã®ãƒã‚¤ãƒˆæ•°ï¼ˆBCç‰¹æœ‰ï¼‰
+			src.slicePitch = ms.DepthPitch;    // ã‚µãƒ–ãƒªã‚½ãƒ¼ã‚¹å…¨ä½“ã®ãƒã‚¤ãƒˆæ•°
 			src.pixels = reinterpret_cast<uint8_t*>(ms.pData);
 
-			// 2) RGBA8‚ÖƒfƒR[ƒhisRGB‚Íg’l‚»‚Ì‚Ü‚Üh‚ÅOK‚È‚ç UNORM ‚Öj
+			// 2) RGBA8ã¸ãƒ‡ã‚³ãƒ¼ãƒ‰ï¼ˆsRGBã¯â€œå€¤ãã®ã¾ã¾â€ã§OKãªã‚‰ UNORM ã¸ï¼‰
 			ScratchImage tmp;
 			HRESULT hr = Decompress(src, DXGI_FORMAT_R8G8B8A8_UNORM, tmp);
 			if (FAILED(hr)) return false;
@@ -567,7 +567,7 @@ namespace SFW {
 			D3D11_TEXTURE2D_DESC sd{};
 			src->GetDesc(&sd);
 
-			// 1) MSAA‚È‚ç‚Ü‚¸Resolve‚µ‚Ä1x‚Ö
+			// 1) MSAAãªã‚‰ã¾ãšResolveã—ã¦1xã¸
 			Microsoft::WRL::ComPtr<ID3D11Texture2D> resolved;
 			ID3D11Texture2D* srcForCopy = src;
 			if (sd.SampleDesc.Count > 1) {
@@ -579,37 +579,37 @@ namespace SFW {
 				rs.Usage = D3D11_USAGE_DEFAULT;
 				rs.CPUAccessFlags = 0;
 				if (FAILED(dev->CreateTexture2D(&rs, nullptr, &resolved))) return false;
-				// mip 0 / array slice 0 ‚ğ‘z’èB•K—v‚È‚çƒ‹[ƒv‚ÅB
+				// mip 0 / array slice 0 ã‚’æƒ³å®šã€‚å¿…è¦ãªã‚‰ãƒ«ãƒ¼ãƒ—ã§ã€‚
 				ctx->ResolveSubresource(resolved.Get(), 0, src, 0, sd.Format);
 				srcForCopy = resolved.Get();
-				sd = rs; // ˆÈ~‚Í”ñMSAA‚Ìdesc‚Åi‚ß‚é
+				sd = rs; // ä»¥é™ã¯éMSAAã®descã§é€²ã‚ã‚‹
 			}
 
-			// 2) Staging‚ğ“¯ƒTƒCƒY‚Åi‚½‚¾‚µCPU Read‰Âj
+			// 2) Stagingã‚’åŒã‚µã‚¤ã‚ºã§ï¼ˆãŸã ã—CPU Readå¯ï¼‰
 			D3D11_TEXTURE2D_DESC rd = sd;
 			rd.Usage = D3D11_USAGE_STAGING;
 			rd.BindFlags = 0;
 			rd.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
 			rd.MiscFlags = 0;
-			// mip/array‚ğ–{“–‚É1‚Â‚¾‚¯æ‚è‚½‚¢‚È‚ç MipLevels=1, ArraySize=1 ‚É’²®‚µ‚Ä
-			// CopySubresourceRegion ‚Å•K—v•”•ª‚¾‚¯•¡Ê‚·‚é•û–@‚à‚ ‚é
+			// mip/arrayã‚’æœ¬å½“ã«1ã¤ã ã‘å–ã‚ŠãŸã„ãªã‚‰ MipLevels=1, ArraySize=1 ã«èª¿æ•´ã—ã¦
+			// CopySubresourceRegion ã§å¿…è¦éƒ¨åˆ†ã ã‘è¤‡å†™ã™ã‚‹æ–¹æ³•ã‚‚ã‚ã‚‹
 
 			Microsoft::WRL::ComPtr<ID3D11Texture2D> staging;
 			if (FAILED(dev->CreateTexture2D(&rd, nullptr, &staging))) return false;
 
-			// 3) ƒRƒs[i‚±‚±‚Å‚ÍƒŠƒ\[ƒXŠÛ‚²‚ÆB•K—v‚É‰‚¶‚Ä CopySubresourceRegionj
+			// 3) ã‚³ãƒ”ãƒ¼ï¼ˆã“ã“ã§ã¯ãƒªã‚½ãƒ¼ã‚¹ä¸¸ã”ã¨ã€‚å¿…è¦ã«å¿œã˜ã¦ CopySubresourceRegionï¼‰
 			ctx->CopyResource(staging.Get(), srcForCopy);
 
-			// 4) MapiREAD‚ÍŠ®—¹‘Ò‚¿‚·‚é‚Ì‚Å’ÊíSync•s—vj
+			// 4) Mapï¼ˆREADã¯å®Œäº†å¾…ã¡ã™ã‚‹ã®ã§é€šå¸¸Syncä¸è¦ï¼‰
 			D3D11_MAPPED_SUBRESOURCE ms{};
 			if (FAILED(ctx->Map(staging.Get(), 0, D3D11_MAP_READ, 0, &ms))) return false;
 
 			if (sd.Format == DXGI_FORMAT_B8G8R8A8_UNORM)
 			{
-				// 5) ‘ƒoƒCƒg”‚Í DepthPitch ‚ğ—Dæ—˜—pi2D‚Å‚à—LŒøj
+				// 5) ç·ãƒã‚¤ãƒˆæ•°ã¯ DepthPitch ã‚’å„ªå…ˆåˆ©ç”¨ï¼ˆ2Dã§ã‚‚æœ‰åŠ¹ï¼‰
 				const size_t totalBytes = (ms.DepthPitch != 0)
 					? size_t(ms.DepthPitch)
-					: size_t(ms.RowPitch) * size_t(sd.Height); // ƒtƒH[ƒ‹ƒoƒbƒN
+					: size_t(ms.RowPitch) * size_t(sd.Height); // ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯
 
 				out.width = sd.Width;
 				out.height = sd.Height;
@@ -617,7 +617,7 @@ namespace SFW {
 				out.fmt = sd.Format;
 				out.bytes.resize(totalBytes);
 
-				// 6) ‚»‚Ì‚Ü‚ÜˆêŠ‡ƒRƒs[ig¶hƒŒƒCƒAƒEƒg‚Å—Ç‚¢‚È‚çj
+				// 6) ãã®ã¾ã¾ä¸€æ‹¬ã‚³ãƒ”ãƒ¼ï¼ˆâ€œç”Ÿâ€ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã§è‰¯ã„ãªã‚‰ï¼‰
 				std::memcpy(out.bytes.data(), ms.pData, totalBytes);
 			}
 			else
@@ -633,7 +633,7 @@ namespace SFW {
 				out.stride = (UINT)img->rowPitch;
 				out.fmt = img->format;
 				out.bytes.resize(img->height * img->rowPitch);
-				// 5) RGBA8ƒf[ƒ^‚ğƒRƒs[
+				// 5) RGBA8ãƒ‡ãƒ¼ã‚¿ã‚’ã‚³ãƒ”ãƒ¼
 				std::memcpy(out.bytes.data(), img->pixels, out.bytes.size());
 			}
 
@@ -661,10 +661,10 @@ namespace SFW {
 			if (!dev || !ctx || !src) return false;
 
 			ScratchImage captured;
-			HRESULT hr = CaptureTexture(dev, ctx, src, captured); // MSAA‚à“à•”‚Åˆ—‚µ‚Ä‚­‚ê‚éÀ‘•‚ª‘½‚¢
+			HRESULT hr = CaptureTexture(dev, ctx, src, captured); // MSAAã‚‚å†…éƒ¨ã§å‡¦ç†ã—ã¦ãã‚Œã‚‹å®Ÿè£…ãŒå¤šã„
 			if (FAILED(hr)) return false;
 
-			// ‚Ü‚¸uˆ³k‚È‚ç“WŠJv
+			// ã¾ãšã€Œåœ§ç¸®ãªã‚‰å±•é–‹ã€
 			ScratchImage decompressed;
 			const Image* base = captured.GetImage(0, 0, 0);
 			if (!base) return false;
@@ -680,7 +680,7 @@ namespace SFW {
 				if (!base) return false;
 			}
 
-			// Ÿ‚ÉuRGBA8‚Ö•ÏŠ·vifloat/UNORM/‘¼ƒ`ƒƒƒ“ƒlƒ‹”‚È‚Ç‘S•”‚±‚±‚Å‹zûj
+			// æ¬¡ã«ã€ŒRGBA8ã¸å¤‰æ›ã€ï¼ˆfloat/UNORM/ä»–ãƒãƒ£ãƒ³ãƒãƒ«æ•°ãªã©å…¨éƒ¨ã“ã“ã§å¸åï¼‰
 			ScratchImage rgba8;
 			if (base->format != DXGI_FORMAT_R8G8B8A8_UNORM)
 			{

@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   UndeletablePtr.hpp
- * @brief delete‚ğ–h‚®‚½‚ß‚Ìƒ|ƒCƒ“ƒ^ƒ‰ƒbƒp[ƒNƒ‰ƒX‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief deleteã‚’é˜²ããŸã‚ã®ãƒã‚¤ãƒ³ã‚¿ãƒ©ãƒƒãƒ‘ãƒ¼ã‚¯ãƒ©ã‚¹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   July 2025
  *********************************************************************/
@@ -10,44 +10,44 @@
 namespace SFW
 {
 	/**
-	 * @brief delete‚ğ–h‚®‚½‚ß‚Ìƒ|ƒCƒ“ƒ^ƒ‰ƒbƒp[ƒNƒ‰ƒX
+	 * @brief deleteã‚’é˜²ããŸã‚ã®ãƒã‚¤ãƒ³ã‚¿ãƒ©ãƒƒãƒ‘ãƒ¼ã‚¯ãƒ©ã‚¹
 	 */
 	template<typename T>
 	class UndeletablePtr {
 		/**
-		 * @brief –{‘Ì
+		 * @brief æœ¬ä½“
 		 */
 		T* ptr;
 	public:
 		/**
-		 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @param p ƒ|ƒCƒ“ƒ^
+		 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @param p ãƒã‚¤ãƒ³ã‚¿
 		 */
 		explicit UndeletablePtr(T* p) noexcept : ptr(p) {}
 		/**
-		 * @brief@À‘Ì‰»
-		 * @return T* ƒ|ƒCƒ“ƒ^
+		 * @briefã€€å®Ÿä½“åŒ–
+		 * @return T* ãƒã‚¤ãƒ³ã‚¿
 		 */
 		inline T* operator->() const noexcept { return ptr; }
 		/**
-		 * @brief QÆ‰‰Zq
-		 * @return T& QÆ
+		 * @brief å‚ç…§æ¼”ç®—å­
+		 * @return T& å‚ç…§
 		 */
 		inline T& operator*()  const noexcept { return *ptr; }
 		/**
-		 * @brief ƒ|ƒCƒ“ƒ^‚ğæ“¾‚·‚éŠÖ”
-		 * @return T* ƒ|ƒCƒ“ƒ^
+		 * @brief ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return T* ãƒã‚¤ãƒ³ã‚¿
 		 */
 		inline T* get() const noexcept { return ptr; }
 
 		/**
-		 * @brief  delete‚ğ–h‚®‚½‚ßA–¾¦“I‚Èdelete‚ğ‹Ö~
+		 * @brief  deleteã‚’é˜²ããŸã‚ã€æ˜ç¤ºçš„ãªdeleteã‚’ç¦æ­¢
 		 */
 		void operator delete(void*) = delete;
 
 		/**
-		 * @brief ƒ|ƒCƒ“ƒ^‚ª—LŒø‚©‚Ç‚¤‚©
-		 * @return —LŒø‚È‚çtrue
+		 * @brief ãƒã‚¤ãƒ³ã‚¿ãŒæœ‰åŠ¹ã‹ã©ã†ã‹
+		 * @return æœ‰åŠ¹ãªã‚‰true
 		 */
 		bool IsValid() const noexcept { return ptr != nullptr; }
 	};

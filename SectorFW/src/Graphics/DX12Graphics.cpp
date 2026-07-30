@@ -1,4 +1,4 @@
-#include "DX12Graphics.h"
+ï»¿#include "DX12Graphics.h"
 
 namespace SFW
 {
@@ -9,7 +9,7 @@ namespace SFW
 
 	//	HRESULT hr;
 
-	//	// DXGIƒtƒ@ƒNƒgƒŠ & ƒAƒ_ƒvƒ^æ“¾
+	//	// DXGIãƒ•ã‚¡ã‚¯ãƒˆãƒª & ã‚¢ãƒ€ãƒ—ã‚¿å–å¾—
 	//	ComPtr<IDXGIFactory6> factory;
 	//	hr = CreateDXGIFactory1(IID_PPV_ARGS(&factory));
 	//	if (FAILED(hr)) return false;
@@ -18,16 +18,16 @@ namespace SFW
 	//	hr = factory->EnumAdapters1(0, &adapter);
 	//	if (FAILED(hr)) return false;
 
-	//	// ƒfƒoƒCƒXì¬
+	//	// ãƒ‡ãƒã‚¤ã‚¹ä½œæˆ
 	//	hr = D3D12CreateDevice(adapter.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&device));
 	//	if (FAILED(hr)) return false;
 
-	//	// ƒRƒ}ƒ“ƒhƒLƒ…[ì¬
+	//	// ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼ä½œæˆ
 	//	D3D12_COMMAND_QUEUE_DESC queueDesc = {};
 	//	hr = device->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&commandQueue));
 	//	if (FAILED(hr)) return false;
 
-	//	// ƒXƒƒbƒvƒ`ƒF[ƒ“ì¬
+	//	// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³ä½œæˆ
 	//	DXGI_SWAP_CHAIN_DESC1 swapDesc = {};
 	//	swapDesc.BufferCount = FrameCount;
 	//	swapDesc.Width = 1280;
@@ -44,7 +44,7 @@ namespace SFW
 	//	tempSwapChain.As(&swapChain);
 	//	frameIndex = swapChain->GetCurrentBackBufferIndex();
 
-	//	// RTVƒq[ƒv
+	//	// RTVãƒ’ãƒ¼ãƒ—
 	//	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc = {};
 	//	rtvHeapDesc.NumDescriptors = FrameCount;
 	//	rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
@@ -52,7 +52,7 @@ namespace SFW
 	//	rtvDescriptorSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 	//	if (FAILED(hr)) return false;
 
-	//	// ƒoƒbƒNƒoƒbƒtƒ@æ“¾ & RTVì¬
+	//	// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡å–å¾— & RTVä½œæˆ
 	//	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = rtvHeap->GetCPUDescriptorHandleForHeapStart();
 	//	for (UINT i = 0; i < FrameCount; i++) {
 	//		swapChain->GetBuffer(i, IID_PPV_ARGS(&renderTargets[i]));
@@ -60,7 +60,7 @@ namespace SFW
 	//		rtvHandle.ptr += rtvDescriptorSize;
 	//	}
 
-	//	// ƒRƒ}ƒ“ƒhƒAƒƒP[ƒ^ & ƒŠƒXƒg
+	//	// ã‚³ãƒãƒ³ãƒ‰ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ & ãƒªã‚¹ãƒˆ
 	//	hr = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
 	//	if (FAILED(hr)) return false;
 
@@ -70,7 +70,7 @@ namespace SFW
 	//	hr = commandList->Close();
 	//	if (FAILED(hr)) return false;
 
-	//	// ƒtƒFƒ“ƒX
+	//	// ãƒ•ã‚§ãƒ³ã‚¹
 	//	hr = device->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
 	//	if (FAILED(hr)) return false;
 

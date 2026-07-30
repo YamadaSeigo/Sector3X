@@ -1,18 +1,18 @@
-#include <vector>
+ï»¿#include <vector>
 #include <random>
 #include <cmath>
 #include <cstdint>
 #include <algorithm>
 
-// polyline ‚ÌŒÊ’·ƒTƒ“ƒvƒ‹Œ‹‰Ê
+// polyline ã®å¼§é•·ã‚µãƒ³ãƒ—ãƒ«çµæœ
 struct Sample
 {
-	Math::Vec3f  pos;     // ’†Süã
-	Math::Vec3f  tangent; // is•ûŒü
-	float yawDeg;  // …•½–Ê‚Ìyawi•K—v‚È‚çj
+	Math::Vec3f  pos;     // ä¸­å¿ƒç·šä¸Š
+	Math::Vec3f  tangent; // é€²è¡Œæ–¹å‘
+	float yawDeg;  // æ°´å¹³é¢ã®yawï¼ˆå¿…è¦ãªã‚‰ï¼‰
 };
 
-// Ü‚êü‚ğŒÊ’·ƒpƒ‰ƒ[ƒ^ s (0..totalLen) ‚ÅƒTƒ“ƒvƒ‹
+// æŠ˜ã‚Œç·šã‚’å¼§é•·ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ s (0..totalLen) ã§ã‚µãƒ³ãƒ—ãƒ«
 class PolylineSampler
 {
 public:
@@ -31,7 +31,7 @@ public:
 
 		s = Math::clamp(s, 0.0f, m_totalLen);
 
-		// “ñ•ª’Tõ‚Å‹æŠÔ‚ğ“Á’è
+		// äºŒåˆ†æ¢ç´¢ã§åŒºé–“ã‚’ç‰¹å®š
 		auto it = std::upper_bound(m_prefixLen.begin(), m_prefixLen.end(), s);
 		size_t seg = (it == m_prefixLen.begin()) ? 0 : (size_t)(it - m_prefixLen.begin() - 1);
 		seg = (std::min)(seg, m_segLen.size() - 1);
@@ -47,8 +47,8 @@ public:
 		out.pos = a * (1.0f - t) + b * t;
 		out.tangent = dir;
 
-		// yaw: XZ•½–Ê‚ÅŒvZiY-up‘z’èj
-		out.yawDeg = Math::Rad2Deg(std::atan2(dir.x, dir.z)); // z‘O•û, x‰E ‚È‚ç‚±‚ÌŒ`‚ªˆµ‚¢‚â‚·‚¢
+		// yaw: XZå¹³é¢ã§è¨ˆç®—ï¼ˆY-upæƒ³å®šï¼‰
+		out.yawDeg = Math::Rad2Deg(std::atan2(dir.x, dir.z)); // zå‰æ–¹, xå³ ãªã‚‰ã“ã®å½¢ãŒæ‰±ã„ã‚„ã™ã„
 		return out;
 	}
 
@@ -75,26 +75,26 @@ private:
 	}
 
 	std::vector<Math::Vec3f> m_pts;
-	std::vector<float> m_prefixLen; // ŠeƒZƒOƒƒ“ƒgŠJn‚Ü‚Å‚Ì—İÏ’·
+	std::vector<float> m_prefixLen; // å„ã‚»ã‚°ãƒ¡ãƒ³ãƒˆé–‹å§‹ã¾ã§ã®ç´¯ç©é•·
 	std::vector<float> m_segLen;
 	float m_totalLen{};
 };
 
 struct FenceParams
 {
-	float spacing = 2.0f;          // Šî–{ŠÔŠu
-	float spacingJitter = 0.2f;    // ŠÔŠu‚Ìƒ‰ƒ“ƒ_ƒ€i}j
+	float spacing = 2.0f;          // åŸºæœ¬é–“éš”
+	float spacingJitter = 0.2f;    // é–“éš”ã®ãƒ©ãƒ³ãƒ€ãƒ ï¼ˆÂ±ï¼‰
 
-	float baseWidth = 1.5f;        // ü‚©‚ç‚ÌŠî–{ƒIƒtƒZƒbƒg
-	float widthRand = 0.5f;        // ’Ç‰Á‚Ìƒ‰ƒ“ƒ_ƒ€ (0..widthRand)
+	float baseWidth = 1.5f;        // ç·šã‹ã‚‰ã®åŸºæœ¬ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+	float widthRand = 0.5f;        // è¿½åŠ ã®ãƒ©ãƒ³ãƒ€ãƒ  (0..widthRand)
 
-	float baseHeight = 0.0f;       // ‚‚³ƒIƒtƒZƒbƒg
-	float heightRand = 0.2f;       // ‚‚³ƒ‰ƒ“ƒ_ƒ€ (})
+	float baseHeight = 0.0f;       // é«˜ã•ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+	float heightRand = 0.2f;       // é«˜ã•ãƒ©ãƒ³ãƒ€ãƒ  (Â±)
 
-	float yawJitterDeg = 5.0f;     // yawƒ‰ƒ“ƒ_ƒ€ (}deg)
+	float yawJitterDeg = 5.0f;     // yawãƒ©ãƒ³ãƒ€ãƒ  (Â±deg)
 
-	bool bothSides = false;        // true‚È‚ç¶‰E—¼‘¤‚Éo‚·
-	bool randomSide = true;        // bothSides=false‚Ì‚Æ‚«A¶‰E‚ğƒ‰ƒ“ƒ_ƒ€‚É‚·‚é
+	bool bothSides = false;        // trueãªã‚‰å·¦å³ä¸¡å´ã«å‡ºã™
+	bool randomSide = true;        // bothSides=falseã®ã¨ãã€å·¦å³ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«ã™ã‚‹
 };
 
 struct FenceInstance
@@ -102,7 +102,7 @@ struct FenceInstance
 	Math::Vec3f  position;
 	float yawDeg;
 	Math::Vec3f tangent;
-	// •K—v‚È‚ç scale/tint/seed/id ‚È‚Ç‚à’Ç‰Á
+	// å¿…è¦ãªã‚‰ scale/tint/seed/id ãªã©ã‚‚è¿½åŠ 
 };
 
 static inline float RandRange(std::mt19937& rng, float a, float b)
@@ -111,10 +111,10 @@ static inline float RandRange(std::mt19937& rng, float a, float b)
 	return dist(rng);
 }
 
-// up ‚ÍŠî–{ {0,1,0}B’nŒ`–@ü‚ª‚ ‚é‚È‚ç SampleByArcLength ‚©‚ç•Ê“ræ‚Á‚Ä·‚µ‘Ö‚¦„§B
+// up ã¯åŸºæœ¬ {0,1,0}ã€‚åœ°å½¢æ³•ç·šãŒã‚ã‚‹ãªã‚‰ SampleByArcLength ã‹ã‚‰åˆ¥é€”å–ã£ã¦å·®ã—æ›¿ãˆæ¨å¥¨ã€‚
 static inline  Math::Vec3f ComputeRight(const  Math::Vec3f& tangent, const  Math::Vec3f& up)
 {
-	// ‰E = up x forwardiÀ•WŒn‚É‰‚¶‚Ä‹t‚Å‚àOKj
+	// å³ = up x forwardï¼ˆåº§æ¨™ç³»ã«å¿œã˜ã¦é€†ã§ã‚‚OKï¼‰
 	Math::Vec3f r = Math::Cross(up, tangent);
 	return Normalize(r);
 }
@@ -144,17 +144,17 @@ std::vector<FenceInstance> GenerateFenceAlongPolyline(
 	float s = startS;
 	while (s <= endS)
 	{
-		// ƒTƒ“ƒvƒ‹
+		// ã‚µãƒ³ãƒ—ãƒ«
 		Sample smp = sampler.SampleByArcLength(s);
 		Math::Vec3f right = ComputeRight(smp.tangent, worldUp);
 
-		// Ÿ‚ÌŠÔŠuiƒWƒbƒ^[j
+		// æ¬¡ã®é–“éš”ï¼ˆã‚¸ãƒƒã‚¿ãƒ¼ï¼‰
 		float ds = p.spacing;
 		if (p.spacingJitter > 0.0f)
 			ds += RandRange(rng, -p.spacingJitter, +p.spacingJitter);
 		ds = (std::max)(0.05f, ds);
 
-		// ‚Ç‚¿‚ç‘¤‚É’u‚­‚©
+		// ã©ã¡ã‚‰å´ã«ç½®ãã‹
 		auto emitOneSide = [&](float sideSign)
 			{
 				float w = p.baseWidth + RandRange(rng, 0.0f, p.widthRand);

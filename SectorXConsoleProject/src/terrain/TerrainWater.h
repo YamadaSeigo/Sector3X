@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <vector>
 #include <SectorFW/Math/Vector.hpp>
@@ -10,8 +10,8 @@ class TerrainWater
 public:
 	struct ClusterNode
 	{
-		uint32_t clusterX; // ƒNƒ‰ƒXƒ^[‚ÌXÀ•W
-		uint32_t clusterZ; // ƒNƒ‰ƒXƒ^[‚ÌZÀ•W
+		uint32_t clusterX; // ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã®Xåº§æ¨™
+		uint32_t clusterZ; // ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã®Zåº§æ¨™
 	};
 
 	struct BuilderParams
@@ -19,31 +19,31 @@ public:
 		std::string heigthMapPath;
 		std::string normal1Path;
 		std::string normal2Path;
-		float worldMapSizeX; // ƒ[ƒ‹ƒh‘S‘Ì‚ÌX•ûŒü‚ÌƒTƒCƒY
-		float worldMapSizeZ; // ƒ[ƒ‹ƒh‘S‘Ì‚ÌZ•ûŒü‚ÌƒTƒCƒY
-		Math::Vec3f worldOffset; // ƒ[ƒ‹ƒhƒIƒtƒZƒbƒg
-		float heightScale; // (0.0 - 1.0j* heightScale ‚ÅÀÛ‚Ì‚‚³‚É‚È‚é
-		uint32_t clusterCellsX; // ƒNƒ‰ƒXƒ^[‚²‚Æ‚ÌÅ‘å•ªŠ„”(X•ûŒü)
-		uint32_t clusterCellsZ; // ƒNƒ‰ƒXƒ^[‚²‚Æ‚ÌÅ‘å•ªŠ„”(Z•ûŒü)
-		float cellSize; // Heightfield ‚ÌƒZƒ‹ƒTƒCƒY (ƒ[ƒ‹ƒh’PˆÊ)
+		float worldMapSizeX; // ãƒ¯ãƒ¼ãƒ«ãƒ‰å…¨ä½“ã®Xæ–¹å‘ã®ã‚µã‚¤ã‚º
+		float worldMapSizeZ; // ãƒ¯ãƒ¼ãƒ«ãƒ‰å…¨ä½“ã®Zæ–¹å‘ã®ã‚µã‚¤ã‚º
+		Math::Vec3f worldOffset; // ãƒ¯ãƒ¼ãƒ«ãƒ‰ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+		float heightScale; // (0.0 - 1.0ï¼‰* heightScale ã§å®Ÿéš›ã®é«˜ã•ã«ãªã‚‹
+		uint32_t clusterCellsX; // ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã”ã¨ã®æœ€å¤§åˆ†å‰²æ•°(Xæ–¹å‘)
+		uint32_t clusterCellsZ; // ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã”ã¨ã®æœ€å¤§åˆ†å‰²æ•°(Zæ–¹å‘)
+		float cellSize; // Heightfield ã®ã‚»ãƒ«ã‚µã‚¤ã‚º (ãƒ¯ãƒ¼ãƒ«ãƒ‰å˜ä½)
 	};
 
 	struct CSParam
 	{
-		// ƒƒCƒ“ƒJƒƒ‰—pƒtƒ‰ƒXƒ^ƒ€
+		// ãƒ¡ã‚¤ãƒ³ã‚«ãƒ¡ãƒ©ç”¨ãƒ•ãƒ©ã‚¹ã‚¿ãƒ 
 		Math::Frustumf MainFrustum;
 
-		// LOD ”»’è—pi‰æ–ÊƒTƒCƒYƒx[ƒXj
+		// LOD åˆ¤å®šç”¨ï¼ˆç”»é¢ã‚µã‚¤ã‚ºãƒ™ãƒ¼ã‚¹ï¼‰
 		Math::Matrix4x4f ViewProj;
 
-		uint32_t MaxVisibleIndices; // Visible_* ‚ÌÅ‘å index ”iuint ’PˆÊj
-		uint32_t LodLevels; // Šú‘Ò’l: 3~4iLOD0..LOD3j
+		uint32_t MaxVisibleIndices; // Visible_* ã®æœ€å¤§ index æ•°ï¼ˆuint å˜ä½ï¼‰
+		uint32_t LodLevels; // æœŸå¾…å€¤: 3~4ï¼ˆLOD0..LOD3ï¼‰
 		float ScreenSize[2]; // px
 
-		// ƒƒCƒ“—p LOD ‚µ‚«‚¢’l (px): x=0/1, y=1/2, z=2/3, w=3/4
+		// ãƒ¡ã‚¤ãƒ³ç”¨ LOD ã—ãã„å€¤ (px): x=0/1, y=1/2, z=2/3, w=3/4
 		float LodPxThreshold_Main[4];
 
-		// Heightfield ‘S‘Ì‚Ì’¸“_”
+		// Heightfield å…¨ä½“ã®é ‚ç‚¹æ•°
 		uint32_t gVertsX; // (= vertsX)
 		uint32_t gVertsZ; // (= vertsZ)
 		uint32_t gCellsX; // (= cellsX)
@@ -52,23 +52,23 @@ public:
 
 	struct GridCB
 	{
-		Math::Vec3f gOrigin; // ƒ[ƒ‹ƒhÀ•W‚ÌŠî€ (x,z)
+		Math::Vec3f gOrigin; // ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã®åŸºæº– (x,z)
 		float heightScale;
 
-		uint32_t gVertsX; // Heightfield ‘S‘Ì‚Ì’¸“_”X
-		uint32_t gVertsZ; // Heightfield ‘S‘Ì‚Ì’¸“_”Z
+		uint32_t gVertsX; // Heightfield å…¨ä½“ã®é ‚ç‚¹æ•°X
+		uint32_t gVertsZ; // Heightfield å…¨ä½“ã®é ‚ç‚¹æ•°Z
 
-		//g‚Á‚Ä‚È‚¢‚¯‚Çˆê‰(‚Ç‚¤‚¹padding‚ª‚¢‚é‚Ì‚Å)
-		uint32_t gDimX; // ƒNƒ‰ƒXƒ^”X
-		uint32_t gDimZ; // ƒNƒ‰ƒXƒ^”Z
+		//ä½¿ã£ã¦ãªã„ã‘ã©ä¸€å¿œ(ã©ã†ã›paddingãŒã„ã‚‹ã®ã§)
+		uint32_t gDimX; // ã‚¯ãƒ©ã‚¹ã‚¿æ•°X
+		uint32_t gDimZ; // ã‚¯ãƒ©ã‚¹ã‚¿æ•°Z
 
-		uint32_t gClusterCellsX; // ƒNƒ‰ƒXƒ^[‚²‚Æ‚ÌÅ‘å•ªŠ„”X
-		uint32_t gClusterCellsZ; // ƒNƒ‰ƒXƒ^[‚²‚Æ‚ÌÅ‘å•ªŠ„”Z
+		uint32_t gClusterCellsX; // ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã”ã¨ã®æœ€å¤§åˆ†å‰²æ•°X
+		uint32_t gClusterCellsZ; // ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã”ã¨ã®æœ€å¤§åˆ†å‰²æ•°Z
 
-		float gCellInvCount[2]; // Heightfield ‚ÌƒZƒ‹‚Ì‹t” (1/gClusterCellsX, 1/gClusterCellsZ)
+		float gCellInvCount[2]; // Heightfield ã®ã‚»ãƒ«ã®é€†æ•° (1/gClusterCellsX, 1/gClusterCellsZ)
 
-		float gCellSize[2]; // Heightfield ‚ÌƒZƒ‹ƒTƒCƒY (x,z)
-		float gHeightMapInvSize[2]; // 1/width, 1/height (height/normal texture—p)
+		float gCellSize[2]; // Heightfield ã®ã‚»ãƒ«ã‚µã‚¤ã‚º (x,z)
+		float gHeightMapInvSize[2]; // 1/width, 1/height (height/normal textureç”¨)
 	};
 
 	struct FrameCB
@@ -103,11 +103,11 @@ public:
 		float shoreFadeScale = 1.5f;
 		float pad1;
 
-		float gFoamColor[4] = { 0.95f, 1.0, 1.0f };      // ”’‚É­‚µ‰©—Î‚âÂ‚ğ¬‚º‚Ä‚à—Ç‚¢
-		float  gFoamDepthStart = 0.02f; // —á: 0.02
-		float  gFoamDepthEnd = 0.25f;   // —á: 0.25
-		float  gFoamIntensity = 0.8f;  // —á: 0.8
-		float  gFoamNoiseScale = 6.0f; // —á: 6.0
+		float gFoamColor[4] = { 0.95f, 1.0, 1.0f };      // ç™½ã«å°‘ã—é»„ç·‘ã‚„é’ã‚’æ··ãœã¦ã‚‚è‰¯ã„
+		float  gFoamDepthStart = 0.02f; // ä¾‹: 0.02
+		float  gFoamDepthEnd = 0.25f;   // ä¾‹: 0.25
+		float  gFoamIntensity = 0.8f;  // ä¾‹: 0.8
+		float  gFoamNoiseScale = 6.0f; // ä¾‹: 6.0
 	};
 
 	TerrainWater() = default;
@@ -142,12 +142,12 @@ public:
 		float fogEnd);
 
 private:
-	std::vector<ClusterNode> waterClusters; // …–Ê‚Æ‚İ‚È‚³‚ê‚éƒNƒ‰ƒXƒ^[‚ÌƒŠƒXƒg
-	std::vector<Math::AABB3f> waterClusterBounds; // …–ÊƒNƒ‰ƒXƒ^[‚ÌAABBƒŠƒXƒg(å‚ÉLOD‚ÌŒvZ‚Ég—p‚·‚é)
+	std::vector<ClusterNode> waterClusters; // æ°´é¢ã¨ã¿ãªã•ã‚Œã‚‹ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã®ãƒªã‚¹ãƒˆ
+	std::vector<Math::AABB3f> waterClusterBounds; // æ°´é¢ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã®AABBãƒªã‚¹ãƒˆ(ä¸»ã«LODã®è¨ˆç®—ã«ä½¿ç”¨ã™ã‚‹)
 
 	BuilderParams params;
-	uint32_t clustersX = 1; // ƒNƒ‰ƒXƒ^[”X
-	uint32_t clustersZ = 1; // ƒNƒ‰ƒXƒ^[”Z
+	uint32_t clustersX = 1; // ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼æ•°X
+	uint32_t clustersZ = 1; // ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼æ•°Z
 
 	FrameCB frameCBData;
 

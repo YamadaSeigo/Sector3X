@@ -1,4 +1,4 @@
-#include "EnvironmentService.h"
+ï»¿#include "EnvironmentService.h"
 #include <SectorFW/Math/Perlin2D.h>
 
 float gMaxDryRate = 0.15f;
@@ -20,11 +20,11 @@ EnvironmentService::EnvironmentService(Graphics::DX11::BufferManager* bufferMgr_
 	{
 		TimeOfDayKey keys[] = {
 			/*			  t,		ambientColor,		ambientIntensity,	fogColor,				fogStart,	fogEnd,			heightFogDensity,	sunColor,		sunIntensity,	godRayTint,		godRayIntensity, emissiveBoost*/
-			/*–é–¾‚¯	*/	{0.0f,   {	0.03f, 0.05f, 0.07f	},		0.3f,	{	0.05f, 0.07f, 0.12f	},	500.0f,		FAR_CLIP * 2.5f,	0.005f,			{	1.0f,0.95f,0.8f	},	1.0f,   {	1.0f,1.0f,1.0f	},	0.0f,			4.0f		},
-			/*’©		*/	{0.2f,	 {	0.9f, 0.95f, 1.0f	},		1.0f,	{	1.0f, 0.8f, 0.6f	},	300.0f,		FAR_CLIP * 1.0f,	0.02f,			{	1.0f,0.9f,0.7f	},	2.0f,   {	1.0f,1.0f,0.9f	},	1.0f,			2.0f		},
-			/*’‹		*/	{0.4f,   {	0.9f, 0.95f, 1.0f	},		1.2f,	{	0.7f, 0.85f, 1.0f	},	100.0f,		FAR_CLIP * 1.5f,	0.002f,			{	1.0f,1.0f,1.0f	},	5.0f,   {	1.0f,1.0f,1.0f	},	0.5f,			1.0f		},
-			/*—[•û	*/	{0.6f,	 {	1.0f, 0.7f, 0.5f	},		0.7f,	{	0.6f, 0.5f, 0.5f	},	400.0f,		FAR_CLIP * 1.3f,	0.005f,			{	1.0f,0.8f,0.6f	},	2.5f,   {	1.0f,0.9f,0.8f	},	0.8f,			2.5f		},
-			/*–é		*/	{0.8f,   {	0.02f, 0.03f, 0.05f	},		0.15f,	{	0.03f, 0.04f, 0.06f	},	600.0f,		FAR_CLIP * 1.7f,	0.0f,			{	1.0f,0.9f,0.7f	},	0.5f,   {	0.8f,0.8f,1.0f	},	0.0f,			4.0f		},
+			/*å¤œæ˜ã‘	*/	{0.0f,   {	0.03f, 0.05f, 0.07f	},		0.3f,	{	0.05f, 0.07f, 0.12f	},	500.0f,		FAR_CLIP * 2.5f,	0.005f,			{	1.0f,0.95f,0.8f	},	1.0f,   {	1.0f,1.0f,1.0f	},	0.0f,			4.0f		},
+			/*æœ		*/	{0.2f,	 {	0.9f, 0.95f, 1.0f	},		1.0f,	{	1.0f, 0.8f, 0.6f	},	300.0f,		FAR_CLIP * 1.0f,	0.02f,			{	1.0f,0.9f,0.7f	},	2.0f,   {	1.0f,1.0f,0.9f	},	1.0f,			2.0f		},
+			/*æ˜¼		*/	{0.4f,   {	0.9f, 0.95f, 1.0f	},		1.2f,	{	0.7f, 0.85f, 1.0f	},	100.0f,		FAR_CLIP * 1.5f,	0.002f,			{	1.0f,1.0f,1.0f	},	5.0f,   {	1.0f,1.0f,1.0f	},	0.5f,			1.0f		},
+			/*å¤•æ–¹	*/	{0.6f,	 {	1.0f, 0.7f, 0.5f	},		0.7f,	{	0.6f, 0.5f, 0.5f	},	400.0f,		FAR_CLIP * 1.3f,	0.005f,			{	1.0f,0.8f,0.6f	},	2.5f,   {	1.0f,0.9f,0.8f	},	0.8f,			2.5f		},
+			/*å¤œ		*/	{0.8f,   {	0.02f, 0.03f, 0.05f	},		0.15f,	{	0.03f, 0.04f, 0.06f	},	600.0f,		FAR_CLIP * 1.7f,	0.0f,			{	1.0f,0.9f,0.7f	},	0.5f,   {	0.8f,0.8f,1.0f	},	0.0f,			4.0f		},
 		};
 
 		timeOfDayKeys.assign(std::begin(keys), std::end(keys));
@@ -129,12 +129,12 @@ void EnvironmentService::PreUpdate(double deltaTime)
 		CalcCurrentTimeOfDayKey();
 	}
 
-	// “VŒóXV
+	// å¤©å€™æ›´æ–°
 	UpdateWeatherState(dt);
 
 	m_targetRainIntensity = GetTargetRainIntensity(m_weatherState);
 
-	// ‰J‹­“x‚ğ–Ú•W‚Ö‘Q‹ß
+	// é›¨å¼·åº¦ã‚’ç›®æ¨™ã¸æ¼¸è¿‘
 	{
 		const float speed = (m_targetRainIntensity > m_currentRainIntensity)
 			? m_rainInSpeed
@@ -146,10 +146,10 @@ void EnvironmentService::PreUpdate(double deltaTime)
 			speed * dt);
 	}
 
-	// ŠÔ‘Ñ + “VŒó‡¬
+	// æ™‚é–“å¸¯ + å¤©å€™åˆæˆ
 	const auto env = BuildCompositeEnvironment();
 
-	// FogXV
+	// Fogæ›´æ–°
 	{
 		std::lock_guard lock(updateFogMutex);
 		cpuFogBuf.gFogColor = env.fogColor;
@@ -159,7 +159,7 @@ void EnvironmentService::PreUpdate(double deltaTime)
 		isUpdateFogBuffer = true;
 	}
 
-	// GodRayXV
+	// GodRayæ›´æ–°
 	{
 		std::lock_guard lock(updateGodRayMutex);
 		cpuGodRayBuf.gGodRayTint = env.godRayTint;
@@ -171,7 +171,7 @@ void EnvironmentService::PreUpdate(double deltaTime)
 	{
 		isUpdateFogBuffer = false;
 
-		// ’è”ƒoƒbƒtƒ@XV
+		// å®šæ•°ãƒãƒƒãƒ•ã‚¡æ›´æ–°
 		using namespace Graphics;
 		DX11::BufferUpdateDesc updateDesc;
 		auto fogCBData = bufferMgr->Get(fogCBHandle);
@@ -186,7 +186,7 @@ void EnvironmentService::PreUpdate(double deltaTime)
 	if (isUpdateGodRayBuffer)
 	{
 		isUpdateGodRayBuffer = false;
-		// ’è”ƒoƒbƒtƒ@XV
+		// å®šæ•°ãƒãƒƒãƒ•ã‚¡æ›´æ–°
 		using namespace Graphics;
 		DX11::BufferUpdateDesc updateDesc;
 		auto godRayCBData = bufferMgr->Get(godRayCBHandle);
@@ -204,7 +204,7 @@ RainWeatherParams EnvironmentService::BuildRainParams() const noexcept
 
 	const float rain01 = std::clamp(m_currentRainIntensity, 0.0f, 1.0f);
 
-	// —±q—Ê‚Íã‰J‚Å­‚È‚ßAŒã”¼‚ÅŒø‚­‚æ‚¤‚É
+	// ç²’å­é‡ã¯å¼±é›¨ã§å°‘ãªã‚ã€å¾ŒåŠã§åŠ¹ãã‚ˆã†ã«
 	float rainSpawn = rain01 * rain01;
 
 	p.spawnPerFrame = static_cast<uint32_t>(std::lerp(0.0f, 300.0f, rainSpawn));
@@ -228,7 +228,7 @@ WeatherState EnvironmentService::ChooseNextWeatherState_Rand(float timeOfDay01, 
 {
 	auto w = GetBaseWeights(m_weatherState);
 
-	// ŠÔ‘Ñ•â³
+	// æ™‚é–“å¸¯è£œæ­£
 	const bool nightLike = (timeOfDay01 < 0.20f || timeOfDay01 > 0.70f);
 	const bool noonLike = (timeOfDay01 > 0.33f && timeOfDay01 < 0.52f);
 
@@ -275,10 +275,10 @@ WeatherState EnvironmentService::ChooseNextWeatherState_Perlin(float timeOfDay01
 {
 	auto w = GetBaseWeights(m_weatherState);
 
-	// ’·üŠú‚Ì¼“x
+	// é•·å‘¨æœŸã®æ¹¿æ½¤åº¦
 	const float climateWetness01 = SampleWeatherNoise01(m_weatherGlobalClock * m_weatherClimateFreq);
 
-	// ŠÔ‘Ñ•â³
+	// æ™‚é–“å¸¯è£œæ­£
 	const bool nightLike = (timeOfDay01 < 0.20f || timeOfDay01 > 0.70f);
 	const bool noonLike = (timeOfDay01 > 0.33f && timeOfDay01 < 0.52f);
 
@@ -371,14 +371,14 @@ void EnvironmentService::UpdateWeatherState(float dt) noexcept
 		m_nextWeatherDecisionSec = RandomRange(desc.minStaySec, desc.maxStaySec);
 	}
 
-	// Šî–{ target
+	// åŸºæœ¬ target
 	float baseTarget = GetTargetRainIntensity(m_weatherState);
 
-	// ó‘Ô“à‚Ì¬‚³‚È—h‚ç‚¬
+	// çŠ¶æ…‹å†…ã®å°ã•ãªæºã‚‰ã
 	float targetOffset = 0.0f;
 	if (m_enableWeatherPerlinAssist)
 	{
-		// ‹­‚¢ó‘Ô‚Ù‚Ç­‚µ—h‚ç‚·
+		// å¼·ã„çŠ¶æ…‹ã»ã©å°‘ã—æºã‚‰ã™
 		const float wobbleAmp =
 			(m_weatherState == WeatherState::Clear) ? 0.02f :
 			(m_weatherState == WeatherState::Drizzle) ? 0.05f :
@@ -390,7 +390,7 @@ void EnvironmentService::UpdateWeatherState(float dt) noexcept
 	}
 	else
 	{
-		// rand”Å‚Å‚à‹}‚É’l‚ğU‚ç‚È‚¢‚æ‚¤A’á•p“xXV‚Å\•ª
+		// randç‰ˆã§ã‚‚æ€¥ã«å€¤ã‚’æŒ¯ã‚‰ãªã„ã‚ˆã†ã€ä½é »åº¦æ›´æ–°ã§ååˆ†
 		m_targetWobbleTimer += dt;
 		if (m_targetWobbleTimer >= m_targetWobbleIntervalSec)
 		{
@@ -402,7 +402,7 @@ void EnvironmentService::UpdateWeatherState(float dt) noexcept
 
 	m_targetRainIntensity = Math::saturate(baseTarget + targetOffset);
 
-	// current ‚Í target ‚É’Ç]
+	// current ã¯ target ã«è¿½å¾“
 	const float speed =
 		(m_currentRainIntensity < m_targetRainIntensity)
 		? m_rainRiseSpeed

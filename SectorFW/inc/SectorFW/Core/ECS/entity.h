@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   entity.h
- * @brief ƒGƒ“ƒeƒBƒeƒBID‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -12,34 +12,34 @@ namespace SFW
 	namespace ECS
 	{
 		/**
-		 * @brief Å‘åƒGƒ“ƒeƒBƒeƒB”
+		 * @brief æœ€å¤§ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£æ•°
 		 */
 		static inline constexpr size_t MAX_ENTITY_NUM = 500000;
 
 		/**
-		 * @brief Entity‚ÌID‚ğ•\‚·\‘¢‘Ì
+		 * @brief Entityã®IDã‚’è¡¨ã™æ§‹é€ ä½“
 		 */
 		struct EntityID {
 			uint32_t index = 0;
 			uint32_t generation = 0;
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param other EntityID‚ğƒRƒs[‚·‚é
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param other EntityIDã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹
 			 * @return EntityID
 			 */
 			bool operator==(const EntityID& other) const noexcept {
 				return index == other.index && generation == other.generation;
 			}
 			/**
-			 * @brief EntityID‚ª—LŒø‚©‚Ç‚¤‚©‚ğŠm”F‚·‚é
-			 * @return —LŒø‚Èê‡‚ÍtrueA–³Œø‚Èê‡‚Ífalse
+			 * @brief EntityIDãŒæœ‰åŠ¹ã‹ã©ã†ã‹ã‚’ç¢ºèªã™ã‚‹
+			 * @return æœ‰åŠ¹ãªå ´åˆã¯trueã€ç„¡åŠ¹ãªå ´åˆã¯false
 			 */
 			bool IsValid() const noexcept {
 				return index != UINT32_MAX;
 			}
 			/**
-			 * @brief –³Œø‚ÈEntityID‚ğæ“¾‚·‚é
-			 * @return –³Œø‚ÈEntityID
+			 * @brief ç„¡åŠ¹ãªEntityIDã‚’å–å¾—ã™ã‚‹
+			 * @return ç„¡åŠ¹ãªEntityID
 			 */
 			static constexpr EntityID Invalid() noexcept {
 				return EntityID{ UINT32_MAX, 0 };
@@ -50,14 +50,14 @@ namespace SFW
 
 namespace std {
 	/**
-	 * @brief EntityID‚ÌƒnƒbƒVƒ…ŠÖ”
+	 * @brief EntityIDã®ãƒãƒƒã‚·ãƒ¥é–¢æ•°
 	 * @param id EntityID
-	 * @return ƒnƒbƒVƒ…’l
+	 * @return ãƒãƒƒã‚·ãƒ¥å€¤
 	 */
 	template <>
 	struct hash<SFW::ECS::EntityID> {
 		size_t operator()(const SFW::ECS::EntityID& id) const noexcept {
-			// ‚‘¬‚È‘g‚İ‡‚í‚¹FFNV1a, Boost‚Ìhash_combine•—
+			// é«˜é€Ÿãªçµ„ã¿åˆã‚ã›ï¼šFNV1a, Boostã®hash_combineé¢¨
 			return std::hash<uint64_t>{}(static_cast<uint64_t>(id.generation) << 32 | id.index);
 		}
 	};

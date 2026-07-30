@@ -1,6 +1,6 @@
-/*****************************************************************//**
+﻿/*****************************************************************//**
  * \file   AudioService.h
- * \brief �I�[�f�B�I�Ǘ��T�[�r�X�̒�`�BSoLoud���C�u�������g�p���āA�T�E���h�̃��[�h�A�Đ��A��~�A�p�����[�^�ݒ�Ȃǂ̋@�\��񋟂��܂��B
+ * \brief オーディオ管理サービスの定義。SoLoudライブラリを使用して、サウンドのロード、再生、停止、パラメータ設定などの機能を提供します。
  * \author seigo
  * \date   December 2025
  *********************************************************************/
@@ -21,7 +21,7 @@
 
 #include "../Core/ECS/ServiceContext.hpp"
 
- // �O���錾
+ // 前方宣言
 namespace SoLoud
 {
 	class Soloud;
@@ -33,7 +33,7 @@ namespace SFW::Audio
 	class AudioService : public ECS::IUpdateService
 	{
 	public:
-		//�C�����C���W�J����Ȃ��悤��cpp�Œ�`
+		//インライン展開されないようにcppで定義
 		AudioService();
 		~AudioService();
 
@@ -41,99 +41,99 @@ namespace SFW::Audio
 		AudioService& operator=(const AudioService&) = delete;
 
 		/**
-		 * @brief AudioService�����������܂��BSoLoud�G���W�����Z�b�g�A�b�v���܂��B
-		 * @return bool �������ɐ��������ꍇ��true�A���s�����ꍇ��false��Ԃ��܂��B
+		 * @brief AudioServiceを初期化します。SoLoudエンジンをセットアップします。
+		 * @return bool 初期化に成功した場合はtrue、失敗した場合はfalseを返します。
 		 */
 		bool Initialize();
 
 		/**
-		 * @brief AudioService���V���b�g�_�E�����܂��B���ׂẴT�E���h���~���A���\�[�X��������܂��B
+		 * @brief AudioServiceをシャットダウンします。すべてのサウンドを停止し、リソースを解放します。
 		 */
 		void Shutdown();
 
 		void PreUpdate(double deltaTime) override
 		{
-			// �R�}���h������
+			// コマンドを処理
 			PumpCommands();
 		}
 
 		/**
-		 * @brief WAV�t�@�C���̃��[�h���L���[�ɒǉ����܂��B���ۂ̃t�@�C���̃��[�h��PumpCommands()�X���b�h�ōs���܂��B
-		 * @param path ���[�h����WAV�t�@�C���̃p�X
-		 * @return SoundHandle ���[�h���ꂽ�T�E���h�̃n���h��
+		 * @brief WAVファイルのロードをキューに追加します。実際のファイルのロードはPumpCommands()スレッドで行われます。
+		 * @param path ロードするWAVファイルのパス
+		 * @return SoundHandle ロードされたサウンドのハンドル
 		 */
 		SoundHandle EnqueueLoadWav(const std::string& path);
 
 		/**
-		 * @brief �X�g���[�~���O(��ɒ���BGM����)�ŉ����t�@�C�������[�h����R�}���h���L���[�ɒǉ����܂��B
-		 *        ���ۂ̃��[�h��PumpCommands()�X���b�h�ōs���܂��B
-		 * @param path ���[�h���鉹���t�@�C���̃p�X�iwav/ogg�Ȃǁj
-		 * @return SoundHandle ���[�h���ꂽ�T�E���h�̃n���h��
+		 * @brief ストリーミング(主に長尺BGM向け)で音声ファイルをロードするコマンドをキューに追加します。
+		 *        実際のロードはPumpCommands()スレッドで行われます。
+		 * @param path ロードする音声ファイルのパス（wav/oggなど）
+		 * @return SoundHandle ロードされたサウンドのハンドル
 		 */
 		SoundHandle EnqueueLoadStream(const std::string& path);
 		/**
-			   * @brief �T�E���h�̃A�����[�h���L���[�ɒǉ����܂��B���ۂ̃A�����[�h��PumpCommands()�X���b�h�ōs���܂��B
-			   * @param h �A�����[�h����T�E���h�̃n���h��
+			   * @brief サウンドのアンロードをキューに追加します。実際のアンロードはPumpCommands()スレッドで行われます。
+			   * @param h アンロードするサウンドのハンドル
 			   */
 		void EnqueueUnload(SoundHandle h);
 
 		/**
-		 * @brief �T�E���h�̍Đ����L���[�ɒǉ����܂��B���ۂ̍Đ���PumpCommands()�X���b�h�ōs���܂��B
-		 * @param sound �Đ�����T�E���h�̃n���h��
-		 * @param p �Đ��p�����[�^
-		 * @return AudioTicketID �Đ��`�P�b�g��ID
+		 * @brief サウンドの再生をキューに追加します。実際の再生はPumpCommands()スレッドで行われます。
+		 * @param sound 再生するサウンドのハンドル
+		 * @param p 再生パラメータ
+		 * @return AudioTicketID 再生チケットのID
 		 */
 		AudioTicketID EnqueuePlay(SoundHandle sound, const AudioPlayParams& p = {});
 
 		/**
-		 * @brief �w�肳�ꂽ�{�C�XID�̍Đ����~����R�}���h���L���[�ɒǉ����܂��B���ۂ̒�~��PumpCommands()�X���b�h�ōs���܂��B
-		 * @param v ��~����{�C�XID
+		 * @brief 指定されたボイスIDの再生を停止するコマンドをキューに追加します。実際の停止はPumpCommands()スレッドで行われます。
+		 * @param v 停止するボイスID
 		 */
 		void EnqueueStop(VoiceID v);
 		/**
-		 * @brief �w�肳�ꂽ�{�C�XID�̉��ʂ�ݒ肷��R�}���h���L���[�ɒǉ����܂��B���ۂ̐ݒ��PumpCommands()�X���b�h�ōs���܂��B
-		 * @param v ���ʂ�ݒ肷��{�C�XID
-		 * @param volume �ݒ肷�鉹�ʁi0.0f = �����A1.0f = �f�t�H���g���ʁA2.0f = 2�{�̉��ʂȂǁj
+		 * @brief 指定されたボイスIDの音量を設定するコマンドをキューに追加します。実際の設定はPumpCommands()スレッドで行われます。
+		 * @param v 音量を設定するボイスID
+		 * @param volume 設定する音量（0.0f = 無音、1.0f = デフォルト音量、2.0f = 2倍の音量など）
 		 */
 		void EnqueueSetVolume(VoiceID v, float volume);
 		/**
-		 * @brief �w�肳�ꂽ�{�C�XID�̃p����ݒ肷��R�}���h���L���[�ɒǉ����܂��B���ۂ̐ݒ��PumpCommands()�X���b�h�ōs���܂��B
-		 * @param v �p����ݒ肷��{�C�XID
-		 * @param pan �ݒ肷��p���i-1.0f = ���A0.0f = �����A1.0f = �E�j
+		 * @brief 指定されたボイスIDのパンを設定するコマンドをキューに追加します。実際の設定はPumpCommands()スレッドで行われます。
+		 * @param v パンを設定するボイスID
+		 * @param pan 設定するパン（-1.0f = 左、0.0f = 中央、1.0f = 右）
 		 */
 		void EnqueueSetPan(VoiceID v, float pan);
 		/**
-		 * @brief �w�肳�ꂽ�{�C�XID�̃s�b�`��ݒ肷��R�}���h���L���[�ɒǉ����܂��B���ۂ̐ݒ��PumpCommands()�X���b�h�ōs���܂��B
-		 * @param v �s�b�`��ݒ肷��{�C�XID
-		 * @param pitch �ݒ肷��s�b�`�i1.0f = �f�t�H���g�̃s�b�`�A0.5f = �����̃s�b�`�A2.0f = 2�{�̃s�b�`�Ȃǁj
+		 * @brief 指定されたボイスIDのピッチを設定するコマンドをキューに追加します。実際の設定はPumpCommands()スレッドで行われます。
+		 * @param v ピッチを設定するボイスID
+		 * @param pitch 設定するピッチ（1.0f = デフォルトのピッチ、0.5f = 半分のピッチ、2.0f = 2倍のピッチなど）
 		 */
 		void EnqueueSetPitch(VoiceID v, float pitch);
 		/**
-		 * @brief �w�肳�ꂽ�{�C�XID��3D�ʒu�Ƒ��x��ݒ肷��R�}���h���L���[�ɒǉ����܂��B���ۂ̐ݒ��PumpCommands()�X���b�h�ōs���܂��B
-		 * @param v �ʒu�Ƒ��x��ݒ肷��{�C�XID
-		 * @param x �ʒuX
-		 * @param y �ʒuY
-		 * @param z �ʒuZ
-		 * @param vx ���xX
-		 * @param vy ���xY
-		 * @param vz ���xZ
+		 * @brief 指定されたボイスIDの3D位置と速度を設定するコマンドをキューに追加します。実際の設定はPumpCommands()スレッドで行われます。
+		 * @param v 位置と速度を設定するボイスID
+		 * @param x 位置X
+		 * @param y 位置Y
+		 * @param z 位置Z
+		 * @param vx 速度X
+		 * @param vy 速度Y
+		 * @param vz 速度Z
 		 */
 		void EnqueueSet3D(VoiceID v, float x, float y, float z, float vx, float vy, float vz);
 
 		/**
-		 * @brief ���X�i�[�̈ʒu�ƌ�����ݒ肷��R�}���h���L���[�ɒǉ����܂��B���ۂ̐ݒ��PumpCommands()�X���b�h�ōs���܂��B
-		 * @param px �ʒuX
-		 * @param py �ʒuY
-		 * @param pz �ʒuZ
-		 * @param ax ����X
-		 * @param ay ����Y
-		 * @param az ����Z
-		 * @param ux �����X
-		 * @param uy �����Y
-		 * @param uz �����Z
-		 * @param vx �O����X
-		 * @param vy �O����Y
-		 * @param vz �O����Z
+		 * @brief リスナーの位置と向きを設定するコマンドをキューに追加します。実際の設定はPumpCommands()スレッドで行われます。
+		 * @param px 位置X
+		 * @param py 位置Y
+		 * @param pz 位置Z
+		 * @param ax 向きX
+		 * @param ay 向きY
+		 * @param az 向きZ
+		 * @param ux 上方向X
+		 * @param uy 上方向Y
+		 * @param uz 上方向Z
+		 * @param vx 前方向X
+		 * @param vy 前方向Y
+		 * @param vz 前方向Z
 		 */
 		void EnqueueSetListener(float px, float py, float pz,
 			float ax, float ay, float az,
@@ -141,28 +141,28 @@ namespace SFW::Audio
 			float vx, float vy, float vz);
 
 		/**
-		 * @brief �w�肳�ꂽ�I�[�f�B�I�`�P�b�gID�ɑΉ�����{�C�XID���������悤�Ƃ��܂��B
-		 * @param t ��������I�[�f�B�I�`�P�b�gID
-		 * @return std::optional<VoiceID> �`�P�b�g���L���Ń{�C�X���������ꂽ�ꍇ��VoiceID���܂ރI�v�V������Ԃ��A�����łȂ��ꍇ��std::nullopt��Ԃ��܂��B
+		 * @brief 指定されたオーディオチケットIDに対応するボイスIDを解決しようとします。
+		 * @param t 解決するオーディオチケットID
+		 * @return std::optional<VoiceID> チケットが有効でボイスが解決された場合はVoiceIDを含むオプションを返し、そうでない場合はstd::nulloptを返します。
 		 */
 		std::optional<VoiceID> TryResolve(AudioTicketID t) const noexcept;
 
 		/**
-		 * @brief �w�肳�ꂽ�I�[�f�B�I�`�P�b�g��������܂��B����ɂ��A�֘A���郊�\�[�X���������܂��B
-		 * @param t �������I�[�f�B�I�`�P�b�gID
+		 * @brief 指定されたオーディオチケットを解放します。これにより、関連するリソースが解放されます。
+		 * @param t 解放するオーディオチケットID
 		 * @return void
 		 */
 		void ReleaseTicket(AudioTicketID t) noexcept;
 
 		/**
-		 * @brief �w�肳�ꂽ�{�C�XID�����݃A�N�e�B�u���ǂ������I�[�f�B�I�X���b�h��Ŋm�F���܂��B
-		 * @param v �`�F�b�N����{�C�XID
-		 * @return bool �{�C�X���A�N�e�B�u�ȏꍇ��true�A�����łȂ��ꍇ��false��Ԃ��܂��B
+		 * @brief 指定されたボイスIDが現在アクティブかどうかをオーディオスレッド上で確認します。
+		 * @param v チェックするボイスID
+		 * @return bool ボイスがアクティブな場合はtrue、そうでない場合はfalseを返します。
 		 */
 		bool IsVoiceAlive_OnAudioThread(VoiceID v) noexcept;
 
 		/**
-		 * @brief �L���[�ɗ��܂����I�[�f�B�I�R�}���h���������܂��B����ɂ̓T�E���h�̃��[�h�A�Đ��A��~�A�p�����[�^�̐ݒ�Ȃǂ��܂܂�܂��B
+		 * @brief キューに溜まったオーディオコマンドを処理します。これにはサウンドのロード、再生、停止、パラメータの設定などが含まれます。
 		 */
 		void PumpCommands();
 
@@ -177,7 +177,7 @@ namespace SFW::Audio
 		};
 
 		static constexpr uint32_t kMaxTickets = 1u << 16;
-		//�ł�������̂Ńq�[�v�ŊǗ�
+		//でかすぎるのでヒープで管理
 		std::vector<TicketSlot> m_ticketSlots = std::vector<TicketSlot>(kMaxTickets);
 		std::atomic<uint32_t> m_ticketAlloc{ 0 };
 
@@ -194,9 +194,9 @@ namespace SFW::Audio
 
 		// ---------------------------
 		// Load cache (caller thread)
-		// - �����p�X���ă��[�h���Ȃ�
-		// - EnqueueUnload() �̎Q�ƃJ�E���g�Ŏ��ۂ̃A�����[�h�𐧌�
-		// NOTE: Wav �� Stream �͕ʃL�[�ŊǗ� ("wav|..." / "stream|...")
+		// - 同じパスを再ロードしない
+		// - EnqueueUnload() の参照カウントで実際のアンロードを制御
+		// NOTE: Wav と Stream は別キーで管理 ("wav|..." / "stream|...")
 		// ---------------------------
 		struct CachedSound
 		{
@@ -312,7 +312,7 @@ namespace SFW::Audio
 		}
 
 	private:
-		//cpp�Ńw�b�_�[���C���N���[�h���邽�߂Ƀ|�C���^���g�p
+		//cppでヘッダーをインクルードするためにポインタを使用
 		std::unique_ptr<SoLoud::Soloud> m_soloud{};
 
 		// command queue

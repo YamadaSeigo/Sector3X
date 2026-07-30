@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   PhysicsLayers.h
- * @brief •¨—ƒŒƒCƒ„[‚Ì’è‹`ƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ç‰©ç†ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å®šç¾©ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -13,16 +13,16 @@
 
 namespace SFW {
 	namespace Physics {
-		// ƒ^ƒCƒgƒ‹“s‡‚Å·‚µ‘Ö‚¦‘O’ñ‚ÌÅ¬ƒZƒbƒg
+		// ã‚¿ã‚¤ãƒˆãƒ«éƒ½åˆã§å·®ã—æ›¿ãˆå‰æã®æœ€å°ã‚»ãƒƒãƒˆ
 		namespace Layers {
-			// ObjectLayeri—p“r•Ê‚É‘‚â‚¹‚éj
+			// ObjectLayerï¼ˆç”¨é€”åˆ¥ã«å¢—ã‚„ã›ã‚‹ï¼‰
 			inline static constexpr JPH::ObjectLayer NON_MOVING_RAY_HIT = 0;
 			inline static constexpr JPH::ObjectLayer NON_MOVING_RAY_IGNORE = 1;
 			inline static constexpr JPH::ObjectLayer MOVING = 2;
 			inline static constexpr JPH::ObjectLayer SENSOR = 3;
 			inline static constexpr uint32_t NUM_LAYERS = 4;
 
-			// BroadPhaseLayeri¬‚³‚ß‚ÌW‡•ª—Şj
+			// BroadPhaseLayerï¼ˆå°ã•ã‚ã®é›†åˆåˆ†é¡ï¼‰
 			class BPLayers final {
 			public:
 				inline static constexpr JPH::BroadPhaseLayer NON_MOVING = JPH::BroadPhaseLayer(0);
@@ -32,23 +32,23 @@ namespace SFW {
 			};
 		}
 
-		// BroadPhaseLayer -> ƒ}ƒXƒNƒrƒbƒg ‚Ì•ÏŠ·
+		// BroadPhaseLayer -> ãƒã‚¹ã‚¯ãƒ“ãƒƒãƒˆ ã®å¤‰æ›
 		inline constexpr BroadPhaseLayerMask MakeBPMask(JPH::BroadPhaseLayer layer)
 		{
 			return 1u << (JPH::uint8)layer;
 		}
 
-		// ObjectLayer -> ƒ}ƒXƒNƒrƒbƒg ‚Ì•ÏŠ·
+		// ObjectLayer -> ãƒã‚¹ã‚¯ãƒ“ãƒƒãƒˆ ã®å¤‰æ›
 		inline constexpr ObjectLayerMask MakeObjectLayerMask(JPH::ObjectLayer layer)
 		{
 			return 1u << (ObjectLayerMask)layer;
 		}
 
-		// ObjectLayer ¨ BroadPhaseLayer ‚Ì‘Î‰
+		// ObjectLayer â†’ BroadPhaseLayer ã®å¯¾å¿œ
 		class BroadPhaseLayerInterfaceImpl final : public JPH::BroadPhaseLayerInterface {
 		public:
 			BroadPhaseLayerInterfaceImpl() {
-				//ObjectLayer‚ğBroadPhaseLayer‚É•ÏŠ·‚·‚éƒ}ƒbƒsƒ“ƒO‚ğİ’è
+				//ObjectLayerã‚’BroadPhaseLayerã«å¤‰æ›ã™ã‚‹ãƒãƒƒãƒ”ãƒ³ã‚°ã‚’è¨­å®š
 				m_object_to_broad[(size_t)Layers::NON_MOVING_RAY_HIT] = Layers::BPLayers::NON_MOVING;
 				m_object_to_broad[(size_t)Layers::NON_MOVING_RAY_IGNORE] = Layers::BPLayers::NON_MOVING;
 				m_object_to_broad[(size_t)Layers::MOVING] = Layers::BPLayers::MOVING;
@@ -72,24 +72,24 @@ namespace SFW {
 			JPH::BroadPhaseLayer m_object_to_broad[Layers::NUM_LAYERS]{};
 		};
 
-		// ObjectLayer ~ BroadPhaseLayer ‚Ì‘eƒtƒBƒ‹ƒ^
+		// ObjectLayer Ã— BroadPhaseLayer ã®ç²—ãƒ•ã‚£ãƒ«ã‚¿
 		class ObjectVsBroadPhaseLayerFilterImpl final : public JPH::ObjectVsBroadPhaseLayerFilter {
 		public:
 			virtual bool ShouldCollide(JPH::ObjectLayer layer1, JPH::BroadPhaseLayer layer2) const override {
-				if (layer1 == Layers::SENSOR) return layer2 == Layers::BPLayers::MOVING; // sensor‚Í“®‚­•¨‘Ì‚Ì‚İŒŸo
-				// ”ñˆÚ“®‚ÍˆÚ“®‚ÆAˆÚ“®‚Í”ñˆÚ“®•ˆÚ“®‚Æ
+				if (layer1 == Layers::SENSOR) return layer2 == Layers::BPLayers::MOVING; // sensorã¯å‹•ãç‰©ä½“ã®ã¿æ¤œå‡º
+				// éç§»å‹•ã¯ç§»å‹•ã¨ã€ç§»å‹•ã¯éç§»å‹•ï¼†ç§»å‹•ã¨
 				if (layer1 == Layers::NON_MOVING_RAY_HIT || layer1 == Layers::NON_MOVING_RAY_IGNORE) return layer2 == Layers::BPLayers::MOVING;
 				if (layer1 == Layers::MOVING)     return layer2 == Layers::BPLayers::NON_MOVING || layer2 == Layers::BPLayers::MOVING;
 				return true;
 			}
 		};
 
-		// ObjectLayer ~ ObjectLayer ‚ÌÚ×ƒtƒBƒ‹ƒ^
+		// ObjectLayer Ã— ObjectLayer ã®è©³ç´°ãƒ•ã‚£ãƒ«ã‚¿
 		class ObjectLayerPairFilterImpl final : public JPH::ObjectLayerPairFilter {
 		public:
 			virtual bool ShouldCollide(JPH::ObjectLayer a, JPH::ObjectLayer b) const override {
-				if (a == Layers::SENSOR || b == Layers::SENSOR) return true; // ƒZƒ“ƒT[‚Í‰½‚Å‚à“–‚½‚éiNarrow‘¤‚Å–³”½”­‚Éj
-				if ((a == Layers::NON_MOVING_RAY_HIT || a == Layers::NON_MOVING_RAY_IGNORE) && (b == Layers::NON_MOVING_RAY_HIT || b == Layers::NON_MOVING_RAY_IGNORE)) return false; // Ã“I~Ã“I‚Í•s—v
+				if (a == Layers::SENSOR || b == Layers::SENSOR) return true; // ã‚»ãƒ³ã‚µãƒ¼ã¯ä½•ã§ã‚‚å½“ãŸã‚‹ï¼ˆNarrowå´ã§ç„¡åç™ºã«ï¼‰
+				if ((a == Layers::NON_MOVING_RAY_HIT || a == Layers::NON_MOVING_RAY_IGNORE) && (b == Layers::NON_MOVING_RAY_HIT || b == Layers::NON_MOVING_RAY_IGNORE)) return false; // é™çš„Ã—é™çš„ã¯ä¸è¦
 				return true;
 			}
 		};
@@ -122,7 +122,7 @@ namespace SFW {
 			ObjectLayerMask mMask;
 		};
 
-		// ©•ª©gi©ƒLƒƒƒ‰j‚Ì Body ‚ğœŠO‚·‚é BodyFilter
+		// è‡ªåˆ†è‡ªèº«ï¼ˆè‡ªã‚­ãƒ£ãƒ©ï¼‰ã® Body ã‚’é™¤å¤–ã™ã‚‹ BodyFilter
 		class RayBodyFilterIgnoreSelf final : public JPH::BodyFilter
 		{
 		public:
@@ -131,17 +131,17 @@ namespace SFW {
 			{
 			}
 
-			// BodyID ‚¾‚¯‚Å”»’è‚·‚é”Å
+			// BodyID ã ã‘ã§åˆ¤å®šã™ã‚‹ç‰ˆ
 			bool ShouldCollide(const JPH::BodyID& inBodyID) const override
 			{
-				// ©•ª‚Ì BodyID ‚Í–³‹
+				// è‡ªåˆ†ã® BodyID ã¯ç„¡è¦–
 				return inBodyID != mSelf;
 			}
 
-			// Body ‚Ì’†g‚ğŒ©‚Ä”»’è‚·‚é”Åi•K—v‚È‚çj
+			// Body ã®ä¸­èº«ã‚’è¦‹ã¦åˆ¤å®šã™ã‚‹ç‰ˆï¼ˆå¿…è¦ãªã‚‰ï¼‰
 			bool ShouldCollideLocked(const JPH::Body& inBody) const override
 			{
-				// —á‚¦‚Î UserData ‚Å "Trigger" ‚ğœŠO‚·‚é‚È‚Ç‚à‚±‚±‚Å‰Â”\
+				// ä¾‹ãˆã° UserData ã§ "Trigger" ã‚’é™¤å¤–ã™ã‚‹ãªã©ã‚‚ã“ã“ã§å¯èƒ½
 				// auto tag = static_cast<MyTag>(inBody.GetUserData());
 				// if (tag == MyTag::Trigger) return false;
 				return inBody.GetID() != mSelf;

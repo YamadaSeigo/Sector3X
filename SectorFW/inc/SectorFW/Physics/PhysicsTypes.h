@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   PhysicsTypes.h
- * @brief PhysicsDevice‚Åg‚¤Œ^‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief PhysicsDeviceã§ä½¿ã†å‹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -19,31 +19,31 @@ namespace SFW
 {
 	namespace Physics
 	{
-		typedef ECS::EntityID Entity; // EntityID ‚ğ PhysicsDevice —¬‹V‚Åg‚¤
-		typedef Math::Vec3f Vec3f; // Jolt Vec3f —¬‹V‚Åg‚¤
-		typedef Math::Quatf Quatf; // Jolt Quatf —¬‹V‚Åg‚¤
+		typedef ECS::EntityID Entity; // EntityID ã‚’ PhysicsDevice æµå„€ã§ä½¿ã†
+		typedef Math::Vec3f Vec3f; // Jolt Vec3f æµå„€ã§ä½¿ã†
+		typedef Math::Quatf Quatf; // Jolt Quatf æµå„€ã§ä½¿ã†
 
 		/**
-		 * @brief Œ`óƒnƒ“ƒhƒ‹iShapeHandlej
+		 * @brief å½¢çŠ¶ãƒãƒ³ãƒ‰ãƒ«ï¼ˆShapeHandleï¼‰
 		 */
-		struct ShapeHandle { uint32_t index{ 0 }; uint32_t generation{ 0 }; }; // ResourceManagerBase—¬‹V
+		struct ShapeHandle { uint32_t index{ 0 }; uint32_t generation{ 0 }; }; // ResourceManagerBaseæµå„€
 
 		struct Mat34f {
-			Vec3f pos; Quatf rot; // ƒXƒP[ƒ‹‚Í Jolt ‘¤‚Ì ShapeScale ‚Åˆµ‚¤‘O’ñ
+			Vec3f pos; Quatf rot; // ã‚¹ã‚±ãƒ¼ãƒ«ã¯ Jolt å´ã® ShapeScale ã§æ‰±ã†å‰æ
 		};
 
-		//ƒqƒbƒg‚³‚¹‚éLayer‚ğw’è‚·‚é‚½‚ß‚Ìƒ}ƒXƒN
+		//ãƒ’ãƒƒãƒˆã•ã›ã‚‹Layerã‚’æŒ‡å®šã™ã‚‹ãŸã‚ã®ãƒã‚¹ã‚¯
 		using BroadPhaseLayerMask = uint16_t;
 		using ObjectLayerMask = uint32_t;
 
-		// ========= ƒRƒ}ƒ“ƒh =========
+		// ========= ã‚³ãƒãƒ³ãƒ‰ =========
 
 		/**
-		 * @brief „‘Ì¶¬ƒRƒ}ƒ“ƒh(CreateBodyCmd)
+		 * @brief å‰›ä½“ç”Ÿæˆã‚³ãƒãƒ³ãƒ‰(CreateBodyCmd)
 		 */
 		struct CreateBodyCmd {
 			Entity      e{};
-			SpatialChunkKey  owner{};     // ManagerKey ‚ÉŠg’£
+			SpatialChunkKey  owner{};     // ManagerKey ã«æ‹¡å¼µ
 			ShapeHandle shape;
 			Mat34f     worldTM;
 			float      density{ 1000.0f };
@@ -56,13 +56,13 @@ namespace SFW
 		};
 
 		/**
-		 * @brief „‘Ì”jŠüƒRƒ}ƒ“ƒh(DestroyBodyCmd)
+		 * @brief å‰›ä½“ç ´æ£„ã‚³ãƒãƒ³ãƒ‰(DestroyBodyCmd)
 		 */
 		struct DestroyBodyCmd {
 			Entity e;
 		};
 		/**
-		 * @brief ƒeƒŒƒ|[ƒgƒRƒ}ƒ“ƒhi‹­§ƒ[ƒvj
+		 * @brief ãƒ†ãƒ¬ãƒãƒ¼ãƒˆã‚³ãƒãƒ³ãƒ‰ï¼ˆå¼·åˆ¶ãƒ¯ãƒ¼ãƒ—ï¼‰
 		 */
 		struct TeleportCmd {
 			Entity e;
@@ -71,85 +71,85 @@ namespace SFW
 		};
 
 		/**
-		 * @brief ‘¬“xİ’è
+		 * @brief é€Ÿåº¦è¨­å®š
 		 */
 		struct SetLinearVelocityCmd { Entity e; Vec3f v; };
 		/**
-		 * @brief Šp‘¬“xİ’è
+		 * @brief è§’é€Ÿåº¦è¨­å®š
 		 */
 		struct SetAngularVelocityCmd { Entity e; Vec3f w; };
 		/**
-		 * @brief —Í•t—^ (atWorldPos w’è‚ÍƒIƒvƒVƒ‡ƒ“)
+		 * @brief åŠ›ä»˜ä¸ (atWorldPos æŒ‡å®šã¯ã‚ªãƒ—ã‚·ãƒ§ãƒ³)
 		 */
 		struct AddForceCmd { Entity e; Vec3f force; Vec3f atWorldPos; bool useAtPos{ false }; };
 		/**
-		 * @brief ƒCƒ“ƒpƒ‹ƒX•t—^ (atWorldPos w’è‚ÍƒIƒvƒVƒ‡ƒ“)
+		 * @brief ã‚¤ãƒ³ãƒ‘ãƒ«ã‚¹ä»˜ä¸ (atWorldPos æŒ‡å®šã¯ã‚ªãƒ—ã‚·ãƒ§ãƒ³)
 		 */
 		struct AddImpulseCmd { Entity e; Vec3f impulse; Vec3f atWorldPos; bool useAtPos{ false }; };
 
 		/**
-		 * @brief ƒLƒlƒ}ƒeƒBƒbƒN–Ú•Wp¨i‰^“®Šwå‘Ìj
+		 * @brief ã‚­ãƒãƒãƒ†ã‚£ãƒƒã‚¯ç›®æ¨™å§¿å‹¢ï¼ˆé‹å‹•å­¦ä¸»ä½“ï¼‰
 		 */
 		struct SetKinematicTargetCmd { Entity e; Mat34f worldTM; };
 
 		/**
-		 * @brief Õ“Ëƒ}ƒXƒN‚âƒŒƒCƒ„
+		 * @brief è¡çªãƒã‚¹ã‚¯ã‚„ãƒ¬ã‚¤ãƒ¤
 		 */
 		struct SetCollisionMaskCmd { Entity e; uint32_t mask; };
 		/**
-		 * @brief ƒIƒuƒWƒFƒNƒgƒŒƒCƒ„iÕ“ËƒOƒ‹[ƒvj•ÏX
+		 * @brief ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ¬ã‚¤ãƒ¤ï¼ˆè¡çªã‚°ãƒ«ãƒ¼ãƒ—ï¼‰å¤‰æ›´
 		 */
 		struct SetObjectLayerCmd { Entity e; uint16_t layer; uint16_t broadphase; };
 
 		/**
-		 * @brief RayCastiŒ‹‰Ê‚ÍƒCƒxƒ“ƒg‚Å•Ô‚·‘z’èj
+		 * @brief RayCastï¼ˆçµæœã¯ã‚¤ãƒ™ãƒ³ãƒˆã§è¿”ã™æƒ³å®šï¼‰
 		 */
 		struct RayCastCmd {
 			uint32_t requestId = {};
 			Vec3f    origin = {};
-			Vec3f    dir = {};   // ³‹K‰»‘O’ñ
+			Vec3f    dir = {};   // æ­£è¦åŒ–å‰æ
 			float    maxDist = {};
-			uint32_t ignoreBody = 0xffffffff; // –³‹‚·‚éƒ{ƒfƒBiƒIƒvƒVƒ‡ƒ“j
-			ObjectLayerMask     objectLayerMask = 0xFFFFFFFF; // ‘SƒrƒbƒgON‚Å‘SƒŒƒCƒ„
-			BroadPhaseLayerMask broadPhaseMask = 0xFFFF; // ‘SƒrƒbƒgON‚Å‘SƒŒƒCƒ„
+			uint32_t ignoreBody = 0xffffffff; // ç„¡è¦–ã™ã‚‹ãƒœãƒ‡ã‚£ï¼ˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ï¼‰
+			ObjectLayerMask     objectLayerMask = 0xFFFFFFFF; // å…¨ãƒ“ãƒƒãƒˆONã§å…¨ãƒ¬ã‚¤ãƒ¤
+			BroadPhaseLayerMask broadPhaseMask = 0xFFFF; // å…¨ãƒ“ãƒƒãƒˆONã§å…¨ãƒ¬ã‚¤ãƒ¤
 		};
 
-		// ƒvƒŒƒCƒ„[ƒLƒƒƒ‰¶¬ƒRƒ}ƒ“ƒh
+		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚­ãƒ£ãƒ©ç”Ÿæˆã‚³ãƒãƒ³ãƒ‰
 		struct CreateCharacterCmd {
 			Entity e;
-			ShapeHandle shape;   // ƒJƒvƒZƒ‹‚È‚Ç
-			Mat34f worldTM;      // ‰ŠúˆÊ’u + ‰ñ“]
+			ShapeHandle shape;   // ã‚«ãƒ—ã‚»ãƒ«ãªã©
+			Mat34f worldTM;      // åˆæœŸä½ç½® + å›è»¢
 			float maxSlopeDeg = 45.0f;
-			uint16_t objectLayer = 1;   // ƒLƒƒƒ‰—p ObjectLayer
+			uint16_t objectLayer = 1;   // ã‚­ãƒ£ãƒ©ç”¨ ObjectLayer
 
 			explicit  CreateCharacterCmd(Entity _e) :e(_e) {}
 		};
 
-		// ƒLƒƒƒ‰‚ÌüŒ`‘¬“x‚ğİ’è
+		// ã‚­ãƒ£ãƒ©ã®ç·šå½¢é€Ÿåº¦ã‚’è¨­å®š
 		struct SetCharacterVelocityCmd {
 			Entity e;
 			Vec3f  v;
 		};
 
-		// ƒLƒƒƒ‰‚ÌŒü‚«‚ğİ’èiY²‰ñ“]‚¾‚¯‚Å—Ç‚¢‚È‚ç yaw ‚Å‚àOKj
+		// ã‚­ãƒ£ãƒ©ã®å‘ãã‚’è¨­å®šï¼ˆYè»¸å›è»¢ã ã‘ã§è‰¯ã„ãªã‚‰ yaw ã§ã‚‚OKï¼‰
 		struct SetCharacterRotationCmd {
 			Entity e;
 			Quatf  rot;
 		};
 
-		// character‚ğƒeƒŒƒ|[ƒg‚³‚¹‚é
+		// characterã‚’ãƒ†ãƒ¬ãƒãƒ¼ãƒˆã•ã›ã‚‹
 		struct TeleportCharacterCmd {
 			Entity e;
 			Mat34f worldTM;
 		};
 
-		// ƒLƒƒƒ‰”jŠüƒRƒ}ƒ“ƒh
+		// ã‚­ãƒ£ãƒ©ç ´æ£„ã‚³ãƒãƒ³ãƒ‰
 		struct DestroyCharacterCmd {
 			Entity e;
 		};
 
 		/**
-		 * @brief PhysicsCommandiƒRƒ}ƒ“ƒh‘‡Œ^j
+		 * @brief PhysicsCommandï¼ˆã‚³ãƒãƒ³ãƒ‰ç·åˆå‹ï¼‰
 		 */
 		using PhysicsCommand = std::variant<
 			CreateBodyCmd,
@@ -170,102 +170,102 @@ namespace SFW
 			DestroyCharacterCmd
 		>;
 
-		// ========= Œ`ó‹LqqŒQ =========
+		// ========= å½¢çŠ¶è¨˜è¿°å­ç¾¤ =========
 		struct BoxDesc { Vec3f halfExtents; };
 		struct SphereDesc { float radius; };
 		struct CapsuleDesc { float halfHeight; float radius; };
 
 		enum class TriangleWinding : uint8_t
 		{
-			CCW, // ”½Œv‰ñ‚è‚ğ•\iŠOŒü‚«j‚Æ‚İ‚È‚·
-			CW   // Œv‰ñ‚è‚ğ•\iŠOŒü‚«j‚Æ‚İ‚È‚·
+			CCW, // åæ™‚è¨ˆå›ã‚Šã‚’è¡¨ï¼ˆå¤–å‘ãï¼‰ã¨ã¿ãªã™
+			CW   // æ™‚è¨ˆå›ã‚Šã‚’è¡¨ï¼ˆå¤–å‘ãï¼‰ã¨ã¿ãªã™
 		};
 
-		// OŠpƒƒbƒVƒ…i“Ê«ƒ`ƒFƒbƒNEBVH‚Í Jolt ‘¤j
+		// ä¸‰è§’ãƒ¡ãƒƒã‚·ãƒ¥ï¼ˆå‡¸æ€§ãƒã‚§ãƒƒã‚¯ãƒ»BVHã¯ Jolt å´ï¼‰
 		struct MeshDesc {
 			const std::vector<Vec3f>& vertices;
-			const std::vector<uint32_t>& indices; // 3*i ‚Ì˜A‘±OŠpŒ`
-			bool rhFlip = false; // ‰EèŒn•ÏŠ·‚ª•K—v‚È‚ç true
+			const std::vector<uint32_t>& indices; // 3*i ã®é€£ç¶šä¸‰è§’å½¢
+			bool rhFlip = false; // å³æ‰‹ç³»å¤‰æ›ãŒå¿…è¦ãªã‚‰ true
 			TriangleWinding winding = TriangleWinding::CCW;
-			bool autoFlipWindingOnRHFlip = true; // rhFlip ‚µ‚½‚ç winding ‚ğ”½“]‚³‚¹‚é
+			bool autoFlipWindingOnRHFlip = true; // rhFlip ã—ãŸã‚‰ winding ã‚’åè»¢ã•ã›ã‚‹
 		};
 
 		struct MeshFileDesc {
-			std::string path; // glb ‚Æ“¯‚¶‘Š‘Î/â‘ÎƒpƒX‚È‚ÇA‰^—pƒ‹[ƒ‹‚É‡‚í‚¹‚Ä
-			bool rhFlip = false; // ‰EèŒn•ÏŠ·‚ª•K—v‚È‚ç true
+			std::string path; // glb ã¨åŒã˜ç›¸å¯¾/çµ¶å¯¾ãƒ‘ã‚¹ãªã©ã€é‹ç”¨ãƒ«ãƒ¼ãƒ«ã«åˆã‚ã›ã¦
+			bool rhFlip = false; // å³æ‰‹ç³»å¤‰æ›ãŒå¿…è¦ãªã‚‰ true
 			TriangleWinding winding = TriangleWinding::CCW;
-			bool autoFlipWindingOnRHFlip = true; // rhFlip ‚µ‚½‚ç winding ‚ğ”½“]‚³‚¹‚é
+			bool autoFlipWindingOnRHFlip = true; // rhFlip ã—ãŸã‚‰ winding ã‚’åè»¢ã•ã›ã‚‹
 		};
 
 		/**
-		 * @brief ‚‚³ƒ}ƒbƒv
+		 * @brief é«˜ã•ãƒãƒƒãƒ—
 		 */
 		struct HeightFieldDesc {
-			int sizeX{ 0 }, sizeY{ 0 };                // ƒTƒ“ƒvƒ‹”iŠiq“_j
+			int sizeX{ 0 }, sizeY{ 0 };                // ã‚µãƒ³ãƒ—ãƒ«æ•°ï¼ˆæ ¼å­ç‚¹ï¼‰
 			std::vector<float> samples;            // sizeX*sizeY
-			float scaleY{ 1.0f };                    // ‚‚³ƒXƒP[ƒ‹
-			float cellSizeX{ 1.0f }, cellSizeY{ 1.0f }; // ƒZƒ‹ŠÔŠu
+			float scaleY{ 1.0f };                    // é«˜ã•ã‚¹ã‚±ãƒ¼ãƒ«
+			float cellSizeX{ 1.0f }, cellSizeY{ 1.0f }; // ã‚»ãƒ«é–“éš”
 		};
 		/**
-		 * @brief “Ê•ï
+		 * @brief å‡¸åŒ…
 		 */
 		struct ConvexHullDesc {
-			const std::vector<Vec3f>& points;  // “Ê•ï’¸“_Œó•âid•¡OKEJolt‘¤‚Å®—j
-			const std::vector<uint32_t>& indices; // ƒIƒvƒVƒ‡ƒ“‚ÅƒCƒ“ƒfƒbƒNƒXw’èiOŠpŒ`—ñ‹“j
-			float maxConvexRadius = 0.05f; // ƒVƒ…ƒŠƒ“ƒN”¼Œai‹·ŠÔŠuƒNƒGƒŠ‚ÌƒƒoƒXƒg«Œüãj
+			const std::vector<Vec3f>& points;  // å‡¸åŒ…é ‚ç‚¹å€™è£œï¼ˆé‡è¤‡OKãƒ»Joltå´ã§æ•´ç†ï¼‰
+			const std::vector<uint32_t>& indices; // ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã§ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æŒ‡å®šï¼ˆä¸‰è§’å½¢åˆ—æŒ™ï¼‰
+			float maxConvexRadius = 0.05f; // ã‚·ãƒ¥ãƒªãƒ³ã‚¯åŠå¾„ï¼ˆç‹­é–“éš”ã‚¯ã‚¨ãƒªã®ãƒ­ãƒã‚¹ãƒˆæ€§å‘ä¸Šï¼‰
 			float hullTolerance = 0.005f;
 		};
 
 		struct VHACDHull
 		{
-			std::vector<Vec3f>   points;   // ’¸“_ŒQ
-			std::vector<uint32_t> indices; // •K—v‚È‚ç•Ûi¡‚Í–¢g—pj
+			std::vector<Vec3f>   points;   // é ‚ç‚¹ç¾¤
+			std::vector<uint32_t> indices; // å¿…è¦ãªã‚‰ä¿æŒï¼ˆä»Šã¯æœªä½¿ç”¨ï¼‰
 		};
 
 		struct ConvexCompoundDesc {
-			const std::vector<VHACDHull>& hulls; // •¡”“Ê•ï‚ÌW‡
+			const std::vector<VHACDHull>& hulls; // è¤‡æ•°å‡¸åŒ…ã®é›†åˆ
 			float maxConvexRadius = 0.05f;
 			float hullTolerance = 0.005f;
-			bool rhFlip = false; // ‰EèŒn•ÏŠ·‚ª•K—v‚È‚ç true
+			bool rhFlip = false; // å³æ‰‹ç³»å¤‰æ›ãŒå¿…è¦ãªã‚‰ true
 		};
 
 		/**
-		 * @brief VHACD ƒoƒCƒiƒŠ‚©‚ç StaticCompoundShape ‚ğì‚é—p‚Ì‹Lqq
-		 *        1ƒtƒ@ƒCƒ‹ ¨ 1 Œ`ó
+		 * @brief VHACD ãƒã‚¤ãƒŠãƒªã‹ã‚‰ StaticCompoundShape ã‚’ä½œã‚‹ç”¨ã®è¨˜è¿°å­
+		 *        1ãƒ•ã‚¡ã‚¤ãƒ« â†’ 1 å½¢çŠ¶
 		 */
 		struct ConvexCompoundFileDesc {
-			std::string path;       // glb ‚Æ“¯‚¶‘Š‘Î/â‘ÎƒpƒX‚È‚ÇA‰^—pƒ‹[ƒ‹‚É‡‚í‚¹‚Ä
+			std::string path;       // glb ã¨åŒã˜ç›¸å¯¾/çµ¶å¯¾ãƒ‘ã‚¹ãªã©ã€é‹ç”¨ãƒ«ãƒ¼ãƒ«ã«åˆã‚ã›ã¦
 			float maxConvexRadius = 0.05f;
 			float hullTolerance = 0.005f;
-			bool rhFlip = false; // ‰EèŒn•ÏŠ·‚ª•K—v‚È‚ç true
+			bool rhFlip = false; // å³æ‰‹ç³»å¤‰æ›ãŒå¿…è¦ãªã‚‰ true
 		};
 
 		/**
-		 * @brief ShapeDesciŒ`ó‹Lqq‘‡Œ^j
+		 * @brief ShapeDescï¼ˆå½¢çŠ¶è¨˜è¿°å­ç·åˆå‹ï¼‰
 		 */
 		using ShapeDesc = std::variant<
 			BoxDesc, SphereDesc, CapsuleDesc, MeshDesc, MeshFileDesc, HeightFieldDesc, ConvexHullDesc, ConvexCompoundDesc, ConvexCompoundFileDesc
 		>;
 
 		/**
-		 * @brief ”ñˆê—lƒXƒP[ƒ‹‚É‘Î‰‚µ‚½‚¢‚Æ‚«‚Ég‚¤
+		 * @brief éä¸€æ§˜ã‚¹ã‚±ãƒ¼ãƒ«ã«å¯¾å¿œã—ãŸã„ã¨ãã«ä½¿ã†
 		 */
 		struct ShapeScale {
-			Vec3f s{ 1,1,1 }; // (1,1,1) ‚È‚çƒXƒP[ƒ‹–³‚µ
+			Vec3f s{ 1,1,1 }; // (1,1,1) ãªã‚‰ã‚¹ã‚±ãƒ¼ãƒ«ç„¡ã—
 			ShapeScale() = default;
 			ShapeScale(Vec3f _s) :s(_s) {}
 		};
 		/**
-		 * @brief Œ`ó¶¬‹Lqq(ShapeCreateDesc)
+		 * @brief å½¢çŠ¶ç”Ÿæˆè¨˜è¿°å­(ShapeCreateDesc)
 		 */
 		struct ShapeCreateDesc {
 			ShapeDesc   shape;
-			ShapeScale  scale;     // ƒIƒvƒVƒ‡ƒ“
-			//•¨—ƒVƒFƒCƒv‚Ìƒ[ƒJƒ‹ƒIƒtƒZƒbƒgiƒ{ƒfƒBŒ´“_‚©‚ç‚ÌƒVƒtƒgj
+			ShapeScale  scale;     // ã‚ªãƒ—ã‚·ãƒ§ãƒ³
+			//ç‰©ç†ã‚·ã‚§ã‚¤ãƒ—ã®ãƒ­ãƒ¼ã‚«ãƒ«ã‚ªãƒ•ã‚»ãƒƒãƒˆï¼ˆãƒœãƒ‡ã‚£åŸç‚¹ã‹ã‚‰ã®ã‚·ãƒ•ãƒˆï¼‰
 			Vec3f localOffset{ 0.0f, 0.0f, 0.0f };
-			// •¨—ƒVƒFƒCƒv‚Ìƒ[ƒJƒ‹‰ñ“]iƒ{ƒfƒBƒ[ƒJƒ‹j
-			Quatf localRotation = Quatf::Identity(); // ‚È‚¯‚ê‚Î {0,0,0,1} ‚Å‚àOK
-			// •K—v‚È‚çƒ}ƒeƒŠƒAƒ‹“™‚ğ’Ç‰Á
+			// ç‰©ç†ã‚·ã‚§ã‚¤ãƒ—ã®ãƒ­ãƒ¼ã‚«ãƒ«å›è»¢ï¼ˆãƒœãƒ‡ã‚£ãƒ­ãƒ¼ã‚«ãƒ«ï¼‰
+			Quatf localRotation = Quatf::Identity(); // ãªã‘ã‚Œã° {0,0,0,1} ã§ã‚‚OK
+			// å¿…è¦ãªã‚‰ãƒãƒ†ãƒªã‚¢ãƒ«ç­‰ã‚’è¿½åŠ 
 		};
 	}
 }

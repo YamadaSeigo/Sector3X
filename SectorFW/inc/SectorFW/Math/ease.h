@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * \file   ease.h
- * \brief ƒC[ƒWƒ“ƒOŠÖ”‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * \brief ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°é–¢æ•°ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * \author seigo
  * \date   December 2025
  *********************************************************************/
@@ -10,7 +10,7 @@
 namespace SFW::Math
 {
 	/*
-   * @brief ŠŠ‚ç‚©‚ÈƒC[ƒWƒ“ƒOŠÖ”
+   * @brief æ»‘ã‚‰ã‹ãªã‚¤ãƒ¼ã‚¸ãƒ³ã‚°é–¢æ•°
    */
 	inline float EaseSmooth(float t) noexcept
 	{
@@ -18,7 +18,7 @@ namespace SFW::Math
 		return t * t * (3.0f - 2.0f * t);
 	}
 	/*
-	* @brief ‚æ‚èŠŠ‚ç‚©‚ÈƒC[ƒWƒ“ƒOŠÖ”
+	* @brief ã‚ˆã‚Šæ»‘ã‚‰ã‹ãªã‚¤ãƒ¼ã‚¸ãƒ³ã‚°é–¢æ•°
 	*/
 	inline float EaseSmoother(float t) noexcept
 	{
@@ -27,7 +27,7 @@ namespace SFW::Math
 	}
 
 	/*
-	* @brief “ñŸƒC[ƒWƒ“ƒOŠÖ”(‰º‚É‚½‚í‚Ş)
+	* @brief äºŒæ¬¡ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°é–¢æ•°(ä¸‹ã«ãŸã‚ã‚€)
 	*/
 	inline float EaseInQuad(float t) noexcept
 	{
@@ -35,7 +35,7 @@ namespace SFW::Math
 	}
 
 	/*
-	* @brief “ñŸƒC[ƒWƒ“ƒOŠÖ”(ã‚É‚½‚í‚Ş)
+	* @brief äºŒæ¬¡ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°é–¢æ•°(ä¸Šã«ãŸã‚ã‚€)
 	*/
 	inline float EaseOutQuad(float t) noexcept
 	{
@@ -43,7 +43,7 @@ namespace SFW::Math
 	}
 
 	/*
-	* @brief “ñŸƒC[ƒWƒ“ƒOŠÖ”(—¼’[‚½‚í‚Ş)
+	* @brief äºŒæ¬¡ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°é–¢æ•°(ä¸¡ç«¯ãŸã‚ã‚€)
 	*/
 	inline float EaseInOutQuad(float t) noexcept
 	{

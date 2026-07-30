@@ -1,9 +1,9 @@
-/*
+﻿/*
 SoLoud audio engine
 Copyright (c) 2015 Jari Komppa
 
 Core Audio backend for Mac OS X
-Copyright (c) 2015 Petri Häkkinen
+Copyright (c) 2015 Petri Hﾃ､kkinen
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages

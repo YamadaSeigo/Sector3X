@@ -1,4 +1,4 @@
-//
+﻿//
 // The MIT License (MIT)
 //
 // Copyright (c) 2019 Karim Naaji, karim.naaji@gmail.com
@@ -31,7 +31,7 @@
 // A full description of the algorithm is available at:
 //  http://karim.naaji.fr/blog/2019/15.11.19.html
 //
-// Triangle box intersection algorithm by Tomas Akenine-Möller[1].
+// Triangle box intersection algorithm by Tomas Akenine-Mﾃｶller[1].
 //
 // References:
 //  [1] https://fileadmin.cs.lth.se/cs/Personal/Tomas_Akenine-Moller/code/tribox_tam.pdf

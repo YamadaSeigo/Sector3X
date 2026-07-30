@@ -1,4 +1,4 @@
-#ifndef _CPU_H
+﻿#ifndef _CPU_H
 #define _CPU_H
 
 #define SETFLAGS_ZN(VALUE) ST = (ST&0x7D)|(((VALUE)==0)<<1)|((VALUE)&0x80)

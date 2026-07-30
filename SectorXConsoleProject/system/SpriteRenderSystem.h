@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 struct CSprite
 {
@@ -21,13 +21,13 @@ template<typename Partition>
 class SpriteRenderSystem : public ITypeSystem<
 	SpriteRenderSystem,
 	Partition,
-	//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
+	//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
 	ComponentAccess<
 	Read<CSprite>,
 	Read<CTransform>,
 	Read<CColor>
 	>,
-	//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	ServiceContext<
 	SFW::Graphics::RenderService
 	>>
@@ -52,7 +52,7 @@ public:
 		DX11::PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::SolidCullBack };
 		psoMgr->Add(psoDesc, psoHandle);
 
-		uint32_t initialData[1] = { 0xFFFFFFFF }; // 1ƒsƒNƒZƒ‹‚Ì”’Fƒf[ƒ^
+		uint32_t initialData[1] = { 0xFFFFFFFF }; // 1ãƒ”ã‚¯ã‚»ãƒ«ã®ç™½è‰²ãƒ‡ãƒ¼ã‚¿
 
 		DX11::TextureRecipe onePixelWhite = {};
 		onePixelWhite.width = 1;
@@ -71,11 +71,11 @@ public:
 
 		DX11::MaterialCreateDesc matDesc;
 		matDesc.shader = shaderHandle;
-		matDesc.psSRV[2] = onePixelTexHandle; // TEX2 ‚ÉƒZƒbƒg
+		matDesc.psSRV[2] = onePixelTexHandle; // TEX2 ã«ã‚»ãƒƒãƒˆ
 		materialMgr->Add(matDesc, materialHandle);
 	}
 
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(Partition& partition,
 		NoDeletePtr<SFW::Graphics::RenderService> renderService) {
 		auto uiSession = renderService->GetProducerSession(PassGroupName[GROUP_UI]);
@@ -100,7 +100,7 @@ public:
 					transform->sx(), transform->sy(), transform->sz()
 			};
 
-			// ƒ[ƒ‹ƒhs—ñ‚ğˆêŠ‡¶¬
+			// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’ä¸€æ‹¬ç”Ÿæˆ
 			std::vector<float> worldMtxBuffer(12 * entityCount);
 			Math::Matrix3x4fSoA worldMtxSoA(worldMtxBuffer.data(), entityCount);
 			Math::BuildWorldMatrixSoA_FromTransformSoA(mtf, worldMtxSoA, false);

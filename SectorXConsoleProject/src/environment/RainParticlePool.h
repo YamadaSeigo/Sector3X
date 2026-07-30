@@ -1,10 +1,10 @@
-// FireflyParticlePool.hpp
+ï»¿// FireflyParticlePool.hpp
 #pragma once
 #include <d3d11.h>
 #include <cstdint>
 #include "graphics/D3D11Helpers.h"
 
-// ƒfƒoƒbƒO—pF‰J—±‚ª“–‚½‚Á‚½[“x‚ğ‹L˜^‚·‚é‹@”\‚ğ—LŒø‰»(ƒVƒF[ƒ_[‚Ì•û‚à—v‘Î‰ _RainParticle.hlsli)
+// ãƒ‡ãƒãƒƒã‚°ç”¨ï¼šé›¨ç²’ãŒå½“ãŸã£ãŸæ·±åº¦ã‚’è¨˜éŒ²ã™ã‚‹æ©Ÿèƒ½ã‚’æœ‰åŠ¹åŒ–(ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®æ–¹ã‚‚è¦å¯¾å¿œ _RainParticle.hlsli)
 //#define DEBUG_RAIN_HIT_DEPTH
 
 struct RainParticleGPU
@@ -12,10 +12,10 @@ struct RainParticleGPU
 	float posWS[3];
 	float life;
 	float velWS[3];
-	float addSize; // ‰ÁZƒTƒCƒY
+	float addSize; // åŠ ç®—ã‚µã‚¤ã‚º
 
 #ifdef DEBUG_RAIN_HIT_DEPTH
-	uint32_t debugHit; // ƒfƒoƒbƒO—pF‰J—±‚ª“–‚½‚Á‚½[“xi0‚È‚ç“–‚½‚Á‚Ä‚È‚¢j
+	uint32_t debugHit; // ãƒ‡ãƒãƒƒã‚°ç”¨ï¼šé›¨ç²’ãŒå½“ãŸã£ãŸæ·±åº¦ï¼ˆ0ãªã‚‰å½“ãŸã£ã¦ãªã„ï¼‰
 #endif
 };
 
@@ -23,7 +23,7 @@ class RainParticlePool
 {
 public:
 	static constexpr uint32_t MaxParticles = 100000;
-	static constexpr uint32_t MaxSpawnPerFrame = 512; 	// 1ƒtƒŒ[ƒ€‚ ‚½‚è‚ÌÅ‘åƒXƒ|[ƒ“”B‚±‚êˆÈã‚ÍƒXƒ|[ƒ“‚³‚ê‚È‚¢B
+	static constexpr uint32_t MaxSpawnPerFrame = 512; 	// 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®æœ€å¤§ã‚¹ãƒãƒ¼ãƒ³æ•°ã€‚ã“ã‚Œä»¥ä¸Šã¯ã‚¹ãƒãƒ¼ãƒ³ã•ã‚Œãªã„ã€‚
 
 	void Create(ID3D11Device* dev);
 	void InitFreeList(ID3D11DeviceContext* ctx, ID3D11Buffer* spawnCB, ID3D11ComputeShader* initCS);
@@ -38,7 +38,7 @@ public:
 		ID3D11Buffer* tileCB;
 	};
 
-	// SpawnivolumeSRV‚Í‘O’i‚ÌFireflyService‚ªì‚Á‚ÄCommit‚µ‚Ä‚¢‚éSRVj
+	// Spawnï¼ˆvolumeSRVã¯å‰æ®µã®FireflyServiceãŒä½œã£ã¦Commitã—ã¦ã„ã‚‹SRVï¼‰
 	void Spawn(
 		ID3D11DeviceContext* ctx,
 		ID3D11ComputeShader* spawnCS,
@@ -58,7 +58,7 @@ public:
 	ID3D11UnorderedAccessView* GetFreeUAV() const { return m_free.uav.Get(); }
 
 private:
-	StructuredBufferSRVUAV m_particles;                 // SRV+UAViRWParticlesj
+	StructuredBufferSRVUAV m_particles;                 // SRV+UAVï¼ˆRWParticlesï¼‰
 	StructuredBufferSRVUAV m_free;                      // UAV(APPEND) : FreeList
 	StructuredBufferSRVUAV m_alivePing, m_alivePong;    // UAV(APPEND) : AliveList
 

@@ -1,9 +1,9 @@
-#include "terrain/TerrainBootstrap.h"
+ï»¿#include "terrain/TerrainBootstrap.h"
 #include "terrain/normalmap_bc5.h"
 #include "app/AppConfig.h"
 #include "app/texture_registry.h"
 
-#include <SectorFW/Graphics/DX11/DX11BlockRevertHelper.h> // TerrainClustered / DX11 helpers ˆê®
+#include <SectorFW/Graphics/DX11/DX11BlockRevertHelper.h> // TerrainClustered / DX11 helpers ä¸€å¼
 #include <SectorFW/Graphics/ImageLoader.h>
 
 namespace TerrainBoot
@@ -30,7 +30,7 @@ namespace TerrainBoot
 		tp.seed = 20251212;
 		tp.offset.y -= 40.0f;
 
-		// ƒ†[ƒU[‚ª—pˆÓ‚µ‚½ƒfƒUƒCƒi[ƒ}ƒbƒv‚ğ“Ç‚İ‚ñ‚ÅATerrainBuildParams ‚ÉƒZƒbƒg‚·‚é
+		// ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒç”¨æ„ã—ãŸãƒ‡ã‚¶ã‚¤ãƒŠãƒ¼ãƒãƒƒãƒ—ã‚’èª­ã¿è¾¼ã‚“ã§ã€TerrainBuildParams ã«ã‚»ãƒƒãƒˆã™ã‚‹
 		auto designerMap = Graphics::LoadImageFromFile(
 			"assets/texture/terrain/DesignerHeightMap.png",
 			1
@@ -42,7 +42,7 @@ namespace TerrainBoot
 		designer.data.resize(designer.width * designer.height);
 		for (int i = 0; i < designerMap.width * designerMap.height; ++i)
 		{
-			// 16bit³‹K‰»
+			// 16bitæ­£è¦åŒ–
 			uint8_t h8 = designerMap.pixels.get()[i];
 			float h01 = (float)h8 / 255.0f;
 			designer.data[i] = h01;
@@ -116,7 +116,7 @@ namespace TerrainBoot
 		r.cp = &cp;
 
 		static DX11::CpuImage cpuSplatImage;
-		// d‚İƒeƒNƒXƒ`ƒƒî•ñ‚ğCPU‘¤‚ÉƒRƒs[‚µ‚Ä•Û‚µ‚Ä‚¨‚­iEntity”z’u‚É—˜—p‚·‚é‘z’èj
+		// é‡ã¿ãƒ†ã‚¯ã‚¹ãƒãƒ£æƒ…å ±ã‚’CPUå´ã«ã‚³ãƒ”ãƒ¼ã—ã¦ä¿æŒã—ã¦ãŠãï¼ˆEntityé…ç½®ã«åˆ©ç”¨ã™ã‚‹æƒ³å®šï¼‰
 		DX11::ReadTexture2DToCPU(graphics.GetDevice(), graphics.GetDeviceContext(), sheetTex.Get(), cpuSplatImage);
 
 		r.cpuSplatImage = &cpuSplatImage;
@@ -144,7 +144,7 @@ namespace TerrainBoot
 			size_t heightMapSize = heightMap.size();
 			std::vector<uint16_t> height16(heightMapSize);
 
-			//16bit³‹K‰»
+			//16bitæ­£è¦åŒ–
 			for (int i = 0; i < heightMapSize; ++i)
 			{
 				float h01 = heightMap[i];

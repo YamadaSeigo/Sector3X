@@ -1,4 +1,4 @@
-#include "TerrainWater.h"
+ï»¿#include "TerrainWater.h"
 
 #include <SectorFW/Graphics/ImageLoader.h>
 #include <SectorFW/Graphics/DX11/DX11BlockRevertHelper.h>
@@ -25,7 +25,7 @@ float gDebugFoamNoiseScale = 6.0f;
 
 void TerrainWater::BuildCluster(BuilderParams& p)
 {
-	//–{“–‚Í‚æ‚­‚È‚¢‚ª‚¢‚Á‚½‚ñŠm”F‚Ì‚½‚ß‚É‚±‚±‚Å’è‹`
+	//æœ¬å½“ã¯ã‚ˆããªã„ãŒã„ã£ãŸã‚“ç¢ºèªã®ãŸã‚ã«ã“ã“ã§å®šç¾©
 #ifdef _DEBUG
 
 	BIND_DEBUG_SLIDER_FLOAT("TerrainWater", "FlowSpeed1", &gDebugFlowSpeed0, 0.0f, 5.0f, 0.01f);
@@ -50,14 +50,14 @@ void TerrainWater::BuildCluster(BuilderParams& p)
 
 	params = p;
 
-	auto imgData = Graphics::LoadImageFromFile(p.heigthMapPath, 1, // 1 ƒ`ƒƒƒlƒ‹‚Å“Ç‚İ‚ŞiƒOƒŒ[ƒXƒP[ƒ‹j
+	auto imgData = Graphics::LoadImageFromFile(p.heigthMapPath, 1, // 1 ãƒãƒ£ãƒãƒ«ã§èª­ã¿è¾¼ã‚€ï¼ˆã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ï¼‰
 		false
 	);
 
 	float clusterWorldSizeX = p.clusterCellsX * p.cellSize;
 	float clusterWorldSizeZ = p.clusterCellsZ * p.cellSize;
 
-	// ƒNƒ‰ƒXƒ^[”‚ğŒvZ
+	// ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼æ•°ã‚’è¨ˆç®—
 	int cx = static_cast<int>(std::ceil(p.worldMapSizeX / clusterWorldSizeX));
 	int cz = static_cast<int>(std::ceil(p.worldMapSizeZ / clusterWorldSizeZ));
 
@@ -70,9 +70,9 @@ void TerrainWater::BuildCluster(BuilderParams& p)
 	clustersX = static_cast<uint32_t>(cx);
 	clustersZ = static_cast<uint32_t>(cz);
 
-	constexpr float HEIGHT_CLUSTER_THRESHOLD = 0.1f; // …–Ê‚Æ‚İ‚È‚·‚‚³‚Ìè‡’li0.0 - 1.0j
+	constexpr float HEIGHT_CLUSTER_THRESHOLD = 0.1f; // æ°´é¢ã¨ã¿ãªã™é«˜ã•ã®é–¾å€¤ï¼ˆ0.0 - 1.0ï¼‰
 
-	// ƒNƒ‰ƒXƒ^[‚²‚Æ‚É•½‹Ï‚‚³‚ğŒvZ‚µAè‡’lˆÈã‚È‚ç…–ÊƒNƒ‰ƒXƒ^[‚Æ‚µ‚Ä“o˜^
+	// ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã”ã¨ã«å¹³å‡é«˜ã•ã‚’è¨ˆç®—ã—ã€é–¾å€¤ä»¥ä¸Šãªã‚‰æ°´é¢ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã¨ã—ã¦ç™»éŒ²
 	for (int z = 0; z < cz; ++z)
 	{
 		for (int x = 0; x < cx; ++x)
@@ -91,23 +91,23 @@ void TerrainWater::BuildCluster(BuilderParams& p)
 				{
 					int idx = iz * imgData.width + ix;
 					uint8_t heightValue = (uint8_t)imgData.pixels.get()[idx];
-					float height = static_cast<float>(heightValue) / 255.0f; // 0.0 - 1.0 ‚É³‹K‰»
+					float height = static_cast<float>(heightValue) / 255.0f; // 0.0 - 1.0 ã«æ­£è¦åŒ–
 					maxHeight = (std::max)(maxHeight, height);
 					minHeight = (std::min)(minHeight, height);
 				}
 			}
 
-			// Å‘å‚‚³‚ªè‡’lˆÈ‰º‚È‚ç…–ÊƒNƒ‰ƒXƒ^[‚Æ‚İ‚È‚³‚È‚¢
+			// æœ€å¤§é«˜ã•ãŒé–¾å€¤ä»¥ä¸‹ãªã‚‰æ°´é¢ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã¨ã¿ãªã•ãªã„
 			if (maxHeight < HEIGHT_CLUSTER_THRESHOLD) continue;
 
 			waterClusters.push_back({ (uint32_t)x, (uint32_t)z });
 
-			// ƒNƒ‰ƒXƒ^[‚Ìƒ[ƒ‹ƒhÀ•W”ÍˆÍ‚ğŒvZ‚µ‚Ä AABB ‚ğì¬
-			// XZ‚ÍƒNƒ‰ƒXƒ^[‚ÌˆÊ’u‚©‚çŒvZAY‚ÍÅ‘å‚‚³‚ÉŠî‚Ã‚¢‚Äİ’è
+			// ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç¯„å›²ã‚’è¨ˆç®—ã—ã¦ AABB ã‚’ä½œæˆ
+			// XZã¯ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã®ä½ç½®ã‹ã‚‰è¨ˆç®—ã€Yã¯æœ€å¤§é«˜ã•ã«åŸºã¥ã„ã¦è¨­å®š
 
-			constexpr float HEIGHT_PADDING = 0.4f; // …–Ê‚Ìã‰º‚É­‚µ—]—T‚ğ‚½‚¹‚é
+			constexpr float HEIGHT_PADDING = 0.4f; // æ°´é¢ã®ä¸Šä¸‹ã«å°‘ã—ä½™è£•ã‚’æŒãŸã›ã‚‹
 
-			// ‚‚³‚Ì·‚ª¬‚³‚¢ê‡‚ÍAÅ’á‚Å‚àˆê’è‚Ì‚‚³‚ğŠm•Û‚·‚é‚½‚ß‚ÉƒpƒfƒBƒ“ƒO‚ğ’Ç‰Á
+			// é«˜ã•ã®å·®ãŒå°ã•ã„å ´åˆã¯ã€æœ€ä½ã§ã‚‚ä¸€å®šã®é«˜ã•ã‚’ç¢ºä¿ã™ã‚‹ãŸã‚ã«ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°ã‚’è¿½åŠ 
 			float padding = 0.0f;
 			float disHeight = (maxHeight - minHeight);
 			if (disHeight < HEIGHT_PADDING * 2.0f)
@@ -212,7 +212,7 @@ bool TerrainWater::CreateResource(SFW::Graphics::DX11::GraphicsDevice& graphics)
 	auto counterSRVUAV = CreateRawBufferSRVUAV(dev, sizeof(uint32_t), D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS, true, true);
 	counterUAV = counterSRVUAV.uav;
 
-	uint32_t maxIndexCount = params.clusterCellsX * params.clusterCellsZ * 6 * (uint32_t)waterClusters.size(); // ƒNƒ‰ƒXƒ^[1‚Â‚ ‚½‚è‚ÌÅ‘åƒCƒ“ƒfƒbƒNƒX”i6‚Í1ƒZƒ‹‚ ‚½‚è‚ÌƒCƒ“ƒfƒbƒNƒX”j
+	uint32_t maxIndexCount = params.clusterCellsX * params.clusterCellsZ * 6 * (uint32_t)waterClusters.size(); // ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼1ã¤ã‚ãŸã‚Šã®æœ€å¤§ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°ï¼ˆ6ã¯1ã‚»ãƒ«ã‚ãŸã‚Šã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°ï¼‰
 
 	auto indexSRVUAV = CreateStructuredBufferSRVUAV(dev, sizeof(uint32_t), maxIndexCount, true, true, 0, D3D11_USAGE_DEFAULT, 0);
 	indexSRV = indexSRVUAV.srv;
@@ -231,13 +231,13 @@ bool TerrainWater::CreateResource(SFW::Graphics::DX11::GraphicsDevice& graphics)
 		return SUCCEEDED(dev->CreateBuffer(&d, initData ? &sd : nullptr, &cb));
 		};
 
-	// ’è”ƒoƒbƒtƒ@
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	if (!makeCB(sizeof(CSParam), cbParam)) return false;
 
 	GridCB gridCbData{};
 	gridCbData.gOrigin = params.worldOffset;
 	gridCbData.heightScale = params.heightScale;
-	gridCbData.gVertsX = clustersX * params.clusterCellsX + 1; // ’¸“_”‚ÍƒZƒ‹”+1
+	gridCbData.gVertsX = clustersX * params.clusterCellsX + 1; // é ‚ç‚¹æ•°ã¯ã‚»ãƒ«æ•°+1
 	gridCbData.gVertsZ = clustersZ * params.clusterCellsZ + 1;
 	gridCbData.gDimX = clustersX;
 	gridCbData.gDimZ = clustersZ;
@@ -253,7 +253,7 @@ bool TerrainWater::CreateResource(SFW::Graphics::DX11::GraphicsDevice& graphics)
 
 	if (!makeCB(sizeof(FrameCB), cbFrame, &frameCBData)) return false;
 
-	//wrapƒTƒ“ƒvƒ‰[¶¬
+	//wrapã‚µãƒ³ãƒ—ãƒ©ãƒ¼ç”Ÿæˆ
 	D3D11_SAMPLER_DESC sampDesc{};
 	sampDesc.Filter = D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR;
 	sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -281,7 +281,7 @@ bool TerrainWater::CreateResource(SFW::Graphics::DX11::GraphicsDevice& graphics)
 
 void TerrainWater::ComputeVisibleIndices(ComputeContext& ctx, ComPtr<ID3D11Buffer> cbCamera)
 {
-	cbCameraFrame = std::move(cbCamera); // ƒJƒƒ‰‚Ì’è”ƒoƒbƒtƒ@‚ğˆê“I‚ÉØ‚è‚é
+	cbCameraFrame = std::move(cbCamera); // ã‚«ãƒ¡ãƒ©ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ã‚’ä¸€æ™‚çš„ã«å€Ÿã‚Šã‚‹
 
 	HRESULT hr;
 
@@ -294,11 +294,11 @@ void TerrainWater::ComputeVisibleIndices(ComputeContext& ctx, ComPtr<ID3D11Buffe
 		csp->MainFrustum = ctx.mainFrustum;
 		csp->ViewProj = ctx.viewProj;
 		csp->MaxVisibleIndices = (params.clusterCellsX * params.clusterCellsZ * 6) * (uint32_t)waterClusters.size();
-		csp->LodLevels = 4; // ŒÅ’è‚Å4ƒŒƒxƒ‹iLOD0..LOD3j
+		csp->LodLevels = 4; // å›ºå®šã§4ãƒ¬ãƒ™ãƒ«ï¼ˆLOD0..LOD3ï¼‰
 		csp->ScreenSize[0] = ctx.screenSize[0];
 		csp->ScreenSize[1] = ctx.screenSize[1];
 
-		// LOD ‚µ‚«‚¢’lipxj
+		// LOD ã—ãã„å€¤ï¼ˆpxï¼‰
 		csp->LodPxThreshold_Main[0] = 200.0f;
 		csp->LodPxThreshold_Main[1] = 100.0f;
 		csp->LodPxThreshold_Main[2] = 50.0f;
@@ -313,13 +313,13 @@ void TerrainWater::ComputeVisibleIndices(ComputeContext& ctx, ComPtr<ID3D11Buffe
 		ctx.devCtx->Unmap(cbParam.Get(), 0);
 	}
 
-	// 0) ƒJƒEƒ“ƒ^‚ğƒNƒŠƒA
+	// 0) ã‚«ã‚¦ãƒ³ã‚¿ã‚’ã‚¯ãƒªã‚¢
 	{
 		static constexpr UINT zeros[5u] = { 0 };
 		ctx.devCtx->ClearUnorderedAccessViewUint(counterUAV.Get(), zeros);
 	}
 
-	// 1) ComputeShader ‚ğƒZƒbƒg‚µ‚Ä UAV ‚ğƒoƒCƒ“ƒh
+	// 1) ComputeShader ã‚’ã‚»ãƒƒãƒˆã—ã¦ UAV ã‚’ãƒã‚¤ãƒ³ãƒ‰
 	{
 		ctx.devCtx->CSSetShader(csBuild.Get(), nullptr, 0);
 		ID3D11ShaderResourceView* srvs[3] = {
@@ -341,19 +341,19 @@ void TerrainWater::ComputeVisibleIndices(ComputeContext& ctx, ComPtr<ID3D11Buffe
 		ctx.devCtx->Dispatch(groupCountX, 1, 1);
 	}
 
-	// 2) CS_WriteArgs ‚Å
-	//    - counterUAV ¨ argsUAVBufiƒƒCƒ“j
-	//    - cascadeCountersUAV ¨ shadowArgsUAVBufiƒVƒƒƒhƒEj
-	//    ‚ğ‚Q‰ñŒÄ‚ñ‚Å¶¬
+	// 2) CS_WriteArgs ã§
+	//    - counterUAV â†’ argsUAVBufï¼ˆãƒ¡ã‚¤ãƒ³ï¼‰
+	//    - cascadeCountersUAV â†’ shadowArgsUAVBufï¼ˆã‚·ãƒ£ãƒ‰ã‚¦ï¼‰
+	//    ã‚’ï¼’å›å‘¼ã‚“ã§ç”Ÿæˆ
 
 	{
 		ctx.devCtx->CSSetShader(csArg.Get(), nullptr, 0);
 
-		// ƒƒCƒ“—p (counterUAV ¨ argsUAV)
+		// ãƒ¡ã‚¤ãƒ³ç”¨ (counterUAV â†’ argsUAV)
 		{
 			ID3D11UnorderedAccessView* uavsArgs[2] = {
 				counterUAV.Get(),        // Counter
-				argsUAV.Get()            // ArgsUAV (ƒƒCƒ“—p)
+				argsUAV.Get()            // ArgsUAV (ãƒ¡ã‚¤ãƒ³ç”¨)
 			};
 			UINT initCounts[2] = { 0xFFFFFFFF, 0xFFFFFFFF };
 			ctx.devCtx->CSSetUnorderedAccessViews(0, 2, uavsArgs, initCounts);
@@ -368,9 +368,9 @@ void TerrainWater::ComputeVisibleIndices(ComputeContext& ctx, ComPtr<ID3D11Buffe
 		ctx.devCtx->CSSetShader(nullptr, nullptr, 0);
 	}
 
-	// 3) ArgsUAV ¨ DrawIndirectArgs ‚ÉƒRƒs[
+	// 3) ArgsUAV â†’ DrawIndirectArgs ã«ã‚³ãƒ”ãƒ¼
 	{
-		ctx.devCtx->CopyResource(argsBuf.Get(), argsUAVBuf.Get());       // ƒƒCƒ“
+		ctx.devCtx->CopyResource(argsBuf.Get(), argsUAVBuf.Get());       // ãƒ¡ã‚¤ãƒ³
 	}
 }
 
@@ -449,7 +449,7 @@ void TerrainWater::Render(ID3D11DeviceContext* devCtx,
 	devCtx->IASetInputLayout(nullptr);
 	devCtx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	// ‚±‚±‚Å‚Í Arg ‚ğ—¬—p‚·‚é‚¾‚¯‚ÅACS ‚ÍŒÄ‚Î‚È‚¢
+	// ã“ã“ã§ã¯ Arg ã‚’æµç”¨ã™ã‚‹ã ã‘ã§ã€CS ã¯å‘¼ã°ãªã„
 	devCtx->DrawInstancedIndirect(argsBuf.Get(), 0);
 
 	ID3D11ShaderResourceView* nullSRV[3] = { nullptr,nullptr,nullptr };

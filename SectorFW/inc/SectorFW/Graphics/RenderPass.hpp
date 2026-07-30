@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   RenderPass.hpp
- * @brief ƒŒƒ“ƒ_[ƒpƒX‚ğ’è‹`‚·‚é\‘¢‘Ì
+ * @brief ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ‘ã‚¹ã‚’å®šç¾©ã™ã‚‹æ§‹é€ ä½“
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -18,55 +18,55 @@ namespace SFW
 		using PassCustomFuncType = void(*)(uint64_t);
 
 		/**
-		 * @brief •`‰æ‚·‚éƒpƒX‚²‚Æ‚Ìİ’è‚ğ’è‹`‚·‚é\‘¢‘Ì
+		 * @brief æç”»ã™ã‚‹ãƒ‘ã‚¹ã”ã¨ã®è¨­å®šã‚’å®šç¾©ã™ã‚‹æ§‹é€ ä½“
 		 */
 		template<typename RTV, typename DSV, typename SRV, typename Buffer,
 			typename RTVHandle = DefaultViewHandle<RTV>,
 			typename DSVHandle = DefaultViewHandle<DSV>>
 			struct RenderPass {
-			// ƒnƒ“ƒhƒ‹Œ^iƒXƒ}[ƒgƒ|ƒCƒ“ƒ^^¶ƒ|ƒCƒ“ƒ^‚È‚Çj
+			// ãƒãƒ³ãƒ‰ãƒ«å‹ï¼ˆã‚¹ãƒãƒ¼ãƒˆãƒã‚¤ãƒ³ã‚¿ï¼ç”Ÿãƒã‚¤ãƒ³ã‚¿ãªã©ï¼‰
 			using RTVHandleT = RTVHandle;
 			using DSVHandleT = DSVHandle;
 
 			static_assert(std::is_default_constructible_v<RTVHandleT>, "RTVHandle must be default constructible");
 			static_assert(std::is_default_constructible_v<DSVHandleT>, "DSVHandle must be default constructible");
 
-			std::vector<RTVHandleT> rtvs; // RenderTargetViewƒnƒ“ƒhƒ‹
-			std::vector<RTV> rtvsRaw; // ¶‚ÌRTVƒ|ƒCƒ“ƒ^”z—ñi“à•”ˆ——pj
-			DSVHandleT dsv = nullptr; // DepthStencilViewƒnƒ“ƒhƒ‹
+			std::vector<RTVHandleT> rtvs; // RenderTargetViewãƒãƒ³ãƒ‰ãƒ«
+			std::vector<RTV> rtvsRaw; // ç”Ÿã®RTVãƒã‚¤ãƒ³ã‚¿é…åˆ—ï¼ˆå†…éƒ¨å‡¦ç†ç”¨ï¼‰
+			DSVHandleT dsv = nullptr; // DepthStencilViewãƒãƒ³ãƒ‰ãƒ«
 			RenderQueue* queue;
-			PrimitiveTopology topology = PrimitiveTopology::TriangleList; // ƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒW
-			std::optional<RasterizerStateID> rasterizerState = std::nullopt; // ƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒgID
-			BlendStateID blendState = BlendStateID::Opaque; // ƒuƒŒƒ“ƒhƒXƒe[ƒgID
-			DepthStencilStateID depthStencilState = DepthStencilStateID::Default; // [“xƒXƒeƒ“ƒVƒ‹ƒXƒe[ƒgID
-			std::optional<std::vector<BindSlotBuffer>> cbvs; // ’è”ƒoƒbƒtƒ@ƒnƒ“ƒhƒ‹‚ÌƒŠƒXƒg
-			std::optional<Viewport> viewport = std::nullopt; // ƒrƒ…[ƒ|[ƒg‚ÌƒI[ƒo[ƒ‰ƒCƒh
-			std::optional<PSOHandle> psoOverride = std::nullopt; // PSO‚ÌƒI[ƒo[ƒ‰ƒCƒh
-			std::vector<PassCustomFuncType> customExecute = {};	// ƒJƒXƒ^ƒ€•`‰æŠÖ”iFullscreenQuad‚È‚Çj
+			PrimitiveTopology topology = PrimitiveTopology::TriangleList; // ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ãƒˆãƒãƒ­ã‚¸
+			std::optional<RasterizerStateID> rasterizerState = std::nullopt; // ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆID
+			BlendStateID blendState = BlendStateID::Opaque; // ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆID
+			DepthStencilStateID depthStencilState = DepthStencilStateID::Default; // æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆID
+			std::optional<std::vector<BindSlotBuffer>> cbvs; // å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒªã‚¹ãƒˆ
+			std::optional<Viewport> viewport = std::nullopt; // ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã®ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
+			std::optional<PSOHandle> psoOverride = std::nullopt; // PSOã®ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
+			std::vector<PassCustomFuncType> customExecute = {};	// ã‚«ã‚¹ã‚¿ãƒ æç”»é–¢æ•°ï¼ˆFullscreenQuadãªã©ï¼‰
 
 			uint32_t stencilRef = 0;
 
-			// ‚±‚ÌƒpƒX‚ªŒ©‚é viewMask ‚Ìƒrƒbƒg
-			uint16_t viewBit = 0;   // —á: 1<<0=ZPre, 1<<1=Opaque, 1<<2=ID...
+			// ã“ã®ãƒ‘ã‚¹ãŒè¦‹ã‚‹ viewMask ã®ãƒ“ãƒƒãƒˆ
+			uint16_t viewBit = 0;   // ä¾‹: 1<<0=ZPre, 1<<1=Opaque, 1<<2=ID...
 
-			bool rebindPSO = false; // PSOƒŠƒoƒCƒ“ƒh‚ğs‚¤‚©‚Ç‚¤‚©
+			bool rebindPSO = false; // PSOãƒªãƒã‚¤ãƒ³ãƒ‰ã‚’è¡Œã†ã‹ã©ã†ã‹
 
 			/**
-			 * @brief ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+			 * @brief ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 			 */
 			RenderPass() = default;
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param name ƒpƒX‚Ì–¼‘O
-			 * @param rtv RenderTargetViewƒnƒ“ƒhƒ‹‚ÌƒŠƒXƒg
-			 * @param dsv DepthStencilViewƒnƒ“ƒhƒ‹
-			 * @param queue •`‰æƒLƒ…[
-			 * @param topology ƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒW
-			 * @param rasterizerState ƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒgID
-			 * @param blendState ƒuƒŒƒ“ƒhƒXƒe[ƒgID
-			 * @param depthStencilState [“xƒXƒeƒ“ƒVƒ‹ƒXƒe[ƒgID
-			 * @param cbvs ’è”ƒoƒbƒtƒ@ƒnƒ“ƒhƒ‹‚ÌƒŠƒXƒg
-			 * @param customExecute ƒJƒXƒ^ƒ€•`‰æŠÖ”iFullscreenQuad‚È‚Çj
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param name ãƒ‘ã‚¹ã®åå‰
+			 * @param rtv RenderTargetViewãƒãƒ³ãƒ‰ãƒ«ã®ãƒªã‚¹ãƒˆ
+			 * @param dsv DepthStencilViewãƒãƒ³ãƒ‰ãƒ«
+			 * @param queue æç”»ã‚­ãƒ¥ãƒ¼
+			 * @param topology ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ãƒˆãƒãƒ­ã‚¸
+			 * @param rasterizerState ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆID
+			 * @param blendState ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆID
+			 * @param depthStencilState æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆID
+			 * @param cbvs å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒªã‚¹ãƒˆ
+			 * @param customExecute ã‚«ã‚¹ã‚¿ãƒ æç”»é–¢æ•°ï¼ˆFullscreenQuadãªã©ï¼‰
 			 */
 			RenderPass(
 				const std::vector<RTVHandleT>& rtvs,
@@ -102,9 +102,9 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒ€[ƒuƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param other ƒ€[ƒuŒ³‚ÌRenderPass
-			 * @return RenderPass&& ƒ€[ƒu‚³‚ê‚½RenderPass
+			 * @brief ãƒ ãƒ¼ãƒ–ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param other ãƒ ãƒ¼ãƒ–å…ƒã®RenderPass
+			 * @return RenderPass&& ãƒ ãƒ¼ãƒ–ã•ã‚ŒãŸRenderPass
 			 */
 			RenderPass(RenderPass&& other) noexcept
 				: rtvs(std::move(other.rtvs))
@@ -118,7 +118,7 @@ namespace SFW
 				, customExecute(std::move(other.customExecute))
 				, stencilRef(other.stencilRef)
 				, rebindPSO(other.rebindPSO) {
-				other.dsv = nullptr; // ˆÀ‘S‚Ì‚½‚ßƒkƒ‹ƒNƒŠƒA
+				other.dsv = nullptr; // å®‰å…¨ã®ãŸã‚ãƒŒãƒ«ã‚¯ãƒªã‚¢
 				queue = other.queue;
 
 				rtvsRaw.resize(rtvs.size());
@@ -128,9 +128,9 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒ€[ƒu‘ã“ü‰‰Zq
-			 * @param other ƒ€[ƒuŒ³‚ÌRenderPass
-			 * @return RenderPass& ƒ€[ƒu‚³‚ê‚½RenderPass‚ÌQÆ
+			 * @brief ãƒ ãƒ¼ãƒ–ä»£å…¥æ¼”ç®—å­
+			 * @param other ãƒ ãƒ¼ãƒ–å…ƒã®RenderPass
+			 * @return RenderPass& ãƒ ãƒ¼ãƒ–ã•ã‚ŒãŸRenderPassã®å‚ç…§
 			 */
 			RenderPass& operator=(RenderPass&& other) noexcept {
 				if (this != &other) {
@@ -157,37 +157,37 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒRƒs[‹Ö~
+			 * @brief ã‚³ãƒ”ãƒ¼ç¦æ­¢
 			 */
 			RenderPass(const RenderPass&) = delete;
 			RenderPass& operator=(const RenderPass&) = delete;
 		};
 
 		/**
-		 * @brief ƒŒƒ“ƒ_[ƒpƒX‚Ìİ’è‚ğ’è‹`‚·‚é\‘¢‘Ì
-		 * @detial ƒ‰ƒXƒ^ƒ‰ƒCƒY‚ğw’è‚µ‚È‚¢ê‡PSO‚Åw’è‚µ‚½ƒ‰ƒXƒ^ƒ‰ƒCƒY‚ğg—p‚·‚é
+		 * @brief ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ‘ã‚¹ã®è¨­å®šã‚’å®šç¾©ã™ã‚‹æ§‹é€ ä½“
+		 * @detial ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚ºã‚’æŒ‡å®šã—ãªã„å ´åˆPSOã§æŒ‡å®šã—ãŸãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚ºã‚’ä½¿ç”¨ã™ã‚‹
 		 */
 		template<typename RTV, typename DSV, template <typename> class ViewHandle = DefaultViewHandle>
 		struct RenderPassDesc {
-			// ƒnƒ“ƒhƒ‹Œ^iƒXƒ}[ƒgƒ|ƒCƒ“ƒ^^¶ƒ|ƒCƒ“ƒ^‚È‚Çj
+			// ãƒãƒ³ãƒ‰ãƒ«å‹ï¼ˆã‚¹ãƒãƒ¼ãƒˆãƒã‚¤ãƒ³ã‚¿ï¼ç”Ÿãƒã‚¤ãƒ³ã‚¿ãªã©ï¼‰
 			using RTVHandleT = ViewHandle<std::remove_pointer_t<RTV>>;
 			using DSVHandleT = ViewHandle<std::remove_pointer_t<DSV>>;
 
 			static_assert(std::is_default_constructible_v<RTVHandleT>, "RTVHandle must be default constructible");
 			static_assert(std::is_default_constructible_v<DSVHandleT>, "DSVHandle must be default constructible");
 
-			std::vector<RTVHandleT> rtvs; // RenderTargetViewƒnƒ“ƒhƒ‹
-			DSVHandleT dsv = nullptr; // DepthStencilViewƒnƒ“ƒhƒ‹
-			PrimitiveTopology topology = PrimitiveTopology::TriangleList; // ƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒW
-			std::optional<RasterizerStateID> rasterizerState = std::nullopt; // ƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒgID
-			BlendStateID blendState = BlendStateID::Opaque; // ƒuƒŒƒ“ƒhƒXƒe[ƒgID
-			DepthStencilStateID depthStencilState = DepthStencilStateID::Default; // [“xƒXƒeƒ“ƒVƒ‹ƒXƒe[ƒgID
-			std::optional<std::vector<BindSlotBuffer>> cbvs; // ’è”ƒoƒbƒtƒ@ƒnƒ“ƒhƒ‹‚ÌƒŠƒXƒg
-			std::optional<Viewport> viewport = std::nullopt; // ƒrƒ…[ƒ|[ƒgİ’è
-			std::optional<PSOHandle> psoOverride = std::nullopt; // PSO‚ÌƒI[ƒo[ƒ‰ƒCƒh
-			std::vector<PassCustomFuncType> customExecute = {}; // FullscreenQuad‚È‚Ç
+			std::vector<RTVHandleT> rtvs; // RenderTargetViewãƒãƒ³ãƒ‰ãƒ«
+			DSVHandleT dsv = nullptr; // DepthStencilViewãƒãƒ³ãƒ‰ãƒ«
+			PrimitiveTopology topology = PrimitiveTopology::TriangleList; // ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ãƒˆãƒãƒ­ã‚¸
+			std::optional<RasterizerStateID> rasterizerState = std::nullopt; // ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆID
+			BlendStateID blendState = BlendStateID::Opaque; // ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆID
+			DepthStencilStateID depthStencilState = DepthStencilStateID::Default; // æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆID
+			std::optional<std::vector<BindSlotBuffer>> cbvs; // å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒªã‚¹ãƒˆ
+			std::optional<Viewport> viewport = std::nullopt; // ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆè¨­å®š
+			std::optional<PSOHandle> psoOverride = std::nullopt; // PSOã®ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
+			std::vector<PassCustomFuncType> customExecute = {}; // FullscreenQuadãªã©
 			uint32_t stencilRef = 0;
-			bool rebindPSO = false; // PSOƒŠƒoƒCƒ“ƒh(w’è‚µ‚½ƒVƒF[ƒ_[‚ÉØ‚è‘Ö‚¦‚é)‚ğs‚¤‚©‚Ç‚¤‚©
+			bool rebindPSO = false; // PSOãƒªãƒã‚¤ãƒ³ãƒ‰(æŒ‡å®šã—ãŸã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«åˆ‡ã‚Šæ›¿ãˆã‚‹)ã‚’è¡Œã†ã‹ã©ã†ã‹
 		};
 	}
 }

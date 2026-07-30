@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <SectorFW/Physics/PhysicsComponent.h>
 #include <SectorFW/Core/ChunkCrossingMove.hpp>
@@ -11,14 +11,14 @@ template<typename Partition>
 class PhysicsSystem : public ITypeSystem<
 	PhysicsSystem,
 	Partition,
-	//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
+	//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
 	ComponentAccess<
 	Write<CTransform>,
 	Write<Physics::PhysicsInterpolation>,
 	Read<Physics::CPhyBody>,
 	Write<CSpatialMotionTag>
 	>,
-	//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	ServiceContext<
 	Physics::PhysicsService,
 	SpatialChunkRegistry>
@@ -26,7 +26,7 @@ class PhysicsSystem : public ITypeSystem<
 {
 	using Accessor = ComponentAccessor<Write<CTransform>, Write<Physics::PhysicsInterpolation>, Read<Physics::CPhyBody>, Write<CSpatialMotionTag>>;
 public:
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(Partition& partition, LevelContext<Partition>& levelCtx, NoDeletePtr<Physics::PhysicsService> physicsService,
 		NoDeletePtr<SpatialChunkRegistry> chunkReg) {
 		BudgetMover::LocalBatch moveBatch(levelCtx.mover, 200);
@@ -57,7 +57,7 @@ public:
 				memcpy(interpolation->prz(), interpolation->crz(), size);
 				memcpy(interpolation->prw(), interpolation->crw(), size);
 
-				// –¢‰Šú‰»‚Ì˜A‘±‚µ‚½ƒƒ‚ƒŠ“®“IŠm•ÛB©“®“I‚Éƒƒ‚ƒŠ‚Í”jŠü‚³‚ê‚é
+				// æœªåˆæœŸåŒ–ã®é€£ç¶šã—ãŸãƒ¡ãƒ¢ãƒªå‹•çš„ç¢ºä¿ã€‚è‡ªå‹•çš„ã«ãƒ¡ãƒ¢ãƒªã¯ç ´æ£„ã•ã‚Œã‚‹
 				auto updateMasks = std::make_unique_for_overwrite<uint32_t[]>(entityCount);
 
 				Physics::PoseBatchView poseBatch = {
@@ -72,13 +72,13 @@ public:
 
 				using namespace SFW::SIMD;
 
-				// ˆÊ’u
+				// ä½ç½®
 #ifdef USE_LERP_SIMD
 				gUpdateScalarLerp(transform->px(), interpolation->ppx(), interpolation->cpx(), updateMasks.get(), entityCount, alpha);
 				gUpdateScalarLerp(transform->py(), interpolation->ppy(), interpolation->cpy(), updateMasks.get(), entityCount, alpha);
 				gUpdateScalarLerp(transform->pz(), interpolation->ppz(), interpolation->cpz(), updateMasks.get(), entityCount, alpha);
 
-				// ‰ñ“]iÅ’ZŒo˜H nlerpj
+				// å›è»¢ï¼ˆæœ€çŸ­çµŒè·¯ nlerpï¼‰
 				gUpdateQuatNlerpShortest(
 					transform->qx(), transform->qy(), transform->qz(), transform->qw(),
 					interpolation->prx(), interpolation->pry(), interpolation->prz(), interpolation->prw(),
@@ -89,11 +89,11 @@ public:
 				{
 					if (updateMasks[i] == 0) continue;
 
-					// ˆÊ’u
+					// ä½ç½®
 					transform->px()[i] = interpolation->ppx()[i] + (interpolation->cpx()[i] - interpolation->ppx()[i]) * alpha;
 					transform->py()[i] = interpolation->ppy()[i] + (interpolation->cpy()[i] - interpolation->ppy()[i]) * alpha;
 					transform->pz()[i] = interpolation->ppz()[i] + (interpolation->cpz()[i] - interpolation->ppz()[i]) * alpha;
-					// ‰ñ“]iÅ’ZŒo˜H nlerpj
+					// å›è»¢ï¼ˆæœ€çŸ­çµŒè·¯ nlerpï¼‰
 					Math::Quatf prevQ{ interpolation->prx()[i], interpolation->pry()[i], interpolation->prz()[i], interpolation->prw()[i] };
 					Math::Quatf currQ{ interpolation->crx()[i], interpolation->cry()[i], interpolation->crz()[i], interpolation->crw()[i] };
 					Math::Quatf nlerpQ = Math::Quatf::Slerp(prevQ, currQ, alpha);
@@ -108,9 +108,9 @@ public:
 						(interpolation->cpy()[i] - interpolation->ppy()[i]) / (1.0f / 60.0f),
 						(interpolation->cpz()[i] - interpolation->ppz()[i]) / (1.0f / 60.0f) };
 
-					// 1) ‘Ş”ğ‰^—p
+					// 1) é€€é¿é‹ç”¨
 					CSpatialMotionTag& tag = (*motionTag)[i];
-					//constexpr SettleRule rule{ 0.3f, 6 }; // ‘¬“x0.3ˆÈ‰º‚ğ6ƒtƒŒ[ƒ€‚ÅÄƒAƒ^ƒbƒ`
+					//constexpr SettleRule rule{ 0.3f, 6 }; // é€Ÿåº¦0.3ä»¥ä¸‹ã‚’6ãƒ•ãƒ¬ãƒ¼ãƒ ã§å†ã‚¢ã‚¿ãƒƒãƒ
 					//UpdateSpatialAttachment(
 					//	entityIDs[i],
 					//	newPos,

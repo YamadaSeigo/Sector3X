@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   DX11MeshManager.h
- * @brief DirectX 11‚ÌƒƒbƒVƒ…ƒ}ƒl[ƒWƒƒ[‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief DirectX 11ã®ãƒ¡ãƒƒã‚·ãƒ¥ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -17,7 +17,7 @@
 #include <unordered_map>
 #include <functional>
 
- // MeshOptimizer‚ğg‚¤ê‡‚Í’è‹`
+ // MeshOptimizerã‚’ä½¿ã†å ´åˆã¯å®šç¾©
 #define USE_MESHOPTIMIZER
 
 namespace SFW
@@ -25,7 +25,7 @@ namespace SFW
 	namespace Graphics::DX11
 	{
 		/**
-		 * @brief ƒƒbƒVƒ…ì¬‚Ì‚½‚ß‚Ì\‘¢‘Ì
+		 * @brief ãƒ¡ãƒƒã‚·ãƒ¥ä½œæˆã®ãŸã‚ã®æ§‹é€ ä½“
 		 */
 		struct MeshCreateDesc {
 			const void* vertices = nullptr;
@@ -35,26 +35,26 @@ namespace SFW
 			uint32_t iSize = {};
 			D3D11_USAGE vUsage = D3D11_USAGE_IMMUTABLE;
 			D3D11_USAGE iUsage = D3D11_USAGE_IMMUTABLE;
-			D3D11_CPU_ACCESS_FLAG cpuAccessFlags = D3D11_CPU_ACCESS_WRITE; // D3D11_USAGE_STAGING—p
+			D3D11_CPU_ACCESS_FLAG cpuAccessFlags = D3D11_CPU_ACCESS_WRITE; // D3D11_USAGE_STAGINGç”¨
 			std::wstring sourcePath;
 		};
 
 		/**
-		 * @brief DirectX 11‚ÌƒƒbƒVƒ…ƒf[ƒ^‚ğ’è‹`‚·‚é\‘¢‘Ì
+		 * @brief DirectX 11ã®ãƒ¡ãƒƒã‚·ãƒ¥ãƒ‡ãƒ¼ã‚¿ã‚’å®šç¾©ã™ã‚‹æ§‹é€ ä½“
 		 */
 		struct MeshData {
-			// •¡”ƒXƒgƒŠ[ƒ€islot‚²‚Æj‚ÌVB
-			std::array<ComPtr<ID3D11Buffer>, 8> vbs{}; // 0..7 ‚­‚ç‚¢‚Ü‚ÅŠm•Û
+			// è¤‡æ•°ã‚¹ãƒˆãƒªãƒ¼ãƒ ï¼ˆslotã”ã¨ï¼‰ã®VB
+			std::array<ComPtr<ID3D11Buffer>, 8> vbs{}; // 0..7 ãã‚‰ã„ã¾ã§ç¢ºä¿
 			std::array<UINT, 8> strides{};
 			std::array<UINT, 8> offsets{};
 			std::bitset<8> usedSlots{};
-			uint32_t stride = 0; // ‹ŒF’PˆêVB‚ÌŒİŠ·ˆÛi–¢g—p‚Å‚à•Ûj
+			uint32_t stride = 0; // æ—§ï¼šå˜ä¸€VBã®äº’æ›ç¶­æŒï¼ˆæœªä½¿ç”¨ã§ã‚‚ä¿æŒï¼‰
 
-			// ƒZƒ}ƒ“ƒeƒBƒNi"POSITION0","NORMAL0","TANGENT0","TEXCOORD0","BLENDINDICES0","BLENDWEIGHT0"...j
+			// ã‚»ãƒãƒ³ãƒ†ã‚£ã‚¯ï¼ˆ"POSITION0","NORMAL0","TANGENT0","TEXCOORD0","BLENDINDICES0","BLENDWEIGHT0"...ï¼‰
 			struct AttribBinding {
 				UINT slot;
 				DXGI_FORMAT format;
-				UINT alignedByteOffset; // slot“àƒIƒtƒZƒbƒgi¡‰ñ NORMAL/TANGENT ‚ğ“¯ˆêslot‚Å‹l‚ß‚é‚È‚çg—pj
+				UINT alignedByteOffset; // slotå†…ã‚ªãƒ•ã‚»ãƒƒãƒˆï¼ˆä»Šå› NORMAL/TANGENT ã‚’åŒä¸€slotã§è©°ã‚ã‚‹ãªã‚‰ä½¿ç”¨ï¼‰
 			};
 			std::unordered_map<std::string, AttribBinding> attribMap;
 
@@ -63,21 +63,21 @@ namespace SFW
 			uint32_t startIndex = 0;
 
 		private:
-			std::wstring path; // ƒLƒƒƒbƒVƒ…—pƒpƒX
+			std::wstring path; // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ç”¨ãƒ‘ã‚¹
 
 			friend class MeshManager;
 		};
 		/**
-		 * @brief DirectX 11‚ÌƒƒbƒVƒ…ƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX
+		 * @brief DirectX 11ã®ãƒ¡ãƒƒã‚·ãƒ¥ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚¯ãƒ©ã‚¹
 		 */
 		class MeshManager : public ResourceManagerBase<MeshManager, MeshHandle, MeshCreateDesc, MeshData> {
 		public:
-			//–@ü‚Ìw¬•ª‚ğ¶¬‚·‚é‚½‚ß‚ÌƒJƒXƒ^ƒ€ŠÖ”Œ^
-			// ˆø”: ˆÊ’u”z—ñA–ß‚è’l: w¬•ª”z—ñ
+			//æ³•ç·šã®wæˆåˆ†ã‚’ç”Ÿæˆã™ã‚‹ãŸã‚ã®ã‚«ã‚¹ã‚¿ãƒ é–¢æ•°å‹
+			// å¼•æ•°: ä½ç½®é…åˆ—ã€æˆ»ã‚Šå€¤: wæˆåˆ†é…åˆ—
 			using NormalWCustomFunc = std::vector<float>(*)(const std::vector<Math::Vec3f>&);
 
-			// ====== LOD ¶¬‚âÄƒCƒ“ƒfƒbƒNƒX‚Åg‚¤ŒöŠJƒ†[ƒeƒBƒŠƒeƒB ======
-						// ’¸“_ƒXƒgƒŠ[ƒ€‚ğˆêŠ‡‚ÅƒŠƒ}ƒbƒv‚µ‚½Œ‹‰Ê‚ğ•Û‚·‚éŠÈˆÕ\‘¢‘Ì
+			// ====== LOD ç”Ÿæˆã‚„å†ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã§ä½¿ã†å…¬é–‹ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ ======
+						// é ‚ç‚¹ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’ä¸€æ‹¬ã§ãƒªãƒãƒƒãƒ—ã—ãŸçµæœã‚’ä¿æŒã™ã‚‹ç°¡æ˜“æ§‹é€ ä½“
 			struct RemappedStreams {
 				std::vector<Math::Vec3f> positions;
 				std::vector<Math::Vec3f> normals;
@@ -88,17 +88,17 @@ namespace SFW
 			};
 
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param dev DirectX 11‚ÌƒfƒoƒCƒX
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param dev DirectX 11ã®ãƒ‡ãƒã‚¤ã‚¹
 			 */
 			explicit MeshManager(ID3D11Device* dev) noexcept : device(dev) {
 				bool ok = InitCommonMeshes();
 				assert(ok && "Failed to initialize common meshes");
 			}
 			/**
-			 * @brief Šù‘¶‚ÌƒƒbƒVƒ…‚ğŒŸõ‚·‚éŠÖ”
-			 * @param d ƒƒbƒVƒ…ì¬‚Ì‚½‚ß‚Ì\‘¢‘Ì
-			 * @return std::optional<MeshHandle> Šù‘¶‚ÌƒƒbƒVƒ…ƒnƒ“ƒhƒ‹A‘¶İ‚µ‚È‚¢ê‡‚Ístd::nullopt
+			 * @brief æ—¢å­˜ã®ãƒ¡ãƒƒã‚·ãƒ¥ã‚’æ¤œç´¢ã™ã‚‹é–¢æ•°
+			 * @param d ãƒ¡ãƒƒã‚·ãƒ¥ä½œæˆã®ãŸã‚ã®æ§‹é€ ä½“
+			 * @return std::optional<MeshHandle> æ—¢å­˜ã®ãƒ¡ãƒƒã‚·ãƒ¥ãƒãƒ³ãƒ‰ãƒ«ã€å­˜åœ¨ã—ãªã„å ´åˆã¯std::nullopt
 			 */
 			std::optional<MeshHandle> FindExisting(const MeshCreateDesc& d) noexcept {
 				if (!d.sourcePath.empty()) {
@@ -108,53 +108,53 @@ namespace SFW
 				return std::nullopt;
 			}
 			/**
-			 * @brief ƒƒbƒVƒ…ƒnƒ“ƒhƒ‹‚ğƒLƒƒƒbƒVƒ…‚É“o˜^‚·‚éŠÖ”
-			 * @param d ƒƒbƒVƒ…ì¬‚Ì‚½‚ß‚Ì\‘¢‘Ì
-			 * @param h ƒƒbƒVƒ…ƒnƒ“ƒhƒ‹
+			 * @brief ãƒ¡ãƒƒã‚·ãƒ¥ãƒãƒ³ãƒ‰ãƒ«ã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«ç™»éŒ²ã™ã‚‹é–¢æ•°
+			 * @param d ãƒ¡ãƒƒã‚·ãƒ¥ä½œæˆã®ãŸã‚ã®æ§‹é€ ä½“
+			 * @param h ãƒ¡ãƒƒã‚·ãƒ¥ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			void RegisterKey(const MeshCreateDesc& d, MeshHandle h) {
 				if (!d.sourcePath.empty()) pathToHandle.emplace(d.sourcePath, h);
 			}
 			/**
-			 * @brief ƒƒbƒVƒ…ƒŠƒ\[ƒX‚ğì¬‚·‚éŠÖ”
-			 * @param desc ƒƒbƒVƒ…ì¬‚Ì‚½‚ß‚Ì\‘¢‘Ì
-			 * @param h ƒƒbƒVƒ…ƒnƒ“ƒhƒ‹
-			 * @return DX11MeshData ì¬‚³‚ê‚½ƒƒbƒVƒ…ƒf[ƒ^
+			 * @brief ãƒ¡ãƒƒã‚·ãƒ¥ãƒªã‚½ãƒ¼ã‚¹ã‚’ä½œæˆã™ã‚‹é–¢æ•°
+			 * @param desc ãƒ¡ãƒƒã‚·ãƒ¥ä½œæˆã®ãŸã‚ã®æ§‹é€ ä½“
+			 * @param h ãƒ¡ãƒƒã‚·ãƒ¥ãƒãƒ³ãƒ‰ãƒ«
+			 * @return DX11MeshData ä½œæˆã•ã‚ŒãŸãƒ¡ãƒƒã‚·ãƒ¥ãƒ‡ãƒ¼ã‚¿
 			 */
 			MeshData CreateResource(const MeshCreateDesc& desc, MeshHandle h);
 			/**
-			 * @brief cgltf ‚©‚ç’Šo‚µ‚½ float ”z—ñ‚ğ SNORM / half ‚ÉƒpƒbƒN‚µ‚Ä SoA ƒXƒgƒŠ[ƒ€‚ğì‚é
-			 * @param pathW ƒƒbƒVƒ…‚ÌŒ³ƒtƒ@ƒCƒ‹ƒpƒXiƒLƒƒƒbƒVƒ…—pj
-			 * @param positions   : float3i‚»‚Ì‚Ü‚Üj
-			 * @param normals     : float3 ¨ R8G8B8A8_SNORMiw=0j
-			 * @param tangents    : float4 (xyz, w=handedness) ¨ R8G8B8A8_SNORM
-			 * @param tex0        : float2 ¨ R16G16_FLOATihalf2j
-			 * @param skinIdx     : u8x4 ¨ R8G8B8A8_UINT
-			 * @param skinWgt     : u8x4(UNORM) ¨ R8G8B8A8_UNORM (0..255, ³‹K‰»Ï‚İ)
+			 * @brief cgltf ã‹ã‚‰æŠ½å‡ºã—ãŸ float é…åˆ—ã‚’ SNORM / half ã«ãƒ‘ãƒƒã‚¯ã—ã¦ SoA ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’ä½œã‚‹
+			 * @param pathW ãƒ¡ãƒƒã‚·ãƒ¥ã®å…ƒãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ï¼ˆã‚­ãƒ£ãƒƒã‚·ãƒ¥ç”¨ï¼‰
+			 * @param positions   : float3ï¼ˆãã®ã¾ã¾ï¼‰
+			 * @param normals     : float3 â†’ R8G8B8A8_SNORMï¼ˆw=0ï¼‰
+			 * @param tangents    : float4 (xyz, w=handedness) â†’ R8G8B8A8_SNORM
+			 * @param tex0        : float2 â†’ R16G16_FLOATï¼ˆhalf2ï¼‰
+			 * @param skinIdx     : u8x4 â†’ R8G8B8A8_UINT
+			 * @param skinWgt     : u8x4(UNORM) â†’ R8G8B8A8_UNORM (0..255, æ­£è¦åŒ–æ¸ˆã¿)
 			 */
 			bool CreateFromGLTF_SoA_R8Snorm(
 				const std::wstring& pathW,
 				const std::vector<Math::Vec3f>& positions,
-				const std::vector<Math::Vec3f>& normals,         // optionali‹ó‚È‚ç–¢g—pj
-				const std::vector<Math::Vec4f>& tangents,        // optionali‹ó‚È‚ç–¢g—pj
+				const std::vector<Math::Vec3f>& normals,         // optionalï¼ˆç©ºãªã‚‰æœªä½¿ç”¨ï¼‰
+				const std::vector<Math::Vec4f>& tangents,        // optionalï¼ˆç©ºãªã‚‰æœªä½¿ç”¨ï¼‰
 				const std::vector<Math::Vec2f>& tex0,            // optional
 				const std::vector<std::array<uint8_t, 4>>& skinIdx,     // optional
-				const std::vector<std::array<uint8_t, 4>>& skinWgt,     // optional (0..255, Œãq)
+				const std::vector<std::array<uint8_t, 4>>& skinWgt,     // optional (0..255, å¾Œè¿°)
 				const std::vector<uint32_t>& indices,
 				MeshData& out,
 				NormalWCustomFunc customFunc = nullptr);
 			/**
-			 * @brief CreateFromGLTF_SoA_R8Snorm—p‚Ìƒ‰ƒbƒp[ŠÖ”(d•¡ƒ`ƒƒƒbƒN‚È‚µ)
-			 * @param pathW ƒƒbƒVƒ…‚ÌŒ³ƒtƒ@ƒCƒ‹ƒpƒXiƒLƒƒƒbƒVƒ…—pj
-			 * @param positions   : float3i‚»‚Ì‚Ü‚Üj
-			 * @param normals     : float3 ¨ R8G8B8A8_SNORMiw=0j
-			 * @param tangents    : float4 (xyz, w=handedness) ¨ R8G8B8A8_SNORM
-			 * @param tex0        : float2 ¨ R16G16_FLOATihalf2j
-			 * @param skinIdx     : u8x4 ¨ R8G8B8A8_UINT
-			 * @param skinWgt     : u8x4(UNORM) ¨ R8G8B8A8_UNORM (0..255, ³‹K‰»Ï‚İ)
-			 * @param indices     : uint32_t ƒCƒ“ƒfƒbƒNƒX”z—ñ
-			 * @param outHandle   : o—ÍƒƒbƒVƒ…ƒnƒ“ƒhƒ‹
-			 * @return bool ¬Œ÷‚µ‚½‚ç trueA¸”s‚µ‚½‚ç false
+			 * @brief CreateFromGLTF_SoA_R8Snormç”¨ã®ãƒ©ãƒƒãƒ‘ãƒ¼é–¢æ•°(é‡è¤‡ãƒãƒ£ãƒƒã‚¯ãªã—)
+			 * @param pathW ãƒ¡ãƒƒã‚·ãƒ¥ã®å…ƒãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ï¼ˆã‚­ãƒ£ãƒƒã‚·ãƒ¥ç”¨ï¼‰
+			 * @param positions   : float3ï¼ˆãã®ã¾ã¾ï¼‰
+			 * @param normals     : float3 â†’ R8G8B8A8_SNORMï¼ˆw=0ï¼‰
+			 * @param tangents    : float4 (xyz, w=handedness) â†’ R8G8B8A8_SNORM
+			 * @param tex0        : float2 â†’ R16G16_FLOATï¼ˆhalf2ï¼‰
+			 * @param skinIdx     : u8x4 â†’ R8G8B8A8_UINT
+			 * @param skinWgt     : u8x4(UNORM) â†’ R8G8B8A8_UNORM (0..255, æ­£è¦åŒ–æ¸ˆã¿)
+			 * @param indices     : uint32_t ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—
+			 * @param outHandle   : å‡ºåŠ›ãƒ¡ãƒƒã‚·ãƒ¥ãƒãƒ³ãƒ‰ãƒ«
+			 * @return bool æˆåŠŸã—ãŸã‚‰ trueã€å¤±æ•—ã—ãŸã‚‰ false
 			 */
 			bool AddFromSoA_R8Snorm(
 				const std::wstring& sourcePath,
@@ -168,7 +168,7 @@ namespace SFW
 				MeshHandle& outHandle,
 				NormalWCustomFunc customFunc = nullptr);
 
-			// meshoptimizer ‚Ì remap ‚ğŠeƒXƒgƒŠ[ƒ€‚Ö“K—pi‘¶İ‚·‚éƒXƒgƒŠ[ƒ€‚Ì‚İˆ—j
+			// meshoptimizer ã® remap ã‚’å„ã‚¹ãƒˆãƒªãƒ¼ãƒ ã¸é©ç”¨ï¼ˆå­˜åœ¨ã™ã‚‹ã‚¹ãƒˆãƒªãƒ¼ãƒ ã®ã¿å‡¦ç†ï¼‰
 			static void ApplyRemapToStreams(
 				const std::vector<uint32_t>& remap,
 				const std::vector<Math::Vec3f>& inPos,
@@ -181,19 +181,19 @@ namespace SFW
 				RemappedStreams& out);
 
 #ifdef USE_MESHOPTIMIZER
-			// ƒNƒ‰ƒXƒ^imeshletj‚Ìƒƒ^î•ñ
+			// ã‚¯ãƒ©ã‚¹ã‚¿ï¼ˆmeshletï¼‰ã®ãƒ¡ã‚¿æƒ…å ±
 			struct ClusterInfo {
-				uint32_t triOffset;     // outClusterTriangles “à‚ÌOŠpŒ`æ“ªi3*triCount ŒÂ‚Ì˜A‘±”z—ñj
-				uint32_t triCount;      // OŠpŒ`”
-				Math::Vec3f center;     // ƒoƒEƒ“ƒfƒBƒ“ƒO‹…’†S
-				float       radius;     // ƒoƒEƒ“ƒfƒBƒ“ƒO‹…”¼Œa
-				Math::Vec3f coneAxis;   // –@ü‰~‚Ì²
-				float       coneCutoff; // ‰~ƒJƒbƒgƒIƒt cosƒÆ
+				uint32_t triOffset;     // outClusterTriangles å†…ã®ä¸‰è§’å½¢å…ˆé ­ï¼ˆ3*triCount å€‹ã®é€£ç¶šé…åˆ—ï¼‰
+				uint32_t triCount;      // ä¸‰è§’å½¢æ•°
+				Math::Vec3f center;     // ãƒã‚¦ãƒ³ãƒ‡ã‚£ãƒ³ã‚°çƒä¸­å¿ƒ
+				float       radius;     // ãƒã‚¦ãƒ³ãƒ‡ã‚£ãƒ³ã‚°çƒåŠå¾„
+				Math::Vec3f coneAxis;   // æ³•ç·šå††éŒã®è»¸
+				float       coneCutoff; // å††éŒã‚«ãƒƒãƒˆã‚ªãƒ• cosÎ¸
 			};
 
-			// positions / indices ‚©‚ç meshlets ‚ğ¶¬‚µ‚Ä•Ô‚·
-			// outClusterTriangles: meshlet‚²‚Æ‚ÌOŠpŒ`(ƒCƒ“ƒfƒbƒNƒX)‚ª‡‚É‹l‚Ü‚Á‚½”z—ñi3*triCount ŒÂj
-			// outClusterVertices : meshlet‚²‚Æ‚Ìƒ†ƒj[ƒN’¸“_ƒŠƒXƒgi«—ˆ‚ÌÄƒCƒ“ƒfƒbƒNƒX“™‚Ég—p‰Âj
+			// positions / indices ã‹ã‚‰ meshlets ã‚’ç”Ÿæˆã—ã¦è¿”ã™
+			// outClusterTriangles: meshletã”ã¨ã®ä¸‰è§’å½¢(ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹)ãŒé †ã«è©°ã¾ã£ãŸé…åˆ—ï¼ˆ3*triCount å€‹ï¼‰
+			// outClusterVertices : meshletã”ã¨ã®ãƒ¦ãƒ‹ãƒ¼ã‚¯é ‚ç‚¹ãƒªã‚¹ãƒˆï¼ˆå°†æ¥ã®å†ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç­‰ã«ä½¿ç”¨å¯ï¼‰
 			static bool BuildClustersWithMeshoptimizer(
 				const std::vector<Math::Vec3f>& positions,
 				const std::vector<uint32_t>& indices,
@@ -206,20 +206,20 @@ namespace SFW
 #endif
 
 			/**
-			 * @brief ƒLƒƒƒbƒVƒ…‚©‚çƒƒbƒVƒ…ƒnƒ“ƒhƒ‹‚ğíœ‚·‚éŠÖ”
-			 * @param idx íœ‚·‚éƒƒbƒVƒ…‚ÌƒCƒ“ƒfƒbƒNƒX
+			 * @brief ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‹ã‚‰ãƒ¡ãƒƒã‚·ãƒ¥ãƒãƒ³ãƒ‰ãƒ«ã‚’å‰Šé™¤ã™ã‚‹é–¢æ•°
+			 * @param idx å‰Šé™¤ã™ã‚‹ãƒ¡ãƒƒã‚·ãƒ¥ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			 */
 			void RemoveFromCaches(uint32_t idx);
 			/**
-			 * @brief ƒƒbƒVƒ…ƒŠƒ\[ƒX‚ğ”jŠü‚·‚éŠÖ”
-			 * @param idx ”jŠü‚·‚éƒƒbƒVƒ…‚ÌƒCƒ“ƒfƒbƒNƒX
-			 * @param currentFrame Œ»İ‚ÌƒtƒŒ[ƒ€”Ô†
+			 * @brief ãƒ¡ãƒƒã‚·ãƒ¥ãƒªã‚½ãƒ¼ã‚¹ã‚’ç ´æ£„ã™ã‚‹é–¢æ•°
+			 * @param idx ç ´æ£„ã™ã‚‹ãƒ¡ãƒƒã‚·ãƒ¥ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			 * @param currentFrame ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·
 			 */
 			void DestroyResource(uint32_t idx, uint64_t currentFrame);
 			/**
-			 * @brief ƒƒbƒVƒ…‚ÌƒCƒ“ƒfƒbƒNƒX”‚ğİ’è‚·‚éŠÖ”
-			 * @param h ƒƒbƒVƒ…ƒnƒ“ƒhƒ‹
-			 * @param count ƒCƒ“ƒfƒbƒNƒX”
+			 * @brief ãƒ¡ãƒƒã‚·ãƒ¥ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°ã‚’è¨­å®šã™ã‚‹é–¢æ•°
+			 * @param h ãƒ¡ãƒƒã‚·ãƒ¥ãƒãƒ³ãƒ‰ãƒ«
+			 * @param count ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°
 			 */
 			void SetIndexCount(MeshHandle h, uint32_t count, uint32_t start = 0) {
 				if (!IsValid(h)) {
@@ -231,10 +231,10 @@ namespace SFW
 				slots[h.index].data.startIndex = start;
 			}
 
-			// ƒXƒvƒ‰ƒCƒgi’PˆÊƒNƒAƒbƒhF’†SŒ´“_A•=‚‚³=1AZ=0j
+			// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆï¼ˆå˜ä½ã‚¯ã‚¢ãƒƒãƒ‰ï¼šä¸­å¿ƒåŸç‚¹ã€å¹…=é«˜ã•=1ã€Z=0ï¼‰
 			MeshHandle GetSpriteQuadHandle() const { return spriteQuadHandle_; }
 		private:
-			// ‹¤’ÊƒƒbƒVƒ…‚ğ‰Šú‰»i•¡”‰ñŒÄ‚ñ‚Å‚àˆÀ‘Sj
+			// å…±é€šãƒ¡ãƒƒã‚·ãƒ¥ã‚’åˆæœŸåŒ–ï¼ˆè¤‡æ•°å›å‘¼ã‚“ã§ã‚‚å®‰å…¨ï¼‰
 			bool InitCommonMeshes();
 
 		private:
@@ -242,7 +242,7 @@ namespace SFW
 
 			std::unordered_map<std::wstring, MeshHandle> pathToHandle;
 
-			// ‹¤’ÊƒXƒvƒ‰ƒCƒg—pƒnƒ“ƒhƒ‹i–³Œø‚Ì‚Ü‚Ü‚È‚ç–¢‰Šú‰»j
+			// å…±é€šã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”¨ãƒãƒ³ãƒ‰ãƒ«ï¼ˆç„¡åŠ¹ã®ã¾ã¾ãªã‚‰æœªåˆæœŸåŒ–ï¼‰
 			MeshHandle spriteQuadHandle_{};
 		};
 	}

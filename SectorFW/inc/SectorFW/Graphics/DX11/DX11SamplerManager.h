@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   DX11SamplerManager.h
- * @brief DirectX 11‚ÌƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+ * @brief DirectX 11ã®ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -14,7 +14,7 @@
 #include <string>
 
  /**
-  * @brief D3D11_SAMPLER_DESC‚Ì”äŠr‰‰Zq
+  * @brief D3D11_SAMPLER_DESCã®æ¯”è¼ƒæ¼”ç®—å­
   */
 inline bool operator==(const D3D11_SAMPLER_DESC& a, const D3D11_SAMPLER_DESC& b) {
 	return memcmp(&a, &b, sizeof(D3D11_SAMPLER_DESC)) == 0;
@@ -25,21 +25,21 @@ namespace SFW
 	namespace Graphics::DX11
 	{
 		/**
-		 * @brief DirectX 11‚ÌƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+		 * @brief DirectX 11ã®ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 		 */
 		struct SamplerCreateDesc {
 			std::string name;
 			D3D11_SAMPLER_DESC desc;
 		};
 		/**
-		 * @brief DirectX 11‚ÌƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚Ìƒf[ƒ^
+		 * @brief DirectX 11ã®ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®ãƒ‡ãƒ¼ã‚¿
 		 */
 		struct SamplerData {
 			ComPtr<ID3D11SamplerState> state;
 			std::string_view name;
 		};
 		/**
-		 * @brief D3D11_SAMPLER_DESC‚ÌƒnƒbƒVƒ…ŠÖ”
+		 * @brief D3D11_SAMPLER_DESCã®ãƒãƒƒã‚·ãƒ¥é–¢æ•°
 		 */
 		struct SamplerDescHash {
 			std::size_t operator()(const D3D11_SAMPLER_DESC& desc) const {
@@ -47,21 +47,21 @@ namespace SFW
 			}
 		};
 		/**
-		 * @brief DirectX 11‚ÌƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+		 * @brief DirectX 11ã®ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 		 */
 		class SamplerManager : public ResourceManagerBase<
 			SamplerManager, SamplerHandle, SamplerCreateDesc, SamplerData>
 		{
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param device DirectX 11‚ÌƒfƒoƒCƒX
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param device DirectX 11ã®ãƒ‡ãƒã‚¤ã‚¹
 			 */
 			SamplerManager(ID3D11Device* device) noexcept : device(device) {}
 			/**
-			 * @brief Šù‘¶‚ÌƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚ğ–¼‘O‚ÅŒŸõ‚·‚éŠÖ”
-			 * @param desc ƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚Ìì¬î•ñ
-			 * @return std::optional<SamplerHandle> Šù‘¶‚ÌƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚Ìƒnƒ“ƒhƒ‹A‘¶İ‚µ‚È‚¢ê‡‚Ístd::nullopt
+			 * @brief æ—¢å­˜ã®ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’åå‰ã§æ¤œç´¢ã™ã‚‹é–¢æ•°
+			 * @param desc ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®ä½œæˆæƒ…å ±
+			 * @return std::optional<SamplerHandle> æ—¢å­˜ã®ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®ãƒãƒ³ãƒ‰ãƒ«ã€å­˜åœ¨ã—ãªã„å ´åˆã¯std::nullopt
 			 */
 			std::optional<SamplerHandle> FindExisting(const SamplerCreateDesc& desc) noexcept {
 				if (auto it = nameToHandle.find(desc.name); it != nameToHandle.end())
@@ -69,18 +69,18 @@ namespace SFW
 				return std::nullopt;
 			}
 			/**
-			 * @brief ƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚ğ–¼‘O‚Å“o˜^‚·‚éŠÖ”
-			 * @param desc ƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚Ìì¬î•ñ
-			 * @param h “o˜^‚·‚éƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚Ìƒnƒ“ƒhƒ‹
+			 * @brief ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’åå‰ã§ç™»éŒ²ã™ã‚‹é–¢æ•°
+			 * @param desc ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®ä½œæˆæƒ…å ±
+			 * @param h ç™»éŒ²ã™ã‚‹ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			void RegisterKey(const SamplerCreateDesc& desc, SamplerHandle h) {
 				nameToHandle.emplace(desc.name, h);
 			}
 			/**
-			 * @brief ƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚ğì¬‚·‚éŠÖ”
-			 * @param desc ƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚Ìì¬î•ñ
-			 * @param h “o˜^‚·‚éƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚Ìƒnƒ“ƒhƒ‹
-			 * @return DX11SamplerData ì¬‚³‚ê‚½ƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚Ìƒf[ƒ^
+			 * @brief ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä½œæˆã™ã‚‹é–¢æ•°
+			 * @param desc ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®ä½œæˆæƒ…å ±
+			 * @param h ç™»éŒ²ã™ã‚‹ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®ãƒãƒ³ãƒ‰ãƒ«
+			 * @return DX11SamplerData ä½œæˆã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®ãƒ‡ãƒ¼ã‚¿
 			 */
 			SamplerData CreateResource(const SamplerCreateDesc& desc, SamplerHandle h) {
 				SamplerData data{};
@@ -96,21 +96,21 @@ namespace SFW
 				return data;
 			}
 			/**
-			 * @brief D3D11_SAMPLER_DESC‚Ì³‹K‰»‚ğs‚¤ŠÖ”
-			 * @param d ³‹K‰»‚·‚éD3D11_SAMPLER_DESC
+			 * @brief D3D11_SAMPLER_DESCã®æ­£è¦åŒ–ã‚’è¡Œã†é–¢æ•°
+			 * @param d æ­£è¦åŒ–ã™ã‚‹D3D11_SAMPLER_DESC
 			 */
 			static void NormalizeDesc(D3D11_SAMPLER_DESC& d)
 			{
-				// Šù’è‚ğŒy‚­ŒŠ–„‚ßi•K—v‚É‰‚¶‚Ä’²®j
+				// æ—¢å®šã‚’è»½ãç©´åŸ‹ã‚ï¼ˆå¿…è¦ã«å¿œã˜ã¦èª¿æ•´ï¼‰
 				if (d.AddressU == 0) d.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 				if (d.AddressV == 0) d.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 				if (d.AddressW == 0) d.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 
-				// ‹«ŠEF–¢İ’è‚È‚ç 0 ‚Å‰Šú‰»
+				// å¢ƒç•Œè‰²æœªè¨­å®šãªã‚‰ 0 ã§åˆæœŸåŒ–
 				if (d.AddressU == D3D11_TEXTURE_ADDRESS_BORDER ||
 					d.AddressV == D3D11_TEXTURE_ADDRESS_BORDER ||
 					d.AddressW == D3D11_TEXTURE_ADDRESS_BORDER) {
-					// ‚Ç‚ê‚©‚ª BORDER ‚È‚ç”O‚Ì‚½‚ß‘S•”–„‚ß‚é
+					// ã©ã‚Œã‹ãŒ BORDER ãªã‚‰å¿µã®ãŸã‚å…¨éƒ¨åŸ‹ã‚ã‚‹
 					for (int i = 0; i < 4; ++i) d.BorderColor[i] = 0.0f;
 				}
 
@@ -118,7 +118,7 @@ namespace SFW
 					(d.Filter == D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR ||
 						d.Filter == D3D11_FILTER_COMPARISON_MIN_MAG_MIP_POINT ||
 						d.Filter == D3D11_FILTER_COMPARISON_ANISOTROPIC)) {
-					// ”äŠrƒtƒBƒ‹ƒ^‚È‚Ì‚É ComparisonFunc ‚ª–¢İ’è‚Á‚Û‚¢ê‡ALESS_EQUAL‚É
+					// æ¯”è¼ƒãƒ•ã‚£ãƒ«ã‚¿ãªã®ã« ComparisonFunc ãŒæœªè¨­å®šã£ã½ã„å ´åˆã€LESS_EQUALã«
 					d.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
 				}
 
@@ -129,9 +129,9 @@ namespace SFW
 				}
 			}
 			/**
-			 * @brief 16i‚Ì’Z‚¢•¶š—ñ‚ğì‚éƒwƒ‹ƒpi”CˆÓj
-			 * @param v •ÏŠ·‚·‚é’l
-			 * @return std::string 16i‚Ì’Z‚¢•¶š—ñ
+			 * @brief 16é€²ã®çŸ­ã„æ–‡å­—åˆ—ã‚’ä½œã‚‹ãƒ˜ãƒ«ãƒ‘ï¼ˆä»»æ„ï¼‰
+			 * @param v å¤‰æ›ã™ã‚‹å€¤
+			 * @return std::string 16é€²ã®çŸ­ã„æ–‡å­—åˆ—
 			 */
 			static std::string Hex64(uint64_t v) {
 				char buf[17];
@@ -139,16 +139,16 @@ namespace SFW
 				return std::string(buf);
 			}
 			/**
-			 * @brief D3D11_SAMPLER_DESC‚©‚çƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚ğæ“¾‚Ü‚½‚Íì¬‚·‚éŠÖ”
-			 * @param in D3D11_SAMPLER_DESC‚Ìì¬î•ñ
-			 * @return SamplerHandle æ“¾‚Ü‚½‚Íì¬‚³‚ê‚½ƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚Ìƒnƒ“ƒhƒ‹
+			 * @brief D3D11_SAMPLER_DESCã‹ã‚‰ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å–å¾—ã¾ãŸã¯ä½œæˆã™ã‚‹é–¢æ•°
+			 * @param in D3D11_SAMPLER_DESCã®ä½œæˆæƒ…å ±
+			 * @return SamplerHandle å–å¾—ã¾ãŸã¯ä½œæˆã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			SamplerHandle AddWithDesc(const D3D11_SAMPLER_DESC& in)
 			{
 				D3D11_SAMPLER_DESC desc = in;
 				NormalizeDesc(desc);
 
-				// 1) ƒLƒƒƒbƒVƒ…ƒqƒbƒg‚È‚çÄ—˜—pi+1j
+				// 1) ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ’ãƒƒãƒˆãªã‚‰å†åˆ©ç”¨ï¼ˆ+1ï¼‰
 				{
 					std::scoped_lock lock(cacheMutex);
 					auto it = samplerCache.find(desc);
@@ -158,14 +158,14 @@ namespace SFW
 					}
 				}
 
-				// 2) V‹Kì¬i–¼‘O‚ğƒnƒbƒVƒ…‚©‚ç¶¬j
+				// 2) æ–°è¦ä½œæˆï¼ˆåå‰ã‚’ãƒãƒƒã‚·ãƒ¥ã‹ã‚‰ç”Ÿæˆï¼‰
 				const size_t h = HashBufferContent(&desc, sizeof(desc));
 				std::string genName = "samp_" + Hex64(static_cast<uint64_t>(h));
 
 				SamplerHandle handle;
-				Add({ genName, desc }, handle); // Add ‚Í ref=1 ‚ğ•Ô‚·Œ_–ñ
+				Add({ genName, desc }, handle); // Add ã¯ ref=1 ã‚’è¿”ã™å¥‘ç´„
 
-				// 3) ƒLƒƒƒbƒVƒ…“o˜^i‹tˆø‚«‚àj
+				// 3) ã‚­ãƒ£ãƒƒã‚·ãƒ¥ç™»éŒ²ï¼ˆé€†å¼•ãã‚‚ï¼‰
 				{
 					std::scoped_lock lock(cacheMutex);
 					samplerCache.emplace(desc, handle);
@@ -175,9 +175,9 @@ namespace SFW
 				return handle;
 			}
 			/**
-			 * @brief –¼‘O‚ÅƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚ğŒŸõ‚·‚éŠÖ”
-			 * @param name ƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚Ì–¼‘O
-			 * @return SamplerHandle ƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚Ìƒnƒ“ƒhƒ‹A‘¶İ‚µ‚È‚¢ê‡‚Í‹ó‚Ìƒnƒ“ƒhƒ‹
+			 * @brief åå‰ã§ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’æ¤œç´¢ã™ã‚‹é–¢æ•°
+			 * @param name ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®åå‰
+			 * @return SamplerHandle ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®ãƒãƒ³ãƒ‰ãƒ«ã€å­˜åœ¨ã—ãªã„å ´åˆã¯ç©ºã®ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			SamplerHandle FindByName(const std::string& name) const {
 				auto it = nameToHandle.find(name);
@@ -186,8 +186,8 @@ namespace SFW
 				return {};
 			}
 			/**
-			 * @brief ƒLƒƒƒbƒVƒ…‚©‚çƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚ğíœ‚·‚éŠÖ”
-			 * @param idx íœ‚·‚éƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚ÌƒCƒ“ƒfƒbƒNƒX
+			 * @brief ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‹ã‚‰ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å‰Šé™¤ã™ã‚‹é–¢æ•°
+			 * @param idx å‰Šé™¤ã™ã‚‹ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			 */
 			void RemoveFromCaches(uint32_t idx) {
 				auto& d = slots[idx].data;
@@ -198,9 +198,9 @@ namespace SFW
 				}
 			}
 			/**
-			 * @brief ƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚ğ”jŠü‚·‚éŠÖ”
-			 * @param idx ”jŠü‚·‚éƒTƒ“ƒvƒ‰[ƒXƒe[ƒg‚ÌƒCƒ“ƒfƒbƒNƒX
-			 * @param currentFrame Œ»İ‚ÌƒtƒŒ[ƒ€”Ô†i–¢g—pj
+			 * @brief ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ç ´æ£„ã™ã‚‹é–¢æ•°
+			 * @param idx ç ´æ£„ã™ã‚‹ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			 * @param currentFrame ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·ï¼ˆæœªä½¿ç”¨ï¼‰
 			 */
 			void DestroyResource(uint32_t idx, uint64_t /*currentFrame*/) {
 				slots[idx].data.state.Reset();
@@ -211,7 +211,7 @@ namespace SFW
 			std::unordered_map<uint32_t, D3D11_SAMPLER_DESC> handleToDesc;
 
 			std::unordered_map<std::string, SamplerHandle> nameToHandle;
-			std::mutex cacheMutex; // samplerCache / handleToDesc ‚ğç‚é
+			std::mutex cacheMutex; // samplerCache / handleToDesc ã‚’å®ˆã‚‹
 		};
 	}
 }

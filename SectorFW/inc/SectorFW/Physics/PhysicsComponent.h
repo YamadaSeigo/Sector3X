@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   PhysicsComponent.h
- * @brief •¨—ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ç‰©ç†ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -20,33 +20,33 @@
 namespace SFW
 {
 	/**
-	 * @brief JPH::BodyID‚ğƒvƒŠƒ~ƒeƒBƒuŒ^‚Æ‚µ‚Äˆµ‚¤‚½‚ß‚Ì“Áê‰»
+	 * @brief JPH::BodyIDã‚’ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å‹ã¨ã—ã¦æ‰±ã†ãŸã‚ã®ç‰¹æ®ŠåŒ–
 	 */
 	template<> struct user_primitive<JPH::BodyID> : std::true_type {};
 
 	namespace Physics
 	{
 		/**
-		 * @brief •¨—•âŠÔƒRƒ“ƒ|[ƒlƒ“ƒg
+		 * @brief ç‰©ç†è£œé–“ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
 		 */
 		struct PhysicsInterpolation {
 			union {
 				struct {
-					Math::Vec3f prevPos, currPos; // ˆÊ’u
+					Math::Vec3f prevPos, currPos; // ä½ç½®
 				};
 				struct {
-					float ppx, ppy, ppz, cpx, cpy, cpz; // ˆÊ’uix, y, zj
+					float ppx, ppy, ppz, cpx, cpy, cpz; // ä½ç½®ï¼ˆx, y, zï¼‰
 				};
 			};
 
-			uint32_t lastUpdatedFrame = 0; // “¯Šú˜R‚ê”»’è‚Ég—p
+			uint32_t lastUpdatedFrame = 0; // åŒæœŸæ¼ã‚Œåˆ¤å®šã«ä½¿ç”¨
 
 			union {
 				struct {
-					Math::Quatf prevRot, currRot; // ‰ñ“]
+					Math::Quatf prevRot, currRot; // å›è»¢
 				};
 				struct {
-					float prx, pry, prz, prw, crx, cry, crz, crw; // ‰ñ“]ix, y, z, wj
+					float prx, pry, prz, prw, crx, cry, crz, crw; // å›è»¢ï¼ˆx, y, z, wï¼‰
 				};
 			};
 
@@ -72,7 +72,7 @@ namespace SFW
 				lastUpdatedFrame, prx, pry, prz, prw, crx, cry, crz, crw)
 		};
 		/**
-		 * @brief •¨—ƒ{ƒfƒB‚Ìƒ^ƒCƒv
+		 * @brief ç‰©ç†ãƒœãƒ‡ã‚£ã®ã‚¿ã‚¤ãƒ—
 		 */
 		enum class BodyType : uint8_t {
 			Static = 1,
@@ -80,20 +80,20 @@ namespace SFW
 		};
 
 		/**
-		 * @brief •¨—ƒ{ƒfƒBƒRƒ“ƒ|[ƒlƒ“ƒg
+		 * @brief ç‰©ç†ãƒœãƒ‡ã‚£ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
 		 */
 		struct CPhyBody {
 			static constexpr uint16_t invalidLayer = 0xFFFFu;
 
-			JPH::BodyID body = JPH::BodyID((std::numeric_limits<uint32_t>::max)());   // ¶¬Œã‚ÉƒZƒbƒgi“Ç‚İæ‚è—pj
-			uint16_t    layer = invalidLayer;  // Š‘®ƒ[ƒ‹ƒh
+			JPH::BodyID body = JPH::BodyID((std::numeric_limits<uint32_t>::max)());   // ç”Ÿæˆå¾Œã«ã‚»ãƒƒãƒˆï¼ˆèª­ã¿å–ã‚Šç”¨ï¼‰
+			uint16_t    layer = invalidLayer;  // æ‰€å±ãƒ¯ãƒ¼ãƒ«ãƒ‰
 			bool        kinematic{ false };
-			BodyType     type{ BodyType::Dynamic }; // 1: Ã“IA0: “®“IiƒLƒlƒ}ƒeƒBƒbƒNŠÜ‚Şj
+			BodyType     type{ BodyType::Dynamic }; // 1: é™çš„ã€0: å‹•çš„ï¼ˆã‚­ãƒãƒãƒ†ã‚£ãƒƒã‚¯å«ã‚€ï¼‰
 
 			DEFINE_SOA(CPhyBody, body, layer, kinematic, type)
 		};
 		/**
-		 * @brief Œ`ó¡–@ƒRƒ“ƒ|[ƒlƒ“ƒg
+		 * @brief å½¢çŠ¶å¯¸æ³•ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
 		 */
 		struct ShapeDims {
 			enum Type : uint8_t {
@@ -105,19 +105,19 @@ namespace SFW
 				CMHC = 6,
 			};
 
-			// ‘ã•\¡–@i—ájFx,y,z = •/‚‚³/‰œs or ’¼Œa‚È‚Ç
+			// ä»£è¡¨å¯¸æ³•ï¼ˆä¾‹ï¼‰ï¼šx,y,z = å¹…/é«˜ã•/å¥¥è¡Œ or ç›´å¾„ãªã©
 			Math::Vec3f dims;
-			// Œ`óŒÅ—L‚Ì’l
-			float r = 0.0f;           // ”¼Œa‚È‚Ç
-			float halfHeight = 0.0f;  // ”¼‚‚³
+			// å½¢çŠ¶å›ºæœ‰ã®å€¤
+			float r = 0.0f;           // åŠå¾„ãªã©
+			float halfHeight = 0.0f;  // åŠé«˜ã•
 
-			// --- DecoratedShape —p‚Ìƒ[ƒJƒ‹•ÏŠ· ---
-			Math::Vec3f localOffset{ 0.0f, 0.0f, 0.0f };   // RotatedTranslated ‚Ì position
-			float localRotation[4] = { 0.0f, 0.0f, 0.0f, 1.0f }; //ƒAƒ‰ƒCƒƒ“ƒg‚Ì“s‡‚Å”z—ñ‚Å‚Â
+			// --- DecoratedShape ç”¨ã®ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ› ---
+			Math::Vec3f localOffset{ 0.0f, 0.0f, 0.0f };   // RotatedTranslated ã® position
+			float localRotation[4] = { 0.0f, 0.0f, 0.0f, 1.0f }; //ã‚¢ãƒ©ã‚¤ãƒ¡ãƒ³ãƒˆã®éƒ½åˆã§é…åˆ—ã§æŒã¤
 
-			ShapeHandle handle{}; // Œ³‚ÌŒ`óƒnƒ“ƒhƒ‹iQÆ—pj
+			ShapeHandle handle{}; // å…ƒã®å½¢çŠ¶ãƒãƒ³ãƒ‰ãƒ«ï¼ˆå‚ç…§ç”¨ï¼‰
 
-			bool hasLocalTransform = false; // RotatedTranslated “™‚Åü‚ç‚ê‚Ä‚¢‚é‚©
+			bool hasLocalTransform = false; // RotatedTranslated ç­‰ã§é£¾ã‚‰ã‚Œã¦ã„ã‚‹ã‹
 
 			uint8_t type = Type::Box;
 		};

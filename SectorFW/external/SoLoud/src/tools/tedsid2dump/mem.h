@@ -1,4 +1,4 @@
-#ifndef _MEM_H
+﻿#ifndef _MEM_H
 #define _MEM_H
 
 // Abstract Memory handler superclass for all memory handler objects

@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   ArchetypeChunk.h
- * @brief ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -25,24 +25,24 @@ namespace SFW
 	namespace ECS
 	{
 		/**
-		 * @brief ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚ÌƒTƒCƒYiƒoƒCƒg’PˆÊj
+		 * @brief ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã®ã‚µã‚¤ã‚ºï¼ˆãƒã‚¤ãƒˆå˜ä½ï¼‰
 		 */
 		constexpr size_t ChunkSizeBytes = 32 * 1024;
-		//‘O•û’è‹`
+		//å‰æ–¹å®šç¾©
 		class ComponentTypeRegistry;
 		/**
-		 * @brief ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚Ìƒoƒbƒtƒ@Œ^
+		 * @brief ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã®ãƒãƒƒãƒ•ã‚¡å‹
 		 */
 		using BufferType = uint8_t;
 		/**
-		 * @brief ‘ÎÛ‚ÌƒA[ƒLƒ^ƒCƒv‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒf[ƒ^‚ğŠi”[‚·‚éƒNƒ‰ƒX
+		 * @brief å¯¾è±¡ã®ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹ã‚¯ãƒ©ã‚¹
 		 */
 		class ArchetypeChunk {
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param mask ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
-			 * @details mask‚©‚çƒŒƒCƒAƒEƒg‚ğæ“¾‚µAƒ`ƒƒƒ“ƒN‚Ì—e—Ê‚ğİ’è‚µ‚Ü‚·B
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param mask ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
+			 * @details maskã‹ã‚‰ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’å–å¾—ã—ã€ãƒãƒ£ãƒ³ã‚¯ã®å®¹é‡ã‚’è¨­å®šã—ã¾ã™ã€‚
 			 */
 			ArchetypeChunk(ComponentMask mask) : layout(ComponentLayoutRegistry::GetLayout(mask)),
 				componentMask(mask) {
@@ -50,96 +50,96 @@ namespace SFW
 				entities.resize(layout.capacity);
 			}
 			/**
-			 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì—ñ‚ğæ“¾‚·‚éŠÖ”
-			 * @return std::optional<T*> ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒ|ƒCƒ“ƒ^
+			 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®åˆ—ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return std::optional<T*> ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒã‚¤ãƒ³ã‚¿
 			 */
 			template<typename T>
 			std::optional<T*> GetColumn() noexcept {
 				ComponentTypeID id = ComponentTypeRegistry::GetID<T>();
 				auto it = layout.infoIdx.find(id);
 				if (it == layout.infoIdx.end()) [[unlikely]] {
-					LOG_ERROR("ƒRƒ“ƒ|[ƒlƒ“ƒgID{ %d }‚ªƒŒƒCƒAƒEƒg‚ÉŒ©‚Â‚©‚è‚Ü‚¹‚ñ", id);
+					LOG_ERROR("ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆID{ %d }ãŒãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã«è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“", id);
 					return std::nullopt; // or throw an exception
 				}
 				auto info = layout.info[it->second].get(0);
 				if (!info) [[unlikely]] {
-					LOG_ERROR("ƒRƒ“ƒ|[ƒlƒ“ƒgID{ %d }‚ªƒŒƒCƒAƒEƒgî•ñ‚ÉŒ©‚Â‚©‚è‚Ü‚¹‚ñ", id);
+					LOG_ERROR("ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆID{ %d }ãŒãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆæƒ…å ±ã«è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“", id);
 					return std::nullopt;
 				}
 
 				return reinterpret_cast<T*>(&buffer[info.value().get().offset]);
 			}
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚ğ’Ç‰Á‚·‚éŠÖ”
-			 * @param id ƒGƒ“ƒeƒBƒeƒBID
-			 * @return size_t ’Ç‰Á‚³‚ê‚½ƒGƒ“ƒeƒBƒeƒB‚ÌƒCƒ“ƒfƒbƒNƒX
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã‚’è¿½åŠ ã™ã‚‹é–¢æ•°
+			 * @param id ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
+			 * @return size_t è¿½åŠ ã•ã‚ŒãŸã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			 */
 			size_t AddEntity(EntityID id);
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚ğíœ‚·‚éŠÖ”(ÅŒã‚ÌƒGƒ“ƒeƒBƒeƒB‚Æ“ü‚ê‘Ö‚¦‚Ä’Ç•ú)
-			 * @param index íœ‚·‚éƒGƒ“ƒeƒBƒeƒB‚ÌƒCƒ“ƒfƒbƒNƒX
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã‚’å‰Šé™¤ã™ã‚‹é–¢æ•°(æœ€å¾Œã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã¨å…¥ã‚Œæ›¿ãˆã¦è¿½æ”¾)
+			 * @param index å‰Šé™¤ã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			 */
 			void RemoveEntitySwapPop(size_t index) noexcept;
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚Ì”‚ğæ“¾‚·‚éŠÖ”
-			 * @return size_t ƒGƒ“ƒeƒBƒeƒB‚Ì”
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®æ•°ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return size_t ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®æ•°
 			 */
 			size_t GetEntityCount() const noexcept { return entityCount; }
 			/**
-			 * @brief ƒ`ƒƒƒ“ƒN‚Ì—e—Ê‚ğæ“¾‚·‚éŠÖ”
-			 * @return size_t ƒ`ƒƒƒ“ƒN‚Ì—e—Ê
+			 * @brief ãƒãƒ£ãƒ³ã‚¯ã®å®¹é‡ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return size_t ãƒãƒ£ãƒ³ã‚¯ã®å®¹é‡
 			 */
 			size_t GetCapacity() const noexcept { return layout.capacity; }
 			/**
-			 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN‚ğæ“¾‚·‚éŠÖ”
-			 * @return ComponentMask ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
+			 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return ComponentMask ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
 			 */
 			ComponentMask GetComponentMask() const noexcept { return componentMask; }
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒBID‚Ì”z—ñ‚ğæ“¾‚·‚éŠÖ”
-			 * @return const std::vector<EntityID>& ƒGƒ“ƒeƒBƒeƒBID‚Ì”z—ñ‚Ö‚ÌQÆ
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã®é…åˆ—ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return const std::vector<EntityID>& ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã®é…åˆ—ã¸ã®å‚ç…§
 			 */
 			const std::vector<EntityID>& GetEntityIDs() const noexcept { return entities; }
 		private:
-			//ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚Ìƒoƒbƒtƒ@
+			//ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã®ãƒãƒƒãƒ•ã‚¡
 			BufferType buffer[ChunkSizeBytes] = {};
-			//ƒGƒ“ƒeƒBƒeƒB‚Ì”
+			//ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®æ•°
 			size_t entityCount = 0;
-			//ƒGƒ“ƒeƒBƒeƒB‚ÌID‚ğŠi”[‚·‚éƒxƒNƒ^[
+			//ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®IDã‚’æ ¼ç´ã™ã‚‹ãƒ™ã‚¯ã‚¿ãƒ¼
 			std::vector<EntityID> entities;
-			//ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
+			//ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
 			ComponentMask componentMask;
-			//ƒRƒ“ƒ|[ƒlƒ“ƒgƒŒƒCƒAƒEƒg
+			//ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 			const ComponentLayout& layout;
 		public:
 			/**
-			 * @brief ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚ÌƒAƒNƒZƒT[ƒNƒ‰ƒX
+			 * @brief ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã®ã‚¢ã‚¯ã‚»ã‚µãƒ¼ã‚¯ãƒ©ã‚¹
 			 */
 			struct Accessor
 			{
 			private:
 				/**
-				 * @brief ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒNƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				 * @param chunk ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				 * @return BufferType* ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
+				 * @brief ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				 * @param chunk ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				 * @return BufferType* ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 				 */
 				static auto GetBuffer(ArchetypeChunk* chunk) noexcept { return chunk->buffer; }
 				/**
-				 * @brief ƒGƒ“ƒeƒBƒeƒB‚Ì”z—ñ‚ğæ“¾‚·‚éŠÖ”
-				 * @param chunk ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				 * @return const std::vector<EntityID>& ƒGƒ“ƒeƒBƒeƒB‚Ì”z—ñ‚Ö‚ÌQÆ
+				 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®é…åˆ—ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+				 * @param chunk ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				 * @return const std::vector<EntityID>& ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®é…åˆ—ã¸ã®å‚ç…§
 				 */
 				static const std::vector<EntityID>& GetEntityIDs(ArchetypeChunk* chunk) noexcept { return chunk->entities; }
 				/**
-				 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒgƒŒƒCƒAƒEƒgî•ñ‚ğæ“¾‚·‚éŠÖ”
-				 * @param chunk ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				 * @return const decltype(ComponentLayout::info)& ƒRƒ“ƒ|[ƒlƒ“ƒgƒŒƒCƒAƒEƒgî•ñ‚Ö‚ÌQÆ
+				 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆæƒ…å ±ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+				 * @param chunk ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				 * @return const decltype(ComponentLayout::info)& ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆæƒ…å ±ã¸ã®å‚ç…§
 				 */
 				static const decltype(ComponentLayout::info)& GetLayoutInfo(ArchetypeChunk* chunk) noexcept { return chunk->layout.info; }
 				/**
-				 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒgƒŒƒCƒAƒEƒgî•ñ‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ“¾‚·‚éŠÖ”
-				 * @param chunk ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				 * @return const decltype(ComponentLayout::infoIdx)& ƒRƒ“ƒ|[ƒlƒ“ƒgƒŒƒCƒAƒEƒgî•ñ‚ÌƒCƒ“ƒfƒbƒNƒX‚Ö‚ÌQÆ
+				 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆæƒ…å ±ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+				 * @param chunk ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+				 * @return const decltype(ComponentLayout::infoIdx)& ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆæƒ…å ±ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¸ã®å‚ç…§
 				 */
 				static const decltype(ComponentLayout::infoIdx)& GetLayoutInfoIdx(ArchetypeChunk* chunk) noexcept { return chunk->layout.infoIdx; }
 

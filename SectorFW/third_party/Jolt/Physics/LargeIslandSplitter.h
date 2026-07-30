@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2023 Jorrit Rouwe
+﻿// SPDX-FileCopyrightText: 2023 Jorrit Rouwe
 // SPDX-License-Identifier: MIT
 
 #pragma once

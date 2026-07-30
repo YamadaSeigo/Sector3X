@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   SpscRing.hpp
- * @brief ƒVƒ“ƒOƒ‹ƒvƒƒfƒ…[ƒTEƒVƒ“ƒOƒ‹ƒRƒ“ƒVƒ…[ƒ}‚ÌƒŠƒ“ƒOƒoƒbƒtƒ@
+ * @brief ã‚·ãƒ³ã‚°ãƒ«ãƒ—ãƒ­ãƒ‡ãƒ¥ãƒ¼ã‚µãƒ»ã‚·ãƒ³ã‚°ãƒ«ã‚³ãƒ³ã‚·ãƒ¥ãƒ¼ãƒã®ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -12,23 +12,23 @@
 namespace SFW
 {
 	/**
-	 * @brief ƒVƒ“ƒOƒ‹ƒvƒƒfƒ…[ƒTEƒVƒ“ƒOƒ‹ƒRƒ“ƒVƒ…[ƒ}‚ÌƒŠƒ“ƒOƒoƒbƒtƒ@
+	 * @brief ã‚·ãƒ³ã‚°ãƒ«ãƒ—ãƒ­ãƒ‡ãƒ¥ãƒ¼ã‚µãƒ»ã‚·ãƒ³ã‚°ãƒ«ã‚³ãƒ³ã‚·ãƒ¥ãƒ¼ãƒã®ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡
 	 */
 	template<class T>
 	class SpscRing {
 	public:
 		/**
-		 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @param capacity_pow2 ƒoƒbƒtƒ@‚Ì—e—Êi2‚Ì‚×‚«æj
+		 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @param capacity_pow2 ãƒãƒƒãƒ•ã‚¡ã®å®¹é‡ï¼ˆ2ã®ã¹ãä¹—ï¼‰
 		 */
 		explicit SpscRing(size_t capacity_pow2 = 1024)
 			: m_mask(capacity_pow2 - 1),
 			m_buf(capacity_pow2) {
 		}
 		/**
-		 * @brief —v‘f‚ğƒoƒbƒtƒ@‚É’Ç‰Á‚·‚éŠÖ”
-		 * @param v ’Ç‰Á‚·‚é—v‘f
-		 * @return bool ’Ç‰Á‚É¬Œ÷‚µ‚½‚©‚Ç‚¤‚©
+		 * @brief è¦ç´ ã‚’ãƒãƒƒãƒ•ã‚¡ã«è¿½åŠ ã™ã‚‹é–¢æ•°
+		 * @param v è¿½åŠ ã™ã‚‹è¦ç´ 
+		 * @return bool è¿½åŠ ã«æˆåŠŸã—ãŸã‹ã©ã†ã‹
 		 */
 		bool push(const T& v) {
 			auto head = m_head.load(std::memory_order_relaxed);
@@ -39,8 +39,8 @@ namespace SFW
 			return true;
 		}
 		/**
-		 * @brief —v‘f‚ğƒoƒbƒtƒ@‚©‚çæ‚èo‚·ŠÖ”
-		 * @return std::optional<T> æ‚èo‚µ‚½—v‘fi‹ó‚Ìê‡‚Ístd::nulloptj
+		 * @brief è¦ç´ ã‚’ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰å–ã‚Šå‡ºã™é–¢æ•°
+		 * @return std::optional<T> å–ã‚Šå‡ºã—ãŸè¦ç´ ï¼ˆç©ºã®å ´åˆã¯std::nulloptï¼‰
 		 */
 		std::optional<T> pop() {
 			auto tail = m_tail.load(std::memory_order_relaxed);
@@ -50,8 +50,8 @@ namespace SFW
 			return v;
 		}
 		/**
-		 * @brief ƒoƒbƒtƒ@‚ª‹ó‚©‚Ç‚¤‚©‚ğŠm”F‚·‚éŠÖ”
-		 * @return bool ‹ó‚Ìê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+		 * @brief ãƒãƒƒãƒ•ã‚¡ãŒç©ºã‹ã©ã†ã‹ã‚’ç¢ºèªã™ã‚‹é–¢æ•°
+		 * @return bool ç©ºã®å ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 		 */
 		bool empty() const {
 			return m_tail.load(std::memory_order_acquire) ==

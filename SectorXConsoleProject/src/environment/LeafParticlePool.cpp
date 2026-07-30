@@ -1,4 +1,4 @@
-// LeafParticlePool.cpp
+ï»¿// LeafParticlePool.cpp
 #include "LeafParticlePool.h"
 #include "LeafService.h"
 
@@ -6,13 +6,13 @@
 #include <cassert>
 
 #ifdef _DEBUG
-// ƒfƒoƒbƒO—p: AliveCount ‚ğCPU‚Å“Ç‚ñ‚ÅŠm”F‚·‚é‹@”\‚ğ—LŒø‰»i•K—v‚È‚çj
+// ãƒ‡ãƒãƒƒã‚°ç”¨: AliveCount ã‚’CPUã§èª­ã‚“ã§ç¢ºèªã™ã‚‹æ©Ÿèƒ½ã‚’æœ‰åŠ¹åŒ–ï¼ˆå¿…è¦ãªã‚‰ï¼‰
 #define DEBUG_READ_ALIVE_COUNT 0
 #endif
 
 #if DEBUG_READ_ALIVE_COUNT
 
-// 4ƒoƒCƒgiuintj‚ğCPU‚Å“Ç‚Ş‚½‚ß‚Ì staging
+// 4ãƒã‚¤ãƒˆï¼ˆuintï¼‰ã‚’CPUã§èª­ã‚€ãŸã‚ã® staging
 Microsoft::WRL::ComPtr<ID3D11Buffer> gLeafAliveCountReadback;
 
 static void CreateLeafReadbackBuffer(ID3D11Device* dev)
@@ -43,7 +43,7 @@ static uint32_t ReadLeafAliveCount(ID3D11DeviceContext* ctx, ID3D11Buffer* src, 
 #endif // DEBUG_READ_ALIVE_COUNT
 
 #ifdef _DEBUG
-// Firefly ‚Æ“¯‚¶ƒXƒ^ƒCƒ‹‚ÌƒfƒoƒbƒOƒXƒ‰ƒCƒ_[—pƒ}ƒNƒi–¼‘O‚¾‚¯ Leaf ‚É•ÏXj
+// Firefly ã¨åŒã˜ã‚¹ã‚¿ã‚¤ãƒ«ã®ãƒ‡ãƒãƒƒã‚°ã‚¹ãƒ©ã‚¤ãƒ€ãƒ¼ç”¨ãƒã‚¯ãƒ­ï¼ˆåå‰ã ã‘ Leaf ã«å¤‰æ›´ï¼‰
 #define BIND_DEBUG_LEAF_PARAM_FLOAT(var, min, max, speed) \
     REGISTER_DEBUG_SLIDER_FLOAT("Leaf", #var, m_cpuUpdateParam.var, min, max, speed, [&](float value) { \
         m_isUpdateParamDirty = true; \
@@ -70,7 +70,7 @@ void LeafParticlePool::Create(ID3D11Device* dev)
 		dev,
 		sizeof(uint32_t),
 		MaxParticles,
-		false, // SRV•s—v
+		false, // SRVä¸è¦
 		true,  // UAV
 		D3D11_BUFFER_UAV_FLAG_APPEND,
 		D3D11_USAGE_DEFAULT,
@@ -105,33 +105,33 @@ void LeafParticlePool::Create(ID3D11Device* dev)
 		dev,
 		sizeof(uint32_t),
 		MaxVolumeSlots,
-		false, // SRV•s—viUpdateCS ‚¾‚¯‚ÅOK‚È‚çj
+		false, // SRVä¸è¦ï¼ˆUpdateCS ã ã‘ã§OKãªã‚‰ï¼‰
 		true,  // UAV
 		0,
 		D3D11_USAGE_DEFAULT,
 		0
 	);
 
-	// AliveCountRaw: 4 bytesi1 uintj
+	// AliveCountRaw: 4 bytesï¼ˆ1 uintï¼‰
 	m_aliveCountRaw = CreateRawBufferSRVUAV(
 		dev,
 		4,
 		D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS,
 		true,   // SRV
-		false   // UAV ‚Í•s—v
+		false   // UAV ã¯ä¸è¦
 	);
 
-	// DrawArgsRaw: 16 bytesi4 uintj+ DRAWINDIRECT
+	// DrawArgsRaw: 16 bytesï¼ˆ4 uintï¼‰+ DRAWINDIRECT
 	m_drawArgsRaw = CreateRawBufferSRVUAV(
 		dev,
 		16,
 		D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS |
 		D3D11_RESOURCE_MISC_DRAWINDIRECT_ARGS,
-		false,  // SRV•s—v
+		false,  // SRVä¸è¦
 		true    // UAV
 	);
 
-	// ’nŒ`HeightMap—pƒTƒ“ƒvƒ‰[iFirefly ‚Æ“¯‚¶j
+	// åœ°å½¢HeightMapç”¨ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ï¼ˆFirefly ã¨åŒã˜ï¼‰
 	m_linearSampler = CreateSamplerState(
 		dev,
 		D3D11_FILTER_MIN_MAG_MIP_LINEAR,
@@ -148,7 +148,7 @@ void LeafParticlePool::Create(ID3D11Device* dev)
 		D3D11_TEXTURE_ADDRESS_CLAMP
 	);
 
-	// UpdateParam ‚ÌCB
+	// UpdateParam ã®CB
 	D3D11_BUFFER_DESC desc{};
 	desc.ByteWidth = sizeof(LeafUpdateParam);
 	desc.Usage = D3D11_USAGE_DYNAMIC;
@@ -156,7 +156,7 @@ void LeafParticlePool::Create(ID3D11Device* dev)
 	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	desc.MiscFlags = 0;
 
-	// ‰Šú’l‚ğ m_cpuUpdateParam ‚©‚ç“ü‚ê‚Ä‚¨‚­
+	// åˆæœŸå€¤ã‚’ m_cpuUpdateParam ã‹ã‚‰å…¥ã‚Œã¦ãŠã
 	D3D11_SUBRESOURCE_DATA initData{};
 	initData.pSysMem = &m_cpuUpdateParam;
 
@@ -180,7 +180,7 @@ void LeafParticlePool::Create(ID3D11Device* dev)
 	float gGroundFollowD = 1.2f; // e.g. 1.2   (y velocity damping)
 	 */
 
-	 // Firefly ‚Æ“¯‚¶‚æ‚¤‚É GUI ‚©‚çƒpƒ‰ƒ[ƒ^‚ğ‚¢‚¶‚éê‡
+	 // Firefly ã¨åŒã˜ã‚ˆã†ã« GUI ã‹ã‚‰ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ã„ã˜ã‚‹å ´åˆ
 	BIND_DEBUG_LEAF_PARAM_FLOAT(gKillRadiusScale, 1.0f, 10.0f, 0.01f);
 	BIND_DEBUG_LEAF_PARAM_FLOAT(gDamping, 0.8f, 0.999f, 0.001f);
 	BIND_DEBUG_LEAF_PARAM_FLOAT(gMaxSpeed, 0.1f, 40.0f, 0.1f);
@@ -200,21 +200,21 @@ void LeafParticlePool::InitFreeList(
 	ID3D11Buffer* initCB,
 	ID3D11ComputeShader* initCS)
 {
-	// FreeList ‚Ì counter ‚ğ 0 ‚É‚µ‚Ä‚©‚ç initCS ‚Å Append(i) ‚·‚é
+	// FreeList ã® counter ã‚’ 0 ã«ã—ã¦ã‹ã‚‰ initCS ã§ Append(i) ã™ã‚‹
 	ID3D11UnorderedAccessView* uavs[1] = { m_free.uav.Get() };
 	UINT initialCounts[1] = { 0 }; // counter reset
 	ctx->CSSetUnorderedAccessViews(0, 1, uavs, initialCounts);
 
 	ctx->CSSetShader(initCS, nullptr, 0);
 
-	// SpawnCB ‚ğg‚¢‰ñ‚µ‚Ä‚àOKi’†g‚ÍƒCƒ“ƒfƒbƒNƒX‰Šú‰»—pj
+	// SpawnCB ã‚’ä½¿ã„å›ã—ã¦ã‚‚OKï¼ˆä¸­èº«ã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹åˆæœŸåŒ–ç”¨ï¼‰
 	ctx->CSSetConstantBuffers(0, 1, &initCB);
 
 	const uint32_t threads = 256;
 	uint32_t groups = (MaxParticles + threads - 1) / threads;
 	ctx->Dispatch(groups, 1, 1);
 
-	// UAV‰ğœ
+	// UAVè§£é™¤
 	ID3D11UnorderedAccessView* nullUAV[1] = { nullptr };
 	UINT dummy[1] = { 0 };
 	ctx->CSSetUnorderedAccessViews(0, 1, nullUAV, dummy);
@@ -243,12 +243,12 @@ void LeafParticlePool::Spawn(
 	uint32_t activeVolumeCount)
 {
 	// -----------------------------
-	// (0) g‘‚«‚İæh AlivePong ‚ğ 0 ƒŠƒZƒbƒg
+	// (0) â€œæ›¸ãè¾¼ã¿å…ˆâ€ AlivePong ã‚’ 0 ãƒªã‚»ãƒƒãƒˆ
 	// -----------------------------
 	{
 		ID3D11UnorderedAccessView* uav = m_alivePong.uav.Get();
 		UINT initCount = 0;
-		// slot‚Í‚Ç‚±‚Å‚àOKB‚±‚±‚Å‚Í u1 ‘Š“–‚ÌêŠ‚Åˆê’U“–‚Ä‚ÄƒŠƒZƒbƒg‚·‚é
+		// slotã¯ã©ã“ã§ã‚‚OKã€‚ã“ã“ã§ã¯ u1 ç›¸å½“ã®å ´æ‰€ã§ä¸€æ—¦å½“ã¦ã¦ãƒªã‚»ãƒƒãƒˆã™ã‚‹
 		ctx->CSSetUnorderedAccessViews(1, 1, &uav, &initCount);
 	}
 
@@ -278,25 +278,25 @@ void LeafParticlePool::Spawn(
 		};
 		ctx->CSSetConstantBuffers(0, _countof(cbuffers), cbuffers);
 		ctx->CSSetShader(clumpCS, nullptr, 0);
-		uint32_t totalThreads = activeVolumeCount * LeafService::ClumpsPerVolume; // Spawn ‚Æ“¯‚¶
+		uint32_t totalThreads = activeVolumeCount * LeafService::ClumpsPerVolume; // Spawn ã¨åŒã˜
 		uint32_t groups = (totalThreads + 256 - 1) / 256;             // ClumpCS: [numthreads(64,1,1)]
 		if (groups > 0)
 			ctx->Dispatch(groups, 1, 1);
 
-		// UAV‰ğœ
+		// UAVè§£é™¤
 		UINT dummy[] = { 0 };
 		ID3D11UnorderedAccessView* nullUAV[] = { nullptr };
 		ctx->CSSetUnorderedAccessViews(0, 1, nullUAV, dummy);
 	}
 
 	// -----------------------------
-	// (1) gAlivePingi‘OƒtƒŒ[ƒ€¶‘¶jh ‚Ì count ‚ğæ‚é
-	// ¦ Spawn ‚Å‚Í Ping ‚ğG‚ç‚È‚¢i‚±‚±‚ªd—vj
+	// (1) â€œAlivePingï¼ˆå‰ãƒ•ãƒ¬ãƒ¼ãƒ ç”Ÿå­˜ï¼‰â€ ã® count ã‚’å–ã‚‹
+	// â€» Spawn ã§ã¯ Ping ã‚’è§¦ã‚‰ãªã„ï¼ˆã“ã“ãŒé‡è¦ï¼‰
 	// -----------------------------
 	ctx->CopyStructureCount(m_aliveCountRaw.buf.Get(), 0, m_alivePing.uav.Get());
 
 	// -----------------------------
-	// (2) Spawn: AlivePong ‚É AppendiV‹K¶¬j
+	// (2) Spawn: AlivePong ã« Appendï¼ˆæ–°è¦ç”Ÿæˆï¼‰
 	// -----------------------------
 	{
 		ID3D11ShaderResourceView* srvs[] =
@@ -317,11 +317,11 @@ void LeafParticlePool::Spawn(
 		ID3D11UnorderedAccessView* uavs[4] =
 		{
 			m_particles.uav.Get(),     // u0
-			m_alivePong.uav.Get(),     // u1 (Append)  © Pong‚Ö
+			m_alivePong.uav.Get(),     // u1 (Append)  â† Pongã¸
 			m_free.uav.Get(),          // u2 (Consume)
 			m_volumeCount.uav.Get(),   // u3
 		};
-		// Pong ‚Í‚³‚Á‚«ƒŠƒZƒbƒgÏ‚İ‚¾‚ªA‚±‚±‚ÅŠmÀ‚É 0 ‚ğw’è‚µ‚Ä‚àOK
+		// Pong ã¯ã•ã£ããƒªã‚»ãƒƒãƒˆæ¸ˆã¿ã ãŒã€ã“ã“ã§ç¢ºå®Ÿã« 0 ã‚’æŒ‡å®šã—ã¦ã‚‚OK
 		UINT initialCounts[4] = { (UINT)-1, 0, (UINT)-1, (UINT)-1 };
 		ctx->CSSetUnorderedAccessViews(0, 4, uavs, initialCounts);
 
@@ -337,7 +337,7 @@ void LeafParticlePool::Spawn(
 
 		ctx->CSSetShader(spawnCS, nullptr, 0);
 
-		uint32_t totalThreads = activeVolumeCount * MaxSpawnPerVol; // CB ‚Æˆê’v‚³‚¹‚é
+		uint32_t totalThreads = activeVolumeCount * MaxSpawnPerVol; // CB ã¨ä¸€è‡´ã•ã›ã‚‹
 		uint32_t groups = (totalThreads + 64 - 1) / 64;             // SpawnCS: [numthreads(64,1,1)]
 		if (groups > 0)
 			ctx->Dispatch(groups, 1, 1);
@@ -351,7 +351,7 @@ void LeafParticlePool::Spawn(
 #endif
 
 	// -----------------------------
-	// (3) Update: AlivePing(SRV) ¨ AlivePong(Append)
+	// (3) Update: AlivePing(SRV) â†’ AlivePong(Append)
 	// -----------------------------
 	{
 		// t0 = volumeSRV, t1 = alivePingSRV, t2 = aliveCountRawSRV, t3 = heightMapSRV
@@ -374,15 +374,15 @@ void LeafParticlePool::Spawn(
 		ID3D11UnorderedAccessView* updateUavs[] =
 		{
 			m_particles.uav.Get(),   // u0
-			m_alivePong.uav.Get(),   // u1 (Append)  ¦‚±‚±‚Í -1 ‚Å•Ûi0‚É‚µ‚È‚¢j
-			m_free.uav.Get(),        // u2 (Append‚Å•Ô‹p)
+			m_alivePong.uav.Get(),   // u1 (Append)  â€»ã“ã“ã¯ -1 ã§ä¿æŒï¼ˆ0ã«ã—ãªã„ï¼‰
+			m_free.uav.Get(),        // u2 (Appendã§è¿”å´)
 			m_volumeCount.uav.Get(),  // u3
 		};
-		// Pong‚ÍSpawn‚Å0ƒŠƒZƒbƒgÏ‚İ{Spawn‚ªŠù‚ÉAppend‚µ‚½‚Ì‚ÅA‚±‚±‚Å0‚É‚·‚é‚ÆSpawn•ª‚ªÁ‚¦‚éB
+		// Pongã¯Spawnã§0ãƒªã‚»ãƒƒãƒˆæ¸ˆã¿ï¼‹SpawnãŒæ—¢ã«Appendã—ãŸã®ã§ã€ã“ã“ã§0ã«ã™ã‚‹ã¨Spawnåˆ†ãŒæ¶ˆãˆã‚‹ã€‚
 		UINT updateInitialCounts[_countof(updateUavs)] = { (UINT)-1,(UINT)-1 ,(UINT)-1 ,(UINT)-1 };
 		ctx->CSSetUnorderedAccessViews(0, _countof(updateUavs), updateUavs, updateInitialCounts);
 
-		// UpdateParamCB XVidirty ‚Ì‚Æ‚«‚¾‚¯j
+		// UpdateParamCB æ›´æ–°ï¼ˆdirty ã®ã¨ãã ã‘ï¼‰
 		if (m_isUpdateParamDirty)
 		{
 			D3D11_MAPPED_SUBRESOURCE ms{};
@@ -397,7 +397,7 @@ void LeafParticlePool::Spawn(
 
 		ID3D11Buffer* cbBuffers[] =
 		{
-			cbUpdateData,           // b0: ƒtƒŒ[ƒ€‹¤’Ê UpdateCB
+			cbUpdateData,           // b0: ãƒ•ãƒ¬ãƒ¼ãƒ å…±é€š UpdateCB
 			cbTerrain,              // b1: TerrainCB
 			cbWind,                  // b2: WindCB
 			m_cbUpdateParam.Get(), // b3: LeafUpdateParam,
@@ -407,10 +407,10 @@ void LeafParticlePool::Spawn(
 
 		ctx->CSSetShader(updateCS, nullptr, 0);
 
-		// AlivePing ‚Ì”‚¾‚¯ UpdateCS ‚ğ‰ñ‚·iAliveCountRaw ‚É‘OƒtƒŒ[ƒ€‚Ì”‚ª“ü‚Á‚Ä‚¢‚éj
-		// ¦ UpdateCS ‘¤‚Å DispatchCount ‚ğg‚¤À‘•‚É‚µ‚Ä‚àOK
-		// ‚±‚±‚Å‚Í“K“–‚ÉuMaxParticles ‘O’ñv‚Å groups ‚ğŒˆ‚ß‚Ä‚à—Ç‚¢
-		uint32_t groups = (MaxParticles + 256 - 1) / 256; // [numthreads(256,1,1)] ‘O’ñ
+		// AlivePing ã®æ•°ã ã‘ UpdateCS ã‚’å›ã™ï¼ˆAliveCountRaw ã«å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ•°ãŒå…¥ã£ã¦ã„ã‚‹ï¼‰
+		// â€» UpdateCS å´ã§ DispatchCount ã‚’ä½¿ã†å®Ÿè£…ã«ã—ã¦ã‚‚OK
+		// ã“ã“ã§ã¯é©å½“ã«ã€ŒMaxParticles å‰æã€ã§ groups ã‚’æ±ºã‚ã¦ã‚‚è‰¯ã„
+		uint32_t groups = (MaxParticles + 256 - 1) / 256; // [numthreads(256,1,1)] å‰æ
 		ctx->Dispatch(groups, 1, 1);
 
 		// unbind
@@ -423,12 +423,12 @@ void LeafParticlePool::Spawn(
 	}
 
 	// -----------------------------
-	// (4) Ping/Pong ‚ğ swapFAlivePing ‚ª g¡ƒtƒŒ[ƒ€¶‘¶h ‚É‚È‚é
+	// (4) Ping/Pong ã‚’ swapï¼šAlivePing ãŒ â€œä»Šãƒ•ãƒ¬ãƒ¼ãƒ ç”Ÿå­˜â€ ã«ãªã‚‹
 	// -----------------------------
 	std::swap(m_alivePing, m_alivePong);
 
 	// -----------------------------
-	// (5) •`‰æ—p‚É AlivePing ‚Ì count ‚ğæ‚èAArgsCS ‚Å DrawArgs ‚ğXV
+	// (5) æç”»ç”¨ã« AlivePing ã® count ã‚’å–ã‚Šã€ArgsCS ã§ DrawArgs ã‚’æ›´æ–°
 	// -----------------------------
 	ctx->CopyStructureCount(m_aliveCountRaw.buf.Get(), 0, m_alivePing.uav.Get());
 
@@ -463,7 +463,7 @@ void LeafParticlePool::Draw(
 	ID3D11PixelShader* ps)
 {
 	// 6) Draw: Billboard
-	// IA: ’¸“_ƒoƒbƒtƒ@–³‚µinulljAIndex–³‚µ
+	// IA: é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ç„¡ã—ï¼ˆnullï¼‰ã€Indexç„¡ã—
 	ctx->IASetInputLayout(nullptr);
 	ctx->IASetVertexBuffers(0, 0, nullptr, nullptr, nullptr);
 	ctx->IASetIndexBuffer(nullptr, DXGI_FORMAT_UNKNOWN, 0);
@@ -489,7 +489,7 @@ void LeafParticlePool::Draw(
 
 	ctx->DrawInstancedIndirect(m_drawArgsRaw.buf.Get(), 0);
 
-	// VS SRV unbindiŸ‚ÌƒpƒX‚Å‹£‡‚µ‚É‚­‚­‚·‚éj
+	// VS SRV unbindï¼ˆæ¬¡ã®ãƒ‘ã‚¹ã§ç«¶åˆã—ã«ããã™ã‚‹ï¼‰
 	{
 		ID3D11ShaderResourceView* nullVsSrvs[3] = { nullptr, nullptr, nullptr };
 		ctx->VSSetShaderResources(0, 3, nullVsSrvs);

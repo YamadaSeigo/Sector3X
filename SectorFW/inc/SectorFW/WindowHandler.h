@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   WindowHandler.h
- * @brief  ƒEƒBƒ“ƒhƒE‚ğŠÇ—‚·‚é
+ * @brief  ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ç®¡ç†ã™ã‚‹
  * @author seigo_t03b63m
  * @date   May 2025
  *********************************************************************/
@@ -9,7 +9,7 @@
 
 #ifdef _WIN32
 
-#define WIN32_LEAN_AND_MEAN    // Windows ƒwƒbƒ_[‚©‚ç‚Ù‚Æ‚ñ‚Çg—p‚³‚ê‚Ä‚¢‚È‚¢•”•ª‚ğœŠO‚·‚é
+#define WIN32_LEAN_AND_MEAN    // Windows ãƒ˜ãƒƒãƒ€ãƒ¼ã‹ã‚‰ã»ã¨ã‚“ã©ä½¿ç”¨ã•ã‚Œã¦ã„ãªã„éƒ¨åˆ†ã‚’é™¤å¤–ã™ã‚‹
 #define NOMINMAX
 
 #include <windows.h>
@@ -23,21 +23,21 @@
 namespace SFW
 {
 	/**
-	 * @brief ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‰
+	 * @brief ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ©
 	 * @class WindowHandler
-	 * @detailss ƒEƒBƒ“ƒhƒEŠÇ—ƒNƒ‰ƒX(ƒ}ƒ‹ƒ`ƒEƒBƒ“ƒhƒE”ñ‘Î‰)
+	 * @detailss ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç®¡ç†ã‚¯ãƒ©ã‚¹(ãƒãƒ«ãƒã‚¦ã‚£ãƒ³ãƒ‰ã‚¦éå¯¾å¿œ)
 	 */
 	class WindowHandler final : NonCopyable
 	{
 	public:
 		/**
-		 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @detailss ƒEƒBƒ“ƒhƒE‚Ìì¬‚à“¯‚És‚¤
+		 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @detailss ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆã‚‚åŒæ™‚ã«è¡Œã†
 		 */
 		WindowHandler() = delete;
 		/**
-		 * @brief ƒfƒXƒgƒ‰ƒNƒ^
-		 * @detailss ƒEƒBƒ“ƒhƒE‚Ì”jŠü
+		 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @detailss ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç ´æ£„
 		 */
 		~WindowHandler() = default;
 
@@ -45,28 +45,28 @@ namespace SFW
 
 #ifdef _UNICODE
 		/**
-		 * @brief ƒEƒBƒ“ƒhƒE‚Ìì¬(ƒRƒ“ƒ\[ƒ‹ƒAƒvƒŠƒP[ƒVƒ‡ƒ“AUnicode)
+		 * @brief ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆ(ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã€Unicode)
 		 */
 		static void Create(const TCHAR* windowTitle, uint32_t width, uint32_t height)
 #else  // !_UNICODE
 		/**
-		 * @brief ƒEƒBƒ“ƒhƒE‚Ìì¬(ƒRƒ“ƒ\[ƒ‹ƒAƒvƒŠƒP[ƒVƒ‡ƒ“AANSI)
+		 * @brief ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆ(ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã€ANSI)
 		 */
 		static void Create(const char* windowTitle, uint32_t width, uint32_t height)
 #endif // _UNICODE
 		{
-			// ƒEƒBƒ“ƒhƒE‚ªì¬‚³‚ê‚Ä‚¢‚½‚çA‰½‚à‚µ‚È‚¢
+			// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒä½œæˆã•ã‚Œã¦ã„ãŸã‚‰ã€ä½•ã‚‚ã—ãªã„
 			if (m_isCreated) return;
 
-			// ƒEƒBƒ“ƒhƒE‚ªì¬‚³‚ê‚½ƒtƒ‰ƒO‚ğ—§‚Ä‚é
+			// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒä½œæˆã•ã‚ŒãŸãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 			m_isCreated = true;
 
 #ifdef _DEBUG
-			//ƒƒ‚ƒŠƒŠ[ƒNŒŸ’m
+			//ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯æ¤œçŸ¥
 			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif // _DEBUG
 
-			// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚Ìİ’è
+			// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®è¨­å®š
 			WNDCLASSEX wc = {
 				sizeof(WNDCLASSEX),
 				CS_CLASSDC,
@@ -83,9 +83,9 @@ namespace SFW
 
 			RegisterClassEx(&wc);
 
-			m_hInstance = wc.hInstance; // ƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹‚ğ•Û‘¶
+			m_hInstance = wc.hInstance; // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«ã‚’ä¿å­˜
 
-			// ƒEƒBƒ“ƒhƒE‚Ìì¬
+			// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆ
 			m_hWnd = CreateWindow(
 				wc.lpszClassName,
 				windowTitle,
@@ -109,35 +109,35 @@ namespace SFW
 
 #ifdef _UNICODE
 		/**
-		 * @brief ƒEƒBƒ“ƒhƒE‚Ìì¬(ƒEƒBƒ“ƒhƒEƒAƒvƒŠƒP[ƒVƒ‡ƒ“AUnicode)
-		 * @param hInstance ƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹
-		 * @param nCmdShow •\¦ó‘Ô
+		 * @brief ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆ(ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã€Unicode)
+		 * @param hInstance ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«
+		 * @param nCmdShow è¡¨ç¤ºçŠ¶æ…‹
 		 */
 		static void Create(HINSTANCE hInstance, int nCmdShow, const TCHAR* windowTitle, uint32_t width, uint32_t height)
 #else
 		/**
-		 * @brief ƒEƒBƒ“ƒhƒE‚Ìì¬(ƒEƒBƒ“ƒhƒEƒAƒvƒŠƒP[ƒVƒ‡ƒ“AANSI)
-		 * @param hInstance ƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹
-		 * @param nCmdShow •\¦ó‘Ô
+		 * @brief ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆ(ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã€ANSI)
+		 * @param hInstance ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«
+		 * @param nCmdShow è¡¨ç¤ºçŠ¶æ…‹
 		 */
 		static void Create(HINSTANCE hInstance, int nCmdShow, const char* windowTitle, uint32_t width, uint32_t height)
 #endif // _UNICODE
 		{
-			// ƒEƒBƒ“ƒhƒE‚ªì¬‚³‚ê‚Ä‚¢‚½‚çA‰½‚à‚µ‚È‚¢
+			// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒä½œæˆã•ã‚Œã¦ã„ãŸã‚‰ã€ä½•ã‚‚ã—ãªã„
 			if (m_isCreated) return;
 
-			// ƒEƒBƒ“ƒhƒE‚ªì¬‚³‚ê‚½ƒtƒ‰ƒO‚ğ—§‚Ä‚é
+			// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒä½œæˆã•ã‚ŒãŸãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 			m_isCreated = true;
 
 #ifdef _DEBUG
-			//ƒRƒ“ƒ\[ƒ‹‰æ–Ê‹N“®
+			//ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ç”»é¢èµ·å‹•
 			CreateConsoleWindow();
 
-			//ƒƒ‚ƒŠƒŠ[ƒNŒŸ’m
+			//ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯æ¤œçŸ¥
 			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif // _DEBUG
 
-			// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒXî•ñ‚ğ‚Ü‚Æ‚ß‚é
+			// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹æƒ…å ±ã‚’ã¾ã¨ã‚ã‚‹
 			WNDCLASSEX wc;
 			wc.cbSize = sizeof(WNDCLASSEX);
 			wc.style = CS_CLASSDC;
@@ -154,24 +154,24 @@ namespace SFW
 
 			RegisterClassEx(&wc);
 
-			m_hInstance = hInstance; // ƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹‚ğ•Û‘¶
+			m_hInstance = hInstance; // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«ã‚’ä¿å­˜
 
-			// ƒEƒBƒ“ƒhƒE‚Ìî•ñ‚ğ‚Ü‚Æ‚ß‚é
+			// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®æƒ…å ±ã‚’ã¾ã¨ã‚ã‚‹
 			m_hWnd = CreateWindowEx(
-				0, // Extended styles,// Šg’£ƒEƒBƒ“ƒhƒEƒXƒ^ƒCƒ‹
-				_T("MAIN_WINDOW"),							// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚Ì–¼‘O
-				windowTitle,							// ƒEƒBƒ“ƒhƒE‚Ì–¼‘O
-				WS_OVERLAPPEDWINDOW,					// ƒEƒBƒ“ƒhƒEƒXƒ^ƒCƒ‹
-				CW_USEDEFAULT,							// ƒEƒBƒ“ƒhƒE‚Ì¶ã‚wÀ•W
-				CW_USEDEFAULT,							// ƒEƒBƒ“ƒhƒE‚Ì¶ã‚xÀ•W
-				width,									// ƒEƒBƒ“ƒhƒE‚Ì•
-				height,									// ƒEƒBƒ“ƒhƒE‚Ì‚‚³
-				NULL,									// eƒEƒBƒ“ƒhƒE‚Ìƒnƒ“ƒhƒ‹
-				NULL,									// ƒƒjƒ…[ƒnƒ“ƒhƒ‹‚Ü‚½‚ÍqƒEƒBƒ“ƒhƒEID
-				hInstance,								// ƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹
-				NULL);									// ƒEƒBƒ“ƒhƒEì¬ƒf[ƒ^
+				0, // Extended styles,// æ‹¡å¼µã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¹ã‚¿ã‚¤ãƒ«
+				_T("MAIN_WINDOW"),							// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®åå‰
+				windowTitle,							// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®åå‰
+				WS_OVERLAPPEDWINDOW,					// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¹ã‚¿ã‚¤ãƒ«
+				CW_USEDEFAULT,							// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å·¦ä¸Šï¼¸åº§æ¨™
+				CW_USEDEFAULT,							// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å·¦ä¸Šï¼¹åº§æ¨™
+				width,									// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å¹…
+				height,									// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®é«˜ã•
+				NULL,									// è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒãƒ³ãƒ‰ãƒ«
+				NULL,									// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ³ãƒ‰ãƒ«ã¾ãŸã¯å­ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ID
+				hInstance,								// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«
+				NULL);									// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä½œæˆãƒ‡ãƒ¼ã‚¿
 
-			//ƒEƒBƒ“ƒhƒE‚ÌƒTƒCƒY‚ğC³
+			//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚ºã‚’ä¿®æ­£
 			RECT rc1, rc2;
 			GetWindowRect(m_hWnd, &rc1);
 			GetClientRect(m_hWnd, &rc2);
@@ -182,9 +182,9 @@ namespace SFW
 			SetWindowPos(m_hWnd, NULL, 0, 0, sx, sy, (SWP_NOZORDER |
 				SWP_NOOWNERZORDER | SWP_NOMOVE));
 
-			// w’è‚³‚ê‚½ƒEƒBƒ“ƒhƒE‚Ì•\¦ó‘Ô‚ğİ’è(ƒEƒBƒ“ƒhƒE‚ğ•\¦)
+			// æŒ‡å®šã•ã‚ŒãŸã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¡¨ç¤ºçŠ¶æ…‹ã‚’è¨­å®š(ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è¡¨ç¤º)
 			ShowWindow(m_hWnd, nCmdShow);
-			// ƒEƒBƒ“ƒhƒE‚Ìó‘Ô‚ğ’¼‚¿‚É”½‰f(ƒEƒBƒ“ƒhƒE‚ÌƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚ğXV)
+			// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®çŠ¶æ…‹ã‚’ç›´ã¡ã«åæ˜ (ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã‚’æ›´æ–°)
 			UpdateWindow(m_hWnd);
 
 			return;
@@ -192,19 +192,19 @@ namespace SFW
 
 #endif // !_CONSOLE
 		/**
-		 * @brief ƒEƒBƒ“ƒhƒE‚ÌƒƒbƒZ[ƒWƒ‹[ƒv
-		 * @param pLoop ƒ‹[ƒvˆ—ŠÖ”ƒ|ƒCƒ“ƒ^
-		 * @details ƒƒbƒZ[ƒW‚ª–³‚¯‚ê‚ÎAƒ‹[ƒvˆ—‚ğÀs
+		 * @brief ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—
+		 * @param pLoop ãƒ«ãƒ¼ãƒ—å‡¦ç†é–¢æ•°ãƒã‚¤ãƒ³ã‚¿
+		 * @details ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒç„¡ã‘ã‚Œã°ã€ãƒ«ãƒ¼ãƒ—å‡¦ç†ã‚’å®Ÿè¡Œ
 		 */
 		static void Run(void(*pLoop)());
 
 		/**
-		 * @brief ƒEƒBƒ“ƒhƒE‚Ì”jŠü
-		 * @detailss ƒEƒBƒ“ƒhƒE‚Ì”jŠü
+		 * @brief ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç ´æ£„
+		 * @detailss ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç ´æ£„
 		 */
 		static int Destroy()
 		{
-			// ƒEƒBƒ“ƒhƒE‚ªì¬‚³‚ê‚Ä‚¢‚È‚¯‚ê‚ÎA‰½‚à‚µ‚È‚¢
+			// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒä½œæˆã•ã‚Œã¦ã„ãªã‘ã‚Œã°ã€ä½•ã‚‚ã—ãªã„
 			if (!m_isCreated) return 0;
 
 			if (m_mouseInput)
@@ -212,7 +212,7 @@ namespace SFW
 
 #ifndef CONSOLE_TRUE
 #ifdef _DEBUG
-			//ƒRƒ“ƒ\[ƒ‹‰æ–Ê•Â‚¶‚é
+			//ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ç”»é¢é–‰ã˜ã‚‹
 			FreeConsole();
 #endif
 
@@ -236,31 +236,31 @@ namespace SFW
 
 	private:
 		/**
-		 * @brief ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ
-		 * @param hwnd ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-		 * @param uMsg ƒƒbƒZ[ƒWID
+		 * @brief ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£
+		 * @param hwnd ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+		 * @param uMsg ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ID
 		 * @param wParam WPARAM
 		 * @param lParam LPARAM
-		 * @return LRESULT ƒƒbƒZ[ƒW‚ÌŒ‹‰Ê
+		 * @return LRESULT ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®çµæœ
 		 */
 		static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 		/**
-		 * @brief ƒRƒ“ƒ\[ƒ‹ƒEƒBƒ“ƒhƒE‚Ìì¬
-		 * @detailss ƒRƒ“ƒ\[ƒ‹ƒEƒBƒ“ƒhƒE‚ğì¬‚·‚é
+		 * @brief ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆ
+		 * @detailss ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ä½œæˆã™ã‚‹
 		 */
 		static void CreateConsoleWindow();
 	private:
-		// ƒEƒBƒ“ƒhƒE‚ªì¬‚³‚ê‚½‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒä½œæˆã•ã‚ŒãŸã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
 		static bool m_isCreated;
-		// ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
 		static HWND m_hWnd;
-		// ƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹
+		// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«
 		static HINSTANCE m_hInstance;
-		// ƒƒbƒZ[ƒW\‘¢‘Ì
+		// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æ§‹é€ ä½“
 		static MSG m_msg;
-		// ƒ}ƒEƒX“ü—Íƒnƒ“ƒhƒ‰
-		static Input::WinMouseInput* m_mouseInput; // ƒ}ƒEƒX“ü—Íƒnƒ“ƒhƒ‰
+		// ãƒã‚¦ã‚¹å…¥åŠ›ãƒãƒ³ãƒ‰ãƒ©
+		static Input::WinMouseInput* m_mouseInput; // ãƒã‚¦ã‚¹å…¥åŠ›ãƒãƒ³ãƒ‰ãƒ©
 	};
 }
 

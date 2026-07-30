@@ -1,4 +1,4 @@
-#include "DebugRenderType.h"
+ï»¿#include "DebugRenderType.h"
 #include "DeferredRenderingService.h"
 
 #include <SectorFW/Debug/UIBus.h>
@@ -29,7 +29,7 @@ const DebugRenderType debugRenderType = {};
 
 DebugRenderType::DebugRenderType()
 {
-	//‹­§“I‚ÉUI Bus‚ğŠJn‚µ‚Ä‚¨‚­
+	//å¼·åˆ¶çš„ã«UI Busã‚’é–‹å§‹ã—ã¦ãŠã
 	Debug::StartUIBus();
 
 	BIND_DEBUG_CHECKBOX("Show", "enabled", &isHit);

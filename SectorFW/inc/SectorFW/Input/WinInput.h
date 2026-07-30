@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   WinInput.h
- * @brief WindowsŒü‚¯‚Ì“ü—ÍƒfƒoƒCƒX‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief Windowså‘ã‘ã®å…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -17,7 +17,7 @@ namespace SFW
 	namespace Input
 	{
 		/**
-		 * @brief WindowsŒü‚¯‚Ì“ü—ÍƒfƒoƒCƒX
+		 * @brief Windowså‘ã‘ã®å…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹
 		 */
 		class WinInput : public InputDevice<WinInput> {
 			/**
@@ -181,14 +181,14 @@ namespace SFW
 
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param mouseInput ƒ}ƒEƒX“ü—ÍƒfƒoƒCƒX‚Ìƒ|ƒCƒ“ƒ^
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param mouseInput ãƒã‚¦ã‚¹å…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 			 */
 			explicit WinInput(WinMouseInput* mouseInput) noexcept
 				: mouseInput(mouseInput) {
 			}
 			/**
-			 * @brief “ü—Íó‘Ô‚ğXV‚·‚éŠÖ”
+			 * @brief å…¥åŠ›çŠ¶æ…‹ã‚’æ›´æ–°ã™ã‚‹é–¢æ•°
 			 */
 			void UpdateImpl() {
 				memcpy(oldKeyStates, keyStates, sizeof(keyStates));
@@ -199,64 +199,64 @@ namespace SFW
 				}
 			}
 			/**
-			 * @brief ƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©‚ğŠm”F‚·‚éŠÖ”
-			 * @param key Šm”F‚·‚éƒL[
-			 * @return bool ‰Ÿ‚³‚ê‚Ä‚¢‚éê‡‚ÍtrueA‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Ífalse
+			 * @brief ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹ã‚’ç¢ºèªã™ã‚‹é–¢æ•°
+			 * @param key ç¢ºèªã™ã‚‹ã‚­ãƒ¼
+			 * @return bool æŠ¼ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯trueã€æŠ¼ã•ã‚Œã¦ã„ãªã„å ´åˆã¯false
 			 */
 			bool IsKeyPressedImpl(Key key) const noexcept {
 				return keyStates[GetVKFromKey(key)] & 0x80;
 			}
 			/**
-			 * @brief ƒL[‚ª—£‚³‚ê‚½‚©‚ğŠm”F‚·‚éŠÖ”
-			 * @param key Šm”F‚·‚éƒL[
-			 * @return bool —£‚³‚ê‚½ê‡‚ÍtrueA—£‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Ífalse
+			 * @brief ã‚­ãƒ¼ãŒé›¢ã•ã‚ŒãŸã‹ã‚’ç¢ºèªã™ã‚‹é–¢æ•°
+			 * @param key ç¢ºèªã™ã‚‹ã‚­ãƒ¼
+			 * @return bool é›¢ã•ã‚ŒãŸå ´åˆã¯trueã€é›¢ã•ã‚Œã¦ã„ãªã„å ´åˆã¯false
 			 */
 			bool IsKeyReleasedImpl(Key key) const noexcept {
 				auto keyIndex = GetVKFromKey(key);
 				return !(keyStates[keyIndex] & 0x80) && (oldKeyStates[keyIndex] & 0x80);
 			}
 			/**
-			 * @brief ƒL[‚ªƒgƒŠƒK[‚³‚ê‚½‚©‚ğŠm”F‚·‚éŠÖ”
-			 * @param key Šm”F‚·‚éƒL[
-			 * @return bool ƒgƒŠƒK[‚³‚ê‚½ê‡‚ÍtrueAƒgƒŠƒK[‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Ífalse
+			 * @brief ã‚­ãƒ¼ãŒãƒˆãƒªã‚¬ãƒ¼ã•ã‚ŒãŸã‹ã‚’ç¢ºèªã™ã‚‹é–¢æ•°
+			 * @param key ç¢ºèªã™ã‚‹ã‚­ãƒ¼
+			 * @return bool ãƒˆãƒªã‚¬ãƒ¼ã•ã‚ŒãŸå ´åˆã¯trueã€ãƒˆãƒªã‚¬ãƒ¼ã•ã‚Œã¦ã„ãªã„å ´åˆã¯false
 			 */
 			bool IsKeyTriggerImpl(Key key) const noexcept {
 				auto keyIndex = GetVKFromKey(key);
 				return (keyStates[keyIndex] & 0x80) && !(oldKeyStates[keyIndex] & 0x80);
 			}
 			/**
-			 * @brief ¶ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©‚ğŠm”F‚·‚éŠÖ”
-			 * @return bool ‰Ÿ‚³‚ê‚Ä‚¢‚éê‡‚ÍtrueA‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Ífalse
+			 * @brief å·¦ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹ã‚’ç¢ºèªã™ã‚‹é–¢æ•°
+			 * @return bool æŠ¼ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯trueã€æŠ¼ã•ã‚Œã¦ã„ãªã„å ´åˆã¯false
 			 */
 			bool IsLButtonPressedImpl() const noexcept {
 				return mouseInput->IsLeftDown();
 			}
 			/**
-			 * @brief ‰Eƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©‚ğŠm”F‚·‚éŠÖ”
-			 * @return bool ‰Ÿ‚³‚ê‚Ä‚¢‚éê‡‚ÍtrueA‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Ífalse
+			 * @brief å³ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹ã‚’ç¢ºèªã™ã‚‹é–¢æ•°
+			 * @return bool æŠ¼ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯trueã€æŠ¼ã•ã‚Œã¦ã„ãªã„å ´åˆã¯false
 			 */
 			bool IsRButtonPressedImpl() const noexcept {
 				return mouseInput->IsRightDown();
 			}
 			/**
-			 * @brief ƒ~ƒhƒ‹ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©‚ğŠm”F‚·‚éŠÖ”
-			 * @return bool ‰Ÿ‚³‚ê‚Ä‚¢‚éê‡‚ÍtrueA‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Ífalse
+			 * @brief ãƒŸãƒ‰ãƒ«ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹ã‚’ç¢ºèªã™ã‚‹é–¢æ•°
+			 * @return bool æŠ¼ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯trueã€æŠ¼ã•ã‚Œã¦ã„ãªã„å ´åˆã¯false
 			 */
 			bool IsMouseCapturedImpl() const noexcept {
 				return mouseInput->IsCaptured();
 			}
 			/**
-			 * @brief ƒ}ƒEƒX‚ÌˆÚ“®—Ê‚ğæ“¾‚·‚éŠÖ”
-			 * @param outDx ƒ}ƒEƒX‚ÌˆÚ“®—ÊX
-			 * @param outDy@ƒ}ƒEƒX‚ÌˆÚ“®—ÊY
+			 * @brief ãƒã‚¦ã‚¹ã®ç§»å‹•é‡ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @param outDx ãƒã‚¦ã‚¹ã®ç§»å‹•é‡X
+			 * @param outDyã€€ãƒã‚¦ã‚¹ã®ç§»å‹•é‡Y
 			 */
 			void GetMouseDeltaImpl(long& outDx, long& outDy) const noexcept {
 				mouseInput->GetDelta(outDx, outDy);
 			}
 			/**
-			 * @brief ƒ}ƒEƒX‚ÌƒzƒC[ƒ‹‚Ì‰ñ“]—Ê‚ğæ“¾‚·‚éŠÖ”
-			 * @param outWheelV ƒ}ƒEƒX‚ÌƒzƒC[ƒ‹‚Ì‰ñ“]—Ê‚’¼
-			 * @param outWheelH ƒ}ƒEƒX‚ÌƒzƒC[ƒ‹‚Ì‰ñ“]—Ê…•½
+			 * @brief ãƒã‚¦ã‚¹ã®ãƒ›ã‚¤ãƒ¼ãƒ«ã®å›è»¢é‡ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @param outWheelV ãƒã‚¦ã‚¹ã®ãƒ›ã‚¤ãƒ¼ãƒ«ã®å›è»¢é‡å‚ç›´
+			 * @param outWheelH ãƒã‚¦ã‚¹ã®ãƒ›ã‚¤ãƒ¼ãƒ«ã®å›è»¢é‡æ°´å¹³
 			 */
 			void GetMouseWheelImpl(int& outWheelV, int& outWheelH) const noexcept {
 				mouseInput->GetMouseWheel(outWheelV, outWheelH);

@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   InputDevice.hpp
- * @brief “ü—ÍƒfƒoƒCƒX‚Ì’ŠÛƒNƒ‰ƒX‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief å…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã®æŠ½è±¡ã‚¯ãƒ©ã‚¹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -88,7 +88,7 @@ namespace SFW
 			Count
 		};
 		/**
-		 * @brief “ü—ÍƒfƒoƒCƒX‚Ì’ŠÛƒNƒ‰ƒXB”ñŠÂ‹«ˆË‘¶‚Ì‚½‚ß‚É’ŠÛ‰»BServiceLocator‚ÅŠÇ—‚³‚ê‚éB
+		 * @brief å…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã®æŠ½è±¡ã‚¯ãƒ©ã‚¹ã€‚éç’°å¢ƒä¾å­˜ã®ãŸã‚ã«æŠ½è±¡åŒ–ã€‚ServiceLocatorã§ç®¡ç†ã•ã‚Œã‚‹ã€‚
 		 */
 		template<typename Derived>
 		class InputDevice : public ECS::IUpdateService
@@ -97,69 +97,69 @@ namespace SFW
 
 		public:
 			/**
-			 * @brief ƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğæ“¾‚µ‚Ü‚·B
-			 * @param key ƒ`ƒFƒbƒN‚·‚éƒL[
-			 * @return bool ‰Ÿ‚³‚ê‚Ä‚¢‚éê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+			 * @brief ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @param key ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‚­ãƒ¼
+			 * @return bool æŠ¼ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 			 */
 			bool IsKeyPressed(Key key) const {
 				return static_cast<const Derived*>(this)->IsKeyPressedImpl(key);
 			}
 			/**
-			 * @brief ƒL[‚ª—£‚³‚ê‚½‚©‚Ç‚¤‚©‚ğæ“¾‚µ‚Ü‚·B
-			 * @param key ƒ`ƒFƒbƒN‚·‚éƒL[
-			 * @return bool —£‚³‚ê‚½ê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+			 * @brief ã‚­ãƒ¼ãŒé›¢ã•ã‚ŒãŸã‹ã©ã†ã‹ã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @param key ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‚­ãƒ¼
+			 * @return bool é›¢ã•ã‚ŒãŸå ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 			 */
 			bool IsKeyReleased(Key key) const {
 				return static_cast<const Derived*>(this)->IsKeyReleasedImpl(key);
 			}
 			/**
-			 * @brief ƒL[‚ªƒgƒŠƒK[‚³‚ê‚½‚©‚Ç‚¤‚©‚ğæ“¾‚µ‚Ü‚·B
-			 * @param key ƒ`ƒFƒbƒN‚·‚éƒL[
-			 * @return bool ƒgƒŠƒK[‚³‚ê‚½ê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+			 * @brief ã‚­ãƒ¼ãŒãƒˆãƒªã‚¬ãƒ¼ã•ã‚ŒãŸã‹ã©ã†ã‹ã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @param key ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‚­ãƒ¼
+			 * @return bool ãƒˆãƒªã‚¬ãƒ¼ã•ã‚ŒãŸå ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 			 */
 			bool IsKeyTrigger(Key key) const {
 				return static_cast<const Derived*>(this)->IsKeyTriggerImpl(key);
 			}
 			/**
-			 * @brief ¶ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğæ“¾‚µ‚Ü‚·B
-			 * @return bool ‰Ÿ‚³‚ê‚Ä‚¢‚éê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+			 * @brief å·¦ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @return bool æŠ¼ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 			 */
 			bool IsLButtonPressed() const {
 				return static_cast<const Derived*>(this)->IsLButtonPressedImpl();
 			}
 			/**
-			 * @brief ‰Eƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğæ“¾‚µ‚Ü‚·B
-			 * @return bool ‰Ÿ‚³‚ê‚Ä‚¢‚éê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+			 * @brief å³ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @return bool æŠ¼ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 			 */
 			bool IsRButtonPressed() const {
 				return static_cast<const Derived*>(this)->IsRButtonPressedImpl();
 			}
 			/**
-			 * @brief ƒ}ƒEƒX‚Ì“ü—Í‚ªƒLƒƒƒvƒ`ƒƒ‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğæ“¾‚µ‚Ü‚·B
-			 * @return bool ƒLƒƒƒvƒ`ƒƒ‚³‚ê‚Ä‚¢‚éê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+			 * @brief ãƒã‚¦ã‚¹ã®å…¥åŠ›ãŒã‚­ãƒ£ãƒ—ãƒãƒ£ã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @return bool ã‚­ãƒ£ãƒ—ãƒãƒ£ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 			 */
 			bool IsMouseCaptured() const {
 				return static_cast<const Derived*>(this)->IsMouseCapturedImpl();
 			}
 			/**
-			 * @brief ƒ}ƒEƒX‚Ì“ü—Í‚ğƒLƒƒƒvƒ`ƒƒ‚·‚é‚©‚Ç‚¤‚©‚ğİ’è‚µ‚Ü‚·B
-			 * @param captured ƒLƒƒƒvƒ`ƒƒ‚·‚éê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+			 * @brief ãƒã‚¦ã‚¹ã®å…¥åŠ›ã‚’ã‚­ãƒ£ãƒ—ãƒãƒ£ã™ã‚‹ã‹ã©ã†ã‹ã‚’è¨­å®šã—ã¾ã™ã€‚
+			 * @param captured ã‚­ãƒ£ãƒ—ãƒãƒ£ã™ã‚‹å ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 			 */
 			void SetMouseCaptured(bool captured) {
 				static_cast<Derived*>(this)->SetMouseCapturedImpl(captured);
 			}
 			/**
-			 * @brief ƒ}ƒEƒX‚ÌˆÊ’u‚ğæ“¾‚µ‚Ü‚·B
-			 * @param outDx ƒ}ƒEƒX‚ÌXÀ•W
-			 * @param outDy@ƒ}ƒEƒX‚ÌYÀ•W
+			 * @brief ãƒã‚¦ã‚¹ã®ä½ç½®ã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @param outDx ãƒã‚¦ã‚¹ã®Xåº§æ¨™
+			 * @param outDyã€€ãƒã‚¦ã‚¹ã®Yåº§æ¨™
 			 */
 			void GetMouseDelta(long& outDx, long& outDy) const noexcept {
 				static_cast<const Derived*>(this)->GetMouseDeltaImpl(outDx, outDy);
 			}
 			/**
-			 * @brief ƒ}ƒEƒXƒzƒC[ƒ‹‚Ìó‘Ô‚ğæ“¾‚µ‚Ü‚·B
-			 * @param outWheelV ‚’¼•ûŒü‚ÌƒzƒC[ƒ‹‚Ìó‘Ô
-			 * @param outWheelH …•½•ûŒü‚ÌƒzƒC[ƒ‹‚Ìó‘Ô
+			 * @brief ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ã®çŠ¶æ…‹ã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @param outWheelV å‚ç›´æ–¹å‘ã®ãƒ›ã‚¤ãƒ¼ãƒ«ã®çŠ¶æ…‹
+			 * @param outWheelH æ°´å¹³æ–¹å‘ã®ãƒ›ã‚¤ãƒ¼ãƒ«ã®çŠ¶æ…‹
 			 */
 			void GetMouseWheel(int& outWheelV, int& outWheelH) const noexcept {
 				static_cast<const Derived*>(this)->GetMouseWheelImpl(outWheelV, outWheelH);
@@ -170,7 +170,7 @@ namespace SFW
 			}
 		public:
 			STATIC_SERVICE_TAG
-				//GetKeystate‚ÍUIƒXƒŒƒbƒh(WndProc‚Æ“¯‚¶ƒƒCƒ“)‚ÅŒÄ‚Î‚È‚¢‚ÆŠëŒ¯‚È‚Ì‚Å”ñ“¯ŠúƒOƒ‹[ƒv
+				//GetKeystateã¯UIã‚¹ãƒ¬ãƒƒãƒ‰(WndProcã¨åŒã˜ãƒ¡ã‚¤ãƒ³)ã§å‘¼ã°ãªã„ã¨å±é™ºãªã®ã§éåŒæœŸã‚°ãƒ«ãƒ¼ãƒ—
 				DEFINE_UPDATESERVICE_GROUP(GROUP_SERIAL)
 		};
 	}

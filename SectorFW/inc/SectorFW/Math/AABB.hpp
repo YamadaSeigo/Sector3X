@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   AABB.hpp
- * @brief Axis-Aligned Bounding Box (AABB)‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief Axis-Aligned Bounding Box (AABB)ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   July 2025
  *********************************************************************/
@@ -8,7 +8,7 @@
 #pragma once
 
 #include <limits>
-#include "Vector.hpp" // Vec<T, N> ‚ğ’è‹`‚µ‚Ä‚¢‚éƒwƒbƒ_[
+#include "Vector.hpp" // Vec<T, N> ã‚’å®šç¾©ã—ã¦ã„ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼
 
 namespace SFW
 {
@@ -16,8 +16,8 @@ namespace SFW
 	{
 		template<typename T, typename VecT>
 		struct AABB {
-			VecT lb;  // Å¬“_
-			VecT ub;  // Å‘å“_
+			VecT lb;  // æœ€å°ç‚¹
+			VecT ub;  // æœ€å¤§ç‚¹
 
 			constexpr AABB() : lb(T(0)), ub(T(0)) {}
 			constexpr AABB(const VecT& lower_bound_, const VecT& upper_bound_) : lb(lower_bound_), ub(upper_bound_) {}
@@ -35,22 +35,22 @@ namespace SFW
 			constexpr AABB& operator/=(const T& s) noexcept { lb /= s; ub /= s; return *this; }
 			constexpr AABB& operator/=(const VecT& v) noexcept { for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) { lb[i] /= v[i]; ub[i] /= v[i]; } return *this; }
 
-			// •E‚‚³E‰œs‚«iƒtƒ‹ƒTƒCƒYj
+			// å¹…ãƒ»é«˜ã•ãƒ»å¥¥è¡Œãï¼ˆãƒ•ãƒ«ã‚µã‚¤ã‚ºï¼‰
 			constexpr VecT size() const noexcept {
 				return ub - lb;
 			}
 
-			// ’†S
+			// ä¸­å¿ƒ
 			constexpr VecT center() const noexcept {
 				return (lb + ub) * T(0.5);
 			}
 
-			// ”¼ƒTƒCƒYihalf-extentj
+			// åŠã‚µã‚¤ã‚ºï¼ˆhalf-extentï¼‰
 			constexpr VecT extent() const noexcept {
 				return (ub - lb) * T(0.5);
 			}
 
-			// “_‚ğ“à•ïH
+			// ç‚¹ã‚’å†…åŒ…ï¼Ÿ
 			constexpr bool contains(const VecT& point) const noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					if (point[i] < lb[i] || point[i] > ub[i]) return false;
@@ -58,7 +58,7 @@ namespace SFW
 				return true;
 			}
 
-			// Œğ·H
+			// äº¤å·®ï¼Ÿ
 			constexpr bool intersects(const AABB& other) const noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					if (ub[i] < other.lb[i] || lb[i] > other.ub[i]) return false;
@@ -66,7 +66,7 @@ namespace SFW
 				return true;
 			}
 
-			// “_‚ÅŠg’£
+			// ç‚¹ã§æ‹¡å¼µ
 			constexpr void expandToInclude(const VecT& point) noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					if (point[i] < lb[i]) lb[i] = point[i];
@@ -74,7 +74,7 @@ namespace SFW
 				}
 			}
 
-			// AABB‚ÅŠg’£
+			// AABBã§æ‹¡å¼µ
 			constexpr void expandToInclude(const AABB& other) noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					if (other.lb[i] < lb[i]) lb[i] = other.lb[i];
@@ -82,7 +82,7 @@ namespace SFW
 				}
 			}
 
-			//extent‚ğlimitˆÈ‰º‚Ék¬
+			//extentã‚’limitä»¥ä¸‹ã«ç¸®å°
 			constexpr void shrinkExtent(const T limit) noexcept {
 				const VecT ext = extent();
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
@@ -94,7 +94,7 @@ namespace SFW
 				}
 			}
 
-			// 2‚Â‚ÌAABB‚Ì˜aiŠOÚÅ¬AABBj‚ğ•Ô‚·ƒ†[ƒeƒBƒŠƒeƒB
+			// 2ã¤ã®AABBã®å’Œï¼ˆå¤–æ¥æœ€å°AABBï¼‰ã‚’è¿”ã™ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£
 			template<typename T, typename VecT>
 			constexpr static AABB<T, VecT> Union(const AABB<T, VecT>& a, const AABB<T, VecT>& b) noexcept {
 				AABB<T, VecT> out;
@@ -105,7 +105,7 @@ namespace SFW
 				return out;
 			}
 
-			// AABB‚ğ–³Œø‰»
+			// AABBã‚’ç„¡åŠ¹åŒ–
 			constexpr void invalidate() noexcept {
 				for (size_t i = 0; i < sizeof(VecT) / sizeof(T); ++i) {
 					lb[i] = (std::numeric_limits<T>::max)();
@@ -118,7 +118,7 @@ namespace SFW
 		using AABB3f = AABB<float, Vec3f>;
 
 		// ---------------------------------------------------------
-		// AABB “¯m‚ÌŒğ·
+		// AABB åŒå£«ã®äº¤å·®
 		// ---------------------------------------------------------
 		template<typename T>
 		static AABB<T, Vec3<T>> IntersectAABB(const AABB<T, Vec3<T>>& a, const AABB<T, Vec3<T>>& b) noexcept
@@ -134,7 +134,7 @@ namespace SFW
 
 			if (r.lb.x > r.ub.x || r.lb.y > r.ub.y || r.lb.z > r.ub.z)
 			{
-				// Œğ·‚È‚µ ¨ “K“–‚É a ‚ğ•Ô‚·‚©A‹óAABB‚É‚·‚é
+				// äº¤å·®ãªã— â†’ é©å½“ã« a ã‚’è¿”ã™ã‹ã€ç©ºAABBã«ã™ã‚‹
 				return a;
 			}
 			return r;

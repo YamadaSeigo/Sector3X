@@ -1,4 +1,4 @@
-// BodyIDWriteBackFromEventsSystem.hpp
+ï»¿// BodyIDWriteBackFromEventsSystem.hpp
 #pragma once
 #include <limits>
 
@@ -7,7 +7,7 @@
 #include <SectorFW/Physics/PhysicsService.h>
 #include <SectorFW/Core/SpatialChunkRegistryService.h>
 
-// PhysicsDevice ‚ª—­‚ß‚½uì¬Š®—¹ƒCƒxƒ“ƒgv‚¾‚¯‚ğƒhƒŒƒCƒ“‚µ‚Ä BodyID ‚ğ·‚µ‚ŞB
+// PhysicsDevice ãŒæºœã‚ãŸã€Œä½œæˆå®Œäº†ã‚¤ãƒ™ãƒ³ãƒˆã€ã ã‘ã‚’ãƒ‰ãƒ¬ã‚¤ãƒ³ã—ã¦ BodyID ã‚’å·®ã—è¾¼ã‚€ã€‚
 template<class Partition>
 class BodyIDWriteBackFromEventsSystem final : public ECS::ISystem<Partition> {
 public:
@@ -21,7 +21,7 @@ public:
 		for (const auto& ev : evs) {
 			ECS::EntityManager* entityMgr = nullptr;
 
-			// –³Œø‚ÈƒI[ƒi[‚ÍƒOƒ[ƒoƒ‹‚©‚çŒŸõ
+			// ç„¡åŠ¹ãªã‚ªãƒ¼ãƒŠãƒ¼ã¯ã‚°ãƒ­ãƒ¼ãƒãƒ«ã‹ã‚‰æ¤œç´¢
 			if (ev.owner.code == SpatialChunkKey::kInvalidCode) {
 				entityMgr = &partition.GetGlobalEntityManager();
 			}
@@ -43,7 +43,7 @@ public:
 			auto loc = entityMgr->TryGetLocation(ev.e);
 			if (!loc) {
 				LOG_WARNING("Not Get ChunkLocation");
-				continue; // Šù‚ÉÁ–Å or ˆÚĞ
+				continue; // æ—¢ã«æ¶ˆæ»… or ç§»ç±
 			}
 
 			ECS::ArchetypeChunk* ch = loc->chunk;
@@ -56,20 +56,20 @@ public:
 			if (!bodyCol) continue;
 
 			auto& bodyValue = bodyCol.value().body()[row];
-			// Pending ƒZƒ“ƒ`ƒlƒ‹i0xFFFFFFFFj‚ÉŒÀ‚Á‚Äã‘‚«i‘½dì¬–h~j
+			// Pending ã‚»ãƒ³ãƒãƒãƒ«ï¼ˆ0xFFFFFFFFï¼‰ã«é™ã£ã¦ä¸Šæ›¸ãï¼ˆå¤šé‡ä½œæˆé˜²æ­¢ï¼‰
 			if (bodyValue.GetIndexAndSequenceNumber() == (std::numeric_limits<uint32_t>::max)()) {
-				bodyValue = ev.id; // ·‚µ‚İŠ®—¹ -> Alive
+				bodyValue = ev.id; // å·®ã—è¾¼ã¿å®Œäº† -> Alive
 			}
 		}
 	}
 
 	void SetContext(const ServiceLocator& serviceLocator) noexcept {
 		ps = serviceLocator.Get<Physics::PhysicsService>(); if (!ps) {
-			LOG_ERROR("PhysicsService‚ªƒT[ƒrƒX‚Æ‚µ‚Ä“o˜^‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+			LOG_ERROR("PhysicsServiceãŒã‚µãƒ¼ãƒ“ã‚¹ã¨ã—ã¦ç™»éŒ²ã•ã‚Œã¦ã„ã¾ã›ã‚“");
 			return;
 		}
 		reg = serviceLocator.Get<SpatialChunkRegistry>(); if (!reg) {
-			LOG_ERROR("EntityManagerRegistry‚ªƒT[ƒrƒX‚Æ‚µ‚Ä“o˜^‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+			LOG_ERROR("EntityManagerRegistryãŒã‚µãƒ¼ãƒ“ã‚¹ã¨ã—ã¦ç™»éŒ²ã•ã‚Œã¦ã„ã¾ã›ã‚“");
 			return;
 		}
 	}

@@ -1,4 +1,4 @@
-#include "Debug/message.h"
+ï»¿#include "Debug/message.h"
 #include "Util/convert_string.h"
 
 #ifdef _WIN32
@@ -11,8 +11,8 @@ namespace SFW::Debug
 #if defined(_MSC_VER)
 		__debugbreak();
 #elif defined(__clang__) || defined(__GNUC__)
-		__builtin_debugtrap();        // g‚¦‚È‚¢ŠÂ‹«‚à‚ ‚é
-		// ‚à‚µã‚ª–³‚¢/Œø‚©‚È‚¢ŠÂ‹«Œü‚¯‚Ì•ÛŒ¯:
+		__builtin_debugtrap();        // ä½¿ãˆãªã„ç’°å¢ƒã‚‚ã‚ã‚‹
+		// ã‚‚ã—ä¸ŠãŒç„¡ã„/åŠ¹ã‹ãªã„ç’°å¢ƒå‘ã‘ã®ä¿é™º:
 		// raise(SIGTRAP);
 #else
 		raise(SIGTRAP);
@@ -29,7 +29,7 @@ namespace SFW::Debug
 		return ::IsDebuggerPresent();
 
 #elif defined(__linux__)
-		// Linux: /proc/self/status ‚Ì TracerPid
+		// Linux: /proc/self/status ã® TracerPid
 #include <fstream>
 		std::ifstream f("/proc/self/status");
 		std::string line;
@@ -73,10 +73,10 @@ namespace SFW::Debug
 			vsnprintf(messageBuffer, BUFFER_SIZE, format, args);
 			va_end(args);
 
-			// ƒtƒ@ƒCƒ‹–¼Es”Ô†EŠÖ”–¼‚ğ•t‰Á
+			// ãƒ•ã‚¡ã‚¤ãƒ«åãƒ»è¡Œç•ªå·ãƒ»é–¢æ•°åã‚’ä»˜åŠ 
 			snprintf(finalBuffer, BUFFER_SIZE, "[%s:%d][%s]  %s", file, line, func, messageBuffer);
 
-			// Retry/Ignore/Abort ‚ğo‚·
+			// Retry/Ignore/Abort ã‚’å‡ºã™
 			int r = MessageBoxA(
 				nullptr,
 				finalBuffer,
@@ -85,18 +85,18 @@ namespace SFW::Debug
 			);
 
 			if (r == IDRETRY) {
-				// ƒfƒoƒbƒK‚ª‚¢‚é‚È‚ç‚±‚±‚Å~‚ß‚Ä’²¸¨(Continue‚Å)ˆ—Œp‘±‚ª‰Â”\
+				// ãƒ‡ãƒãƒƒã‚¬ãŒã„ã‚‹ãªã‚‰ã“ã“ã§æ­¢ã‚ã¦èª¿æŸ»â†’(Continueã§)å‡¦ç†ç¶™ç¶šãŒå¯èƒ½
 				if (IsDebuggerPresentPortable()) {
 					DebugBreakPortable();
-					return; // Continue‚Å–ß‚Á‚Ä‚­‚é
+					return; // Continueã§æˆ»ã£ã¦ãã‚‹
 				}
 				else {
-					// ƒfƒoƒbƒK–³‚µ‚ÌRetry‚ÍˆÓ–¡‚ª”–‚¢‚Ì‚ÅAD‚İ‚Å Abort ‚Æ“¯“™‚É‚·‚é
+					// ãƒ‡ãƒãƒƒã‚¬ç„¡ã—ã®Retryã¯æ„å‘³ãŒè–„ã„ã®ã§ã€å¥½ã¿ã§ Abort ã¨åŒç­‰ã«ã™ã‚‹
 					TerminateProcess(GetCurrentProcess(), 3);
 				}
 			}
 			else if (r == IDIGNORE) {
-				// ‘±si‚½‚¾‚µƒAƒT[ƒg‚ğ“¥‚ñ‚Å‚éó‘Ô‚ª‰ó‚ê‚Ä‚¢‚é‰Â”\«‚ ‚èj
+				// ç¶šè¡Œï¼ˆãŸã ã—ã‚¢ã‚µãƒ¼ãƒˆã‚’è¸ã‚“ã§ã‚‹ï¼çŠ¶æ…‹ãŒå£Šã‚Œã¦ã„ã‚‹å¯èƒ½æ€§ã‚ã‚Šï¼‰
 				return;
 			}
 
@@ -116,24 +116,24 @@ void assert_with_msg(bool expr, const char* file, int line, const char* func, co
 		vsnprintf(messageBuffer, BUFFER_SIZE, format, args);
 		va_end(args);
 
-		// ƒtƒ@ƒCƒ‹–¼Es”Ô†EŠÖ”–¼‚ğ•t‰Á
+		// ãƒ•ã‚¡ã‚¤ãƒ«åãƒ»è¡Œç•ªå·ãƒ»é–¢æ•°åã‚’ä»˜åŠ 
 		snprintf(finalBuffer, BUFFER_SIZE, "[%s:%d][%s] %s", file, line, func, messageBuffer);
 
 		std::cout << finalBuffer << std::endl;
 
 		if (r == IDRETRY) {
-			// ƒfƒoƒbƒK‚ª‚¢‚é‚È‚ç‚±‚±‚Å~‚ß‚Ä’²¸¨(Continue‚Å)ˆ—Œp‘±‚ª‰Â”\
+			// ãƒ‡ãƒãƒƒã‚¬ãŒã„ã‚‹ãªã‚‰ã“ã“ã§æ­¢ã‚ã¦èª¿æŸ»â†’(Continueã§)å‡¦ç†ç¶™ç¶šãŒå¯èƒ½
 			if (IsDebuggerPresentPortable()) {
 				DebugBreakPortable();
-				return; // Continue‚Å–ß‚Á‚Ä‚­‚é
+				return; // Continueã§æˆ»ã£ã¦ãã‚‹
 			}
 			else {
-				// ƒfƒoƒbƒK–³‚µ‚ÌRetry‚ÍˆÓ–¡‚ª”–‚¢‚Ì‚ÅAD‚İ‚Å Abort ‚Æ“¯“™‚É‚·‚é
+				// ãƒ‡ãƒãƒƒã‚¬ç„¡ã—ã®Retryã¯æ„å‘³ãŒè–„ã„ã®ã§ã€å¥½ã¿ã§ Abort ã¨åŒç­‰ã«ã™ã‚‹
 				std::_Exit(3); // or ::_exit(3)
 			}
 		}
 		else if (r == IDIGNORE) {
-			// ‘±si‚½‚¾‚µƒAƒT[ƒg‚ğ“¥‚ñ‚Å‚éó‘Ô‚ª‰ó‚ê‚Ä‚¢‚é‰Â”\«‚ ‚èj
+			// ç¶šè¡Œï¼ˆãŸã ã—ã‚¢ã‚µãƒ¼ãƒˆã‚’è¸ã‚“ã§ã‚‹ï¼çŠ¶æ…‹ãŒå£Šã‚Œã¦ã„ã‚‹å¯èƒ½æ€§ã‚ã‚Šï¼‰
 			return;
 		}
 

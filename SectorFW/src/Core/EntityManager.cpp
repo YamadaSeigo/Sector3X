@@ -1,4 +1,4 @@
-#include "Core/ECS/EntityManager.h"
+ï»¿#include "Core/ECS/EntityManager.h"
 #include "Debug/message.h"
 
 #include <algorithm>
@@ -9,7 +9,7 @@ namespace SFW
 	{
 		void EntityManager::DestroyEntity(EntityID id)
 		{
-			// –‘O‚ÉƒXƒƒbƒv‘ŠèŒó•â‚ğ”cˆ¬iƒƒbƒN•s—vFchunk ‘¤‚Í•Ê“¯ŠúƒŒƒCƒ„j
+			// äº‹å‰ã«ã‚¹ãƒ¯ãƒƒãƒ—ç›¸æ‰‹å€™è£œã‚’æŠŠæ¡ï¼ˆãƒ­ãƒƒã‚¯ä¸è¦ï¼šchunk å´ã¯åˆ¥åŒæœŸãƒ¬ã‚¤ãƒ¤ï¼‰
 			if (true) {
 				std::unique_lock<std::shared_mutex> wlock(locationsMutex);
 				auto it = locations.find(id);
@@ -18,11 +18,11 @@ namespace SFW
 					ArchetypeChunk* chunk = loc.chunk;
 					const size_t idx = loc.index;
 					const size_t lastIndexBefore = chunk->GetEntityCount() - 1;
-					// æ‚É Remove ‚µ‚Ä‚©‚ç locations ‚ğXV
+					// å…ˆã« Remove ã—ã¦ã‹ã‚‰ locations ã‚’æ›´æ–°
 					chunk->RemoveEntitySwapPop(idx);
-					// ƒXƒƒbƒv‚Å‹l‚ß‚ç‚ê‚½ê‡A––”öID ¨ idx ‚ÉˆÚ“®‚·‚é‚Ì‚ÅXV
+					// ã‚¹ãƒ¯ãƒƒãƒ—ã§è©°ã‚ã‚‰ã‚ŒãŸå ´åˆã€æœ«å°¾ID â†’ idx ã«ç§»å‹•ã™ã‚‹ã®ã§æ›´æ–°
 					if (idx < lastIndexBefore) {
-						EntityID swappedId = ArchetypeChunk::Accessor::GetEntityIDs(chunk)[idx]; // Remove Œã‚Í idx ‚É—ˆ‚Ä‚¢‚é
+						EntityID swappedId = ArchetypeChunk::Accessor::GetEntityIDs(chunk)[idx]; // Remove å¾Œã¯ idx ã«æ¥ã¦ã„ã‚‹
 						auto its = locations.find(swappedId);
 						if (its != locations.end()) {
 							its->second = { chunk, idx };
@@ -67,9 +67,9 @@ namespace SFW
 
 		size_t EntityManager::MergeFromAll(EntityManager& src)
 		{
-			// 1) Sparse ‚ğŠÛ‚²‚Æ this ‚ÖˆÚ‘—
+			// 1) Sparse ã‚’ä¸¸ã”ã¨ this ã¸ç§»é€
 			src.MoveAllSparseTo(*this);
-			// 2) ”ñƒXƒp[ƒX‚ğƒ`ƒƒƒ“ƒN—ñ memcpy ‚ÅˆÚ‘—
+			// 2) éã‚¹ãƒ‘ãƒ¼ã‚¹ã‚’ãƒãƒ£ãƒ³ã‚¯åˆ— memcpy ã§ç§»é€
 			const auto ids = src.GetAllEntityIDs();
 			size_t moved = 0;
 			for (EntityID id : ids) {
@@ -87,7 +87,7 @@ namespace SFW
 				out.reserve(locations.size());
 				for (const auto& kv : locations) out.push_back(kv.first);
 			}
-			// ”O‚Ì‚½‚ßAlocations ‚É–³‚¢‚à‚Ì‚àE‚¤i•âŠ®j
+			// å¿µã®ãŸã‚ã€locations ã«ç„¡ã„ã‚‚ã®ã‚‚æ‹¾ã†ï¼ˆè£œå®Œï¼‰
 			for (auto& arch : archetypeManager.GetAllData()) {
 				for (auto& ck : arch->GetChunks()) {
 					const auto entities = ArchetypeChunk::Accessor::GetEntityIDs(ck.get());
@@ -103,7 +103,7 @@ namespace SFW
 
 		ComponentMask EntityManager::GetMask(EntityID id) const noexcept
 		{
-			//id‚Ìƒ`ƒƒƒ“ƒN‚ª‘¶İ‚·‚éê‡‚Í‚»‚Ìƒ}ƒXƒN‚ğ•Ô‚·
+			//idã®ãƒãƒ£ãƒ³ã‚¯ãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯ãã®ãƒã‚¹ã‚¯ã‚’è¿”ã™
 			std::shared_lock<std::shared_mutex> rlock(locationsMutex);
 			auto iter = locations.find(id);
 			if (iter != locations.end())
@@ -111,7 +111,7 @@ namespace SFW
 				return iter->second.chunk->GetComponentMask();
 			}
 
-			//id‚Ìƒ`ƒƒƒ“ƒN‚ª‘¶İ‚µ‚È‚¢ê‡‚ÍA‘SƒA[ƒLƒ^ƒCƒv‚ğŒŸõ‚µ‚Äƒ}ƒXƒN‚ğæ“¾‚·‚é
+			//idã®ãƒãƒ£ãƒ³ã‚¯ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯ã€å…¨ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã‚’æ¤œç´¢ã—ã¦ãƒã‚¹ã‚¯ã‚’å–å¾—ã™ã‚‹
 			ComponentMask componentMask;
 			for (auto& [mask, idx] : archetypeManager.GetAllMaskIndices()) {
 				for (auto& chunk : archetypeManager.AccessArchetype(idx)->GetChunks()) {
@@ -119,7 +119,7 @@ namespace SFW
 					const auto& entities = ArchetypeChunk::Accessor::GetEntityIDs(chunk.get());
 					for (size_t i = 0; i < entityCount; ++i) {
 						if (entities[i] == id)
-							return mask; // ƒ}ƒXƒN‚ªŒ©‚Â‚©‚Á‚½‚ç•Ô‚·
+							return mask; // ãƒã‚¹ã‚¯ãŒè¦‹ã¤ã‹ã£ãŸã‚‰è¿”ã™
 					}
 				}
 			}
@@ -130,21 +130,21 @@ namespace SFW
 		{
 			if (&src == &dst) return false;
 
-			// src ‚ÌˆÊ’uî•ñ‚ğ“¾‚éi–³‚¯‚ê‚Î¸”sj
+			// src ã®ä½ç½®æƒ…å ±ã‚’å¾—ã‚‹ï¼ˆç„¡ã‘ã‚Œã°å¤±æ•—ï¼‰
 			auto locOpt = src.TryGetLocation(id);
 			if (!locOpt) return false;
 			ArchetypeChunk* srcChunk = locOpt->chunk;
 			const size_t     srcIndex = locOpt->index;
 			const ComponentMask mask = srcChunk->GetComponentMask();
-			// ˆ¶æ‘¤‚É1sŠm•Û
+			// å®›å…ˆå´ã«1è¡Œç¢ºä¿
 			Archetype* dstArch = dst.archetypeManager.GetOrCreate(mask);
 			ArchetypeChunk* dstChunk = dstArch->GetOrCreateChunk();
 			const size_t dstIndex = dstChunk->AddEntity(id);
-			// ”ñƒXƒp[ƒX—ñ‚ğƒRƒs[
+			// éã‚¹ãƒ‘ãƒ¼ã‚¹åˆ—ã‚’ã‚³ãƒ”ãƒ¼
 			CopyEntityColumns(srcChunk, srcIndex, dstChunk, dstIndex);
-			// src ‚©‚çƒ[ƒJƒ‹œ‹iƒXƒp[ƒX‚ÍŒã‚ÅˆêŠ‡ˆÚ‘—‚·‚é‚½‚ßG‚ç‚È‚¢j
+			// src ã‹ã‚‰ãƒ­ãƒ¼ã‚«ãƒ«é™¤å»ï¼ˆã‚¹ãƒ‘ãƒ¼ã‚¹ã¯å¾Œã§ä¸€æ‹¬ç§»é€ã™ã‚‹ãŸã‚è§¦ã‚‰ãªã„ï¼‰
 			src.EraseEntityLocalNoSparse(id);
-			// ˆ¶æ‚Ì locations ‚ğ“o˜^
+			// å®›å…ˆã® locations ã‚’ç™»éŒ²
 			{
 				std::unique_lock<std::shared_mutex> wlock(dst.locationsMutex);
 				dst.locations[id] = { dstChunk, dstIndex };
@@ -168,16 +168,16 @@ namespace SFW
 				if (its != locations.end()) { its->second = { chunk, idx }; }
 			}
 			locations.erase(it);
-			return true; // ¦ ID ‚Í”jŠü‚µ‚È‚¢i¢‘ã‚ği‚ß‚È‚¢j
+			return true; // â€» ID ã¯ç ´æ£„ã—ãªã„ï¼ˆä¸–ä»£ã‚’é€²ã‚ãªã„ï¼‰
 		}
 		void EntityManager::CopyEntityColumns(ArchetypeChunk* srcChunk, size_t srcIndex, ArchetypeChunk* dstChunk, size_t dstIndex)
 		{
 			if (srcChunk->GetComponentMask() != dstChunk->GetComponentMask()) {
-				LOG_ERROR("ƒ\[ƒX‚Ìƒ`ƒƒƒ“ƒN‚Æ‚Ìƒ}ƒXƒN‚ªˆê’v‚µ‚Ü‚¹‚ñ");
+				LOG_ERROR("ã‚½ãƒ¼ã‚¹ã®ãƒãƒ£ãƒ³ã‚¯ã¨ã®ãƒã‚¹ã‚¯ãŒä¸€è‡´ã—ã¾ã›ã‚“");
 				return;
 			}
 
-			//¦‚‘¬‰»‚Ì‚½‚ßLayout‚ª“¯‚¶‚Å‚ ‚é‘O’ñ‚Åsrc‚ÌLayout‚ğdst‚Ì•û‚Å‚àg—p‚·‚é
+			//â€»é«˜é€ŸåŒ–ã®ãŸã‚LayoutãŒåŒã˜ã§ã‚ã‚‹å‰æã§srcã®Layoutã‚’dstã®æ–¹ã§ã‚‚ä½¿ç”¨ã™ã‚‹
 			const auto& srcLayout = ArchetypeChunk::Accessor::GetLayoutInfo(srcChunk);
 			for (const auto& infos : srcLayout) {
 				size_t k = 0;

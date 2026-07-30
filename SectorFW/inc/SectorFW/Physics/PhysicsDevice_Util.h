@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   PhysicsDevice_Util.h
- * @brief PhysicsDevice —p‚Ìƒ†[ƒeƒBƒŠƒeƒB
+ * @brief PhysicsDevice ç”¨ã®ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -17,7 +17,7 @@ namespace SFW
 {
 	namespace Physics
 	{
-		// Jolt ‚ª double precision ‚Ìê‡‚Í R* Œ^‚ğg‚¤
+		// Jolt ãŒ double precision ã®å ´åˆã¯ R* å‹ã‚’ä½¿ã†
 #if defined(JPH_DOUBLE_PRECISION) && JPH_DOUBLE_PRECISION
 		using JMat = JPH::RMat44;
 		using JVec3 = JPH::RVec3;
@@ -29,14 +29,14 @@ namespace SFW
 		inline JPH::Quat ToJQuat(const Quatf& q) noexcept { return JPH::Quat(q.x, q.y, q.z, q.w); }
 		inline JVec3     ToJVec3(const Vec3f& v) noexcept { return JVec3(v.x, v.y, v.z); }
 		inline JMat      ToJMatRT(const Mat34f& tm) {
-			// ‰ñ“]{•½sˆÚ“®‚Ì 3x4 ¨ 4x4iJolt‚Í—ñ—DæE‰Eè‘O’ñART‚ÅOKj
+			// å›è»¢ï¼‹å¹³è¡Œç§»å‹•ã® 3x4 â†’ 4x4ï¼ˆJoltã¯åˆ—å„ªå…ˆãƒ»å³æ‰‹å‰æã€RTã§OKï¼‰
 			return JMat::sRotationTranslation(ToJQuat(tm.rot), ToJVec3(tm.pos));
 		}
 
 		inline Vec3f FromJVec3(const JVec3& v) noexcept { return Vec3f{ (float)v.GetX(), (float)v.GetY(), (float)v.GetZ() }; }
 		inline Quatf FromJQuat(const JPH::Quat& q) noexcept { return Quatf{ q.GetX(), q.GetY(), q.GetZ(), q.GetW() }; }
 
-		// BodyID ‚ğ unordered_map ‚ÌƒL[‚É‚·‚é‚½‚ß‚ÌƒnƒbƒVƒ…
+		// BodyID ã‚’ unordered_map ã®ã‚­ãƒ¼ã«ã™ã‚‹ãŸã‚ã®ãƒãƒƒã‚·ãƒ¥
 		struct BodyIDHash {
 			size_t operator()(const JPH::BodyID& id) const noexcept {
 				return std::hash<uint32_t>{}(id.GetIndexAndSequenceNumber());
@@ -48,7 +48,7 @@ namespace SFW
 			}
 		};
 
-		// ===== Pending ”»’è^¶¬iƒZƒ“ƒ`ƒlƒ‹‚Í 0xFFFFFFFFj =====
+		// ===== Pending åˆ¤å®šï¼ç”Ÿæˆï¼ˆã‚»ãƒ³ãƒãƒãƒ«ã¯ 0xFFFFFFFFï¼‰ =====
 		inline bool IsPendingBodyID(const JPH::BodyID& id) noexcept {
 			return id.GetIndexAndSequenceNumber() == (std::numeric_limits<uint32_t>::max)();
 		}

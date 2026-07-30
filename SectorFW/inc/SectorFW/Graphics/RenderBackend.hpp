@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   RenderBackend.hpp
- * @brief ƒŒƒ“ƒ_ƒŠƒ“ƒOƒoƒbƒNƒGƒ“ƒh‚ÌŠî’êƒNƒ‰ƒX
+ * @brief ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒãƒƒã‚¯ã‚¨ãƒ³ãƒ‰ã®åŸºåº•ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -17,104 +17,104 @@ namespace SFW
 	namespace Graphics
 	{
 		/**
-		 * @brief ƒŒƒ“ƒ_ƒŠƒ“ƒOƒoƒbƒNƒGƒ“ƒh‚ÌŠî’êƒNƒ‰ƒXBCRTP‚ğg—p‚µ‚Ä”h¶ƒNƒ‰ƒX‚ÅÀ‘•‚ğ‹­§‚·‚éB
+		 * @brief ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒãƒƒã‚¯ã‚¨ãƒ³ãƒ‰ã®åŸºåº•ã‚¯ãƒ©ã‚¹ã€‚CRTPã‚’ä½¿ç”¨ã—ã¦æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã§å®Ÿè£…ã‚’å¼·åˆ¶ã™ã‚‹ã€‚
 		 */
 		template<typename Derived, PointerType RTV, PointerType DSV, PointerType SRV, PointerType Buffer, template<typename> class ViewHandle>
 		class RenderBackendBase {
 		public:
 			/**
-			 * @brief RenderGraph‚ÉƒŠƒ\[ƒXƒ}ƒl[ƒWƒƒ[‚ğ’Ç‰Á‚·‚éŠÖ”
-			 * @param graph ƒŒƒ“ƒ_[ƒOƒ‰ƒt‚ÌQÆ
+			 * @brief RenderGraphã«ãƒªã‚½ãƒ¼ã‚¹ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚’è¿½åŠ ã™ã‚‹é–¢æ•°
+			 * @param graph ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚°ãƒ©ãƒ•ã®å‚ç…§
 			 */
 			void AddResourceManagerToRenderService(RenderGraph<Derived, RTV, DSV, SRV, Buffer, ViewHandle>& graph) {
 				static_cast<Derived*>(this)->AddResourceManagerToRenderServiceImpl(graph);
 			}
 			/**
-			 * @brief ƒvƒŠƒ~ƒeƒBƒu‚Ìƒgƒ|ƒƒW[‚ğİ’è‚·‚éŠÖ”
-			 * @param topology@ƒvƒŠƒ~ƒeƒBƒu‚Ìƒgƒ|ƒƒW[
+			 * @brief ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ãƒˆãƒãƒ­ã‚¸ãƒ¼ã‚’è¨­å®šã™ã‚‹é–¢æ•°
+			 * @param topologyã€€ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ãƒˆãƒãƒ­ã‚¸ãƒ¼
 			 */
 			void SetPrimitiveTopology(PrimitiveTopology topology) const {
 				static_cast<const Derived*>(this)->SetPrimitiveTopologyImpl(topology);
 			}
 			/**
-			 * @brief ƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒg‚ğİ’è‚·‚éŠÖ”
-			 * @param state ƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒgID
+			 * @brief ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹é–¢æ•°
+			 * @param state ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆID
 			 */
 			void SetRasterizerState(RasterizerStateID state) const {
 				static_cast<const Derived*>(this)->SetRasterizerStateImpl(state);
 			}
 			/**
-			 * @brief ƒuƒŒƒ“ƒhƒXƒe[ƒg‚ğİ’è‚·‚éŠÖ”
-			 * @param state ƒuƒŒƒ“ƒhƒXƒe[ƒgID
+			 * @brief ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹é–¢æ•°
+			 * @param state ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆID
 			 */
 			void SetBlendState(BlendStateID state) const {
 				static_cast<const Derived*>(this)->SetBlendStateImpl(state);
 			}
 			/**
-			 * @brief ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒXƒe[ƒg‚ğİ’è‚·‚éŠÖ”
-			 * @param state ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒXƒe[ƒgID
+			 * @brief ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹é–¢æ•°
+			 * @param state ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆID
 			 */
 			void SetDepthStencilState(DepthStencilStateID state, uint32_t stencilRef = 0) const {
 				static_cast<const Derived*>(this)->SetDepthStencilStateImpl(state, stencilRef);
 			}
 			/**
-			 * @brief ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ÆƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒrƒ…[‚ğİ’è‚·‚éŠÖ”
-			 * @param rtvs ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ì”z—ñ
-			 * @param dsv ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒrƒ…[
+			 * @brief ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ã‚’è¨­å®šã™ã‚‹é–¢æ•°
+			 * @param rtvs ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã®é…åˆ—
+			 * @param dsv ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼
 			 */
 			void SetRenderTargets(const std::vector<RTV>& rtvs, void* dsv) const {
 				static_cast<const Derived*>(this)->SetRenderTargetsImpl(rtvs, dsv);
 			}
 			/**
-			 * @brief ƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[‚ğƒoƒCƒ“ƒh‚·‚éŠÖ”
-			 * @param srvs ƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[‚Ì”z—ñ
-			 * @param startSlot ƒoƒCƒ“ƒhŠJnƒXƒƒbƒg
+			 * @brief ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã‚’ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹é–¢æ•°
+			 * @param srvs ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã®é…åˆ—
+			 * @param startSlot ãƒã‚¤ãƒ³ãƒ‰é–‹å§‹ã‚¹ãƒ­ãƒƒãƒˆ
 			 */
 			void BindPSSRVs(const std::vector<SRV>& srvs, uint32_t startSlot = 0) const {
 				static_cast<const Derived*>(this)->BindPSSRVsImpl(srvs, startSlot);
 			}
 			/**
-			 * @brief ’è”ƒoƒbƒtƒ@ƒrƒ…[‚ğƒoƒCƒ“ƒh‚·‚éŠÖ”
-			 * @param cbvs ’è”ƒoƒbƒtƒ@ƒrƒ…[‚Ì”z—ñ
-			 * @param startSlot ƒoƒCƒ“ƒhŠJnƒXƒƒbƒg
+			 * @brief å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã‚’ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹é–¢æ•°
+			 * @param cbvs å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®é…åˆ—
+			 * @param startSlot ãƒã‚¤ãƒ³ãƒ‰é–‹å§‹ã‚¹ãƒ­ãƒƒãƒˆ
 			 */
 			void BindVSCBVs(const std::vector<Buffer>& cbvs, uint32_t startSlot = 0) const {
 				static_cast<const Derived*>(this)->BindVSCBVsImpl(cbvs, startSlot);
 			}
 			/**
-			 * @brief ƒsƒNƒZƒ‹ƒVƒF[ƒ_[—p’è”ƒoƒbƒtƒ@ƒrƒ…[‚ğƒoƒCƒ“ƒh‚·‚éŠÖ”
-			 * @param cbvs ’è”ƒoƒbƒtƒ@ƒrƒ…[‚Ì”z—ñ
-			 * @param startSlot ƒoƒCƒ“ƒhŠJnƒXƒƒbƒg
+			 * @brief ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”¨å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã‚’ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹é–¢æ•°
+			 * @param cbvs å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®é…åˆ—
+			 * @param startSlot ãƒã‚¤ãƒ³ãƒ‰é–‹å§‹ã‚¹ãƒ­ãƒƒãƒˆ
 			 */
 			void BindPSCBVs(const std::vector<Buffer>& cbvs, uint32_t startSlot = 0) const {
 				static_cast<const Derived*>(this)->BindPSCBVsImpl(cbvs, startSlot);
 			}
 			/**
-			 * @brief ƒOƒ[ƒoƒ‹’è”ƒoƒbƒtƒ@ƒrƒ…[‚ğƒoƒCƒ“ƒh‚·‚éŠÖ”
-			 * @param cbvs ’è”ƒoƒbƒtƒ@ƒrƒ…[‚Ì”z—ñ
+			 * @brief ã‚°ãƒ­ãƒ¼ãƒãƒ«å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã‚’ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹é–¢æ•°
+			 * @param cbvs å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®é…åˆ—
 			 */
 			void BindGlobalVSCBVs(const std::vector<BindSlotBuffer>& cbvs) const {
 				static_cast<const Derived*>(this)->BindGlobalVSCBVsImpl(cbvs);
 			}
 			/**
-			 * @brief ƒrƒ…[ƒ|[ƒg‚ğİ’è‚·‚éŠÖ”
-			 * @param vp ƒrƒ…[ƒ|[ƒgî•ñ
+			 * @brief ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹é–¢æ•°
+			 * @param vp ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆæƒ…å ±
 			 */
 			void SetViewport(const Viewport& vp) const {
 				static_cast<const Derived*>(this)->SetViewportImpl(vp);
 			}
 			/**
-			 * @brief ƒtƒŒ[ƒ€‚²‚Æ‚ÌƒCƒ“ƒXƒ^ƒ“ƒXƒf[ƒ^‚ğƒAƒbƒvƒ[ƒh‚·‚éŠÖ”
-			 * @param framePool ƒCƒ“ƒXƒ^ƒ“ƒXƒf[ƒ^‚Ì”z—ñ
-			 * @param instCount ƒCƒ“ƒXƒ^ƒ“ƒXƒf[ƒ^‚Ì”
+			 * @brief ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã™ã‚‹é–¢æ•°
+			 * @param framePool ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‡ãƒ¼ã‚¿ã®é…åˆ—
+			 * @param instCount ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‡ãƒ¼ã‚¿ã®æ•°
 			 */
 			void BeginFrameUpload(const SharedInstanceArena::InstancePool* framePool, uint32_t instCount) {
 				static_cast<Derived*>(this)->BeginFrameUploadImpl(framePool, instCount);
 			}
 			/**
-			 * @brief ƒCƒ“ƒfƒbƒNƒX•t‚«ƒCƒ“ƒXƒ^ƒ“ƒXƒhƒ[‚ğÀs‚·‚éŠÖ”
-			 * @param cmds ƒCƒ“ƒfƒbƒNƒX•t‚«ƒCƒ“ƒXƒ^ƒ“ƒXƒhƒ[ƒRƒ}ƒ“ƒh‚Ì”z—ñ
-			 * @param usePSORastarizer ƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒg‚ğPSO‚©‚çİ’è‚·‚é‚©‚Ç‚¤‚©
+			 * @brief ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ä»˜ãã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‰ãƒ­ãƒ¼ã‚’å®Ÿè¡Œã™ã‚‹é–¢æ•°
+			 * @param cmds ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ä»˜ãã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‰ãƒ­ãƒ¼ã‚³ãƒãƒ³ãƒ‰ã®é…åˆ—
+			 * @param usePSORastarizer ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’PSOã‹ã‚‰è¨­å®šã™ã‚‹ã‹ã©ã†ã‹
 			 */
 			template<typename VecT>
 			void ExecuteDrawIndexedInstanced(const VecT& cmds, std::optional<PSOHandle> psoOverride = std::nullopt, bool usePSORasterizer = true, bool rebindPSO = false) {
@@ -126,17 +126,17 @@ namespace SFW
 				static_cast<Derived*>(this)->ExecuteDrawIndexedInstancedImpl(cmds, indices, psoOverride, usePSORasterizer, rebindPSO);
 			}
 			/**
-			 * @brief ƒtƒŒ[ƒ€I—¹‚É’x‰„íœ‚ğˆ—‚·‚éŠÖ”
-			 * @param currentFrame Œ»İ‚ÌƒtƒŒ[ƒ€”Ô†
+			 * @brief ãƒ•ãƒ¬ãƒ¼ãƒ çµ‚äº†æ™‚ã«é…å»¶å‰Šé™¤ã‚’å‡¦ç†ã™ã‚‹é–¢æ•°
+			 * @param currentFrame ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·
 			 */
 			void ProcessDeferredDeletes(uint64_t currentFrame) {
 				static_cast<Derived*>(this)->ProcessDeferredDeletesImpl(currentFrame);
 			}
 			/**
-			 * @brief ƒoƒbƒtƒ@ƒf[ƒ^‚ğXV‚·‚éŠÖ”
-			 * @param buffer XV‚·‚éƒoƒbƒtƒ@
-			 * @param data XVƒf[ƒ^‚Ö‚Ìƒ|ƒCƒ“ƒ^
-			 * @param size XVƒf[ƒ^‚ÌƒTƒCƒYiƒoƒCƒg’PˆÊj
+			 * @brief ãƒãƒƒãƒ•ã‚¡ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°ã™ã‚‹é–¢æ•°
+			 * @param buffer æ›´æ–°ã™ã‚‹ãƒãƒƒãƒ•ã‚¡
+			 * @param data æ›´æ–°ãƒ‡ãƒ¼ã‚¿ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+			 * @param size æ›´æ–°ãƒ‡ãƒ¼ã‚¿ã®ã‚µã‚¤ã‚ºï¼ˆãƒã‚¤ãƒˆå˜ä½ï¼‰
 			 */
 			void UpdateCameraBufferData(Buffer buffer, const void* data, size_t size) {
 				static_cast<Derived*>(this)->UpdateBufferDataImpl(buffer, data, size);

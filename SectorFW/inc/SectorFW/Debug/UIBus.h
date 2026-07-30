@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   UIBus.h
- * @brief UIƒoƒX‚Ì’è‹`
+ * @brief UIãƒã‚¹ã®å®šç¾©
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -18,7 +18,7 @@ namespace SFW
 	namespace Debug
 	{
 		/**
-		 * @brief Œy—Ê Latest ’litrivially copyable —pj
+		 * @brief è»½é‡ Latest å€¤ï¼ˆtrivially copyable ç”¨ï¼‰
 		 */
 		template <class T>
 		struct Latest {
@@ -27,7 +27,7 @@ namespace SFW
 			T    consume() const noexcept { return v.load(std::memory_order_acquire); }
 		};
 		/**
-		 * @brief •¶š—ñ‚È‚Ç”ñtrivial‚ÍƒƒbƒN‚Å
+		 * @brief æ–‡å­—åˆ—ãªã©étrivialã¯ãƒ­ãƒƒã‚¯ã§
 		 */
 		template <>
 		struct Latest<std::string> {
@@ -38,7 +38,7 @@ namespace SFW
 			std::string v;
 		};
 		/**
-		 * @brief ¬‚³‚È MPMC •—ƒLƒ…[iUI‘¤‚Å–ˆƒtƒŒ drain ‚·‚é‚¾‚¯‚È‚Ì‚ÅƒƒbƒN‚ÅOKj
+		 * @brief å°ã•ãª MPMC é¢¨ã‚­ãƒ¥ãƒ¼ï¼ˆUIå´ã§æ¯ãƒ•ãƒ¬ drain ã™ã‚‹ã ã‘ãªã®ã§ãƒ­ãƒƒã‚¯ã§OKï¼‰
 		 */
 		template <class T>
 		class UiQueue {
@@ -56,51 +56,51 @@ namespace SFW
 		};
 
 		/**
-		 * @brief •K—v‚È‚çƒXƒiƒbƒvƒVƒ‡ƒbƒgi“ñdƒoƒbƒtƒ@j
+		 * @brief å¿…è¦ãªã‚‰ã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆï¼ˆäºŒé‡ãƒãƒƒãƒ•ã‚¡ï¼‰
 		 */
 		struct Telemetry {
 			float cpu = 0.f, gpu = 0.f;
 			std::vector<float> frameTimes;
 		};
 		/**
-		 * @brief UiSnapshot: RAII ”Å
+		 * @brief UiSnapshot: RAII ç‰ˆ
 		 */
 		class UiSnapshot {
 		public:
 			/**
-			 * @brief ‘‚«‚İƒK[ƒhiRAII ‚ÅƒƒbƒN/ƒAƒ“ƒƒbƒNj
+			 * @brief æ›¸ãè¾¼ã¿ã‚¬ãƒ¼ãƒ‰ï¼ˆRAII ã§ãƒ­ãƒƒã‚¯/ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ï¼‰
 			 */
 			class WriteGuard {
 			public:
 				explicit WriteGuard(UiSnapshot& s)
 					: snap_(s), lock_(s.m_) {
-				}          // ‚±‚±‚Å lock
+				}          // ã“ã“ã§ lock
 				Telemetry& data() noexcept { return snap_.back_; }
-				// ƒRƒs[‹Ö~Eƒ€[ƒuOK
+				// ã‚³ãƒ”ãƒ¼ç¦æ­¢ãƒ»ãƒ ãƒ¼ãƒ–OK
 				WriteGuard(const WriteGuard&) = delete;
 				WriteGuard& operator=(const WriteGuard&) = delete;
 				WriteGuard(WriteGuard&&) = default;
 				WriteGuard& operator=(WriteGuard&&) = default;
 			private:
 				UiSnapshot& snap_;
-				std::unique_lock<std::mutex> lock_;     // ‚±‚±‚ªƒXƒR[ƒv‚Å©“® unlock
+				std::unique_lock<std::mutex> lock_;     // ã“ã“ãŒã‚¹ã‚³ãƒ¼ãƒ—ã§è‡ªå‹• unlock
 			};
 			/**
-			 * @brief ‘‚«‚İŠJn
-			 * @return WriteGuard ‘‚«‚İƒK[ƒh
+			 * @brief æ›¸ãè¾¼ã¿é–‹å§‹
+			 * @return WriteGuard æ›¸ãè¾¼ã¿ã‚¬ãƒ¼ãƒ‰
 			 */
 			WriteGuard beginWrite() { return WriteGuard(*this); }
 			/**
-			 * @brief ƒtƒƒ“ƒg/ƒoƒbƒN‚ğ“ü‚ê‘Ö‚¦
+			 * @brief ãƒ•ãƒ­ãƒ³ãƒˆ/ãƒãƒƒã‚¯ã‚’å…¥ã‚Œæ›¿ãˆ
 			 */
-			void swap() {                                  // UIƒXƒŒƒbƒh‘¤
+			void swap() {                                  // UIã‚¹ãƒ¬ãƒƒãƒ‰å´
 				std::lock_guard<std::mutex> lk(m_);
 				using std::swap;
 				swap(front_, back_);
 			}
 			/**
-			 * @brief ƒtƒƒ“ƒg‚ğ“Ç‚Ş
-			 * @return const Telemetry& ƒtƒƒ“ƒg‚ÌQÆ
+			 * @brief ãƒ•ãƒ­ãƒ³ãƒˆã‚’èª­ã‚€
+			 * @return const Telemetry& ãƒ•ãƒ­ãƒ³ãƒˆã®å‚ç…§
 			 */
 			const Telemetry& read() const { return front_; }
 		private:
@@ -109,7 +109,7 @@ namespace SFW
 		};
 
 		/**
-		 * @brief ƒ[ƒ‹ƒh‚ÌƒfƒoƒbƒOƒcƒŠ[‚Ì[‚³
+		 * @brief ãƒ¯ãƒ¼ãƒ«ãƒ‰ã®ãƒ‡ãƒãƒƒã‚°ãƒ„ãƒªãƒ¼ã®æ·±ã•
 		 */
 		enum class WorldTreeDepth : uint32_t {
 			TREEDEPTH_WORLD = 0,
@@ -126,10 +126,10 @@ namespace SFW
 		 * @brief Tree snapshot types(UIBus.h)
 		 */
 		struct TreeItem {
-			uint64_t id;       // ˆÀ’è‚µ‚½IDiImGui‚ÌŠJ•Âó‘Ô‚ª•Û‚³‚ê‚éj
+			uint64_t id;       // å®‰å®šã—ãŸIDï¼ˆImGuiã®é–‹é–‰çŠ¶æ…‹ãŒä¿æŒã•ã‚Œã‚‹ï¼‰
 			uint32_t depth;    // 0 = root, 1 = child, ...
-			bool     leaf;     // q‚È‚µ‚È‚ç true
-			std::string label; // •\¦ƒeƒLƒXƒg
+			bool     leaf;     // å­ãªã—ãªã‚‰ true
+			std::string label; // è¡¨ç¤ºãƒ†ã‚­ã‚¹ãƒˆ
 
 			TreeItem() = default;
 			TreeItem(uint64_t i, WorldTreeDepth d, bool l, const std::string& lbl)
@@ -137,18 +137,18 @@ namespace SFW
 			}
 		};
 		/**
-		 * @brief ƒcƒŠ[ƒtƒŒ[ƒ€i‘O‡{depth •t‚«ƒAƒCƒeƒ€ŒQj
+		 * @brief ãƒ„ãƒªãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ï¼ˆå‰é †ï¼‹depth ä»˜ãã‚¢ã‚¤ãƒ†ãƒ ç¾¤ï¼‰
 		 */
 		struct TreeFrame {
-			std::vector<TreeItem> items; // ‘O‡iƒvƒŠƒI[ƒ_j‚Å depth •t‚«
+			std::vector<TreeItem> items; // å‰é †ï¼ˆãƒ—ãƒªã‚ªãƒ¼ãƒ€ï¼‰ã§ depth ä»˜ã
 		};
 		/**
-		 * @brief Šù‘¶ UiSnapshot ‚ğ‚»‚Ì‚Ü‚Ü—¬—p‚µ‚Ä TreeFrame —p‚ğ’Ç‰Á
+		 * @brief æ—¢å­˜ UiSnapshot ã‚’ãã®ã¾ã¾æµç”¨ã—ã¦ TreeFrame ç”¨ã‚’è¿½åŠ 
 		 */
 		class UiTreeSnapshot {
 		public:
 			/**
-			 * @brief ‘‚«‚İƒK[ƒhiRAII ‚ÅƒƒbƒN/ƒAƒ“ƒƒbƒNj
+			 * @brief æ›¸ãè¾¼ã¿ã‚¬ãƒ¼ãƒ‰ï¼ˆRAII ã§ãƒ­ãƒƒã‚¯/ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ï¼‰
 			 */
 			class WriteGuard {
 			public:
@@ -165,20 +165,20 @@ namespace SFW
 				std::unique_lock<std::mutex> lock_;
 			};
 			/**
-			 * @brief ‘‚«‚İŠJn
-			 * @return WriteGuard ‘‚«‚İƒK[ƒh
+			 * @brief æ›¸ãè¾¼ã¿é–‹å§‹
+			 * @return WriteGuard æ›¸ãè¾¼ã¿ã‚¬ãƒ¼ãƒ‰
 			 */
 			WriteGuard beginWrite() { return WriteGuard(*this); }
 			/**
-			 * @brief ƒtƒƒ“ƒg/ƒoƒbƒN‚ğ“ü‚ê‘Ö‚¦
+			 * @brief ãƒ•ãƒ­ãƒ³ãƒˆ/ãƒãƒƒã‚¯ã‚’å…¥ã‚Œæ›¿ãˆ
 			 */
 			void swap() {
 				std::lock_guard<std::mutex> lk(m_);
 				using std::swap; swap(front_, back_);
 			}
 			/**
-			 * @brief ƒtƒƒ“ƒg‚ğ“Ç‚Ş
-			 * @return const TreeFrame& ƒtƒƒ“ƒg‚ÌQÆ
+			 * @brief ãƒ•ãƒ­ãƒ³ãƒˆã‚’èª­ã‚€
+			 * @return const TreeFrame& ãƒ•ãƒ­ãƒ³ãƒˆã®å‚ç…§
 			 */
 			const TreeFrame& read() const { return front_; }
 		private:
@@ -187,7 +187,7 @@ namespace SFW
 		};
 
 		// ================================
-		// ƒfƒoƒbƒOƒRƒ“ƒgƒ[ƒ‹—p‚Ì’è‹`
+		// ãƒ‡ãƒãƒƒã‚°ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ç”¨ã®å®šç¾©
 		// ================================
 		enum class DebugControlKind {
 			DC_SLIDERFLOAT,
@@ -203,7 +203,7 @@ namespace SFW
 			std::string category = "Default";
 			std::string      label;
 
-			// Œ»İ’liUI‘¤‚Å•Ûj
+			// ç¾åœ¨å€¤ï¼ˆUIå´ã§ä¿æŒï¼‰
 			float f_value = 0.f, f_min = 0.f, f_max = 1.f, f_speed = 0.1f;
 			int   i_value = 0, i_min = 0, i_max = 100;
 			bool  b_value = false;
@@ -212,11 +212,11 @@ namespace SFW
 			int* i_target = nullptr;
 			bool* b_target = nullptr;
 
-			// •¶š—ñ—p‚Ìƒoƒbƒtƒ@iŠÈ’P‚Ì‚½‚ßŒÅ’è’·j
+			// æ–‡å­—åˆ—ç”¨ã®ãƒãƒƒãƒ•ã‚¡ï¼ˆç°¡å˜ã®ãŸã‚å›ºå®šé•·ï¼‰
 			static constexpr size_t TextBufSize = 256;
 			char textBuf[TextBufSize] = {};
 
-			// ’l•ÏX‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒN
+			// å€¤å¤‰æ›´æ™‚ã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 			std::function<void(float)> onChangeF;
 			std::function<void(int)>   onChangeI;
 			std::function<void(bool)>  onChangeB;
@@ -224,36 +224,36 @@ namespace SFW
 		};
 
 		/**
-		 * @brief ƒoƒX–{‘Ìi‚±‚±‚¾‚¯‚ğƒOƒ[ƒoƒ‹‚É‚·‚éj
+		 * @brief ãƒã‚¹æœ¬ä½“ï¼ˆã“ã“ã ã‘ã‚’ã‚°ãƒ­ãƒ¼ãƒãƒ«ã«ã™ã‚‹ï¼‰
 		 */
 		struct UIBus {
-			std::atomic<bool> alive{ false }; // ¶‘¶ƒtƒ‰ƒO
+			std::atomic<bool> alive{ false }; // ç”Ÿå­˜ãƒ•ãƒ©ã‚°
 			Latest<float>      cpuLoad, gpuLoad;
 
-			Latest<float> logicMs;   // ƒƒWƒbƒNƒXƒŒƒbƒh1frame‚Ìˆ—ŠÔ
-			Latest<float> renderMs;  // ƒŒƒ“ƒ_[ƒXƒŒƒbƒh1frame‚Ìˆ—ŠÔ
-			Latest<float> gpuFrameMs; // GPUƒtƒŒ[ƒ€ŠÔ(ms)iQuery‚âtimestamp‚©‚çj
+			Latest<float> logicMs;   // ãƒ­ã‚¸ãƒƒã‚¯ã‚¹ãƒ¬ãƒƒãƒ‰1frameã®å‡¦ç†æ™‚é–“
+			Latest<float> renderMs;  // ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰1frameã®å‡¦ç†æ™‚é–“
+			Latest<float> gpuFrameMs; // GPUãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“(ms)ï¼ˆQueryã‚„timestampã‹ã‚‰ï¼‰
 
 			Latest<std::string> status;
 			UiQueue<std::string> logQ;
 			UiSnapshot          snap;
 			UiTreeSnapshot       tree;
 
-			UiQueue<DebugControl> debugControlRegisterQ; // “o˜^ƒLƒ…[
-			std::vector<DebugControl> debugControls;     // UIƒXƒŒƒbƒh‘¤‚Å•Û
+			UiQueue<DebugControl> debugControlRegisterQ; // ç™»éŒ²ã‚­ãƒ¥ãƒ¼
+			std::vector<DebugControl> debugControls;     // UIã‚¹ãƒ¬ãƒƒãƒ‰å´ã§ä¿æŒ
 		};
 		/**
-		 * @brief ƒOƒ[ƒoƒ‹UIƒoƒX‚Ìæ“¾
+		 * @brief ã‚°ãƒ­ãƒ¼ãƒãƒ«UIãƒã‚¹ã®å–å¾—
 		 */
 		UIBus& GetUIBus();
 
 		/**
-		 * @brief ImGui ‚Ì SliderFloat + ƒR[ƒ‹ƒoƒbƒN.
-		 * @param label ƒ‰ƒxƒ‹–¼
-		 * @param initialValue ‰Šú’l
-		 * @param minValue@ãŒÀ
-		 * @param maxValue@‰ºŒÀ
-		 * @param speed@ƒXƒ‰ƒCƒ_[‚Ì‘¬“x
+		 * @brief ImGui ã® SliderFloat + ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯.
+		 * @param label ãƒ©ãƒ™ãƒ«å
+		 * @param initialValue åˆæœŸå€¤
+		 * @param minValueã€€ä¸Šé™
+		 * @param maxValueã€€ä¸‹é™
+		 * @param speedã€€ã‚¹ãƒ©ã‚¤ãƒ€ãƒ¼ã®é€Ÿåº¦
 		 */
 		void RegisterDebugSliderFloat(
 			const std::string& category,
@@ -266,12 +266,12 @@ namespace SFW
 			float* bound = nullptr);
 
 		/**
-		 * @brief •Ï”ƒ|ƒCƒ“ƒ^‚ğ’¼ÚƒoƒCƒ“ƒh‚·‚éŠÈˆÕ”Å.
-		 * @param label ƒ‰ƒxƒ‹–¼
-		 * @param target İ’è‚·‚é•Ï”‚Ìƒ|ƒCƒ“ƒ^
-		 * @param minValue@ãŒÀ
-		 * @param maxValue@‰ºŒÀ
-		 * @param speed@ƒXƒ‰ƒCƒ_[‚Ì‘¬“x
+		 * @brief å¤‰æ•°ãƒã‚¤ãƒ³ã‚¿ã‚’ç›´æ¥ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹ç°¡æ˜“ç‰ˆ.
+		 * @param label ãƒ©ãƒ™ãƒ«å
+		 * @param target è¨­å®šã™ã‚‹å¤‰æ•°ã®ãƒã‚¤ãƒ³ã‚¿
+		 * @param minValueã€€ä¸Šé™
+		 * @param maxValueã€€ä¸‹é™
+		 * @param speedã€€ã‚¹ãƒ©ã‚¤ãƒ€ãƒ¼ã®é€Ÿåº¦
 		 */
 		inline void BindDebugSliderFloat(
 			const std::string& category,
@@ -289,7 +289,7 @@ namespace SFW
 				minValue,
 				maxValue,
 				speed,
-				[target](float v) { *target = v; }, // ‚±‚±‚Å‘ã“ü
+				[target](float v) { *target = v; }, // ã“ã“ã§ä»£å…¥
 				target
 			);
 		}
@@ -349,14 +349,14 @@ namespace SFW
 			const std::string& label,
 			std::function<void(bool)> onChange);
 
-		// —á: UIBus.h
+		// ä¾‹: UIBus.h
 		void RegisterDebugText(
 			const std::string& category,
 			const std::string& label,
 			const std::string& initial,
 			std::function<void(std::string)> onChange);
 
-		// •Ï”ƒ|ƒCƒ“ƒ^‚ğ’¼ÚƒoƒCƒ“ƒh‚·‚éŠÈˆÕ”Å
+		// å¤‰æ•°ãƒã‚¤ãƒ³ã‚¿ã‚’ç›´æ¥ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹ç°¡æ˜“ç‰ˆ
 		inline void BindDebugText(
 			const std::string& category,
 			const std::string& label,
@@ -372,49 +372,49 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒ‰ƒCƒtƒTƒCƒNƒ‹i‹N“® / I—¹‚ÉŒÄ‚Ôj
+		 * @brief ãƒ©ã‚¤ãƒ•ã‚µã‚¤ã‚¯ãƒ«ï¼ˆèµ·å‹•æ™‚ / çµ‚äº†æ™‚ã«å‘¼ã¶ï¼‰
 		 */
 		void StartUIBus();
 		/**
-		 * @brief ƒ‰ƒCƒtƒTƒCƒNƒ‹i‹N“® / I—¹‚ÉŒÄ‚Ôj
+		 * @brief ãƒ©ã‚¤ãƒ•ã‚µã‚¤ã‚¯ãƒ«ï¼ˆèµ·å‹•æ™‚ / çµ‚äº†æ™‚ã«å‘¼ã¶ï¼‰
 		 */
 		void StopUIBus();
 		/**
-		 * @brief CPU‚ÌŒv‘ªî•ñ‚ğ”­sBŒöŠJAPIi‚Ç‚±‚©‚ç‚Å‚àŒÄ‚×‚égŠÖ”h‚¾‚¯‚ğ˜Ioj
+		 * @brief CPUã®è¨ˆæ¸¬æƒ…å ±ã‚’ç™ºè¡Œã€‚å…¬é–‹APIï¼ˆã©ã“ã‹ã‚‰ã§ã‚‚å‘¼ã¹ã‚‹â€œé–¢æ•°â€ã ã‘ã‚’éœ²å‡ºï¼‰
 		 */
 		void PublishCpu(float v);
 		/**
-		 * @brief GPU‚ÌŒv‘ªî•ñ‚ğ”­sBŒöŠJAPIi‚Ç‚±‚©‚ç‚Å‚àŒÄ‚×‚égŠÖ”h‚¾‚¯‚ğ˜Ioj
+		 * @brief GPUã®è¨ˆæ¸¬æƒ…å ±ã‚’ç™ºè¡Œã€‚å…¬é–‹APIï¼ˆã©ã“ã‹ã‚‰ã§ã‚‚å‘¼ã¹ã‚‹â€œé–¢æ•°â€ã ã‘ã‚’éœ²å‡ºï¼‰
 		 */
 		void PublishGpu(float v);
 
 		/**
-		 * @brief ƒƒWƒbƒN‚ÌŒv‘ªî•ñ‚ğ”­sBŒöŠJAPIi‚Ç‚±‚©‚ç‚Å‚àŒÄ‚×‚égŠÖ”h‚¾‚¯‚ğ˜Ioj
+		 * @brief ãƒ­ã‚¸ãƒƒã‚¯ã®è¨ˆæ¸¬æƒ…å ±ã‚’ç™ºè¡Œã€‚å…¬é–‹APIï¼ˆã©ã“ã‹ã‚‰ã§ã‚‚å‘¼ã¹ã‚‹â€œé–¢æ•°â€ã ã‘ã‚’éœ²å‡ºï¼‰
 		 */
 		void PublishLogicMs(float ms);
 		/**
-		 * @brief •`‰æ‚ÌCPU•”•ª‚ÌŒv‘ªî•ñ‚ğ”­sBŒöŠJAPIi‚Ç‚±‚©‚ç‚Å‚àŒÄ‚×‚égŠÖ”h‚¾‚¯‚ğ˜Ioj
+		 * @brief æç”»ã®CPUéƒ¨åˆ†ã®è¨ˆæ¸¬æƒ…å ±ã‚’ç™ºè¡Œã€‚å…¬é–‹APIï¼ˆã©ã“ã‹ã‚‰ã§ã‚‚å‘¼ã¹ã‚‹â€œé–¢æ•°â€ã ã‘ã‚’éœ²å‡ºï¼‰
 		 */
 		void PublishRenderMs(float ms);
 		/**
-		 * @brief GPUƒtƒŒ[ƒ€ŠÔ‚ÌŒv‘ªî•ñ‚ğ”­sBŒöŠJAPIi‚Ç‚±‚©‚ç‚Å‚àŒÄ‚×‚égŠÖ”h‚¾‚¯‚ğ˜Ioj
+		 * @brief GPUãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“ã®è¨ˆæ¸¬æƒ…å ±ã‚’ç™ºè¡Œã€‚å…¬é–‹APIï¼ˆã©ã“ã‹ã‚‰ã§ã‚‚å‘¼ã¹ã‚‹â€œé–¢æ•°â€ã ã‘ã‚’éœ²å‡ºï¼‰
 		 */
 		void PublishGpuFrameMs(float ms);
 
 		/**
-		 * @brief ƒXƒe[ƒ^ƒX•¶š—ñ‚ğ”­sBŒöŠJAPIi‚Ç‚±‚©‚ç‚Å‚àŒÄ‚×‚égŠÖ”h‚¾‚¯‚ğ˜Ioj
+		 * @brief ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹æ–‡å­—åˆ—ã‚’ç™ºè¡Œã€‚å…¬é–‹APIï¼ˆã©ã“ã‹ã‚‰ã§ã‚‚å‘¼ã¹ã‚‹â€œé–¢æ•°â€ã ã‘ã‚’éœ²å‡ºï¼‰
 		 */
 		void PublishStatus(std::string s);
 		/**
-		 * @brief ƒƒO•¶š—ñ‚ğ”­sBŒöŠJAPIi‚Ç‚±‚©‚ç‚Å‚àŒÄ‚×‚égŠÖ”h‚¾‚¯‚ğ˜Ioj
+		 * @brief ãƒ­ã‚°æ–‡å­—åˆ—ã‚’ç™ºè¡Œã€‚å…¬é–‹APIï¼ˆã©ã“ã‹ã‚‰ã§ã‚‚å‘¼ã¹ã‚‹â€œé–¢æ•°â€ã ã‘ã‚’éœ²å‡ºï¼‰
 		 */
 		void PushLog(std::string s);
 		/**
-		 * @brief ƒeƒŒƒƒgƒŠ‘‚«‚İŠJniRAII‚ÅƒƒbƒN/ƒAƒ“ƒƒbƒNj
+		 * @brief ãƒ†ãƒ¬ãƒ¡ãƒˆãƒªæ›¸ãè¾¼ã¿é–‹å§‹ï¼ˆRAIIã§ãƒ­ãƒƒã‚¯/ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ï¼‰
 		 */
 		UiSnapshot::WriteGuard BeginTelemetryWrite();
 		/**
-		 * @brief ƒcƒŠ[‘‚«‚İŠJniRAII‚ÅƒƒbƒN/ƒAƒ“ƒƒbƒNj
+		 * @brief ãƒ„ãƒªãƒ¼æ›¸ãè¾¼ã¿é–‹å§‹ï¼ˆRAIIã§ãƒ­ãƒƒã‚¯/ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ï¼‰
 		 */
 		UiTreeSnapshot::WriteGuard BeginTreeWrite();
 	}

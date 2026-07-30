@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   AccessWrapper.hpp
- * @brief ƒRƒ“ƒeƒi‚Ì“Ç‚İ‘‚«ƒrƒ…[‚ğ’ñ‹Ÿ‚·‚éƒNƒ‰ƒX
+ * @brief ã‚³ãƒ³ãƒ†ãƒŠã®èª­ã¿æ›¸ããƒ“ãƒ¥ãƒ¼ã‚’æä¾›ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -10,7 +10,7 @@
 namespace SFW
 {
 	/**
-	 * @brief ƒRƒ“ƒeƒi‚Ì“Ç‚İ‘‚«ƒrƒ…[‚ğ’ñ‹Ÿ‚·‚éƒNƒ‰ƒX
+	 * @brief ã‚³ãƒ³ãƒ†ãƒŠã®èª­ã¿æ›¸ããƒ“ãƒ¥ãƒ¼ã‚’æä¾›ã™ã‚‹ã‚¯ãƒ©ã‚¹
 	 */
 	template<typename Container>
 	class ReadWriteView {
@@ -19,46 +19,46 @@ namespace SFW
 		using const_iterator = typename Container::const_iterator;
 		using value_type = typename Container::value_type;
 		/**
-		 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @param container ƒRƒ“ƒeƒi‚ÌQÆ
-		 * @return ReadWriteView ƒRƒ“ƒeƒi‚Ì“Ç‚İ‘‚«ƒrƒ…[
+		 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @param container ã‚³ãƒ³ãƒ†ãƒŠã®å‚ç…§
+		 * @return ReadWriteView ã‚³ãƒ³ãƒ†ãƒŠã®èª­ã¿æ›¸ããƒ“ãƒ¥ãƒ¼
 		 */
 		explicit ReadWriteView(Container& container) noexcept : container_(container) {}
 		/**
-		 * @brief ƒRƒ“ƒeƒi‚Ìæ“ª—v‘f‚Ö‚ÌƒCƒeƒŒ[ƒ^‚ğæ“¾
-		 * @return iterator ƒRƒ“ƒeƒi‚Ìæ“ª—v‘f‚Ö‚ÌƒCƒeƒŒ[ƒ^
+		 * @brief ã‚³ãƒ³ãƒ†ãƒŠã®å…ˆé ­è¦ç´ ã¸ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚’å–å¾—
+		 * @return iterator ã‚³ãƒ³ãƒ†ãƒŠã®å…ˆé ­è¦ç´ ã¸ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿
 		 */
 		iterator begin() noexcept { return container_.begin(); }
 		/**
-		 * @brief ƒRƒ“ƒeƒi‚Ì––”ö—v‘f‚ÌŸ‚ğw‚·ƒCƒeƒŒ[ƒ^‚ğæ“¾
-		 * @return iterator ƒRƒ“ƒeƒi‚Ì––”ö—v‘f‚ÌŸ‚ğw‚·ƒCƒeƒŒ[ƒ^
+		 * @brief ã‚³ãƒ³ãƒ†ãƒŠã®æœ«å°¾è¦ç´ ã®æ¬¡ã‚’æŒ‡ã™ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚’å–å¾—
+		 * @return iterator ã‚³ãƒ³ãƒ†ãƒŠã®æœ«å°¾è¦ç´ ã®æ¬¡ã‚’æŒ‡ã™ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿
 		 */
 		iterator end() noexcept { return container_.end(); }
 		/**
-		 * @brief ƒRƒ“ƒeƒi‚Ìæ“ª—v‘f‚Ö‚ÌƒCƒeƒŒ[ƒ^‚ğæ“¾iconstj
-		 * @return const_iterator ƒRƒ“ƒeƒi‚Ìæ“ª—v‘f‚Ö‚ÌƒCƒeƒŒ[ƒ^iconstj
+		 * @brief ã‚³ãƒ³ãƒ†ãƒŠã®å…ˆé ­è¦ç´ ã¸ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚’å–å¾—ï¼ˆconstï¼‰
+		 * @return const_iterator ã‚³ãƒ³ãƒ†ãƒŠã®å…ˆé ­è¦ç´ ã¸ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ï¼ˆconstï¼‰
 		 */
 		const_iterator begin() const noexcept { return container_.begin(); }
 		/**
-		 * @brief ƒRƒ“ƒeƒi‚Ì––”ö—v‘f‚ÌŸ‚ğw‚·ƒCƒeƒŒ[ƒ^‚ğæ“¾iconstj
-		 * @return const_iterator ƒRƒ“ƒeƒi‚Ì––”ö—v‘f‚ÌŸ‚ğw‚·ƒCƒeƒŒ[ƒ^iconstj
+		 * @brief ã‚³ãƒ³ãƒ†ãƒŠã®æœ«å°¾è¦ç´ ã®æ¬¡ã‚’æŒ‡ã™ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚’å–å¾—ï¼ˆconstï¼‰
+		 * @return const_iterator ã‚³ãƒ³ãƒ†ãƒŠã®æœ«å°¾è¦ç´ ã®æ¬¡ã‚’æŒ‡ã™ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ï¼ˆconstï¼‰
 		 */
 		const_iterator end() const noexcept { return container_.end(); }
 		/**
-		 * @brief w’è‚µ‚½ƒL[‚Ì—v‘f‚ğæ“¾iat ‚ğ‚Á‚Ä‚¢‚éƒRƒ“ƒeƒi‚Ì‚İ—LŒøj
-		 * @param key ƒL[
-		 * @return —v‘f‚Ö‚ÌQÆ
+		 * @brief æŒ‡å®šã—ãŸã‚­ãƒ¼ã®è¦ç´ ã‚’å–å¾—ï¼ˆat ã‚’æŒã£ã¦ã„ã‚‹ã‚³ãƒ³ãƒ†ãƒŠã®ã¿æœ‰åŠ¹ï¼‰
+		 * @param key ã‚­ãƒ¼
+		 * @return è¦ç´ ã¸ã®å‚ç…§
 		 */
 		template<typename Key>
 		auto& at(const Key& key) {
 			return container_.at(key);
 		}
 
-		// operator[] ‚â insert, erase ‚È‚Ç\‘¢•ÏX‚Í’ñ‹Ÿ‚µ‚È‚¢
+		// operator[] ã‚„ insert, erase ãªã©æ§‹é€ å¤‰æ›´ã¯æä¾›ã—ãªã„
 
 	private:
 		/**
-		 * @brief ƒRƒ“ƒeƒi‚ÌQÆ
+		 * @brief ã‚³ãƒ³ãƒ†ãƒŠã®å‚ç…§
 		 */
 		Container& container_;
 	};

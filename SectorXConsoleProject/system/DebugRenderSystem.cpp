@@ -1,9 +1,9 @@
-#include <SectorFW/Math/Vector.hpp>
+ï»¿#include <SectorFW/Math/Vector.hpp>
 #include <numbers>
 
 #include "DebugRenderSystem.h"
 
-// 24’¸“_+36ƒCƒ“ƒfƒbƒNƒX‚ğ¶¬i’†SŒ´“_A¡–@ w,h,dj
+// 24é ‚ç‚¹+36ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ç”Ÿæˆï¼ˆä¸­å¿ƒåŸç‚¹ã€å¯¸æ³• w,h,dï¼‰
 void MakeBox(float w, float h, float d,
 	std::vector<Debug::VertexPNUV>& outVerts,
 	std::vector<uint32_t>& outIndices)
@@ -17,7 +17,7 @@ void MakeBox(float w, float h, float d,
 	outVerts.reserve(24);
 	outIndices.reserve(36);
 
-	// Še–Ê 4 ’¸“_iUV ‚Í [0,0]=¶ã ‘z’è^‰æ‘œ‚ÌŒ´“_‚Íã¶j
+	// å„é¢ 4 é ‚ç‚¹ï¼ˆUV ã¯ [0,0]=å·¦ä¸Š æƒ³å®šï¼ç”»åƒã®åŸç‚¹ã¯ä¸Šå·¦ï¼‰
 	// +Z (Front)
 	outVerts.push_back({ Math::Vec3f(-hx,-hy,+hz), Math::Vec3f(0,0, 1), Math::Vec2f(0,1) }); // 0  bl
 	outVerts.push_back({ Math::Vec3f(-hx,+hy,+hz), Math::Vec3f(0,0, 1), Math::Vec2f(0,0) }); // 1  tl
@@ -25,31 +25,31 @@ void MakeBox(float w, float h, float d,
 	outVerts.push_back({ Math::Vec3f(+hx,-hy,+hz), Math::Vec3f(0,0, 1), Math::Vec2f(1,1) }); // 3  br
 
 	// -Z (Back)
-	outVerts.push_back({ Math::Vec3f(+hx,-hy,-hz), Math::Vec3f(0,0,-1), Math::Vec2f(0,1) }); // 4  bl (”w–Ê‹“_)
+	outVerts.push_back({ Math::Vec3f(+hx,-hy,-hz), Math::Vec3f(0,0,-1), Math::Vec2f(0,1) }); // 4  bl (èƒŒé¢è¦–ç‚¹)
 	outVerts.push_back({ Math::Vec3f(+hx,+hy,-hz), Math::Vec3f(0,0,-1), Math::Vec2f(0,0) }); // 5  tl
 	outVerts.push_back({ Math::Vec3f(-hx,+hy,-hz), Math::Vec3f(0,0,-1), Math::Vec2f(1,0) }); // 6  tr
 	outVerts.push_back({ Math::Vec3f(-hx,-hy,-hz), Math::Vec3f(0,0,-1), Math::Vec2f(1,1) }); // 7  br
 
 	// +X (Right)
-	outVerts.push_back({ Math::Vec3f(+hx,-hy,+hz), Math::Vec3f(1,0,0), Math::Vec2f(0,1) });  // 8  bl (‰E‘¤–Ê‚ğ+X‘¤‚©‚çŒ©‚é)
+	outVerts.push_back({ Math::Vec3f(+hx,-hy,+hz), Math::Vec3f(1,0,0), Math::Vec2f(0,1) });  // 8  bl (å³å´é¢ã‚’+Xå´ã‹ã‚‰è¦‹ã‚‹)
 	outVerts.push_back({ Math::Vec3f(+hx,+hy,+hz), Math::Vec3f(1,0,0), Math::Vec2f(0,0) });  // 9  tl
 	outVerts.push_back({ Math::Vec3f(+hx,+hy,-hz), Math::Vec3f(1,0,0), Math::Vec2f(1,0) });  // 10 tr
 	outVerts.push_back({ Math::Vec3f(+hx,-hy,-hz), Math::Vec3f(1,0,0), Math::Vec2f(1,1) });  // 11 br
 
 	// -X (Left)
-	outVerts.push_back({ Math::Vec3f(-hx,-hy,-hz), Math::Vec3f(-1,0,0), Math::Vec2f(0,1) }); // 12 bl (¶‘¤–Ê‚ğ-X‘¤‚©‚çŒ©‚é)
+	outVerts.push_back({ Math::Vec3f(-hx,-hy,-hz), Math::Vec3f(-1,0,0), Math::Vec2f(0,1) }); // 12 bl (å·¦å´é¢ã‚’-Xå´ã‹ã‚‰è¦‹ã‚‹)
 	outVerts.push_back({ Math::Vec3f(-hx,+hy,-hz), Math::Vec3f(-1,0,0), Math::Vec2f(0,0) }); // 13 tl
 	outVerts.push_back({ Math::Vec3f(-hx,+hy,+hz), Math::Vec3f(-1,0,0), Math::Vec2f(1,0) }); // 14 tr
 	outVerts.push_back({ Math::Vec3f(-hx,-hy,+hz), Math::Vec3f(-1,0,0), Math::Vec2f(1,1) }); // 15 br
 
 	// +Y (Top)
-	outVerts.push_back({ Math::Vec3f(-hx,+hy,+hz), Math::Vec3f(0,1,0), Math::Vec2f(0,1) });  // 16 bl (ã–Ê‚ğ+Y‘¤‚©‚çŒ©‚éAu=+X, v=-Z)
+	outVerts.push_back({ Math::Vec3f(-hx,+hy,+hz), Math::Vec3f(0,1,0), Math::Vec2f(0,1) });  // 16 bl (ä¸Šé¢ã‚’+Yå´ã‹ã‚‰è¦‹ã‚‹ã€u=+X, v=-Z)
 	outVerts.push_back({ Math::Vec3f(-hx,+hy,-hz), Math::Vec3f(0,1,0), Math::Vec2f(0,0) });  // 17 tl
 	outVerts.push_back({ Math::Vec3f(+hx,+hy,-hz), Math::Vec3f(0,1,0), Math::Vec2f(1,0) });  // 18 tr
 	outVerts.push_back({ Math::Vec3f(+hx,+hy,+hz), Math::Vec3f(0,1,0), Math::Vec2f(1,1) });  // 19 br
 
 	// -Y (Bottom)
-	outVerts.push_back({ Math::Vec3f(-hx,-hy,-hz), Math::Vec3f(0,-1,0), Math::Vec2f(0,1) }); // 20 bl (‰º–Ê‚ğ-Y‘¤‚©‚çŒ©‚éAu=+X, v=+Z)
+	outVerts.push_back({ Math::Vec3f(-hx,-hy,-hz), Math::Vec3f(0,-1,0), Math::Vec2f(0,1) }); // 20 bl (ä¸‹é¢ã‚’-Yå´ã‹ã‚‰è¦‹ã‚‹ã€u=+X, v=+Z)
 	outVerts.push_back({ Math::Vec3f(-hx,-hy,+hz), Math::Vec3f(0,-1,0), Math::Vec2f(0,0) }); // 21 tl
 	outVerts.push_back({ Math::Vec3f(+hx,-hy,+hz), Math::Vec3f(0,-1,0), Math::Vec2f(1,0) }); // 22 tr
 	outVerts.push_back({ Math::Vec3f(+hx,-hy,-hz), Math::Vec3f(0,-1,0), Math::Vec2f(1,1) }); // 23 br
@@ -106,53 +106,53 @@ void MakeSphere(float radius, uint32_t slices, uint32_t stacks,
 	slices = std::max<uint32_t>(slices, 3u);
 	stacks = std::max<uint32_t>(stacks, 2u);
 
-	const uint32_t vxCols = slices + 1;      // U=1 —ñ‚Ì•¡»‚ğŠÜ‚Ş
-	const uint32_t vxRows = stacks + 1;      // ‹É‚ğŠÜ‚Ş
+	const uint32_t vxCols = slices + 1;      // U=1 åˆ—ã®è¤‡è£½ã‚’å«ã‚€
+	const uint32_t vxRows = stacks + 1;      // æ¥µã‚’å«ã‚€
 	outVerts.resize(size_t(vxCols) * vxRows);
 
-	// ’¸“_¶¬
+	// é ‚ç‚¹ç”Ÿæˆ
 	size_t idx = 0;
 	for (uint32_t iy = 0; iy <= stacks; ++iy) {
-		const float v = float(iy) / float(stacks);   // 0..1 (0=–k‹É, 1=“ì‹É) : DirectX ‚ÌƒeƒNƒXƒ`ƒƒÀ•W‚É‡‚¤
-		const float phi = v * std::numbers::pi_v<float>;                   // 0..ƒÎ
+		const float v = float(iy) / float(stacks);   // 0..1 (0=åŒ—æ¥µ, 1=å—æ¥µ) : DirectX ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã«åˆã†
+		const float phi = v * std::numbers::pi_v<float>;                   // 0..Ï€
 		const float sp = sinf(phi);
 		const float cp = cosf(phi);
 
 		for (uint32_t ix = 0; ix <= slices; ++ix) {
-			const float u = float(ix) / float(slices);  // 0..1 iU=1 —ñ‚ÍƒV[ƒ€•¡»j
-			const float theta = u * std::numbers::pi_v<float> *2; // 0..2ƒÎ
+			const float u = float(ix) / float(slices);  // 0..1 ï¼ˆU=1 åˆ—ã¯ã‚·ãƒ¼ãƒ è¤‡è£½ï¼‰
+			const float theta = u * std::numbers::pi_v<float> *2; // 0..2Ï€
 			const float st = sinf(theta);
 			const float ct = cosf(theta);
 
-			Math::Vec3f n = { sp * ct, cp, sp * st };         // ’PˆÊ–@üiŒ´“_’†Sj
+			Math::Vec3f n = { sp * ct, cp, sp * st };         // å˜ä½æ³•ç·šï¼ˆåŸç‚¹ä¸­å¿ƒï¼‰
 			Math::Vec3f p = { radius * n.x, radius * n.y, radius * n.z };
 
 			outVerts[idx++] = Debug::VertexPNUV{ p, n, Math::Vec2f{ u, v } };
 		}
 	}
 
-	// ƒCƒ“ƒfƒbƒNƒX¶¬iŠeƒNƒAƒbƒh‚ğ 2 OŠpŒ`‚É•ª‰ğj? CW ‚Å•\–Ê
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç”Ÿæˆï¼ˆå„ã‚¯ã‚¢ãƒƒãƒ‰ã‚’ 2 ä¸‰è§’å½¢ã«åˆ†è§£ï¼‰? CW ã§è¡¨é¢
 	outIndices.clear();
 	outIndices.reserve(size_t(slices) * stacks * 6);
 
 	for (uint32_t iy = 0; iy < stacks; ++iy) {
 		for (uint32_t ix = 0; ix < slices; ++ix) {
-			const uint32_t k0 = iy * vxCols + ix;      // ã’iE¶
-			const uint32_t k1 = (iy + 1) * vxCols + ix;      // ‰º’iE¶
-			const uint32_t k2 = k1 + 1;                // ‰º’iE‰E
-			const uint32_t k3 = k0 + 1;                // ã’iE‰E
+			const uint32_t k0 = iy * vxCols + ix;      // ä¸Šæ®µãƒ»å·¦
+			const uint32_t k1 = (iy + 1) * vxCols + ix;      // ä¸‹æ®µãƒ»å·¦
+			const uint32_t k2 = k1 + 1;                // ä¸‹æ®µãƒ»å³
+			const uint32_t k3 = k0 + 1;                // ä¸Šæ®µãƒ»å³
 
-			// CWiFrontCounterClockwise = FALSE ‚ğ‘z’èj
+			// CWï¼ˆFrontCounterClockwise = FALSE ã‚’æƒ³å®šï¼‰
 			outIndices.push_back(k0); outIndices.push_back(k2); outIndices.push_back(k1);
 			outIndices.push_back(k0); outIndices.push_back(k3); outIndices.push_back(k2);
 		}
 	}
 }
 
-// segments: 8 ˆÈã„§BLINELIST ‚È‚Ì‚Å•Âƒ‹[ƒv‚Í (i, i+1), (last, first) ‚ğ’£‚é
+// segments: 8 ä»¥ä¸Šæ¨å¥¨ã€‚LINELIST ãªã®ã§é–‰ãƒ«ãƒ¼ãƒ—ã¯ (i, i+1), (last, first) ã‚’å¼µã‚‹
 void AppendCircle(float radius, uint32_t segments, CirclePlane plane,
 	std::vector<Debug::LineVertex>& verts, std::vector<uint32_t>& idx,
-	float yOffset, float rotY, uint32_t rgba) // rotY ‚Í Y ²‰ñ‚è‰ñ“]iYZ->”CˆÓqŒßü—pj
+	float yOffset, float rotY, uint32_t rgba) // rotY ã¯ Y è»¸å›ã‚Šå›è»¢ï¼ˆYZ->ä»»æ„å­åˆç·šç”¨ï¼‰
 {
 	segments = std::max<uint32_t>(segments, 4u);
 	const uint16_t base = static_cast<uint16_t>(verts.size());
@@ -167,19 +167,19 @@ void AppendCircle(float radius, uint32_t segments, CirclePlane plane,
 		float x = 0, y = 0, z = 0;
 
 		switch (plane) {
-		case CirclePlane::XZ: // Ô“¹iXZj- y=ˆê’è
+		case CirclePlane::XZ: // èµ¤é“ï¼ˆXZï¼‰- y=ä¸€å®š
 			x = radius * ct;
 			y = yOffset;
 			z = radius * st;
 			break;
-		case CirclePlane::XY: // qŒßüiXYj- z=0
+		case CirclePlane::XY: // å­åˆç·šï¼ˆXYï¼‰- z=0
 			x = radius * ct;
 			y = radius * st;
 			z = 0.0f;
 			break;
-		case CirclePlane::YZ: // qŒßüiYZj- x=0 ‚ğ rotY ‚Å Y ‰ñ“]‚µ‚Ä”CˆÓŒo“x‚Ö
+		case CirclePlane::YZ: // å­åˆç·šï¼ˆYZï¼‰- x=0 ã‚’ rotY ã§ Y å›è»¢ã—ã¦ä»»æ„çµŒåº¦ã¸
 		{
-			// ‚Ü‚¸ YZ ‰~ (x=0, y=r*cos t, z=r*sin t) ‚ğ Y ‰ñ“]
+			// ã¾ãš YZ å†† (x=0, y=r*cos t, z=r*sin t) ã‚’ Y å›è»¢
 			const float x0 = 0.0f;
 			const float y0 = radius * ct;
 			const float z0 = radius * st;
@@ -199,20 +199,20 @@ void AppendCircle(float radius, uint32_t segments, CirclePlane plane,
 	}
 }
 
-// \ši3 –{j‚Ì‚İ
+// åå­—ï¼ˆ3 æœ¬ï¼‰ã®ã¿
 void MakeSphereCrossLines(float radius, uint32_t segments,
 	std::vector<Debug::LineVertex>& outVerts,
 	std::vector<uint32_t>& outIndices,
 	bool addXY, bool addYZ, bool addXZ, uint32_t rgba)
 {
 	outVerts.clear(); outIndices.clear();
-	if (addXZ) AppendCircle(radius, segments, CirclePlane::XZ, outVerts, outIndices, 0.0f, 0.0f, rgba);		// Ô“¹
-	if (addYZ) AppendCircle(radius, segments, CirclePlane::YZ, outVerts, outIndices, 0.0f, 0.0f, rgba);		// qŒßü
-	if (addXY) AppendCircle(radius, segments, CirclePlane::XY, outVerts, outIndices, 0.0f, 0.0f, rgba);		// ’¼ŒğqŒßü
+	if (addXZ) AppendCircle(radius, segments, CirclePlane::XZ, outVerts, outIndices, 0.0f, 0.0f, rgba);		// èµ¤é“
+	if (addYZ) AppendCircle(radius, segments, CirclePlane::YZ, outVerts, outIndices, 0.0f, 0.0f, rgba);		// å­åˆç·š
+	if (addXY) AppendCircle(radius, segments, CirclePlane::XY, outVerts, outIndices, 0.0f, 0.0f, rgba);		// ç›´äº¤å­åˆç·š
 }
 
-// ƒJƒvƒZƒ‹‚Ìcƒ‹[ƒviXY / ZYj‚Ì¶¬
-// axisPlaneXY = true ‚È‚ç XY •½–Ê (z=0)Afalse ‚È‚ç ZY •½–Ê (x=0)
+// ã‚«ãƒ—ã‚»ãƒ«ã®ç¸¦ãƒ«ãƒ¼ãƒ—ï¼ˆXY / ZYï¼‰ã®ç”Ÿæˆ
+// axisPlaneXY = true ãªã‚‰ XY å¹³é¢ (z=0)ã€false ãªã‚‰ ZY å¹³é¢ (x=0)
 void AppendCapsuleMeridianLoop(float radius, float halfHeight, uint32_t segments,
 	bool axisPlaneXY,
 	std::vector<Debug::LineVertex>& verts,
@@ -220,28 +220,28 @@ void AppendCapsuleMeridianLoop(float radius, float halfHeight, uint32_t segments
 {
 	using Vec3 = Math::Vec3f;
 
-	// ”¼‰~2‚Â{’¼ü2–{ ‚È‚Ì‚ÅAÅ’á 8 ƒZƒOƒƒ“ƒg‚­‚ç‚¢—~‚µ‚¢
+	// åŠå††2ã¤ï¼‹ç›´ç·š2æœ¬ ãªã®ã§ã€æœ€ä½ 8 ã‚»ã‚°ãƒ¡ãƒ³ãƒˆãã‚‰ã„æ¬²ã—ã„
 	segments = std::max<uint32_t>(segments, 8u);
 
-	// uã”¼‰~vu‰º”¼‰~vu‰E‚Ì’¼üvu¶‚Ì’¼üv‚ğ
-	// ‚¾‚¢‚½‚¢“¯‚¶‚­‚ç‚¢‚Ì•ªŠ„”‚É‚µ‚½‚¢‚Ì‚Å 4 ‚ÅŠ„‚é
+	// ã€Œä¸ŠåŠå††ã€ã€Œä¸‹åŠå††ã€ã€Œå³ã®ç›´ç·šã€ã€Œå·¦ã®ç›´ç·šã€ã‚’
+	// ã ã„ãŸã„åŒã˜ãã‚‰ã„ã®åˆ†å‰²æ•°ã«ã—ãŸã„ã®ã§ 4 ã§å‰²ã‚‹
 	uint32_t quarter = segments / 4u;
 	if (quarter == 0) quarter = 1;
-	segments = quarter * 4u; // 4‚Ì”{”‚ÉŠÛ‚ß‚é
+	segments = quarter * 4u; // 4ã®å€æ•°ã«ä¸¸ã‚ã‚‹
 
 	const uint32_t base = static_cast<uint32_t>(verts.size());
 
-	// 2D ‚Ì (u, y) ‚ÅƒJƒvƒZƒ‹’f–Ê‚ğì‚Á‚Ä‚©‚ç XY / ZY ‚É–„‚ß‚Ş
+	// 2D ã® (u, y) ã§ã‚«ãƒ—ã‚»ãƒ«æ–­é¢ã‚’ä½œã£ã¦ã‹ã‚‰ XY / ZY ã«åŸ‹ã‚è¾¼ã‚€
 	auto addPoint = [&](float u, float y)
 		{
 			float x, z;
 			if (axisPlaneXY) {
-				// XY •½–Ê (z = 0)
+				// XY å¹³é¢ (z = 0)
 				x = u;
 				z = 0.0f;
 			}
 			else {
-				// ZY •½–Ê (x = 0)
+				// ZY å¹³é¢ (x = 0)
 				x = 0.0f;
 				z = u;
 			}
@@ -250,41 +250,41 @@ void AppendCapsuleMeridianLoop(float radius, float halfHeight, uint32_t segments
 
 	const float PI = std::numbers::pi_v<float>;
 
-	// 1) ‰E‘¤‚Ì’¼üFy = -halfHeight ¨ +halfHeight, u = +radius
+	// 1) å³å´ã®ç›´ç·šï¼šy = -halfHeight â†’ +halfHeight, u = +radius
 	for (uint32_t i = 0; i < quarter; ++i) {
 		float t = i / float(quarter); // 0..1
 		float y = -halfHeight + (2.0f * halfHeight) * t;
 		addPoint(+radius, y);
 	}
 
-	// 2) ã”¼‰~F’†S (0, +halfHeight)AŠp“x -90‹¨+90‹
+	// 2) ä¸ŠåŠå††ï¼šä¸­å¿ƒ (0, +halfHeight)ã€è§’åº¦ -90Â°â†’+90Â°
 	//    angle = -PI/2 .. +PI/2
 	for (uint32_t i = 0; i < quarter; ++i) {
 		float t = i / float(quarter); // 0..1
-		float angle = -0.5f * PI + PI * t; // -90‹¨+90‹
+		float angle = -0.5f * PI + PI * t; // -90Â°â†’+90Â°
 		float u = radius * std::cos(angle);
 		float y = +halfHeight + radius * std::sin(angle);
 		addPoint(u, y);
 	}
 
-	// 3) ¶‘¤‚Ì’¼üFy = +halfHeight ¨ -halfHeight, u = -radius
+	// 3) å·¦å´ã®ç›´ç·šï¼šy = +halfHeight â†’ -halfHeight, u = -radius
 	for (uint32_t i = 0; i < quarter; ++i) {
 		float t = i / float(quarter); // 0..1
 		float y = +halfHeight - (2.0f * halfHeight) * t;
 		addPoint(-radius, y);
 	}
 
-	// 4) ‰º”¼‰~F’†S (0, -halfHeight)AŠp“x +90‹¨+270‹
+	// 4) ä¸‹åŠå††ï¼šä¸­å¿ƒ (0, -halfHeight)ã€è§’åº¦ +90Â°â†’+270Â°
 	//    angle = +PI/2 .. +3PI/2
 	for (uint32_t i = 0; i < quarter; ++i) {
 		float t = i / float(quarter); // 0..1
-		float angle = +0.5f * PI + PI * t; // +90‹¨+270‹
+		float angle = +0.5f * PI + PI * t; // +90Â°â†’+270Â°
 		float u = radius * std::cos(angle);
 		float y = -halfHeight + radius * std::sin(angle);
 		addPoint(u, y);
 	}
 
-	// ƒCƒ“ƒfƒbƒNƒXi•Âƒ‹[ƒvj
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ï¼ˆé–‰ãƒ«ãƒ¼ãƒ—ï¼‰
 	const uint32_t count = static_cast<uint32_t>(verts.size()) - base;
 	idx.reserve(idx.size() + count * 2);
 	for (uint32_t i = 0; i < count; ++i) {
@@ -295,9 +295,9 @@ void AppendCapsuleMeridianLoop(float radius, float halfHeight, uint32_t segments
 	}
 }
 
-// ƒJƒvƒZƒ‹‘S‘Ì‚Ìƒ‰ƒCƒ“‚ğ¶¬
-// radius: ”¼Œa
-// halfHeight: ‰~’Œ•”•ª‚Ì”¼•ª‚Ì‚‚³iƒJƒvƒZƒ‹‘S‘Ì‚Ì‚‚³‚Í 2*halfHeight + 2*radiusj
+// ã‚«ãƒ—ã‚»ãƒ«å…¨ä½“ã®ãƒ©ã‚¤ãƒ³ã‚’ç”Ÿæˆ
+// radius: åŠå¾„
+// halfHeight: å††æŸ±éƒ¨åˆ†ã®åŠåˆ†ã®é«˜ã•ï¼ˆã‚«ãƒ—ã‚»ãƒ«å…¨ä½“ã®é«˜ã•ã¯ 2*halfHeight + 2*radiusï¼‰
 void MakeCapsuleLines(float radius, float halfHeight,
 	uint32_t meridianSegments, uint32_t ringSegments,
 	std::vector<Debug::LineVertex>& outVerts,
@@ -306,19 +306,19 @@ void MakeCapsuleLines(float radius, float halfHeight,
 	outVerts.clear();
 	outIndices.clear();
 
-	// XY •½–Ê‚Ìcƒ‹[ƒviz = 0j
+	// XY å¹³é¢ã®ç¸¦ãƒ«ãƒ¼ãƒ—ï¼ˆz = 0ï¼‰
 	AppendCapsuleMeridianLoop(radius, halfHeight, meridianSegments,
 		/*axisPlaneXY=*/true, outVerts, outIndices);
 
-	// ZY •½–Ê‚Ìcƒ‹[ƒvix = 0j
+	// ZY å¹³é¢ã®ç¸¦ãƒ«ãƒ¼ãƒ—ï¼ˆx = 0ï¼‰
 	AppendCapsuleMeridianLoop(radius, halfHeight, meridianSegments,
 		/*axisPlaneXY=*/false, outVerts, outIndices);
 
-	// XZ •½–Ê‚Ì‰~Fã‚Æ‰ºi”¼‹…‚Æ‰~’Œ‚Ì‹«–Új
-	// AppendCircle ‚ÌƒVƒOƒlƒ`ƒƒ‚ÉƒfƒtƒHƒ‹ƒgˆø”‚ª‚ ‚é‘O’ñ
+	// XZ å¹³é¢ã®å††ï¼šä¸Šã¨ä¸‹ï¼ˆåŠçƒã¨å††æŸ±ã®å¢ƒç›®ï¼‰
+	// AppendCircle ã®ã‚·ã‚°ãƒãƒãƒ£ã«ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå¼•æ•°ãŒã‚ã‚‹å‰æ
 	AppendCircle(radius, ringSegments, CirclePlane::XZ,
-		outVerts, outIndices, +halfHeight, 0.0f); // ã‘¤‰~ (y = +halfHeight)
+		outVerts, outIndices, +halfHeight, 0.0f); // ä¸Šå´å†† (y = +halfHeight)
 
 	AppendCircle(radius, ringSegments, CirclePlane::XZ,
-		outVerts, outIndices, -halfHeight, 0.0f); // ‰º‘¤‰~ (y = -halfHeight)
+		outVerts, outIndices, -halfHeight, 0.0f); // ä¸‹å´å†† (y = -halfHeight)
 }

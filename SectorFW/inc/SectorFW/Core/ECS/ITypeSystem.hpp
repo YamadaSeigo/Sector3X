@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   ITypeSystem.h
- * @brief ECSƒVƒXƒeƒ€‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ECSã‚·ã‚¹ãƒ†ãƒ ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -23,7 +23,7 @@
 #include "../../Util/function_trait.h"
 #include "../ThreadPoolExecutor.h"
 
- //Parallel‚ğtrue‚É‚µ‚Ä‚¢‚é‚Ì‚ÉExecutor‚ª‚È‚¢ê‡Œx‚ğo‚·
+ //Parallelã‚’trueã«ã—ã¦ã„ã‚‹ã®ã«ExecutorãŒãªã„å ´åˆè­¦å‘Šã‚’å‡ºã™
 #define SFW_WARN_NO_EXECUTOR_PARALLEL 1
 
 namespace SFW
@@ -31,14 +31,14 @@ namespace SFW
 	namespace ECS
 	{
 		/**
-		 * @brief StartImpl‚ÌƒI[ƒo[ƒ[ƒh‚ğƒ`ƒFƒbƒN‚·‚éƒRƒ“ƒZƒvƒg
+		 * @brief StartImplã®ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 		 */
 		template<typename Derived, typename... Services>
 		concept HasStartImpl =
 			requires (Derived & t, UndeletablePtr<Services>... services) {
 				{ t.StartImpl(services...) } -> std::same_as<void>;
 		};
-		// UpdateImpl‚ÌƒI[ƒo[ƒ[ƒh‚ğƒ`ƒFƒbƒN‚·‚éƒRƒ“ƒZƒvƒg
+		// UpdateImplã®ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 		template<typename Derived, typename Partition, typename... Services>
 		concept HasUpdateImpl =
 			requires (Derived & t, UndeletablePtr<Services>... services) {
@@ -75,7 +75,7 @@ namespace SFW
 				{ t.UpdateImpl(exe, services...) } -> std::same_as<void>;
 		};
 
-		// EndImpl‚ÌƒI[ƒo[ƒ[ƒh‚ğƒ`ƒFƒbƒN‚·‚éƒRƒ“ƒZƒvƒg
+		// EndImplã®ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 		template<typename Derived, typename Partition, typename... Services>
 		concept HasEndImpl =
 			requires (Derived & t, UndeletablePtr<Services>... services) {
@@ -91,14 +91,14 @@ namespace SFW
 				{ t.EndImpl(partition, ctx, services...) } -> std::same_as<void>;
 		};
 
-		// ƒOƒ[ƒoƒ‹EndImpl‚ÌƒI[ƒo[ƒ[ƒh‚ğƒ`ƒFƒbƒN‚·‚éƒRƒ“ƒZƒvƒg
+		// ã‚°ãƒ­ãƒ¼ãƒãƒ«EndImplã®ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 		template<typename Derived, typename... Services>
 		concept HasGlobalEndImpl =
 			requires (Derived & t, UndeletablePtr<Services>... services) {
 				{ t.EndImpl(services...) } -> std::same_as<void>;
 		};
 
-		// ComponentAccess<Override...> ‚ª Allowed... ‚Ì•”•ªW‡‚©H
+		// ComponentAccess<Override...> ãŒ Allowed... ã®éƒ¨åˆ†é›†åˆã‹ï¼Ÿ
 		template<class AccessSpec, class... Allowed>
 		struct access_subset_impl : std::false_type {};
 
@@ -110,7 +110,7 @@ namespace SFW
 		template<class AccessSpec, class... Allowed>
 		concept AccessSpecSubsetOf = access_subset_impl<AccessSpec, Allowed...>::value;
 
-		// iƒIƒvƒVƒ‡ƒ“jRead/Write ‚Ìˆá‚¢‚ğ–³‹‚µ‚ÄuƒRƒ“ƒ|[ƒlƒ“ƒgŒ^‚¾‚¯v”äŠr‚µ‚½‚¢ê‡
+		// ï¼ˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ï¼‰Read/Write ã®é•ã„ã‚’ç„¡è¦–ã—ã¦ã€Œã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆå‹ã ã‘ã€æ¯”è¼ƒã—ãŸã„å ´åˆ
 		template<class A> struct access_component { using type = typename AccessPolicy<A>::ComponentType; };
 
 		template<class T, class... Allowed>
@@ -130,7 +130,7 @@ namespace SFW
 		concept AccessSpecSubsetOfByComponent =
 			access_subset_by_comp_impl<AccessSpec, Allowed...>::value;
 
-		// 1) ³‹K‰»ƒgƒŒƒCƒg
+		// 1) æ­£è¦åŒ–ãƒˆãƒ¬ã‚¤ãƒˆ
 		template<class T>
 		struct access_spec_normalize { using type = T; };
 
@@ -144,16 +144,16 @@ namespace SFW
 
 		namespace
 		{
-			// •À—ñ‰»‚Ìè‡’l‚Æ•ªŠ„—±“xi•K—v‚É‰‚¶‚Ä’²®j
-			static constexpr uint32_t kChunksPerTask = 16;    // 1ƒ^ƒXƒN‚ ‚½‚è‚Ìƒ`ƒƒƒ“ƒN”–ÚˆÀ
+			// ä¸¦åˆ—åŒ–ã®é–¾å€¤ã¨åˆ†å‰²ç²’åº¦ï¼ˆå¿…è¦ã«å¿œã˜ã¦èª¿æ•´ï¼‰
+			static constexpr uint32_t kChunksPerTask = 16;    // 1ã‚¿ã‚¹ã‚¯ã‚ãŸã‚Šã®ãƒãƒ£ãƒ³ã‚¯æ•°ç›®å®‰
 
 			struct IsParallel { bool v; constexpr operator bool() const noexcept { return v; } };
 
-			// æ“ª‚Ì“½–¼namespace“à‚Ì RunIndexRange ‚ğ’u‚«Š·‚¦
+			// å…ˆé ­ã®åŒ¿ånamespaceå†…ã® RunIndexRange ã‚’ç½®ãæ›ãˆ
 			template<bool kParallel, class IndexFn>
 			static inline void RunIndexRange(size_t size, IndexFn&& fn, IThreadExecutor* exec = nullptr)
 			{
-				//”O‚Ì‚½‚ßƒTƒCƒYãŒÀƒ`ƒFƒbƒN
+				//å¿µã®ãŸã‚ã‚µã‚¤ã‚ºä¸Šé™ãƒã‚§ãƒƒã‚¯
 				assert(size <= (std::numeric_limits<uint32_t>::max)());
 
 				uint32_t n = static_cast<uint32_t>(size);
@@ -162,7 +162,7 @@ namespace SFW
 					for (size_t i = 0; i < n; ++i) fn(i);
 				}
 				else {
-					//‚ ‚Ü‚è‚ÌƒXƒŒƒbƒh”‚©‚çˆêƒXƒŒƒbƒh“–‚½‚è‚Ìƒ^ƒXƒN”‚ğŒˆ‚ß‚é
+					//ã‚ã¾ã‚Šã®ã‚¹ãƒ¬ãƒƒãƒ‰æ•°ã‹ã‚‰ä¸€ã‚¹ãƒ¬ãƒƒãƒ‰å½“ãŸã‚Šã®ã‚¿ã‚¹ã‚¯æ•°ã‚’æ±ºã‚ã‚‹
 
 					const unsigned targetTasks = (unsigned)(std::min<uint32_t>)(
 						(std::max<uint32_t>)(1, (n + (kChunksPerTask - 1)) / kChunksPerTask),
@@ -189,7 +189,7 @@ namespace SFW
 								});
 						}
 
-						//@‚±‚ÌƒXƒŒƒbƒh‚àd–‚ğ‚·‚é
+						//ã€€ã“ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‚‚ä»•äº‹ã‚’ã™ã‚‹
 						const uint32_t begin = endTasks * block;
 						if (begin < n) {
 							const uint32_t end = (std::min)(n, begin + block);
@@ -204,7 +204,7 @@ namespace SFW
 						if (first_ex) std::rethrow_exception(first_ex);
 					}
 					else {
-						// Šù‘¶iì‚èÌ‚ÄjƒtƒH[ƒ‹ƒoƒbƒN
+						// æ—¢å­˜ï¼ˆä½œã‚Šæ¨ã¦ï¼‰ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯
 						std::vector<std::thread> threads;
 						threads.reserve(targetTasks);
 						for (unsigned t = 0; t < targetTasks; ++t) {
@@ -225,37 +225,37 @@ namespace SFW
 				}
 			}
 
-			// ––”öŒ^‚ğæ‚èo‚·
+			// æœ«å°¾å‹ã‚’å–ã‚Šå‡ºã™
 			template<class... Ts> struct last_type;
 			template<class T> struct last_type<T> { using type = T; };
 			template<class T, class... Ts> struct last_type<T, Ts...> : last_type<Ts...> {};
 			template<class... Ts> using last_t = typename last_type<Ts...>::type;
 
-			// ––”ö‚ª IExecutor* ‚©‚ğ”»’èi‹óƒpƒbƒN‘Î‰j
+			// æœ«å°¾ãŒ IExecutor* ã‹ã‚’åˆ¤å®šï¼ˆç©ºãƒ‘ãƒƒã‚¯å¯¾å¿œï¼‰
 			template<class... Extra>
-			struct tail_is_executor_impl : std::false_type {};          // 0ŒÂ ¨ false
+			struct tail_is_executor_impl : std::false_type {};          // 0å€‹ â†’ false
 
 			template<class Last>
 			struct tail_is_executor_impl<Last>
 				: std::bool_constant<std::is_convertible_v<
-				std::remove_reference_t<Last>, IThreadExecutor*>> {};     // 1ŒÂ ¨ ‚»‚ê‚ª––”ö
+				std::remove_reference_t<Last>, IThreadExecutor*>> {};     // 1å€‹ â†’ ãã‚ŒãŒæœ«å°¾
 
 			template<class First, class... Rest>
 			struct tail_is_executor_impl<First, Rest...>
 				: tail_is_executor_impl<Rest...> {
-			};                      // Ä‹A‚Å––”ö‚É“’B
+			};                      // å†å¸°ã§æœ«å°¾ã«åˆ°é”
 
 			template<class... Extra>
 			inline constexpr bool TailIsExecutor_v = tail_is_executor_impl<Extra...>::value;
 
 			template<bool B> struct ExecWarn { static inline void touch() {} };
-			// ğŒ‚ª true ‚Ìê‡‚¾‚¯A‚±‚ê‚ğQÆ‚·‚é‚Æ gŒxh ‚É‚È‚é
-			template<> struct [[deprecated("Parallel=true ‚Å‚·‚ª––”ö‚É IExecutor* ‚ª“n‚³‚ê‚Ä‚¢‚Ü‚¹‚ñBƒv[ƒ‹‚ğg‚¤ê‡‚Í executor ‚ğ––”ö‚É“n‚µ‚Ä‚­‚¾‚³‚¢B")]]
+			// æ¡ä»¶ãŒ true ã®å ´åˆã ã‘ã€ã“ã‚Œã‚’å‚ç…§ã™ã‚‹ã¨ â€œè­¦å‘Šâ€ ã«ãªã‚‹
+			template<> struct [[deprecated("Parallel=true ã§ã™ãŒæœ«å°¾ã« IExecutor* ãŒæ¸¡ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚ãƒ—ãƒ¼ãƒ«ã‚’ä½¿ã†å ´åˆã¯ executor ã‚’æœ«å°¾ã«æ¸¡ã—ã¦ãã ã•ã„ã€‚")]]
 				ExecWarn<true> {
 				static inline void touch() {}
 			};
 
-			// ’Ç‰Áˆø”—ñ (...Extra) ‚ğ (executor‚ğœ‚¢‚½tuple, executor*) ‚É•ªŠ„
+			// è¿½åŠ å¼•æ•°åˆ— (...Extra) ã‚’ (executorã‚’é™¤ã„ãŸtuple, executor*) ã«åˆ†å‰²
 			template<class... Extra>
 			auto SplitTailExecutor(Extra&&... extra) {
 				if constexpr (sizeof...(Extra) == 0) {
@@ -264,8 +264,8 @@ namespace SFW
 				else {
 					using Last = std::remove_reference_t<last_t<Extra...>>;
 					if constexpr (std::is_convertible_v<Last, IThreadExecutor*>) {
-						// ––”ö‚ª IExecutor* ¨ ‚»‚ê‚Í”²‚­
-						// tuple ‚Ì––”ö‚¾‚¯—‚Æ‚·‚½‚ß‚Ìƒwƒ‹ƒp
+						// æœ«å°¾ãŒ IExecutor* â†’ ãã‚Œã¯æŠœã
+						// tuple ã®æœ«å°¾ã ã‘è½ã¨ã™ãŸã‚ã®ãƒ˜ãƒ«ãƒ‘
 						auto drop_last = []<class... Es>(std::tuple<Es...> && tp) {
 							constexpr size_t N = sizeof...(Es);
 							return[&]<std::size_t... I>(std::index_sequence<I...>) {
@@ -273,32 +273,32 @@ namespace SFW
 									std::get<I>(std::move(tp))...};
 							}(std::make_index_sequence<N - 1>{});
 						};
-						// ‚Ü‚¸‘S•”‚ğƒ^ƒvƒ‹‰»
+						// ã¾ãšå…¨éƒ¨ã‚’ã‚¿ãƒ—ãƒ«åŒ–
 						auto all = std::tuple<Extra...>(std::forward<Extra>(extra)...);
-						// ––”ö = executor
+						// æœ«å°¾ = executor
 						auto exec = static_cast<IThreadExecutor*>(std::get<sizeof...(Extra) - 1>(all));
-						// ––”ö‚ğ—‚Æ‚µ‚½ƒ^ƒvƒ‹
+						// æœ«å°¾ã‚’è½ã¨ã—ãŸã‚¿ãƒ—ãƒ«
 						auto trimmed = drop_last(std::move(all));
 						return std::pair(std::move(trimmed), exec);
 					}
 					else {
-						// ––”ö‚ª executor ‚Å‚È‚¢ ¨ ‚»‚Ì‚Ü‚Ü‘S“n‚µ
+						// æœ«å°¾ãŒ executor ã§ãªã„ â†’ ãã®ã¾ã¾å…¨æ¸¡ã—
 						return std::pair(std::tuple<Extra...>(std::forward<Extra>(extra)...), (IThreadExecutor*)nullptr);
 					}
 				}
 			}
 		}
 
-		//‘O•ûéŒ¾
+		//å‰æ–¹å®£è¨€
 		template<template<typename> class Derived, typename Partition, typename AccessSpec, typename ContextSpec, IsParallel ParallelUpdate = IsParallel{ false } >
 		class ITypeSystem;
 
 		/**
-		 * @brief ECSƒVƒXƒeƒ€‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX
-		 * @tparam Derived CRTP‚ÅŒp³‚·‚é”h¶ƒNƒ‰ƒX
-		 * @tparam Partition ƒp[ƒeƒBƒVƒ‡ƒ“‚ÌŒ^
-		 * @tparam AccessTypes ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^
-		 * @tparam Services ƒT[ƒrƒX‚ÌŒ^
+		 * @brief ECSã‚·ã‚¹ãƒ†ãƒ ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
+		 * @tparam Derived CRTPã§ç¶™æ‰¿ã™ã‚‹æ´¾ç”Ÿã‚¯ãƒ©ã‚¹
+		 * @tparam Partition ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã®å‹
+		 * @tparam AccessTypes ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹
+		 * @tparam Services ã‚µãƒ¼ãƒ“ã‚¹ã®å‹
 		 */
 		template<template<typename> class DerivedT, typename Partition, typename... AccessTypes, typename... Services, IsParallel ParallelUpdate>
 		class ITypeSystem<DerivedT, Partition, ComponentAccess<AccessTypes...>, ServiceContext<Services...>, ParallelUpdate> : public ISystem<Partition> {
@@ -309,9 +309,9 @@ namespace SFW
 			using ContextTuple = ServiceContext<Services...>::Tuple;
 
 			/**
-			 * @brief w’è‚µ‚½ƒAƒNƒZƒXŒ^‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ‚Âƒ`ƒƒƒ“ƒN‚É‘Î‚µ‚ÄAŠÖ”‚ğ“K—p‚·‚é
-			 * @param func ŠÖ”ƒIƒuƒWƒFƒNƒg‚Ü‚½‚Íƒ‰ƒ€ƒ_®
-			 * @param partition ‘ÎÛ‚Ìƒp[ƒeƒBƒVƒ‡ƒ“
+			 * @brief æŒ‡å®šã—ãŸã‚¢ã‚¯ã‚»ã‚¹å‹ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’æŒã¤ãƒãƒ£ãƒ³ã‚¯ã«å¯¾ã—ã¦ã€é–¢æ•°ã‚’é©ç”¨ã™ã‚‹
+			 * @param func é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¾ãŸã¯ãƒ©ãƒ ãƒ€å¼
+			 * @param partition å¯¾è±¡ã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³
 			 */
 			template<IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
 			void ForEachChunkWithAccessor(F&& func, Partition& partition, CallArgs&&... args)
@@ -342,13 +342,13 @@ namespace SFW
 			}
 
 			/**
-			 * @brief w’è‚µ‚½ƒAƒNƒZƒXŒ^‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ‚Âƒ`ƒƒƒ“ƒN‚É‘Î‚µ‚ÄAŠÖ”‚ğ“K—p‚·‚é(ƒtƒ‰ƒXƒ^ƒ€ƒJƒŠƒ“ƒO•t‚«)
-			 * @param func ŠÖ”ƒIƒuƒWƒFƒNƒg‚Ü‚½‚Íƒ‰ƒ€ƒ_®
-			 * @param partition ‘ÎÛ‚Ìƒp[ƒeƒBƒVƒ‡ƒ“
-			 * @param fru ƒtƒ‰ƒXƒ^ƒ€
-			 * @param ...args ’Ç‰Á‚Ìˆø”
+			 * @brief æŒ‡å®šã—ãŸã‚¢ã‚¯ã‚»ã‚¹å‹ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’æŒã¤ãƒãƒ£ãƒ³ã‚¯ã«å¯¾ã—ã¦ã€é–¢æ•°ã‚’é©ç”¨ã™ã‚‹(ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚«ãƒªãƒ³ã‚°ä»˜ã)
+			 * @param func é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¾ãŸã¯ãƒ©ãƒ ãƒ€å¼
+			 * @param partition å¯¾è±¡ã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³
+			 * @param fru ãƒ•ãƒ©ã‚¹ã‚¿ãƒ 
+			 * @param ...args è¿½åŠ ã®å¼•æ•°
 			 */
-			 // A) Šù’è”ÅFƒNƒ‰ƒX’è‹`‚Ì AccessTypes... ‚ğg‚¤i§–ñ‚È‚µj
+			 // A) æ—¢å®šç‰ˆï¼šã‚¯ãƒ©ã‚¹å®šç¾©ã® AccessTypes... ã‚’ä½¿ã†ï¼ˆåˆ¶ç´„ãªã—ï¼‰
 			template<IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
 			void ForEachFrustumChunkWithAccessor(F&& func,
 				Partition& partition,
@@ -364,7 +364,7 @@ namespace SFW
 					std::forward<CallArgs>(args)...);
 			}
 
-			// B) ã‘‚«”Åi’Pˆê AccessSpecjc•”•ªW‡‚Å‚ ‚é‚±‚Æ‚ğ—v‹
+			// B) ä¸Šæ›¸ãç‰ˆï¼ˆå˜ä¸€ AccessSpecï¼‰â€¦éƒ¨åˆ†é›†åˆã§ã‚ã‚‹ã“ã¨ã‚’è¦æ±‚
 			template<typename AccessSpec, IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
 				requires ::SFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
 			void ForEachFrustumChunkWithAccessor(F&& func,
@@ -380,7 +380,7 @@ namespace SFW
 					std::forward<CallArgs>(args)...);
 			}
 
-			// C) ã‘‚«”Åi]—ˆ‚Ì‘‚«–¡F<Read<...>, Read<...>>jc“à•”‚Å‘©‚Ë‚Ä“]‘—
+			// C) ä¸Šæ›¸ãç‰ˆï¼ˆå¾“æ¥ã®æ›¸ãå‘³ï¼š<Read<...>, Read<...>>ï¼‰â€¦å†…éƒ¨ã§æŸã­ã¦è»¢é€
 			template<typename... Override, IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
 				requires (sizeof...(Override) > 0) &&
 			::SFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
@@ -394,7 +394,7 @@ namespace SFW
 					std::forward<F>(func), partition, fru, std::forward<CallArgs>(args)...);
 			}
 
-			// A) Šù’è”ÅFƒNƒ‰ƒX’è‹`‚Ì AccessTypes... ‚ğg‚¤i§–ñ‚È‚µj
+			// A) æ—¢å®šç‰ˆï¼šã‚¯ãƒ©ã‚¹å®šç¾©ã® AccessTypes... ã‚’ä½¿ã†ï¼ˆåˆ¶ç´„ãªã—ï¼‰
 			template<IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
 			void ForEachSphereChunkWithAccessor(F&& func,
 				Partition& partition,
@@ -411,7 +411,7 @@ namespace SFW
 					std::forward<CallArgs>(args)...);
 			}
 
-			// B) ã‘‚«”Åi’Pˆê AccessSpecjc•”•ªW‡‚Å‚ ‚é‚±‚Æ‚ğ—v‹
+			// B) ä¸Šæ›¸ãç‰ˆï¼ˆå˜ä¸€ AccessSpecï¼‰â€¦éƒ¨åˆ†é›†åˆã§ã‚ã‚‹ã“ã¨ã‚’è¦æ±‚
 			template<typename AccessSpec, IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
 				requires ::SFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
 			void ForEachSphereChunkWithAccessor(F&& func,
@@ -428,7 +428,7 @@ namespace SFW
 					std::forward<CallArgs>(args)...);
 			}
 
-			// C) ã‘‚«”Åi]—ˆ‚Ì‘‚«–¡F<Read<...>, Read<...>>jc“à•”‚Å‘©‚Ë‚Ä“]‘—
+			// C) ä¸Šæ›¸ãç‰ˆï¼ˆå¾“æ¥ã®æ›¸ãå‘³ï¼š<Read<...>, Read<...>>ï¼‰â€¦å†…éƒ¨ã§æŸã­ã¦è»¢é€
 			template<typename... Override, IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
 				requires (sizeof...(Override) > 0) &&
 			::SFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
@@ -444,14 +444,14 @@ namespace SFW
 			}
 
 			/**
-			* @brief w’è‚µ‚½ƒAƒNƒZƒXŒ^‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ‚Âƒ`ƒƒƒ“ƒN‚É‘Î‚µ‚ÄAŠÖ”‚ğ“K—p‚·‚é(ƒtƒ‰ƒXƒ^ƒ€ƒJƒŠƒ“ƒO‹ß‚¢‡”Ô•t‚«)
-			* @param func ŠÖ”ƒIƒuƒWƒFƒNƒg‚Ü‚½‚Íƒ‰ƒ€ƒ_®
-			* @param partition ‘ÎÛ‚Ìƒp[ƒeƒBƒVƒ‡ƒ“
-			* @param fru ƒtƒ‰ƒXƒ^ƒ€
-			* @param cp ƒJƒƒ‰‚ÌˆÊ’u
-			* @param ...args ’Ç‰Á‚Ìˆø”
+			* @brief æŒ‡å®šã—ãŸã‚¢ã‚¯ã‚»ã‚¹å‹ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’æŒã¤ãƒãƒ£ãƒ³ã‚¯ã«å¯¾ã—ã¦ã€é–¢æ•°ã‚’é©ç”¨ã™ã‚‹(ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚«ãƒªãƒ³ã‚°è¿‘ã„é †ç•ªä»˜ã)
+			* @param func é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¾ãŸã¯ãƒ©ãƒ ãƒ€å¼
+			* @param partition å¯¾è±¡ã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³
+			* @param fru ãƒ•ãƒ©ã‚¹ã‚¿ãƒ 
+			* @param cp ã‚«ãƒ¡ãƒ©ã®ä½ç½®
+			* @param ...args è¿½åŠ ã®å¼•æ•°
 			*/
-			// A) Šù’è”ÅFƒNƒ‰ƒX’è‹`‚Ì AccessTypes... ‚ğg‚¤i§–ñ‚È‚µj
+			// A) æ—¢å®šç‰ˆï¼šã‚¯ãƒ©ã‚¹å®šç¾©ã® AccessTypes... ã‚’ä½¿ã†ï¼ˆåˆ¶ç´„ãªã—ï¼‰
 			template<IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
 			void ForEachFrustumNearChunkWithAccessor(F&& func,
 				Partition& partition,
@@ -468,7 +468,7 @@ namespace SFW
 					std::forward<CallArgs>(args)...);
 			}
 
-			// B) ã‘‚«”Åi’Pˆê AccessSpecjc•”•ªW‡‚Å‚ ‚é‚±‚Æ‚ğ—v‹
+			// B) ä¸Šæ›¸ãç‰ˆï¼ˆå˜ä¸€ AccessSpecï¼‰â€¦éƒ¨åˆ†é›†åˆã§ã‚ã‚‹ã“ã¨ã‚’è¦æ±‚
 			template<typename AccessSpec, IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
 				requires ::SFW::ECS::AccessSpecSubsetOf<access_spec_normalize_t<AccessSpec>, AccessTypes...>
 			void ForEachFrustumNearChunkWithAccessor(F&& func,
@@ -485,7 +485,7 @@ namespace SFW
 					std::forward<CallArgs>(args)...);
 			}
 
-			// C) ã‘‚«”Åi]—ˆ‚Ì‘‚«–¡F<Read<...>, Read<...>>jc“à•”‚Å‘©‚Ë‚Ä“]‘—
+			// C) ä¸Šæ›¸ãç‰ˆï¼ˆå¾“æ¥ã®æ›¸ãå‘³ï¼š<Read<...>, Read<...>>ï¼‰â€¦å†…éƒ¨ã§æŸã­ã¦è»¢é€
 			template<typename... Override, IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
 				requires (sizeof...(Override) > 0) &&
 			::SFW::ECS::AccessSpecSubsetOf<ComponentAccess<Override...>, AccessTypes...>
@@ -501,10 +501,10 @@ namespace SFW
 			}
 
 			/**
-			 * @brief w’è‚µ‚½ƒAƒNƒZƒXŒ^‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ‚Âƒ`ƒƒƒ“ƒN‚É‘Î‚µ‚ÄAŠÖ”‚ğ“K—p‚·‚é(ƒGƒ“ƒeƒBƒeƒBID•t‚«)
-			 * @param func ŠÖ”ƒIƒuƒWƒFƒNƒg‚Ü‚½‚Íƒ‰ƒ€ƒ_®
-			 * @param partition ‘ÎÛ‚Ìƒp[ƒeƒBƒVƒ‡ƒ“
-			 * @param ...args ’Ç‰Á‚Ìˆø”
+			 * @brief æŒ‡å®šã—ãŸã‚¢ã‚¯ã‚»ã‚¹å‹ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’æŒã¤ãƒãƒ£ãƒ³ã‚¯ã«å¯¾ã—ã¦ã€é–¢æ•°ã‚’é©ç”¨ã™ã‚‹(ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDä»˜ã)
+			 * @param func é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¾ãŸã¯ãƒ©ãƒ ãƒ€å¼
+			 * @param partition å¯¾è±¡ã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³
+			 * @param ...args è¿½åŠ ã®å¼•æ•°
 			 */
 			template<IsParallel Type = IsParallel{ false }, typename F, typename... CallArgs >
 			void ForEachChunkWithAccessorAndEntityIDs(F&& func, Partition& partition, CallArgs&&... args)
@@ -536,26 +536,26 @@ namespace SFW
 
 		public:
 			/**
-			 * @brief  UpdateImplŠÖ”‚ğ•Û‚µ‚Ä‚¢‚é‚©H
-			 * @return •Û‚µ‚Ä‚¢‚éê‡‚Ítrue
-			 * @details ISystem‚ÌIsUpdateableŠÖ”‚ğ‰B•Á
+			 * @brief  UpdateImplé–¢æ•°ã‚’ä¿æŒã—ã¦ã„ã‚‹ã‹ï¼Ÿ
+			 * @return ä¿æŒã—ã¦ã„ã‚‹å ´åˆã¯true
+			 * @details ISystemã®IsUpdateableé–¢æ•°ã‚’éš è”½
 			 */
 			static constexpr bool IsUpdateable() noexcept {
 				if constexpr (HasUpdateImpl<Derived, Partition, Services...>) return true;
 				return false;
 			}
 			/**
-			 * @brief  UpdateImplŠÖ”‚ğ•Û‚µ‚Ä‚¢‚é‚©H
-			 * @return •Û‚µ‚Ä‚¢‚éê‡‚Ítrue
-			 * @details ISystem‚ÌIsUpdateableŠÖ”‚ğ‰B•Á
+			 * @brief  UpdateImplé–¢æ•°ã‚’ä¿æŒã—ã¦ã„ã‚‹ã‹ï¼Ÿ
+			 * @return ä¿æŒã—ã¦ã„ã‚‹å ´åˆã¯true
+			 * @details ISystemã®IsUpdateableé–¢æ•°ã‚’éš è”½
 			 */
 			static constexpr bool IsEndSystem() noexcept {
 				if constexpr (HasEndImpl<Derived, Partition, Services...>) return true;
 				return false;
 			}
 			/**
-			 * @brief ƒRƒ“ƒeƒLƒXƒg‚ğİ’è‚·‚éŠÖ”
-			 * @param ctx ƒRƒ“ƒeƒLƒXƒg‚Ìƒ^ƒvƒ‹
+			 * @brief ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’è¨­å®šã™ã‚‹é–¢æ•°
+			 * @param ctx ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®ã‚¿ãƒ—ãƒ«
 			 */
 			void SetContext(const ServiceLocator& serviceLocator) noexcept {
 				if constexpr (AllStaticServices<Services...>) {
@@ -563,14 +563,14 @@ namespace SFW
 				}
 			}
 			/**
-			 * @brief ƒVƒXƒeƒ€‚ÌŠJnŠÖ”
-			 * @param partition ƒp[ƒeƒBƒVƒ‡ƒ“‚ÌQÆ
-			 * @details ©g‚ÌƒRƒ“ƒeƒLƒXƒg‚ğg—p‚µ‚ÄAStartImpl‚ğŒÄ‚Ño‚·
+			 * @brief ã‚·ã‚¹ãƒ†ãƒ ã®é–‹å§‹é–¢æ•°
+			 * @param partition ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã®å‚ç…§
+			 * @details è‡ªèº«ã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’ä½¿ç”¨ã—ã¦ã€StartImplã‚’å‘¼ã³å‡ºã™
 			 */
 			void Start(const ServiceLocator& serviceLocator) override final {
 				if constexpr (HasStartImpl<Derived, Services...>) {
 					if constexpr (AllStaticServices<Services...>) {
-						// Ã“IƒT[ƒrƒX‚ğg—p‚·‚éê‡AƒT[ƒrƒXƒƒP[ƒ^[‚©‚ç’¼Úæ“¾
+						// é™çš„ã‚µãƒ¼ãƒ“ã‚¹ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã€ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã‹ã‚‰ç›´æ¥å–å¾—
 						std::apply(
 							[&](Services*... unpacked) {
 								static_cast<Derived*>(this)->StartImpl(UndeletablePtr<Services>(unpacked)...);
@@ -592,7 +592,7 @@ namespace SFW
 
 			void Update(const ServiceLocator& serviceLocator, IThreadExecutor* executor) override {
 				if constexpr (HasGlobalUpdateImpl<Derived, Services...>) {
-					// Ã“IƒT[ƒrƒX‚ğg—p‚·‚éê‡AƒT[ƒrƒXƒƒP[ƒ^[‚©‚ç’¼Úæ“¾
+					// é™çš„ã‚µãƒ¼ãƒ“ã‚¹ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã€ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã‹ã‚‰ç›´æ¥å–å¾—
 					if constexpr (AllStaticServices<Services...>) {
 						std::apply(
 							[&](Services*... unpacked) {
@@ -608,7 +608,7 @@ namespace SFW
 						return;
 					}
 
-					// “®“IƒT[ƒrƒX‚ğg—p‚·‚éê‡Aƒ‰ƒ“ƒ^ƒCƒ€‚ÉƒT[ƒrƒXƒƒP[ƒ^[‚©‚çæ“¾
+					// å‹•çš„ã‚µãƒ¼ãƒ“ã‚¹ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã€ãƒ©ãƒ³ã‚¿ã‚¤ãƒ ã«ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã‹ã‚‰å–å¾—
 					auto serviceTuple = std::make_tuple(serviceLocator.Get<Services>()...);
 					std::apply(
 						[&](Services*... unpacked) {
@@ -625,15 +625,15 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒVƒXƒeƒ€‚ÌXVŠÖ”
-			 * @param partition ƒp[ƒeƒBƒVƒ‡ƒ“‚ÌQÆ
-			 * @details ©g‚ÌƒVƒXƒeƒ€‚ÌƒRƒ“ƒeƒLƒXƒg‚ğg—p‚µ‚ÄAUpdateImpl‚ğŒÄ‚Ño‚·
+			 * @brief ã‚·ã‚¹ãƒ†ãƒ ã®æ›´æ–°é–¢æ•°
+			 * @param partition ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã®å‚ç…§
+			 * @details è‡ªèº«ã®ã‚·ã‚¹ãƒ†ãƒ ã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’ä½¿ç”¨ã—ã¦ã€UpdateImplã‚’å‘¼ã³å‡ºã™
 			 */
 			void Update(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) override final {
-				// UpdateImplŠÖ”‚ğ‚Á‚Ä‚¢‚éê‡‚Ì‚İŒÄ‚Ño‚·
-				//¦‚±‚Ìƒtƒ‰ƒO‚Å•ï‚Ü‚È‚¢‚ÆAUpdateImpl‚ğ‚½‚È‚¢ƒVƒXƒeƒ€‚ÅƒRƒ“ƒpƒCƒ‹ƒGƒ‰[‚É‚È‚é
+				// UpdateImplé–¢æ•°ã‚’æŒã£ã¦ã„ã‚‹å ´åˆã®ã¿å‘¼ã³å‡ºã™
+				//â€»ã“ã®ãƒ•ãƒ©ã‚°ã§åŒ…ã¾ãªã„ã¨ã€UpdateImplã‚’æŒãŸãªã„ã‚·ã‚¹ãƒ†ãƒ ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹
 				if constexpr (HasUpdateImpl<Derived, Partition, Services...>) {
-					// Ã“IƒT[ƒrƒX‚ğg—p‚·‚éê‡AƒT[ƒrƒXƒƒP[ƒ^[‚©‚ç’¼Úæ“¾
+					// é™çš„ã‚µãƒ¼ãƒ“ã‚¹ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã€ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã‹ã‚‰ç›´æ¥å–å¾—
 					if constexpr (AllStaticServices<Services...>) {
 						std::apply(
 							[&](Services*... unpacked) {
@@ -668,7 +668,7 @@ namespace SFW
 						return;
 					}
 
-					// “®“IƒT[ƒrƒX‚ğg—p‚·‚éê‡Aƒ‰ƒ“ƒ^ƒCƒ€‚ÉƒT[ƒrƒXƒƒP[ƒ^[‚©‚çæ“¾
+					// å‹•çš„ã‚µãƒ¼ãƒ“ã‚¹ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã€ãƒ©ãƒ³ã‚¿ã‚¤ãƒ ã«ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã‹ã‚‰å–å¾—
 					auto serviceTuple = std::make_tuple(serviceLocator.Get<Services>()...);
 					std::apply(
 						[&](Services*... unpacked) {
@@ -704,14 +704,14 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒVƒXƒeƒ€‚ÌƒOƒ[ƒoƒ‹I—¹ŠÖ”
-			 * @param serviceLocator ƒT[ƒrƒXƒƒP[ƒ^[‚ÌQÆ
-			 * @details ©g‚ÌƒRƒ“ƒeƒLƒXƒg‚ğg—p‚µ‚ÄAEndImpl‚ğŒÄ‚Ño‚·
+			 * @brief ã‚·ã‚¹ãƒ†ãƒ ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«çµ‚äº†é–¢æ•°
+			 * @param serviceLocator ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã®å‚ç…§
+			 * @details è‡ªèº«ã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’ä½¿ç”¨ã—ã¦ã€EndImplã‚’å‘¼ã³å‡ºã™
 			 */
 			void End(const ServiceLocator& serviceLocator) override {
 				if constexpr (HasGlobalEndImpl<Derived, Services...>) {
 					if constexpr (AllStaticServices<Services...>) {
-						// Ã“IƒT[ƒrƒX‚ğg—p‚·‚éê‡AƒT[ƒrƒXƒƒP[ƒ^[‚©‚ç’¼Úæ“¾
+						// é™çš„ã‚µãƒ¼ãƒ“ã‚¹ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã€ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã‹ã‚‰ç›´æ¥å–å¾—
 						std::apply(
 							[&](Services*... unpacked) {
 								static_cast<Derived*>(this)->EndImpl(UndeletablePtr<Services>(unpacked)...);
@@ -732,14 +732,14 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒVƒXƒeƒ€‚ÌI—¹ŠÖ”
-			 * @param partition ƒp[ƒeƒBƒVƒ‡ƒ“‚ÌQÆ
-			 * @details ©g‚ÌƒRƒ“ƒeƒLƒXƒg‚ğg—p‚µ‚ÄAEndImpl‚ğŒÄ‚Ño‚·
+			 * @brief ã‚·ã‚¹ãƒ†ãƒ ã®çµ‚äº†é–¢æ•°
+			 * @param partition ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã®å‚ç…§
+			 * @details è‡ªèº«ã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’ä½¿ç”¨ã—ã¦ã€EndImplã‚’å‘¼ã³å‡ºã™
 			 */
 			void End(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator) override final {
 				if constexpr (HasEndImpl<Derived, Partition, Services...>) {
 					if constexpr (AllStaticServices<Services...>) {
-						// Ã“IƒT[ƒrƒX‚ğg—p‚·‚éê‡AƒT[ƒrƒXƒƒP[ƒ^[‚©‚ç’¼Úæ“¾
+						// é™çš„ã‚µãƒ¼ãƒ“ã‚¹ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã€ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã‹ã‚‰ç›´æ¥å–å¾—
 						std::apply(
 							[&](Services*... unpacked) {
 								constexpr bool hasPartition = function_mentions_v<decltype(&Derived::EndImpl), Partition&>;
@@ -779,35 +779,35 @@ namespace SFW
 				}
 			}
 			/**
-			 * @brief ƒVƒXƒeƒ€‚ÌƒAƒNƒZƒXî•ñ‚ğæ“¾‚·‚éŠÖ”
-			 * @return AccessInfo ƒAƒNƒZƒXî•ñ
+			 * @brief ã‚·ã‚¹ãƒ†ãƒ ã®ã‚¢ã‚¯ã‚»ã‚¹æƒ…å ±ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return AccessInfo ã‚¢ã‚¯ã‚»ã‚¹æƒ…å ±
 			 */
 			constexpr AccessInfo GetAccessInfo() const noexcept override final {
 				return ComponentAccess<AccessTypes...>::GetAccessInfo();
 			}
 			/**
-			 * @brief ƒVƒXƒeƒ€‚Ì•À—ñXV‰Â”\‚©‚ğæ“¾‚·‚éŠÖ”
-			 * @return bool •À—ñXV‰Â”\‚Èê‡‚Ítrue
+			 * @brief ã‚·ã‚¹ãƒ†ãƒ ã®ä¸¦åˆ—æ›´æ–°å¯èƒ½ã‹ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return bool ä¸¦åˆ—æ›´æ–°å¯èƒ½ãªå ´åˆã¯true
 			 */
 			constexpr bool IsParallelUpdate() const noexcept override final {
 				return ParallelUpdate.v;
 			}
 		private:
 
-			//ƒVƒXƒeƒ€‚ÌƒRƒ“ƒeƒLƒXƒg‚ğ•Û‚·‚éƒ^ƒvƒ‹
+			//ã‚·ã‚¹ãƒ†ãƒ ã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’ä¿æŒã™ã‚‹ã‚¿ãƒ—ãƒ«
 			ContextTuple context;
 			/**
-			 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN‚ğİ’è‚·‚éƒwƒ‹ƒp[ŠÖ”
-			 * @param mask ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN‚Ö‚ÌQÆ
+			 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯ã‚’è¨­å®šã™ã‚‹ãƒ˜ãƒ«ãƒ‘ãƒ¼é–¢æ•°
+			 * @param mask ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯ã¸ã®å‚ç…§
 			 */
 			template<typename T>
 			static void SetMask(ComponentMask& mask) {
 				mask.set(ComponentTypeRegistry::GetID<typename T::Type>());
 			}
 			/**
-			 * @brief ƒ^ƒvƒ‹‚©‚çƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN‚ğ\’z‚·‚éƒwƒ‹ƒp[ŠÖ”
-			 * @param Tuple ƒ^ƒvƒ‹‚ÌŒ^
-			 * @return ComponentMask ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
+			 * @brief ã‚¿ãƒ—ãƒ«ã‹ã‚‰ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯ã‚’æ§‹ç¯‰ã™ã‚‹ãƒ˜ãƒ«ãƒ‘ãƒ¼é–¢æ•°
+			 * @param Tuple ã‚¿ãƒ—ãƒ«ã®å‹
+			 * @return ComponentMask ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
 			 */
 			template<typename Tuple, std::size_t... Is>
 			static ComponentMask BuildMaskFromTupleImpl(std::index_sequence<Is...>) {
@@ -816,8 +816,8 @@ namespace SFW
 				return mask;
 			}
 			/**
-			 * @brief ƒ^ƒvƒ‹‚©‚çƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN‚ğ\’z‚·‚éŠÖ”
-			 * @return ComponentMask ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
+			 * @brief ã‚¿ãƒ—ãƒ«ã‹ã‚‰ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯ã‚’æ§‹ç¯‰ã™ã‚‹é–¢æ•°
+			 * @return ComponentMask ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
 			 */
 			template<typename Tuple>
 			static ComponentMask BuildMaskFromTuple() {
@@ -825,7 +825,7 @@ namespace SFW
 					std::make_index_sequence<std::tuple_size_v<Tuple>>{});
 			}
 			/**
-			 * @brief •K—v‚ÈƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN‚ğ’è‹`‚·‚é
+			 * @brief å¿…è¦ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯ã‚’å®šç¾©ã™ã‚‹
 			 */
 			static inline ComponentMask required = BuildMaskFromTuple<AccessorTuple>();
 
@@ -833,7 +833,7 @@ namespace SFW
 			bool matchingChunk = true;
 #endif //_DEBUG
 		private:
-			// –¢ƒ}ƒbƒ`—piŒë—pŒŸoj
+			// æœªãƒãƒƒãƒç”¨ï¼ˆèª¤ç”¨æ¤œå‡ºï¼‰
 			template<bool Parallel, class AccessSpec, class Self, class F, class Source, class... Extra>
 			static void ForEach_impl(AccessSpec*, Self*, F&&, Source&, Extra&&...) {
 				static_assert(sizeof(AccessSpec) == 0,
@@ -859,20 +859,20 @@ namespace SFW
 #endif
 				auto [extraPack, exec] = SplitTailExecutor(std::forward<Extra>(extra)...);
 
-				// ƒRƒ“ƒpƒCƒ‹ŒxFParallel=true ‚È‚Ì‚É––”ö executor ‚ª–³‚¢
+				// ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ™‚è­¦å‘Šï¼šParallel=true ãªã®ã«æœ«å°¾ executor ãŒç„¡ã„
 #if SFW_WARN_NO_EXECUTOR_PARALLEL
 				if constexpr (Parallel && !TailIsExecutor_v<Extra...>) {
 #if defined(__clang__) || defined(__GNUC__)
 #pragma GCC diagnostic push
-#pragma GCC diagnostic warning "-Wdeprecated-declarations" // © ‚±‚±‚Å gŒxh ‚ÉŒÅ’è
-					ExecWarn<true>::touch();   // Œx‚ğ”­¶‚³‚¹‚é
+#pragma GCC diagnostic warning "-Wdeprecated-declarations" // â† ã“ã“ã§ â€œè­¦å‘Šâ€ ã«å›ºå®š
+					ExecWarn<true>::touch();   // è­¦å‘Šã‚’ç™ºç”Ÿã•ã›ã‚‹
 #pragma GCC diagnostic pop
 #else
-					ExecWarn<true>::touch();   // ‘¼ƒRƒ“ƒpƒCƒ‰‚ÍŸ‚Ìß‚©C‚Ö
+					ExecWarn<true>::touch();   // ä»–ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã¯æ¬¡ã®ç¯€ã‹Cã¸
 #endif
 				}
 #endif
-				//w’è‚µ‚½ƒCƒ“ƒfƒbƒNƒX‚Ìƒ`ƒƒƒ“ƒN‚ğXV‚·‚é
+				//æŒ‡å®šã—ãŸã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®ãƒãƒ£ãƒ³ã‚¯ã‚’æ›´æ–°ã™ã‚‹
 				auto body = [&](size_t i) {
 					auto* ch = chunks[i];
 					ComponentAccessor<Ts...> acc(ch);
@@ -885,7 +885,7 @@ namespace SFW
 				RunIndexRange<Parallel>(chunks.size(), body, exec);
 			}
 
-			// “WŠJƒwƒ‹ƒpiAccessSpec = ComponentAccess<Ts...> ‚ğ Ts... ‚ÉŠ„‚èo‚·j
+			// å±•é–‹ãƒ˜ãƒ«ãƒ‘ï¼ˆAccessSpec = ComponentAccess<Ts...> ã‚’ Ts... ã«å‰²ã‚Šå‡ºã™ï¼‰
 			template<bool Parallel, class AccessSpec, class Self, class F, class CullChunks, class... Extra>
 			static void ForEachCulling_impl(Self*, F&&, CullChunks&, EntityManager&, Extra&&...) {
 				static_assert(sizeof(AccessSpec) == 0, "AccessSpec must be ComponentAccess<...>");
@@ -912,16 +912,16 @@ namespace SFW
 #endif
 				auto [extraPack, exec] = SplitTailExecutor(std::forward<Extra>(extra)...);
 
-				// ƒRƒ“ƒpƒCƒ‹ŒxFParallel=true ‚È‚Ì‚É––”ö executor ‚ª–³‚¢
+				// ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ™‚è­¦å‘Šï¼šParallel=true ãªã®ã«æœ«å°¾ executor ãŒç„¡ã„
 #if SFW_WARN_NO_EXECUTOR_PARALLEL
 				if constexpr (Parallel && !TailIsExecutor_v<Extra...>) {
 #if defined(__clang__) || defined(__GNUC__)
 #pragma GCC diagnostic push
-#pragma GCC diagnostic warning "-Wdeprecated-declarations" // © ‚±‚±‚Å gŒxh ‚ÉŒÅ’è
-					ExecWarn<true>::touch();   // Œx‚ğ”­¶‚³‚¹‚é
+#pragma GCC diagnostic warning "-Wdeprecated-declarations" // â† ã“ã“ã§ â€œè­¦å‘Šâ€ ã«å›ºå®š
+					ExecWarn<true>::touch();   // è­¦å‘Šã‚’ç™ºç”Ÿã•ã›ã‚‹
 #pragma GCC diagnostic pop
 #else
-					ExecWarn<true>::touch();   // ‘¼ƒRƒ“ƒpƒCƒ‰‚ÍŸ‚Ìß‚©C‚Ö
+					ExecWarn<true>::touch();   // ä»–ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã¯æ¬¡ã®ç¯€ã‹Cã¸
 #endif
 				}
 #endif
@@ -940,7 +940,7 @@ namespace SFW
 				RunIndexRange<Parallel>(chunks.size(), body, exec);
 			}
 
-			// --- EntityIDs ”Å ---
+			// --- EntityIDs ç‰ˆ ---
 			template<bool Parallel, class AccessSpec, class Self, class F, class Source, class... Extra>
 			static void ForEachWithIDs_impl(AccessSpec*, Self*, F&&, Source&, Extra&&...) {
 				static_assert(sizeof(AccessSpec) == 0,
@@ -968,16 +968,16 @@ namespace SFW
 
 				auto [extraPack, exec] = SplitTailExecutor(std::forward<Extra>(extra)...);
 
-				// ƒRƒ“ƒpƒCƒ‹ŒxFParallel=true ‚È‚Ì‚É––”ö executor ‚ª–³‚¢
+				// ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ™‚è­¦å‘Šï¼šParallel=true ãªã®ã«æœ«å°¾ executor ãŒç„¡ã„
 #if SFW_WARN_NO_EXECUTOR_PARALLEL
 				if constexpr (Parallel && !TailIsExecutor_v<Extra...>) {
 #if defined(__clang__) || defined(__GNUC__)
 #pragma GCC diagnostic push
-#pragma GCC diagnostic warning "-Wdeprecated-declarations" // © ‚±‚±‚Å gŒxh ‚ÉŒÅ’è
-					ExecWarn<true>::touch();   // Œx‚ğ”­¶‚³‚¹‚é
+#pragma GCC diagnostic warning "-Wdeprecated-declarations" // â† ã“ã“ã§ â€œè­¦å‘Šâ€ ã«å›ºå®š
+					ExecWarn<true>::touch();   // è­¦å‘Šã‚’ç™ºç”Ÿã•ã›ã‚‹
 #pragma GCC diagnostic pop
 #else
-					ExecWarn<true>::touch();   // ‘¼ƒRƒ“ƒpƒCƒ‰‚ÍŸ‚Ìß‚©C‚Ö
+					ExecWarn<true>::touch();   // ä»–ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã¯æ¬¡ã®ç¯€ã‹Cã¸
 #endif
 				}
 #endif

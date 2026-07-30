@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "app/appconfig.h"
 #include "system/PlayerSystem.h"
@@ -8,7 +8,7 @@
 
 struct CTitleSprite
 {
-	float fadeTime = 2.5f; //ƒtƒF[ƒh‚É‚©‚©‚éŠÔ
+	float fadeTime = 2.5f; //ãƒ•ã‚§ãƒ¼ãƒ‰ã«ã‹ã‹ã‚‹æ™‚é–“
 	bool isErased = false;
 };
 
@@ -16,12 +16,12 @@ template<typename Partition>
 class TitleSystem : public ITypeSystem<
 	TitleSystem,
 	Partition,
-	//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
+	//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
 	ComponentAccess<
 	Read<CTitleSprite>,
 	Write<CColor>
 	>,
-	//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	ServiceContext<
 	WorldType::RequestService,
 	InputService,
@@ -32,9 +32,9 @@ class TitleSystem : public ITypeSystem<
 	using Accessor = ComponentAccessor<Read<CTitleSprite>, Write<CColor>>;
 
 public:
-	//ƒ[ƒhŠ®—¹‚µ‚Ä‚©‚çƒ^ƒCƒgƒ‹‚ğŒ©‚¹‚é‚Ü‚Å‘Ò‚ÂŠÔ
+	//ãƒ­ãƒ¼ãƒ‰å®Œäº†ã—ã¦ã‹ã‚‰ã‚¿ã‚¤ãƒˆãƒ«ã‚’è¦‹ã›ã‚‹ã¾ã§å¾…ã¤æ™‚é–“
 	static inline constexpr float WAIT_FADE_TIME = 0.0f;
-	//Enter‚ğ‰Ÿ‚µ‚Ä‚©‚çƒQ[ƒ€‚ªn‚Ü‚éŠÔ
+	//Enterã‚’æŠ¼ã—ã¦ã‹ã‚‰ã‚²ãƒ¼ãƒ ãŒå§‹ã¾ã‚‹æ™‚é–“
 	static inline constexpr float START_GAME_TIME = 5.0f;
 
 	static inline constexpr float START_CAMERA_PLAYER_DISTANCE = 20.0f;
@@ -45,19 +45,19 @@ public:
 		NoDeletePtr<TimerService> timerService,
 		NoDeletePtr<PlayerService> playerService,
 		NoDeletePtr<Graphics::I3DPerCameraService> perCameraService) {
-		//ƒ[ƒfƒBƒ“ƒO’†‚ÌƒŒƒxƒ‹‚ğæ‚Éƒ[ƒh
+		//ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ä¸­ã®ãƒ¬ãƒ™ãƒ«ã‚’å…ˆã«ãƒ­ãƒ¼ãƒ‰
 			{
 				auto loadCmd = worldRequestService->CreateLoadLevelCommand(App::LOADING_LEVEL_NAME);
 				worldRequestService->PushCommand(std::move(loadCmd));
 			}
 
 			{
-				//ƒ[ƒhŠ®—¹Œã‚ÌƒR[ƒ‹ƒoƒbƒN
+				//ãƒ­ãƒ¼ãƒ‰å®Œäº†å¾Œã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 				auto loadedFunc = [&](WorldType::Session* pSession) {
-					//ƒ[ƒfƒBƒ“ƒOƒŒƒxƒ‹‚ğƒNƒŠ[ƒ“ƒAƒbƒv
+					//ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ãƒ¬ãƒ™ãƒ«ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—
 					pSession->CleanLevel(App::LOADING_LEVEL_NAME);
 
-					//ƒƒCƒ“ƒŒƒxƒ‹‚ÌƒvƒŒƒCƒ„[ƒVƒXƒeƒ€‚ğˆê’â~
+					//ãƒ¡ã‚¤ãƒ³ãƒ¬ãƒ™ãƒ«ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚·ã‚¹ãƒ†ãƒ ã‚’ä¸€æ™‚åœæ­¢
 					pSession->PauseResumeSystemInLevel<PlayerSystem>(App::MAIN_LEVEL_NAME, true);
 
 					loadedMainLevel.store(true, std::memory_order_relaxed);
@@ -68,7 +68,7 @@ public:
 			}
 	}
 
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(Partition& partition,
 		NoDeletePtr<WorldType::RequestService> worldRequestService,
 		NoDeletePtr<InputService> inputService,
@@ -79,7 +79,7 @@ public:
 
 		if (isLoadedMainLevel)
 		{
-			//ƒtƒF[ƒh‚Íƒ^ƒCƒ€ƒXƒP[ƒ‹‚ğ–³‹‚µ‚Äi‚ß‚é
+			//ãƒ•ã‚§ãƒ¼ãƒ‰ã¯ã‚¿ã‚¤ãƒ ã‚¹ã‚±ãƒ¼ãƒ«ã‚’ç„¡è¦–ã—ã¦é€²ã‚ã‚‹
 			fadeElapsedTime += timerService->GetUnscaledDeltaTime();
 
 			auto& globalEntityManager = partition.GetGlobalEntityManager();
@@ -110,7 +110,7 @@ public:
 
 		if (startGame)
 		{
-			//ƒtƒF[ƒh‚Íƒ^ƒCƒ€ƒXƒP[ƒ‹‚ğ–³‹‚µ‚Äi‚ß‚é
+			//ãƒ•ã‚§ãƒ¼ãƒ‰ã¯ã‚¿ã‚¤ãƒ ã‚¹ã‚±ãƒ¼ãƒ«ã‚’ç„¡è¦–ã—ã¦é€²ã‚ã‚‹
 			float dt = timerService->GetUnscaledDeltaTime();
 			fadeElapsedTime += dt;
 
@@ -147,7 +147,7 @@ public:
 			Math::Vec3f desertTarget = playerService->GetPlayerPosition() + PlayerService::CAMERA_OFFSET;
 			Math::Vec3f target = Math::Lerp(startCamTarget, desertTarget, Math::EaseSmoother(t));
 
-			target.y += sin(t * Math::pi_v<float>) * 5.0f; //­‚µ‚¿ã‚°‚é
+			target.y += sin(t * Math::pi_v<float>) * 5.0f; //å°‘ã—æŒã¡ä¸Šã’ã‚‹
 
 			perCameraService->SetTarget(target);
 
@@ -161,11 +161,11 @@ public:
 
 			if (t >= 1.0f)
 			{
-				//ƒ^ƒCƒgƒ‹ƒŒƒxƒ‹‚ğƒNƒŠ[ƒ“ƒAƒbƒv
+				//ã‚¿ã‚¤ãƒˆãƒ«ãƒ¬ãƒ™ãƒ«ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—
 				auto cleanCmd = worldRequestService->CreateCleanLevelCommand("Title");
 				worldRequestService->PushCommand(std::move(cleanCmd));
 
-				//ƒƒCƒ“ƒŒƒxƒ‹‚ÌƒvƒŒƒCƒ„[ƒVƒXƒeƒ€‚ğÄŠJ
+				//ãƒ¡ã‚¤ãƒ³ãƒ¬ãƒ™ãƒ«ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚·ã‚¹ãƒ†ãƒ ã‚’å†é–‹
 				auto addSystemCmd = worldRequestService->CreatePauseResumeSystemCommand<PlayerSystem>(App::MAIN_LEVEL_NAME, false);
 				worldRequestService->PushCommand(std::move(addSystemCmd));
 			}
@@ -173,7 +173,7 @@ public:
 			return;
 		}
 
-		// SpaceƒL[‚ª‰Ÿ‚³‚ê‚½‚çAƒQ[ƒ€ƒŒƒxƒ‹‚ğƒ[ƒh‚·‚éƒŠƒNƒGƒXƒg‚ğ’Ç‰Á
+		// Spaceã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸã‚‰ã€ã‚²ãƒ¼ãƒ ãƒ¬ãƒ™ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’è¿½åŠ 
 		if (isLoadedMainLevel && inputService->IsKeyTrigger(Input::Key::Space) && !startGame)
 		{
 			startGame = true;

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <SectorFW/Debug/DebugType.h>
 #include "environment/WindService.h"
@@ -7,8 +7,8 @@ template<typename Partition>
 class GlobalDebugRenderSystem : public ITypeSystem<
 	GlobalDebugRenderSystem,
 	Partition,
-	ComponentAccess<>,//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
-	//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	ComponentAccess<>,//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
+	//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	ServiceContext<
 	Graphics::RenderService,
 	Graphics::I3DPerCameraService,
@@ -61,7 +61,7 @@ public:
 		.mipLevels = 1,
 		.arraySize = 1,
 		.usage = D3D11_USAGE_DEFAULT,
-		.bindFlags = D3D11_BIND_SHADER_RESOURCE, // •K—v‚É‰‚¶‚Ä RENDER_TARGET ‚È‚Ç’Ç‰Á
+		.bindFlags = D3D11_BIND_SHADER_RESOURCE, // å¿…è¦ã«å¿œã˜ã¦ RENDER_TARGET ãªã©è¿½åŠ 
 		.cpuAccessFlags = 0,
 		.miscFlags = 0,
 		.initialData = mocDepth.data(),
@@ -75,7 +75,7 @@ public:
 
 		Graphics::DX11::MaterialCreateDesc matDesc;
 		matDesc.shader = mocShaderHandle;
-		matDesc.psSRV[10] = mocDepthTexHandle; // TEX10 ‚ÉƒZƒbƒg
+		matDesc.psSRV[10] = mocDepthTexHandle; // TEX10 ã«ã‚»ãƒƒãƒˆ
 		auto matMgr = renderService->GetResourceManager<Graphics::DX11::MaterialManager>();
 		matMgr->Add(matDesc, mocMaterialHandle);
 
@@ -168,7 +168,7 @@ public:
 		psoDesc = { shaderHandle, RasterizerStateID::WireCullNone };
 		psoMgr->Add(psoDesc, psoLineHandle);
 
-		// --- Index BufferiŒÅ’èF0,1,2,3,4,5,cj---
+		// --- Index Bufferï¼ˆå›ºå®šï¼š0,1,2,3,4,5,â€¦ï¼‰---
 		std::vector<uint32_t> indices(MAX_CAPACITY_3DLINE);
 		for (uint32_t i = 0; i < MAX_CAPACITY_3DLINE; ++i) indices[i] = i;
 
@@ -185,7 +185,7 @@ public:
 		line3DVertices.reset(new Debug::LineVertex[MAX_CAPACITY_3DLINE]);
 	}
 
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::I3DPerCameraService> camera3DService,
 		NoDeletePtr<Graphics::I2DCameraService> camera2DService,
@@ -235,7 +235,7 @@ public:
 			showDeferred = true;
 		}
 
-		//SRV‚ÌƒoƒCƒ“ƒh‚ğŠO‚·‚½‚ß‚Éƒ_ƒ~[‚ÌƒRƒ}ƒ“ƒh”­s
+		//SRVã®ãƒã‚¤ãƒ³ãƒ‰ã‚’å¤–ã™ãŸã‚ã«ãƒ€ãƒŸãƒ¼ã®ã‚³ãƒãƒ³ãƒ‰ç™ºè¡Œ
 		if (showDeferred)
 		{
 			Math::Matrix4x4f scaleMat = Math::MakeScalingMatrix(Math::Vec3f{ 0.0f, 0.0f, 0.0f });
@@ -322,8 +322,8 @@ public:
 			Graphics::DrawCommand cmd;
 			cmd.instanceIndex = uiSession.AllocInstance({ Math::Matrix4x4f::Identity() });
 			cmd.mesh = line3DHandle.index;
-			cmd.pso = psoLineHandle.index; // “KØ‚Èƒ‰ƒCƒ“—pPSO‚ª‚ ‚ê‚Î‚»‚¿‚ç‚ğg—p
-			cmd.material = 0; // ƒ‰ƒCƒ“—p‚Ìƒ}ƒeƒŠƒAƒ‹‚ª‚ ‚ê‚Î‚»‚¿‚ç‚ğg—p
+			cmd.pso = psoLineHandle.index; // é©åˆ‡ãªãƒ©ã‚¤ãƒ³ç”¨PSOãŒã‚ã‚Œã°ãã¡ã‚‰ã‚’ä½¿ç”¨
+			cmd.material = 0; // ãƒ©ã‚¤ãƒ³ç”¨ã®ãƒãƒ†ãƒªã‚¢ãƒ«ãŒã‚ã‚Œã°ãã¡ã‚‰ã‚’ä½¿ç”¨
 			cmd.viewMask = PASS_UI_3DLINE;
 			cmd.sortKey = 0;
 			uiSession.Push(std::move(cmd));

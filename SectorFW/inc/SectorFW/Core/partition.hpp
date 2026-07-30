@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Partition.hpp
- * @brief ƒp[ƒeƒBƒVƒ‡ƒ“‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -22,14 +22,14 @@
 namespace SFW
 {
 	/**
-	 * @brief ƒ`ƒƒƒ“ƒN‚ğŒŸõ‚·‚éÛ‚Ìƒ|ƒŠƒV[‚ğ’è‹`‚·‚é—ñ‹“Œ^
+	 * @brief ãƒãƒ£ãƒ³ã‚¯ã‚’æ¤œç´¢ã™ã‚‹éš›ã®ãƒãƒªã‚·ãƒ¼ã‚’å®šç¾©ã™ã‚‹åˆ—æŒ™å‹
 	 */
 	enum class EOutOfBoundsPolicy {
-		Reject, // ”ÍˆÍŠO‚Ìƒ`ƒƒƒ“ƒN‚ğ‹‘”Û
-		ClampToEdge, // ”ÍˆÍŠO‚Ìƒ`ƒƒƒ“ƒN‚ğƒGƒbƒW‚ÉƒNƒ‰ƒ“ƒv
+		Reject, // ç¯„å›²å¤–ã®ãƒãƒ£ãƒ³ã‚¯ã‚’æ‹’å¦
+		ClampToEdge, // ç¯„å›²å¤–ã®ãƒãƒ£ãƒ³ã‚¯ã‚’ã‚¨ãƒƒã‚¸ã«ã‚¯ãƒ©ãƒ³ãƒ—
 	};
 	/**
-	 * @brief Partition‚ªÀ‘•‚·‚é•K—v‚Ì‚ ‚éƒCƒ“ƒ^[ƒtƒF[ƒX‚ğ’è‹`‚·‚éƒRƒ“ƒZƒvƒg
+	 * @brief PartitionãŒå®Ÿè£…ã™ã‚‹å¿…è¦ã®ã‚ã‚‹ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’å®šç¾©ã™ã‚‹ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 	 */
 	template <typename Derived>
 	concept PartitionConcept = requires(
@@ -44,30 +44,30 @@ namespace SFW
 		Debug::LineVertex * outLine, uint32_t lineCapacity, uint32_t displayCount
 		)
 	{
-		//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		Derived{ originWS, size, size, chunkSize };
 
-		//ƒ|ƒCƒ“ƒg‚©‚çƒ`ƒƒƒ“ƒN‚ğæ“¾
+		//ãƒã‚¤ãƒ³ãƒˆã‹ã‚‰ãƒãƒ£ãƒ³ã‚¯ã‚’å–å¾—
 		{ t.GetChunk(v, reg, level, policy) } -> std::same_as<std::optional<SpatialChunk*>>;
-		//•ªŠ„‚ÉˆË‘¶‚µ‚È‚¢ƒOƒ[ƒoƒ‹‚ÈƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[‚ğæ“¾
+		//åˆ†å‰²ã«ä¾å­˜ã—ãªã„ã‚°ãƒ­ãƒ¼ãƒãƒ«ãªã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚’å–å¾—
 		{ t.GetGlobalEntityManager() } -> std::same_as<ECS::EntityManager&>;
-		//ƒ`ƒƒƒ“ƒN‚Ì“o˜^
+		//ãƒãƒ£ãƒ³ã‚¯ã®ç™»éŒ²
 		{ t.RegisterAllChunks(reg, level) } -> std::same_as<void>;
-		//ƒGƒ“ƒeƒBƒeƒB‚Ì‘”‚ğæ“¾
+		//ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ç·æ•°ã‚’å–å¾—
 		{ t.GetEntityNum() } -> std::same_as<size_t>;
-		//ƒtƒ‰ƒXƒ^ƒ€ƒJƒŠƒ“ƒO
+		//ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚«ãƒªãƒ³ã‚°
 		{ t.CullChunks(fr) } -> std::same_as<std::vector<SpatialChunk*>>;
-		//”¼ŒaƒJƒŠƒ“ƒO
+		//åŠå¾„ã‚«ãƒªãƒ³ã‚°
 		{ t.CullChunks(center, radius) } -> std::same_as<std::vector<SpatialChunk*>>;
-		//ƒtƒ‰ƒXƒ^ƒ€ƒJƒŠƒ“ƒOi‹ß‚¢‡”Ôj
+		//ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚«ãƒªãƒ³ã‚°ï¼ˆè¿‘ã„é †ç•ªï¼‰
 		{ t.CullChunksNear(fr, cp) } -> std::same_as<std::vector<SpatialChunk*>>;
-		//ƒ`ƒƒƒ“ƒN‚ÌƒƒCƒ„[ƒtƒŒ[ƒ€‚ğæ“¾
+		//ãƒãƒ£ãƒ³ã‚¯ã®ãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’å–å¾—
 		{ t.CullChunkLine(fr, cp, hy, outLine, lineCapacity, displayCount) } -> std::same_as<uint32_t>;
-		//ƒ`ƒƒƒ“ƒN‚ğƒNƒŠƒA‚·‚é
+		//ãƒãƒ£ãƒ³ã‚¯ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹
 		{ t.CleanChunk() }->std::same_as<void>;
 	};
 	/**
-	 * @brief XV‰Â”\‚Èƒp[ƒeƒBƒVƒ‡ƒ“‚ğ¯•Ê‚·‚éƒRƒ“ƒZƒvƒg
+	 * @brief æ›´æ–°å¯èƒ½ãªãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã‚’è­˜åˆ¥ã™ã‚‹ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 	 */
 	template <typename Derived>
 	concept HasPartitionUpdate = requires(Derived t, double deltaTime)

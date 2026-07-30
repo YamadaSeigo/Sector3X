@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   ResouceManagerBase.hpp
- * @brief ƒŠƒ\[ƒXƒ}ƒl[ƒWƒƒ[‚ÌŠî’êƒNƒ‰ƒX
+ * @brief ãƒªã‚½ãƒ¼ã‚¹ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®åŸºåº•ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -17,20 +17,20 @@
 namespace SFW
 {
 	/**
-	 * @brief ƒŠƒ\[ƒXƒ}ƒl[ƒWƒƒ[‚ÌŠî’êƒNƒ‰ƒXBå‚ÉRendererŒn‚Åg—p‚·‚éB
+	 * @brief ãƒªã‚½ãƒ¼ã‚¹ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®åŸºåº•ã‚¯ãƒ©ã‚¹ã€‚ä¸»ã«Rendererç³»ã§ä½¿ç”¨ã™ã‚‹ã€‚
 	 */
 	template<typename Derived, typename HandleType, typename CreateDescType, typename ResourceType>
 	class ResourceManagerBase {
 	public:
 		/**
-		 * @brief ƒŠƒ\[ƒX‚ğSLock•t‚«‚Åæ“¾‚·‚é‚½‚ß‚Ìƒ‰ƒbƒp[
+		 * @brief ãƒªã‚½ãƒ¼ã‚¹ã‚’SLockä»˜ãã§å–å¾—ã™ã‚‹ãŸã‚ã®ãƒ©ãƒƒãƒ‘ãƒ¼
 		 */
 		template<class T, template<class> class Lock>
 		class LockedResource {
 		public:
 			using mutex_type = std::shared_mutex;
 
-			// ‹¤—LƒƒbƒN‚È‚ç const T&/const T*A‚»‚êˆÈŠO‚Í T&/T*
+			// å…±æœ‰ãƒ­ãƒƒã‚¯ãªã‚‰ const T&/const T*ã€ãã‚Œä»¥å¤–ã¯ T&/T*
 			using ref_type = std::conditional_t<
 				std::is_same_v<Lock<mutex_type>, std::shared_lock<mutex_type>>,
 				const T&, T&
@@ -40,21 +40,21 @@ namespace SFW
 				const T*, T*
 			>;
 
-			// ƒƒbƒN‚ğæ“¾‚µ‚Ä‚©‚çŒÄ‚Ô‚±‚Æ
+			// ãƒ­ãƒƒã‚¯ã‚’å–å¾—ã—ã¦ã‹ã‚‰å‘¼ã¶ã“ã¨
 			LockedResource(ptr_type p, Lock<mutex_type>&& lk)
 				: ptr_(p), lock_(std::move(lk)) {
 				assert(lock_.owns_lock());
 			}
 
-			// ƒ€[ƒu‚Ì‚İ‰Â
+			// ãƒ ãƒ¼ãƒ–ã®ã¿å¯
 			LockedResource(LockedResource&& other) noexcept
 				: ptr_(other.ptr_), lock_(std::move(other.lock_)) {
 				other.ptr_ = nullptr;
 			}
-			//‚È‚©‚Åƒ€[ƒu‘ã“ü‚ğg‚¤
+			//ãªã‹ã§ãƒ ãƒ¼ãƒ–ä»£å…¥ã‚’ä½¿ã†
 			LockedResource& operator=(LockedResource&& other) noexcept {
 				if (this != &other) {
-					// æ‚É©•ª‚ÌƒƒbƒN‚ğ‰ğ•úiunique_lock/shared_lock ‚Íƒ€[ƒu‘ã“ü‚Å©“®‚Å‚â‚Á‚Ä‚­‚ê‚é‚ª”O‚Ì‚½‚ß‡˜‚ğ–¾Šm‰»j
+					// å…ˆã«è‡ªåˆ†ã®ãƒ­ãƒƒã‚¯ã‚’è§£æ”¾ï¼ˆunique_lock/shared_lock ã¯ãƒ ãƒ¼ãƒ–ä»£å…¥ã§è‡ªå‹•ã§ã‚„ã£ã¦ãã‚Œã‚‹ãŒå¿µã®ãŸã‚é †åºã‚’æ˜ç¢ºåŒ–ï¼‰
 					lock_ = LockTransfer(std::move(other.lock_));
 					ptr_ = other.ptr_;
 					other.ptr_ = nullptr;
@@ -65,21 +65,21 @@ namespace SFW
 			LockedResource(const LockedResource&) = delete;
 			LockedResource& operator=(const LockedResource&) = delete;
 
-			const ResourceType& operator*() const&& = delete;		// rvalue‚Í•s‰Â
-			const ResourceType& operator->() const&& = delete;		// rvalue‚Í•s‰Â
-			const ResourceType& ref() const&& = delete;  	// rvalue‚Í•s‰Â
+			const ResourceType& operator*() const&& = delete;		// rvalueã¯ä¸å¯
+			const ResourceType& operator->() const&& = delete;		// rvalueã¯ä¸å¯
+			const ResourceType& ref() const&& = delete;  	// rvalueã¯ä¸å¯
 
-			// ƒAƒNƒZƒX
+			// ã‚¢ã‚¯ã‚»ã‚¹
 			ref_type operator*() const& noexcept { return *ptr_; }
 			ptr_type operator->() const& noexcept { return ptr_; }
-			// –¾¦“I‚ÉQÆ‚ğæ‚è‚½‚¢ê‡
+			// æ˜ç¤ºçš„ã«å‚ç…§ã‚’å–ã‚ŠãŸã„å ´åˆ
 			ref_type ref() const& noexcept { return *ptr_; }
 
-			// ƒƒbƒN‚ğ–¾¦“I‚É•Û‚µ‚½‚Ü‚Ü‚É‚µ‚½‚¢İŒv‚È‚çAunlock ‚ğo‚³‚È‚¢iRAIIj
-			// •K—v‚È‚ç lock ‚ğæ‚èo‚· API ‚ğ’Ç‰Á‚µ‚Ä‚à—Ç‚¢i”ñ„§j
+			// ãƒ­ãƒƒã‚¯ã‚’æ˜ç¤ºçš„ã«ä¿æŒã—ãŸã¾ã¾ã«ã—ãŸã„è¨­è¨ˆãªã‚‰ã€unlock ã‚’å‡ºã•ãªã„ï¼ˆRAIIï¼‰
+			// å¿…è¦ãªã‚‰ lock ã‚’å–ã‚Šå‡ºã™ API ã‚’è¿½åŠ ã—ã¦ã‚‚è‰¯ã„ï¼ˆéæ¨å¥¨ï¼‰
 
 		private:
-			// lock_ ‚Ìƒ€[ƒu‘ã“ü‚ğ®‚Æ‚µ‚ÄØ‚èo‚·‚¾‚¯‚Ì¬“¹‹ï
+			// lock_ ã®ãƒ ãƒ¼ãƒ–ä»£å…¥ã‚’å¼ã¨ã—ã¦åˆ‡ã‚Šå‡ºã™ã ã‘ã®å°é“å…·
 			static Lock<mutex_type> LockTransfer(Lock<mutex_type>&& lk) noexcept {
 				return std::move(lk);
 			}
@@ -88,7 +88,7 @@ namespace SFW
 			Lock<mutex_type> lock_;
 		};
 		/**
-		 * @brief ƒŠƒ\[ƒX‚ª—LŒø‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚éŠÖ”
+		 * @brief ãƒªã‚½ãƒ¼ã‚¹ãŒæœ‰åŠ¹ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹é–¢æ•°
 		 */
 		struct Slot {
 			ResourceType data;
@@ -97,26 +97,26 @@ namespace SFW
 		};
 
 		/**
-		 * @brief Add: Šù‘¶‚ª‚ ‚ê‚ÎÄ—˜—p(+1)•íœ—v‹‚ª“ü‚Á‚Ä‚¢‚ê‚ÎƒLƒƒƒ“ƒZƒ‹
-		 * @param desc ì¬î•ñ
-		 * @param out æ“¾‚µ‚½ƒnƒ“ƒhƒ‹
-		 * @return Šù‘¶‚ğÄ—˜—p‚µ‚½ê‡ trueAV‹Kì¬‚È‚ç false
+		 * @brief Add: æ—¢å­˜ãŒã‚ã‚Œã°å†åˆ©ç”¨(+1)ï¼†å‰Šé™¤è¦æ±‚ãŒå…¥ã£ã¦ã„ã‚Œã°ã‚­ãƒ£ãƒ³ã‚»ãƒ«
+		 * @param desc ä½œæˆæƒ…å ±
+		 * @param out å–å¾—ã—ãŸãƒãƒ³ãƒ‰ãƒ«
+		 * @return æ—¢å­˜ã‚’å†åˆ©ç”¨ã—ãŸå ´åˆ trueã€æ–°è¦ä½œæˆãªã‚‰ false
 		 */
 		bool Add(const CreateDescType& desc, HandleType& out) {
 			if (auto h = static_cast<Derived*>(this)->FindExisting(desc)) {
-				// Šù‘¶‚ğ +1
+				// æ—¢å­˜ã‚’ +1
 				AddRef(*h);
-				// ‚à‚µíœ—v‹‚ª“ü‚Á‚Ä‚¢‚ê‚ÎƒLƒƒƒ“ƒZƒ‹
+				// ã‚‚ã—å‰Šé™¤è¦æ±‚ãŒå…¥ã£ã¦ã„ã‚Œã°ã‚­ãƒ£ãƒ³ã‚»ãƒ«
 				CancelPending((*h).index);
 
 				out = *h;
 				return true;
 			}
 
-			// V‹KŠm•Û(Ä—˜—p‚Å‚«‚éê‡‚Í‚»‚Ìƒnƒ“ƒhƒ‹‚ğ•Ô‚·)
+			// æ–°è¦ç¢ºä¿(å†åˆ©ç”¨ã§ãã‚‹å ´åˆã¯ãã®ãƒãƒ³ãƒ‰ãƒ«ã‚’è¿”ã™)
 			HandleType h = AllocateHandle();
 
-			// ƒŠƒ\[ƒX‚ÌÀÛ‚Ì¶¬‚ÍƒƒbƒNŠO‚Å‚â‚Á‚Ä‚à‚æ‚¢id‚¢‚Ì‚Åj
+			// ãƒªã‚½ãƒ¼ã‚¹ã®å®Ÿéš›ã®ç”Ÿæˆã¯ãƒ­ãƒƒã‚¯å¤–ã§ã‚„ã£ã¦ã‚‚ã‚ˆã„ï¼ˆé‡ã„ã®ã§ï¼‰
 			ResourceType res = static_cast<Derived*>(this)->CreateResource(desc, h);
 
 			{
@@ -132,17 +132,17 @@ namespace SFW
 			return false;
 		}
 		/**
-		 * @brief AddRef: QÆƒJƒEƒ“ƒg +1
-		 * @param h —LŒø‚Èƒnƒ“ƒhƒ‹
+		 * @brief AddRef: å‚ç…§ã‚«ã‚¦ãƒ³ãƒˆ +1
+		 * @param h æœ‰åŠ¹ãªãƒãƒ³ãƒ‰ãƒ«
 		 */
 		void AddRef(HandleType h) {
 			assert(IsValid(h));
 			refCount[h.index].fetch_add(1, std::memory_order_relaxed);
 		}
 		/**
-		 * @brief Release: 0 ‚É‚È‚Á‚½‚çíœ—v‹‚ğÏ‚Şialive ‚Í‚±‚±‚Å‚Í—‚Æ‚³‚È‚¢j
-		 * @param h —LŒø‚Èƒnƒ“ƒhƒ‹
-		 * @param deleteSync íœ—v‹‚ÌŠúŒÀiƒtƒŒ[ƒ€ƒJƒEƒ“ƒ^‚È‚ÇjB0 ‚È‚ç‘¦B
+		 * @brief Release: 0 ã«ãªã£ãŸã‚‰å‰Šé™¤è¦æ±‚ã‚’ç©ã‚€ï¼ˆalive ã¯ã“ã“ã§ã¯è½ã¨ã•ãªã„ï¼‰
+		 * @param h æœ‰åŠ¹ãªãƒãƒ³ãƒ‰ãƒ«
+		 * @param deleteSync å‰Šé™¤è¦æ±‚ã®æœŸé™ï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ã‚¿ãªã©ï¼‰ã€‚0 ãªã‚‰å³æ™‚ã€‚
 		 */
 		void Release(HandleType h, uint64_t deleteSync = 0) {
 			assert(IsValid(h));
@@ -151,9 +151,9 @@ namespace SFW
 			if (prev == 1) EnqueueDelete(h.index, deleteSync);
 		}
 		/**
-		 * @brief íœ—v‹‚Ì“o˜^id•¡‚ğ–h‚¢‚ÅŠúŒÀXVj
-		 * @param index ƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX
-		 * @param deleteSync íœ—v‹‚ÌŠúŒÀiƒtƒŒ[ƒ€ƒJƒEƒ“ƒ^‚È‚ÇjB0 ‚È‚ç‘¦B
+		 * @brief å‰Šé™¤è¦æ±‚ã®ç™»éŒ²ï¼ˆé‡è¤‡ã‚’é˜²ã„ã§æœŸé™æ›´æ–°ï¼‰
+		 * @param index ã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		 * @param deleteSync å‰Šé™¤è¦æ±‚ã®æœŸé™ï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ã‚¿ãªã©ï¼‰ã€‚0 ãªã‚‰å³æ™‚ã€‚
 		 */
 		void EnqueueDelete(uint32_t index, uint64_t deleteSync) {
 			std::lock_guard lk(pendingMutex_);
@@ -162,12 +162,12 @@ namespace SFW
 				pendingByIndex[index] = pendingDelete.size() - 1;
 			}
 			else {
-				pendingDelete[it->second].deleteSync = deleteSync; // Œã‚ë‚Ö‰„‚Î‚·
+				pendingDelete[it->second].deleteSync = deleteSync; // å¾Œã‚ã¸å»¶ã°ã™
 			}
 		}
 		/**
-		 * @brief íœ—v‹‚ÌƒLƒƒƒ“ƒZƒ‹iAdd ‚Å‚Ì•œŠˆ‚È‚Çj
-		 * @param index ƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX
+		 * @brief å‰Šé™¤è¦æ±‚ã®ã‚­ãƒ£ãƒ³ã‚»ãƒ«ï¼ˆAdd ã§ã®å¾©æ´»æ™‚ãªã©ï¼‰
+		 * @param index ã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 		 */
 		void CancelPending(uint32_t index) {
 			std::lock_guard lk(pendingMutex_);
@@ -176,51 +176,51 @@ namespace SFW
 				const size_t pos = it->second;
 				pendingDelete.erase(pendingDelete.begin() + pos);
 				pendingByIndex.erase(it);
-				// pos ˆÈ~‚ÌˆÊ’u‚ª‚¸‚ê‚é‚Ì‚ÅA•K—v‚È‚ç‹l‚ß‘Ö‚¦Å“K‰»‚ğ“ü‚ê‚Ä‚à‚æ‚¢
+				// pos ä»¥é™ã®ä½ç½®ãŒãšã‚Œã‚‹ã®ã§ã€å¿…è¦ãªã‚‰è©°ã‚æ›¿ãˆæœ€é©åŒ–ã‚’å…¥ã‚Œã¦ã‚‚ã‚ˆã„
 			}
 		}
 		/**
-		 * @brief Get: —LŒø‚Èƒnƒ“ƒhƒ‹‚È‚ç Shared Lock •t‚«‚ÅƒŠƒ\[ƒX‚ğ•Ô‚·
-		 * @param h —LŒø‚Èƒnƒ“ƒhƒ‹
-		 * @return Resource ƒŠƒ\[ƒX‚Ìƒ‰ƒbƒp[
+		 * @brief Get: æœ‰åŠ¹ãªãƒãƒ³ãƒ‰ãƒ«ãªã‚‰ Shared Lock ä»˜ãã§ãƒªã‚½ãƒ¼ã‚¹ã‚’è¿”ã™
+		 * @param h æœ‰åŠ¹ãªãƒãƒ³ãƒ‰ãƒ«
+		 * @return Resource ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ©ãƒƒãƒ‘ãƒ¼
 		 */
 		[[nodiscard]] LockedResource<ResourceType, std::shared_lock> Get(HandleType h) const {
 			assert(IsValid(h));
-			std::shared_lock lk(mapMutex); // æ‚ÉƒƒbƒN
+			std::shared_lock lk(mapMutex); // å…ˆã«ãƒ­ãƒƒã‚¯
 			return { &slots[h.index].data, std::move(lk) };
 		}
 
 		/**
-	 * @brief Get: —LŒø‚Èƒnƒ“ƒhƒ‹‚È‚ç Shared Lock •t‚«‚ÅƒŠƒ\[ƒX‚ğ•Ô‚·
-	 * @param h —LŒø‚Èƒnƒ“ƒhƒ‹
-	 * @return Resource ƒŠƒ\[ƒX‚Ìƒ‰ƒbƒp[
+	 * @brief Get: æœ‰åŠ¹ãªãƒãƒ³ãƒ‰ãƒ«ãªã‚‰ Shared Lock ä»˜ãã§ãƒªã‚½ãƒ¼ã‚¹ã‚’è¿”ã™
+	 * @param h æœ‰åŠ¹ãªãƒãƒ³ãƒ‰ãƒ«
+	 * @return Resource ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ©ãƒƒãƒ‘ãƒ¼
 	 */
 		[[nodiscard]] LockedResource<ResourceType, std::unique_lock> GetWrite(HandleType h) {
 			assert(IsValid(h));
-			std::unique_lock lk(mapMutex); // æ‚ÉƒƒbƒN
+			std::unique_lock lk(mapMutex); // å…ˆã«ãƒ­ãƒƒã‚¯
 			return { &slots[h.index].data, std::move(lk) };
 		}
 		/**
-		 * @brief GetDirect: ƒCƒ“ƒfƒbƒNƒX’¼w’è‚Å Shared Lock •t‚«‚ÅƒŠƒ\[ƒX‚ğ•Ô‚·iIsValid ƒ`ƒFƒbƒN‚È‚µj
-		 * @param idx ƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX
-		 * @return Resource ƒŠƒ\[ƒX‚Ìƒ‰ƒbƒp[
+		 * @brief GetDirect: ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç›´æŒ‡å®šã§ Shared Lock ä»˜ãã§ãƒªã‚½ãƒ¼ã‚¹ã‚’è¿”ã™ï¼ˆIsValid ãƒã‚§ãƒƒã‚¯ãªã—ï¼‰
+		 * @param idx ã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		 * @return Resource ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ©ãƒƒãƒ‘ãƒ¼
 		 */
 		[[nodiscard]] LockedResource<ResourceType, std::shared_lock> GetDirect(uint32_t idx) const {
-			std::shared_lock lk(mapMutex); // æ‚ÉƒƒbƒN
+			std::shared_lock lk(mapMutex); // å…ˆã«ãƒ­ãƒƒã‚¯
 			return { &slots[idx].data, std::move(lk) };
 		}
 		/**
-		 * @brief GetDirect: ƒCƒ“ƒfƒbƒNƒX’¼w’è‚Å Shared Lock •t‚«‚ÅƒŠƒ\[ƒX‚ğ•Ô‚·iIsValid ƒ`ƒFƒbƒN‚È‚µj
-		 * @param idx ƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX
-		 * @return Resource ƒŠƒ\[ƒX‚Ìƒ‰ƒbƒp[
+		 * @brief GetDirect: ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç›´æŒ‡å®šã§ Shared Lock ä»˜ãã§ãƒªã‚½ãƒ¼ã‚¹ã‚’è¿”ã™ï¼ˆIsValid ãƒã‚§ãƒƒã‚¯ãªã—ï¼‰
+		 * @param idx ã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		 * @return Resource ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ©ãƒƒãƒ‘ãƒ¼
 		 */
 		[[nodiscard]] LockedResource<ResourceType, std::unique_lock> GetDirectWrite(uint32_t idx) {
-			std::unique_lock lk(mapMutex); // æ‚ÉƒƒbƒN
+			std::unique_lock lk(mapMutex); // å…ˆã«ãƒ­ãƒƒã‚¯
 			return { &slots[idx].data, std::move(lk) };
 		}
 		/**
-		 * @brief ŠúŒÀ“’B‚ÅÅI”»’fFref == 0 ‚È‚ç”jŠüA>0 ‚È‚çíœƒLƒƒƒ“ƒZƒ‹
-		 * @param currentFrame Œ»İ‚ÌƒtƒŒ[ƒ€ƒJƒEƒ“ƒ^‚È‚Ç
+		 * @brief æœŸé™åˆ°é”ã§æœ€çµ‚åˆ¤æ–­ï¼šref == 0 ãªã‚‰ç ´æ£„ã€>0 ãªã‚‰å‰Šé™¤ã‚­ãƒ£ãƒ³ã‚»ãƒ«
+		 * @param currentFrame ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ã‚¿ãªã©
 		 */
 		void ProcessDeferredDeletes(uint64_t currentFrame) {
 			std::lock_guard lk(pendingMutex_);
@@ -231,77 +231,77 @@ namespace SFW
 
 				const uint32_t idx = req.index;
 				if (refCount[idx].load(std::memory_order_acquire) == 0) {
-					// ‚±‚±‚Å‰‚ß‚Ä alive=falseBˆÈ~‚Í Derived ‚ÌÓ–±B
+					// ã“ã“ã§åˆã‚ã¦ alive=falseã€‚ä»¥é™ã¯ Derived ã®è²¬å‹™ã€‚
 					slots[idx].alive = false;
 
-					// “o˜^Ï‚İƒL[‚â–¼‘O¨handle‚È‚Ç‚ğ‘|œ
+					// ç™»éŒ²æ¸ˆã¿ã‚­ãƒ¼ã‚„åå‰â†’handleãªã©ã‚’æƒé™¤
 					static_cast<Derived*>(this)->RemoveFromCaches(idx);
 
-					// À‘Ì”jŠüiq‚Ì Release ˜A½‚È‚Ç‚ª‚ ‚ê‚Î currentFrame ‚ğ“n‚µ‚Ä’x‰„‚É‚à‘Î‰j
+					// å®Ÿä½“ç ´æ£„ï¼ˆå­ã® Release é€£é–ãªã©ãŒã‚ã‚Œã° currentFrame ã‚’æ¸¡ã—ã¦é…å»¶ã«ã‚‚å¯¾å¿œï¼‰
 					static_cast<Derived*>(this)->DestroyResource(idx, currentFrame);
 
-					// ƒXƒƒbƒgÄ—˜—p
+					// ã‚¹ãƒ­ãƒƒãƒˆå†åˆ©ç”¨
 					freeList.push_back(idx);
 				}
-				// ”jŠüÏ‚İ or ƒLƒƒƒ“ƒZƒ‹A‚Ç‚¿‚ç‚Å‚à—v‹‚ÍÌ‚Ä‚é
+				// ç ´æ£„æ¸ˆã¿ or ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã€ã©ã¡ã‚‰ã§ã‚‚è¦æ±‚ã¯æ¨ã¦ã‚‹
 				pendingByIndex.erase(idx);
 				pendingDelete.erase(pendingDelete.begin() + i);
 			}
 		}
 
 		/**
-		 * @brief “Ç‚İæ‚è—pƒƒbƒN‚ğæ“¾‚·‚éŠÖ”
-		 * @return std::shared_lock<std::shared_mutex> æ“¾‚µ‚½“Ç‚İæ‚è—pƒƒbƒN
+		 * @brief èª­ã¿å–ã‚Šç”¨ãƒ­ãƒƒã‚¯ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return std::shared_lock<std::shared_mutex> å–å¾—ã—ãŸèª­ã¿å–ã‚Šç”¨ãƒ­ãƒƒã‚¯
 		 */
 		[[nodiscard]] std::shared_lock<std::shared_mutex> AcquireReadLock() const {
 			return std::shared_lock<std::shared_mutex>(mapMutex);
 		}
 		/**
-		 * @brief ‘‚«‚İ—pƒƒbƒN‚ğæ“¾‚·‚éŠÖ”
-		 * @return std::unique_lock<std::shared_mutex> æ“¾‚µ‚½‘‚«‚İ—pƒƒbƒN
+		 * @brief æ›¸ãè¾¼ã¿ç”¨ãƒ­ãƒƒã‚¯ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return std::unique_lock<std::shared_mutex> å–å¾—ã—ãŸæ›¸ãè¾¼ã¿ç”¨ãƒ­ãƒƒã‚¯
 		 */
 		[[nodiscard]] std::unique_lock<std::shared_mutex> AcquireWriteLock() {
 			return std::unique_lock<std::shared_mutex>(mapMutex);
 		}
 		/**
-		 * @brief ƒƒbƒN–³‚µ‚ÅƒŠƒ\[ƒX‚ğæ“¾‚·‚éŠÖ”iIsValid ƒ`ƒFƒbƒN•t‚«j
-		 * @param h —LŒø‚Èƒnƒ“ƒhƒ‹
-		 * @return const ResourceType& æ“¾‚µ‚½ƒŠƒ\[ƒX‚ÌQÆ
+		 * @brief ãƒ­ãƒƒã‚¯ç„¡ã—ã§ãƒªã‚½ãƒ¼ã‚¹ã‚’å–å¾—ã™ã‚‹é–¢æ•°ï¼ˆIsValid ãƒã‚§ãƒƒã‚¯ä»˜ãï¼‰
+		 * @param h æœ‰åŠ¹ãªãƒãƒ³ãƒ‰ãƒ«
+		 * @return const ResourceType& å–å¾—ã—ãŸãƒªã‚½ãƒ¼ã‚¹ã®å‚ç…§
 		 */
 		[[nodiscard]] const ResourceType& GetNoLock(HandleType h) const {
 			assert(IsValid(h));
 			return slots[h.index].data;
 		}
 		/**
-		 * @brief ƒƒbƒN–³‚µ‚ÅƒŠƒ\[ƒX‚ğæ“¾‚·‚éŠÖ”iIsValid ƒ`ƒFƒbƒN•t‚«j
-		 * @param h —LŒø‚Èƒnƒ“ƒhƒ‹
-		 * @return ResourceType& æ“¾‚µ‚½ƒŠƒ\[ƒX‚ÌQÆ
+		 * @brief ãƒ­ãƒƒã‚¯ç„¡ã—ã§ãƒªã‚½ãƒ¼ã‚¹ã‚’å–å¾—ã™ã‚‹é–¢æ•°ï¼ˆIsValid ãƒã‚§ãƒƒã‚¯ä»˜ãï¼‰
+		 * @param h æœ‰åŠ¹ãªãƒãƒ³ãƒ‰ãƒ«
+		 * @return ResourceType& å–å¾—ã—ãŸãƒªã‚½ãƒ¼ã‚¹ã®å‚ç…§
 		 */
 		[[nodiscard]] ResourceType& GetNoLockWrite(HandleType h) {
 			assert(IsValid(h));
 			return slots[h.index].data;
 		}
 		/**
-		 * @brief ƒƒbƒN–³‚µ‚ÅƒŠƒ\[ƒX‚ğæ“¾‚·‚éŠÖ”iIsValid ƒ`ƒFƒbƒN‚È‚µj
-		 * @param idx ƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX
-		 * @return const ResourceType& æ“¾‚µ‚½ƒŠƒ\[ƒX‚ÌQÆ
+		 * @brief ãƒ­ãƒƒã‚¯ç„¡ã—ã§ãƒªã‚½ãƒ¼ã‚¹ã‚’å–å¾—ã™ã‚‹é–¢æ•°ï¼ˆIsValid ãƒã‚§ãƒƒã‚¯ãªã—ï¼‰
+		 * @param idx ã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		 * @return const ResourceType& å–å¾—ã—ãŸãƒªã‚½ãƒ¼ã‚¹ã®å‚ç…§
 		 */
 		[[nodiscard]] const ResourceType& GetDirectNoLock(uint32_t idx) const {
 			return slots[idx].data;
 		}
 		/**
-		 * @brief ƒƒbƒN–³‚µ‚ÅƒŠƒ\[ƒX‚ğæ“¾‚·‚éŠÖ”iIsValid ƒ`ƒFƒbƒN‚È‚µj
-		 * @param idx ƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX
-		 * @return ResourceType& æ“¾‚µ‚½ƒŠƒ\[ƒX‚ÌQÆ
+		 * @brief ãƒ­ãƒƒã‚¯ç„¡ã—ã§ãƒªã‚½ãƒ¼ã‚¹ã‚’å–å¾—ã™ã‚‹é–¢æ•°ï¼ˆIsValid ãƒã‚§ãƒƒã‚¯ãªã—ï¼‰
+		 * @param idx ã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		 * @return ResourceType& å–å¾—ã—ãŸãƒªã‚½ãƒ¼ã‚¹ã®å‚ç…§
 		 */
 		[[nodiscard]] ResourceType& GetDirectNoLockWrite(uint32_t idx) {
 			return slots[idx].data;
 		}
 
 		/**
-		 * @brief ƒnƒ“ƒhƒ‹‚ª—LŒø‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚éŠÖ”
-		 * @param h ƒ`ƒFƒbƒN‚·‚éƒnƒ“ƒhƒ‹
-		 * @return bool —LŒø‚Èê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+		 * @brief ãƒãƒ³ãƒ‰ãƒ«ãŒæœ‰åŠ¹ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹é–¢æ•°
+		 * @param h ãƒã‚§ãƒƒã‚¯ã™ã‚‹ãƒãƒ³ãƒ‰ãƒ«
+		 * @return bool æœ‰åŠ¹ãªå ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 		 */
 		bool IsValid(HandleType h) const noexcept {
 			return h.index < slots.size() &&
@@ -310,8 +310,8 @@ namespace SFW
 		}
 	protected:
 		/**
-		 * @brief ƒnƒ“ƒhƒ‹‚ğV‹KŠm•Û‚·‚éŠÖ”
-		 * @return HandleType V‹KŠm•Û‚µ‚½ƒnƒ“ƒhƒ‹
+		 * @brief ãƒãƒ³ãƒ‰ãƒ«ã‚’æ–°è¦ç¢ºä¿ã™ã‚‹é–¢æ•°
+		 * @return HandleType æ–°è¦ç¢ºä¿ã—ãŸãƒãƒ³ãƒ‰ãƒ«
 		 */
 		HandleType AllocateHandle() {
 			uint32_t idx;
@@ -329,49 +329,49 @@ namespace SFW
 			return { idx, slots[idx].generation };
 		}
 		/**
-		 * @brief ”h¶‚ªg‚¤ƒ†[ƒeƒBƒŠƒeƒB
-		 * @details w’è‚µ‚½ƒCƒ“ƒfƒbƒNƒX‚ÌƒXƒƒbƒg‚ğ€‚ñ‚Å‚¢‚éó‘Ô‚É‚·‚éiProcessDeferredDeletes ‚Å‚ÌÅI”jŠü‚Ü‚Å‚ÌŠÔ‚Ég‚¤j
-		 * @param index ƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX
+		 * @brief æ´¾ç”ŸãŒä½¿ã†ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£
+		 * @details æŒ‡å®šã—ãŸã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®ã‚¹ãƒ­ãƒƒãƒˆã‚’æ­»ã‚“ã§ã„ã‚‹çŠ¶æ…‹ã«ã™ã‚‹ï¼ˆProcessDeferredDeletes ã§ã®æœ€çµ‚ç ´æ£„ã¾ã§ã®é–“ã«ä½¿ã†ï¼‰
+		 * @param index ã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 		 */
 		void MarkDead(uint32_t index) {
 			std::unique_lock lock(mapMutex);
 			slots[index].alive = false;
 		}
 		/**
-		 * @brief ”h¶‚ªg‚¤ƒ†[ƒeƒBƒŠƒeƒB
-		 * @details w’è‚µ‚½ƒCƒ“ƒfƒbƒNƒX‚ÌƒXƒƒbƒg‚ğ‘¦‚É‰ğ•ú‚·‚éiProcessDeferredDeletes ‚Å‚ÌÅI”jŠü‚Ü‚Å‚ÌŠÔ‚Ég‚¤j
-		 * @param index ƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX
+		 * @brief æ´¾ç”ŸãŒä½¿ã†ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£
+		 * @details æŒ‡å®šã—ãŸã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®ã‚¹ãƒ­ãƒƒãƒˆã‚’å³æ™‚ã«è§£æ”¾ã™ã‚‹ï¼ˆProcessDeferredDeletes ã§ã®æœ€çµ‚ç ´æ£„ã¾ã§ã®é–“ã«ä½¿ã†ï¼‰
+		 * @param index ã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 		 */
 		void FreeIndex(uint32_t index) {
 			std::unique_lock lock(mapMutex);
 			freeList.push_back(index);
 		}
 		/**
-		 * @brief ƒXƒƒbƒgî•ñ‚ÌƒŠƒXƒg
+		 * @brief ã‚¹ãƒ­ãƒƒãƒˆæƒ…å ±ã®ãƒªã‚¹ãƒˆ
 		 */
 		std::vector<Slot> slots;
 		/**
-		 * @brief QÆƒJƒEƒ“ƒg‚ÌƒŠƒXƒg
+		 * @brief å‚ç…§ã‚«ã‚¦ãƒ³ãƒˆã®ãƒªã‚¹ãƒˆ
 		 */
 		std::vector<CopyableAtomic<uint32_t>> refCount;
 		/**
-		 * @brief ‹ó‚«ƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX‚ÌƒŠƒXƒg
+		 * @brief ç©ºãã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®ãƒªã‚¹ãƒˆ
 		 */
 		std::vector<uint32_t> freeList;
 
 	protected:
-		//GetŠÖ”‚Ì‚½‚ß‚Ìmutable
+		//Geté–¢æ•°ã®ãŸã‚ã®mutable
 		mutable std::shared_mutex mapMutex;
 	private:
-		// íœ—v‹ƒLƒ…[
+		// å‰Šé™¤è¦æ±‚ã‚­ãƒ¥ãƒ¼
 		struct PendingDelete { uint32_t index; uint64_t deleteSync; };
 
 		std::vector<PendingDelete> pendingDelete;
-		std::unordered_map<uint32_t, size_t> pendingByIndex; // index -> pendingDelete_ ‚ÌˆÊ’u
+		std::unordered_map<uint32_t, size_t> pendingByIndex; // index -> pendingDelete_ ã®ä½ç½®
 		std::mutex pendingMutex_;
 	};
 
-	//‘¬“xd‹‚ÅƒnƒbƒVƒ…‚Å”äŠr‚·‚éBˆÀ‘S‚É‚·‚é‚È‚çmemcmp‚ğg‚¤B
+	//é€Ÿåº¦é‡è¦–ã§ãƒãƒƒã‚·ãƒ¥ã§æ¯”è¼ƒã™ã‚‹ã€‚å®‰å…¨ã«ã™ã‚‹ãªã‚‰memcmpã‚’ä½¿ã†ã€‚
 	inline size_t HashBufferContent(const void* data, size_t size) {
 		std::hash<std::string_view> hasher;
 		return hasher(std::string_view((const char*)data, size));

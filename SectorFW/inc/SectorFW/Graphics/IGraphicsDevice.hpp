@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   IGraphicsDevice.h
- * @brief  ƒOƒ‰ƒtƒBƒbƒNƒfƒoƒCƒX‚ÌƒCƒ“ƒ^[ƒtƒF[ƒXƒNƒ‰ƒX‚Ì‚Ü‚Æ‚ß
+ * @brief  ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ‡ãƒã‚¤ã‚¹ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚¯ãƒ©ã‚¹ã®ã¾ã¨ã‚
  * @author seigo_t03b63m
  * @date   May 2025
  *********************************************************************/
@@ -21,58 +21,58 @@ namespace SFW
 {
 	namespace Graphics
 	{
-		// ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹‚ÌŒ^
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«ã®å‹
 		//======================================================================
 		using NativeWindowHandle = std::variant<HWND>;
 		//======================================================================
 
 		//=======================================================================
-		//¦Œp³æ‚ÌƒNƒ‰ƒX‚ÅÀ‘•‚³‚ê‚é‚×‚«ŠÖ”‚ÌéŒ¾
-		// InitializeImpl() : ƒfƒoƒCƒX‚Ì‰Šú‰»‚ğs‚¤ŠÖ”Bˆø”‚ÍƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹A•A‚‚³AFPS‚È‚ÇB–ß‚è’l‚Í‰Šú‰»‚Ì¬Œ÷/¸”sB
-		// ClearImpl() : ‰æ–Ê‚ğƒNƒŠƒA‚·‚éŠÖ”Bˆø”‚ÍƒNƒŠƒAƒJƒ‰[B
-		// DrawImpl() : •`‰æ‚ğÀs‚·‚éŠÖ”B
-		// PresentImpl() : •`‰æŒ‹‰Ê‚ğ‰æ–Ê‚É•\¦‚·‚éŠÖ”B
-		// SubmitFrameImpl() : •`‰æƒtƒŒ[ƒ€‚ğƒŒƒ“ƒ_[ƒXƒŒƒbƒh‚É’ño‚·‚éŠÖ”B
-		// WaitSubmittedFramesImpl() : w’è‚µ‚½ƒtƒŒ[ƒ€ƒCƒ“ƒfƒbƒNƒX‚Ü‚Å‚Ì’ñoÏ‚İƒtƒŒ[ƒ€‚ÌŠ®—¹‚ğ‘Ò‚ÂŠÖ”B
+		//â€»ç¶™æ‰¿å…ˆã®ã‚¯ãƒ©ã‚¹ã§å®Ÿè£…ã•ã‚Œã‚‹ã¹ãé–¢æ•°ã®å®£è¨€
+		// InitializeImpl() : ãƒ‡ãƒã‚¤ã‚¹ã®åˆæœŸåŒ–ã‚’è¡Œã†é–¢æ•°ã€‚å¼•æ•°ã¯ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«ã€å¹…ã€é«˜ã•ã€FPSãªã©ã€‚æˆ»ã‚Šå€¤ã¯åˆæœŸåŒ–ã®æˆåŠŸ/å¤±æ•—ã€‚
+		// ClearImpl() : ç”»é¢ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹é–¢æ•°ã€‚å¼•æ•°ã¯ã‚¯ãƒªã‚¢ã‚«ãƒ©ãƒ¼ã€‚
+		// DrawImpl() : æç”»ã‚’å®Ÿè¡Œã™ã‚‹é–¢æ•°ã€‚
+		// PresentImpl() : æç”»çµæœã‚’ç”»é¢ã«è¡¨ç¤ºã™ã‚‹é–¢æ•°ã€‚
+		// SubmitFrameImpl() : æç”»ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰ã«æå‡ºã™ã‚‹é–¢æ•°ã€‚
+		// WaitSubmittedFramesImpl() : æŒ‡å®šã—ãŸãƒ•ãƒ¬ãƒ¼ãƒ ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¾ã§ã®æå‡ºæ¸ˆã¿ãƒ•ãƒ¬ãƒ¼ãƒ ã®å®Œäº†ã‚’å¾…ã¤é–¢æ•°ã€‚
 		// =======================================================================
 
 		/**
-		 * @brief ƒOƒ‰ƒtƒBƒbƒNƒfƒoƒCƒX‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX
-		 * @detials CRTP‚ğ—p‚¢‚ÄA”h¶ƒNƒ‰ƒX‚ÅÀ‘•‚³‚ê‚é‚×‚«ŠÖ”‚ğŒÄ‚Ño‚·B‚±‚ê‚É‚æ‚èA‹¤’Ê‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX‚ğ’ñ‹Ÿ‚µ‚Â‚ÂA”h¶ƒNƒ‰ƒX‚²‚Æ‚ÉˆÙ‚È‚éÀ‘•‚ğ‰Â”\‚É‚·‚éB
+		 * @brief ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ‡ãƒã‚¤ã‚¹ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
+		 * @detials CRTPã‚’ç”¨ã„ã¦ã€æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã§å®Ÿè£…ã•ã‚Œã‚‹ã¹ãé–¢æ•°ã‚’å‘¼ã³å‡ºã™ã€‚ã“ã‚Œã«ã‚ˆã‚Šã€å…±é€šã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’æä¾›ã—ã¤ã¤ã€æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã”ã¨ã«ç•°ãªã‚‹å®Ÿè£…ã‚’å¯èƒ½ã«ã™ã‚‹ã€‚
 		 * @class IGraphicsDevice
 		 */
 		template<typename Impl>
 		class IGraphicsDevice {
 		protected:
 			/**
-			 * @brief Œp³æ‚ÌƒfƒoƒCƒX‚Ì‰Šú‰»‚ğs‚¤ŠÖ”B‚±‚ê‚ğŒÄ‚Ño‚·‘O‚ÉAm_isInitialized‚ªfalse‚Å‚ ‚é‚±‚Æ‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B
-			 * @param nativeWindowHandle ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-			 * @param width ƒEƒBƒ“ƒhƒE•
-			 * @param height ƒEƒBƒ“ƒhƒE‚‚³
+			 * @brief ç¶™æ‰¿å…ˆã®ãƒ‡ãƒã‚¤ã‚¹ã®åˆæœŸåŒ–ã‚’è¡Œã†é–¢æ•°ã€‚ã“ã‚Œã‚’å‘¼ã³å‡ºã™å‰ã«ã€m_isInitializedãŒfalseã§ã‚ã‚‹ã“ã¨ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚
+			 * @param nativeWindowHandle ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+			 * @param width ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å¹…
+			 * @param height ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é«˜ã•
 			 */
 			bool Initialize(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height, double fps) {
 				return static_cast<Impl*>(this)->InitializeImpl(nativeWindowHandle, width, height, fps);
 			}
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 			 */
 			IGraphicsDevice() = default;
 			/**
-			 * @brief •`‰æƒfƒoƒCƒX‚ğ‰Šú‰»‚·‚éB‰‚ß‚É‚±‚ê‚ğŒÄ‚Ño‚³‚È‚¢‚Æ•`‰æ‚Å‚«‚Ü‚¹‚ñB
-			 * @param nativeWindowHandle ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-			 * @param width ƒEƒBƒ“ƒhƒE•
-			 * @param height ƒEƒBƒ“ƒhƒE‚‚³
+			 * @brief æç”»ãƒ‡ãƒã‚¤ã‚¹ã‚’åˆæœŸåŒ–ã™ã‚‹ã€‚åˆã‚ã«ã“ã‚Œã‚’å‘¼ã³å‡ºã•ãªã„ã¨æç”»ã§ãã¾ã›ã‚“ã€‚
+			 * @param nativeWindowHandle ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+			 * @param width ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å¹…
+			 * @param height ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é«˜ã•
 			 */
 			template<Debug::ImGuiBackendType ImGuiBackend>
 			void Configure(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height, double fps)
 			{
 				assert(!m_isInitialized && "IGraphicsDevice is already initialized.");
 
-				// ”h¶ƒNƒ‰ƒX‚ÌAPI‚²‚Æ‚Ì‰Šú‰»ŠÖ”‚ğŒÄ‚Ño‚·
+				// æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã®APIã”ã¨ã®åˆæœŸåŒ–é–¢æ•°ã‚’å‘¼ã³å‡ºã™
 				m_isInitialized = Initialize(nativeWindowHandle, width, height, fps);
 
-				//imgui‚Ì‰Šú‰»
+				//imguiã®åˆæœŸåŒ–
 #ifdef _ENABLE_IMGUI
 				m_imguiLayer = std::make_unique<Debug::ImGuiLayer>(std::make_unique<ImGuiBackend>());
 				Debug::ImGuiInitInfo info{};
@@ -84,12 +84,12 @@ namespace SFW
 					}
 
 					if constexpr (std::is_pointer_v<T>) {
-						// —á: HWND / GLFWwindow* / SDL_Window* ‚È‚Ç
-						return handle;                 // T* ¨ void* ‚ÖˆÃ–Ù•ÏŠ·iOKj
+						// ä¾‹: HWND / GLFWwindow* / SDL_Window* ãªã©
+						return handle;                 // T* â†’ void* ã¸æš—é»™å¤‰æ›ï¼ˆOKï¼‰
 					}
 					else {
-						// —á: X11 Window ‚Ì‚æ‚¤‚É®”ƒnƒ“ƒhƒ‹‚ğ‚½‚¹‚Ä‚¢‚é‚È‚ç‚±‚±‚ÍÄŒŸ“¢
-						return static_cast<void*>(std::addressof(handle)); // T* ¨ void*iOKj
+						// ä¾‹: X11 Window ã®ã‚ˆã†ã«æ•´æ•°ãƒãƒ³ãƒ‰ãƒ«ã‚’æŒãŸã›ã¦ã„ã‚‹ãªã‚‰ã“ã“ã¯å†æ¤œè¨
+						return static_cast<void*>(std::addressof(handle)); // T* â†’ void*ï¼ˆOKï¼‰
 					}
 					}, nativeWindowHandle);
 
@@ -99,7 +99,7 @@ namespace SFW
 				}
 				info.platform_window = windowPtr;
 
-				//info.platform_window = ;            // SDL3 ‚È‚ç SDL_Window*
+				//info.platform_window = ;            // SDL3 ãªã‚‰ SDL_Window*
 				auto device = static_cast<Impl*>(this)->GetDevice();
 				if (!device) {
 					assert(false && "Failed to get graphics device for ImGui initialization.");
@@ -119,16 +119,16 @@ namespace SFW
 				info.device_context = deviceContext;
 				info.display_w = (int)width;
 				info.display_h = (int)height;
-				info.dpi_scale = 1.0f; // •K—v‚È‚çæ“¾‚µ‚Ä“ü‚ê‚é
+				info.dpi_scale = 1.0f; // å¿…è¦ãªã‚‰å–å¾—ã—ã¦å…¥ã‚Œã‚‹
 
 				bool ok = m_imguiLayer->Init(info);
-				assert(ok && "Imgui‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½");
+				assert(ok && "Imguiã®åˆæœŸåŒ–ã«å¤±æ•—ã—ã¾ã—ãŸ");
 
 				frameSec = 1.0f / (float)fps;
 #endif // _ENABLE_IMGUI
 			}
 			/**
-			 * @brief ‰æ–Ê‚ğƒNƒŠƒA
+			 * @brief ç”»é¢ã‚’ã‚¯ãƒªã‚¢
 			 * @param clearColor
 			 */
 			void Clear(const float clearColor[4]) {
@@ -149,37 +149,37 @@ namespace SFW
 #endif // _ENABLE_IMGUI
 			}
 			/**
-			 * @brief •`‰æ
+			 * @brief æç”»
 			 */
 			void Present() {
 				static_cast<Impl*>(this)->PresentImpl();
 			}
 			/**
-			 * @brief ƒtƒŒ[ƒ€‚Ì’ño
-			 * @param clearColor ƒNƒŠƒAƒJƒ‰[
-			* @param frameIdx ƒtƒŒ[ƒ€ƒCƒ“ƒfƒbƒNƒX
+			 * @brief ãƒ•ãƒ¬ãƒ¼ãƒ ã®æå‡º
+			 * @param clearColor ã‚¯ãƒªã‚¢ã‚«ãƒ©ãƒ¼
+			* @param frameIdx ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			*/
 			void SubmitFrame(const FLOAT clearColor[4], uint64_t frameIdx) {
 				static_cast<Impl*>(this)->SubmitFrameImpl(clearColor, frameIdx);
 			}
 			/**
-			 * @brief ’ñoÏ‚İƒtƒŒ[ƒ€‚ÌŠ®—¹‘Ò‚¿
-			 * @param uptoFrame ƒtƒŒ[ƒ€ƒCƒ“ƒfƒbƒNƒX
+			 * @brief æå‡ºæ¸ˆã¿ãƒ•ãƒ¬ãƒ¼ãƒ ã®å®Œäº†å¾…ã¡
+			 * @param uptoFrame ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			 */
 			void WaitSubmittedFrames(uint64_t uptoFrame) {
 				static_cast<Impl*>(this)->WaitSubmittedFramesImpl(uptoFrame);
 			}
 			/**
-			 * @brief ƒfƒXƒgƒ‰ƒNƒ^
+			 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 			 */
 			~IGraphicsDevice() = default;
 			/**
-			 * @brief ‰Šú‰»ƒtƒ‰ƒO‚Ìæ“¾
-			 * @return ‰Šú‰»ƒtƒ‰ƒO
+			 * @brief åˆæœŸåŒ–ãƒ•ãƒ©ã‚°ã®å–å¾—
+			 * @return åˆæœŸåŒ–ãƒ•ãƒ©ã‚°
 			 */
 			bool IsInitialized() const { return m_isInitialized; }
 		private:
-			// ‰Šú‰»ƒtƒ‰ƒO
+			// åˆæœŸåŒ–ãƒ•ãƒ©ã‚°
 			static inline bool m_isInitialized = false;
 
 #ifdef _ENABLE_IMGUI

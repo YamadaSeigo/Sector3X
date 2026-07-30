@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * \file   PhysicsConvexHullLoader.h
- * \brief VHACD‚Ìo—Í‚µ‚½ƒoƒCƒiƒŠƒtƒ@ƒCƒ‹(.chullbin)‚ğ“Ç‚İ‚ñ‚ÅA•¡”‚Ì“Êƒnƒ‹ƒf[ƒ^‚ğæ“¾‚·‚é‚½‚ß‚Ìƒ†[ƒeƒBƒŠƒeƒBŠÖ”
+ * \brief VHACDã®å‡ºåŠ›ã—ãŸãƒã‚¤ãƒŠãƒªãƒ•ã‚¡ã‚¤ãƒ«(.chullbin)ã‚’èª­ã¿è¾¼ã‚“ã§ã€è¤‡æ•°ã®å‡¸ãƒãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹ãŸã‚ã®ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£é–¢æ•°
  * \author seigo
  * \date   December 2025
  *********************************************************************/
@@ -17,11 +17,11 @@
 namespace SFW::Physics
 {
 	// -------------------------------
-	// ƒ[ƒJƒ‹—p‚Ìƒf[ƒ^\‘¢
+	// ãƒ­ãƒ¼ã‚«ãƒ«ç”¨ã®ãƒ‡ãƒ¼ã‚¿æ§‹é€ 
 	// -------------------------------
 
-	// .chullbin ‚ğ“Ç‚İ‚ñ‚Å‘S•”‚Ìƒnƒ‹‚ğ outHulls ‚ÉÏ‚Ş
-	// –ß‚è’l: ¬Œ÷‚È‚ç true / ¸”s‚È‚ç false
+	// .chullbin ã‚’èª­ã¿è¾¼ã‚“ã§å…¨éƒ¨ã®ãƒãƒ«ã‚’ outHulls ã«ç©ã‚€
+	// æˆ»ã‚Šå€¤: æˆåŠŸãªã‚‰ true / å¤±æ•—ãªã‚‰ false
 	inline bool LoadVHACDFile(
 		const std::filesystem::path& binPath,
 		std::vector<VHACDHull>& outHulls,
@@ -35,18 +35,18 @@ namespace SFW::Physics
 		{
 			LOG_ERROR("PhysicsConvexHullLoader: Failed to open VHACD file: {%s}", binPath.string().c_str());
 
-			// ƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚È‚¢
+			// ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‘ãªã„
 			return false;
 		}
 
-		// ----- ƒwƒbƒ_[“Ç -----
+		// ----- ãƒ˜ãƒƒãƒ€ãƒ¼èª­è¾¼ -----
 		char magic[4];
 		ifs.read(magic, 4);
 		if (!ifs || magic[0] != 'C' || magic[1] != 'V' || magic[2] != 'X' || magic[3] != 'H')
 		{
 			LOG_ERROR("PhysicsConvexHullLoader: Invalid VHACD file format: {%s}", binPath.string().c_str());
 
-			// ƒtƒH[ƒ}ƒbƒg•sˆê’v
+			// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆä¸ä¸€è‡´
 			return false;
 		}
 
@@ -64,13 +64,13 @@ namespace SFW::Physics
 		{
 			LOG_ERROR("PhysicsConvexHullLoader: Unsupported VHACD file version (%u) in file: {%s}", version, binPath.string().c_str());
 
-			// ‚Æ‚è‚ ‚¦‚¸ version 1 ‚Ì‚İ‘Î‰
+			// ã¨ã‚Šã‚ãˆãš version 1 ã®ã¿å¯¾å¿œ
 			return false;
 		}
 
 		outHulls.reserve(hullCount);
 
-		// ----- Šeƒnƒ‹ -----
+		// ----- å„ãƒãƒ« -----
 		for (uint32_t h = 0; h < hullCount; ++h)
 		{
 			uint32_t vCount = read_u32();
@@ -83,7 +83,7 @@ namespace SFW::Physics
 
 			auto flip_vec3z = [](float& x, float& y, float& z) { x = -x; };
 
-			// ’¸“_ (vCount * 3 float)
+			// é ‚ç‚¹ (vCount * 3 float)
 			for (uint32_t i = 0; i < vCount; ++i)
 			{
 				float xyz[3];
@@ -94,7 +94,7 @@ namespace SFW::Physics
 				hull.points[i] = Vec3f{ xyz[0], xyz[1], xyz[2] } *scale;
 			}
 
-			// ƒCƒ“ƒfƒbƒNƒX (iCount * uint32)
+			// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ (iCount * uint32)
 			if (iCount > 0)
 			{
 				ifs.read(reinterpret_cast<char*>(hull.indices.data()),

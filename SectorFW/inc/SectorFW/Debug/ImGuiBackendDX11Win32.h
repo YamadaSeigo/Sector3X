@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   ImGuiBackendDX11Win32.h
- * @brief ImGui‚ÌDirectX11‚ÆWin32‚ÌƒoƒbƒNƒGƒ“ƒh‚ğÀ‘•‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ImGuiã®DirectX11ã¨Win32ã®ãƒãƒƒã‚¯ã‚¨ãƒ³ãƒ‰ã‚’å®Ÿè£…ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -14,28 +14,28 @@ namespace SFW
 	namespace Debug
 	{
 		/**
-		 * @brief ImGui‚ÌDirectX11‚ÆWin32‚ÌƒoƒbƒNƒGƒ“ƒh‚ğÀ‘•‚·‚éƒNƒ‰ƒX
+		 * @brief ImGuiã®DirectX11ã¨Win32ã®ãƒãƒƒã‚¯ã‚¨ãƒ³ãƒ‰ã‚’å®Ÿè£…ã™ã‚‹ã‚¯ãƒ©ã‚¹
 		 */
 		class ImGuiBackendDX11Win32 : public IImGuiBackend {
 		public:
 			/**
-			 * @brief ƒEƒBƒ“ƒhƒE‚ÌŒ^î•ñ‚ğæ“¾‚µ‚Ü‚·B
-			 * @return const std::type_info& ƒEƒBƒ“ƒhƒE‚ÌŒ^î•ñ
+			 * @brief ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å‹æƒ…å ±ã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @return const std::type_info& ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å‹æƒ…å ±
 			 */
 			const std::type_info& GetWindowType() const override {
 				return typeid(HWND);
 			}
 			/**
-			 * @brief ƒfƒoƒCƒX‚ÌŒ^î•ñ‚ğæ“¾‚µ‚Ü‚·B
-			 * @return const std::type_info& ƒfƒoƒCƒX‚ÌŒ^î•ñ
+			 * @brief ãƒ‡ãƒã‚¤ã‚¹ã®å‹æƒ…å ±ã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @return const std::type_info& ãƒ‡ãƒã‚¤ã‚¹ã®å‹æƒ…å ±
 			 */
 			const std::type_info& GetDeviceType() const override {
 				return typeid(ID3D11Device*);
 			}
 			/**
-			 * @brief ƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒg‚ÌŒ^î•ñ‚ğæ“¾‚µ‚Ü‚·B
-			 * @param info ‰Šú‰»î•ñ
-			 * @return ¬Œ÷‚È‚çtrueA¸”s‚È‚çfalse
+			 * @brief ãƒ‡ãƒã‚¤ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®å‹æƒ…å ±ã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @param info åˆæœŸåŒ–æƒ…å ±
+			 * @return æˆåŠŸãªã‚‰trueã€å¤±æ•—ãªã‚‰false
 			 */
 			bool Init(const ImGuiInitInfo& info) override {
 				if (!ImGui_ImplWin32_Init(info.platform_window)) return false;
@@ -44,18 +44,18 @@ namespace SFW
 				return true;
 			}
 			/**
-			 * @brief V‚µ‚¢ƒtƒŒ[ƒ€‚ğŠJn‚µ‚Ü‚·B
+			 * @brief æ–°ã—ã„ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’é–‹å§‹ã—ã¾ã™ã€‚
 			 */
 			void NewFrame() override {
 				ImGui_ImplDX11_NewFrame();
 				ImGui_ImplWin32_NewFrame();
 			}
 			/**
-			 * @brief •`‰æƒRƒ}ƒ“ƒh‚ğÀs‚µ‚Ü‚·B
+			 * @brief æç”»ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
 			 */
 			void Render() override {
 				ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-				// Viewports —LŒø‚È‚ç
+				// Viewports æœ‰åŠ¹ãªã‚‰
 				auto& io = ImGui::GetIO();
 				if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 				{
@@ -64,7 +64,7 @@ namespace SFW
 				}
 			}
 			/**
-			 * @brief ƒoƒbƒNƒGƒ“ƒh‚ğƒVƒƒƒbƒgƒ_ƒEƒ“‚µ‚Ü‚·B
+			 * @brief ãƒãƒƒã‚¯ã‚¨ãƒ³ãƒ‰ã‚’ã‚·ãƒ£ãƒƒãƒˆãƒ€ã‚¦ãƒ³ã—ã¾ã™ã€‚
 			 */
 			void Shutdown() override {
 				ImGui_ImplDX11_Shutdown();

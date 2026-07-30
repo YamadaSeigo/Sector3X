@@ -1,4 +1,4 @@
-#include "Audio/AudioService.h"
+ï»¿#include "Audio/AudioService.h"
 
 #include <SoLoud/include/soloud.h>
 #include <SoLoud/include/soloud_wav.h>
@@ -106,7 +106,7 @@ namespace SFW::Audio
 			auto itKey = m_idToCacheKey.find(h.id);
 			if (itKey == m_idToCacheKey.end())
 			{
-				// –¢ƒLƒƒƒbƒVƒ…: ‚»‚Ì‚Ü‚ÜƒAƒ“ƒ[ƒh—v‹iˆÀ‘S‘¤j
+				// æœªã‚­ãƒ£ãƒƒã‚·ãƒ¥: ãã®ã¾ã¾ã‚¢ãƒ³ãƒ­ãƒ¼ãƒ‰è¦æ±‚ï¼ˆå®‰å…¨å´ï¼‰
 				doUnload = true;
 			}
 			else

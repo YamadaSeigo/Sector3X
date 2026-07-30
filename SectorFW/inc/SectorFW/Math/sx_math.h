@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   sx_math.h
- * @brief ”ŠwŠÖ”‚Æ’è”‚ğ’ñ‹Ÿ‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief æ•°å­¦é–¢æ•°ã¨å®šæ•°ã‚’æä¾›ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -14,7 +14,7 @@
 
 namespace SFW::Math {
 	//-------------------------------------
-	// Šî–{ƒRƒ“ƒZƒvƒg
+	// åŸºæœ¬ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 	//-------------------------------------
 	template<class T>
 	concept Arithmetic = std::is_arithmetic_v<T>;
@@ -23,7 +23,7 @@ namespace SFW::Math {
 	concept UnsignedInt = std::is_unsigned_v<T> && std::is_integral_v<T>;
 
 	//-------------------------------------
-	// ’è”
+	// å®šæ•°
 	//-------------------------------------
 	template<class T>
 		requires std::is_floating_point_v<T>
@@ -36,7 +36,7 @@ namespace SFW::Math {
 	inline constexpr T half_pi_v = static_cast<T>(1.570796326794896619231321691639751442L);
 
 	//-------------------------------------
-	// Šp“x•ÏŠ·
+	// è§’åº¦å¤‰æ›
 	//-------------------------------------
 	template<Arithmetic T, class R = std::conditional_t<std::is_integral_v<T>, double, T>>
 	[[nodiscard]] constexpr R deg2rad(T deg) noexcept {
@@ -48,7 +48,7 @@ namespace SFW::Math {
 	}
 
 	//-------------------------------------
-	// ”äŠrE”»’è
+	// æ¯”è¼ƒãƒ»åˆ¤å®š
 	//-------------------------------------
 	template<Arithmetic T>
 	[[nodiscard]] constexpr bool is_finite(T x) noexcept {
@@ -56,7 +56,7 @@ namespace SFW::Math {
 		else return true;
 	}
 
-	// ‹ß—“™‰¿: |a-b| <= max(abs_tol, rel_tol * max(|a|,|b|))
+	// è¿‘ä¼¼ç­‰ä¾¡: |a-b| <= max(abs_tol, rel_tol * max(|a|,|b|))
 	template<Arithmetic T, class R = std::conditional_t<std::is_integral_v<T>, double, T>>
 	[[nodiscard]] constexpr bool approx_equal(T a, T b,
 		R rel_tol = R(1e-6),
@@ -68,7 +68,7 @@ namespace SFW::Math {
 	}
 
 	//-------------------------------------
-	// ƒNƒ‰ƒ“ƒvE•âŠÔEÄƒ}ƒbƒv
+	// ã‚¯ãƒ©ãƒ³ãƒ—ãƒ»è£œé–“ãƒ»å†ãƒãƒƒãƒ—
 	//-------------------------------------
 	template<Arithmetic T>
 	[[nodiscard]] constexpr T clamp(T x, T lo, T hi) noexcept {
@@ -83,7 +83,7 @@ namespace SFW::Math {
 		else return clamp<T>(x, T(0), T(1));
 	}
 
-	// üŒ`•âŠÔi”ñƒNƒ‰ƒ“ƒvjB•‚“®¬”‚ÍFMA‚ğg—p
+	// ç·šå½¢è£œé–“ï¼ˆéã‚¯ãƒ©ãƒ³ãƒ—ï¼‰ã€‚æµ®å‹•å°æ•°ã¯FMAã‚’ä½¿ç”¨
 	template<Arithmetic A, Arithmetic B, Arithmetic U>
 	[[nodiscard]] constexpr auto lerp(A a, B b, U t) noexcept {
 		using R = std::common_type_t<A, B, U>;
@@ -96,14 +96,14 @@ namespace SFW::Math {
 		}
 	}
 
-	// ƒNƒ‰ƒ“ƒv•t lerp
+	// ã‚¯ãƒ©ãƒ³ãƒ—ä»˜ lerp
 	template<Arithmetic A, Arithmetic B, Arithmetic U>
 	[[nodiscard]] constexpr auto lerp_clamped(A a, B b, U t) noexcept {
 		using R = std::common_type_t<A, B, U>;
 		return lerp(a, b, clamp01(static_cast<R>(t)));
 	}
 
-	// (a..b) ¨ t  ‹t•âŠÔ
+	// (a..b) â†’ t  é€†è£œé–“
 	template<Arithmetic A, Arithmetic B, Arithmetic X>
 	[[nodiscard]] constexpr auto inverse_lerp(A a, B b, X x) noexcept {
 		using R = std::common_type_t<A, B, X>;
@@ -113,7 +113,7 @@ namespace SFW::Math {
 		return (xr - ar) / denom;
 	}
 
-	// ‹æŠÔÄƒ}ƒbƒv (in0..in1)¨(out0..out1)
+	// åŒºé–“å†ãƒãƒƒãƒ— (in0..in1)â†’(out0..out1)
 	template<Arithmetic X, Arithmetic A, Arithmetic B, Arithmetic C, Arithmetic D>
 	[[nodiscard]] constexpr auto remap(X x, A in0, B in1, C out0, D out1) noexcept {
 		using R = std::common_type_t<X, A, B, C, D>;
@@ -126,7 +126,7 @@ namespace SFW::Math {
 		return clamp01(inverse_lerp(static_cast<R>(in0), static_cast<R>(in1), static_cast<R>(x)));
 	}
 
-	// ƒXƒeƒbƒvEƒXƒ€[ƒYƒXƒeƒbƒv
+	// ã‚¹ãƒ†ãƒƒãƒ—ãƒ»ã‚¹ãƒ ãƒ¼ã‚ºã‚¹ãƒ†ãƒƒãƒ—
 	template<Arithmetic E, Arithmetic X>
 	[[nodiscard]] constexpr auto step(E edge, X x) noexcept {
 		using R = std::common_type_t<E, X>;
@@ -146,7 +146,7 @@ namespace SFW::Math {
 	}
 
 	//-------------------------------------
-	// ƒ‰ƒbƒvEƒ‚ƒWƒ…ƒ
+	// ãƒ©ãƒƒãƒ—ãƒ»ãƒ¢ã‚¸ãƒ¥ãƒ­
 	//-------------------------------------
 	template<Arithmetic X, Arithmetic A, Arithmetic B>
 	[[nodiscard]] constexpr auto wrap(X x, A lo, B hi) noexcept {
@@ -171,19 +171,19 @@ namespace SFW::Math {
 	}
 
 	//-------------------------------------
-	// Šp“xƒ†[ƒeƒBƒŠƒeƒBiƒ‰ƒWƒAƒ“j
+	// è§’åº¦ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ï¼ˆãƒ©ã‚¸ã‚¢ãƒ³ï¼‰
 	//-------------------------------------
 	template<std::floating_point T>
-	[[nodiscard]] constexpr T wrap_angle_pi(T a) noexcept {            // (-ƒÎ, ƒÎ]
+	[[nodiscard]] constexpr T wrap_angle_pi(T a) noexcept {            // (-Ï€, Ï€]
 		return wrap(a, -pi_v<T>, pi_v<T>);
 	}
 	template<std::floating_point T>
-	[[nodiscard]] constexpr T shortest_angle_delta(T from, T to) noexcept { // [-ƒÎ, ƒÎ]
+	[[nodiscard]] constexpr T shortest_angle_delta(T from, T to) noexcept { // [-Ï€, Ï€]
 		return wrap_angle_pi<T>(to - from);
 	}
 
 	//-------------------------------------
-	// •„†E‚»‚Ì‘¼
+	// ç¬¦å·ãƒ»ãã®ä»–
 	//-------------------------------------
 	template<Arithmetic T>
 	[[nodiscard]] constexpr int sign(T x) noexcept {
@@ -201,7 +201,7 @@ namespace SFW::Math {
 	}
 
 	//-------------------------------------
-	// ‚×‚«EƒrƒbƒgŒn
+	// ã¹ããƒ»ãƒ“ãƒƒãƒˆç³»
 	//-------------------------------------
 	template<UnsignedInt U>
 	[[nodiscard]] constexpr bool is_power_of_two(U x) noexcept {
@@ -221,9 +221,9 @@ namespace SFW::Math {
 	}
 
 	//-------------------------------------
-	// ƒAƒ‰ƒCƒ“
+	// ã‚¢ãƒ©ã‚¤ãƒ³
 	//-------------------------------------
-	// ”CˆÓ®—ñ
+	// ä»»æ„æ•´åˆ—
 	template<UnsignedInt U>
 	[[nodiscard]] constexpr U align_up(U value, U alignment) noexcept {
 		if (alignment == 0) return value;
@@ -234,7 +234,7 @@ namespace SFW::Math {
 		if (alignment == 0) return value;
 		return (value / alignment) * alignment;
 	}
-	// 2‚Ì™p®—ñi‚‘¬j
+	// 2ã®å†ªæ•´åˆ—ï¼ˆé«˜é€Ÿï¼‰
 	template<UnsignedInt U>
 	[[nodiscard]] constexpr U align_up_pow2(U value, U alignment_pow2) noexcept {
 		return (value + (alignment_pow2 - 1)) & ~(alignment_pow2 - 1);
@@ -245,11 +245,11 @@ namespace SFW::Math {
 	}
 
 	//-------------------------------------
-	// ˆÀ‘S‚È‹t•½•ûªi¸“x—Dæj
+	// å®‰å…¨ãªé€†å¹³æ–¹æ ¹ï¼ˆç²¾åº¦å„ªå…ˆï¼‰
 	//-------------------------------------
 	template<std::floating_point T>
 	inline T rsqrt(T x) noexcept {
-		if (x <= T(0)) return std::numeric_limits<T>::infinity(); // ‚à‚µ‚­‚Í 0, ‚Ü‚½‚Í¬‚³‚Èepsilon‚Å•ÛŒì
+		if (x <= T(0)) return std::numeric_limits<T>::infinity(); // ã‚‚ã—ãã¯ 0, ã¾ãŸã¯å°ã•ãªepsilonã§ä¿è­·
 		return T(1) / std::sqrt(x);
 	}
 

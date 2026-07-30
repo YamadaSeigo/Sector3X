@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Transform.h
- * @brief Transform\‘¢‘Ì‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief Transformæ§‹é€ ä½“ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   July 2025
  *********************************************************************/
@@ -16,7 +16,7 @@
 
 namespace SFW
 {
-	struct TransformSoA; // ‘O•ûéŒ¾
+	struct TransformSoA; // å‰æ–¹å®£è¨€
 
 	struct Transform
 	{
@@ -24,7 +24,7 @@ namespace SFW
 		Math::Quatf rotation;
 		Math::Vec3f scale;
 
-		// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		Transform() noexcept : location(0, 0, 0), rotation(0, 0, 0, 1), scale(1, 1, 1) {}
 		explicit Transform(const Math::Vec3f& location_, const Math::Quatf& rotation_, const Math::Vec3f& scale_) noexcept
 			: location(location_), rotation(rotation_), scale(scale_) {
@@ -41,19 +41,19 @@ namespace SFW
 		union
 		{
 			struct {
-				float px, py, pz; // ˆÊ’u
-				float qx, qy, qz, qw; // ‰ñ“]iƒNƒH[ƒ^ƒjƒIƒ“j
-				float sx, sy, sz; // ƒXƒP[ƒ‹
+				float px, py, pz; // ä½ç½®
+				float qx, qy, qz, qw; // å›è»¢ï¼ˆã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ï¼‰
+				float sx, sy, sz; // ã‚¹ã‚±ãƒ¼ãƒ«
 			};
 			struct {
-				Math::Vec3f location; // ˆÊ’u
-				Math::Quatf rotation; // ‰ñ“]iƒNƒH[ƒ^ƒjƒIƒ“j
-				Math::Vec3f scale; // ƒXƒP[ƒ‹
+				Math::Vec3f location; // ä½ç½®
+				Math::Quatf rotation; // å›è»¢ï¼ˆã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ï¼‰
+				Math::Vec3f scale; // ã‚¹ã‚±ãƒ¼ãƒ«
 			};
-			float data[10]; // ƒf[ƒ^‚ğˆêŠ‡‚Åˆµ‚¤‚½‚ß‚Ì”z—ñ
+			float data[10]; // ãƒ‡ãƒ¼ã‚¿ã‚’ä¸€æ‹¬ã§æ‰±ã†ãŸã‚ã®é…åˆ—
 		};
 
-		// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		TransformSoA() noexcept : px(0), py(0), pz(0), qx(0), qy(0), qz(0), qw(1), sx(1), sy(1), sz(1) {}
 		explicit TransformSoA(float px_, float py_, float pz_,
 			float qx_, float qy_, float qz_, float qw_,
@@ -76,7 +76,7 @@ namespace SFW
 			sx(transform.scale.x), sy(transform.scale.y), sz(transform.scale.z) {
 		}
 
-		// TransformSoA‚©‚çTransform‚Ö‚Ì•ÏŠ·
+		// TransformSoAã‹ã‚‰Transformã¸ã®å¤‰æ›
 		Transform ToAoS() const noexcept {
 			return Transform(px, py, pz,
 				qx, qy, qz, qw,

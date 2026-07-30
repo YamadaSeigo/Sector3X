@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Flatten.h
- * @brief ƒ^ƒvƒ‹‚ğÄ‹A“I‚É“WŠJ‚·‚éƒwƒbƒ_ƒtƒ@ƒCƒ‹
+ * @brief ã‚¿ãƒ—ãƒ«ã‚’å†å¸°çš„ã«å±•é–‹ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -13,56 +13,56 @@
 namespace SFW
 {
 	/**
-	 * @brief ƒ^ƒvƒ‹‚ğÄ‹A“I‚É“WŠJ‚·‚é‚½‚ß‚Ìƒwƒ‹ƒp[\‘¢‘Ì
+	 * @brief ã‚¿ãƒ—ãƒ«ã‚’å†å¸°çš„ã«å±•é–‹ã™ã‚‹ãŸã‚ã®ãƒ˜ãƒ«ãƒ‘ãƒ¼æ§‹é€ ä½“
 	 */
 	template<typename T, typename = void>
 	struct ValueOrSelfHelper {
 		using type = T;
 	};
 	/**
-	 * @brief ƒ^ƒvƒ‹Œ^‚ğ‚Âê‡‚Ìƒwƒ‹ƒp[\‘¢‘Ì
+	 * @brief ã‚¿ãƒ—ãƒ«å‹ã‚’æŒã¤å ´åˆã®ãƒ˜ãƒ«ãƒ‘ãƒ¼æ§‹é€ ä½“
 	 */
 	template<typename T>
 	struct ValueOrSelfHelper<T, std::void_t<typename T::tuple_type>> {
 		using type = typename T::tuple_type;
 	};
 	/**
-	 * @brief ƒ^ƒvƒ‹‚ğÄ‹A“I‚É“WŠJ‚·‚é‚½‚ß‚ÌƒGƒCƒŠƒAƒX
+	 * @brief ã‚¿ãƒ—ãƒ«ã‚’å†å¸°çš„ã«å±•é–‹ã™ã‚‹ãŸã‚ã®ã‚¨ã‚¤ãƒªã‚¢ã‚¹
 	 */
 	template<typename T>
 	using ValueOrSelf = typename ValueOrSelfHelper<T>::type;
 	/**
-	 * @brief ƒ^ƒvƒ‹‚ğÄ‹A“I‚É“WŠJ‚·‚é‚½‚ß‚Ì\‘¢‘Ì
+	 * @brief ã‚¿ãƒ—ãƒ«ã‚’å†å¸°çš„ã«å±•é–‹ã™ã‚‹ãŸã‚ã®æ§‹é€ ä½“
 	 */
 	template<typename T>
 	struct Flatten {
 		using type = std::tuple<T>;
 	};
 	/**
-	 * @brief ƒ^ƒvƒ‹‚ğÄ‹A“I‚É“WŠJ‚·‚é‚½‚ß‚Ì“Áê‰»
+	 * @brief ã‚¿ãƒ—ãƒ«ã‚’å†å¸°çš„ã«å±•é–‹ã™ã‚‹ãŸã‚ã®ç‰¹æ®ŠåŒ–
 	 */
 	template<typename... Ts>
 	struct Flatten<std::tuple<Ts...>> {
 	private:
 		/**
-		 * @brief ƒ^ƒvƒ‹‚Ì—v‘f‚ğÄ‹A“I‚É“WŠJ‚·‚é‚½‚ß‚Ìƒwƒ‹ƒp[Œ^
+		 * @brief ã‚¿ãƒ—ãƒ«ã®è¦ç´ ã‚’å†å¸°çš„ã«å±•é–‹ã™ã‚‹ãŸã‚ã®ãƒ˜ãƒ«ãƒ‘ãƒ¼å‹
 		 */
 		template<typename T>
 		using flatten_t = typename Flatten<ValueOrSelf<T>>::type;
 		/**
-		* @brief ƒ^ƒvƒ‹‚ğŒ‹‡‚·‚é‚½‚ß‚Ìƒwƒ‹ƒp[\‘¢‘Ì
+		* @brief ã‚¿ãƒ—ãƒ«ã‚’çµåˆã™ã‚‹ãŸã‚ã®ãƒ˜ãƒ«ãƒ‘ãƒ¼æ§‹é€ ä½“
 		*/
 		template<typename... Tuples>
 		struct TupleConcat;
 		/**
-		 * @brief ƒ^ƒvƒ‹‚ğŒ‹‡‚·‚é‚½‚ß‚Ì“Áê‰»
+		 * @brief ã‚¿ãƒ—ãƒ«ã‚’çµåˆã™ã‚‹ãŸã‚ã®ç‰¹æ®ŠåŒ–
 		 */
 		template<typename... T1s, typename... T2s>
 		struct TupleConcat<std::tuple<T1s...>, std::tuple<T2s...>> {
 			using type = std::tuple<T1s..., T2s...>;
 		};
 		/**
-		 * @brief ƒ^ƒvƒ‹‚ğÄ‹A“I‚ÉŒ‹‡‚·‚é‚½‚ß‚Ì“Áê‰»
+		 * @brief ã‚¿ãƒ—ãƒ«ã‚’å†å¸°çš„ã«çµåˆã™ã‚‹ãŸã‚ã®ç‰¹æ®ŠåŒ–
 		 */
 		template<typename T1, typename T2, typename... Rest>
 		struct TupleConcat<T1, T2, Rest...> {
@@ -70,12 +70,12 @@ namespace SFW
 		};
 	public:
 		/**
-		 * @brief Ä‹A“I‚É“WŠJ‚³‚ê‚½ƒ^ƒvƒ‹‚ÌŒ^‚ğ’è‹`‚·‚é
+		 * @brief å†å¸°çš„ã«å±•é–‹ã•ã‚ŒãŸã‚¿ãƒ—ãƒ«ã®å‹ã‚’å®šç¾©ã™ã‚‹
 		 */
 		using type = typename TupleConcat<flatten_t<Ts>...>::type;
 	};
 	/**
-	 * @brief FlattenT‚ÍA—^‚¦‚ç‚ê‚½Œ^T‚ğÄ‹A“I‚É“WŠJ‚µAÅI“I‚ÈŒ^‚ğæ“¾‚·‚é‚½‚ß‚ÌƒGƒCƒŠƒAƒX
+	 * @brief FlattenTã¯ã€ä¸ãˆã‚‰ã‚ŒãŸå‹Tã‚’å†å¸°çš„ã«å±•é–‹ã—ã€æœ€çµ‚çš„ãªå‹ã‚’å–å¾—ã™ã‚‹ãŸã‚ã®ã‚¨ã‚¤ãƒªã‚¢ã‚¹
 	 */
 	template<typename T>
 	using FlattenT = typename Flatten<ValueOrSelf<T>>::type;

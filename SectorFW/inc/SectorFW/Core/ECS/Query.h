@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Query.h
- * @brief ECS‚ÌƒNƒGƒŠ‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ECSã®ã‚¯ã‚¨ãƒªã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -13,32 +13,32 @@ namespace SFW
 {
 	namespace ECS
 	{
-		//‘O•ûéŒ¾
+		//å‰æ–¹å®£è¨€
 		class ArchetypeChunk;
 		/**
-		 * @brief ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ¯•Ê‚·‚éƒgƒŒƒCƒg
+		 * @brief ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è­˜åˆ¥ã™ã‚‹ãƒˆãƒ¬ã‚¤ãƒˆ
 		 */
 		template <typename... Args>
 		concept AllDense = (!is_sparse_component_v<Args> && ...);
 		/**
-		 * @brief QÆ‚Ì‚İ‚ÌŒ^‚ğ¯•Ê‚·‚éƒgƒŒƒCƒg
+		 * @brief å‚ç…§ã®ã¿ã®å‹ã‚’è­˜åˆ¥ã™ã‚‹ãƒˆãƒ¬ã‚¤ãƒˆ
 		 */
 		template<typename T>
 		concept ReferenceOnly = std::is_reference_v<T>;
 		/**
-		 * @brief í‚Éfalse‚ğ•Ô‚·’è”ƒeƒ“ƒvƒŒ[ƒg
+		 * @brief å¸¸ã«falseã‚’è¿”ã™å®šæ•°ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 		 */
 		template<typename>
 		inline constexpr bool always_false = false;
 		/**
-		 * @brief w’è‚µ‚½ƒRƒ“ƒ|[ƒlƒ“ƒg‚Éƒ}ƒbƒ`ƒ“ƒO‚·‚éƒ`ƒƒƒ“ƒN‚ğæ“¾‚½‚ß‚ÌƒNƒ‰ƒX
+		 * @brief æŒ‡å®šã—ãŸã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã«ãƒãƒƒãƒãƒ³ã‚°ã™ã‚‹ãƒãƒ£ãƒ³ã‚¯ã‚’å–å¾—ãŸã‚ã®ã‚¯ãƒ©ã‚¹
 		 */
 		class Query
 		{
 		public:
 			/**
-			 * @brief ƒNƒGƒŠ‚ÉŠÜ‚ß‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚ğw’è‚·‚éƒeƒ“ƒvƒŒ[ƒg
-			 * @return Query& ƒNƒGƒŠ©g‚ÌQÆ
+			 * @brief ã‚¯ã‚¨ãƒªã«å«ã‚ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’æŒ‡å®šã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
+			 * @return Query& ã‚¯ã‚¨ãƒªè‡ªèº«ã®å‚ç…§
 			 */
 			template<typename... Ts>
 				requires AllDense<Ts...>
@@ -47,8 +47,8 @@ namespace SFW
 				return *this;
 			}
 			/**
-			 * @brief ƒNƒGƒŠ‚©‚çœŠO‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚ğw’è‚·‚éƒeƒ“ƒvƒŒ[ƒg
-			 * @return Query& ƒNƒGƒŠ©g‚ÌQÆ
+			 * @brief ã‚¯ã‚¨ãƒªã‹ã‚‰é™¤å¤–ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’æŒ‡å®šã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
+			 * @return Query& ã‚¯ã‚¨ãƒªè‡ªèº«ã®å‚ç…§
 			 */
 			template<typename... Ts>
 				requires AllDense<Ts...>
@@ -58,9 +58,9 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒNƒGƒŠ‚Éƒ}ƒbƒ`‚·‚éƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚ğæ“¾‚µ‚Ü‚·B
-			 * @param context ƒRƒ“ƒeƒLƒXƒg‚ğw’è‚·‚éƒeƒ“ƒvƒŒ[ƒg
-			 * @return std::vector<ArchetypeChunk*> ƒ}ƒbƒ`‚·‚éƒ`ƒƒƒ“ƒN‚ÌƒxƒNƒ^[
+			 * @brief ã‚¯ã‚¨ãƒªã«ãƒãƒƒãƒã™ã‚‹ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @param context ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’æŒ‡å®šã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
+			 * @return std::vector<ArchetypeChunk*> ãƒãƒƒãƒã™ã‚‹ãƒãƒ£ãƒ³ã‚¯ã®ãƒ™ã‚¯ã‚¿ãƒ¼
 			 */
 			template<ReferenceOnly T>
 			std::vector<ArchetypeChunk*> MatchingChunks(T context) const noexcept {
@@ -69,9 +69,9 @@ namespace SFW
 				return {};
 			}
 		private:
-			//ƒNƒGƒŠ‚É•K—v‚ÈƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
+			//ã‚¯ã‚¨ãƒªã«å¿…è¦ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
 			ComponentMask required;
-			//ƒNƒGƒŠ‚©‚çœŠO‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
+			//ã‚¯ã‚¨ãƒªã‹ã‚‰é™¤å¤–ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
 			ComponentMask excluded;
 		};
 	}

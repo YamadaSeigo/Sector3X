@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   OneOrMore.hpp
- * @brief 1ŒÂˆÈã‚Ì—v‘f‚ğŠi”[‚·‚éƒRƒ“ƒeƒiƒNƒ‰ƒX
+ * @brief 1å€‹ä»¥ä¸Šã®è¦ç´ ã‚’æ ¼ç´ã™ã‚‹ã‚³ãƒ³ãƒ†ãƒŠã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -15,15 +15,15 @@
 #include <cassert>
 
  /**
-  * @brief 1ŒÂˆÈã‚Ì—v‘f‚ğŠi”[‚·‚éƒRƒ“ƒeƒiƒNƒ‰ƒX
-  * @details “à•”“I‚É‚ÍA—v‘f‚ª0ŒÂ‚Ì‚Æ‚«‚Ístd::monostateA1ŒÂ‚Ì‚Æ‚«‚ÍTA•¡”‚Ì‚Æ‚«‚Ístd::vector<T>‚ğ•Û‚·‚éB—v‘f‚Ì’Ç‰Á‚Íadd()‚âemplace()‚Ås‚¢Aæ“¾‚Íget()‚âoperator[]‚Ås‚¤BƒTƒCƒY‚â‹ó”»’è‚à’ñ‹Ÿ‚·‚éB
+  * @brief 1å€‹ä»¥ä¸Šã®è¦ç´ ã‚’æ ¼ç´ã™ã‚‹ã‚³ãƒ³ãƒ†ãƒŠã‚¯ãƒ©ã‚¹
+  * @details å†…éƒ¨çš„ã«ã¯ã€è¦ç´ ãŒ0å€‹ã®ã¨ãã¯std::monostateã€1å€‹ã®ã¨ãã¯Tã€è¤‡æ•°ã®ã¨ãã¯std::vector<T>ã‚’ä¿æŒã™ã‚‹ã€‚è¦ç´ ã®è¿½åŠ ã¯add()ã‚„emplace()ã§è¡Œã„ã€å–å¾—ã¯get()ã‚„operator[]ã§è¡Œã†ã€‚ã‚µã‚¤ã‚ºã‚„ç©ºåˆ¤å®šã‚‚æä¾›ã™ã‚‹ã€‚
   */
 template <class T>
 class OneOrMore {
 	std::variant<std::monostate, T, std::vector<T>> data_;
 
 	/**
-	 * @brief helper: Œ»İ‚Ìæ“ª‚ÆI’[ƒ|ƒCƒ“ƒ^‚ğæ‚èo‚·i•ªŠò‚Íˆê“x‚¾‚¯j
+	 * @brief helper: ç¾åœ¨ã®å…ˆé ­ã¨çµ‚ç«¯ãƒã‚¤ãƒ³ã‚¿ã‚’å–ã‚Šå‡ºã™ï¼ˆåˆ†å²ã¯ä¸€åº¦ã ã‘ï¼‰
 	 */
 	static std::pair<const T*, const T*> ptr_range(const std::variant<std::monostate, T, std::vector<T>>& v) noexcept {
 		if (std::holds_alternative<T>(v)) {
@@ -41,8 +41,8 @@ public:
 	OneOrMore() = default;
 
 	/**
-	 * @brief ’Ç‰ÁiƒRƒs[j
-	 * @param value ’Ç‰Á‚·‚é’l
+	 * @brief è¿½åŠ ï¼ˆã‚³ãƒ”ãƒ¼ï¼‰
+	 * @param value è¿½åŠ ã™ã‚‹å€¤
 	 */
 	void add(const T& value) {
 		if (std::holds_alternative<std::monostate>(data_)) {
@@ -50,7 +50,7 @@ public:
 		}
 		else if (std::holds_alternative<T>(data_)) {
 			std::vector<T> vec;
-			vec.reserve(2);                    // š single¨multi •ÏŠ·‚ÌÄŠm•Û‚ğ”ğ‚¯‚é
+			vec.reserve(2);                    // â˜… singleâ†’multi å¤‰æ›æ™‚ã®å†ç¢ºä¿ã‚’é¿ã‘ã‚‹
 			vec.push_back(std::get<T>(data_));
 			vec.push_back(value);
 			data_ = std::move(vec);
@@ -60,8 +60,8 @@ public:
 		}
 	}
 	/**
-	 * @brief ’Ç‰Áiƒ€[ƒuj
-	 * @param value ’Ç‰Á‚·‚é’li‰E•Ó’lQÆj
+	 * @brief è¿½åŠ ï¼ˆãƒ ãƒ¼ãƒ–ï¼‰
+	 * @param value è¿½åŠ ã™ã‚‹å€¤ï¼ˆå³è¾ºå€¤å‚ç…§ï¼‰
 	 */
 	void add(T&& value) {
 		if (std::holds_alternative<std::monostate>(data_)) {
@@ -79,9 +79,9 @@ public:
 		}
 	}
 	/**
-	 * @brief emplacei—]Œv‚Èˆê‚ğ”ğ‚¯‚éj
-	 * @param ...args ƒRƒ“ƒXƒgƒ‰ƒNƒ^ˆø”
-	 * @return T& ’Ç‰Á‚³‚ê‚½—v‘f‚Ö‚ÌQÆ
+	 * @brief emplaceï¼ˆä½™è¨ˆãªä¸€æ™‚ã‚’é¿ã‘ã‚‹ï¼‰
+	 * @param ...args ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å¼•æ•°
+	 * @return T& è¿½åŠ ã•ã‚ŒãŸè¦ç´ ã¸ã®å‚ç…§
 	 */
 	template <class... Args>
 	T& emplace(Args&&... args) {
@@ -105,7 +105,7 @@ public:
 	}
 
 	/**
-	 * @brief ƒTƒCƒY / ‹ó”»’è
+	 * @brief ã‚µã‚¤ã‚º / ç©ºåˆ¤å®š
 	 */
 	[[nodiscard]] size_t size() const noexcept {
 		if (std::holds_alternative<std::monostate>(data_)) return 0;
@@ -115,9 +115,9 @@ public:
 	[[nodiscard]] bool empty() const noexcept { return size() == 0; }
 
 	/**
-	 * @brief ˆÀ‘Sæ“¾ioptional<ref>j
-	 * @param index æ“¾‚·‚é—v‘f‚ÌƒCƒ“ƒfƒbƒNƒX
-	 * @return optional<ref> æ“¾‚Å‚«‚È‚¯‚ê‚Î nullopt
+	 * @brief å®‰å…¨å–å¾—ï¼ˆoptional<ref>ï¼‰
+	 * @param index å–å¾—ã™ã‚‹è¦ç´ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	 * @return optional<ref> å–å¾—ã§ããªã‘ã‚Œã° nullopt
 	 */
 	[[nodiscard]] std::optional<std::reference_wrapper<const T>> get(size_t index) const {
 		if (std::holds_alternative<T>(data_)) {
@@ -131,9 +131,9 @@ public:
 	}
 
 	/**
-	 * @brief ’¼ÚQÆi‚‘¬‚¾‚ª©ŒÈÓ”Cj
-	 * @param i ƒCƒ“ƒfƒbƒNƒX
-	 * @return const T& QÆ
+	 * @brief ç›´æ¥å‚ç…§ï¼ˆé«˜é€Ÿã ãŒè‡ªå·±è²¬ä»»ï¼‰
+	 * @param i ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	 * @return const T& å‚ç…§
 	 */
 	const T& operator[](size_t i) const {
 		if (std::holds_alternative<T>(data_)) { assert(i == 0); return std::get<T>(data_); }
@@ -145,7 +145,7 @@ public:
 	 * @brief reserve
 	 */
 	void reserve(size_t n) {
-		if (n <= 1) return; // single ‚Å\•ª
+		if (n <= 1) return; // single ã§ååˆ†
 		if (std::holds_alternative<std::vector<T>>(data_)) {
 			std::get<std::vector<T>>(data_).reserve(n);
 		}
@@ -165,7 +165,7 @@ public:
 	void clear() noexcept { data_.emplace<std::monostate>(); }
 
 	/**
-	 * @brief ”½•œF•ªŠò‚È‚µ‚ÌŒy—ÊƒCƒeƒŒ[ƒ^iƒ|ƒCƒ“ƒ^‘Îj
+	 * @brief åå¾©ï¼šåˆ†å²ãªã—ã®è»½é‡ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ï¼ˆãƒã‚¤ãƒ³ã‚¿å¯¾ï¼‰
 	 */
 	struct iterator {
 		const T* cur = nullptr;
@@ -180,7 +180,7 @@ public:
 	};
 	/**
 	 * @brief begin
-	 * @return iterator æ“ªƒCƒeƒŒ[ƒ^
+	 * @return iterator å…ˆé ­ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿
 	 */
 	[[nodiscard]] iterator begin() const noexcept {
 		auto [b, e] = ptr_range(data_);
@@ -188,14 +188,14 @@ public:
 	}
 	/**
 	 * @brief end
-	 * @return iterator I’[ƒCƒeƒŒ[ƒ^
+	 * @return iterator çµ‚ç«¯ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿
 	 */
 	[[nodiscard]] iterator end() const noexcept {
 		auto [b, e] = ptr_range(data_);
 		(void)b; return { e, e };
 	}
 	/**
-	 * @brief ‚‘¬ for_eachi•ªŠò1‰ñ‚Å‘S—v‘fˆ—j
+	 * @brief é«˜é€Ÿ for_eachï¼ˆåˆ†å²1å›ã§å…¨è¦ç´ å‡¦ç†ï¼‰
 	 */
 	template <class F>
 	void for_each(F&& f) const {
@@ -210,7 +210,7 @@ public:
 };
 
 /**
- * @brief 1ŒÂ‚©‚ç4ŒÂ’ö“x‚Ì—v‘f‚ğŠi”[‚·‚é‚ÆŒø—¦‚ª‚¢‚¢ƒRƒ“ƒeƒiƒNƒ‰ƒXiSmall Buffer Optimization”Åj
+ * @brief 1å€‹ã‹ã‚‰4å€‹ç¨‹åº¦ã®è¦ç´ ã‚’æ ¼ç´ã™ã‚‹ã¨åŠ¹ç‡ãŒã„ã„ã‚³ãƒ³ãƒ†ãƒŠã‚¯ãƒ©ã‚¹ï¼ˆSmall Buffer Optimizationç‰ˆï¼‰
  */
 template <class T, size_t SmallN = 4>
 class OneOrMoreSBO {
@@ -224,13 +224,13 @@ public:
 	OneOrMoreSBO() = default;
 
 	/**
-	 * @brief ƒTƒCƒY / ‹ó”»’è
-	 * @return size_t ƒTƒCƒY
+	 * @brief ã‚µã‚¤ã‚º / ç©ºåˆ¤å®š
+	 * @return size_t ã‚µã‚¤ã‚º
 	 */
 	size_t size() const noexcept { return sz_; }
 	/**
-	 * @brief ‹ó”»’è
-	 * @return bool ‹ó‚È‚ç true
+	 * @brief ç©ºåˆ¤å®š
+	 * @return bool ç©ºãªã‚‰ true
 	 */
 	bool   empty() const noexcept { return sz_ == 0; }
 	/**
@@ -241,9 +241,9 @@ public:
 		kind_ = Kind::Empty; sz_ = 0;
 	}
 	/**
-	 * @brief ’Ç‰ÁiƒRƒs[j
-	 * @param ...args ƒRƒ“ƒXƒgƒ‰ƒNƒ^ˆø”
-	 * @return T& ’Ç‰Á‚³‚ê‚½—v‘f‚Ö‚ÌQÆ
+	 * @brief è¿½åŠ ï¼ˆã‚³ãƒ”ãƒ¼ï¼‰
+	 * @param ...args ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å¼•æ•°
+	 * @return T& è¿½åŠ ã•ã‚ŒãŸè¦ç´ ã¸ã®å‚ç…§
 	 */
 	template <class... Args>
 	T& emplace(Args&&... args) {
@@ -265,7 +265,7 @@ public:
 	}
 	/**
 	 * @brief reserve
-	 * @param n —\–ñ‚·‚é—v‘f”
+	 * @param n äºˆç´„ã™ã‚‹è¦ç´ æ•°
 	 */
 	void reserve(size_t n) {
 		if (n <= SmallN) return;
@@ -279,16 +279,16 @@ public:
 		}
 	}
 	/**
-	 * @brief ’¼ÚQÆi‚‘¬‚¾‚ª©ŒÈÓ”Cj
-	 * @param i ƒCƒ“ƒfƒbƒNƒX
-	 * @return const T& QÆ
+	 * @brief ç›´æ¥å‚ç…§ï¼ˆé«˜é€Ÿã ãŒè‡ªå·±è²¬ä»»ï¼‰
+	 * @param i ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	 * @return const T& å‚ç…§
 	 */
 	const T& operator[](size_t i) const {
 		if (kind_ == Kind::Inline) { assert(i < sz_); return inline_[i]; }
 		return heap_[i];
 	}
 	/**
-	 * @brief ”½•œƒCƒeƒŒ[ƒ^i•ªŠò‚È‚µ
+	 * @brief åå¾©ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ï¼ˆåˆ†å²ãªã—
 	 */
 	struct iterator {
 		const T* cur{}, * end{};
@@ -300,7 +300,7 @@ public:
 	};
 	/**
 	 * @brief begin
-	 * @return iterator æ“ªƒCƒeƒŒ[ƒ^
+	 * @return iterator å…ˆé ­ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿
 	 */
 	iterator begin() const noexcept {
 		if (kind_ == Kind::Inline) return { inline_.data(), inline_.data() + sz_ };
@@ -309,7 +309,7 @@ public:
 	}
 	/**
 	 * @brief end
-	 * @return iterator I’[ƒCƒeƒŒ[ƒ^
+	 * @return iterator çµ‚ç«¯ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿
 	 */
 	iterator end() const noexcept {
 		if (kind_ == Kind::Inline) return { inline_.data() + sz_, inline_.data() + sz_ };

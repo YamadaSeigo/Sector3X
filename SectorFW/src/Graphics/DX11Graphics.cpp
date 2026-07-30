@@ -1,4 +1,4 @@
-#include "DX11Graphics.h"
+ï»¿#include "DX11Graphics.h"
 
 #include "Debug/logger.h"
 
@@ -17,7 +17,7 @@
 
 #endif //_DEBUG
 
-// NVIDIA Optimus ‚â AMD Switchable Graphics ‚Å‚«”\GPU‚ğ—Dæ‚·‚é‚½‚ß‚ÌƒGƒNƒXƒ|[ƒg•Ï”
+// NVIDIA Optimus ã‚„ AMD Switchable Graphics ã§é«˜æ€§èƒ½GPUã‚’å„ªå…ˆã™ã‚‹ãŸã‚ã®ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆå¤‰æ•°
 extern "C"
 {
 	__declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
@@ -30,21 +30,21 @@ namespace SFW
 	{
 		GraphicsDevice::~GraphicsDevice()
 		{
-			// ‚±‚±‚ÅƒŒƒ“ƒ_[ƒXƒŒƒbƒh‚ğ’â~
+			// ã“ã“ã§ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’åœæ­¢
 			StopRenderThread();
 
 #ifdef SHOW_DX_LIVE_OBJECT
-			// ‚Ü‚¸‚ÍƒoƒCƒ“ƒh‰ğœ‚Æó‘ÔƒNƒŠƒA
+			// ã¾ãšã¯ãƒã‚¤ãƒ³ãƒ‰è§£é™¤ã¨çŠ¶æ…‹ã‚¯ãƒªã‚¢
 			m_context->ClearState();
 			m_context->Flush();
 
-			// 1) D3D11 ‘¤iŒ^•ÊEQÆƒJƒEƒ“ƒg‚Â‚«‚ÅÚ×j
+			// 1) D3D11 å´ï¼ˆå‹åˆ¥ãƒ»å‚ç…§ã‚«ã‚¦ãƒ³ãƒˆã¤ãã§è©³ç´°ï¼‰
 			ComPtr<ID3D11Debug> d3dDebug;
 			if (SUCCEEDED(m_device.As(&d3dDebug))) {
 				d3dDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
 			}
 
-			// 2) DXGI ‘¤iƒ‚ƒWƒ…[ƒ‹‰¡’fj
+			// 2) DXGI å´ï¼ˆãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«æ¨ªæ–­ï¼‰
 			ComPtr<IDXGIDebug1> dxgiDebug;
 			if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&dxgiDebug)))) {
 				dxgiDebug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
@@ -68,10 +68,10 @@ namespace SFW
 		{
 			if (this == &rhs) return *this;
 
-			// ©•ª‘¤‚ÉŠù‘¶ƒ‰ƒ“ƒi[‚ª‚¢‚ê‚Î~‚ß‚éiŠ—L‚ğÌ‚Ä‚é‘O‚ÉƒNƒŠ[ƒ“ƒAƒbƒvj
+			// è‡ªåˆ†å´ã«æ—¢å­˜ãƒ©ãƒ³ãƒŠãƒ¼ãŒã„ã‚Œã°æ­¢ã‚ã‚‹ï¼ˆæ‰€æœ‰ã‚’æ¨ã¦ã‚‹å‰ã«ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—ï¼‰
 			StopRenderThread();
 
-			// COM ‚ÆƒXƒƒbƒvƒ`ƒF[ƒ“‚È‚Ç‚ğˆÚ÷
+			// COM ã¨ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³ãªã©ã‚’ç§»è­²
 			m_device = rhs.m_device;
 			m_context = rhs.m_context;
 			m_swapChain = rhs.m_swapChain;
@@ -79,11 +79,11 @@ namespace SFW
 			m_depthStencilBuffer = rhs.m_depthStencilBuffer;
 			m_depthStencilView = rhs.m_depthStencilView;
 
-			// ‹¤—Ló‘Ô‚ğˆÚ÷‚µAowner ‚ğV‚µ‚¢ this ‚Ö
+			// å…±æœ‰çŠ¶æ…‹ã‚’ç§»è­²ã—ã€owner ã‚’æ–°ã—ã„ this ã¸
 			m_rt = std::move(rhs.m_rt);
 			if (m_rt) m_rt->owner.store(this, std::memory_order_release);
 
-			// rhs ‚ğƒkƒ‹‰»
+			// rhs ã‚’ãƒŒãƒ«åŒ–
 			rhs.m_rt.reset();
 			return *this;
 		}
@@ -99,7 +99,7 @@ namespace SFW
 			DXGI_ADAPTER_DESC desc{};
 			if (FAILED(adapter->GetDesc(&desc))) return;
 
-			// ‘ã•\“I‚ÈVendorId: NVIDIA 0x10DE, Intel 0x8086, AMD 0x1002
+			// ä»£è¡¨çš„ãªVendorId: NVIDIA 0x10DE, Intel 0x8086, AMD 0x1002
 			//wchar_t buf[512];
 			LOG_INFO("Adapter: %ls (VendorId=0x%04X, DeviceId=0x%04X)\n",
 				desc.Description, desc.VendorId, desc.DeviceId);
@@ -149,7 +149,7 @@ namespace SFW
 				return false;
 			}
 
-			// ƒoƒbƒNƒoƒbƒtƒ@æ“¾
+			// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡å–å¾—
 			Microsoft::WRL::ComPtr<ID3D11Texture2D> backBuffer;
 			hr = m_swapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer));
 			if (FAILED(hr)) {
@@ -157,8 +157,8 @@ namespace SFW
 				return false;
 			}
 
-			// RenderTargetView ì¬
-			// RTV ‚Í SRGB ‚Åì¬iƒKƒ“ƒ}‘‚«‚İ‚ª—LŒøj
+			// RenderTargetView ä½œæˆ
+			// RTV ã¯ SRGB ã§ä½œæˆï¼ˆã‚¬ãƒ³ãƒæ›¸ãè¾¼ã¿ãŒæœ‰åŠ¹ï¼‰
 			D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
 			rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 			rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
@@ -169,10 +169,10 @@ namespace SFW
 				return false;
 			}
 
-			// o—Íæ‚Æ‚µ‚ÄƒZƒbƒg
+			// å‡ºåŠ›å…ˆã¨ã—ã¦ã‚»ãƒƒãƒˆ
 			m_context->OMSetRenderTargets(1, m_renderTargetView.GetAddressOf(), nullptr);
 
-			// ƒrƒ…[ƒ|[ƒgİ’è
+			// ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆè¨­å®š
 			m_viewport.Width = static_cast<FLOAT>(width);
 			m_viewport.Height = static_cast<FLOAT>(height);
 			m_viewport.MinDepth = 0.0f;
@@ -181,7 +181,7 @@ namespace SFW
 			m_viewport.TopLeftY = 0;
 			m_context->RSSetViewports(1, &m_viewport);
 
-			// [“xƒXƒeƒ“ƒVƒ‹ƒoƒbƒtƒ@‚Ìì¬
+			// æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒãƒƒãƒ•ã‚¡ã®ä½œæˆ
 			D3D11_TEXTURE2D_DESC depthDesc = {};
 			depthDesc.Width = width;
 			depthDesc.Height = height;
@@ -199,7 +199,7 @@ namespace SFW
 				return false;
 			}
 
-			// [“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[‚Ìì¬
+			// æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 			D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 			dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 			dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
@@ -212,11 +212,11 @@ namespace SFW
 				return false;
 			}
 
-			// “Ç‚İæ‚èê—p[“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[‚Ìì¬
+			// èª­ã¿å–ã‚Šå°‚ç”¨æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 			dsvDesc.Flags = D3D11_DSV_READ_ONLY_DEPTH;
 			hr = m_device->CreateDepthStencilView(m_depthStencilBuffer.Get(), &dsvDesc, m_depthStencilViewReadOnly.GetAddressOf());
 
-			// [“xƒXƒeƒ“ƒVƒ‹ƒoƒbƒtƒ@‚ÌƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[ì¬
+			// æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒãƒƒãƒ•ã‚¡ã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ä½œæˆ
 			D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
 			srvDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
 			srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
@@ -229,7 +229,7 @@ namespace SFW
 				return false;
 			}
 
-			//ResourceManagerŠÖ˜A‰Šú‰»
+			//ResourceManageré–¢é€£åˆæœŸåŒ–
 			//===========================================================
 			meshManager = std::make_unique<MeshManager>(m_device.Get());
 			shaderManager = std::make_unique<ShaderManager>(m_device.Get());
@@ -247,7 +247,7 @@ namespace SFW
 				textureManager.get(), bufferManager.get(), samplerManager.get(), modelAssetManager.get()
 			);
 
-			//Masked Occlution Culling‰Šú‰»
+			//Masked Occlution CullingåˆæœŸåŒ–
 			//==============================================================
 			MOC* moc = MOC::Create();
 			if (!moc) {
@@ -260,7 +260,7 @@ namespace SFW
 
 			renderGraph = std::make_unique<RenderGraph>(*backend, moc);
 
-			// ‚±‚±‚ÅƒŒƒ“ƒ_[ƒXƒŒƒbƒh‚ğ‹N“®
+			// ã“ã“ã§ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’èµ·å‹•
 			StartRenderThread();
 
 #ifdef _ENABLE_IMGUI
@@ -285,9 +285,9 @@ namespace SFW
 		void GraphicsDevice::DrawImpl()
 		{
 #ifdef _ENABLE_IMGUI
-			//GPUg—p—¦‚ğ‘ª’èŠJn
+			//GPUä½¿ç”¨ç‡ã‚’æ¸¬å®šé–‹å§‹
 			m_gpuTimer.begin(m_context.Get());
-			//Œo‰ßŠÔŒv‘ª—p
+			//çµŒéæ™‚é–“è¨ˆæ¸¬ç”¨
 			auto t0 = std::chrono::steady_clock::now();
 #endif
 
@@ -297,12 +297,12 @@ namespace SFW
 			auto t1 = std::chrono::steady_clock::now();
 			double ms = std::chrono::duration<double, std::milli>(t1 - t0).count();
 
-			// •`‰æŒn‚ÌCPU‚ÌÀsŠÔ‚ğƒfƒoƒbƒOî•ñ‚É‘—M
+			// æç”»ç³»ã®CPUã®å®Ÿè¡Œæ™‚é–“ã‚’ãƒ‡ãƒãƒƒã‚°æƒ…å ±ã«é€ä¿¡
 			Debug::PublishRenderMs(float(ms));
 
-			constexpr double sampleInterval = 0.5; // ƒTƒ“ƒvƒŠƒ“ƒOŠÔŠui•bj
+			constexpr double sampleInterval = 0.5; // ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°é–“éš”ï¼ˆç§’ï¼‰
 
-			// ˆê’èŠÔ‚²‚Æ‚ÉGPUg—p—¦‚ğæ“¾‚µ‚ÄUI‚É‘—‚é
+			// ä¸€å®šæ™‚é–“ã”ã¨ã«GPUä½¿ç”¨ç‡ã‚’å–å¾—ã—ã¦UIã«é€ã‚‹
 			m_elapsedTime += m_gpuTimeBudget;
 			if (m_elapsedTime > sampleInterval)
 			{
@@ -311,7 +311,7 @@ namespace SFW
 				double pct = 0.0;
 				if (m_gpuUtilPDH.sample(m_lastSampledPID, pct))
 				{
-					//GPUg—p—¦‚ğUI‚É‘—‚é
+					//GPUä½¿ç”¨ç‡ã‚’UIã«é€ã‚‹
 					Debug::PublishGpu(float(pct / 100));
 				}
 			}
@@ -319,11 +319,11 @@ namespace SFW
 			m_gpuTimer.end(m_context.Get());
 			double gpuSec = m_gpuTimer.tryResolve(m_context.Get());
 			if (gpuSec >= 0.0) {
-				// GPUŒo‰ßŠÔ‚ğƒfƒoƒbƒOî•ñ‚É‘—M
+				// GPUçµŒéæ™‚é–“ã‚’ãƒ‡ãƒãƒƒã‚°æƒ…å ±ã«é€ä¿¡
 				Debug::PublishGpuFrameMs(float(gpuSec * 1000.0));
 			}
 
-			//Imgui‚Ì‚½‚ß‚ÉƒƒCƒ“‚Ìƒ^[ƒQƒbƒg‚É–ß‚·
+			//Imguiã®ãŸã‚ã«ãƒ¡ã‚¤ãƒ³ã®ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«æˆ»ã™
 			SetMainRenderTargetAndDepth();
 #endif
 		}
@@ -333,28 +333,28 @@ namespace SFW
 			m_swapChain->Present(1, 0);
 		}
 
-		// ==== ƒŒƒ“ƒ_[ƒXƒŒƒbƒh API ====
+		// ==== ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰ API ====
 		void GraphicsDevice::StartRenderThread() {
 			if (m_rt && m_rt->running.load()) return;
 			if (!m_rt) m_rt = std::make_shared<RTState>();
 			m_rt->owner.store(this, std::memory_order_release);
 			m_rt->running.store(true, std::memory_order_release);
 
-			// Šù‘¶ thread ‚ğÄ—˜—p‚µ‚È‚¢iƒ€[ƒu‰Â”\‚É‚·‚é‚½‚ß shared_ptr ‚Å•ß‘¨j
+			// æ—¢å­˜ thread ã‚’å†åˆ©ç”¨ã—ãªã„ï¼ˆãƒ ãƒ¼ãƒ–å¯èƒ½ã«ã™ã‚‹ãŸã‚ shared_ptr ã§æ•æ‰ï¼‰
 			m_rt->thread = std::thread([st = m_rt] { st->owner.load()->RenderThreadMain(st); });
 		}
 
 		void GraphicsDevice::StopRenderThread() {
 			if (!m_rt) return;
 			if (!m_rt->running.exchange(false)) {
-				// Šù‚É~‚Ü‚Á‚Ä‚¢‚é
+				// æ—¢ã«æ­¢ã¾ã£ã¦ã„ã‚‹
 				if (m_rt->thread.joinable()) m_rt->thread.join();
 				return;
 			}
-			// ‹N°
+			// èµ·åºŠ
 			{
 				std::lock_guard<std::mutex> lk(m_rt->qMtx);
-				// ‰½‚à‚µ‚È‚¢iƒLƒ…[‚ª‹ó‚Å‚à‹N‚±‚·‚½‚ß‚Ì notifyj
+				// ä½•ã‚‚ã—ãªã„ï¼ˆã‚­ãƒ¥ãƒ¼ãŒç©ºã§ã‚‚èµ·ã“ã™ãŸã‚ã® notifyï¼‰
 			}
 			m_rt->qCv.notify_all();
 
@@ -365,8 +365,8 @@ namespace SFW
 			auto st = m_rt;
 			if (!st) return;
 
-			// === ƒoƒbƒNƒvƒŒƒbƒVƒƒFRENDER_QUEUE_BUFFER_COUNT ˜g‚ğ’´‚¦‚È‚¢ ===
-			// ğŒ: (lastSubmitted - lastCompleted) >= MaxInFlight
+			// === ãƒãƒƒã‚¯ãƒ—ãƒ¬ãƒƒã‚·ãƒ£ï¼šRENDER_QUEUE_BUFFER_COUNT æ ã‚’è¶…ãˆãªã„ ===
+			// æ¡ä»¶: (lastSubmitted - lastCompleted) >= MaxInFlight
 			{
 				std::unique_lock<std::mutex> lk(st->doneMtx);
 				st->doneCv.wait(lk, [&] {
@@ -422,7 +422,7 @@ namespace SFW
 		}
 
 		void GraphicsDevice::RenderThreadMain(std::shared_ptr<RTState> st) {
-			// Immediate Context ‚Í‚±‚ÌƒXƒŒƒbƒhê—L
+			// Immediate Context ã¯ã“ã®ã‚¹ãƒ¬ãƒƒãƒ‰å°‚æœ‰
 			while (st->running.load(std::memory_order_acquire)) {
 				RenderSubmit job{};
 				{
@@ -433,12 +433,12 @@ namespace SFW
 					st->queue.pop_front();
 				}
 
-				// Às
+				// å®Ÿè¡Œ
 				if (job.doClear) Clear(job.clearColor);
 				Draw();
 				Present();
 
-				// Š®—¹‚ğ‹L˜^‚µ‚Ä’Ê’m
+				// å®Œäº†ã‚’è¨˜éŒ²ã—ã¦é€šçŸ¥
 				{
 					std::lock_guard<std::mutex> lk(st->doneMtx);
 					st->lastCompleted.fetch_add(1, std::memory_order_release);

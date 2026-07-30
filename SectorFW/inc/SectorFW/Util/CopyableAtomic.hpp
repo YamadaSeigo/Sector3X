@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   CopyableAtomic.hpp
- * @brief ƒRƒs[‰Â”\‚Èatomicƒ‰ƒbƒp[ƒNƒ‰ƒX
+ * @brief ã‚³ãƒ”ãƒ¼å¯èƒ½ãªatomicãƒ©ãƒƒãƒ‘ãƒ¼ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -12,26 +12,26 @@
 namespace SFW
 {
 	/**
-	 * @brief ƒRƒs[‰Â”\‚Èatomicƒ‰ƒbƒp[ƒNƒ‰ƒX
+	 * @brief ã‚³ãƒ”ãƒ¼å¯èƒ½ãªatomicãƒ©ãƒƒãƒ‘ãƒ¼ã‚¯ãƒ©ã‚¹
 	 */
 	template<typename T>
 	struct CopyableAtomic {
 		std::atomic<T> value;
 
 		/**
-		 * @brief ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		 * @brief ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		 */
 		CopyableAtomic() noexcept = default;
 		/**
-		 * @brief ’l‚ğw’è‚µ‚Ä‰Šú‰»‚·‚éƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @param v ‰Šú‰»‚·‚é’l
+		 * @brief å€¤ã‚’æŒ‡å®šã—ã¦åˆæœŸåŒ–ã™ã‚‹ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @param v åˆæœŸåŒ–ã™ã‚‹å€¤
 		 */
 		CopyableAtomic(T v) noexcept : value(v) {}
 
 		/**
-		 * @brief ƒRƒs[‚ÍƒfƒtƒHƒ‹ƒg‰Šú‰»i0j
-		 * @param other ƒRƒs[Œ³
-		 * @return CopyableAtomic& ©g‚ÌQÆ
+		 * @brief ã‚³ãƒ”ãƒ¼æ™‚ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆåˆæœŸåŒ–ï¼ˆ0ï¼‰
+		 * @param other ã‚³ãƒ”ãƒ¼å…ƒ
+		 * @return CopyableAtomic& è‡ªèº«ã®å‚ç…§
 		 */
 		CopyableAtomic(const CopyableAtomic& other) noexcept : value(other.load(std::memory_order_acquire)) {}
 		CopyableAtomic& operator=(const CopyableAtomic& other) noexcept {
@@ -40,35 +40,35 @@ namespace SFW
 		}
 
 		/**
-		 * @brief –¾¦“I‚Éatomic‘€ì‚ğˆÏ÷
-		 * @param order ƒƒ‚ƒŠƒI[ƒ_[
-		 * @return T ƒ[ƒh‚µ‚½’l
+		 * @brief æ˜ç¤ºçš„ã«atomicæ“ä½œã‚’å§”è­²
+		 * @param order ãƒ¡ãƒ¢ãƒªã‚ªãƒ¼ãƒ€ãƒ¼
+		 * @return T ãƒ­ãƒ¼ãƒ‰ã—ãŸå€¤
 		 */
 		inline T load(std::memory_order order = std::memory_order_seq_cst) const {
 			return value.load(order);
 		}
 		/**
-		 * @brief ƒXƒgƒA‘€ì‚ğˆÏ÷
-		 * @param v Ši”[‚·‚é’l
-		 * @param order ƒƒ‚ƒŠƒI[ƒ_[
+		 * @brief ã‚¹ãƒˆã‚¢æ“ä½œã‚’å§”è­²
+		 * @param v æ ¼ç´ã™ã‚‹å€¤
+		 * @param order ãƒ¡ãƒ¢ãƒªã‚ªãƒ¼ãƒ€ãƒ¼
 		 */
 		inline void store(T v, std::memory_order order = std::memory_order_seq_cst) {
 			value.store(v, order);
 		}
 		/**
-		 * @brief ‰ÁZ‘€ì‚ğˆÏ÷
-		 * @param arg ‰ÁZ‚·‚é’l
-		 * @param order ƒƒ‚ƒŠƒI[ƒ_[
-		 * @return T ‰ÁZ‘O‚Ì’l
+		 * @brief åŠ ç®—æ“ä½œã‚’å§”è­²
+		 * @param arg åŠ ç®—ã™ã‚‹å€¤
+		 * @param order ãƒ¡ãƒ¢ãƒªã‚ªãƒ¼ãƒ€ãƒ¼
+		 * @return T åŠ ç®—å‰ã®å€¤
 		 */
 		inline T fetch_add(T arg, std::memory_order order = std::memory_order_seq_cst) {
 			return value.fetch_add(arg, order);
 		}
 		/**
-		 * @brief Œ¸Z‘€ì‚ğˆÏ÷
-		 * @param arg Œ¸Z‚·‚é’l
-		 * @param order ƒƒ‚ƒŠƒI[ƒ_[
-		 * @return T Œ¸Z‘O‚Ì’l
+		 * @brief æ¸›ç®—æ“ä½œã‚’å§”è­²
+		 * @param arg æ¸›ç®—ã™ã‚‹å€¤
+		 * @param order ãƒ¡ãƒ¢ãƒªã‚ªãƒ¼ãƒ€ãƒ¼
+		 * @return T æ¸›ç®—å‰ã®å€¤
 		 */
 		inline T fetch_sub(T arg, std::memory_order order = std::memory_order_seq_cst) {
 			return value.fetch_sub(arg, order);

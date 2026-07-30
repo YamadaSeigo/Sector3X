@@ -1,4 +1,4 @@
-#include <SectorFW/Util/convert_string.h>
+ï»¿#include <SectorFW/Util/convert_string.h>
 #include <SectorFW/Debug/message.h>
 
 #include "RainService.h"
@@ -103,7 +103,7 @@ RainService::RainService(
 			assert(SUCCEEDED(hr) && "Failed to create compute shader.");
 		};
 
-	// ƒRƒ“ƒsƒ…[ƒgƒVƒF[ƒ_[ì¬
+	// ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ãƒˆã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ä½œæˆ
 	compileComputeShader(csInitFreeListPath, m_initFreeListCS);
 	compileComputeShader(csSpawnPath, m_spawnCS);
 	compileComputeShader(csUpdatePath, m_updateCS);
@@ -131,7 +131,7 @@ RainService::RainService(
 
 	m_particlePool.Create(pDevice);
 
-	// FreeList‰Šú‰»
+	// FreeListåˆæœŸåŒ–
 	{
 		struct InitCB
 		{
@@ -261,32 +261,32 @@ void RainService::Commit(double deltaTime)
 		   cameraPosWS.z - mWetWorldSize * 0.5f
 		};
 
-		// ƒXƒNƒ[ƒ‹—p‚ÌƒXƒiƒbƒvoriginiXV‚ÌˆÀ’è‰»j
+		// ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ç”¨ã®ã‚¹ãƒŠãƒƒãƒ—originï¼ˆæ›´æ–°ã®å®‰å®šåŒ–ï¼‰
 		Math::Vec2f originSnap;
 		originSnap.x = std::floor(originFine.x / metersPerTexelX) * metersPerTexelX;
 		originSnap.y = std::floor(originFine.y / metersPerTexelY) * metersPerTexelY;
 
-		// g—~‚µ‚¢snaph‚ğƒeƒNƒZƒ‹®”‚ÅŒˆ‚ß‚é
+		// â€œæ¬²ã—ã„snapâ€ã‚’ãƒ†ã‚¯ã‚»ãƒ«æ•´æ•°ã§æ±ºã‚ã‚‹
 		int32_t newTx = (int32_t)std::floor(originFine.x / metersPerTexelX);
 		int32_t newTy = (int32_t)std::floor(originFine.y / metersPerTexelY);
 
-		// ƒXƒNƒ[ƒ‹—Ê‚à®”·•ª‚ÅŠm’èiŠÛ‚ßŒë·‚È‚µj
+		// ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«é‡ã‚‚æ•´æ•°å·®åˆ†ã§ç¢ºå®šï¼ˆä¸¸ã‚èª¤å·®ãªã—ï¼‰
 		int32_t dxTex = newTx - mWetOriginTexelX;
 		int32_t dyTex = newTy - mWetOriginTexelY;
 
-		// snapŒ´“_‚ğXV
+		// snapåŸç‚¹ã‚’æ›´æ–°
 		mWetOriginTexelX = newTx;
 		mWetOriginTexelY = newTy;
 		mWetOriginXZ.x = float(mWetOriginTexelX) * metersPerTexelX;
 		mWetOriginXZ.y = float(mWetOriginTexelY) * metersPerTexelY;
 
-		// •\¦—p‚Ì sub-texel ƒIƒtƒZƒbƒgi0..1texel –¢–j
+		// è¡¨ç¤ºç”¨ã® sub-texel ã‚ªãƒ•ã‚»ãƒƒãƒˆï¼ˆ0..1texel æœªæº€ï¼‰
 		Math::Vec2f originSub{
 			originFine.x - originSnap.x,
 			originFine.y - originSnap.y
 		};
 
-		// CB‚Ö
+		// CBã¸
 		wetnessBuf.gWetOriginXZ_Snap = mWetOriginXZ; // Snap
 
 		float metersPerTexel = mWetWorldSize / DEPTH_MAP_SIZE;
@@ -458,8 +458,8 @@ Math::Matrix4x4f RainService::MakeDepthMapViewProjNoLock() const
 	float spawnRadius = m_cpuSpawnBuffer[currentSlot].gSpawnRadius;
 	float heightOffset = m_cpuSpawnBuffer[currentSlot].gHeightOffset;
 
-	constexpr float topMargin = 20.0f; // ƒXƒ|[ƒ“”ÍˆÍ‚Ìã‚É—]—T‚ğ‚½‚¹‚é‚½‚ß‚Ìƒ}[ƒWƒ“
-	constexpr float bottomMargin = 10.0f; // ƒXƒ|[ƒ“”ÍˆÍ‚Ì‰º‚É—]—T‚ğ‚½‚¹‚é‚½‚ß‚Ìƒ}[ƒWƒ“
+	constexpr float topMargin = 20.0f; // ã‚¹ãƒãƒ¼ãƒ³ç¯„å›²ã®ä¸Šã«ä½™è£•ã‚’æŒãŸã›ã‚‹ãŸã‚ã®ãƒãƒ¼ã‚¸ãƒ³
+	constexpr float bottomMargin = 10.0f; // ã‚¹ãƒãƒ¼ãƒ³ç¯„å›²ã®ä¸‹ã«ä½™è£•ã‚’æŒãŸã›ã‚‹ãŸã‚ã®ãƒãƒ¼ã‚¸ãƒ³
 
 	Math::Vec3f eye = camPos + Math::Vec3f(0.0f, heightOffset + topMargin, 0.0f);
 	Math::Vec3f at = camPos;
@@ -471,7 +471,7 @@ Math::Matrix4x4f RainService::MakeDepthMapViewProjNoLock() const
 	float top = spawnRadius;
 	float bottom = -spawnRadius;
 	float nearZ = 0.1f;
-	float farZ = heightOffset + spawnRadius + bottomMargin; // ƒJƒƒ‰‚Ì‚‚³ + ƒXƒ|[ƒ“”¼Œa + ‰ºƒ}[ƒWƒ“
+	float farZ = heightOffset + spawnRadius + bottomMargin; // ã‚«ãƒ¡ãƒ©ã®é«˜ã• + ã‚¹ãƒãƒ¼ãƒ³åŠå¾„ + ä¸‹ãƒãƒ¼ã‚¸ãƒ³
 	Math::Matrix4x4f proj = Math::MakeOrthographicT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(left, right, top, bottom, nearZ, farZ);
 
 	return proj * view;

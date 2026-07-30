@@ -1,4 +1,4 @@
-/**
+﻿/**
  * meshoptimizer - version 0.25
  *
  * Copyright (C) 2016-2025, by Arseny Kapoulkine (arseny.kapoulkine@gmail.com)

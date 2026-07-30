@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   I3DCameraService.h
- * @brief 3DƒJƒƒ‰ƒT[ƒrƒX‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief 3Dã‚«ãƒ¡ãƒ©ã‚µãƒ¼ãƒ“ã‚¹ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -26,7 +26,7 @@ namespace SFW
 		};
 
 		/**
-		* @brief@ƒJƒƒ‰ƒoƒbƒtƒ@‚Ì\‘¢‘Ì
+		* @briefã€€ã‚«ãƒ¡ãƒ©ãƒãƒƒãƒ•ã‚¡ã®æ§‹é€ ä½“
 		*/
 		struct CameraBuffer {
 			Math::Matrix4x4f view;
@@ -35,7 +35,7 @@ namespace SFW
 		};
 
 		/**
-		 * @brief 3DƒJƒƒ‰ƒT[ƒrƒX‚ÌƒCƒ“ƒ^[ƒtƒF[ƒXBƒJƒƒ‰‚Ì‘€ìAƒrƒ…[s—ñ‚ÌŒvZAƒJƒƒ‰ƒoƒbƒtƒ@‚ÌŠÇ—‚ğs‚¤B
+		 * @brief 3Dã‚«ãƒ¡ãƒ©ã‚µãƒ¼ãƒ“ã‚¹ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã€‚ã‚«ãƒ¡ãƒ©ã®æ“ä½œã€ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã®è¨ˆç®—ã€ã‚«ãƒ¡ãƒ©ãƒãƒƒãƒ•ã‚¡ã®ç®¡ç†ã‚’è¡Œã†ã€‚
 		 */
 		template<ProjectionType Type = ProjectionType::Perspective>
 		class I3DCameraService : public ECS::IUpdateService {
@@ -47,16 +47,16 @@ namespace SFW
 			};
 
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 			 */
 			explicit I3DCameraService(BufferHandle bufferHandle) noexcept : cameraBufferHandle(bufferHandle) {};
 			/**
-			 * @brief ƒfƒXƒgƒ‰ƒNƒ^
+			 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 			 */
 			virtual ~I3DCameraService() = default;
 			/**
-			 * @brief ƒJƒƒ‰‚ÌˆÚ“®
-			 * @param vec ˆÚ“®ƒxƒNƒgƒ‹
+			 * @brief ã‚«ãƒ¡ãƒ©ã®ç§»å‹•
+			 * @param vec ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«
 			 */
 			void Move(const Math::Vec3f& vec) noexcept {
 				std::unique_lock lock(sharedMutex);
@@ -65,8 +65,8 @@ namespace SFW
 				isUpdateBuffer = true;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚Ì‰ñ“]
-			 * @param rotation ‰ñ“]‚ğ•\‚·ƒNƒH[ƒ^ƒjƒIƒ“
+			 * @brief ã‚«ãƒ¡ãƒ©ã®å›è»¢
+			 * @param rotation å›è»¢ã‚’è¡¨ã™ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
 			 */
 			void Rotate(const Math::Quatf& q) noexcept {
 				std::unique_lock lock(sharedMutex);
@@ -94,8 +94,8 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒJƒƒ‰‚ÌˆÊ’u‚ğİ’è
-			 * @param position V‚µ‚¢ˆÊ’uƒxƒNƒgƒ‹
+			 * @brief ã‚«ãƒ¡ãƒ©ã®ä½ç½®ã‚’è¨­å®š
+			 * @param position æ–°ã—ã„ä½ç½®ãƒ™ã‚¯ãƒˆãƒ«
 			 */
 			void SetEyePos(const Math::Vec3f& eyePos) noexcept {
 				std::unique_lock lock(sharedMutex);
@@ -104,8 +104,8 @@ namespace SFW
 				isUpdateBuffer = true;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚Ì’‹“_‚ğİ’è
-			 * @param eyePosition V‚µ‚¢’‹“_ƒxƒNƒgƒ‹
+			 * @brief ã‚«ãƒ¡ãƒ©ã®æ³¨è¦–ç‚¹ã‚’è¨­å®š
+			 * @param eyePosition æ–°ã—ã„æ³¨è¦–ç‚¹ãƒ™ã‚¯ãƒˆãƒ«
 			 */
 			void SetTarget(const Math::Vec3f& targetPos) noexcept {
 				std::unique_lock lock(sharedMutex);
@@ -114,8 +114,8 @@ namespace SFW
 				isUpdateBuffer = true;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚Ì‹–ìŠp‚ğİ’è
-			 * @param fovRad ‹–ìŠpiƒ‰ƒWƒAƒ“’PˆÊj
+			 * @brief ã‚«ãƒ¡ãƒ©ã®è¦–é‡è§’ã‚’è¨­å®š
+			 * @param fovRad è¦–é‡è§’ï¼ˆãƒ©ã‚¸ã‚¢ãƒ³å˜ä½ï¼‰
 			 */
 			void SetFOV(float fovRad) noexcept {
 				std::unique_lock lock(sharedMutex);
@@ -124,8 +124,8 @@ namespace SFW
 				isUpdateBuffer = true;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚ÌƒAƒXƒyƒNƒg”ä‚ğİ’è
-			 * @param aspectRatio ƒAƒXƒyƒNƒg”äi•/‚‚³j
+			 * @brief ã‚«ãƒ¡ãƒ©ã®ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ã‚’è¨­å®š
+			 * @param aspectRatio ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ï¼ˆå¹…/é«˜ã•ï¼‰
 			 */
 			void SetAspectRatio(float aspectRatio) noexcept {
 				std::unique_lock lock(sharedMutex);
@@ -134,8 +134,8 @@ namespace SFW
 				isUpdateBuffer = true;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚ÌƒjƒAƒNƒŠƒbƒv‹——£‚ğİ’è
-			 * @param nearClip ƒjƒAƒNƒŠƒbƒv‹——£
+			 * @brief ã‚«ãƒ¡ãƒ©ã®ãƒ‹ã‚¢ã‚¯ãƒªãƒƒãƒ—è·é›¢ã‚’è¨­å®š
+			 * @param nearClip ãƒ‹ã‚¢ã‚¯ãƒªãƒƒãƒ—è·é›¢
 			 */
 			void SetNearClip(float nearClip) noexcept {
 				std::unique_lock lock(sharedMutex);
@@ -144,8 +144,8 @@ namespace SFW
 				isUpdateBuffer = true;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚Ìƒtƒ@[ƒNƒŠƒbƒv‹——£‚ğİ’è
-			 * @param farClip ƒtƒ@[ƒNƒŠƒbƒv‹——£
+			 * @brief ã‚«ãƒ¡ãƒ©ã®ãƒ•ã‚¡ãƒ¼ã‚¯ãƒªãƒƒãƒ—è·é›¢ã‚’è¨­å®š
+			 * @param farClip ãƒ•ã‚¡ãƒ¼ã‚¯ãƒªãƒƒãƒ—è·é›¢
 			 */
 			void SetFarClip(float farClip) noexcept {
 				std::unique_lock lock(sharedMutex);
@@ -154,8 +154,8 @@ namespace SFW
 				isUpdateBuffer = true;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚ÌÅ“_‹——£‚ğİ’è
-			 * @param distance Å“_‹——£
+			 * @brief ã‚«ãƒ¡ãƒ©ã®ç„¦ç‚¹è·é›¢ã‚’è¨­å®š
+			 * @param distance ç„¦ç‚¹è·é›¢
 			 */
 			void SetFocusDistance(float distance) noexcept {
 				std::unique_lock lock(sharedMutex);
@@ -165,9 +165,9 @@ namespace SFW
 				isUpdateBuffer = true;
 			}
 			/**
-			 * @brief ƒ}ƒEƒX‚ÌˆÚ“®—Ê‚ğİ’è
-			 * @param deltaX X•ûŒü‚ÌˆÚ“®—Ê
-			 * @param deltaY Y•ûŒü‚ÌˆÚ“®—Ê
+			 * @brief ãƒã‚¦ã‚¹ã®ç§»å‹•é‡ã‚’è¨­å®š
+			 * @param deltaX Xæ–¹å‘ã®ç§»å‹•é‡
+			 * @param deltaY Yæ–¹å‘ã®ç§»å‹•é‡
 			 */
 			void SetMouseDelta(float deltaX, float deltaY) noexcept {
 				std::unique_lock lock(sharedMutex);
@@ -176,9 +176,9 @@ namespace SFW
 				isUpdateBuffer = true;
 			}
 			/**
-			 * @brief ƒ}ƒEƒXŠ´“x‚ğİ’è
-			 * @param sensX X•ûŒü‚ÌŠ´“x
-			 * @param sensY Y•ûŒü‚ÌŠ´“x
+			 * @brief ãƒã‚¦ã‚¹æ„Ÿåº¦ã‚’è¨­å®š
+			 * @param sensX Xæ–¹å‘ã®æ„Ÿåº¦
+			 * @param sensY Yæ–¹å‘ã®æ„Ÿåº¦
 			 */
 			void SetMouseSensitivity(float sensX, float sensY) noexcept {
 				std::unique_lock lock(sharedMutex);
@@ -186,16 +186,16 @@ namespace SFW
 				sensY_rad_per_px = sensY;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚Ì‰ñ“]ƒ‚[ƒh‚ğİ’è
-			 * @param mode ‰ñ“]ƒ‚[ƒhiFPS‚Ü‚½‚ÍOrbitalj
+			 * @brief ã‚«ãƒ¡ãƒ©ã®å›è»¢ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®š
+			 * @param mode å›è»¢ãƒ¢ãƒ¼ãƒ‰ï¼ˆFPSã¾ãŸã¯Orbitalï¼‰
 			 */
 			void SetRotateMode(RotateMode mode) noexcept {
 				std::unique_lock lock(sharedMutex);
 				rotateMode = mode;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚ÌˆÊ’u‚ğæ“¾
-			 * @return Math::Vec3f ƒJƒƒ‰‚ÌˆÊ’uƒxƒNƒgƒ‹
+			 * @brief ã‚«ãƒ¡ãƒ©ã®ä½ç½®ã‚’å–å¾—
+			 * @return Math::Vec3f ã‚«ãƒ¡ãƒ©ã®ä½ç½®ãƒ™ã‚¯ãƒˆãƒ«
 			 */
 			Math::Vec3f GetEyePos() const noexcept {
 				std::shared_lock lock(sharedMutex);
@@ -203,8 +203,8 @@ namespace SFW
 				return eye;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚Ì’‹“_‚ğæ“¾
-			 * @return Math::Vec3f ƒJƒƒ‰‚Ì’‹“_ƒxƒNƒgƒ‹
+			 * @brief ã‚«ãƒ¡ãƒ©ã®æ³¨è¦–ç‚¹ã‚’å–å¾—
+			 * @return Math::Vec3f ã‚«ãƒ¡ãƒ©ã®æ³¨è¦–ç‚¹ãƒ™ã‚¯ãƒˆãƒ«
 			 */
 			Math::Vec3f GetTarget() const noexcept {
 				std::shared_lock lock(sharedMutex);
@@ -212,8 +212,8 @@ namespace SFW
 				return target;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚Ìã•ûŒüƒxƒNƒgƒ‹‚ğæ“¾
-			 * @return Math::Vec3f ƒJƒƒ‰‚Ìã•ûŒüƒxƒNƒgƒ‹
+			 * @brief ã‚«ãƒ¡ãƒ©ã®ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
+			 * @return Math::Vec3f ã‚«ãƒ¡ãƒ©ã®ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 			 */
 			Math::Vec3f GetUp() const noexcept {
 				std::shared_lock lock(sharedMutex);
@@ -221,8 +221,8 @@ namespace SFW
 				return Math::QuatUp<float, Math::LH_ZForward>(rot);
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚Ì‹–ìŠp‚ğæ“¾
-			 * @return float ‹–ìŠpiƒ‰ƒWƒAƒ“’PˆÊj
+			 * @brief ã‚«ãƒ¡ãƒ©ã®è¦–é‡è§’ã‚’å–å¾—
+			 * @return float è¦–é‡è§’ï¼ˆãƒ©ã‚¸ã‚¢ãƒ³å˜ä½ï¼‰
 			 */
 			float GetFOV() const noexcept {
 				std::shared_lock lock(sharedMutex);
@@ -230,8 +230,8 @@ namespace SFW
 				return fovRad;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚ÌƒAƒXƒyƒNƒg”ä‚ğæ“¾
-			 * @return float ƒAƒXƒyƒNƒg”äi•/‚‚³j
+			 * @brief ã‚«ãƒ¡ãƒ©ã®ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ã‚’å–å¾—
+			 * @return float ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ï¼ˆå¹…/é«˜ã•ï¼‰
 			 */
 			float GetAspectRatio() const noexcept {
 				std::shared_lock lock(sharedMutex);
@@ -239,8 +239,8 @@ namespace SFW
 				return aspectRatio;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚ÌƒjƒAƒNƒŠƒbƒv‹——£‚ğæ“¾
-			 * @return float ƒjƒAƒNƒŠƒbƒv‹——£
+			 * @brief ã‚«ãƒ¡ãƒ©ã®ãƒ‹ã‚¢ã‚¯ãƒªãƒƒãƒ—è·é›¢ã‚’å–å¾—
+			 * @return float ãƒ‹ã‚¢ã‚¯ãƒªãƒƒãƒ—è·é›¢
 			 */
 			float GetNearClip() const noexcept {
 				std::shared_lock lock(sharedMutex);
@@ -248,8 +248,8 @@ namespace SFW
 				return nearClip;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚Ìƒtƒ@[ƒNƒŠƒbƒv‹——£‚ğæ“¾
-			 * @return float ƒtƒ@[ƒNƒŠƒbƒv‹——£
+			 * @brief ã‚«ãƒ¡ãƒ©ã®ãƒ•ã‚¡ãƒ¼ã‚¯ãƒªãƒƒãƒ—è·é›¢ã‚’å–å¾—
+			 * @return float ãƒ•ã‚¡ãƒ¼ã‚¯ãƒªãƒƒãƒ—è·é›¢
 			 */
 			float GetFarClip() const noexcept {
 				std::shared_lock lock(sharedMutex);
@@ -257,16 +257,16 @@ namespace SFW
 				return farClip;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚Ì‰ñ“]‚ğæ“¾
-			 * @return Math::Quatf ƒJƒƒ‰‚Ì‰ñ“]ƒNƒH[ƒ^ƒjƒIƒ“
+			 * @brief ã‚«ãƒ¡ãƒ©ã®å›è»¢ã‚’å–å¾—
+			 * @return Math::Quatf ã‚«ãƒ¡ãƒ©ã®å›è»¢ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
 			 */
 			Math::Quatf GetRotation() const noexcept {
 				std::shared_lock lock(sharedMutex);
 				return rot;
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚ÌÅ“_‹——£‚ğæ“¾
-			 * @return float Å“_‹——£
+			 * @brief ã‚«ãƒ¡ãƒ©ã®ç„¦ç‚¹è·é›¢ã‚’å–å¾—
+			 * @return float ç„¦ç‚¹è·é›¢
 			 */
 			Math::Vec3f GetForward() const noexcept {
 				std::shared_lock lock(sharedMutex);
@@ -274,8 +274,8 @@ namespace SFW
 				return (target - eye).normalized();
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚ÌŒã•û•ûŒüƒxƒNƒgƒ‹‚ğæ“¾
-			 * @return Math::Vec3f ƒJƒƒ‰‚ÌŒã•û•ûŒüƒxƒNƒgƒ‹
+			 * @brief ã‚«ãƒ¡ãƒ©ã®å¾Œæ–¹æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
+			 * @return Math::Vec3f ã‚«ãƒ¡ãƒ©ã®å¾Œæ–¹æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 			 */
 			Math::Vec3f GetBackward() const noexcept {
 				std::shared_lock lock(sharedMutex);
@@ -283,16 +283,16 @@ namespace SFW
 				return (eye - target).normalized();
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚Ì‰E•ûŒüƒxƒNƒgƒ‹‚ğæ“¾
-			 * @return Math::Vec3f ƒJƒƒ‰‚Ì‰E•ûŒüƒxƒNƒgƒ‹
+			 * @brief ã‚«ãƒ¡ãƒ©ã®å³æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
+			 * @return Math::Vec3f ã‚«ãƒ¡ãƒ©ã®å³æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 			 */
 			Math::Vec3f GetRight() const noexcept {
 				Math::Vec3f forward = GetForward();
 				return Math::RFAxes::makeRight(Math::RFAxes::up(), forward);
 			}
 			/**
-			 * @brief ƒJƒƒ‰‚Ì‰ğ‘œ“x‚ğæ“¾
-			 * @return Math::Vec2f ƒJƒƒ‰‚Ì‰ğ‘œ“xƒxƒNƒgƒ‹ (width, height)
+			 * @brief ã‚«ãƒ¡ãƒ©ã®è§£åƒåº¦ã‚’å–å¾—
+			 * @return Math::Vec2f ã‚«ãƒ¡ãƒ©ã®è§£åƒåº¦ãƒ™ã‚¯ãƒˆãƒ« (width, height)
 			 */
 			Math::Vec2f GetResolution() const noexcept {
 				std::shared_lock lock(sharedMutex);
@@ -370,8 +370,8 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒrƒ…[s—ñ‚ğæ“¾
-			 * @return Math::Matrix4x4f ƒrƒ…[s—ñ
+			 * @brief ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã‚’å–å¾—
+			 * @return Math::Matrix4x4f ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—
 			 */
 			Math::Frustumf MakeFrustum(bool normalize = false) const {
 				auto fru = Math::Frustumf::FromRowMajor(cameraBuffer[currentSlot].viewProj.data(), normalize);
@@ -380,15 +380,15 @@ namespace SFW
 				return fru;
 			}
 			/**
-			 * @brief ƒJƒƒ‰ƒoƒbƒtƒ@‚Ìƒf[ƒ^‚ğæ“¾
-			 * @return const CameraBuffer& ƒJƒƒ‰ƒoƒbƒtƒ@‚Ìƒf[ƒ^
+			 * @brief ã‚«ãƒ¡ãƒ©ãƒãƒƒãƒ•ã‚¡ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
+			 * @return const CameraBuffer& ã‚«ãƒ¡ãƒ©ãƒãƒƒãƒ•ã‚¡ã®ãƒ‡ãƒ¼ã‚¿
 			 */
 			const CameraBuffer& GetCameraBufferDataNoLock() const noexcept {
 				return cameraBuffer[currentSlot];
 			}
 			/**
-			 * @brief ’x‰„•ª‘O‚ÌƒJƒƒ‰ƒoƒbƒtƒ@‚Ìƒf[ƒ^‚ğæ“¾
-			 * @return const CameraBuffer& ƒJƒƒ‰ƒoƒbƒtƒ@‚Ìƒf[ƒ^
+			 * @brief é…å»¶åˆ†å‰ã®ã‚«ãƒ¡ãƒ©ãƒãƒƒãƒ•ã‚¡ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
+			 * @return const CameraBuffer& ã‚«ãƒ¡ãƒ©ãƒãƒƒãƒ•ã‚¡ã®ãƒ‡ãƒ¼ã‚¿
 			 */
 			const CameraBuffer& GetOldCameraBufferDataNoLock() const noexcept {
 				return cameraBuffer[(currentSlot + (RENDER_BUFFER_COUNT - 2)) % RENDER_BUFFER_COUNT];
@@ -399,8 +399,8 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒJƒƒ‰ƒoƒbƒtƒ@‚ÌXV‚ª•K—v‚©‚Ç‚¤‚©‚ğæ“¾
-			 * @return bool XV‚ª•K—v‚Èê‡‚ÍtrueA‚»‚¤‚Å‚È‚¯‚ê‚Îfalse
+			 * @brief ã‚«ãƒ¡ãƒ©ãƒãƒƒãƒ•ã‚¡ã®æ›´æ–°ãŒå¿…è¦ã‹ã©ã†ã‹ã‚’å–å¾—
+			 * @return bool æ›´æ–°ãŒå¿…è¦ãªå ´åˆã¯trueã€ãã†ã§ãªã‘ã‚Œã°false
 			 */
 			bool IsUpdateBuffer() const noexcept {
 				std::shared_lock lock(sharedMutex);
@@ -408,28 +408,28 @@ namespace SFW
 			}
 
 			/**
-			 * @brief Œ»İ‚Ì‰ñ“]‚ğŒvZ‚µ‚Äæ“¾‚·‚é
-			 * @return Math::Quatf Œ»İ‚Ì‰ñ“]‚ğ•\‚·ƒNƒH[ƒ^ƒjƒIƒ“
+			 * @brief ç¾åœ¨ã®å›è»¢ã‚’è¨ˆç®—ã—ã¦å–å¾—ã™ã‚‹
+			 * @return Math::Quatf ç¾åœ¨ã®å›è»¢ã‚’è¡¨ã™ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
 			 */
 			Math::Quatf CalcCurrentRotation() const noexcept {
 				std::shared_lock lock(sharedMutex);
 				Math::Quatf outRot;
 
-				// ƒ}ƒEƒX ¨ Šp“xi1px‚ ‚½‚è‰½ƒ‰ƒWƒAƒ“‰ñ‚·‚©‚ğ sens* ‚ÅŒˆ‚ß‚éj
-				float yaw = dx * sensX_rad_per_px; // ‰E‚É“®‚©‚·‚Æ‰Eù‰ñ‚É‚µ‚½‚¢“™‚Å•„†’²®
+				// ãƒã‚¦ã‚¹ â†’ è§’åº¦ï¼ˆ1pxã‚ãŸã‚Šä½•ãƒ©ã‚¸ã‚¢ãƒ³å›ã™ã‹ã‚’ sens* ã§æ±ºã‚ã‚‹ï¼‰
+				float yaw = dx * sensX_rad_per_px; // å³ã«å‹•ã‹ã™ã¨å³æ—‹å›ã«ã—ãŸã„ç­‰ã§ç¬¦å·èª¿æ•´
 				float pitch = dy * sensY_rad_per_px;
 
-				// ƒsƒbƒ`§ŒÀiƒIƒXƒXƒF—İÏŠp‚ÅŠÇ—j
+				// ãƒ”ãƒƒãƒåˆ¶é™ï¼ˆã‚ªã‚¹ã‚¹ãƒ¡ï¼šç´¯ç©è§’ã§ç®¡ç†ï¼‰
 				float newPitch = std::clamp(pitchAccum + pitch, Math::Deg2Rad(-89.0f), Math::Deg2Rad(89.0f));
 				pitch = newPitch - pitchAccum;
 
-				// 1) Yaw ‚ğƒ[ƒ‹ƒhUp‚Å“K—p
+				// 1) Yaw ã‚’ãƒ¯ãƒ¼ãƒ«ãƒ‰Upã§é©ç”¨
 				const Math::Vec3f worldUp{ 0,1,0 };
 				Math::Quatf qYaw = Math::Quatf::FromAxisAngle(worldUp, yaw);
 				outRot = qYaw * rot;
 				outRot.Normalize();
 
-				// 2) Yaw Œã‚Ì Right ‚ğæ‚è’¼‚µ‚Ä Pitch
+				// 2) Yaw å¾Œã® Right ã‚’å–ã‚Šç›´ã—ã¦ Pitch
 				Math::Vec3f right = rot.RotateVector(Math::Vec3f{ 1,0,0 });
 				Math::Quatf qPitch = Math::Quatf::FromAxisAngle(right, pitch);
 				outRot = qPitch * rot;
@@ -441,62 +441,62 @@ namespace SFW
 			virtual void PreUpdate(double deltaTime) override {
 				++frameIdx;
 
-				if (!isUpdateBuffer) return; // XV‚ª•K—v‚È‚¢ê‡‚Í‰½‚à‚µ‚È‚¢
+				if (!isUpdateBuffer) return; // æ›´æ–°ãŒå¿…è¦ãªã„å ´åˆã¯ä½•ã‚‚ã—ãªã„
 
 				currentSlot = frameIdx % RENDER_BUFFER_COUNT;
 
 				std::unique_lock lock(sharedMutex);
 
-				moveVec = Math::Vec3f{ 0.0f, 0.0f, 0.0f }; // ˆÚ“®ƒxƒNƒgƒ‹‚ğƒŠƒZƒbƒg
+				moveVec = Math::Vec3f{ 0.0f, 0.0f, 0.0f }; // ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«ã‚’ãƒªã‚»ãƒƒãƒˆ
 				UpdateCameraFromMouse();
 				isUpdateBuffer = false;
 			}
 
 		protected:
 			/**
-			 * @brief ƒ}ƒEƒX‚ÌˆÚ“®‚ÉŠî‚Ã‚¢‚ÄƒJƒƒ‰‚Ì‰ñ“]‚ğXV‚·‚é
+			 * @brief ãƒã‚¦ã‚¹ã®ç§»å‹•ã«åŸºã¥ã„ã¦ã‚«ãƒ¡ãƒ©ã®å›è»¢ã‚’æ›´æ–°ã™ã‚‹
 			 */
 			void UpdateCameraFromMouse()
 			{
-				// ƒ}ƒEƒX ¨ Šp“xi1px‚ ‚½‚è‰½ƒ‰ƒWƒAƒ“‰ñ‚·‚©‚ğ sens* ‚ÅŒˆ‚ß‚éj
-				float yaw = dx * sensX_rad_per_px; // ‰E‚É“®‚©‚·‚Æ‰Eù‰ñ‚É‚µ‚½‚¢“™‚Å•„†’²®
+				// ãƒã‚¦ã‚¹ â†’ è§’åº¦ï¼ˆ1pxã‚ãŸã‚Šä½•ãƒ©ã‚¸ã‚¢ãƒ³å›ã™ã‹ã‚’ sens* ã§æ±ºã‚ã‚‹ï¼‰
+				float yaw = dx * sensX_rad_per_px; // å³ã«å‹•ã‹ã™ã¨å³æ—‹å›ã«ã—ãŸã„ç­‰ã§ç¬¦å·èª¿æ•´
 				float pitch = dy * sensY_rad_per_px;
 
-				// ƒsƒbƒ`§ŒÀiƒIƒXƒXƒF—İÏŠp‚ÅŠÇ—j
+				// ãƒ”ãƒƒãƒåˆ¶é™ï¼ˆã‚ªã‚¹ã‚¹ãƒ¡ï¼šç´¯ç©è§’ã§ç®¡ç†ï¼‰
 				float newPitch = std::clamp(pitchAccum + pitch, Math::Deg2Rad(-89.0f), Math::Deg2Rad(89.0f));
 				pitch = newPitch - pitchAccum;
 				pitchAccum = newPitch;
 
-				// 1) Yaw ‚ğƒ[ƒ‹ƒhUp‚Å“K—p
+				// 1) Yaw ã‚’ãƒ¯ãƒ¼ãƒ«ãƒ‰Upã§é©ç”¨
 				const Math::Vec3f worldUp{ 0,1,0 };
 				Math::Quatf qYaw = Math::Quatf::FromAxisAngle(worldUp, yaw);
 				rot = qYaw * rot;
 				rot.Normalize();
 
-				// 2) Yaw Œã‚Ì Right ‚ğæ‚è’¼‚µ‚Ä Pitch
+				// 2) Yaw å¾Œã® Right ã‚’å–ã‚Šç›´ã—ã¦ Pitch
 				Math::Vec3f right = rot.RotateVector(Math::Vec3f{ 1,0,0 });
 				Math::Quatf qPitch = Math::Quatf::FromAxisAngle(right, pitch);
 				rot = qPitch * rot;
 				rot.Normalize();
 			}
 		protected:
-			// ƒJƒƒ‰ƒoƒbƒtƒ@ƒnƒ“ƒhƒ‹‚Æƒf[ƒ^
+			// ã‚«ãƒ¡ãƒ©ãƒãƒƒãƒ•ã‚¡ãƒãƒ³ãƒ‰ãƒ«ã¨ãƒ‡ãƒ¼ã‚¿
 			BufferHandle cameraBufferHandle;
-			// ƒtƒŒ[ƒ€ƒCƒ“ƒfƒbƒNƒX
+			// ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			uint64_t frameIdx = 0; //
-			//ƒJƒƒ‰‚Ìƒoƒbƒtƒ@ƒf[ƒ^
+			//ã‚«ãƒ¡ãƒ©ã®ãƒãƒƒãƒ•ã‚¡ãƒ‡ãƒ¼ã‚¿
 			CameraBuffer cameraBuffer[RENDER_BUFFER_COUNT] = {};
-			// ƒJƒƒ‰‚ÌˆÊ’u
+			// ã‚«ãƒ¡ãƒ©ã®ä½ç½®
 			Math::Vec3f eye = { 0.0f, 0.0f, -5.0f };
-			// ƒJƒƒ‰‚Ì’‹“_
+			// ã‚«ãƒ¡ãƒ©ã®æ³¨è¦–ç‚¹
 			Math::Vec3f target = { 0.0f, 0.0f, 0.0f };
-			// ‚’¼FOV
+			// å‚ç›´FOV
 			float fovRad = Math::Deg2Rad(90.0f);
-			// ƒAƒXƒyƒNƒg”ä
+			// ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”
 			float aspectRatio = 16.0f / 9.0f;
-			// ƒjƒAƒNƒŠƒbƒv
+			// ãƒ‹ã‚¢ã‚¯ãƒªãƒƒãƒ—
 			float nearClip = 0.1f;
-			// ƒtƒ@[ƒNƒŠƒbƒv
+			// ãƒ•ã‚¡ãƒ¼ã‚¯ãƒªãƒƒãƒ—
 			float farClip = 1000.0f;
 
 			float left = 0.0;
@@ -512,26 +512,26 @@ namespace SFW
 #endif
 			float top = 0.0f;
 
-			// ’‹“_‚Ü‚Å‚Ì‹——£
+			// æ³¨è¦–ç‚¹ã¾ã§ã®è·é›¢
 			float focusDist = 10.0f;
-			// ˆÚ“®ƒxƒNƒgƒ‹
+			// ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«
 			Math::Vec3f moveVec = { 0.0f, 0.0f, 0.0f };
-			// ƒsƒbƒ`‚Ì—İÏŠp“xi§ŒÀ—pj
+			// ãƒ”ãƒƒãƒã®ç´¯ç©è§’åº¦ï¼ˆåˆ¶é™ç”¨ï¼‰
 			float pitchAccum = 0.0f;
-			// Œ»İ‚ÌƒXƒƒbƒg
+			// ç¾åœ¨ã®ã‚¹ãƒ­ãƒƒãƒˆ
 			uint16_t currentSlot = 0;
-			// XVƒtƒ‰ƒO
+			// æ›´æ–°ãƒ•ãƒ©ã‚°
 			bool isUpdateBuffer = true;
-			// ‰Šú‰ñ“]
+			// åˆæœŸå›è»¢
 			Math::Quatf rot = Math::Quatf::FromEuler(0.0f, 0.0f, 0.0f);
-			// ƒ}ƒEƒXˆÚ“®—Ê
+			// ãƒã‚¦ã‚¹ç§»å‹•é‡
 			float dx = 0.0f, dy = 0.0f;
-			// ƒ}ƒEƒXŠ´“xiƒ‰ƒWƒAƒ“/ƒsƒNƒZƒ‹j
+			// ãƒã‚¦ã‚¹æ„Ÿåº¦ï¼ˆãƒ©ã‚¸ã‚¢ãƒ³/ãƒ”ã‚¯ã‚»ãƒ«ï¼‰
 			float sensX_rad_per_px = std::numbers::pi_v<float> / 600.0f, sensY_rad_per_px = std::numbers::pi_v<float> / 600.0f;
-			// ƒXƒŒƒbƒhƒZ[ƒt—p‚Ì‹¤—Lƒ~ƒ…[ƒeƒbƒNƒX
+			// ã‚¹ãƒ¬ãƒƒãƒ‰ã‚»ãƒ¼ãƒ•ç”¨ã®å…±æœ‰ãƒŸãƒ¥ãƒ¼ãƒ†ãƒƒã‚¯ã‚¹
 			mutable std::shared_mutex sharedMutex;
 
-			// ‰ñ“]ƒ‚[ƒh
+			// å›è»¢ãƒ¢ãƒ¼ãƒ‰
 			RotateMode rotateMode = RotateMode::Orbital;
 		public:
 			STATIC_SERVICE_TAG

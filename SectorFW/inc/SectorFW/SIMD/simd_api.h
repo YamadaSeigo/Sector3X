@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   simd_api.h
- * @brief SIMDÅ“K‰»‚³‚ê‚½ŠÖ”‚ÌAPI’è‹`ƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief SIMDæœ€é©åŒ–ã•ã‚ŒãŸé–¢æ•°ã®APIå®šç¾©ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -13,12 +13,12 @@ namespace SFW
 	namespace SIMD
 	{
 		/**
-		 * @brief ƒXƒJƒ‰[•âŠÔ‚ğs‚¤ŠÖ”ƒ|ƒCƒ“ƒ^‚ÌŒ^’è‹`
+		 * @brief ã‚¹ã‚«ãƒ©ãƒ¼è£œé–“ã‚’è¡Œã†é–¢æ•°ãƒã‚¤ãƒ³ã‚¿ã®å‹å®šç¾©
 		 */
 		using UpdateScalarLerpFn = void(*)(float* dst, const float* a, const float* b,
 			const uint32_t* mask01, size_t n, float alpha);
 		/**
-		 * @brief ƒNƒH[ƒ^ƒjƒIƒ“‚ÌÅ’ZŒo˜H•âŠÔ‚ğs‚¤ŠÖ”ƒ|ƒCƒ“ƒ^‚ÌŒ^’è‹`
+		 * @brief ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã®æœ€çŸ­çµŒè·¯è£œé–“ã‚’è¡Œã†é–¢æ•°ãƒã‚¤ãƒ³ã‚¿ã®å‹å®šç¾©
 		 */
 		using UpdateQuatNlerpShortestFn = void(*)(float* qx, float* qy, float* qz, float* qw,
 			const float* ax, const float* ay, const float* az, const float* aw,
@@ -26,15 +26,15 @@ namespace SFW
 			const uint32_t* mask01, size_t n, float alpha);
 
 		/**
-		 * @brief Às‚É·‚µ‘Ö‚¦‚éƒXƒJƒ‰[•âŠÔŠÖ”ƒ|ƒCƒ“ƒ^
+		 * @brief å®Ÿè¡Œæ™‚ã«å·®ã—æ›¿ãˆã‚‹ã‚¹ã‚«ãƒ©ãƒ¼è£œé–“é–¢æ•°ãƒã‚¤ãƒ³ã‚¿
 		 */
 		extern UpdateScalarLerpFn            gUpdateScalarLerp;
 		/**
-		 * @brief Às‚É·‚µ‘Ö‚¦‚éƒNƒH[ƒ^ƒjƒIƒ“•âŠÔŠÖ”ƒ|ƒCƒ“ƒ^
+		 * @brief å®Ÿè¡Œæ™‚ã«å·®ã—æ›¿ãˆã‚‹ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³è£œé–“é–¢æ•°ãƒã‚¤ãƒ³ã‚¿
 		 */
 		extern UpdateQuatNlerpShortestFn     gUpdateQuatNlerpShortest;
 		/**
-		 * @brief SIMD‰Šú‰»B‹N“®‚ÉŒÄ‚Ô
+		 * @brief SIMDåˆæœŸåŒ–ã€‚èµ·å‹•æ™‚ã«å‘¼ã¶
 		 */
 		void SimdInit();
 	}

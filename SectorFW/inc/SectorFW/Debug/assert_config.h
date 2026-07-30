@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   assert_config.h
- * @brief ƒfƒoƒbƒO—pƒAƒT[ƒgİ’èƒwƒbƒ_
+ * @brief ãƒ‡ãƒãƒƒã‚°ç”¨ã‚¢ã‚µãƒ¼ãƒˆè¨­å®šãƒ˜ãƒƒãƒ€
  * @author seigo_t03b63m
  * @date   December 2025
  *********************************************************************/
@@ -16,7 +16,7 @@ namespace SFW::Debug {
 		std::fprintf(stderr,
 			"[ASSERT] %s\n  at %s(%d)\n  message: %s\n",
 			expr, file, line, msg ? msg : "(none)");
-		// ‚±‚±‚ÅƒƒOƒtƒ@ƒCƒ‹‚É‘‚¢‚½‚èAMessageBox o‚µ‚½‚è‚à‰Â
+		// ã“ã“ã§ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ã„ãŸã‚Šã€MessageBox å‡ºã—ãŸã‚Šã‚‚å¯
 	}
 
 #if defined(_MSC_VER)
@@ -27,7 +27,7 @@ namespace SFW::Debug {
 } // namespace Debug
 
 //-------------------------
-// ƒfƒoƒbƒO—pƒAƒT[ƒg
+// ãƒ‡ãƒãƒƒã‚°ç”¨ã‚¢ã‚µãƒ¼ãƒˆ
 //-------------------------
 #if defined(_DEBUG) || !defined(NDEBUG)
 #define SFW_ASSERT(expr)                                                     \
@@ -38,12 +38,12 @@ namespace SFW::Debug {
             }                                                                    \
         } while (0)
 #else
-	// Release ‚Å‚Í–³Œø (®‚à•]‰¿‚µ‚È‚¢)
+	// Release ã§ã¯ç„¡åŠ¹ (å¼ã‚‚è©•ä¾¡ã—ãªã„)
 #define SFW_ASSERT(expr) ((void)0)
 #endif
 
 //-------------------------
-// VERIFY: Release ‚Å‚à•]‰¿‚³‚ê‚é
+// VERIFY: Release ã§ã‚‚è©•ä¾¡ã•ã‚Œã‚‹
 //-------------------------
 #define SFW_VERIFY(expr)                                                         \
     do {                                                                         \

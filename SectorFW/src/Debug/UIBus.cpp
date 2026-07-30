@@ -1,4 +1,4 @@
-#include "Debug/UIBus.h"
+ï»¿#include "Debug/UIBus.h"
 #include "Debug/ImGuiLayer.h"
 #include "Debug/PerfHUD.h"
 
@@ -10,7 +10,7 @@ namespace SFW
 {
 	namespace Debug
 	{
-		// --- ƒOƒ[ƒoƒ‹æ“¾iŠÖ”“à static ‰Šú‰»‡–â‘è‚ğ‰ñ”ğj
+		// --- ã‚°ãƒ­ãƒ¼ãƒãƒ«å–å¾—ï¼ˆé–¢æ•°å†… static ï¼åˆæœŸåŒ–é †å•é¡Œã‚’å›é¿ï¼‰
 		UIBus& GetUIBus() {
 			static UIBus bus; // Meyers Singleton
 			return bus;
@@ -49,7 +49,7 @@ namespace SFW
 		UiTreeSnapshot::WriteGuard BeginTreeWrite() { return GetUIBus().tree.beginWrite(); }
 
 		// ================================
-		// ƒfƒoƒbƒOƒRƒ“ƒgƒ[ƒ‹“o˜^À‘•
+		// ãƒ‡ãƒãƒƒã‚°ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ç™»éŒ²å®Ÿè£…
 		// ================================
 		void RegisterDebugSliderFloat(
 			const std::string& category,
@@ -151,7 +151,7 @@ namespace SFW
 			c.label = label;
 			c.onChangeText = std::move(onChange);
 
-			// ‰Šú•¶š—ñ‚ğƒoƒbƒtƒ@‚ÉƒRƒs[
+			// åˆæœŸæ–‡å­—åˆ—ã‚’ãƒãƒƒãƒ•ã‚¡ã«ã‚³ãƒ”ãƒ¼
 			std::snprintf(c.textBuf, DebugControl::TextBufSize, "%s", initial.c_str());
 
 			bus.debugControlRegisterQ.push(std::move(c));

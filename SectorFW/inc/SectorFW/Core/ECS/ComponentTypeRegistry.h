@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   ComponentTypeRegistry.h
- * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^ID‚Æƒƒ^î•ñ‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+ * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹IDã¨ãƒ¡ã‚¿æƒ…å ±ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -16,15 +16,15 @@
 namespace SFW
 {
 	namespace detail {
-		// Œ^–¼‚ğƒGƒ‰[ƒƒbƒZ[ƒW‚É•\¦‚·‚é‚½‚ß‚Ì–¢’è‹`ƒeƒ“ƒvƒŒ[ƒg
+		// å‹åã‚’ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã«è¡¨ç¤ºã™ã‚‹ãŸã‚ã®æœªå®šç¾©ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 		template<class> struct print_type;
 	}
 
 	namespace ECS
 	{
 		/**
-		 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^ID‚Æƒƒ^î•ñ‚ğŠÇ—‚·‚éƒNƒ‰ƒX
-		 * @details ƒRƒ“ƒ|[ƒlƒ“ƒgID‚©‚çƒTƒCƒY‚âƒAƒ‰ƒCƒƒ“ƒg‚È‚Ç‚Ìƒƒ^î•ñ‚ğ“®“I‚Éæ“¾‚·‚é‚½‚ß‚É’è‹`
+		 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹IDã¨ãƒ¡ã‚¿æƒ…å ±ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
+		 * @details ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆIDã‹ã‚‰ã‚µã‚¤ã‚ºã‚„ã‚¢ãƒ©ã‚¤ãƒ¡ãƒ³ãƒˆãªã©ã®ãƒ¡ã‚¿æƒ…å ±ã‚’å‹•çš„ã«å–å¾—ã™ã‚‹ãŸã‚ã«å®šç¾©
 		 */
 		struct ComponentMeta {
 			struct Structure {
@@ -43,14 +43,14 @@ namespace SFW
 			bool isSoA = false;
 		};
 		/**
-		 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^ID‚Æ‚»‚ê‚É‘Î‰‚·‚éƒƒ^î•ñ‚ğ“o˜^AŠÇ—‚·‚éƒNƒ‰ƒX
+		 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹IDã¨ãã‚Œã«å¯¾å¿œã™ã‚‹ãƒ¡ã‚¿æƒ…å ±ã‚’ç™»éŒ²ã€ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 		 */
 		class ComponentTypeRegistry {
 		public:
 			/**
-			 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^ID‚ğæ“¾‚µ‚Ü‚·B
-			 * @tparam T ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^
-			 * @return ComponentTypeID ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^ID
+			 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹IDã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @tparam T ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹
+			 * @return ComponentTypeID ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹ID
 			 */
 			template<typename T>
 			static ComponentTypeID GetID() noexcept {
@@ -58,8 +58,8 @@ namespace SFW
 				return id;
 			}
 			/**
-			 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ^î•ñ‚ğİ’è‚µ‚Ü‚·B(SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Å‚Í‚È‚¢ê‡)
-			 * @param meta_structures ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ^î•ñ‚ğŠi”[‚·‚é\‘¢‘Ì
+			 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ã‚¿æƒ…å ±ã‚’è¨­å®šã—ã¾ã™ã€‚(SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã§ã¯ãªã„å ´åˆ)
+			 * @param meta_structures ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ã‚¿æƒ…å ±ã‚’æ ¼ç´ã™ã‚‹æ§‹é€ ä½“
 			 */
 			template<typename T>
 				requires (!requires { typename T::soa_type; })
@@ -67,8 +67,8 @@ namespace SFW
 				meta_structures.add(ComponentMeta::Structure{ sizeof(T), alignof(T) });
 			}
 			/**
-			 * @brief SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ^î•ñ‚ğİ’è‚µ‚Ü‚·B
-			 * @param meta_structures ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ^î•ñ‚ğŠi”[‚·‚é\‘¢‘Ì
+			 * @brief SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ã‚¿æƒ…å ±ã‚’è¨­å®šã—ã¾ã™ã€‚
+			 * @param meta_structures ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ã‚¿æƒ…å ±ã‚’æ ¼ç´ã™ã‚‹æ§‹é€ ä½“
 			 */
 			template<typename T>
 				requires (requires { typename T::soa_type; })
@@ -77,18 +77,18 @@ namespace SFW
 				SetSoAComponentMetaTuple<soa_tuple>(meta_structures);
 			}
 			/**
-			 * @brief Tuple ‚ğ I... ‚Å“WŠJ‚µ‚ÄŠe—v‘fŒ^‚ÉˆÏ÷
-			 * @param meta_structures ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ^î•ñ‚ğŠi”[‚·‚é\‘¢‘Ì
+			 * @brief Tuple ã‚’ I... ã§å±•é–‹ã—ã¦å„è¦ç´ å‹ã«å§”è­²
+			 * @param meta_structures ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ã‚¿æƒ…å ±ã‚’æ ¼ç´ã™ã‚‹æ§‹é€ ä½“
 			 */
 			template<class Tuple, std::size_t... I>
 			static void SetSoAComponentMetaTupleImpl(OneOrMore<ComponentMeta::Structure>& meta_structures,
 				std::index_sequence<I...>) {
-				// Še—v‘fŒ^‚ğ“WŠJ‚µ‚Ä“o˜^i—v‘fŒ^‚²‚Æ‚ÉÄ‹A“I‚ÉSetMetaStructure‚³‚ê‚éj
+				// å„è¦ç´ å‹ã‚’å±•é–‹ã—ã¦ç™»éŒ²ï¼ˆè¦ç´ å‹ã”ã¨ã«å†å¸°çš„ã«SetMetaStructureã•ã‚Œã‚‹ï¼‰
 				(SetMetaStructure<std::tuple_element_t<I, Tuple>>(meta_structures), ...);
 			}
 			/**
-			 * @brief Tuple ‚ÌŠe—v‘fŒ^‚É‘Î‚µ‚Ä SetSoAComponentMetaTupleImpl ‚ğŒÄ‚Ño‚·
-			 * @param meta_structures ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ^î•ñ‚ğŠi”[‚·‚é\‘¢‘Ì
+			 * @brief Tuple ã®å„è¦ç´ å‹ã«å¯¾ã—ã¦ SetSoAComponentMetaTupleImpl ã‚’å‘¼ã³å‡ºã™
+			 * @param meta_structures ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ã‚¿æƒ…å ±ã‚’æ ¼ç´ã™ã‚‹æ§‹é€ ä½“
 			 */
 			template<class Tuple>
 			static void SetSoAComponentMetaTuple(OneOrMore<ComponentMeta::Structure>& meta_structures) {
@@ -96,20 +96,20 @@ namespace SFW
 				SetSoAComponentMetaTupleImpl<Tuple>(meta_structures, std::make_index_sequence<N>{});
 			}
 			/**
-			 * @brief •¹‚¹‚ÄF‰Â•Ï’·”Å‚Í gƒƒ“ƒo[—ñ‚ğ’¼Ú“n‚·‚Æ‚«ê—ph ‚Æ‚µ‚ÄˆÛ
-			 * @param meta_structures ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ^î•ñ‚ğŠi”[‚·‚é\‘¢‘Ì
+			 * @brief ä½µã›ã¦ï¼šå¯å¤‰é•·ç‰ˆã¯ â€œãƒ¡ãƒ³ãƒãƒ¼åˆ—ã‚’ç›´æ¥æ¸¡ã™ã¨ãå°‚ç”¨â€ ã¨ã—ã¦ç¶­æŒ
+			 * @param meta_structures ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ã‚¿æƒ…å ±ã‚’æ ¼ç´ã™ã‚‹æ§‹é€ ä½“
 			 */
 			template<typename... Ts>
 			static void SetSoAComponentMeta(OneOrMore<ComponentMeta::Structure>& meta_structures) {
 				(SetMetaStructure<Ts>(meta_structures), ...);
 			}
 			/**
-			 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì“o˜^BT ‚ª trivially copyable ‚Å‚È‚¢ê‡‚ÍƒRƒ“ƒpƒCƒ‹ƒGƒ‰[‚É‚È‚è‚Ü‚·B
+			 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ç™»éŒ²ã€‚T ãŒ trivially copyable ã§ãªã„å ´åˆã¯ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼ã«ãªã‚Šã¾ã™ã€‚
 			 */
 			template<typename T>
 			static void Register() noexcept {
 				if constexpr (!std::is_trivially_copyable_v<T>) {
-					// ‚±‚±‚Å T ‚ÌŠ®‘S‚ÈŒ^–¼‚ªƒRƒ“ƒpƒCƒ‰‚ÌƒGƒ‰[‚Éo‚Ü‚·
+					// ã“ã“ã§ T ã®å®Œå…¨ãªå‹åãŒã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã®ã‚¨ãƒ©ãƒ¼ã«å‡ºã¾ã™
 					detail::print_type<T> __please_read_type_in_error{};
 					static_assert(std::is_trivially_copyable_v<T>,
 						"T must be std::is_trivially_copyable");
@@ -123,7 +123,7 @@ namespace SFW
 				if constexpr (requires { typename T::soa_type; }) {
 					using tuple = typename T::soa_type;
 
-					// “WŠJƒwƒ‹ƒp[‚ğg‚Á‚Ä static_assert ‚ğd‚Ş
+					// å±•é–‹ãƒ˜ãƒ«ãƒ‘ãƒ¼ã‚’ä½¿ã£ã¦ static_assert ã‚’ä»•è¾¼ã‚€
 					TupleTrivialAssert<tuple>();
 					SetSoAComponentMetaTuple<tuple>(meta_structures);
 				}
@@ -135,7 +135,7 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚ª“o˜^‚³‚ê‚Ä‚¢‚é‚©Šm”F‚µ‚Ü‚·B
+			 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‹ç¢ºèªã—ã¾ã™ã€‚
 			 */
 			template<typename T>
 			static bool IsRegistered() noexcept {
@@ -144,11 +144,11 @@ namespace SFW
 			}
 
 			/**
-			 * @brief SoA ƒ^ƒvƒ‹‚Ì‘S—v‘f‚ª trivially copyable ‚©Šm”F‚·‚é•â•
+			 * @brief SoA ã‚¿ãƒ—ãƒ«ã®å…¨è¦ç´ ãŒ trivially copyable ã‹ç¢ºèªã™ã‚‹è£œåŠ©
 			 */
 			template<class Tuple, std::size_t... I>
 			static void TupleTrivialAssertImpl(std::index_sequence<I...>) {
-				// ¸”s‚É—v‘fŒ^–¼ƒqƒ“ƒg‚ğo‚µ‚½‚¢ê‡
+				// å¤±æ•—æ™‚ã«è¦ç´ å‹åãƒ’ãƒ³ãƒˆã‚’å‡ºã—ãŸã„å ´åˆ
 				(([] {
 					using Elem = std::tuple_element_t<I, Tuple>;
 					if constexpr (!std::is_trivially_copyable_v<Elem>) {
@@ -159,7 +159,7 @@ namespace SFW
 					}()), ...);
 			}
 			/**
-			 * @brief SoA ƒ^ƒvƒ‹‚Ì‘S—v‘f‚ª trivially copyable ‚©Šm”F‚µ‚Ü‚·B
+			 * @brief SoA ã‚¿ãƒ—ãƒ«ã®å…¨è¦ç´ ãŒ trivially copyable ã‹ç¢ºèªã—ã¾ã™ã€‚
 			 */
 			template<class Tuple>
 			static void TupleTrivialAssert() {
@@ -167,28 +167,28 @@ namespace SFW
 				TupleTrivialAssertImpl<Tuple>(std::make_index_sequence<N>{});
 			}
 			/**
-			 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚ª‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚©‚Ç‚¤‚©‚ğ”»’è‚µ‚Ü‚·B
-			 * @return true ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚Å‚ ‚éê‡
+			 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‹ã©ã†ã‹ã‚’åˆ¤å®šã—ã¾ã™ã€‚
+			 * @return true ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã§ã‚ã‚‹å ´åˆ
 			 */
 			template<typename T>
 			static constexpr bool IsSparse() noexcept {
 				return is_sparse_component_v<T>;
 			}
 			/**
-			 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ^î•ñ‚ğæ“¾‚µ‚Ü‚·B
-			 * @param id ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^ID
-			 * @return const ComponentMeta& ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ^î•ñ‚Ö‚ÌQÆ
+			 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ã‚¿æƒ…å ±ã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @param id ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹ID
+			 * @return const ComponentMeta& ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ã‚¿æƒ…å ±ã¸ã®å‚ç…§
 			 */
 			static const ComponentMeta* GetMeta(ComponentTypeID id) noexcept;
 		private:
-			//ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^ID‚ğƒJƒEƒ“ƒg‚·‚éÃ“I•Ï”
+			//ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹IDã‚’ã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹é™çš„å¤‰æ•°
 			static inline ComponentTypeID counter = 0;
-			//ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ^î•ñ‚ğŠi”[‚·‚éƒ}ƒbƒv
+			//ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ã‚¿æƒ…å ±ã‚’æ ¼ç´ã™ã‚‹ãƒãƒƒãƒ—
 			static inline std::unordered_map<ComponentTypeID, ComponentMeta> meta;
 		};
 		/**
-		 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN‚Éw’è‚³‚ê‚½ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğƒZƒbƒg‚µ‚Ü‚·B
-		 * @param mask ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
+		 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯ã«æŒ‡å®šã•ã‚ŒãŸã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’ã‚»ãƒƒãƒˆã—ã¾ã™ã€‚
+		 * @param mask ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
 		 */
 		template<typename T>
 		void SetMask(ComponentMask& mask) noexcept {

@@ -1,4 +1,4 @@
-#include "texture_registry.h"
+﻿#include "texture_registry.h"
 #include <unordered_map>
 
 namespace Assets

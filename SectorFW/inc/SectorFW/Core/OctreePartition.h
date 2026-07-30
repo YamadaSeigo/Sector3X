@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   OctreePartition.h
- * @brief 3D ”ª•ª–ØiOctreej‚É‚æ‚é‹óŠÔ•ªŠ„‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief 3D å…«åˆ†æœ¨ï¼ˆOctreeï¼‰ã«ã‚ˆã‚‹ç©ºé–“åˆ†å‰²ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -27,30 +27,30 @@
 namespace SFW
 {
 	/**
-	 * @brief 3D ”ª•ª–ØiOctreej‚É‚æ‚é‹óŠÔ•ªŠ„
-	 * - X, Y, Z ‚Ì 3 ²‚Å‹Ï“™•ªŠ„
-	 * - —tƒm[ƒh‚É‚Í SpatialChunki= EntityManager ‚ğ•Ûj
-	 * - QuadTreePartition ‚Æ“¯‚¶ API/‹““®‚ğ–Úw‚µ‚ÄÀ‘•
+	 * @brief 3D å…«åˆ†æœ¨ï¼ˆOctreeï¼‰ã«ã‚ˆã‚‹ç©ºé–“åˆ†å‰²
+	 * - X, Y, Z ã® 3 è»¸ã§å‡ç­‰åˆ†å‰²
+	 * - è‘‰ãƒãƒ¼ãƒ‰ã«ã¯ SpatialChunkï¼ˆ= EntityManager ã‚’ä¿æŒï¼‰
+	 * - QuadTreePartition ã¨åŒã˜ API/æŒ™å‹•ã‚’ç›®æŒ‡ã—ã¦å®Ÿè£…
 	 *
-	 * PartitionConcept ‚Í `Derived{ size,size,chunkSize }` ‚ğ—v‹‚·‚é‚½‚ßA
-	 * ‚±‚±‚Å‚Í "size" ‚ğ—§•û‘Ì‚Ìˆê•ÓiX=Y=Zj‚ÌƒuƒƒbƒN”‚Æ‚µ‚Äˆµ‚¢A
-	 * minLeafSize (= chunkSize) ‚ğ 1 ƒuƒƒbƒN‚ÌÀ¡iƒ[ƒ‹ƒh’PˆÊj‚Æ‚İ‚È‚µ‚Ü‚·B
+	 * PartitionConcept ã¯ `Derived{ size,size,chunkSize }` ã‚’è¦æ±‚ã™ã‚‹ãŸã‚ã€
+	 * ã“ã“ã§ã¯ "size" ã‚’ç«‹æ–¹ä½“ã®ä¸€è¾ºï¼ˆX=Y=Zï¼‰ã®ãƒ–ãƒ­ãƒƒã‚¯æ•°ã¨ã—ã¦æ‰±ã„ã€
+	 * minLeafSize (= chunkSize) ã‚’ 1 ãƒ–ãƒ­ãƒƒã‚¯ã®å®Ÿå¯¸ï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰å˜ä½ï¼‰ã¨ã¿ãªã—ã¾ã™ã€‚
 	 */
 	class OctreePartition
 	{
 	public:
 		using AABB = Math::AABB3f;
 
-		// “‡‚ğÀs‚·‚éüŠúi•bj
+		// çµ±åˆã‚’å®Ÿè¡Œã™ã‚‹å‘¨æœŸï¼ˆç§’ï¼‰
 		static inline constexpr double coalesceInterval = 10.0;
 		/**
-		 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @details PartitionConcept‚É‡‚í‚¹‚é‚½‚ß‚ÉworldBlockZ‚ğw’è‚µ‚È‚¢ê‡‚ÍX‚Æ“¯‚¶‚É‚È‚é
-		 * @param worldBlocksX X•ûŒü‚ÌƒuƒƒbƒNƒTƒCƒY
-		 * @param worldBlocksY Y•ûŒü‚ÌƒuƒƒbƒNƒTƒCƒY
-		 * @param minLeafSize —tƒ`ƒƒƒ“ƒNiSpatialChunkj‚ÌÅ¬ƒTƒCƒYiƒ[ƒ‹ƒh’PˆÊj
-		 * @param maxEntitiesPerLeaf —tƒ`ƒƒƒ“ƒNiSpatialChunkj‚ ‚½‚è‚ÌÅ‘åƒGƒ“ƒeƒBƒeƒB”
-		 * @param worldBlocksZ Z•ûŒü‚ÌƒuƒƒbƒNƒTƒCƒYiÈ—ª‚ÍX‚Æ“¯‚¶j
+		 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @details PartitionConceptã«åˆã‚ã›ã‚‹ãŸã‚ã«worldBlockZã‚’æŒ‡å®šã—ãªã„å ´åˆã¯Xã¨åŒã˜ã«ãªã‚‹
+		 * @param worldBlocksX Xæ–¹å‘ã®ãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚º
+		 * @param worldBlocksY Yæ–¹å‘ã®ãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚º
+		 * @param minLeafSize è‘‰ãƒãƒ£ãƒ³ã‚¯ï¼ˆSpatialChunkï¼‰ã®æœ€å°ã‚µã‚¤ã‚ºï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰å˜ä½ï¼‰
+		 * @param maxEntitiesPerLeaf è‘‰ãƒãƒ£ãƒ³ã‚¯ï¼ˆSpatialChunkï¼‰ã‚ãŸã‚Šã®æœ€å¤§ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£æ•°
+		 * @param worldBlocksZ Zæ–¹å‘ã®ãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚ºï¼ˆçœç•¥æ™‚ã¯Xã¨åŒã˜ï¼‰
 		 */
 		explicit OctreePartition(
 			Math::Vec3f originWS,
@@ -61,7 +61,7 @@ namespace SFW
 			uint32_t maxEntitiesPerLeaf = 1024) noexcept
 			: levelOriginWS(originWS)
 			, m_worldX(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksX* minLeafSize)))
-			, m_worldY(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksY* minLeafSize))) // —§•û‘Ì‚É‡‚í‚¹‚é
+			, m_worldY(std::max<ChunkSizeType>(1, ChunkSizeType(worldBlocksY* minLeafSize))) // ç«‹æ–¹ä½“ã«åˆã‚ã›ã‚‹
 			, m_worldZ(std::max<ChunkSizeType>(1, ChunkSizeType((worldBlocksZ == ChunkSizeType(0) ? worldBlocksX : worldBlocksZ)* minLeafSize)))
 			, m_minLeaf(std::max<float>(1.f, minLeafSize))
 			, m_maxPerLeafCount(std::max<uint32_t>(1, maxEntitiesPerLeaf))
@@ -70,12 +70,12 @@ namespace SFW
 			m_root->depth = 0;
 			m_root->bounds = { Math::Vec3f(0.f, 0.f, 0.f),
 							   Math::Vec3f(float(m_worldX), float(m_worldY), float(m_worldZ)) };
-			m_leafCount = 1; // —t‚Æ‚µ‚ÄŠJn
+			m_leafCount = 1; // è‘‰ã¨ã—ã¦é–‹å§‹
 		}
 
 		/**
-		 * @brief ’èŠú“I‚É‰ß¬—˜—p‚Ì‰ºˆÊ—t‚ğe‚Ö“‡‚µ‚Ä–Ø‚ğk–ñ
-		 * @param deltaTime ‘O‰ñŒÄ‚Ño‚µ‚©‚ç‚ÌŒo‰ßŠÔi•bj
+		 * @brief å®šæœŸçš„ã«éå°åˆ©ç”¨ã®ä¸‹ä½è‘‰ã‚’è¦ªã¸çµ±åˆã—ã¦æœ¨ã‚’ç¸®ç´„
+		 * @param deltaTime å‰å›å‘¼ã³å‡ºã—ã‹ã‚‰ã®çµŒéæ™‚é–“ï¼ˆç§’ï¼‰
 		 */
 		void Update(double deltaTime)
 		{
@@ -86,12 +86,12 @@ namespace SFW
 			}
 		}
 		/**
-		 * @brief “_ p ‚ğŠÜ‚Ş—tƒ`ƒƒƒ“ƒNiSpatialChunkj‚ğæ“¾
-		 * @param wp ƒ[ƒ‹ƒhÀ•WŒn‚Ì“_
-		 * @param reg ƒ`ƒƒƒ“ƒNƒŒƒWƒXƒgƒŠ
-		 * @param level ƒŒƒxƒ‹ID
-		 * @param policy ”ÍˆÍŠOƒ|ƒŠƒV[
-		 * @return “_ p ‚ğŠÜ‚Ş—tƒ`ƒƒƒ“ƒNiSpatialChunkjB”ÍˆÍŠO‚Åƒ|ƒŠƒV[‚ª Reject ‚Ìê‡‚Í std::nullopt
+		 * @brief ç‚¹ p ã‚’å«ã‚€è‘‰ãƒãƒ£ãƒ³ã‚¯ï¼ˆSpatialChunkï¼‰ã‚’å–å¾—
+		 * @param wp ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã®ç‚¹
+		 * @param reg ãƒãƒ£ãƒ³ã‚¯ãƒ¬ã‚¸ã‚¹ãƒˆãƒª
+		 * @param level ãƒ¬ãƒ™ãƒ«ID
+		 * @param policy ç¯„å›²å¤–ãƒãƒªã‚·ãƒ¼
+		 * @return ç‚¹ p ã‚’å«ã‚€è‘‰ãƒãƒ£ãƒ³ã‚¯ï¼ˆSpatialChunkï¼‰ã€‚ç¯„å›²å¤–ã§ãƒãƒªã‚·ãƒ¼ãŒ Reject ã®å ´åˆã¯ std::nullopt
 		 */
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f wp,
 			SpatialChunkRegistry& reg, LevelID level,
@@ -110,14 +110,14 @@ namespace SFW
 			return &leaf->chunk;
 		}
 		/**
-		 * @brief •ªŠ„‚ÉˆË‘¶‚µ‚È‚¢ƒOƒ[ƒoƒ‹‚È EntityManager ‚ğæ“¾
-		 * @return ƒOƒ[ƒoƒ‹‚È EntityManager
+		 * @brief åˆ†å‰²ã«ä¾å­˜ã—ãªã„ã‚°ãƒ­ãƒ¼ãƒãƒ«ãª EntityManager ã‚’å–å¾—
+		 * @return ã‚°ãƒ­ãƒ¼ãƒãƒ«ãª EntityManager
 		 */
 		ECS::EntityManager& GetGlobalEntityManager() noexcept { return m_global; }
 		/**
-		 * @brief ‚·‚×‚Ä‚Ì—t‚ğƒŒƒWƒXƒgƒŠ‚Ö“o˜^
-		 * @param reg ƒ`ƒƒƒ“ƒNƒŒƒWƒXƒgƒŠ
-		 * @param level ƒŒƒxƒ‹ID
+		 * @brief ã™ã¹ã¦ã®è‘‰ã‚’ãƒ¬ã‚¸ã‚¹ãƒˆãƒªã¸ç™»éŒ²
+		 * @param reg ãƒãƒ£ãƒ³ã‚¯ãƒ¬ã‚¸ã‚¹ãƒˆãƒª
+		 * @param level ãƒ¬ãƒ™ãƒ«ID
 		 */
 		void RegisterAllChunks(SpatialChunkRegistry& reg, LevelID level)
 		{
@@ -129,8 +129,8 @@ namespace SFW
 				});
 		}
 		/**
-		 * @brief ‚·‚×‚Ä‚ÌƒGƒ“ƒeƒBƒeƒB”‚ğæ“¾iƒOƒ[ƒoƒ‹ + ‘S—tƒ`ƒƒƒ“ƒNj
-		 * @return ƒGƒ“ƒeƒBƒeƒB”
+		 * @brief ã™ã¹ã¦ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£æ•°ã‚’å–å¾—ï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ« + å…¨è‘‰ãƒãƒ£ãƒ³ã‚¯ï¼‰
+		 * @return ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£æ•°
 		 */
 		size_t GetEntityNum() const noexcept
 		{
@@ -142,9 +142,9 @@ namespace SFW
 		}
 
 		/**
-		 * @brief 3D ƒtƒ‰ƒXƒ^ƒ€ê—pƒJƒŠƒ“ƒOi‚‚³‚Í”ª•ª–ØAABB‚©‚ç‚»‚Ì‚Ü‚Ü—˜—p
-		 * @param fr ƒtƒ‰ƒXƒ^ƒ€
-		 * @return ‰Â‹ƒ`ƒƒƒ“ƒN‚Ì”z—ñ
+		 * @brief 3D ãƒ•ãƒ©ã‚¹ã‚¿ãƒ å°‚ç”¨ã‚«ãƒªãƒ³ã‚°ï¼ˆé«˜ã•ã¯å…«åˆ†æœ¨AABBã‹ã‚‰ãã®ã¾ã¾åˆ©ç”¨
+		 * @param fr ãƒ•ãƒ©ã‚¹ã‚¿ãƒ 
+		 * @return å¯è¦–ãƒãƒ£ãƒ³ã‚¯ã®é…åˆ—
 		 */
 		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr) noexcept
 		{
@@ -154,9 +154,9 @@ namespace SFW
 			return out;
 		}
 		/**
-		 * @brief 3D ƒtƒ‰ƒXƒ^ƒ€ê—pƒJƒŠƒ“ƒOi‚‚³‚Í”ª•ª–ØAABB‚©‚ç‚»‚Ì‚Ü‚Ü—˜—p
-		 * @param fr ƒtƒ‰ƒXƒ^ƒ€
-		 * @return ‰Â‹ƒ`ƒƒƒ“ƒN‚Ì”z—ñ
+		 * @brief 3D ãƒ•ãƒ©ã‚¹ã‚¿ãƒ å°‚ç”¨ã‚«ãƒªãƒ³ã‚°ï¼ˆé«˜ã•ã¯å…«åˆ†æœ¨AABBã‹ã‚‰ãã®ã¾ã¾åˆ©ç”¨
+		 * @param fr ãƒ•ãƒ©ã‚¹ã‚¿ãƒ 
+		 * @return å¯è¦–ãƒãƒ£ãƒ³ã‚¯ã®é…åˆ—
 		 */
 		std::vector<const SpatialChunk*> CullChunks(const Math::Frustumf& fr) const noexcept
 		{
@@ -165,21 +165,21 @@ namespace SFW
 			cullRecursive3D(*m_root, fr, out);
 			return out;
 		}
-		// ƒtƒ‰ƒXƒ^ƒ€ƒJƒŠƒ“ƒOƒR[ƒ‹ƒoƒbƒNi‚‚³•â•‚È‚µE”ª•ª–ØAABB‚ğ’¼Úg—p)j
+		// ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚«ãƒªãƒ³ã‚°ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ï¼ˆé«˜ã•è£œåŠ©ãªã—ãƒ»å…«åˆ†æœ¨AABBã‚’ç›´æ¥ä½¿ç”¨)ï¼‰
 		template<class F>
 		void CullChunks(const Math::Frustumf& fr, F&& f) noexcept
 		{
 			if (!m_root) return;
 			cullRecursive3D(*m_root, fr, std::forward<F>(f));
 		}
-		// ƒtƒ‰ƒXƒ^ƒ€ƒJƒŠƒ“ƒOƒR[ƒ‹ƒoƒbƒNi‚‚³•â•‚È‚µE”ª•ª–ØAABB‚ğ’¼Úg—pj
+		// ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚«ãƒªãƒ³ã‚°ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ï¼ˆé«˜ã•è£œåŠ©ãªã—ãƒ»å…«åˆ†æœ¨AABBã‚’ç›´æ¥ä½¿ç”¨ï¼‰
 		template<class F>
 		void CullChunks(const Math::Frustumf& fr, F&& f) const noexcept
 		{
 			if (!m_root) return;
 			cullRecursive3D(*m_root, fr, std::forward<F>(f));
 		}
-		// ƒtƒ‰ƒXƒ^ƒ€ƒJƒŠƒ“ƒOi‰Â•Ï‚‚³j
+		// ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚«ãƒªãƒ³ã‚°ï¼ˆå¯å¤‰é«˜ã•ï¼‰
 		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr, float ymin, float ymax) noexcept
 		{
 			std::vector<SpatialChunk*> out; out.reserve(128);
@@ -187,7 +187,7 @@ namespace SFW
 			cullRecursive(*m_root, fr, ymin, ymax, out);
 			return out;
 		}
-		// ƒtƒ‰ƒXƒ^ƒ€ƒJƒŠƒ“ƒOi‰Â•Ï‚‚³j
+		// ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚«ãƒªãƒ³ã‚°ï¼ˆå¯å¤‰é«˜ã•ï¼‰
 		std::vector<const SpatialChunk*> CullChunks(const Math::Frustumf& fr, float ymin, float ymax) const noexcept
 		{
 			std::vector<const SpatialChunk*> out; out.reserve(128);
@@ -247,7 +247,7 @@ namespace SFW
 			return dx * dx + dy * dy + dz * dz;
 		}
 
-		// ‰Â‹ƒ`ƒƒƒ“ƒN‚ğ‹ß‚¢‡‚ÅãˆÊKŒ
+		// å¯è¦–ãƒãƒ£ãƒ³ã‚¯ã‚’è¿‘ã„é †ã§ä¸Šä½Kä»¶
 		std::vector<SpatialChunk*> CullChunksNear(const Math::Frustumf& fr,
 			const Math::Vec3f& eye,
 			size_t maxCount = (std::numeric_limits<size_t>::max)()) const noexcept
@@ -257,7 +257,7 @@ namespace SFW
 			std::vector<Item> items; items.reserve(128);
 			if (!m_root) return {};
 
-			// ‰Â‹—t (chunk, bounds) ‚ğ“¯‚ÉûW‚·‚é“à•”Ä‹A
+			// å¯è¦–è‘‰ (chunk, bounds) ã‚’åŒæ™‚ã«åé›†ã™ã‚‹å†…éƒ¨å†å¸°
 			std::function<void(const Node&)> rec = [&](const Node& n) {
 				if (!nodeIntersectsFrustum3D(n, fr)) return;
 				if (n.isLeaf()) {
@@ -286,14 +286,14 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒ`ƒƒƒ“ƒN‚ÌƒƒCƒ„[ƒtƒŒ[ƒ€‚ğƒtƒ‰ƒXƒ^ƒ€ƒJƒŠƒ“ƒO•t‚«‚Åæ“¾
-		 * @param fr ƒtƒ‰ƒXƒ^ƒ€
-		 * @param eye –ÚüˆÊ’u
-		 * @param dummy –¢g—piQuadTreePartition ‚Æ“¯‚¶ƒVƒOƒlƒ`ƒƒ‚É‚·‚é‚½‚ß‚Ìƒ_ƒ~[j
-		 * @param outLine ƒƒCƒ„[ƒtƒŒ[ƒ€’¸“_—ñ‚Ìo—Íæ
-		 * @param capacity outLine ‚Ì’¸“_—e—Ê
-		 * @param displayCount Å‘å•\¦ƒ`ƒƒƒ“ƒN”
-		 * @return ƒƒCƒ„[ƒtƒŒ[ƒ€’¸“_—ñ
+		 * @brief ãƒãƒ£ãƒ³ã‚¯ã®ãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚«ãƒªãƒ³ã‚°ä»˜ãã§å–å¾—
+		 * @param fr ãƒ•ãƒ©ã‚¹ã‚¿ãƒ 
+		 * @param eye ç›®ç·šä½ç½®
+		 * @param dummy æœªä½¿ç”¨ï¼ˆQuadTreePartition ã¨åŒã˜ã‚·ã‚°ãƒãƒãƒ£ã«ã™ã‚‹ãŸã‚ã®ãƒ€ãƒŸãƒ¼ï¼‰
+		 * @param outLine ãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ é ‚ç‚¹åˆ—ã®å‡ºåŠ›å…ˆ
+		 * @param capacity outLine ã®é ‚ç‚¹å®¹é‡
+		 * @param displayCount æœ€å¤§è¡¨ç¤ºãƒãƒ£ãƒ³ã‚¯æ•°
+		 * @return ãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ é ‚ç‚¹åˆ—
 		 */
 		uint32_t CullChunkLine(const Math::Frustumf& fr,
 			const Math::Vec3f& eye,
@@ -304,12 +304,12 @@ namespace SFW
 		{
 			if (!m_root || capacity < 24 || displayCount == 0) return 0;
 
-			// 1) ‰Â‹ƒ{ƒbƒNƒXûWi3Dƒtƒ‰ƒXƒ^ƒ€”»’èj
+			// 1) å¯è¦–ãƒœãƒƒã‚¯ã‚¹åé›†ï¼ˆ3Dãƒ•ãƒ©ã‚¹ã‚¿ãƒ åˆ¤å®šï¼‰
 			std::vector<AABB> boxes; boxes.reserve(256);
 			cullRecursive3D(*m_root, fr, boxes);
 			if (boxes.empty()) return 0;
 
-			// 2) –Úü‚©‚ç‚Ì‹——£‚Å‘O‚©‚ç—Dæi‹ß‚¢‡j
+			// 2) ç›®ç·šã‹ã‚‰ã®è·é›¢ã§å‰ã‹ã‚‰å„ªå…ˆï¼ˆè¿‘ã„é †ï¼‰
 			struct Item { AABB box; float dist; };
 			std::vector<Item> items; items.reserve(boxes.size());
 			auto clampToBox = [&](const AABB& b, const Math::Vec3f& p) {
@@ -328,7 +328,7 @@ namespace SFW
 				[](const Item& a, const Item& b) { return a.dist < b.dist; });
 			const size_t useN = std::min<size_t>(displayCount, items.size());
 
-			// 3) F‚Í‹——£ƒOƒ‰ƒfi‹ß=”’¨‰“=•j
+			// 3) è‰²ã¯è·é›¢ã‚°ãƒ©ãƒ‡ï¼ˆè¿‘=ç™½â†’é =é»’ï¼‰
 			float maxD = 0.f; for (size_t i = 0; i < useN; ++i) maxD = (std::max)(maxD, items[i].dist);
 			if (maxD <= 1e-6f) maxD = 1.f;
 
@@ -370,7 +370,7 @@ namespace SFW
 			return written;
 		}
 		/**
-		 * @brief ƒ`ƒƒƒ“ƒN‚ÌƒNƒŠƒA
+		 * @brief ãƒãƒ£ãƒ³ã‚¯ã®ã‚¯ãƒªã‚¢
 		 */
 		void CleanChunk()
 		{
@@ -382,9 +382,9 @@ namespace SFW
 		}
 
 		/**
-		 * @brief w’è“_‚ğŠÜ‚Ş—t‚ği•K—v‚È‚ç•ªŠ„‚µ‚È‚ª‚çj•K‚¸•Ô‚·
-		 * @param p ƒ[ƒ‹ƒhÀ•WŒn‚Ì“_
-		 * @return “_ p ‚ğŠÜ‚Ş—tƒ`ƒƒƒ“ƒNiSpatialChunkj
+		 * @brief æŒ‡å®šç‚¹ã‚’å«ã‚€è‘‰ã‚’ï¼ˆå¿…è¦ãªã‚‰åˆ†å‰²ã—ãªãŒã‚‰ï¼‰å¿…ãšè¿”ã™
+		 * @param p ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã®ç‚¹
+		 * @return ç‚¹ p ã‚’å«ã‚€è‘‰ãƒãƒ£ãƒ³ã‚¯ï¼ˆSpatialChunkï¼‰
 		 */
 		SpatialChunk* EnsureLeafForPoint(Math::Vec3f p)
 		{
@@ -402,9 +402,9 @@ namespace SFW
 			return &n->chunk;
 		}
 		/**
-		 * @brief predicate ‚ğ–‚½‚·—t‚ğ•ªŠ„•ÄŠ„‚è“–‚Ä
-		 * @param predicate •ªŠ„ğŒ
-		 * @param posFn ƒGƒ“ƒeƒBƒeƒB‚ÌˆÊ’u‚ğæ“¾‚·‚éŠÖ”
+		 * @brief predicate ã‚’æº€ãŸã™è‘‰ã‚’åˆ†å‰²ï¼†å†å‰²ã‚Šå½“ã¦
+		 * @param predicate åˆ†å‰²æ¡ä»¶
+		 * @param posFn ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ä½ç½®ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 		 */
 		void SubdivideIf(std::function<bool(const SpatialChunk&)> predicate,
 			std::function<Math::Vec3f(ECS::EntityID, ECS::EntityManager&)> posFn)
@@ -416,8 +416,8 @@ namespace SFW
 			for (Node* leaf : targets) subdivideAndReassign(*leaf, posFn);
 		}
 		/**
-		 * @brief ‰ß‘å—˜—p‚Ì—t‚ğ•ªŠ„•ÄŠ„‚è“–‚Ä
-		 * @param posFn ƒGƒ“ƒeƒBƒeƒB‚ÌˆÊ’u‚ğæ“¾‚·‚éŠÖ”
+		 * @brief éå¤§åˆ©ç”¨ã®è‘‰ã‚’åˆ†å‰²ï¼†å†å‰²ã‚Šå½“ã¦
+		 * @param posFn ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ä½ç½®ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 		 */
 		void SubdivideIfOverCapacity(std::function<Math::Vec3f(ECS::EntityID, ECS::EntityManager&)> posFn)
 		{
@@ -426,10 +426,10 @@ namespace SFW
 				}, std::move(posFn));
 		}
 		/**
-		 * @brief w’èÀ•W‚Ì—t‚ÌƒL[‚ğÄ”­s‚µ‚ÄƒŒƒWƒXƒgƒŠXViƒfƒoƒbƒO—pj
-		 * @param p ƒ[ƒ‹ƒhÀ•WŒn‚Ì“_
-		 * @param reg ƒ`ƒƒƒ“ƒNƒŒƒWƒXƒgƒŠ
-		 * @param level ƒŒƒxƒ‹ID
+		 * @brief æŒ‡å®šåº§æ¨™ã®è‘‰ã®ã‚­ãƒ¼ã‚’å†ç™ºè¡Œã—ã¦ãƒ¬ã‚¸ã‚¹ãƒˆãƒªæ›´æ–°ï¼ˆãƒ‡ãƒãƒƒã‚°ç”¨ï¼‰
+		 * @param p ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã®ç‚¹
+		 * @param reg ãƒãƒ£ãƒ³ã‚¯ãƒ¬ã‚¸ã‚¹ãƒˆãƒª
+		 * @param level ãƒ¬ãƒ™ãƒ«ID
 		 */
 		void ReloadLeafByPoint(Math::Vec3f p, SpatialChunkRegistry& reg, LevelID level)
 		{
@@ -452,18 +452,18 @@ namespace SFW
 			reg.RegisterOwner(newKey, &target->chunk);
 		}
 		/**
-		 * @brief AABB / Œğ·ŒŸõ
-		 * @param aabb ŒŸõ‚·‚éAABB
-		 * @return Œğ·‚·‚éƒ`ƒƒƒ“ƒN‚Ì”z—ñ
+		 * @brief AABB / äº¤å·®æ¤œç´¢
+		 * @param aabb æ¤œç´¢ã™ã‚‹AABB
+		 * @return äº¤å·®ã™ã‚‹ãƒãƒ£ãƒ³ã‚¯ã®é…åˆ—
 		 */
 		std::vector<SpatialChunk*> GetChunksAABB(const AABB& aabb)
 		{
 			std::vector<SpatialChunk*> out; if (!m_root) return out; queryAABB(*m_root, aabb, out); return out;
 		}
 		/**
-		 * @brief AABB / Œğ·ŒŸõ
-		 * @param aabb ŒŸõ‚·‚éAABB
-		 * @return Œğ·‚·‚éƒ`ƒƒƒ“ƒN‚Ì”z—ñ
+		 * @brief AABB / äº¤å·®æ¤œç´¢
+		 * @param aabb æ¤œç´¢ã™ã‚‹AABB
+		 * @return äº¤å·®ã™ã‚‹ãƒãƒ£ãƒ³ã‚¯ã®é…åˆ—
 		 */
 		std::vector<const SpatialChunk*> GetChunksAABB(const AABB& aabb) const
 		{
@@ -477,7 +477,7 @@ namespace SFW
 		template<class F> void ForEachLeafEM(F&& f) { forEachLeaf([&](Node& n) { f(n.chunk.GetEntityManager()); }); }
 		template<class F> void ForEachLeafEM(F&& f) const { forEachLeaf([&](const Node& n) { f(n.chunk.GetEntityManager()); }); }
 
-		// ƒfƒoƒbƒO
+		// ãƒ‡ãƒãƒƒã‚°
 		uint32_t LeafCount() const noexcept { return m_leafCount; }
 		float MinLeafSize() const noexcept { return m_minLeaf; }
 		void SetMaxPerLeafCount(uint32_t v) noexcept { m_maxPerLeafCount = v; }
@@ -487,30 +487,30 @@ namespace SFW
 
 	private:
 		/**
-		 * @brief —t‚Ìƒm[ƒh\‘¢‘Ì‚ğ’è‹`
+		 * @brief è‘‰ã®ãƒãƒ¼ãƒ‰æ§‹é€ ä½“ã‚’å®šç¾©
 		 */
 		struct Node {
 			AABB bounds{};
 			uint16_t generation = 0;
 			uint8_t  depth = 0;
 			std::array<std::unique_ptr<Node>, 8> child{}; // 0..7 octants
-			SpatialChunk chunk; // —t‚Ì‚İÀ¿g—p
+			SpatialChunk chunk; // è‘‰ã®ã¿å®Ÿè³ªä½¿ç”¨
 
 			bool isLeaf() const noexcept {
 				for (int i = 0; i < 8; ++i) if (child[i]) return false; return true;
 			}
 		};
 
-		// ƒ†[ƒeƒBƒŠƒeƒBF—t‚ÌƒL[‚ª–¢”­s/–¢“o˜^‚È‚ç”­s‚µ‚Ä“o˜^
+		// ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ï¼šè‘‰ã®ã‚­ãƒ¼ãŒæœªç™ºè¡Œ/æœªç™»éŒ²ãªã‚‰ç™ºè¡Œã—ã¦ç™»éŒ²
 		inline void EnsureKeyRegisteredForLeaf(Node& leafNode,
 			SpatialChunkRegistry& reg,
 			LevelID level)
 		{
 			SpatialChunk& sc = leafNode.chunk;
 
-			// Šù‚É“o˜^Ï‚İ‚©‚ğŒy‚­”»’èFResolveOwner ‚ªæ‚ê‚é‚© / code==0 “™‚ÅŠÈˆÕƒ`ƒFƒbƒN
+			// æ—¢ã«ç™»éŒ²æ¸ˆã¿ã‹ã‚’è»½ãåˆ¤å®šï¼šResolveOwner ãŒå–ã‚Œã‚‹ã‹ / code==0 ç­‰ã§ç°¡æ˜“ãƒã‚§ãƒƒã‚¯
 			const SpatialChunkKey cur = sc.GetNodeKey();
-			if (reg.ResolveOwner(cur) != nullptr && cur.code != 0) return; // Šù“o˜^
+			if (reg.ResolveOwner(cur) != nullptr && cur.code != 0) return; // æ—¢ç™»éŒ²
 
 			const auto [ix, iy, iz] = leafIndex(leafNode);
 			SpatialChunkKey key = MakeOctKey(level, leafNode.depth, ix, iy, iz, /*gen*/leafNode.generation);
@@ -518,14 +518,14 @@ namespace SFW
 			reg.RegisterOwner(key, &sc);
 		}
 
-		// --- 3D”Å AABB ûW ---
+		// --- 3Dç‰ˆ AABB åé›† ---
 		void cullRecursive3D(const Node& n, const Math::Frustumf& fr, std::vector<AABB>& out) const
 		{
 			if (!nodeIntersectsFrustum3D(n, fr)) return;
 			if (n.isLeaf()) { if (n.chunk.GetEntityManager().GetEntityCount() > 0) out.push_back(n.bounds); return; }
 			for (int i = 0; i < 8; ++i) if (n.child[i]) cullRecursive3D(*n.child[i], fr, out);
 		}
-		// ---- 3D ”ÅƒJƒŠƒ“ƒOi‚‚³”ÍˆÍ‚ğg‚í‚¸A”ª•ª–Ø‚Ì AABB ‚ğ‚»‚Ì‚Ü‚Üg—pj----
+		// ---- 3D ç‰ˆã‚«ãƒªãƒ³ã‚°ï¼ˆé«˜ã•ç¯„å›²ã‚’ä½¿ã‚ãšã€å…«åˆ†æœ¨ã® AABB ã‚’ãã®ã¾ã¾ä½¿ç”¨ï¼‰----
 		bool nodeIntersectsFrustum3D(const Node& n, const Math::Frustumf& fr) const noexcept
 		{
 			const Math::Vec3f c = levelOriginWS + (n.bounds.lb + n.bounds.ub) * 0.5f;
@@ -559,7 +559,7 @@ namespace SFW
 			for (int i = 0; i < 8; ++i) if (n.child[i]) cullRecursive3D(*n.child[i], fr, f);
 		}
 
-		// ---- Šî–{”»’è ----
+		// ---- åŸºæœ¬åˆ¤å®š ----
 		static bool intersects(const AABB& a, const AABB& b) noexcept {
 			return !(a.ub.x <= b.lb.x || a.lb.x >= b.ub.x ||
 				a.ub.y <= b.lb.y || a.lb.y >= b.ub.y ||
@@ -582,7 +582,7 @@ namespace SFW
 			const int ex = (x >= mx) ? 1 : 0; // East(1)/West(0)
 			const int uy = (y >= my) ? 1 : 0; // Up(1)/Down(0)
 			const int nz = (z >= mz) ? 1 : 0; // North(1)/South(0)
-			// ƒrƒbƒg: x(1) | y(2) | z(4)
+			// ãƒ“ãƒƒãƒˆ: x(1) | y(2) | z(4)
 			return (ex) | (uy << 1) | (nz << 2); // 0..7
 		}
 
@@ -610,7 +610,7 @@ namespace SFW
 				n.child[i]->depth = uint8_t(n.depth + 1);
 				n.child[i]->generation = 0;
 			}
-			m_leafCount += 7; // —t1 ¨ q8
+			m_leafCount += 7; // è‘‰1 â†’ å­8
 		}
 
 		Node* descendToLeaf(Node& cur, float x, float y, float z, bool createIfMissing)
@@ -626,10 +626,10 @@ namespace SFW
 				if (n->isLeaf()) {
 					if (!createIfMissing) break;
 					if (n->chunk.GetEntityManager().GetEntityCount() > 0) {
-						subdivideAndReassign(*n, posFn); // ’†g‚ ‚è -> •ªŠ„‚µ‚ÄÄ”z’u
+						subdivideAndReassign(*n, posFn); // ä¸­èº«ã‚ã‚Š -> åˆ†å‰²ã—ã¦å†é…ç½®
 					}
 					else {
-						ensureChildren(*n); // ‹ó -> q¶¬‚Ì‚İ
+						ensureChildren(*n); // ç©º -> å­ç”Ÿæˆã®ã¿
 					}
 				}
 				const int oi = octant(*n, x, y, z);
@@ -638,7 +638,7 @@ namespace SFW
 			return n;
 		}
 
-		// ---- ƒNƒGƒŠ ----
+		// ---- ã‚¯ã‚¨ãƒª ----
 		void queryAABB(Node& n, const AABB& q, std::vector<SpatialChunk*>& out)
 		{
 			if (!intersects(n.bounds, q)) return;
@@ -672,7 +672,7 @@ namespace SFW
 			return nullptr;
 		}
 
-		// ƒtƒ‰ƒXƒ^ƒ€‚Æ‚ÌŒğ·iY ”ÍˆÍ‚ğ–‘O‚Éƒtƒ‰ƒXƒ^ƒ€‚ÖË‰e‚·‚éƒ†[ƒeƒBƒŠƒeƒB‚ğg—pj
+		// ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã¨ã®äº¤å·®ï¼ˆY ç¯„å›²ã‚’äº‹å‰ã«ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã¸å°„å½±ã™ã‚‹ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ã‚’ä½¿ç”¨ï¼‰
 		bool nodeIntersectsFrustum(const Node& n, const Math::Frustumf& fr,
 			float ymin, float ymax) const noexcept
 		{
@@ -681,13 +681,13 @@ namespace SFW
 
 			float cyEff, eyEff;
 			if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, c.x, c.z, ymin, ymax, cyEff, eyEff))
-				return false; // c‚Éd‚È‚ç‚È‚¢
+				return false; // ç¸¦ã«é‡ãªã‚‰ãªã„
 			const Math::Vec3f center{ c.x, cyEff, c.z };
 			const Math::Vec3f extent{ e.x, eyEff, e.z };
 			return fr.IntersectsAABB(center, extent);
 		}
 
-		// ---- ƒJƒŠƒ“ƒO ----
+		// ---- ã‚«ãƒªãƒ³ã‚° ----
 		void cullRecursive(Node& n, const Math::Frustumf& fr, float ymin, float ymax,
 			std::vector<SpatialChunk*>& out)
 		{
@@ -724,7 +724,7 @@ namespace SFW
 			for (int i = 0; i < 8; ++i) if (n.child[i]) cullRecursive(*n.child[i], fr, ymin, ymax, out);
 		}
 
-		// ---- —t—ñ‹“ ----
+		// ---- è‘‰åˆ—æŒ™ ----
 		template<class F>
 		void forEachLeaf(F&& f)
 		{
@@ -750,7 +750,7 @@ namespace SFW
 			}
 		}
 
-		// ---- •ªŠ„‚ÆÄ”z’u ----
+		// ---- åˆ†å‰²ã¨å†é…ç½® ----
 		void subdivideAndReassign(Node& leaf,
 			const std::function<std::optional<Math::Vec3f>(ECS::EntityID, ECS::EntityManager&)>& posFn)
 		{
@@ -765,13 +765,13 @@ namespace SFW
 				const int oi = octant(leaf, pos->x, pos->y, pos->z);
 				return &leaf.child[oi]->chunk.GetEntityManager();
 				};
-			(void)src.SplitByAll(router); // ”ñƒXƒp[ƒX¨’€Ÿ, ƒXƒp[ƒX¨IDƒoƒPƒbƒgˆêŠ‡
+			(void)src.SplitByAll(router); // éã‚¹ãƒ‘ãƒ¼ã‚¹â†’é€æ¬¡, ã‚¹ãƒ‘ãƒ¼ã‚¹â†’IDãƒã‚±ãƒƒãƒˆä¸€æ‹¬
 			++leaf.generation;
 		}
 
 		/**
-		 * @brief 4 q‚ª—t‚Ìe‚ğ“‡‚µ‚Ä—t‚Ö–ß‚·iOctree ‚Å‚Í 8 qj
-		 * @return ƒ}[ƒW‚µ‚½eƒm[ƒh”
+		 * @brief 4 å­ãŒè‘‰ã®è¦ªã‚’çµ±åˆã—ã¦è‘‰ã¸æˆ»ã™ï¼ˆOctree ã§ã¯ 8 å­ï¼‰
+		 * @return ãƒãƒ¼ã‚¸ã—ãŸè¦ªãƒãƒ¼ãƒ‰æ•°
 		 */
 		size_t CoalesceUnderutilized()
 		{
@@ -806,7 +806,7 @@ namespace SFW
 			return mergedParents;
 		}
 
-		// ---- ƒL[¶¬iMorton3D 64bit •„†‰»j ----
+		// ---- ã‚­ãƒ¼ç”Ÿæˆï¼ˆMorton3D 64bit ç¬¦å·åŒ–ï¼‰ ----
 		static inline uint64_t ExpandBits3(uint64_t v)
 		{
 			v = (v | (v << 32)) & 0x1F00000000FFFFull;
@@ -827,7 +827,7 @@ namespace SFW
 		{
 			SpatialChunkKey k{};
 			k.level = level;
-			k.scheme = PartitionScheme::Octree3D; // ¦ ’è‹`‚ª–³‚¢ê‡‚Í’Ç‰Á/•ÏX‚µ‚Ä‚­‚¾‚³‚¢
+			k.scheme = PartitionScheme::Octree3D; // â€» å®šç¾©ãŒç„¡ã„å ´åˆã¯è¿½åŠ /å¤‰æ›´ã—ã¦ãã ã•ã„
 			k.depth = depth;
 			k.generation = gen;
 			const uint64_t morton = Morton3D64(ix, iy, iz);
@@ -846,14 +846,14 @@ namespace SFW
 		ChunkSizeType m_worldZ = 0;
 		float m_minLeaf = 1.0f;
 
-		uint32_t m_minPerLeafCount = 0;  // “‡ƒgƒŠƒKiq‡Œv‚ª‚±‚êˆÈ‰º‚È‚çe‚ÖW–ñj
+		uint32_t m_minPerLeafCount = 0;  // çµ±åˆãƒˆãƒªã‚¬ï¼ˆå­åˆè¨ˆãŒã“ã‚Œä»¥ä¸‹ãªã‚‰è¦ªã¸é›†ç´„ï¼‰
 		uint32_t m_maxPerLeafCount = 1024;
 
 		uint32_t m_leafCount = 1;
 		double m_coalesceTimer = 0.0;
 	};
 
-	// ==== Query “Áê‰» ====
+	// ==== Query ç‰¹æ®ŠåŒ– ====
 	namespace ECS {
 		template<>
 		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(SFW::OctreePartition& ctx) const noexcept

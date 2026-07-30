@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 
 class PlayerService : public ECS::IUpdateService
 {
 public:
-	//ÀÛ‚ÌƒJƒƒ‰‚ÌˆÊ’u‚©‚ç‚ÌƒIƒtƒZƒbƒg
+	//å®Ÿéš›ã®ã‚«ãƒ¡ãƒ©ã®ä½ç½®ã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
 	static inline const Math::Vec3f CAMERA_OFFSET = { 0.0f,3.0f,0.0f };
 
 	static inline Math::Vec3f GRAVITY = Math::Vec3f(0.0f, -9.81f, 0.0f);
@@ -17,12 +17,12 @@ public:
 
 	struct GrassFootCB
 	{
-		// Å‘å‰½ŒÂ‚Ü‚Å“¥‚ñ‚Å‚¢‚é—Ìˆæ‚ğl—¶‚·‚é‚©
+		// æœ€å¤§ä½•å€‹ã¾ã§è¸ã‚“ã§ã„ã‚‹é ˜åŸŸã‚’è€ƒæ…®ã™ã‚‹ã‹
 		static const int MAX_FOOT = 4;
-		Math::Vec4f gFootPosWRadiusWS[MAX_FOOT] = {}; // ƒ[ƒ‹ƒhÀ•W (‘«Œ³ or ƒJƒvƒZƒ‹’†S•t‹ß)
-		float  gFootStrength = 2.0f;         // ‘S‘Ì‚Ì‹È‚ª‚è‹­‚³
-		float gFootHeightRange = 5.0f;		//‰e‹¿‚·‚é‚‚³‚Ì”ÍˆÍ
-		int    gFootCount = 0;            // —LŒø‚È‘«‚Ì”
+		Math::Vec4f gFootPosWRadiusWS[MAX_FOOT] = {}; // ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ (è¶³å…ƒ or ã‚«ãƒ—ã‚»ãƒ«ä¸­å¿ƒä»˜è¿‘)
+		float  gFootStrength = 2.0f;         // å…¨ä½“ã®æ›²ãŒã‚Šå¼·ã•
+		float gFootHeightRange = 5.0f;		//å½±éŸ¿ã™ã‚‹é«˜ã•ã®ç¯„å›²
+		int    gFootCount = 0;            // æœ‰åŠ¹ãªè¶³ã®æ•°
 		float pad = {};
 	};
 
@@ -36,7 +36,7 @@ public:
 
 #ifdef _DEBUG
 
-		//imguiƒfƒoƒbƒO—pƒXƒ‰ƒCƒ_[“o˜^
+		//imguiãƒ‡ãƒãƒƒã‚°ç”¨ã‚¹ãƒ©ã‚¤ãƒ€ãƒ¼ç™»éŒ²
 		BIND_DEBUG_SLIDER_FLOAT("Player", "MoveSpeed", &MOVE_SPEED, 0.0f, 50.0f, 0.1f);
 		BIND_DEBUG_SLIDER_FLOAT("Player", "TurnSpeed", &TURN_SPEED, 0.0f, 20.0f, 0.1f);
 		BIND_DEBUG_SLIDER_FLOAT("Player", "FootStrength", &grassFoot_buf.gFootStrength, 0.0f, 10.0f, 0.01f);
@@ -102,7 +102,7 @@ public:
 		return currentPlayerPos;
 	}
 
-	// System‚©‚çƒZƒbƒg‚µ‚Ä‚¢‚é‚Ì‚ÅŠmÀ‚ÉƒvƒŒƒCƒ„[ID‚Æ‚ÍŒÀ‚ç‚È‚¢‚±‚Æ‚É’ˆÓ
+	// Systemã‹ã‚‰ã‚»ãƒƒãƒˆã—ã¦ã„ã‚‹ã®ã§ç¢ºå®Ÿã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼IDã¨ã¯é™ã‚‰ãªã„ã“ã¨ã«æ³¨æ„
 	EntityID GetPlayerID()
 	{
 		std::shared_lock<std::shared_mutex> lock(idMutex);

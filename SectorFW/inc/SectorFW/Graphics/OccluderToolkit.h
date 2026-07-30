@@ -1,4 +1,4 @@
-// OccluderToolkit.hpp
+ï»¿// OccluderToolkit.hpp
 // -----------------------------------------------------------------------------
 // Public API for occluder generation & selection (DX11/MOC friendly)
 //  - melt integration is hidden in .cpp (this header DOES NOT include melt.h)
@@ -217,20 +217,20 @@ namespace SFW {
 		OccluderLOD DecideOccluderLOD_FromArea(float areaPx2);
 
 		struct SoAPosRad {
-			const float* px;  // 32B®—ñ‚ª—‘z
+			const float* px;  // 32Bæ•´åˆ—ãŒç†æƒ³
 			const float* py;
 			const float* pz;
-			const float* pr;  // ”¼Œaiˆê’è‚È‚ç nullptr ‚É‚µ‚ÄƒXƒJƒ‰‚ğg‚¤j
+			const float* pr;  // åŠå¾„ï¼ˆä¸€å®šãªã‚‰ nullptr ã«ã—ã¦ã‚¹ã‚«ãƒ©ã‚’ä½¿ã†ï¼‰
 			uint32_t     count;
 		};
 
 		struct ViewProjParams {
-			// View‚Ì‘æ3s (row-major, ‰EŠ|‚¯‘z’è: v = M[2][0..3])
+			// Viewã®ç¬¬3è¡Œ (row-major, å³æ›ã‘æƒ³å®š: v = M[2][0..3])
 			float v30, v31, v32, v33;
-			// Projection‚Ìdiagonali‘ÎÌFOV‚ğ‰¼’è‚µ‚È‚¢j
+			// Projectionã®diagonalï¼ˆå¯¾ç§°FOVã‚’ä»®å®šã—ãªã„ï¼‰
 			float P00, P11;
 			float zNear, zFar;
-			float epsNdc; // ‚±‚ê–¢–‚Í¬‚³‚·‚¬‚Ä–³‹
+			float epsNdc; // ã“ã‚Œæœªæº€ã¯å°ã•ã™ãã¦ç„¡è¦–
 		};
 
 		inline void CoarseSphereVisible_AVX2(

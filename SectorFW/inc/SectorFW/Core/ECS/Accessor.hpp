@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Accessor.h
- * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÉƒAƒNƒZƒX‚·‚é‚½‚ß‚ÌƒAƒNƒZƒT[ƒNƒ‰ƒX
+ * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã«ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ãŸã‚ã®ã‚¢ã‚¯ã‚»ã‚µãƒ¼ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -15,18 +15,18 @@ namespace SFW
 	namespace ECS
 	{
 		/**
-		 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒgƒAƒNƒZƒX‚ÌŒ^‚ğ’è‹`‚·‚éƒeƒ“ƒvƒŒ[ƒg
-		 * @tparam AccessTypes ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^ƒŠƒXƒg(AccessInfo.hQÆ)
+		 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚¢ã‚¯ã‚»ã‚¹ã®å‹ã‚’å®šç¾©ã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
+		 * @tparam AccessTypes ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹ãƒªã‚¹ãƒˆ(AccessInfo.hå‚ç…§)
 		 */
 		template<typename... AccessTypes>
 		struct ComponentAccess {
 			/**
-			 * @brief ƒAƒNƒZƒXî•ñ‚ğæ“¾‚·‚é‚½‚ß‚ÌŒ^
+			 * @brief ã‚¢ã‚¯ã‚»ã‚¹æƒ…å ±ã‚’å–å¾—ã™ã‚‹ãŸã‚ã®å‹
 			 */
 			using Tuple = std::tuple<AccessTypes...>;
 			/**
-			 * @brief ƒAƒNƒZƒXî•ñ‚ğæ“¾‚·‚é‚½‚ß‚ÌŠÖ”
-			 * @return AccessInfo ƒAƒNƒZƒXî•ñ
+			 * @brief ã‚¢ã‚¯ã‚»ã‚¹æƒ…å ±ã‚’å–å¾—ã™ã‚‹ãŸã‚ã®é–¢æ•°
+			 * @return AccessInfo ã‚¢ã‚¯ã‚»ã‚¹æƒ…å ±
 			 */
 			static constexpr AccessInfo GetAccessInfo() {
 				AccessInfo info;
@@ -35,8 +35,8 @@ namespace SFW
 			}
 		private:
 			/**
-			 * @brief “Á’è‚ÌƒAƒNƒZƒXŒ^‚É‘Î‚µ‚ÄAƒAƒNƒZƒXî•ñ‚ğ“o˜^‚·‚éŠÖ”
-			 * @param info ƒAƒNƒZƒXî•ñ
+			 * @brief ç‰¹å®šã®ã‚¢ã‚¯ã‚»ã‚¹å‹ã«å¯¾ã—ã¦ã€ã‚¢ã‚¯ã‚»ã‚¹æƒ…å ±ã‚’ç™»éŒ²ã™ã‚‹é–¢æ•°
+			 * @param info ã‚¢ã‚¯ã‚»ã‚¹æƒ…å ±
 			 */
 			template<typename T>
 			static void RegisterAccess(AccessInfo& info) {
@@ -49,12 +49,12 @@ namespace SFW
 			}
 		};
 		/**
-		 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒgƒAƒNƒZƒX‚Ìƒ|ƒŠƒV[‚ğ’è‹`‚·‚éƒeƒ“ƒvƒŒ[ƒg
+		 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚¢ã‚¯ã‚»ã‚¹ã®ãƒãƒªã‚·ãƒ¼ã‚’å®šç¾©ã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 		 */
 		template<typename AccessType>
 		struct AccessPolicy;
 		/**
-		 * @brief “Ç‚İæ‚èƒAƒNƒZƒX‚Ìƒ|ƒŠƒV[‚ğ’è‹`‚·‚éƒeƒ“ƒvƒŒ[ƒg
+		 * @brief èª­ã¿å–ã‚Šã‚¢ã‚¯ã‚»ã‚¹ã®ãƒãƒªã‚·ãƒ¼ã‚’å®šç¾©ã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 		 */
 		template<typename T>
 		struct AccessPolicy<Read<T>> {
@@ -62,7 +62,7 @@ namespace SFW
 			using PointerType = const typename SoAPtr<T>::type;
 		};
 		/**
-		 * @brief ‘‚«‚İƒAƒNƒZƒX‚Ìƒ|ƒŠƒV[‚ğ’è‹`‚·‚éƒeƒ“ƒvƒŒ[ƒg
+		 * @brief æ›¸ãè¾¼ã¿ã‚¢ã‚¯ã‚»ã‚¹ã®ãƒãƒªã‚·ãƒ¼ã‚’å®šç¾©ã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 		 */
 		template<typename T>
 		struct AccessPolicy<Write<T>> {
@@ -70,27 +70,27 @@ namespace SFW
 			using PointerType = typename SoAPtr<T>::type;
 		};
 
-		// ƒRƒ“ƒ|[ƒlƒ“ƒgƒAƒNƒZƒT[‚ÌŠî’êƒNƒ‰ƒX
+		// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚¢ã‚¯ã‚»ã‚µãƒ¼ã®åŸºåº•ã‚¯ãƒ©ã‚¹
 		class ComponentAccessorBase
 		{
-			// ”»’èƒeƒ“ƒvƒŒ[ƒg
+			// åˆ¤å®šãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 			template <typename, typename = std::void_t<>>
 			struct IsToPtr : std::false_type {};
-			// ToPtrTag‚ğ‚ÂŒ^‚Ítrue
+			// ToPtrTagã‚’æŒã¤å‹ã¯true
 			template <typename T>
 			struct IsToPtr<T, std::void_t<typename T::ToPtrTag>> : std::true_type {};
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param chunk ƒAƒNƒZƒX‚·‚éƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param chunk ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯
 			 */
 			explicit ComponentAccessorBase(ArchetypeChunk* chunk) noexcept : chunk(chunk) {}
 
 			/**
-			 * @brief SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚ğAoSƒRƒ“ƒ|[ƒlƒ“ƒg‚É•ÏŠ·‚·‚éŠÖ”
-			 * @tparam T SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^
-			 * @param index •ÏŠ·‚·‚éƒCƒ“ƒfƒbƒNƒX
-			 * @return T AoSƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’l
+			 * @brief SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’AoSã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã«å¤‰æ›ã™ã‚‹é–¢æ•°
+			 * @tparam T SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹
+			 * @param index å¤‰æ›ã™ã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			 * @return T AoSã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å€¤
 			 */
 			template<typename T>
 				requires ECS::IsSoAComponent<T>
@@ -105,8 +105,8 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒ`ƒƒƒ“ƒN‚Ì—e—Ê‚ğæ“¾‚·‚éŠÖ”
-			 * @return size_t ƒ`ƒƒƒ“ƒN‚Ì—e—Ê
+			 * @brief ãƒãƒ£ãƒ³ã‚¯ã®å®¹é‡ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return size_t ãƒãƒ£ãƒ³ã‚¯ã®å®¹é‡
 			 */
 			size_t GetCapacity() const noexcept {
 				return chunk->GetCapacity();
@@ -123,7 +123,7 @@ namespace SFW
 					size_t offset = 0;
 					size_t capacity = chunk->GetCapacity();
 
-					//BufferType ‚ª‚¿‚á‚ñ‚Æ\’zÏ‚İ{ƒAƒ‰ƒCƒ“‚àOK‚Ì‘O’ñ‚Å•ÏŠ·
+					//BufferType ãŒã¡ã‚ƒã‚“ã¨æ§‹ç¯‰æ¸ˆã¿ï¼‹ã‚¢ãƒ©ã‚¤ãƒ³ã‚‚OKã®å‰æã§å¤‰æ›
 					BufferType* base = reinterpret_cast<BufferType*>(column.value());
 					PtrType soaPtr;
 					GetMemberStartPtr<PtrType>(base, capacity, offset, soaPtr,
@@ -136,17 +136,17 @@ namespace SFW
 			}
 
 			/**
-			 * @brief SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ“ƒo[‚ÌŠJnƒ|ƒCƒ“ƒ^‚ğæ“¾‚·‚éŠÖ”‚ÌÀ‘•
-			 * @param base SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒx[ƒXƒ|ƒCƒ“ƒ^
-			 * @param capacity SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì—e—Ê
-			 * @param offset Œ»İ‚ÌƒIƒtƒZƒbƒg
-			 * @param value SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒ|ƒCƒ“ƒ^
+			 * @brief SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ãƒ³ãƒãƒ¼ã®é–‹å§‹ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—ã™ã‚‹é–¢æ•°ã®å®Ÿè£…
+			 * @param base SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ™ãƒ¼ã‚¹ãƒã‚¤ãƒ³ã‚¿
+			 * @param capacity SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å®¹é‡
+			 * @param offset ç¾åœ¨ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+			 * @param value SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒã‚¤ãƒ³ã‚¿
 			 */
 			template<typename PtrType, size_t Index>
 			void GetMemberStartPtrImpl(BufferType* base, size_t capacity, size_t& offset, PtrType& value) noexcept
 			{
 				auto memPtr = std::get<Index>(PtrType::ptr_tuple);
-				static_assert(std::is_member_object_pointer_v<decltype(memPtr)>);	// ƒƒ“ƒo[ƒIƒuƒWƒFƒNƒgƒ|ƒCƒ“ƒ^‚Å‚ ‚é‚±‚Æ‚ğŠm”F
+				static_assert(std::is_member_object_pointer_v<decltype(memPtr)>);	// ãƒ¡ãƒ³ãƒãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒã‚¤ãƒ³ã‚¿ã§ã‚ã‚‹ã“ã¨ã‚’ç¢ºèª
 				auto& member = value.*memPtr;
 				using MemberRawType = std::remove_reference_t<decltype(member)>;
 				using MemberType = std::remove_pointer_t<MemberRawType>;
@@ -160,23 +160,23 @@ namespace SFW
 				else {
 					offset = AlignTo(offset, alignof(MemberType));
 					if constexpr (std::is_pointer_v<MemberRawType>) {
-						// ƒƒ“ƒo‚ªƒ|ƒCƒ“ƒ^ ¨ reinterpret_cast‚Å‘ã“ü‰Â”\
+						// ãƒ¡ãƒ³ãƒãŒãƒã‚¤ãƒ³ã‚¿ â†’ reinterpret_castã§ä»£å…¥å¯èƒ½
 						member = reinterpret_cast<MemberRawType>(base + offset);
 					}
 					else {
-						// ƒƒ“ƒo‚ª’lŒ^ifloat‚È‚Çj¨ ‘ã“ü•s”\ ¨ ƒRƒ“ƒpƒCƒ‹ƒGƒ‰[‚ğ–h‚®‚½‚ßstatic_assert
+						// ãƒ¡ãƒ³ãƒãŒå€¤å‹ï¼ˆfloatãªã©ï¼‰â†’ ä»£å…¥ä¸èƒ½ â†’ ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼ã‚’é˜²ããŸã‚static_assert
 						static_assert(std::is_pointer_v<MemberRawType>, "Member must be a pointer type");
 					}
 					offset += sizeof(MemberType) * capacity;
 				}
 			}
 			/**
-			 * @brief SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ“ƒo[‚ÌŠJnƒ|ƒCƒ“ƒ^‚ğæ“¾‚·‚éŠÖ”
-			 * @param base SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒx[ƒXƒ|ƒCƒ“ƒ^
-			 * @param capacity SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì—e—Ê
-			 * @param offset Œ»İ‚ÌƒIƒtƒZƒbƒg
-			 * @param value SoAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒ|ƒCƒ“ƒ^
-			 * @param Is ƒCƒ“ƒfƒbƒNƒXƒV[ƒPƒ“ƒX
+			 * @brief SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ãƒ³ãƒãƒ¼ã®é–‹å§‹ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @param base SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ™ãƒ¼ã‚¹ãƒã‚¤ãƒ³ã‚¿
+			 * @param capacity SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å®¹é‡
+			 * @param offset ç¾åœ¨ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+			 * @param value SoAã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒã‚¤ãƒ³ã‚¿
+			 * @param Is ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚·ãƒ¼ã‚±ãƒ³ã‚¹
 			 */
 			template<typename PtrType, size_t... Is>
 			void GetMemberStartPtr(BufferType* base, size_t capacity, size_t& offset, PtrType& value, std::index_sequence<Is...>) noexcept
@@ -186,32 +186,32 @@ namespace SFW
 
 			template<typename T, std::size_t... Is>
 			static void StoreSoAToAoSImpl(const typename T::ToPtr& p, size_t index, T& out, std::index_sequence<Is...>) noexcept {
-				auto& aos_tuple = T::member_ptr_tuple;			// AoSƒƒ“ƒo•Ï”ƒ|ƒCƒ“ƒ^
-				auto& soa_tuple = p.ptr_tuple;					// SoAƒƒ“ƒo•Ï”ƒ|ƒCƒ“ƒ^
+				auto& aos_tuple = T::member_ptr_tuple;			// AoSãƒ¡ãƒ³ãƒå¤‰æ•°ãƒã‚¤ãƒ³ã‚¿
+				auto& soa_tuple = p.ptr_tuple;					// SoAãƒ¡ãƒ³ãƒå¤‰æ•°ãƒã‚¤ãƒ³ã‚¿
 
 				((out.*(std::get<Is>(aos_tuple)) =
 					(p.*std::get<Is>(soa_tuple))[index]), ...);
 			}
 		private:
-			// ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚Ö‚Ìƒ|ƒCƒ“ƒ^
+			// ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 			ArchetypeChunk* chunk;
 		};
 
 		/**
-		 * @brief w’è‚µ‚½ƒAƒNƒZƒXŒ^‚ÉŠî‚Ã‚¢‚ÄAƒRƒ“ƒ|[ƒlƒ“ƒg‚ÉƒAƒNƒZƒX‚·‚é‚½‚ß‚ÌƒNƒ‰ƒX
+		 * @brief æŒ‡å®šã—ãŸã‚¢ã‚¯ã‚»ã‚¹å‹ã«åŸºã¥ã„ã¦ã€ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã«ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ãŸã‚ã®ã‚¯ãƒ©ã‚¹
 		 */
 		template<typename... AccessTypes>
 		class ComponentAccessor : public ComponentAccessorBase {
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param chunk ƒAƒNƒZƒX‚·‚éƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param chunk ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯
 			 */
 			explicit ComponentAccessor(ArchetypeChunk* chunk) noexcept : ComponentAccessorBase(chunk) {}
 			/**
-			 * @brief w’è‚µ‚½ƒAƒNƒZƒXŒ^‚É‘Î‚µ‚ÄAƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾‚·‚éŠÖ”
-			 * @tparam AccessType ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^(AccessInfo.hQÆ)
-			 * @return@std::optional<PointerType> ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒ|ƒCƒ“ƒ^
+			 * @brief æŒ‡å®šã—ãŸã‚¢ã‚¯ã‚»ã‚¹å‹ã«å¯¾ã—ã¦ã€ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @tparam AccessType ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹(AccessInfo.hå‚ç…§)
+			 * @returnã€€std::optional<PointerType> ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒã‚¤ãƒ³ã‚¿
 			 */
 			template<typename AccessType>
 				requires OneOf<AccessType, AccessTypes...>
@@ -222,8 +222,8 @@ namespace SFW
 				return GetComponent<AccessType, PtrType, ComponentType>();
 			}
 			/**
-			 * @brief requires‚Éˆê’v‚µ‚È‚©‚Á‚½‚Æ‚«‚ÌƒtƒH[ƒ‹ƒoƒbƒN’è‹`
-			 * @return std::optional<void> ‹ó‚ÌƒIƒvƒVƒ‡ƒ“
+			 * @brief requiresã«ä¸€è‡´ã—ãªã‹ã£ãŸã¨ãã®ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯å®šç¾©
+			 * @return std::optional<void> ç©ºã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 			 */
 			template<typename AccessType>
 			std::optional<void> Get() noexcept {

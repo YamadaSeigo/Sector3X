@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Grid3DPartition.h
- * @brief  3DƒOƒŠƒbƒhƒp[ƒeƒBƒVƒ‡ƒ“‚ğ’è‹`‚·‚éƒNƒ‰ƒXiPartitionConcept €‹’j
+ * @brief  3Dã‚°ãƒªãƒƒãƒ‰ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹ï¼ˆPartitionConcept æº–æ‹ ï¼‰
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -11,7 +11,7 @@
 #include <optional>
 #include <vector>
 
-#include "partition.hpp"                   // PartitionConcept / SpatialChunk / ChunkSizeType / EOutOfBoundsPolicy ‚È‚Ç
+#include "partition.hpp"                   // PartitionConcept / SpatialChunk / ChunkSizeType / EOutOfBoundsPolicy ãªã©
 #include "SpatialChunkRegistryService.h"  // EntityManagerRegistry / EntityManagerKey / LevelID
 #include "../Util/Grid.hpp"                // Grid3D<T, N>
 #include "../Util/Morton.h"              // Morton3D64, ZigZag64
@@ -20,16 +20,16 @@
 namespace SFW
 {
 	/**
-	 * @brief 3DƒOƒŠƒbƒhƒp[ƒeƒBƒVƒ‡ƒ“‚ğ’è‹`‚·‚éƒNƒ‰ƒXiPartitionConcept €‹’j
+	 * @brief 3Dã‚°ãƒªãƒƒãƒ‰ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹ï¼ˆPartitionConcept æº–æ‹ ï¼‰
 	 */
 	class Grid3DPartition
 	{
 	public:
 		/**
-		 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @param chunkWidth  X•ûŒüƒZƒ‹”
-		 * @param chunkHeight Y•ûŒüƒZƒ‹”
-		 * @param chunkSize   ŠeƒZƒ‹‚Ìˆê•Óiƒ[ƒ‹ƒh’PˆÊj
+		 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @param chunkWidth  Xæ–¹å‘ã‚»ãƒ«æ•°
+		 * @param chunkHeight Yæ–¹å‘ã‚»ãƒ«æ•°
+		 * @param chunkSize   å„ã‚»ãƒ«ã®ä¸€è¾ºï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰å˜ä½ï¼‰
 		 */
 		explicit Grid3DPartition(Math::Vec3f originWS,
 			ChunkSizeType chunkWidth,
@@ -40,11 +40,11 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		* @param chunkWidth  X•ûŒüƒZƒ‹”
-		* @param chunkHeight Y•ûŒüƒZƒ‹”
-		* @param chunkDepth  Z•ûŒüƒZƒ‹”
-		* @param chunkSize   ŠeƒZƒ‹‚Ìˆê•Óiƒ[ƒ‹ƒh’PˆÊj
+		 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		* @param chunkWidth  Xæ–¹å‘ã‚»ãƒ«æ•°
+		* @param chunkHeight Yæ–¹å‘ã‚»ãƒ«æ•°
+		* @param chunkDepth  Zæ–¹å‘ã‚»ãƒ«æ•°
+		* @param chunkSize   å„ã‚»ãƒ«ã®ä¸€è¾ºï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰å˜ä½ï¼‰
 		*/
 		explicit Grid3DPartition(
 			Math::Vec3f originWS,
@@ -57,7 +57,7 @@ namespace SFW
 		}
 
 		/**
-		 * @brief w’èˆÊ’u‚ª‘®‚·‚éƒZƒ‹iSpatialChunkj‚ğæ“¾
+		 * @brief æŒ‡å®šä½ç½®ãŒå±ã™ã‚‹ã‚»ãƒ«ï¼ˆSpatialChunkï¼‰ã‚’å–å¾—
 		 */
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f wp,
 			SpatialChunkRegistry& reg, LevelID level,
@@ -84,13 +84,13 @@ namespace SFW
 			return &grid(static_cast<ChunkSizeType>(cx), static_cast<ChunkSizeType>(cy), static_cast<ChunkSizeType>(cz));
 		}
 
-		/** @brief ƒOƒŠƒbƒhQÆ */
+		/** @brief ã‚°ãƒªãƒƒãƒ‰å‚ç…§ */
 		const Grid3D<SpatialChunk, ChunkSizeType>& GetGrid() const noexcept { return grid; }
-		/** @brief ƒOƒ[ƒoƒ‹EMQÆ */
+		/** @brief ã‚°ãƒ­ãƒ¼ãƒãƒ«EMå‚ç…§ */
 		ECS::EntityManager& GetGlobalEntityManager() noexcept { return globalEntityManager; }
 
 		/**
-		 * @brief ‚·‚×‚Ä‚ÌƒZƒ‹‚ğRegistry‚É“o˜^‚µ NodeKey ‚ğ–„‚ß‚é
+		 * @brief ã™ã¹ã¦ã®ã‚»ãƒ«ã‚’Registryã«ç™»éŒ²ã— NodeKey ã‚’åŸ‹ã‚ã‚‹
 		 */
 		void RegisterAllChunks(SpatialChunkRegistry& reg, LevelID level)
 		{
@@ -113,7 +113,7 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ‘SƒGƒ“ƒeƒBƒeƒB”iƒOƒ[ƒoƒ‹{‘SƒZƒ‹j
+		 * @brief å…¨ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£æ•°ï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ«ï¼‹å…¨ã‚»ãƒ«ï¼‰
 		 */
 		size_t GetEntityNum()
 		{
@@ -132,14 +132,14 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ‹‘äƒJƒŠƒ“ƒOiŠeƒZƒ‹‚ğ—§•ûAABB‚Å”»’èj
+		 * @brief è¦–éŒå°ã‚«ãƒªãƒ³ã‚°ï¼ˆå„ã‚»ãƒ«ã‚’ç«‹æ–¹AABBã§åˆ¤å®šï¼‰
 		 */
 		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr) const noexcept
 		{
 			std::vector<SpatialChunk*> out;
 			const uint32_t w = grid.width(), h = grid.height(), d = grid.depth();
 			const float cell = float(chunkSize);
-			const float e = 0.5f * cell; // ”¼ŒaiŠe²“¯‚¶j
+			const float e = 0.5f * cell; // åŠå¾„ï¼ˆå„è»¸åŒã˜ï¼‰
 
 			for (uint32_t z = 0; z < d; ++z) {
 				for (uint32_t y = 0; y < h; ++y) {
@@ -159,7 +159,7 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒAƒƒP[ƒVƒ‡ƒ“‰ñ”ğ”ÅiƒR[ƒ‹ƒoƒbƒNó‚¯æ‚èj
+		 * @brief ã‚¢ãƒ­ã‚±ãƒ¼ã‚·ãƒ§ãƒ³å›é¿ç‰ˆï¼ˆã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯å—ã‘å–ã‚Šï¼‰
 		 */
 		template<class F>
 		void CullChunks(const Math::Frustumf& fr, F&& f) const noexcept
@@ -184,7 +184,7 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ‹…‘ÌƒJƒŠƒ“ƒOiŠeƒZƒ‹‚ğ—§•ûAABB‚Å”»’èj
+		 * @brief çƒä½“ã‚«ãƒªãƒ³ã‚°ï¼ˆå„ã‚»ãƒ«ã‚’ç«‹æ–¹AABBã§åˆ¤å®šï¼‰
 		 */
 		std::vector<SpatialChunk*> CullChunks(const Math::Vec3f& center, float radius) const noexcept
 		{
@@ -292,12 +292,12 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒƒCƒ„[ƒtƒŒ[ƒ€—p‚Ì•Óƒ‰ƒCƒ“‚ğ¶¬i12ƒGƒbƒW / ƒZƒ‹j
-		 * @param cp           •\¦Šî€“_i‹——£‚ÅƒtƒF[ƒhj
-		 * @param outLine      ‘‚«‚İæiLineList’¸“_j
-		 * @param capacity     outLine ‚ÌÅ‘å’¸“_”
-		 * @param displayCount •\¦‹——£iƒZƒ‹”j
-		 * @return ‘‚«‚ñ‚¾’¸“_”
+		 * @brief ãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ç”¨ã®è¾ºãƒ©ã‚¤ãƒ³ã‚’ç”Ÿæˆï¼ˆ12ã‚¨ãƒƒã‚¸ / ã‚»ãƒ«ï¼‰
+		 * @param cp           è¡¨ç¤ºåŸºæº–ç‚¹ï¼ˆè·é›¢ã§ãƒ•ã‚§ãƒ¼ãƒ‰ï¼‰
+		 * @param outLine      æ›¸ãè¾¼ã¿å…ˆï¼ˆLineListé ‚ç‚¹ï¼‰
+		 * @param capacity     outLine ã®æœ€å¤§é ‚ç‚¹æ•°
+		 * @param displayCount è¡¨ç¤ºè·é›¢ï¼ˆã‚»ãƒ«æ•°ï¼‰
+		 * @return æ›¸ãè¾¼ã‚“ã é ‚ç‚¹æ•°
 		 */
 		uint32_t CullChunkLine(const Math::Frustumf& fr,
 			Math::Vec3f cp,
@@ -310,7 +310,7 @@ namespace SFW
 			const float cell = float(chunkSize);
 			const float e = 0.5f * cell;
 
-			const uint32_t kVertsPerCell = 24; // 12–{‚ÌƒGƒbƒW ~ 2’¸“_
+			const uint32_t kVertsPerCell = 24; // 12æœ¬ã®ã‚¨ãƒƒã‚¸ Ã— 2é ‚ç‚¹
 			uint32_t written = 0;
 			const float maxLen = displayCount * chunkSize;
 
@@ -325,12 +325,12 @@ namespace SFW
 			for (uint32_t z = 0; z < d; ++z) {
 				for (uint32_t y = 0; y < h; ++y) {
 					for (uint32_t x = 0; x < w; ++x) {
-						if (capacity - written < kVertsPerCell) return written; // ‚±‚êˆÈã‘‚¯‚È‚¢
+						if (capacity - written < kVertsPerCell) return written; // ã“ã‚Œä»¥ä¸Šæ›¸ã‘ãªã„
 
 						const Math::Vec3f c = levelOriginWS + Math::Vec3f{ (x + 0.5f) * cell, (y + 0.5f) * cell, (z + 0.5f) * cell };
 						const Math::Vec3f ex{ e, e, e };
 
-						// ‹——£‚ÅƒtƒF[ƒhiXZ‹——£‚Å‚Í‚È‚­3D‹——£j
+						// è·é›¢ã§ãƒ•ã‚§ãƒ¼ãƒ‰ï¼ˆXZè·é›¢ã§ã¯ãªã3Dè·é›¢ï¼‰
 						const float len = (c - cp).length();
 						if (len > maxLen) continue;
 
@@ -338,7 +338,7 @@ namespace SFW
 
 						const uint32_t rgb = Math::LerpColor(0xFFFFFFFFu, 0x000000FFu, len / maxLen);
 
-						// 8’¸“_
+						// 8é ‚ç‚¹
 						Math::Vec3f v000{ c.x - e, c.y - e, c.z - e };
 						Math::Vec3f v001{ c.x - e, c.y - e, c.z + e };
 						Math::Vec3f v010{ c.x - e, c.y + e, c.z - e };
@@ -348,7 +348,7 @@ namespace SFW
 						Math::Vec3f v110{ c.x + e, c.y + e, c.z - e };
 						Math::Vec3f v111{ c.x + e, c.y + e, c.z + e };
 
-						// 12ƒGƒbƒW
+						// 12ã‚¨ãƒƒã‚¸
 						push_edge(v000, v001, rgb); // -x,-y, z
 						push_edge(v000, v010, rgb); // -x, y,-z
 						push_edge(v000, v100, rgb); //  x,-y,-z
@@ -368,7 +368,7 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒZƒ‹‚ÌÄƒ[ƒhi¢‘ã‚ği‚ß‚ÄÄ“o˜^j
+		 * @brief ã‚»ãƒ«ã®å†ãƒ­ãƒ¼ãƒ‰ï¼ˆä¸–ä»£ã‚’é€²ã‚ã¦å†ç™»éŒ²ï¼‰
 		 */
 		void ReloadCell(uint32_t cx, uint32_t cy, uint32_t cz, SpatialChunkRegistry& reg)
 		{
@@ -382,7 +382,7 @@ namespace SFW
 		}
 
 		/*
-		* @brief ƒ`ƒƒƒ“ƒN‚ğƒŠƒZƒbƒg‚·‚é
+		* @brief ãƒãƒ£ãƒ³ã‚¯ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
 		*/
 		void CleanChunk()
 		{
@@ -405,23 +405,23 @@ namespace SFW
 			k.scheme = PartitionScheme::Grid3D;
 			k.depth = 0;
 			k.generation = gen;
-			k.code = Morton3D64(ZigZag64(gx), ZigZag64(gy), ZigZag64(gz)); // X,Y,Z ‚Ì 3Dƒ‚[ƒgƒ“
+			k.code = Morton3D64(ZigZag64(gx), ZigZag64(gy), ZigZag64(gz)); // X,Y,Z ã® 3Dãƒ¢ãƒ¼ãƒˆãƒ³
 			return k;
 		}
 
 	private:
 
-		ECS::EntityManager globalEntityManager;                 ///< ƒOƒ[ƒoƒ‹EM
-		Grid3D<SpatialChunk, ChunkSizeType> grid;               ///< 3DƒOƒŠƒbƒh
-		Math::Vec3f levelOriginWS;								/// ƒŒƒxƒ‹‚Ìƒ[ƒ‹ƒhŒ´“_
-		float chunkSize;                                       ///< ƒZƒ‹ˆê•Ó
+		ECS::EntityManager globalEntityManager;                 ///< ã‚°ãƒ­ãƒ¼ãƒãƒ«EM
+		Grid3D<SpatialChunk, ChunkSizeType> grid;               ///< 3Dã‚°ãƒªãƒƒãƒ‰
+		Math::Vec3f levelOriginWS;								/// ãƒ¬ãƒ™ãƒ«ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åŸç‚¹
+		float chunkSize;                                       ///< ã‚»ãƒ«ä¸€è¾º
 		bool isRegistryChunk = false;
 	};
 
 	namespace ECS
 	{
 		/**
-		 * @brief Grid3DPartition ‚Ìƒ`ƒƒƒ“ƒN—ñ‹“—pƒNƒGƒŠi“Áê‰»j
+		 * @brief Grid3DPartition ã®ãƒãƒ£ãƒ³ã‚¯åˆ—æŒ™ç”¨ã‚¯ã‚¨ãƒªï¼ˆç‰¹æ®ŠåŒ–ï¼‰
 		 */
 		template<>
 		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(Grid3DPartition& context) const noexcept
@@ -440,9 +440,9 @@ namespace SFW
 				}
 				};
 
-			// ƒOƒ[ƒoƒ‹
+			// ã‚°ãƒ­ãƒ¼ãƒãƒ«
 			collect_from(context.GetGlobalEntityManager());
-			// ‹óŠÔ
+			// ç©ºé–“
 			const auto& g = context.GetGrid();
 			const uint32_t w = g.width(), h = g.height(), d = g.depth();
 			for (uint32_t z = 0; z < d; ++z)

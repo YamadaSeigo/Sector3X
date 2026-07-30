@@ -1,4 +1,4 @@
-#include "LevelBuilders.h"
+ï»¿#include "LevelBuilders.h"
 #include "app/AppContext.h"
 #include "app/appconfig.h"
 #include "environment/BiomeScatterGenerator.h"
@@ -44,7 +44,7 @@ void Levels::EnqueueGlobalSystems(WorldType& world)
 	reqCmds.push_back(worldRequestService.CreateAddGlobalSystemCommand<GlobalDebugRenderSystem>());
 #endif
 
-	// ƒŒƒxƒ‹’Ç‰ÁƒRƒ}ƒ“ƒh‚ğÀsƒLƒ…[‚ÉƒvƒbƒVƒ…
+	// ãƒ¬ãƒ™ãƒ«è¿½åŠ ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè¡Œã‚­ãƒ¥ãƒ¼ã«ãƒ—ãƒƒã‚·ãƒ¥
 	for (auto& cmd : reqCmds) {
 		worldRequestService.PushCommand(std::move(cmd));
 	}
@@ -105,8 +105,8 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 
 			matDesc.shader = windSpriteShaderHandle;
 			matDesc.samplerMap[0] = samp;
-			matDesc.vsCBV[11] = windCBHandle; // VS_CB11 ‚ÉƒZƒbƒg
-			matDesc.psSRV[2] = texHandle; // TEX2 ‚ÉƒZƒbƒg
+			matDesc.vsCBV[11] = windCBHandle; // VS_CB11 ã«ã‚»ãƒƒãƒˆ
+			matDesc.psSRV[2] = texHandle; // TEX2 ã«ã‚»ãƒƒãƒˆ
 
 			Graphics::MaterialHandle matHandle;
 			matMgr->Add(matDesc, matHandle);
@@ -134,7 +134,7 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 			CColor colorWhite = { { 1.0f,1.0f,1.0f,1.0f} };
 			CTitleSprite titleComp;
 
-			sprite.layer = 1; // è‘O‚É•`‰æ
+			sprite.layer = 1; // æ‰‹å‰ã«æç”»
 
 			levelSession.AddGlobalEntity(
 				CTransform{ getPos(0.0f,0.4f),{0.0f,0.0f,0.0f,1.0f}, getScale(0.7f,0.7f) },
@@ -144,10 +144,10 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 
 			textureDesc.path = "assets/texture/sprite/PressSpace.png";
 			textureMgr->Add(textureDesc, texHandle);
-			matDesc.psSRV[2] = texHandle; // TEX2 ‚ÉƒZƒbƒg
+			matDesc.psSRV[2] = texHandle; // TEX2 ã«ã‚»ãƒƒãƒˆ
 			matMgr->Add(matDesc, matHandle);
 			sprite.hMat = matHandle;
-			sprite.layer = 1; // è‘O‚É•`‰æ
+			sprite.layer = 1; // æ‰‹å‰ã«æç”»
 			titleComp.fadeTime = 2.5f;
 
 			levelSession.AddGlobalEntity(
@@ -158,9 +158,9 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 
 			CColor colorBlack = { { 0.0f,0.0f,0.0f,1.0f} };
 
-			sprite.hMat.index = CSprite::invalidIndex; // ƒ}ƒeƒŠƒAƒ‹–³Œø‰»(^‚Á”’ƒ}ƒeƒŠƒAƒ‹‚Å•`‰æj
+			sprite.hMat.index = CSprite::invalidIndex; // ãƒãƒ†ãƒªã‚¢ãƒ«ç„¡åŠ¹åŒ–(çœŸã£ç™½ãƒãƒ†ãƒªã‚¢ãƒ«ã§æç”»ï¼‰
 			sprite.pso = alphaPsoHandle;
-			sprite.layer = 2; // ˆê”Ô‘O‚É•`‰æ
+			sprite.layer = 2; // ä¸€ç•ªå‰ã«æç”»
 			titleComp.fadeTime = 2.0f;
 			titleComp.isErased = true;
 
@@ -192,7 +192,7 @@ void Levels::EnqueueTitleLevel(WorldType& world, App::Context& ctx)
 			scheduler.AddSystem<SpriteRenderSystem>(*serviceLocator);
 		});
 
-	// ƒŒƒxƒ‹’Ç‰ÁƒRƒ}ƒ“ƒh‚ğÀsƒLƒ…[‚ÉƒvƒbƒVƒ…
+	// ãƒ¬ãƒ™ãƒ«è¿½åŠ ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè¡Œã‚­ãƒ¥ãƒ¼ã«ãƒ—ãƒƒã‚·ãƒ¥
 	worldRequestService.PushCommand(std::move(reqCmd));
 }
 
@@ -239,16 +239,16 @@ void Levels::EnqueueLoadingLevel(WorldType& world, App::Context& ctx, const char
 			Graphics::DX11::MaterialCreateDesc matDesc;
 			matDesc.shader = shaderHandle;
 			matDesc.samplerMap[0] = samp;
-			matDesc.vsSRV[11] = spriteInstBufferHandle; // VS_CB11 ‚ÉƒZƒbƒg
-			matDesc.psSRV[2] = texHandle; // TEX2 ‚ÉƒZƒbƒg
+			matDesc.vsSRV[11] = spriteInstBufferHandle; // VS_CB11 ã«ã‚»ãƒƒãƒˆ
+			matDesc.psSRV[2] = texHandle; // TEX2 ã«ã‚»ãƒƒãƒˆ
 
 			Graphics::MaterialHandle matHandle;
 			matMgr->Add(matDesc, matHandle);
 
 			CSpriteAnimation spriteAnim;
 			spriteAnim.hMat = matHandle;
-			spriteAnim.buf.divX = 7; // ‰¡•ªŠ„”
-			spriteAnim.layer = 100; // è‘O‚É•`‰æ
+			spriteAnim.buf.divX = 7; // æ¨ªåˆ†å‰²æ•°
+			spriteAnim.layer = 100; // æ‰‹å‰ã«æç”»
 
 			auto getPos = [](float x, float y)->Math::Vec3f {
 				Math::Vec3f pos;
@@ -280,7 +280,7 @@ void Levels::EnqueueLoadingLevel(WorldType& world, App::Context& ctx, const char
 			scheduler.AddSystem<SpriteAnimationSystem>(*serviceLocator);
 		});
 
-	// ƒŒƒxƒ‹’Ç‰ÁƒRƒ}ƒ“ƒh‚ğÀsƒLƒ…[‚ÉƒvƒbƒVƒ…
+	// ãƒ¬ãƒ™ãƒ«è¿½åŠ ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè¡Œã‚­ãƒ¥ãƒ¼ã«ãƒ—ãƒƒã‚·ãƒ¥
 	worldRequestService.PushCommand(std::move(reqCmd));
 }
 
@@ -299,7 +299,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 	auto reqCmd = worldRequestService.CreateAddLevelCommand(
 		std::move(level),
-		//ƒ[ƒh
+		//ãƒ­ãƒ¼ãƒ‰æ™‚
 		[&](const ECS::ServiceLocator* serviceLocator, OpenFieldLevel* pLevel) {
 			auto modelAssetMgr = graphics.GetRenderService()->GetResourceManager<DX11::ModelAssetManager>();
 			auto bufferMgr = graphics.GetRenderService()->GetResourceManager<DX11::BufferManager>();
@@ -307,7 +307,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 			clock_t start = clock();
 
-			//ƒfƒtƒHƒ‹ƒg•`‰æ‚ÌPSO¶¬
+			//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆæç”»ã®PSOç”Ÿæˆ
 			DX11::ShaderCreateDesc shaderDesc;
 			shaderDesc.templateID = MaterialTemplateID::PBR;
 			shaderDesc.vsPath = L"assets/shader/VS_ClipUVNrm.cso";
@@ -324,7 +324,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			PSOHandle cullNonePSOHandle;
 			psoMgr->Add(psoDesc, cullNonePSOHandle);
 
-			//‘‚Ì—h‚ê—pPSO¶¬
+			//è‰ã®æºã‚Œç”¨PSOç”Ÿæˆ
 			shaderDesc.vsPath = L"assets/shader/VS_WindGrass.cso";
 			shaderDesc.psPath = L"assets/shader/PS_OpaqueColor.cso";
 			shaderMgr->Add(shaderDesc, shaderHandle);
@@ -341,7 +341,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			psoDesc.shader = shaderHandle;
 
 			shaderDesc.vsPath = L"assets/shader/VS_WindEntityShadow.cso";
-			shaderDesc.psPath.clear();// ’¸“_ƒVƒF[ƒ_‚Ì‚İ
+			shaderDesc.psPath.clear();// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®ã¿
 			shaderMgr->Add(shaderDesc, shaderHandle);
 			psoDesc.rebindShader = shaderHandle;
 
@@ -378,11 +378,11 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			auto footCBHandle = ctx.player->GetFootBufferHandle();
 
 			auto materialMgr = graphics.GetRenderService()->GetResourceManager<DX11::MaterialManager>();
-			// ƒ‚ƒfƒ‹ƒAƒZƒbƒg‚Ì“Ç‚İ‚İ
+			// ãƒ¢ãƒ‡ãƒ«ã‚¢ã‚»ãƒƒãƒˆã®èª­ã¿è¾¼ã¿
 			DX11::ModelAssetCreateDesc modelDesc;
 			modelDesc.path = "assets/model/StylizedNatureMegaKit/Rock_Medium_1.gltf";
 			modelDesc.pso = cullDefaultPSOHandle;
-			modelDesc.rhFlipZ = true; // ‰EèŒnGLTF—p‚ÌZ²”½“]ƒtƒ‰ƒO‚ğİ’è
+			modelDesc.rhFlipZ = true; // å³æ‰‹ç³»GLTFç”¨ã®Zè»¸åè»¢ãƒ•ãƒ©ã‚°ã‚’è¨­å®š
 			modelDesc.instancesPeak = 200;
 			modelDesc.viewMax = 50.0f;
 			modelDesc.buildOccluders = false;
@@ -393,8 +393,8 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.path = "assets/model/StylizedNatureMegaKit/Rock_Medium_3.gltf";
 			modelAssetMgr->Add(modelDesc, modelAssetHandle[RockC]);
 
-			modelDesc.BindVS_CBV("WindCB", windCBHandle); // ‘—h‚ê—pCBV‚ğƒoƒCƒ“ƒh
-			modelDesc.BindVS_CBV("GrassFootCB", footCBHandle); // ‘—h‚ê—pCBV‚ğƒoƒCƒ“ƒh
+			modelDesc.BindVS_CBV("WindCB", windCBHandle); // è‰æºã‚Œç”¨CBVã‚’ãƒã‚¤ãƒ³ãƒ‰
+			modelDesc.BindVS_CBV("GrassFootCB", footCBHandle); // è‰æºã‚Œç”¨CBVã‚’ãƒã‚¤ãƒ³ãƒ‰
 
 			modelDesc.path = "assets/model/Stylized/Tree01.gltf";
 			modelDesc.viewMax = 50.0f;
@@ -474,15 +474,15 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 			ModelAssetHandle grassModelHandle;
 
-			//ƒfƒBƒtƒ@\ƒh—p‚ÌƒJƒƒ‰‚Ì’è”ƒoƒbƒtƒ@ƒnƒ“ƒhƒ‹æ“¾
+			//ãƒ‡ã‚£ãƒ•ã‚¡â€•ãƒ‰ç”¨ã®ã‚«ãƒ¡ãƒ©ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒãƒ³ãƒ‰ãƒ«å–å¾—
 			auto deferredCameraHandle = bufferMgr->FindByName(DeferredRenderingService::BUFFER_NAME);
 
-			modelDesc.BindVS_CBV("CameraBuffer", deferredCameraHandle); // ƒJƒƒ‰CBV‚ğƒoƒCƒ“ƒh
-			modelDesc.BindVS_CBV("TerrainGridCB", params.gridHandle); // ’nŒ`ƒOƒŠƒbƒhCBV‚ğƒoƒCƒ“ƒh
-			modelDesc.BindVS_CBV("WindCB", windCBHandle); // ‘—h‚ê—pCBV‚ğƒoƒCƒ“ƒh
-			modelDesc.BindVS_CBV("GrassFootCB", footCBHandle); // ‘—h‚ê—pCBV‚ğƒoƒCƒ“ƒh
+			modelDesc.BindVS_CBV("CameraBuffer", deferredCameraHandle); // ã‚«ãƒ¡ãƒ©CBVã‚’ãƒã‚¤ãƒ³ãƒ‰
+			modelDesc.BindVS_CBV("TerrainGridCB", params.gridHandle); // åœ°å½¢ã‚°ãƒªãƒƒãƒ‰CBVã‚’ãƒã‚¤ãƒ³ãƒ‰
+			modelDesc.BindVS_CBV("WindCB", windCBHandle); // è‰æºã‚Œç”¨CBVã‚’ãƒã‚¤ãƒ³ãƒ‰
+			modelDesc.BindVS_CBV("GrassFootCB", footCBHandle); // è‰æºã‚Œç”¨CBVã‚’ãƒã‚¤ãƒ³ãƒ‰
 
-			modelDesc.BindVS_SRV("gHeightMap", params.heightTexHandle); // ‚‚³ƒeƒNƒXƒ`ƒƒ‚ğƒoƒCƒ“ƒh
+			modelDesc.BindVS_SRV("gHeightMap", params.heightTexHandle); // é«˜ã•ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ãƒã‚¤ãƒ³ãƒ‰
 
 			modelDesc.instancesPeak = 10000;
 			modelDesc.viewMax = 50.0f;
@@ -493,7 +493,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			bool existingModel = modelAssetMgr->Add(modelDesc, grassModelHandle);
 			modelDesc.pCustomNrmWFunc = nullptr;
 
-			// V‹K‚Ìê‡A‘‚Ìƒ}ƒeƒŠƒAƒ‹‚É‘—h‚ê—pCBV‚ğƒZƒbƒg
+			// æ–°è¦ã®å ´åˆã€è‰ã®ãƒãƒ†ãƒªã‚¢ãƒ«ã«è‰æºã‚Œç”¨CBVã‚’ã‚»ãƒƒãƒˆ
 			if (!existingModel)
 			{
 				auto data = modelAssetMgr->GetWrite(grassModelHandle);
@@ -503,10 +503,10 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				{
 					auto matData = materialMgr->GetWrite(mesh.material);
 
-					//’¸“_ƒVƒF[ƒ_[‚É‚àƒoƒCƒ“ƒh‚·‚éİ’è‚É‚·‚é
+					//é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«ã‚‚ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹è¨­å®šã«ã™ã‚‹
 					matData.ref().isBindVSSampler = true;
 
-					for (auto& tpx : mesh.lodThresholds.Tpx) // LOD’²®
+					for (auto& tpx : mesh.lodThresholds.Tpx) // LODèª¿æ•´
 					{
 						tpx *= 4.0f;
 					}
@@ -527,7 +527,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			if (!existingModel && modelDesc.buildOccluders)
 			{
 				auto ruinTowerData = modelAssetMgr->GetWrite(ruinTowerModelHandle);
-				// Õ•ÁAABB‚ğ­‚µ¬‚³‚­‚·‚é
+				// é®è”½AABBã‚’å°‘ã—å°ã•ãã™ã‚‹
 				auto& occAABB = ruinTowerData.ref().subMeshes[0].occluder.meltAABBs[0];
 				occAABB.lb.x *= 0.4f;
 				occAABB.lb.z *= 0.4f;
@@ -547,7 +547,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 			ModelAssetHandle ruinBreakTowerModelHandle;
 			modelDesc.path = "assets/model/Ruins/BreakTower/RuinBreakTowerA.gltf";
-			//’†‚É“ü‚éƒ^ƒCƒv‚Ìƒ‚ƒfƒ‹‚ÌƒIƒNƒ‹\ƒ_[ƒƒbƒVƒ…‚Í‚Ü‚¾‚Å‚«‚Ä‚¢‚È‚¢‚Ì‚Å‚Æ‚è‚ ‚¦‚¸false
+			//ä¸­ã«å…¥ã‚‹ã‚¿ã‚¤ãƒ—ã®ãƒ¢ãƒ‡ãƒ«ã®ã‚ªã‚¯ãƒ«â€•ãƒ€ãƒ¼ãƒ¡ãƒƒã‚·ãƒ¥ã¯ã¾ã ã§ãã¦ã„ãªã„ã®ã§ã¨ã‚Šã‚ãˆãšfalse
 			modelDesc.buildOccluders = false;
 			modelAssetMgr->Add(modelDesc, ruinBreakTowerModelHandle);
 
@@ -556,7 +556,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.viewMax = 200.0f;
 			modelDesc.pso = normalMapPSOHandle;
 			modelDesc.path = "assets/model/Ruins/StoneA/RuinStoneA.gltf";
-			modelDesc.rhFlipZ = true; // ‰EèŒnGLTF—p‚ÌZ²”½“]ƒtƒ‰ƒO‚ğ
+			modelDesc.rhFlipZ = true; // å³æ‰‹ç³»GLTFç”¨ã®Zè»¸åè»¢ãƒ•ãƒ©ã‚°ã‚’
 			modelDesc.buildOccluders = true;
 			modelAssetMgr->Add(modelDesc, ruinStoneModelHandle);
 
@@ -604,7 +604,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			modelDesc.instancesPeak = 10;
 			modelDesc.viewMax = 200.0f;
 			modelDesc.pso = normalMapPSOHandle;
-			modelDesc.rhFlipZ = true; // ‰EèŒnGLTF—p‚ÌZ²”½“]ƒtƒ‰ƒO‚ğ
+			modelDesc.rhFlipZ = true; // å³æ‰‹ç³»GLTFç”¨ã®Zè»¸åè»¢ãƒ•ãƒ©ã‚°ã‚’
 			modelDesc.buildOccluders = false;
 			for (int i = 0; i < 3; ++i)
 			{
@@ -646,8 +646,8 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			Graphics::PointLightDesc(*pMakePointLightDescFunc[BiomeObjectCount])(Math::Vec3f) = { nullptr };
 			pMakePointLightDescFunc[LightFlower] = [](Math::Vec3f location) {
 				Graphics::PointLightDesc plDesc;
-				plDesc.offsetWS = Math::Vec3f(0.0f, 3.0f, 0.0f); // ­‚µã‚É‚¸‚ç‚·
-				plDesc.color = { 0.2f,0.2f,1.0f }; // ÂF
+				plDesc.offsetWS = Math::Vec3f(0.0f, 3.0f, 0.0f); // å°‘ã—ä¸Šã«ãšã‚‰ã™
+				plDesc.color = { 0.2f,0.2f,1.0f }; // é’è‰²
 				plDesc.intensity = 1.0f;
 				plDesc.range = 10.0f;
 				plDesc.castsShadow = false;
@@ -704,7 +704,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				return out;
 				};
 
-			//‘Entity¶¬
+			//è‰Entityç”Ÿæˆ
 			Math::Vec2f terrainScale = {
 				tp.cellsX * tp.cellSize,
 				tp.cellsZ * tp.cellSize
@@ -750,7 +750,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 						auto splatR = cpuSplatImage.bytes[byteIndex];
 						if (splatR < 15) {
-							continue; // ‘‚ª”–‚¢êŠ‚ÍƒXƒLƒbƒv
+							continue; // è‰ãŒè–„ã„å ´æ‰€ã¯ã‚¹ã‚­ãƒƒãƒ—
 						}
 
 						auto biome = sampBiome(u, v);
@@ -768,15 +768,15 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 						tint.y += BiomeScatterGenerator::URange(hash, -tinJitter.y, tinJitter.y);
 						tint.z += BiomeScatterGenerator::URange(hash, -tinJitter.z, tinJitter.z);
 
-						//@”–‚¢‚Ù‚Ç‚‚³‚ğ‰º‚°‚é
+						//ã€€è–„ã„ã»ã©é«˜ã•ã‚’ä¸‹ã’ã‚‹
 						float t = 1.0f - splatR / 255.0f; // 0..1
-						constexpr float k = 5.0f;            // ƒJ[ƒu‚Ì‹­‚³i‚¨D‚İj
+						constexpr float k = 5.0f;            // ã‚«ãƒ¼ãƒ–ã®å¼·ã•ï¼ˆãŠå¥½ã¿ï¼‰
 
-						// 0..1 ‚É³‹K‰»‚µ‚½ exp ƒJ[ƒu
+						// 0..1 ã«æ­£è¦åŒ–ã—ãŸ exp ã‚«ãƒ¼ãƒ–
 						float w = (std::exp(k * t) - 1.0f) / (std::exp(k) - 1.0f); // w: 0..1
 
-						location.y -= w * 2.0f;   // Å‘å‚Å 2 ‰º‚°‚éi0..2j
-						//scaleY *= (1.0f - w * 0.8f); // Å‘å‚Å80%k¬
+						location.y -= w * 2.0f;   // æœ€å¤§ã§ 2 ä¸‹ã’ã‚‹ï¼ˆ0..2ï¼‰
+						//scaleY *= (1.0f - w * 0.8f); // æœ€å¤§ã§80%ç¸®å°
 
 						Math::AABB3f boundsWS = grassBounds;
 						boundsWS *= Math::Vec3f(scaleXZ, scaleY, scaleXZ);
@@ -794,7 +794,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				}
 			}
 
-			// ƒoƒCƒI[ƒ€U•z—pƒf[ƒ^€”õ
+			// ãƒã‚¤ã‚ªãƒ¼ãƒ æ•£å¸ƒç”¨ãƒ‡ãƒ¼ã‚¿æº–å‚™
 			//=====================================================================================
 
 			enum EBiomeType : uint16_t {
@@ -810,14 +810,14 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				tp.cellsZ * tp.cellSize
 			};
 
-			// ’n•\‚ÌƒeƒNƒXƒ`ƒƒiƒXƒvƒ‰ƒbƒgƒ}ƒbƒvj
+			// åœ°è¡¨ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ï¼ˆã‚¹ãƒ—ãƒ©ãƒƒãƒˆãƒãƒƒãƒ—ï¼‰
 			auto& groundRgba = scatterInputs.groundRgba;
 			groundRgba.data = (Rgba8*)cpuSplatImage.bytes.data();
 			groundRgba.w = cpuSplatImage.width;
 			groundRgba.h = cpuSplatImage.height;
 			groundRgba.stride = cpuSplatImage.stride / sizeof(Rgba8);
 
-			// ¼‚è‹Cƒ}ƒbƒv
+			// æ¹¿ã‚Šæ°—ãƒãƒƒãƒ—
 			auto wetnessImg = Graphics::LoadImageFromFile("assets/texture/biome/wetness.png", 1, false);
 			auto& wetnessRgba = scatterInputs.wetness;
 			wetnessRgba.data = (uint8_t*)wetnessImg.pixels.get();
@@ -825,7 +825,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			wetnessRgba.h = wetnessImg.height;
 			wetnessRgba.stride = wetnessImg.width * wetnessImg.desiredChannels;
 
-			// ‘‚Ì¶‚¦‚É‚­‚¢êŠƒ}ƒbƒv
+			// è‰ã®ç”Ÿãˆã«ãã„å ´æ‰€ãƒãƒƒãƒ—
 			auto noVegetationImg = Graphics::LoadImageFromFile("assets/texture/biome/noVegetation.png", 1, false);
 			auto& noVegetationRgba = scatterInputs.noVegetation;
 			noVegetationRgba.data = (uint8_t*)noVegetationImg.pixels.get();
@@ -833,7 +833,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			noVegetationRgba.h = noVegetationImg.height;
 			noVegetationRgba.stride = noVegetationImg.width * noVegetationImg.desiredChannels;
 
-			// ƒoƒCƒI[ƒ€’è‹`(BiomeTypeQÆ)
+			// ãƒã‚¤ã‚ªãƒ¼ãƒ å®šç¾©(BiomeTypeå‚ç…§)
 			uint16_t biomeData[12][12] = {
 				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -854,7 +854,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			scatterInputs.biomeId.h = 12;
 			scatterInputs.biomeId.stride = scatterInputs.biomeId.w;
 
-			// ’nŒ`ƒTƒ“ƒvƒŠƒ“ƒOŠÖ”
+			// åœ°å½¢ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°é–¢æ•°
 			auto pSamplerHeight = [](float x, float z, void* user) -> float {
 				auto terrain = static_cast<const Graphics::TerrainClustered*>(user);
 				float height = 0.0f;
@@ -863,7 +863,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				};
 			scatterInputs.sampleHeight = pSamplerHeight;
 
-			// ŒXÎŠpƒTƒ“ƒvƒŠƒ“ƒOŠÖ”
+			// å‚¾æ–œè§’ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°é–¢æ•°
 			auto pSamplerSlopeDeg = [](float x, float z, void* user) -> float {
 				auto terrain = static_cast<const Graphics::TerrainClustered*>(user);
 				float height = 0.0f;
@@ -896,7 +896,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				trees.maxSlopeDeg = 25.0f;
 				trees.scaleMin = 3.3f; trees.scaleMax = 4.0f;
 				trees.wGrass = 1.2f; trees.wSnow = 0.6f;
-				trees.models = { {TreeA, 1.0f} }; //ƒ‚ƒfƒ‹‚ÌƒoƒŠƒG[ƒVƒ‡ƒ“‚ğ‘‚â‚·ê‡‚Í‚±‚±‚É‘‚­
+				trees.models = { {TreeA, 1.0f} }; //ãƒ¢ãƒ‡ãƒ«ã®ãƒãƒªã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å¢—ã‚„ã™å ´åˆã¯ã“ã“ã«æ›¸ã
 
 				BranchGroup rocks;
 				rocks.spawnProbability = 0.05f;
@@ -925,7 +925,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				trees.maxSlopeDeg = 25.0f;
 				trees.scaleMin = 3.3f; trees.scaleMax = 4.0f;
 				trees.wGrass = 1.2f; trees.wSnow = 0.6f;
-				trees.models = { {TreeA, 1.0f}, {TreeB, 1.0f},{TreeC, 1.0f} }; //ƒ‚ƒfƒ‹‚ÌƒoƒŠƒG[ƒVƒ‡ƒ“‚ğ‘‚â‚·ê‡‚Í‚±‚±‚É‘‚­
+				trees.models = { {TreeA, 1.0f}, {TreeB, 1.0f},{TreeC, 1.0f} }; //ãƒ¢ãƒ‡ãƒ«ã®ãƒãƒªã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å¢—ã‚„ã™å ´åˆã¯ã“ã“ã«æ›¸ã
 
 				BranchGroup rocks;
 				rocks.spawnProbability = 0.05f;
@@ -949,7 +949,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 
 			auto scatterInstance = biomeGen.GenerateAll();
 
-			// ƒoƒCƒI[ƒ€U•zEntity¶¬
+			// ãƒã‚¤ã‚ªãƒ¼ãƒ æ•£å¸ƒEntityç”Ÿæˆ
 			for (auto& inst : scatterInstance)
 			{
 				uint32_t modelIdx = inst.model;
@@ -977,8 +977,8 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				Math::Vec3f tint = inst.tint * biomeTint;
 
 				SFW::SpatialChunk::Bounds3f boundsWS = modelBounds[modelIdx];
-				boundsWS *= scale; // ƒXƒP[ƒ‹“K—p
-				boundsWS += location; // ƒ[ƒ‹ƒhˆÊ’u‚ÉˆÚ“®
+				boundsWS *= scale; // ã‚¹ã‚±ãƒ¼ãƒ«é©ç”¨
+				boundsWS += location; // ãƒ¯ãƒ¼ãƒ«ãƒ‰ä½ç½®ã«ç§»å‹•
 
 				if (makeShapeHandleFunc[modelIdx] != nullptr)
 				{
@@ -986,7 +986,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 					auto key = chunk.value()->GetNodeKey();
 
 					Physics::CPhyBody staticBody{};
-					staticBody.type = Physics::BodyType::Static; // static‚É‚·‚é
+					staticBody.type = Physics::BodyType::Static; // staticã«ã™ã‚‹
 					staticBody.layer = Physics::Layers::NON_MOVING_RAY_IGNORE;
 
 					auto shapeHandle = makeShapeHandleFunc[modelIdx](Math::Vec3f(scale, scale, scale));
@@ -1000,7 +1000,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 						auto plDesc = pMakePointLightDescFunc[modelIdx](location);
 						auto plHandle = pointLightService->Create(plDesc);
 
-						// Ã“I‹«ŠEƒGƒ“ƒeƒBƒeƒB‚Æ‚µ‚Ä“o˜^
+						// é™çš„å¢ƒç•Œã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã¨ã—ã¦ç™»éŒ²
 						id = levelSession.AddStaticBoundsEntity(
 							boundsWS,
 							CTransform{ inst.offsetWS, rot, Math::Vec3f(scale,scale,scale) },
@@ -1014,7 +1014,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 						);
 					}
 					else {
-						// Ã“I‹«ŠEƒGƒ“ƒeƒBƒeƒB‚Æ‚µ‚Ä“o˜^
+						// é™çš„å¢ƒç•Œã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã¨ã—ã¦ç™»éŒ²
 						id = levelSession.AddStaticBoundsEntity(
 							boundsWS,
 							CTransform{ inst.offsetWS, rot, Math::Vec3f(scale,scale,scale) },
@@ -1064,7 +1064,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				return location;
 				};
 
-			//ƒvƒŒƒCƒ„[¶¬
+			//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç”Ÿæˆ
 			{
 				Physics::ShapeCreateDesc shapeDesc;
 				shapeDesc.shape = Physics::CapsuleDesc{ 2.0f, 1.0f };
@@ -1096,7 +1096,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				}
 			}
 
-			//ƒvƒŒƒCƒ„[‚É’Ç]‚·‚éƒ‰ƒCƒg¶¬
+			//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è¿½å¾“ã™ã‚‹ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 			for (int i = 0; i < 5; ++i)
 			{
 				Physics::ShapeCreateDesc shapeDesc;
@@ -1120,7 +1120,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				auto chunk = pLevel->GetChunk(location);
 				auto key = chunk.value()->GetNodeKey();
 
-				//“®‚­‘O’ñ‚Åƒ`ƒƒƒ“ƒNˆÚ“®—p‚Ìƒ^ƒO‚ğ•t—^
+				//å‹•ãå‰æã§ãƒãƒ£ãƒ³ã‚¯ç§»å‹•ç”¨ã®ã‚¿ã‚°ã‚’ä»˜ä¸
 				CSpatialMotionTag motionTag{};
 				motionTag.handle = { key, chunk.value() };
 
@@ -1141,12 +1141,12 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				);
 				if (id) {
 					Physics::PhysicsService::Material phyMat;
-					phyMat.gravityFactor = 0.0f; // d—Í‚Ì‰e‹¿‚ğó‚¯‚È‚¢‚æ‚¤‚É‚·‚é
+					phyMat.gravityFactor = 0.0f; // é‡åŠ›ã®å½±éŸ¿ã‚’å—ã‘ãªã„ã‚ˆã†ã«ã™ã‚‹
 					ps->EnqueueCreateIntent(id.value(), lanternShape, key, phyMat);
 				}
 			}
 
-			//’nŒ`ƒRƒŠƒWƒ‡ƒ“¶¬
+			//åœ°å½¢ã‚³ãƒªã‚¸ãƒ§ãƒ³ç”Ÿæˆ
 			{
 				Physics::ShapeCreateDesc terrainShapeDesc;
 				terrainShapeDesc.shape = Physics::HeightFieldDesc{
@@ -1159,7 +1159,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				};
 				auto terrainShape = ps->MakeShape(terrainShapeDesc);
 				Physics::CPhyBody terrainBody{};
-				terrainBody.type = Physics::BodyType::Static; // static‚É‚·‚é
+				terrainBody.type = Physics::BodyType::Static; // staticã«ã™ã‚‹
 				terrainBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
 				auto id = levelSession.AddEntity(
 					CTransform{ tp.offset.x, tp.offset.y, tp.offset.z ,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,1.0f },
@@ -1171,7 +1171,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				}
 			}
 
-			// ƒtƒFƒ“ƒX¶¬
+			// ãƒ•ã‚§ãƒ³ã‚¹ç”Ÿæˆ
 			{
 				std::vector<Math::Vec3f> road = {
 					Math::Vec3f{607.215637f, 77.519569f, 599.671753f},
@@ -1209,7 +1209,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				fp.heightRand = 0.15f;
 				fp.yawJitterDeg = 3.0f;
 				fp.bothSides = true;
-				fp.randomSide = true; // í‚É‰E‘¤‚É’u‚­
+				fp.randomSide = true; // å¸¸ã«å³å´ã«ç½®ã
 
 				auto fences = GenerateFenceAlongPolyline(road, fp, /*seed=*/12345);
 
@@ -1222,15 +1222,15 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 #endif
 
 					Physics::CPhyBody staticBody{};
-					staticBody.type = Physics::BodyType::Static; // static‚É‚·‚é
+					staticBody.type = Physics::BodyType::Static; // staticã«ã™ã‚‹
 					staticBody.layer = Physics::Layers::NON_MOVING_RAY_IGNORE;
 
-					// ƒtƒFƒ“ƒX‚ÌˆÊ’u‚Í’n–Ê‚É‡‚í‚¹‚é
+					// ãƒ•ã‚§ãƒ³ã‚¹ã®ä½ç½®ã¯åœ°é¢ã«åˆã‚ã›ã‚‹
 					Math::Vec3f outNrm = { 0.0f,1.0f,0.0f };
 					bool sampleOK = terrain.SampleHeightNormalBilinear(fence.position.x, fence.position.z, fence.position.y, &outNrm);
 					if (!sampleOK) continue;
 
-					Math::Vec3f planeTangent = fence.tangent - outNrm * Math::Dot(fence.tangent, outNrm); // ÚüƒxƒNƒgƒ‹‚ğ’n–Ê‚É•½s‚É‚È‚é‚æ‚¤‚ÉC³
+					Math::Vec3f planeTangent = fence.tangent - outNrm * Math::Dot(fence.tangent, outNrm); // æ¥ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’åœ°é¢ã«å¹³è¡Œã«ãªã‚‹ã‚ˆã†ã«ä¿®æ­£
 					Math::Vec3f right = Math::Normalize(Math::Cross(outNrm, planeTangent));
 					Math::Quatf rot = Math::QuatFromBasis(right, outNrm, planeTangent);
 
@@ -1238,7 +1238,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 					modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
 
 					Math::AABB3f boundsWS = modelBounds[WoodFence];
-					boundsWS += fence.position; // ƒ[ƒ‹ƒhˆÊ’u‚ÉˆÚ“®
+					boundsWS += fence.position; // ãƒ¯ãƒ¼ãƒ«ãƒ‰ä½ç½®ã«ç§»å‹•
 
 					auto id = levelSession.AddStaticBoundsEntity(
 						boundsWS,
@@ -1267,7 +1267,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 #endif
 
 					Physics::CPhyBody staticBody{};
-					staticBody.type = Physics::BodyType::Static; // static‚É‚·‚é
+					staticBody.type = Physics::BodyType::Static; // staticã«ã™ã‚‹
 					staticBody.layer = Physics::Layers::NON_MOVING_RAY_HIT;
 
 					auto tf = CTransform{ location , rot , scale };
@@ -1282,7 +1282,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 #endif
 					);
 					if (id) {
-						// ƒ`ƒƒƒ“ƒN‚É‘®‚³‚È‚¢‚Ì‚Å’¼Úƒ{ƒfƒBì¬ƒRƒ}ƒ“ƒh‚ğ”­s
+						// ãƒãƒ£ãƒ³ã‚¯ã«å±ã•ãªã„ã®ã§ç›´æ¥ãƒœãƒ‡ã‚£ä½œæˆã‚³ãƒãƒ³ãƒ‰ã‚’ç™ºè¡Œ
 						auto bodyCmd = MakeNoMoveChunkCreateBodyCmd(id.value(), tf, staticBody, shapeHandle);
 						ps->CreateBody(bodyCmd);
 					}
@@ -1290,7 +1290,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 					return id;
 				};
 
-			//‹´¶¬
+			//æ©‹ç”Ÿæˆ
 			{
 				auto shape = ps->MakeMesh("generated/meshshape/Static/Bridge/medieval_bridge.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
 				CModel modelComp{ bridgeModelHandle }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
@@ -1298,7 +1298,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 					Math::Quatf::FromAxisAngle({ 0.0f, 1.0f, 0.0f }, Math::Deg2Rad(140.0f)));
 			}
 
-			//–Ø‚Ì‹´¶¬
+			//æœ¨ã®æ©‹ç”Ÿæˆ
 			{
 				auto shape = ps->MakeMesh("generated/meshshape/Static/Bridge/GiantTreeBridge.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
 				CModel modelComp{ treeBridgeModelHandle };
@@ -1307,14 +1307,14 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 					Math::Quatf::FromAxisAngle({ 0.0f, 1.0f, 0.0f }, Math::Deg2Rad(90.0f)));
 			}
 
-			// “ƒ¶¬
+			// å¡”ç”Ÿæˆ
 			{
 				auto shape = ps->MakeMesh("generated/meshshape/Ruins/Tower/RuinTower.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
 				CModel modelComp{ ruinTowerModelHandle }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
 				addGlobalEntityWithBody({ 0.67f, 0.51f }, -10.0f, modelComp, shape);
 			}
 
-			// ‰ó‚ê‚½“ƒ¶¬
+			// å£Šã‚ŒãŸå¡”ç”Ÿæˆ
 			{
 				auto shape = ps->MakeMesh("generated/meshshape/Ruins/BreakTower/RuinBreakTowerA.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
 				CModel modelComp{ ruinBreakTowerModelHandle };
@@ -1322,14 +1322,14 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				addGlobalEntityWithBody({ 0.4f, 0.62f }, -4.0f, modelComp, shape);
 			}
 
-			//Î”è¶¬
+			//çŸ³ç¢‘ç”Ÿæˆ
 			{
 				auto shape = ps->MakeConvexCompound("generated/convex/Ruins/StoneA/RuinStoneA.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
 				CModel modelComp{ ruinStoneModelHandle }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
 				addGlobalEntityWithBody({ 0.35f, 0.26f }, -4.0f, modelComp, shape);
 			}
 
-			//‰Æ¶¬
+			//å®¶ç”Ÿæˆ
 			{
 				auto shape = ps->MakeMesh("generated/meshshape/Static/House/HouseA.meshbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
 				CModel modelComp{ houseModelHandle[0] }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
@@ -1348,7 +1348,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				addGlobalEntityWithBody({ 0.531f, 0.438f }, -1.0f, modelComp4, shape, Math::Quatf::FromAxisAngle({ 0.0f,1.0f,0.0f }, Math::Deg2Rad(85.0f)));
 			}
 
-			//ŠâƒNƒ‰ƒXƒ^[¶¬
+			//å²©ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ç”Ÿæˆ
 			{
 				auto shape = ps->MakeConvexCompound("generated/convex/Static/ClusterRock/ClusterRockA.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
 				CModel modelComp1{ clusterRockModelHandle[0] }; modelComp1.flags |= (uint16_t)EModelFlag::CastShadow;
@@ -1359,7 +1359,7 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				addGlobalEntityWithBody({ 0.5f, 0.2f }, 5.0f, modelComp2, shape, Math::Quatf::FromEuler(0.0f, Math::Deg2Rad(40.0f), 0.0f));
 			}
 
-			//ƒ‰ƒ“ƒhƒ}[ƒNƒNƒŠƒXƒ^ƒ‹¶¬
+			//ãƒ©ãƒ³ãƒ‰ãƒãƒ¼ã‚¯ã‚¯ãƒªã‚¹ã‚¿ãƒ«ç”Ÿæˆ
 			{
 				auto shape = ps->MakeConvexCompound("generated/convex/landmark/crystals/hugeCrystal.chullbin", true, Math::Vec3f{ 1.0f,1.0f,1.0f });
 				CModel modelComp{ landmarkCrystalModelHandle[0] }; modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
@@ -1379,24 +1379,24 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				);
 			}
 
-			//Œu‚Ì—Ìˆæ¶¬
+			//è›ã®é ˜åŸŸç”Ÿæˆ
 			{
 				Math::Vec3f location = getTerrainLocation(0.3f, 0.215f);
-				//location.y += 5.0f; // ­‚µ•‚‚©‚¹‚é
+				//location.y += 5.0f; // å°‘ã—æµ®ã‹ã›ã‚‹
 
 				CFireflyVolume fireflyVolume;
 				fireflyVolume.centerWS = location;
 				fireflyVolume.hitRadius = 40.0f;
 				fireflyVolume.radius = 50.0f;
 
-				//ˆÊ’u‚ğw’è‚µ‚Ä’Ç‰Á
+				//ä½ç½®ã‚’æŒ‡å®šã—ã¦è¿½åŠ 
 				levelSession.AddEntityWithLocation(fireflyVolume.centerWS, fireflyVolume);
 			}
 
-			//—t‚Á‚Ï‚Ì—Ìˆæ¶¬
+			//è‘‰ã£ã±ã®é ˜åŸŸç”Ÿæˆ
 			{
 				Math::Vec3f location = getTerrainLocation(0.26f, 0.2f);
-				//location.y += 5.0f; // ­‚µ•‚‚©‚¹‚é
+				//location.y += 5.0f; // å°‘ã—æµ®ã‹ã›ã‚‹
 
 				CLeafVolume leafVolume;
 				leafVolume.centerWS = location;
@@ -1407,15 +1407,15 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				auto chunk = pLevel->GetChunk(location);
 				auto key = chunk.value()->GetNodeKey();
 
-				//“®‚­‘O’ñ‚Åƒ`ƒƒƒ“ƒNˆÚ“®—p‚Ìƒ^ƒO‚ğ•t—^
+				//å‹•ãå‰æã§ãƒãƒ£ãƒ³ã‚¯ç§»å‹•ç”¨ã®ã‚¿ã‚°ã‚’ä»˜ä¸
 				CSpatialMotionTag tag{};
 				tag.handle = { key, chunk.value() };
 
-				//ˆÊ’u‚ğw’è‚µ‚Ä’Ç‰Á
+				//ä½ç½®ã‚’æŒ‡å®šã—ã¦è¿½åŠ 
 				levelSession.AddEntityWithLocation(leafVolume.centerWS, leafVolume, tag);
 			}
 
-			// System“o˜^
+			// Systemç™»éŒ²
 			auto& scheduler = pLevel->GetScheduler();
 
 			scheduler.AddSystem<ModelRenderSystem>(*serviceLocator);
@@ -1435,15 +1435,15 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			scheduler.AddSystem<DebugRenderSystem>(*serviceLocator);
 #endif
 
-			//ƒJƒXƒ^ƒ€‚Ìˆ—‚ğŠJn
+			//ã‚«ã‚¹ã‚¿ãƒ ã®å‡¦ç†ã‚’é–‹å§‹
 			ctx.executeCustom.store(true, std::memory_order_relaxed);
 		},
-		//ƒAƒ“ƒ[ƒh
+		//ã‚¢ãƒ³ãƒ­ãƒ¼ãƒ‰æ™‚
 		[&](const ECS::ServiceLocator*, OpenFieldLevel* pLevel)
 		{
 			ctx.executeCustom.store(false, std::memory_order_relaxed);
 		});
 
-	// ƒŒƒxƒ‹’Ç‰ÁƒRƒ}ƒ“ƒh‚ğÀsƒLƒ…[‚ÉƒvƒbƒVƒ…
+	// ãƒ¬ãƒ™ãƒ«è¿½åŠ ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè¡Œã‚­ãƒ¥ãƒ¼ã«ãƒ—ãƒƒã‚·ãƒ¥
 	worldRequestService.PushCommand(std::move(reqCmd));
 }

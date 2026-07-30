@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   DX113DCameraService.h
- * @brief DirectX11—p‚Ì3DƒJƒƒ‰ƒT[ƒrƒX
+ * @brief DirectX11ç”¨ã®3Dã‚«ãƒ¡ãƒ©ã‚µãƒ¼ãƒ“ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -16,17 +16,17 @@ namespace SFW
 	namespace Graphics::DX11
 	{
 		/**
-		 * @brief DirectX11—p‚Ì3DƒJƒƒ‰ƒT[ƒrƒXBƒJƒƒ‰‚Ì’è”ƒoƒbƒtƒ@‚ðŠÇ—‚µAXV‚·‚éB
+		 * @brief DirectX11ç”¨ã®3Dã‚«ãƒ¡ãƒ©ã‚µãƒ¼ãƒ“ã‚¹ã€‚ã‚«ãƒ¡ãƒ©ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ã‚’ç®¡ç†ã—ã€æ›´æ–°ã™ã‚‹ã€‚
 		 */
 		class Camera2DService : public I2DCameraService {
 		public:
 			/**
-			 * @brief ƒJƒƒ‰‚Ì’è”ƒoƒbƒtƒ@‚Ì–¼‘O
+			 * @brief ã‚«ãƒ¡ãƒ©ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®åå‰
 			 */
 			constexpr static inline char BUFFER_NAME[] = "2DCamera";
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param bufferMgr BufferManager‚Ìƒ|ƒCƒ“ƒ^
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param bufferMgr BufferManagerã®ãƒã‚¤ãƒ³ã‚¿
 			 */
 			explicit Camera2DService(BufferManager* bufferMgr, const uint32_t width, const uint32_t height)
 				: I2DCameraService([&] {
@@ -38,8 +38,8 @@ namespace SFW
 			}
 
 					/**
-					 * @brief ƒJƒƒ‰‚ÌXVŠÖ”
-					 * @param deltaTime ‘O‚ÌƒtƒŒ[ƒ€‚©‚ç‚ÌŒo‰ßŽžŠÔi•bj
+					 * @brief ã‚«ãƒ¡ãƒ©ã®æ›´æ–°é–¢æ•°
+					 * @param deltaTime å‰ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‹ã‚‰ã®çµŒéŽæ™‚é–“ï¼ˆç§’ï¼‰
 					 */
 					void PreUpdate(double deltaTime) override {
 						frameIdx++;
@@ -61,7 +61,7 @@ namespace SFW
 						RecomputeMatrices_NoLock(currentSlot);
 
 						cbUpdateDesc.data = &cameraBuffer[currentSlot];
-						cbUpdateDesc.isDelete = false; // XVŽž‚Ííœ‚µ‚È‚¢
+						cbUpdateDesc.isDelete = false; // æ›´æ–°æ™‚ã¯å‰Šé™¤ã—ãªã„
 
 						cbUpdateDesc.size = sizeof(CameraBuffer);
 						bufferManager->UpdateBuffer(cbUpdateDesc, currentSlot);

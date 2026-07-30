@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Archetype.h
- * @brief ƒA[ƒLƒ^ƒCƒv‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -17,18 +17,18 @@ namespace SFW
 	namespace ECS
 	{
 		/**
-		 * @brief ƒA[ƒLƒ^ƒCƒv‚ğ•\‚·ƒNƒ‰ƒX(ƒ}ƒXƒNƒx[ƒX‚ÌƒRƒ“ƒ|[ƒlƒ“ƒgŠÇ—)
+		 * @brief ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã‚’è¡¨ã™ã‚¯ãƒ©ã‚¹(ãƒã‚¹ã‚¯ãƒ™ãƒ¼ã‚¹ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆç®¡ç†)
 		 */
 		class Archetype {
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param mask ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param mask ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
 			 */
 			explicit Archetype(ComponentMask mask) noexcept : mask(mask) {}
 			/**
-			 * @brief ƒA[ƒLƒ^ƒCƒv‚Ìƒ`ƒƒƒ“ƒN‚ğæ“¾‚Ü‚½‚Íì¬‚·‚éŠÖ”
-			 * @return ArchetypeChunk* ƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚Ö‚Ìƒ|ƒCƒ“ƒ^
+			 * @brief ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã®ãƒãƒ£ãƒ³ã‚¯ã‚’å–å¾—ã¾ãŸã¯ä½œæˆã™ã‚‹é–¢æ•°
+			 * @return ArchetypeChunk* ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 			 */
 			ArchetypeChunk* GetOrCreateChunk() {
 				for (auto& chunk : chunks) {
@@ -42,21 +42,21 @@ namespace SFW
 				return ptr;
 			}
 			/**
-			 * @brief ƒA[ƒLƒ^ƒCƒv‚ÌƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN‚ğæ“¾‚·‚éŠÖ”
-			 * @return const ComponentMask& ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN‚Ö‚ÌQÆ
+			 * @brief ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return const ComponentMask& ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯ã¸ã®å‚ç…§
 			 */
 			const ComponentMask& GetMask() const noexcept { return mask; }
 			/**
-			 * @brief ƒA[ƒLƒ^ƒCƒv‚Ìƒ`ƒƒƒ“ƒN‚ğæ“¾‚·‚éŠÖ”
-			 * @return const std::vector<std::unique_ptr<ArchetypeChunk>>& ƒ`ƒƒƒ“ƒN‚ÌƒxƒNƒ^[‚Ö‚ÌQÆ
+			 * @brief ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã®ãƒãƒ£ãƒ³ã‚¯ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return const std::vector<std::unique_ptr<ArchetypeChunk>>& ãƒãƒ£ãƒ³ã‚¯ã®ãƒ™ã‚¯ã‚¿ãƒ¼ã¸ã®å‚ç…§
 			 */
 			const std::vector<std::unique_ptr<ArchetypeChunk>>& GetChunks() const noexcept {
 				return chunks;
 			}
 		private:
-			//ƒA[ƒLƒ^ƒCƒv‚ÌƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
+			//ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
 			ComponentMask mask;
-			//ƒA[ƒLƒ^ƒCƒv‚Ìƒ`ƒƒƒ“ƒN‚ÌƒRƒ“ƒeƒi
+			//ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã®ãƒãƒ£ãƒ³ã‚¯ã®ã‚³ãƒ³ãƒ†ãƒŠ
 			std::vector<std::unique_ptr<ArchetypeChunk>> chunks;
 		};
 	}

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 struct DebugRenderType
 {
@@ -37,5 +37,5 @@ struct DebugRenderType
 	static Graphics::TextureHandle debugBloomTexHandle;
 };
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ño‚·‚½‚ß
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã³å‡ºã™ãŸã‚
 extern const DebugRenderType debugRenderType;

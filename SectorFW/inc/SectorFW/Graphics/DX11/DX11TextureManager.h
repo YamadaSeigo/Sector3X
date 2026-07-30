@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   DX11TextureManager.h
- * @brief DirectX 11‚ÌƒeƒNƒXƒ`ƒƒƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief DirectX 11ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚¯ãƒ©ã‚¹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -20,14 +20,14 @@ namespace SFW
 {
 	namespace Graphics::DX11
 	{
-		//= •¶š—ñƒwƒ‹ƒp
+		//= æ–‡å­—åˆ—ãƒ˜ãƒ«ãƒ‘
 		namespace detail {
 			inline std::string NormalizePath(std::string path) {
-				// 1) ‚·‚×‚Ä '\\' ‚É“ˆê
+				// 1) ã™ã¹ã¦ '\\' ã«çµ±ä¸€
 				std::replace(path.begin(), path.end(), '/', '\\');
-				// 2) ––”ö‚Ì '\\' ‚Ííœ
+				// 2) æœ«å°¾ã® '\\' ã¯å‰Šé™¤
 				while (!path.empty() && path.back() == '\\') path.pop_back();
-				// 3) ¬•¶š‰»
+				// 3) å°æ–‡å­—åŒ–
 				std::transform(path.begin(), path.end(), path.begin(),
 					[](unsigned char c) { return static_cast<char>(std::tolower(c)); });
 				return path;
@@ -56,41 +56,41 @@ namespace SFW
 				size_t operator()(const TextureKey& k) const noexcept {
 					std::hash<std::string> hs; std::hash<bool> hb;
 					size_t h = hs(k.normPath);
-					// ‡¬i“K“–‚Èƒ~ƒbƒNƒXj
+					// åˆæˆï¼ˆé©å½“ãªãƒŸãƒƒã‚¯ã‚¹ï¼‰
 					return (h ^ (hb(k.forceSRGB) + 0x9e3779b97f4a7c15ULL + (h << 6) + (h >> 2)));
 				}
 			};
 		} // namespace detail
 
-		//ƒeƒNƒXƒ`ƒƒ‚ğ¶ƒf[ƒ^‚Åì¬‚·‚éê‡‚ÌƒŒƒVƒs
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ç”Ÿãƒ‡ãƒ¼ã‚¿ã§ä½œæˆã™ã‚‹å ´åˆã®ãƒ¬ã‚·ãƒ”
 		struct TextureRecipe {
-			// Šî–{‚Í 2D ƒeƒNƒXƒ`ƒƒ
+			// åŸºæœ¬ã¯ 2D ãƒ†ã‚¯ã‚¹ãƒãƒ£
 			uint32_t     width = 0;
 			uint32_t     height = 0;
 			DXGI_FORMAT  format = DXGI_FORMAT_R8G8B8A8_UNORM;
-			uint32_t     mipLevels = 1;     // 0 ‚Ì‚Æ‚«‚Íƒtƒ‹ƒ`ƒF[ƒ“i©“®j‚É‚µ‚Äì¬
-			uint32_t     arraySize = 1;		// ƒeƒNƒXƒ`ƒƒ‚Ì–‡”
+			uint32_t     mipLevels = 1;     // 0 ã®ã¨ãã¯ãƒ•ãƒ«ãƒã‚§ãƒ¼ãƒ³ï¼ˆè‡ªå‹•ï¼‰ã«ã—ã¦ä½œæˆ
+			uint32_t     arraySize = 1;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æšæ•°
 			D3D11_USAGE  usage = D3D11_USAGE_DEFAULT;
-			UINT         bindFlags = D3D11_BIND_SHADER_RESOURCE; // •K—v‚È‚ç RT/UA ‚à‰Â
-			UINT         cpuAccessFlags = 0;                      // DYNAMIC ‚Å Map ‚µ‚½‚¢ê‡‚È‚Ç
-			UINT         miscFlags = 0;                           // —á: D3D11_RESOURCE_MISC_TEXTURECUBE / GENERATE_MIPS
-			// ‰Šúƒf[ƒ^iƒgƒbƒvƒ~ƒbƒv‚Ì‚İEÈ—ª‰Âj
-			const void* initialData = nullptr;	//‰Šú‰»ƒf[ƒ^
-			UINT         initialRowPitch = 0;	//ƒoƒCƒg’PˆÊ‚ÌsƒTƒCƒY
+			UINT         bindFlags = D3D11_BIND_SHADER_RESOURCE; // å¿…è¦ãªã‚‰ RT/UA ã‚‚å¯
+			UINT         cpuAccessFlags = 0;                      // DYNAMIC ã§ Map ã—ãŸã„å ´åˆãªã©
+			UINT         miscFlags = 0;                           // ä¾‹: D3D11_RESOURCE_MISC_TEXTURECUBE / GENERATE_MIPS
+			// åˆæœŸãƒ‡ãƒ¼ã‚¿ï¼ˆãƒˆãƒƒãƒ—ãƒŸãƒƒãƒ—ã®ã¿ãƒ»çœç•¥å¯ï¼‰
+			const void* initialData = nullptr;	//åˆæœŸåŒ–ãƒ‡ãƒ¼ã‚¿
+			UINT         initialRowPitch = 0;	//ãƒã‚¤ãƒˆå˜ä½ã®è¡Œã‚µã‚¤ã‚º
 		};
 
 		/**
-		 * @brief DirectX 11‚ÌƒeƒNƒXƒ`ƒƒ‚ğì¬‚·‚é‚½‚ß‚Ì\‘¢‘Ì
+		 * @brief DirectX 11ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½œæˆã™ã‚‹ãŸã‚ã®æ§‹é€ ä½“
 		 */
 		struct TextureCreateDesc {
 			std::string path;
 
-			// --- ‰ğ‘œ“x‚ğw’è‚µ‚Ä¶¬‚·‚éê‡ipath ‚ª‹ój----
-			TextureRecipe* recipe = nullptr; //w’è‚µ‚È‚¢ê‡‚Ínullptr(•K{‚Å‚Í‚È‚¢)
+			// --- è§£åƒåº¦ã‚’æŒ‡å®šã—ã¦ç”Ÿæˆã™ã‚‹å ´åˆï¼ˆpath ãŒç©ºï¼‰----
+			TextureRecipe* recipe = nullptr; //æŒ‡å®šã—ãªã„å ´åˆã¯nullptr(å¿…é ˆã§ã¯ãªã„)
 
-			// ƒƒ‚ƒŠã‚Ìˆ³k‰æ‘œ‚©‚çì‚éƒ‚[ƒh
-			const void* memory = nullptr;   // PNG/JPG/DDS “™‚ÌƒoƒCƒiƒŠ(•K{‚Å‚Í‚È‚¢)
-			size_t      memorySize = 0;     // ƒeƒNƒXƒ`ƒƒƒTƒCƒY(ƒƒ‚ƒŠƒf[ƒ^‚©‚ç¶¬‚·‚éê‡)
+			// ãƒ¡ãƒ¢ãƒªä¸Šã®åœ§ç¸®ç”»åƒã‹ã‚‰ä½œã‚‹ãƒ¢ãƒ¼ãƒ‰
+			const void* memory = nullptr;   // PNG/JPG/DDS ç­‰ã®ãƒã‚¤ãƒŠãƒª(å¿…é ˆã§ã¯ãªã„)
+			size_t      memorySize = 0;     // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ãƒ¡ãƒ¢ãƒªãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ç”Ÿæˆã™ã‚‹å ´åˆ)
 			enum class MemoryHint {
 				Auto, DDS, TGA, HDR, WIC
 			} memoryHint = MemoryHint::Auto;
@@ -99,35 +99,35 @@ namespace SFW
 			bool convertDSS = true;
 		};
 		/**
-		 * @brief DirectX 11‚ÌƒeƒNƒXƒ`ƒƒƒf[ƒ^‚ğŠi”[‚·‚é\‘¢‘Ì
+		 * @brief DirectX 11ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹æ§‹é€ ä½“
 		 */
 		struct TextureData {
 			ComPtr<ID3D11ShaderResourceView> srv = nullptr;
-			ComPtr<ID3D11Resource> resource = nullptr; // •K—v‚È‚çg—p‚·‚é
+			ComPtr<ID3D11Resource> resource = nullptr; // å¿…è¦ãªã‚‰ä½¿ç”¨ã™ã‚‹
 		private:
-			std::string path; // ƒLƒƒƒbƒVƒ…—p‚ÌƒpƒX
+			std::string path; // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ç”¨ã®ãƒ‘ã‚¹
 
 			friend class TextureManager;
 		};
 
 		struct TextureUpdateDesc {
-			// ‚Ç‚ÌƒeƒNƒXƒ`ƒƒ‚ğXV‚·‚é‚©
+			// ã©ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’æ›´æ–°ã™ã‚‹ã‹
 			ComPtr<ID3D11Resource> tex;
-			// ‚Ç‚ÌƒTƒuƒŠƒ\[ƒX‚ğXV‚·‚é‚©imip/array ‚ğŠÜ‚ŞƒCƒ“ƒfƒbƒNƒXj
+			// ã©ã®ã‚µãƒ–ãƒªã‚½ãƒ¼ã‚¹ã‚’æ›´æ–°ã™ã‚‹ã‹ï¼ˆmip/array ã‚’å«ã‚€ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ï¼‰
 			UINT subresource = 0;
-			// CPU ‚©‚ç“Š‚°‚éƒƒ‚ƒŠiUpdateSubresource —pj
+			// CPU ã‹ã‚‰æŠ•ã’ã‚‹ãƒ¡ãƒ¢ãƒªï¼ˆUpdateSubresource ç”¨ï¼‰
 			const void* pData = nullptr;
 			UINT rowPitch = 0;    // bytes/row
-			UINT depthPitch = 0;  // bytes/slice (3D ‚Ì‚İ)
-			// —ÌˆæŒÀ’èXV
+			UINT depthPitch = 0;  // bytes/slice (3D ã®ã¿)
+			// é ˜åŸŸé™å®šæ›´æ–°
 			bool useBox = false;
 			D3D11_BOX box{};
-			// ©“® delete ‚Ì‹““®iBufferManager ‚Æ“¯—lj
+			// è‡ªå‹• delete ã®æŒ™å‹•ï¼ˆBufferManager ã¨åŒæ§˜ï¼‰
 			bool isDelete = true;
 		};
 
 		/**
-		 * @brief DirectX 11‚ÌƒeƒNƒXƒ`ƒƒƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX
+		 * @brief DirectX 11ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚¯ãƒ©ã‚¹
 		 */
 		class TextureManager : public ResourceManagerBase<
 			TextureManager, TextureHandle, TextureCreateDesc, TextureData>
@@ -137,19 +137,19 @@ namespace SFW
 
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param device DirectX 11‚ÌƒfƒoƒCƒX
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param device DirectX 11ã®ãƒ‡ãƒã‚¤ã‚¹
 			 */
 			explicit TextureManager(ID3D11Device* device,
 				ID3D11DeviceContext* context,
 				std::filesystem::path convertedDir = DefaultConvertedDir) noexcept;
 			/**
-			 * @brief Šù‘¶‚ÌƒeƒNƒXƒ`ƒƒ‚ğŒŸõ‚·‚éŠÖ”
-			 * @param desc ƒeƒNƒXƒ`ƒƒ‚Ìì¬î•ñ
-			 * @return std::optional<TextureHandle> Šù‘¶‚ÌƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹A‘¶İ‚µ‚È‚¢ê‡‚Ístd::nullopt
+			 * @brief æ—¢å­˜ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’æ¤œç´¢ã™ã‚‹é–¢æ•°
+			 * @param desc ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ä½œæˆæƒ…å ±
+			 * @return std::optional<TextureHandle> æ—¢å­˜ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«ã€å­˜åœ¨ã—ãªã„å ´åˆã¯std::nullopt
 			 */
 			std::optional<TextureHandle> FindExisting(const TextureCreateDesc& desc) noexcept {
-				// ¶¬ƒ‚[ƒhipath ‹ój‚Ì‚Æ‚«‚Í–¼‘OƒLƒƒƒbƒVƒ…‚ğ—p‚¢‚È‚¢
+				// ç”Ÿæˆãƒ¢ãƒ¼ãƒ‰ï¼ˆpath ç©ºï¼‰ã®ã¨ãã¯åå‰ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ç”¨ã„ãªã„
 				if (desc.path.empty()) return std::nullopt;
 				detail::TextureKey k{ detail::NormalizePath(desc.path), desc.forceSRGB };
 				std::lock_guard lk(cacheMx_);
@@ -157,48 +157,48 @@ namespace SFW
 				return std::nullopt;
 			}
 			/**
-			 * @brief ƒeƒNƒXƒ`ƒƒ‚ÌƒpƒX‚Æƒnƒ“ƒhƒ‹‚ğ“o˜^‚·‚éŠÖ”
-			 * @param desc ƒeƒNƒXƒ`ƒƒ‚Ìì¬î•ñ
-			 * @param h “o˜^‚·‚éƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹
+			 * @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ‘ã‚¹ã¨ãƒãƒ³ãƒ‰ãƒ«ã‚’ç™»éŒ²ã™ã‚‹é–¢æ•°
+			 * @param desc ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ä½œæˆæƒ…å ±
+			 * @param h ç™»éŒ²ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			void RegisterKey(const TextureCreateDesc& desc, TextureHandle h) {
-				if (desc.path.empty()) return; // ¶¬ƒ‚[ƒh‚ÍƒL[“o˜^‚µ‚È‚¢
+				if (desc.path.empty()) return; // ç”Ÿæˆãƒ¢ãƒ¼ãƒ‰ã¯ã‚­ãƒ¼ç™»éŒ²ã—ãªã„
 				detail::TextureKey k{ detail::NormalizePath(desc.path), desc.forceSRGB };
 				std::lock_guard lk(cacheMx_);
 				pathToHandle_.emplace(std::move(k), h);
 			}
 			/**
-			 * @brief ƒeƒNƒXƒ`ƒƒƒŠƒ\[ƒX‚ğì¬‚·‚éŠÖ”
-			 * @param desc ƒeƒNƒXƒ`ƒƒ‚Ìì¬î•ñ
-			 * @param h “o˜^‚·‚éƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹
-			 * @return DX11TextureData ì¬‚³‚ê‚½ƒeƒNƒXƒ`ƒƒƒf[ƒ^
+			 * @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒªã‚½ãƒ¼ã‚¹ã‚’ä½œæˆã™ã‚‹é–¢æ•°
+			 * @param desc ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ä½œæˆæƒ…å ±
+			 * @param h ç™»éŒ²ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«
+			 * @return DX11TextureData ä½œæˆã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿
 			 */
 			TextureData CreateResource(const TextureCreateDesc& desc, TextureHandle h);
 			/**
-			 * @brief ƒLƒƒƒbƒVƒ…‚©‚çƒeƒNƒXƒ`ƒƒ‚ğíœ‚·‚éŠÖ”
-			 * @param idx íœ‚·‚éƒeƒNƒXƒ`ƒƒ‚ÌƒCƒ“ƒfƒbƒNƒX
+			 * @brief ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‹ã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å‰Šé™¤ã™ã‚‹é–¢æ•°
+			 * @param idx å‰Šé™¤ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			 */
 			void RemoveFromCaches(uint32_t idx);
 			/**
-			 * @brief ƒeƒNƒXƒ`ƒƒƒŠƒ\[ƒX‚ğ”jŠü‚·‚éŠÖ”
-			 * @param idx ”jŠü‚·‚éƒeƒNƒXƒ`ƒƒ‚ÌƒCƒ“ƒfƒbƒNƒX
-			 * @param currentFrame Œ»İ‚ÌƒtƒŒ[ƒ€”Ô†(–¢g—p)
+			 * @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒªã‚½ãƒ¼ã‚¹ã‚’ç ´æ£„ã™ã‚‹é–¢æ•°
+			 * @param idx ç ´æ£„ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			 * @param currentFrame ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·(æœªä½¿ç”¨)
 			 */
 			void DestroyResource(uint32_t idx, uint64_t /*currentFrame*/);
 
-			// ƒeƒNƒXƒ`ƒƒXV‚ğƒLƒ…[‚ÉÏ‚ŞiƒŠƒ\[ƒX’¼w’èj
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£æ›´æ–°ã‚’ã‚­ãƒ¥ãƒ¼ã«ç©ã‚€ï¼ˆãƒªã‚½ãƒ¼ã‚¹ç›´æŒ‡å®šï¼‰
 			void UpdateTexture(const TextureUpdateDesc& desc);
-			// ƒnƒ“ƒhƒ‹‚©‚ç‚ÌXViÅ‰‚ÌƒTƒuƒŠƒ\[ƒX‚ğ‘z’èBmip/array ‚ğ©‘O‚ÅŒvZ‚·‚éê‡‚Íã‚ğg—pj
+			// ãƒãƒ³ãƒ‰ãƒ«ã‹ã‚‰ã®æ›´æ–°ï¼ˆæœ€åˆã®ã‚µãƒ–ãƒªã‚½ãƒ¼ã‚¹ã‚’æƒ³å®šã€‚mip/array ã‚’è‡ªå‰ã§è¨ˆç®—ã™ã‚‹å ´åˆã¯ä¸Šã‚’ä½¿ç”¨ï¼‰
 			void UpdateTexture(TextureHandle h, const void* pData, UINT rowPitch, UINT depthPitch = 0,
 				bool isDelete = false, const D3D11_BOX* pBox = nullptr, UINT subresource = 0);
 
-			// ¶¬Ï‚İƒ~ƒbƒv‚ğ GPU ‚Åì‚ç‚¹‚éiSRV •K{j¨ ’x‰„ƒLƒ…[
+			// ç”Ÿæˆæ¸ˆã¿ãƒŸãƒƒãƒ—ã‚’ GPU ã§ä½œã‚‰ã›ã‚‹ï¼ˆSRV å¿…é ˆï¼‰â†’ é…å»¶ã‚­ãƒ¥ãƒ¼
 			void QueueGenerateMips(TextureHandle h);
 
-			// —­‚Ü‚Á‚½XV‚ğˆêŠ‡“K—piƒtƒŒ[ƒ€‚ÌI‚í‚è‚È‚Ç‚ÉŒÄ‚Ôj
+			// æºœã¾ã£ãŸæ›´æ–°ã‚’ä¸€æ‹¬é©ç”¨ï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ ã®çµ‚ã‚ã‚Šãªã©ã«å‘¼ã¶ï¼‰
 			void PendingUpdates();
 		private:
-			// •ÏŠ·Ï‚İDDS‚ÌŠi”[ƒfƒBƒŒƒNƒgƒŠ
+			// å¤‰æ›æ¸ˆã¿DDSã®æ ¼ç´ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
 			std::string ResolveConvertedPath(const std::string& original);
 
 			// UTF-8 -> Wide
@@ -207,15 +207,15 @@ namespace SFW
 			ID3D11Device* device;
 			ID3D11DeviceContext* context = nullptr;
 
-			// •¡‡ƒL[‚ÌƒLƒƒƒbƒVƒ…iƒXƒŒƒbƒhˆÀ‘Sj
+			// è¤‡åˆã‚­ãƒ¼ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ï¼ˆã‚¹ãƒ¬ãƒƒãƒ‰å®‰å…¨ï¼‰
 			mutable std::mutex cacheMx_;
 			std::unordered_map<detail::TextureKey, TextureHandle, detail::TextureKeyHash> pathToHandle_;
 
 			std::filesystem::path convertedDir;
 
-			size_t maxGeneratedMips_{ 0 }; // 0 = ‘S’i
+			size_t maxGeneratedMips_{ 0 }; // 0 = å…¨æ®µ
 
-			//=== ’x‰„ƒLƒ…[ ===
+			//=== é…å»¶ã‚­ãƒ¥ãƒ¼ ===
 			struct GenMipsItem { ComPtr<ID3D11ShaderResourceView> srv; };
 			std::mutex              updateMx_;
 			std::vector<TextureUpdateDesc> pendingTexUpdates_;
@@ -225,14 +225,14 @@ namespace SFW
 		struct CpuImage {
 			UINT width = 0, height = 0, stride = 0;
 			DXGI_FORMAT fmt = DXGI_FORMAT_UNKNOWN;
-			std::vector<uint8_t> bytes; // RGBA8‘z’è‚È‚ç 4*W
+			std::vector<uint8_t> bytes; // RGBA8æƒ³å®šãªã‚‰ 4*W
 		};
 
-		// GPU 2D ƒeƒNƒXƒ`ƒƒ -> staging -> map ‚Å CPU ‚É‹z‚¢o‚·iƒ~ƒbƒv0‚Ì‚İj
+		// GPU 2D ãƒ†ã‚¯ã‚¹ãƒãƒ£ -> staging -> map ã§ CPU ã«å¸ã„å‡ºã™ï¼ˆãƒŸãƒƒãƒ—0ã®ã¿ï¼‰
 		bool ReadTexture2DToCPU(ID3D11Device* dev, ID3D11DeviceContext* ctx,
 			ID3D11Texture2D* src, CpuImage& out);
 
-		// ‚Ç‚ñ‚ÈTexture‚Å‚àuCPU‘¤‚ÉRGBA8‚Å—~‚µ‚¢v”Å
+		// ã©ã‚“ãªTextureã§ã‚‚ã€ŒCPUå´ã«RGBA8ã§æ¬²ã—ã„ã€ç‰ˆ
 		bool ReadTexture2DToCPU_RGBA8(ID3D11Device* dev, ID3D11DeviceContext* ctx,
 			ID3D11Texture2D* src, CpuImage& out);
 	}

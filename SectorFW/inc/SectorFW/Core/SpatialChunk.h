@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   SpatialChunk.h
- * @brief ‹óŠÔƒ`ƒƒƒ“ƒN‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief ç©ºé–“ãƒãƒ£ãƒ³ã‚¯ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -13,32 +13,32 @@
 namespace SFW
 {
 	/**
-	 * @brief@‹óŠÔ‚Å•ªŠ„‚µ‚½ƒ`ƒƒƒ“ƒN‚ğ•\‚·ƒNƒ‰ƒX
+	 * @briefã€€ç©ºé–“ã§åˆ†å‰²ã—ãŸãƒãƒ£ãƒ³ã‚¯ã‚’è¡¨ã™ã‚¯ãƒ©ã‚¹
 	 */
 	class SpatialChunk
 	{
 	public:
 		/**
-		 * @brief ‹óŠÔƒ`ƒƒƒ“ƒN‚ÌƒTƒCƒY‚ğ’è‹`‚·‚éŒ^
-		 * @details 32ƒrƒbƒg•„†‚È‚µ®”‚ğg—p
+		 * @brief ç©ºé–“ãƒãƒ£ãƒ³ã‚¯ã®ã‚µã‚¤ã‚ºã‚’å®šç¾©ã™ã‚‹å‹
+		 * @details 32ãƒ“ãƒƒãƒˆç¬¦å·ãªã—æ•´æ•°ã‚’ä½¿ç”¨
 		 */
 		using SizeType = uint32_t;
 
 		using Bounds3f = Math::AABB3f;
 
 		/**
-		 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @details EntityManager‚Ì‰Šú‰»‚às‚Á‚Ä‚¢‚é
+		 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @details EntityManagerã®åˆæœŸåŒ–ã‚‚è¡Œã£ã¦ã„ã‚‹
 		 */
 		SpatialChunk() :entityManager(std::make_unique<ECS::EntityManager>()) {}
 		/**
-		 * @brief ƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[‚Ìæ“¾ŠÖ”
-		 * @return ECS::EntityManager& ƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[‚Ö‚ÌQÆ
+		 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®å–å¾—é–¢æ•°
+		 * @return ECS::EntityManager& ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã¸ã®å‚ç…§
 		 */
 		ECS::EntityManager& GetEntityManager() noexcept { return *entityManager; }
 		const ECS::EntityManager& GetEntityManager() const noexcept { return *entityManager; }
 
-		// --- NodeKey (space / code / depth / generation) ‚ğƒ`ƒƒƒ“ƒN’PˆÊ‚Å•Û ---
+		// --- NodeKey (space / code / depth / generation) ã‚’ãƒãƒ£ãƒ³ã‚¯å˜ä½ã§ä¿æŒ ---
 		const SpatialChunkKey& GetNodeKey() const noexcept { return nodeKey; }
 		void SetNodeKey(const SpatialChunkKey& k) noexcept { nodeKey = k; }
 		void BumpGeneration() noexcept { ++nodeKey.generation; }
@@ -46,7 +46,7 @@ namespace SFW
 		bool HasStaticBounds() const noexcept { return hasStaticBounds; }
 		const Bounds3f& GetStaticBoundsWS() const noexcept { return staticBoundsWS; }
 
-		// Ã“IEntity‚ÌAABB‚Å‚Ì‚İŠg’£ik‚ß‚È‚¢j
+		// é™çš„Entityã®AABBã§ã®ã¿æ‹¡å¼µï¼ˆç¸®ã‚ãªã„ï¼‰
 		void ExpandStaticBoundsWS(const Bounds3f& aabbWS) noexcept
 		{
 			if (!hasStaticBounds)
@@ -60,7 +60,7 @@ namespace SFW
 			}
 		}
 
-		// ‰Šú‰»‚µ‚½‚¢‚Æ‚«—pi”CˆÓj
+		// åˆæœŸåŒ–ã—ãŸã„ã¨ãç”¨ï¼ˆä»»æ„ï¼‰
 		void ResetStaticBounds() noexcept
 		{
 			hasStaticBounds = false;
@@ -68,16 +68,16 @@ namespace SFW
 		}
 
 	private:
-		//ƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[.‹óŠÔƒ`ƒƒƒ“ƒN“à‚ÌƒGƒ“ƒeƒBƒeƒB‚ğŠÇ—‚·‚é
+		//ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼.ç©ºé–“ãƒãƒ£ãƒ³ã‚¯å†…ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã‚’ç®¡ç†ã™ã‚‹
 		std::unique_ptr<ECS::EntityManager> entityManager;
-		//‚±‚Ìƒ`ƒƒƒ“ƒN‚ğ“Á’è‚·‚éƒL[BŒ»İ¢‘ã‚ğŠÜ‚Ş
+		//ã“ã®ãƒãƒ£ãƒ³ã‚¯ã‚’ç‰¹å®šã™ã‚‹ã‚­ãƒ¼ã€‚ç¾åœ¨ä¸–ä»£ã‚’å«ã‚€
 		SpatialChunkKey nodeKey{};
 
 		Bounds3f staticBoundsWS{};
 		bool hasStaticBounds = false;
 	};
 	/**
-	 * @brief ‹óŠÔƒ`ƒƒƒ“ƒN‚ÌƒTƒCƒYŒ^‚ğ’è‹`‚·‚é
+	 * @brief ç©ºé–“ãƒãƒ£ãƒ³ã‚¯ã®ã‚µã‚¤ã‚ºå‹ã‚’å®šç¾©ã™ã‚‹
 	 */
 	using ChunkSizeType = SpatialChunk::SizeType;
 
@@ -93,7 +93,7 @@ namespace SFW
 					const ComponentMask& mask = arch->GetMask();
 					if ((mask & required) == required && (mask & excluded).none()) {
 						const auto& chunks = arch->GetChunks();
-						// æ‚É•K—v•ª‚¾‚¯‚Ü‚Æ‚ß‚ÄŠg’£i•½‹Ï“I‚ÉÄŠm•Û‚ğŒ¸‚ç‚·j
+						// å…ˆã«å¿…è¦åˆ†ã ã‘ã¾ã¨ã‚ã¦æ‹¡å¼µï¼ˆå¹³å‡çš„ã«å†ç¢ºä¿ã‚’æ¸›ã‚‰ã™ï¼‰
 						result.reserve(result.size() + chunks.size());
 						for (const auto& ch : chunks) {
 							result.push_back(ch.get());
@@ -102,7 +102,7 @@ namespace SFW
 				}
 				};
 
-			// ‹óŠÔ‚²‚Æ
+			// ç©ºé–“ã”ã¨
 			for (auto spatial : context) {
 				collect_from(spatial->GetEntityManager());
 			}

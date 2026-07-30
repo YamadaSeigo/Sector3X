@@ -1,4 +1,4 @@
-/*
+﻿/*
 SoLoud audio engine
 Copyright (c) 2020 Jari Komppa
 

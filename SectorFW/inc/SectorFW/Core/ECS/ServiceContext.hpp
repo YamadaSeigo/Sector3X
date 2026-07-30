@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   ServiceContext.h
- * @brief ƒT[ƒrƒXƒRƒ“ƒeƒLƒXƒg‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ã‚µãƒ¼ãƒ“ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   July 2025
  *********************************************************************/
@@ -12,33 +12,33 @@
 namespace SFW {
 	namespace ECS {
 		/**
-		 * @brief ƒT[ƒrƒX‚ÌÃ“I‚ÈŒ^‚ğ’è‹`‚·‚éƒeƒ“ƒvƒŒ[ƒg
-		 * @details ƒT[ƒrƒX‚ÌŒ^‚É‘Î‚µ‚ÄAÃ“I‚ÈisStaticƒƒ“ƒo[‚ğ’è‹`‚µ‚Ü‚·B
-		 * @tparam Services... ƒT[ƒrƒX‚ÌŒ^ƒŠƒXƒg
+		 * @brief ã‚µãƒ¼ãƒ“ã‚¹ã®é™çš„ãªå‹ã‚’å®šç¾©ã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
+		 * @details ã‚µãƒ¼ãƒ“ã‚¹ã®å‹ã«å¯¾ã—ã¦ã€é™çš„ãªisStaticãƒ¡ãƒ³ãƒãƒ¼ã‚’å®šç¾©ã—ã¾ã™ã€‚
+		 * @tparam Services... ã‚µãƒ¼ãƒ“ã‚¹ã®å‹ãƒªã‚¹ãƒˆ
 		 */
 		template<typename... Services>
 		constexpr bool AllStaticServices = (Services::isStatic && ...);
 		/**
-		 * @brief ƒT[ƒrƒX‚ÌŒ^‚ÉisStaticƒƒ“ƒo[‚ª‘¶İ‚·‚é‚©‚ğƒ`ƒFƒbƒN‚·‚éƒRƒ“ƒZƒvƒg
+		 * @brief ã‚µãƒ¼ãƒ“ã‚¹ã®å‹ã«isStaticãƒ¡ãƒ³ãƒãƒ¼ãŒå­˜åœ¨ã™ã‚‹ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 		 */
 		template<typename T>
 		concept HasServiceTag = requires { T::isStatic; };
 
 		/**
-		 * @brief ƒT[ƒrƒX‚ÌŒ^‚ğ’è‹`‚·‚éƒ}ƒNƒ
-		 * @details ƒT[ƒrƒX‚ÌŒ^‚É‘Î‚µ‚ÄAÃ“I‚ÈisStaticƒƒ“ƒo[‚ğ’è‹`‚µ‚Ü‚·B
+		 * @brief ã‚µãƒ¼ãƒ“ã‚¹ã®å‹ã‚’å®šç¾©ã™ã‚‹ãƒã‚¯ãƒ­
+		 * @details ã‚µãƒ¼ãƒ“ã‚¹ã®å‹ã«å¯¾ã—ã¦ã€é™çš„ãªisStaticãƒ¡ãƒ³ãƒãƒ¼ã‚’å®šç¾©ã—ã¾ã™ã€‚
 		 */
 #define STATIC_SERVICE_TAG static constexpr bool isStatic = true;
 		 /**
-		  * @brief “®“IƒT[ƒrƒX‚ÌŒ^‚ğ’è‹`‚·‚éƒ}ƒNƒ
-		  * @details “®“IƒT[ƒrƒX‚ÌŒ^‚É‘Î‚µ‚ÄAÃ“I‚ÈisStaticƒƒ“ƒo[‚ğ’è‹`‚µ‚Ü‚·B
+		  * @brief å‹•çš„ã‚µãƒ¼ãƒ“ã‚¹ã®å‹ã‚’å®šç¾©ã™ã‚‹ãƒã‚¯ãƒ­
+		  * @details å‹•çš„ã‚µãƒ¼ãƒ“ã‚¹ã®å‹ã«å¯¾ã—ã¦ã€é™çš„ãªisStaticãƒ¡ãƒ³ãƒãƒ¼ã‚’å®šç¾©ã—ã¾ã™ã€‚
 		  */
 #define DYNAMIC_SERVICE_TAG static constexpr bool isStatic = false;
 
 		  /**
-		   * @brief System‚É’“ü‚³‚ê‚éƒT[ƒrƒX‚ÌƒRƒ“ƒeƒLƒXƒg‚ğ’è‹`‚·‚éƒeƒ“ƒvƒŒ[ƒg
-		   * @details ƒT[ƒrƒX‚ÌŒ^‚ğƒ^ƒvƒ‹‚Æ‚µ‚Ä•Û‚µ‚Ü‚·B
-		   * @tparam Services... ƒT[ƒrƒX‚ÌŒ^ƒŠƒXƒg
+		   * @brief Systemã«æ³¨å…¥ã•ã‚Œã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’å®šç¾©ã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
+		   * @details ã‚µãƒ¼ãƒ“ã‚¹ã®å‹ã‚’ã‚¿ãƒ—ãƒ«ã¨ã—ã¦ä¿æŒã—ã¾ã™ã€‚
+		   * @tparam Services... ã‚µãƒ¼ãƒ“ã‚¹ã®å‹ãƒªã‚¹ãƒˆ
 		   */
 		template<typename... Services>
 		struct ServiceContext {
@@ -48,8 +48,8 @@ namespace SFW {
 			using Tuple = std::tuple<Services*...>;
 		};
 		/**
-		 * @brief XVƒT[ƒrƒX‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX(System‚æ‚è‚à‘O‚ÉXV)
-		 * @details g—p‚·‚éê‡‚Í‘ÎÛ‚ÌƒT[ƒrƒX‚ÉŒp³‚³‚¹‚é
+		 * @brief æ›´æ–°ã‚µãƒ¼ãƒ“ã‚¹ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹(Systemã‚ˆã‚Šã‚‚å‰ã«æ›´æ–°)
+		 * @details ä½¿ç”¨ã™ã‚‹å ´åˆã¯å¯¾è±¡ã®ã‚µãƒ¼ãƒ“ã‚¹ã«ç¶™æ‰¿ã•ã›ã‚‹
 		 */
 		class IUpdateService {
 			virtual void PreUpdate(double deltaTime) = 0;
@@ -63,7 +63,7 @@ namespace SFW {
 			};
 
 			enum Group : uint16_t {
-				GROUP_SERIAL, //ƒƒCƒ“ƒXƒŒƒbƒh‚Å’¼—ñÀs
+				GROUP_SERIAL, //ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰ã§ç›´åˆ—å®Ÿè¡Œ
 				GROUP_GRAPHICS,
 				GROUP_PHYSICS,
 				GROUP_INPUT,
@@ -86,9 +86,9 @@ namespace SFW {
 		};
 
 		/**
-		 * @brief ƒRƒ~ƒbƒgƒT[ƒrƒX‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX(System‚ğXV‚µ‚½Œã‚ÉŒÄ‚Ño‚³‚ê‚é)
-		 * @details g—p‚·‚éê‡‚Í‘ÎÛ‚ÌƒT[ƒrƒX‚ÉŒp³‚³‚¹‚é
-		 * @details ‚Æ‚è‚ ‚¦‚¸’¼—ñ‚ÅXVBd‚¢ˆ—‚ğÚ‚¹‚é—\’è‚È‚çIUpdateService‚Ì‚æ‚¤‚É•À—ñ‚É‚µ‚Ä‚à‚¢‚¢
+		 * @brief ã‚³ãƒŸãƒƒãƒˆã‚µãƒ¼ãƒ“ã‚¹ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹(Systemã‚’æ›´æ–°ã—ãŸå¾Œã«å‘¼ã³å‡ºã•ã‚Œã‚‹)
+		 * @details ä½¿ç”¨ã™ã‚‹å ´åˆã¯å¯¾è±¡ã®ã‚µãƒ¼ãƒ“ã‚¹ã«ç¶™æ‰¿ã•ã›ã‚‹
+		 * @details ã¨ã‚Šã‚ãˆãšç›´åˆ—ã§æ›´æ–°ã€‚é‡ã„å‡¦ç†ã‚’è¼‰ã›ã‚‹äºˆå®šãªã‚‰IUpdateServiceã®ã‚ˆã†ã«ä¸¦åˆ—ã«ã—ã¦ã‚‚ã„ã„
 		 */
 		class ICommitService {
 		public:
@@ -96,13 +96,13 @@ namespace SFW {
 		};
 
 		/**
-		 * @brief w’è‚µ‚½Œ^‚ªIUpdateService‚ğŒp³‚µ‚Ä‚¢‚é‚©‚ğ”»’è‚·‚éƒeƒ“ƒvƒŒ[ƒg
+		 * @brief æŒ‡å®šã—ãŸå‹ãŒIUpdateServiceã‚’ç¶™æ‰¿ã—ã¦ã„ã‚‹ã‹ã‚’åˆ¤å®šã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 		 */
 		template<typename T>
 		static constexpr bool isUpdateService = std::is_base_of_v<IUpdateService, T>;
 
 		/**
-		 * @brief w’è‚µ‚½Œ^‚ªICommitService‚ğŒp³‚µ‚Ä‚¢‚é‚©‚ğ”»’è‚·‚éƒeƒ“ƒvƒŒ[ƒg
+		 * @brief æŒ‡å®šã—ãŸå‹ãŒICommitServiceã‚’ç¶™æ‰¿ã—ã¦ã„ã‚‹ã‹ã‚’åˆ¤å®šã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 		 */
 		template<typename T>
 		static constexpr bool isCommitService = std::is_base_of_v<ICommitService, T>;
@@ -116,7 +116,7 @@ namespace SFW {
 #define DEFINE_UPDATESERVICE_ORDER(OrderValue) \
 			static inline constexpr uint16_t updateOrder = OrderValue;
 
-		// ƒ}ƒNƒ‚ÅXVƒtƒF[ƒYAƒOƒ‹[ƒvAƒI[ƒ_[‚ğ’è‹`
+		// ãƒã‚¯ãƒ­ã§æ›´æ–°ãƒ•ã‚§ãƒ¼ã‚ºã€ã‚°ãƒ«ãƒ¼ãƒ—ã€ã‚ªãƒ¼ãƒ€ãƒ¼ã‚’å®šç¾©
 #define DEFINE_UPDATESERVICE(PhaseEnum, GroupEnum, OrderValue) \
 			DEFINE_UPDATESERVICE_PHASE(PhaseEnum) \
 			DEFINE_UPDATESERVICE_GROUP(GroupEnum) \

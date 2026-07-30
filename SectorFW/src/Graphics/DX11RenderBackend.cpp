@@ -1,4 +1,4 @@
-#include "Graphics/DX11/DX11RenderBackend.h"
+ï»¿#include "Graphics/DX11/DX11RenderBackend.h"
 #include "Graphics/RenderQueue.h"
 #include "Graphics/LightShadowService.h"
 #include "Debug/logger.h"
@@ -69,7 +69,7 @@ namespace SFW
 				context->OMSetBlendState(blendState.Get(), nullptr, 0xFFFFFFFF);
 			}
 			else {
-				// ƒfƒtƒHƒ‹ƒg‚ÌƒuƒŒƒ“ƒhƒXƒe[ƒg‚ğİ’è
+				// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¨­å®š
 				context->OMSetBlendState(nullptr, nullptr, 0xFFFFFFFF);
 				LOG_WARNING("BlendStateID %d is not set, using default blend state.", static_cast<int>(state));
 			}
@@ -88,7 +88,7 @@ namespace SFW
 				context->RSSetState(rasterizerState.Get());
 			}
 			else {
-				// ƒfƒtƒHƒ‹ƒg‚Ìƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒg‚ğİ’è
+				// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¨­å®š
 				context->RSSetState(nullptr);
 			}
 		}
@@ -119,7 +119,7 @@ namespace SFW
 					SetRasterizerStateImpl(pso.ref().rasterizerState);
 				}
 
-				// PSOƒoƒCƒ“ƒh
+				// PSOãƒã‚¤ãƒ³ãƒ‰
 				context->IASetInputLayout(rebindPSO ? pso.ref().rebindInputLayout.Get() : pso.ref().inputLayout.Get());
 
 				auto shader = shaderManager->Get(rebindPSO ? pso.ref().rebindShader : pso.ref().shader);
@@ -160,29 +160,29 @@ namespace SFW
 			{
 				auto mat = materialManager->GetDirect(matIdx);
 
-				// ƒ}ƒeƒŠƒAƒ‹ƒoƒCƒ“ƒh
+				// ãƒãƒ†ãƒªã‚¢ãƒ«ãƒã‚¤ãƒ³ãƒ‰
 				if (mat.ref().templateID != templateID) [[unlikely]] {
 					LOG_ERROR("Incompatible Material-Shader: Template mismatch.");
 					return;
 				}
 
-				// ƒeƒNƒXƒ`ƒƒSRVƒoƒCƒ“ƒh
+				// ãƒ†ã‚¯ã‚¹ãƒãƒ£SRVãƒã‚¤ãƒ³ãƒ‰
 				MaterialManager::BindMaterialVSSRVs(context, mat.ref().vsSRV);
-				// CBVƒoƒCƒ“ƒh
+				// CBVãƒã‚¤ãƒ³ãƒ‰
 				MaterialManager::BindMaterialVSCBVs(context, mat.ref().vsCBV);
 
 				if (mat.ref().isBindVSSampler) {
-					// ƒTƒ“ƒvƒ‰[ƒoƒCƒ“ƒh
+					// ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ãƒã‚¤ãƒ³ãƒ‰
 					MaterialManager::BindMaterialVSSamplers(context, mat.ref().samplerCache);
 				}
 
 				if (isPSBind) {
-					// ƒeƒNƒXƒ`ƒƒSRVƒoƒCƒ“ƒh
+					// ãƒ†ã‚¯ã‚¹ãƒãƒ£SRVãƒã‚¤ãƒ³ãƒ‰
 					MaterialManager::BindMaterialPSSRVs(context, mat.ref().psSRV);
-					// CBVƒoƒCƒ“ƒh
+					// CBVãƒã‚¤ãƒ³ãƒ‰
 					MaterialManager::BindMaterialPSCBVs(context, mat.ref().psCBV);
 
-					// ƒTƒ“ƒvƒ‰[ƒoƒCƒ“ƒh
+					// ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ãƒã‚¤ãƒ³ãƒ‰
 					MaterialManager::BindMaterialPSSamplers(context, mat.ref().samplerCache);
 				}
 			}
@@ -194,19 +194,19 @@ namespace SFW
 			ShaderManager::LockedResource<ShaderData, std::shared_lock>& shader,
 			MeshManager::LockedResource<MeshData, std::shared_lock>& mesh) const
 		{
-			// PSO ‚Ì InputLayoutDesc ‚©‚ç•K—v slot ‚ğ’Šo
+			// PSO ã® InputLayoutDesc ã‹ã‚‰å¿…è¦ slot ã‚’æŠ½å‡º
 			UINT minSlot = UINT_MAX, maxSlot = 0;
 			std::bitset<8> needed{};
 			for (auto& e : shader.ref().inputLayoutDesc) {
-				// ƒCƒ“ƒXƒ^ƒ“ƒX—p‚Í•Êi¡‰ñ‚Í slot=4 ‚ğ‘z’èj
+				// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”¨ã¯åˆ¥ï¼ˆä»Šå›ã¯ slot=4 ã‚’æƒ³å®šï¼‰
 				if (e.InputSlotClass == D3D11_INPUT_PER_INSTANCE_DATA) continue;
 				needed.set(e.InputSlot);
 				minSlot = (std::min)(minSlot, e.InputSlot);
 				maxSlot = (std::max)(maxSlot, e.InputSlot);
 			}
-			if (minSlot == UINT_MAX) return; // ’¸“_“ü—Í‚È‚µi—˜_ã‚ ‚è‚¦‚È‚¢‚ªj
+			if (minSlot == UINT_MAX) return; // é ‚ç‚¹å…¥åŠ›ãªã—ï¼ˆç†è«–ä¸Šã‚ã‚Šãˆãªã„ãŒï¼‰
 
-			// ˜A‘±ƒŒƒ“ƒW [minSlot, maxSlot] ‚ğ IASetVertexBuffers ‚ÅˆêŠ‡ƒZƒbƒg
+			// é€£ç¶šãƒ¬ãƒ³ã‚¸ [minSlot, maxSlot] ã‚’ IASetVertexBuffers ã§ä¸€æ‹¬ã‚»ãƒƒãƒˆ
 			std::vector<ID3D11Buffer*> bufs;
 			std::vector<UINT> strides, offs;
 			bufs.reserve(maxSlot - minSlot + 1);
@@ -220,10 +220,10 @@ namespace SFW
 					offs.push_back(mesh.ref().offsets[s]);
 				}
 				else {
-					// gap‚ğ–„‚ß‚é‚½‚ß‚É null ‚ğ“ü‚ê‚é•K—v‚Í‚È‚¢iStartSlot=minSlotANumBuffers=bufs.size() ‚Å‹l‚ß‚Ä“n‚·j
-					// ‚½‚¾‚µ InputLayout ‚Í slot”Ô†‚ğŒ©‚Ä‚¢‚é‚Ì‚ÅAg‹l‚ß‘Ö‚¦h‚Í‚Å‚«‚È‚¢B
-					// ¨ ‚æ‚Á‚Ä gap ‚ğì‚ç‚È‚¢‚æ‚¤‚ÉAŠî–{‚Í slot 0..N ‚ÌİŒv‚É‚µ‚Ä‚¨‚­B
-					// ‚±‚±‚Å‚ÍŠÈ’P‚Ì‚½‚ßAgap ‚ª‚ ‚ê‚Î nullptr ‚ğ“ü‚ê‚ÄˆÛ‚·‚éB
+					// gapã‚’åŸ‹ã‚ã‚‹ãŸã‚ã« null ã‚’å…¥ã‚Œã‚‹å¿…è¦ã¯ãªã„ï¼ˆStartSlot=minSlotã€NumBuffers=bufs.size() ã§è©°ã‚ã¦æ¸¡ã™ï¼‰
+					// ãŸã ã— InputLayout ã¯ slotç•ªå·ã‚’è¦‹ã¦ã„ã‚‹ã®ã§ã€â€œè©°ã‚æ›¿ãˆâ€ã¯ã§ããªã„ã€‚
+					// â†’ ã‚ˆã£ã¦ gap ã‚’ä½œã‚‰ãªã„ã‚ˆã†ã«ã€åŸºæœ¬ã¯ slot 0..N ã®è¨­è¨ˆã«ã—ã¦ãŠãã€‚
+					// ã“ã“ã§ã¯ç°¡å˜ã®ãŸã‚ã€gap ãŒã‚ã‚Œã° nullptr ã‚’å…¥ã‚Œã¦ç¶­æŒã™ã‚‹ã€‚
 					bufs.push_back(nullptr);
 					strides.push_back(0);
 					offs.push_back(0);
@@ -237,16 +237,16 @@ namespace SFW
 			ShaderManager::LockedResource<ShaderData, std::shared_lock>& shader,
 			MeshManager::LockedResource<MeshData, std::shared_lock>& mesh) const
 		{
-			// ‚±‚ÌŠÖ”‚ÍuVS ‚ÌÅI InputLayouti= ”½Ë{ƒI[ƒo[ƒ‰ƒCƒh”½‰fÏ‚İjv‚ğM—p‚µ‚Ä
-			//  ‚»‚±‚É‘‚©‚ê‚½ InputSlot ‚ÌƒŒƒ“ƒW‚ğ˜A‘±‚Å IA ‚ÉƒZƒbƒg‚µ‚Ü‚·B
+			// ã“ã®é–¢æ•°ã¯ã€ŒVS ã®æœ€çµ‚ InputLayoutï¼ˆ= åå°„ï¼‹ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰åæ˜ æ¸ˆã¿ï¼‰ã€ã‚’ä¿¡ç”¨ã—ã¦
+			//  ãã“ã«æ›¸ã‹ã‚ŒãŸ InputSlot ã®ãƒ¬ãƒ³ã‚¸ã‚’é€£ç¶šã§ IA ã«ã‚»ãƒƒãƒˆã—ã¾ã™ã€‚
 			UINT minSlot = UINT_MAX, maxSlot = 0;
-			for (const auto& elem : shader.ref().inputLayoutDesc) {              // ”½ËŒ‹‰Ê‚ÍŠù‚É•ÛÏ‚İ
-				if (elem.InputSlotClass == D3D11_INPUT_PER_INSTANCE_DATA) continue; // ƒCƒ“ƒXƒ^ƒ“ƒX‘®«‚Í•ÊŒo˜H
+			for (const auto& elem : shader.ref().inputLayoutDesc) {              // åå°„çµæœã¯æ—¢ã«ä¿æŒæ¸ˆã¿
+				if (elem.InputSlotClass == D3D11_INPUT_PER_INSTANCE_DATA) continue; // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å±æ€§ã¯åˆ¥çµŒè·¯
 				minSlot = (std::min)(minSlot, elem.InputSlot);
 				maxSlot = (std::max)(maxSlot, elem.InputSlot);
 			}
 			if (minSlot == UINT_MAX) {
-				// ’¸“_“ü—Í‚ª–³‚¢i—˜_ã‚Ù‚Ú–³‚¢jê‡‚Í‰½‚à‚µ‚È‚¢
+				// é ‚ç‚¹å…¥åŠ›ãŒç„¡ã„ï¼ˆç†è«–ä¸Šã»ã¼ç„¡ã„ï¼‰å ´åˆã¯ä½•ã‚‚ã—ãªã„
 				return;
 			}
 
@@ -256,20 +256,20 @@ namespace SFW
 			std::vector<UINT>          strides(num, 0);
 			std::vector<UINT>          offs(num, 0);
 
-			// •K—vƒXƒƒbƒg‚ğ–„‚ß‚éigap ‚Í nullptr/0 ‚Å–„‚ß‚Ä˜A‘±ƒŒƒ“ƒWˆÛj
-			// ‚±‚±‚Åu‚Ç‚ÌƒXƒƒbƒg‚É‚Ç‚Ì VB ‚ğ‘}‚·‚©v‚Í ShaderManager ‚ªŒˆ‚ß‚½ InputSlotÅIŒ`‚É‡‚í‚¹‚é
+			// å¿…è¦ã‚¹ãƒ­ãƒƒãƒˆã‚’åŸ‹ã‚ã‚‹ï¼ˆgap ã¯ nullptr/0 ã§åŸ‹ã‚ã¦é€£ç¶šãƒ¬ãƒ³ã‚¸ç¶­æŒï¼‰
+			// ã“ã“ã§ã€Œã©ã®ã‚¹ãƒ­ãƒƒãƒˆã«ã©ã® VB ã‚’æŒ¿ã™ã‹ã€ã¯ ShaderManager ãŒæ±ºã‚ãŸ InputSlotï¼æœ€çµ‚å½¢ã«åˆã‚ã›ã‚‹
 			for (const auto& elem : shader.ref().inputLayoutDesc) {
 				if (elem.InputSlotClass == D3D11_INPUT_PER_INSTANCE_DATA) continue;
 
 				const UINT slot = elem.InputSlot;
 				const size_t idx = size_t(slot - minSlot);
 
-				// --- SoAi•¡”VBjƒpƒX ---
-				// ‘O’ñFMeshData ‚É vbs/strides/offsets/usedSlots ‚ª‚ ‚éiSoA‘Î‰‚ğ“ü‚ê‚Ä‚¢‚éê‡j
-				// ‚ ‚é‚¢‚Í AoS ‚µ‚©–³‚¢ƒƒbƒVƒ…‚È‚çA‰º‚ÌƒtƒH[ƒ‹ƒoƒbƒN‚ğ’Ê‚·
+				// --- SoAï¼ˆè¤‡æ•°VBï¼‰ãƒ‘ã‚¹ ---
+				// å‰æï¼šMeshData ã« vbs/strides/offsets/usedSlots ãŒã‚ã‚‹ï¼ˆSoAå¯¾å¿œã‚’å…¥ã‚Œã¦ã„ã‚‹å ´åˆï¼‰
+				// ã‚ã‚‹ã„ã¯ AoS ã—ã‹ç„¡ã„ãƒ¡ãƒƒã‚·ãƒ¥ãªã‚‰ã€ä¸‹ã®ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’é€šã™
 				bool bound = false;
 #if 1
-				// SoA ‘Î‰‚ª“ü‚Á‚Ä‚¢‚éê‡‚ÍA‚±‚ÌƒuƒƒbƒN‚ª¶‚«‚Ü‚·
+				// SoA å¯¾å¿œãŒå…¥ã£ã¦ã„ã‚‹å ´åˆã¯ã€ã“ã®ãƒ–ãƒ­ãƒƒã‚¯ãŒç”Ÿãã¾ã™
 				if (mesh.ref().usedSlots.test(slot) && mesh.ref().vbs[slot]) {
 					bufs[idx] = mesh.ref().vbs[slot].Get();
 					strides[idx] = mesh.ref().strides[slot];
@@ -277,28 +277,28 @@ namespace SFW
 					bound = true;
 				}
 #endif
-				// --- ƒtƒH[ƒ‹ƒoƒbƒNF]—ˆ AoSi’PˆêVBj ---
+				// --- ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ï¼šå¾“æ¥ AoSï¼ˆå˜ä¸€VBï¼‰ ---
 				if (!bound && mesh.ref().vbs[0]) {
-					// Šù‘¶‚Ì’Pˆê’¸“_ƒoƒbƒtƒ@‚ğ‚»‚Ì‚Ü‚Ü slot ‚É‘}‚·iLayout ‘¤‚Ì offset/format ‚ÍŠù‚ÉŒˆ‚Ü‚Á‚Ä‚¢‚é‘O’ñj
+					// æ—¢å­˜ã®å˜ä¸€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãã®ã¾ã¾ slot ã«æŒ¿ã™ï¼ˆLayout å´ã® offset/format ã¯æ—¢ã«æ±ºã¾ã£ã¦ã„ã‚‹å‰æï¼‰
 					bufs[idx] = mesh.ref().vbs[0].Get();
 					strides[idx] = mesh.ref().stride;
 					offs[idx] = 0;
 					bound = true;
 				}
 
-				// ‚»‚ê‚Å‚à–³‚¯‚ê‚Î nullptr ‚Ì‚Ü‚ÜigapjB‚±‚Ìê‡A‚»‚ÌƒZƒ}ƒ“ƒeƒBƒN‚Í–¢‹Ÿ‹‹‚È‚Ì‚Å•`‰æ‚Í”j’]‚µ‚¤‚é‚ªA
-				// ‚±‚±‚Å~‚ß‚¸‚ÉãˆÊ‚Ì®‡ƒ`ƒFƒbƒN‚É”C‚¹‚éiƒƒO‚ğo‚µ‚½‚¢ê‡‚Í WARNING ‚ğo‚·jB
+				// ãã‚Œã§ã‚‚ç„¡ã‘ã‚Œã° nullptr ã®ã¾ã¾ï¼ˆgapï¼‰ã€‚ã“ã®å ´åˆã€ãã®ã‚»ãƒãƒ³ãƒ†ã‚£ã‚¯ã¯æœªä¾›çµ¦ãªã®ã§æç”»ã¯ç ´ç¶»ã—ã†ã‚‹ãŒã€
+				// ã“ã“ã§æ­¢ã‚ãšã«ä¸Šä½ã®æ•´åˆãƒã‚§ãƒƒã‚¯ã«ä»»ã›ã‚‹ï¼ˆãƒ­ã‚°ã‚’å‡ºã—ãŸã„å ´åˆã¯ WARNING ã‚’å‡ºã™ï¼‰ã€‚
 				// LOG_WARNING("Missing vertex stream for slot %u", slot);
 			}
 
-			// ˜A‘±ƒŒƒ“ƒW‚Åˆê‹C‚ÉƒZƒbƒgigap ‚Í nullptr/0 ‚ğ“n‚·j
+			// é€£ç¶šãƒ¬ãƒ³ã‚¸ã§ä¸€æ°—ã«ã‚»ãƒƒãƒˆï¼ˆgap ã¯ nullptr/0 ã‚’æ¸¡ã™ï¼‰
 			context->IASetVertexBuffers(minSlot, num, bufs.data(), strides.data(), offs.data());
 		}
 
 		void RenderBackend::BindMeshVertexStreamsForLegacyPSO(ShaderManager::LockedResource<ShaderData, std::shared_lock>& shader, MeshManager::LockedResource<MeshData, std::shared_lock>& mesh) const
 		{
-			// ‹Œ: ’PˆêAoS VB ‚¾‚¯‚ğslot=0‚É
-			ID3D11Buffer* buf = mesh.ref().vbs[0].Get(); // ŒİŠ·‚Ì’PˆêVB
+			// æ—§: å˜ä¸€AoS VB ã ã‘ã‚’slot=0ã«
+			ID3D11Buffer* buf = mesh.ref().vbs[0].Get(); // äº’æ›ã®å˜ä¸€VB
 			UINT stride = mesh.ref().stride ? mesh.ref().stride : mesh.ref().strides[0];
 			UINT off = 0;
 			context->IASetVertexBuffers(0, 1, &buf, &stride, &off);
@@ -341,7 +341,7 @@ namespace SFW
 					return S_OK;
 				};
 
-			// —áFÅ‘å 65k ƒCƒ“ƒXƒ^ƒ“ƒX^ƒtƒŒ[ƒ€AÅ‘å 1M ƒCƒ“ƒfƒbƒNƒX^ƒpƒX
+			// ä¾‹ï¼šæœ€å¤§ 65k ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ï¼ãƒ•ãƒ¬ãƒ¼ãƒ ã€æœ€å¤§ 1M ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ï¼ãƒ‘ã‚¹
 			hr = createStructuredSRV(sizeof(SharedInstanceArena::InstancePool), MAX_INSTANCES_PER_FRAME, &m_instanceSB, &m_instanceSRV);
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to create structured SRV for instance data: %d", hr);
@@ -354,7 +354,7 @@ namespace SFW
 				return hr;
 			}
 
-			// PerDraw CBi16B ƒAƒ‰ƒCƒ“j
+			// PerDraw CBï¼ˆ16B ã‚¢ãƒ©ã‚¤ãƒ³ï¼‰
 			D3D11_BUFFER_DESC cbd{};
 			cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 			cbd.Usage = D3D11_USAGE_DYNAMIC;
@@ -371,7 +371,7 @@ namespace SFW
 
 		HRESULT RenderBackend::CreateRasterizerStates()
 		{
-			//--- ƒJƒŠƒ“ƒOİ’è
+			//--- ã‚«ãƒªãƒ³ã‚°è¨­å®š
 			D3D11_RASTERIZER_DESC rasterizer = {};
 
 			D3D11_FILL_MODE fill[] = {
@@ -402,15 +402,15 @@ namespace SFW
 			shadowBiasDesc.FillMode = D3D11_FILL_SOLID;
 			shadowBiasDesc.CullMode = D3D11_CULL_BACK;
 			shadowBiasDesc.FrontCounterClockwise = TRUE;
-			shadowBiasDesc.DepthBias = 8000; // “K‹X’²®
+			shadowBiasDesc.DepthBias = 8000; // é©å®œèª¿æ•´
 
 			//float dummyInput;
-			//std::cin >> dummyInput; // ƒ_ƒ~[“ü—Í‚ÅƒRƒ“ƒpƒCƒ‹ƒGƒ‰[‰ñ”ğ
-			//shadowBiasDesc.DepthBias = static_cast<INT>(dummyInput); // ƒ_ƒ~[ƒR[ƒhiÀÛ‚É‚Í“K‹X’²®‚µ‚Ä‚­‚¾‚³‚¢j
+			//std::cin >> dummyInput; // ãƒ€ãƒŸãƒ¼å…¥åŠ›ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼å›é¿
+			//shadowBiasDesc.DepthBias = static_cast<INT>(dummyInput); // ãƒ€ãƒŸãƒ¼ã‚³ãƒ¼ãƒ‰ï¼ˆå®Ÿéš›ã«ã¯é©å®œèª¿æ•´ã—ã¦ãã ã•ã„ï¼‰
 
-			//shadowBiasDesc.SlopeScaledDepthBias = 5.0f; // “K‹X’²®
+			//shadowBiasDesc.SlopeScaledDepthBias = 5.0f; // é©å®œèª¿æ•´
 
-			//std::cin >> dummyInput; // ƒ_ƒ~[“ü—Í‚ÅƒRƒ“ƒpƒCƒ‹ƒGƒ‰[‰ñ”ğ
+			//std::cin >> dummyInput; // ãƒ€ãƒŸãƒ¼å…¥åŠ›ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼å›é¿
 
 			shadowBiasDesc.DepthBiasClamp = 0.0f;
 
@@ -428,14 +428,14 @@ namespace SFW
 				if (FAILED(hr)) { return hr; }
 			}
 
-			SetRasterizerStateImpl(RasterizerStateID::SolidCullBack); // ƒfƒtƒHƒ‹ƒg
+			SetRasterizerStateImpl(RasterizerStateID::SolidCullBack); // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
 
 			return S_OK;
 		}
 
 		HRESULT RenderBackend::CreateBlendStates()
 		{
-			//--- ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒfƒBƒ“ƒO
+			//--- ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚°
 			// https://pgming-ctrl.com/directx11/blend/
 			D3D11_BLEND_DESC blendDesc = {};
 			blendDesc.AlphaToCoverageEnable = FALSE;
@@ -453,11 +453,11 @@ namespace SFW
 				TRUE,
 				// Additive      : C = SrcAlpha + Dest
 				TRUE,
-				// Multiply      : C = Dest * (1 - Src)  (Œ³ƒR[ƒh‚Ì ZERO / INV_SRC_COLOR ‚É‡‚í‚¹‚Ä‚¢‚Ü‚·)
+				// Multiply      : C = Dest * (1 - Src)  (å…ƒã‚³ãƒ¼ãƒ‰ã® ZERO / INV_SRC_COLOR ã«åˆã‚ã›ã¦ã„ã¾ã™)
 				TRUE,
-				// PremultiplyAlpha : C = Src + (1-SrcAlpha) * Dest  (ƒAƒ‹ƒtƒ@‘OæZ”Å‚ÌƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh)
+				// PremultiplyAlpha : C = Src + (1-SrcAlpha) * Dest  (ã‚¢ãƒ«ãƒ•ã‚¡å‰ä¹—ç®—ç‰ˆã®ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰)
 				TRUE,
-				// Subtract      : C = Dest - Src  iŒ¸ZƒuƒŒƒ“ƒhj
+				// Subtract      : C = Dest - Src  ï¼ˆæ¸›ç®—ãƒ–ãƒ¬ãƒ³ãƒ‰ï¼‰
 				TRUE,
 			};
 
@@ -470,7 +470,7 @@ namespace SFW
 				D3D11_BLEND_OP  opAlpha;
 			};
 
-			// BlendStateID ‚Æ 1:1 ‚Å‘Î‰‚³‚¹‚é
+			// BlendStateID ã¨ 1:1 ã§å¯¾å¿œã•ã›ã‚‹
 			BlendPreset presets[(size_t)BlendStateID::MAX_COUNT] = {
 				// Opaque        : C = Src
 				{ D3D11_BLEND_ONE,        D3D11_BLEND_ZERO,          D3D11_BLEND_OP_ADD,			D3D11_BLEND_ONE,		D3D11_BLEND_ZERO,			D3D11_BLEND_OP_ADD },
@@ -481,14 +481,14 @@ namespace SFW
 				// Additive      : C = SrcAlpha + Dest
 				{ D3D11_BLEND_SRC_ALPHA,  D3D11_BLEND_ONE,           D3D11_BLEND_OP_ADD,			D3D11_BLEND_ZERO,		D3D11_BLEND_ONE,			D3D11_BLEND_OP_ADD },
 
-				// Multiply      : C = Dest * (1 - Src)  (Œ³ƒR[ƒh‚Ì ZERO / INV_SRC_COLOR ‚É‡‚í‚¹‚Ä‚¢‚Ü‚·)
+				// Multiply      : C = Dest * (1 - Src)  (å…ƒã‚³ãƒ¼ãƒ‰ã® ZERO / INV_SRC_COLOR ã«åˆã‚ã›ã¦ã„ã¾ã™)
 				{ D3D11_BLEND_ZERO,       D3D11_BLEND_INV_SRC_COLOR, D3D11_BLEND_OP_ADD,			D3D11_BLEND_ZERO,		D3D11_BLEND_ONE,			D3D11_BLEND_OP_ADD },
 
-				// PremultiplyAlpha : C = Src + (1-SrcAlpha) * Dest  (ƒAƒ‹ƒtƒ@‘OæZ”Å‚ÌƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh)
+				// PremultiplyAlpha : C = Src + (1-SrcAlpha) * Dest  (ã‚¢ãƒ«ãƒ•ã‚¡å‰ä¹—ç®—ç‰ˆã®ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰)
 				{ D3D11_BLEND_ONE,        D3D11_BLEND_INV_SRC_ALPHA, D3D11_BLEND_OP_ADD,			D3D11_BLEND_ONE,		D3D11_BLEND_INV_SRC_ALPHA,	D3D11_BLEND_OP_ADD },
 
-				// Subtract      : C = Dest - Src  iŒ¸ZƒuƒŒƒ“ƒhj
-				// ‚±‚±‚Å RevSubtract ‚É‚µ‚Ä‚¢‚é‚Ì‚ÅuŠù‘¶F - V‚µ‚¢Fv‚ÌƒCƒ[ƒW
+				// Subtract      : C = Dest - Src  ï¼ˆæ¸›ç®—ãƒ–ãƒ¬ãƒ³ãƒ‰ï¼‰
+				// ã“ã“ã§ RevSubtract ã«ã—ã¦ã„ã‚‹ã®ã§ã€Œæ—¢å­˜è‰² - æ–°ã—ã„è‰²ã€ã®ã‚¤ãƒ¡ãƒ¼ã‚¸
 				{ D3D11_BLEND_ONE,        D3D11_BLEND_ONE,           D3D11_BLEND_OP_REV_SUBTRACT,	D3D11_BLEND_ZERO,		D3D11_BLEND_ONE,			D3D11_BLEND_OP_ADD },
 			};
 
@@ -512,16 +512,16 @@ namespace SFW
 
 		HRESULT RenderBackend::CreateDepthStencilStates()
 		{
-			//--- [“xƒeƒXƒg
+			//--- æ·±åº¦ãƒ†ã‚¹ãƒˆ
 			// https://tositeru.github.io/Imasara/part/ZBuffer-and-depth-stencil
 			auto create = [&](size_t idx, const D3D11_DEPTH_STENCIL_DESC& desc) -> HRESULT {
-				depthStencilStates[idx].Reset(); // ˆÀ‘S‚Ì‚½‚ß”jŠü
+				depthStencilStates[idx].Reset(); // å®‰å…¨ã®ãŸã‚ç ´æ£„
 				return device->CreateDepthStencilState(&desc, depthStencilStates[idx].GetAddressOf());
 				};
 
 			HRESULT hr = S_OK;
 
-			// 0) ƒx[ƒX‚Æ‚È‚éƒfƒtƒHƒ‹ƒgİ’è
+			// 0) ãƒ™ãƒ¼ã‚¹ã¨ãªã‚‹ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¨­å®š
 			D3D11_DEPTH_STENCIL_DESC ds = {};
 			ds.StencilReadMask = D3D11_DEFAULT_STENCIL_READ_MASK;
 			ds.StencilWriteMask = D3D11_DEFAULT_STENCIL_WRITE_MASK;
@@ -531,17 +531,17 @@ namespace SFW
 			ds.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 			ds.BackFace = ds.FrontFace;
 
-			// 1) Default: [“xƒeƒXƒgON, ‘‚«‚İON, LessEquali•s“§–¾/‘å”¼‚Ì3Dj
+			// 1) Default: æ·±åº¦ãƒ†ã‚¹ãƒˆON, æ›¸ãè¾¼ã¿ON, LessEqualï¼ˆä¸é€æ˜/å¤§åŠã®3Dï¼‰
 			{
 				auto d = ds;
 				d.DepthEnable = TRUE;
 				d.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 				d.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
-				d.StencilEnable = FALSE; // Šù’è‚ÍStencil–¢g—p
+				d.StencilEnable = FALSE; // æ—¢å®šã¯Stencilæœªä½¿ç”¨
 				hr = create((size_t)DepthStencilStateID::Default, d); if (FAILED(hr)) return hr;
 			}
 
-			// 2) DepthReadOnly: [“xƒeƒXƒgON, ‘‚«‚İOFFiƒXƒJƒCƒ{ƒbƒNƒX/ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh/ƒ|ƒXƒgŒnj
+			// 2) DepthReadOnly: æ·±åº¦ãƒ†ã‚¹ãƒˆON, æ›¸ãè¾¼ã¿OFFï¼ˆã‚¹ã‚«ã‚¤ãƒœãƒƒã‚¯ã‚¹/ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰/ãƒã‚¹ãƒˆç³»ï¼‰
 			{
 				auto d = ds;
 				d.DepthEnable = TRUE;
@@ -551,17 +551,17 @@ namespace SFW
 				hr = create((size_t)DepthStencilStateID::DepthReadOnly, d); if (FAILED(hr)) return hr;
 			}
 
-			// 3) DefaultGreater: [“xƒeƒXƒgON, ‘‚«‚İON, GraterEquali•s“§–¾/‘å”¼‚Ì3Dj
+			// 3) DefaultGreater: æ·±åº¦ãƒ†ã‚¹ãƒˆON, æ›¸ãè¾¼ã¿ON, GraterEqualï¼ˆä¸é€æ˜/å¤§åŠã®3Dï¼‰
 			{
 				auto d = ds;
 				d.DepthEnable = TRUE;
 				d.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 				d.DepthFunc = D3D11_COMPARISON_GREATER_EQUAL;
-				d.StencilEnable = FALSE; // Šù’è‚ÍStencil–¢g—p
+				d.StencilEnable = FALSE; // æ—¢å®šã¯Stencilæœªä½¿ç”¨
 				hr = create((size_t)DepthStencilStateID::Default_Greater, d); if (FAILED(hr)) return hr;
 			}
 
-			// 4) DepthReadOnlyGreater: [“xƒeƒXƒgON, ‘‚«‚İOFFiƒXƒJƒCƒ{ƒbƒNƒX/ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh/ƒ|ƒXƒgŒnj
+			// 4) DepthReadOnlyGreater: æ·±åº¦ãƒ†ã‚¹ãƒˆON, æ›¸ãè¾¼ã¿OFFï¼ˆã‚¹ã‚«ã‚¤ãƒœãƒƒã‚¯ã‚¹/ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰/ãƒã‚¹ãƒˆç³»ï¼‰
 			{
 				auto d = ds;
 				d.DepthEnable = TRUE;
@@ -571,7 +571,7 @@ namespace SFW
 				hr = create((size_t)DepthStencilStateID::DepthReadOnly_Greater, d); if (FAILED(hr)) return hr;
 			}
 
-			// 5) Default_Stencil: [“xƒeƒXƒgON, ‘‚«‚İON, LessEqual, StencilONi•s“§–¾/‘å”¼‚Ì3Dj
+			// 5) Default_Stencil: æ·±åº¦ãƒ†ã‚¹ãƒˆON, æ›¸ãè¾¼ã¿ON, LessEqual, StencilONï¼ˆä¸é€æ˜/å¤§åŠã®3Dï¼‰
 			{
 				auto d = ds;
 				d.DepthEnable = TRUE;
@@ -591,7 +591,7 @@ namespace SFW
 				hr = create((size_t)DepthStencilStateID::Default_Stencil, d); if (FAILED(hr)) return hr;
 			}
 
-			// 6) Default_ReadOnly_Stencil: [“xƒeƒXƒgON, ‘‚«‚İOFF, LessEqual, StencilONi•s“§–¾/‘å”¼‚Ì3Dj
+			// 6) Default_ReadOnly_Stencil: æ·±åº¦ãƒ†ã‚¹ãƒˆON, æ›¸ãè¾¼ã¿OFF, LessEqual, StencilONï¼ˆä¸é€æ˜/å¤§åŠã®3Dï¼‰
 			{
 				auto d = ds;
 				d.DepthEnable = TRUE;
@@ -611,7 +611,7 @@ namespace SFW
 				hr = create((size_t)DepthStencilStateID::DepthReadOnly_Stencil, d); if (FAILED(hr)) return hr;
 			}
 
-			// 7) DepthReadOnlyGreater_Stencil: [“xƒeƒXƒgON, ‘‚«‚İOFFiƒXƒJƒCƒ{ƒbƒNƒX/ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh/ƒ|ƒXƒgŒnj
+			// 7) DepthReadOnlyGreater_Stencil: æ·±åº¦ãƒ†ã‚¹ãƒˆON, æ›¸ãè¾¼ã¿OFFï¼ˆã‚¹ã‚«ã‚¤ãƒœãƒƒã‚¯ã‚¹/ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰/ãƒã‚¹ãƒˆç³»ï¼‰
 			{
 				auto d = ds;
 				d.DepthEnable = TRUE;
@@ -619,7 +619,7 @@ namespace SFW
 				d.DepthFunc = D3D11_COMPARISON_GREATER_EQUAL;
 				d.StencilEnable = TRUE;
 				d.StencilReadMask = 0xFF;
-				d.StencilWriteMask = 0x00; // ‘‚«‚Ü‚È‚¢
+				d.StencilWriteMask = 0x00; // æ›¸ãè¾¼ã¾ãªã„
 				d.FrontFace.StencilFunc = D3D11_COMPARISON_EQUAL;
 				d.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 				d.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
@@ -627,7 +627,7 @@ namespace SFW
 				hr = create((size_t)DepthStencilStateID::DepthReadOnly_Greater_Read_Stencil, d); if (FAILED(hr)) return hr;
 			}
 
-			// 8) NoDepth: [“xƒeƒXƒgOFF, ‘‚«‚İOFFiHUD/ƒfƒoƒbƒOƒI[ƒo[ƒŒƒCj
+			// 8) NoDepth: æ·±åº¦ãƒ†ã‚¹ãƒˆOFF, æ›¸ãè¾¼ã¿OFFï¼ˆHUD/ãƒ‡ãƒãƒƒã‚°ã‚ªãƒ¼ãƒãƒ¼ãƒ¬ã‚¤ï¼‰
 			{
 				auto d = ds;
 				d.DepthEnable = FALSE;

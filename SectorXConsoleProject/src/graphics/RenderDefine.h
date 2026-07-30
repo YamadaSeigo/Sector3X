@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 enum PassGroup {
 	GROUP_3D_MAIN,

@@ -1,4 +1,4 @@
-// simd_base.cpp
+ï»¿// simd_base.cpp
 #include "SIMD/simd_api.h"
 #include <cmath>
 #include <algorithm>
@@ -15,7 +15,7 @@ namespace SFW::SIMD
 		}
 	}
 
-	// Å’ZŒo˜H nlerpF dot(a,b)<0 ‚È‚ç b ‚ğ”½“] ¨ lerp ¨ ³‹K‰»
+	// æœ€çŸ­çµŒè·¯ nlerpï¼š dot(a,b)<0 ãªã‚‰ b ã‚’åè»¢ â†’ lerp â†’ æ­£è¦åŒ–
 	void UpdateQuatNlerpShortest_Base(float* qx, float* qy, float* qz, float* qw,
 		const float* ax, const float* ay, const float* az, const float* aw,
 		const float* bx, const float* by, const float* bz, const float* bw,

@@ -1,4 +1,4 @@
-// BiomeScatterGenerator.cpp
+ï»¿// BiomeScatterGenerator.cpp
 #include "BiomeScatterGenerator.h"
 
 void BiomeScatterGenerator::SetBiomes(std::span<const BiomeParams> biomes)
@@ -38,7 +38,7 @@ GroundSample BiomeScatterGenerator::SampleGround(float x, float z) const
 	g.rock = c.b / 255.0f;
 	g.snow = c.a / 255.0f;
 
-	// ‚½‚Ü‚É‡Œv‚ª1‚¶‚á‚È‚¢‚±‚Æ‚ª‚ ‚é‚Ì‚Å³‹K‰»i”CˆÓj
+	// ãŸã¾ã«åˆè¨ˆãŒ1ã˜ã‚ƒãªã„ã“ã¨ãŒã‚ã‚‹ã®ã§æ­£è¦åŒ–ï¼ˆä»»æ„ï¼‰
 	const float sum = g.grass + g.dirt + g.rock + g.snow;
 	if (sum > 1e-6f) {
 		g.grass /= sum; g.dirt /= sum; g.rock /= sum; g.snow /= sum;
@@ -107,7 +107,7 @@ int BiomeScatterGenerator::WeightedPickIndex(std::span<const BranchGroup::ModelC
 	return (int)items.size() - 1;
 }
 
-// Œó•â“_¶¬Fƒ[ƒ‹ƒh‚ğƒZƒ‹‚Å‘–¸‚µ‚ÄƒZƒ‹‚²‚Æ‚É1“_iƒWƒbƒ^[j
+// å€™è£œç‚¹ç”Ÿæˆï¼šãƒ¯ãƒ¼ãƒ«ãƒ‰ã‚’ã‚»ãƒ«ã§èµ°æŸ»ã—ã¦ã‚»ãƒ«ã”ã¨ã«1ç‚¹ï¼ˆã‚¸ãƒƒã‚¿ãƒ¼ï¼‰
 void BiomeScatterGenerator::GenerateCandidates(std::vector<Math::Vec2f>& out) const
 {
 	const float cell = (std::max)(0.25f, m_cfg.candidateCellSize);
@@ -121,7 +121,7 @@ void BiomeScatterGenerator::GenerateCandidates(std::vector<Math::Vec2f>& out) co
 		for (int x = 0; x < nx; ++x) {
 			uint32_t rng = Hash2D((uint32_t)x, (uint32_t)z, m_in.globalSeed);
 
-			// ƒZƒ‹“àƒWƒbƒ^[i‹Ïˆêj
+			// ã‚»ãƒ«å†…ã‚¸ãƒƒã‚¿ãƒ¼ï¼ˆå‡ä¸€ï¼‰
 			const float jx = URange(rng, 0.0f, 1.0f);
 			const float jz = URange(rng, 0.0f, 1.0f);
 
@@ -129,7 +129,7 @@ void BiomeScatterGenerator::GenerateCandidates(std::vector<Math::Vec2f>& out) co
 			p.x = (x + jx) * cell;
 			p.y = (z + jz) * cell;
 
-			// ”O‚Ì‚½‚ßƒNƒ‰ƒ“ƒv
+			// å¿µã®ãŸã‚ã‚¯ãƒ©ãƒ³ãƒ—
 			if (p.x < 0 || p.y < 0 || p.x > m_in.worldSize.x || p.y > m_in.worldSize.y)
 				continue;
 
@@ -159,8 +159,8 @@ void BiomeScatterGenerator::GenerateCandidates(std::vector<Math::Vec2f>& out) co
 		const BiomeParams* biome = FindBiome(biomeId);
 		if (!biome) continue;
 
-		// density gateiƒoƒCƒI[ƒ€‚Ì–§“x‚É‰‚¶‚ÄŒó•â“_‚ğŠÔˆø‚­j
-		// –ÚˆÀ: baseDensityPerSquareMeter ~ (cellArea) ‚ª 1Œó•â‚ ‚½‚è‚ÌÌ—pŠm—¦
+		// density gateï¼ˆãƒã‚¤ã‚ªãƒ¼ãƒ ã®å¯†åº¦ã«å¿œã˜ã¦å€™è£œç‚¹ã‚’é–“å¼•ãï¼‰
+		// ç›®å®‰: baseDensityPerSquareMeter Ã— (cellArea) ãŒ 1å€™è£œã‚ãŸã‚Šã®æ¡ç”¨ç¢ºç‡
 		const float cellArea = m_cfg.candidateCellSize * m_cfg.candidateCellSize;
 		float acceptP = Math::saturate(biome->baseDensityPerSquareMeter * cellArea);
 
@@ -179,7 +179,7 @@ void BiomeScatterGenerator::GenerateCandidates(std::vector<Math::Vec2f>& out) co
 		if (m_in.sampleSlopeDeg) slopeDeg = m_in.sampleSlopeDeg(x, z, m_in.heightUser);
 		if (m_in.sampleHeight)   y = m_in.sampleHeight(x, z, m_in.heightUser);
 
-		// branch loopiu}•ª‚©‚êvj
+		// branch loopï¼ˆã€Œæåˆ†ã‹ã‚Œã€ï¼‰
 		for (const BranchGroup& br : biome->branches)
 		{
 			if (out.size() >= m_cfg.maxInstances) return out;
@@ -192,8 +192,8 @@ void BiomeScatterGenerator::GenerateCandidates(std::vector<Math::Vec2f>& out) co
 			uint32_t rng = HashU32(rngCell ^ HashU32((uint32_t)(&br - biome->branches.data())));
 			if (U01(rng) > Math::saturate(br.spawnProbability)) continue;
 
-			// ’n•\•¼‚è‹C‚Åd‚İ‚ğì‚éig}•ª‚¯h‚Ì’†‚Ìƒ‚ƒfƒ‹‘I‘ğ‚É”½‰fj
-			// ‚±‚±‚ÍD‚İ‚Åu}©‘Ì‚ÌÌ”Ûv‚É‚àg‚¦‚é
+			// åœ°è¡¨ï¼†æ¹¿ã‚Šæ°—ã§é‡ã¿ã‚’ä½œã‚‹ï¼ˆâ€œæåˆ†ã‘â€ã®ä¸­ã®ãƒ¢ãƒ‡ãƒ«é¸æŠã«åæ˜ ï¼‰
+			// ã“ã“ã¯å¥½ã¿ã§ã€Œæè‡ªä½“ã®æ¡å¦ã€ã«ã‚‚ä½¿ãˆã‚‹
 			const float surfaceW =
 				g.grass * br.wGrass +
 				g.dirt * br.wDirt +
@@ -202,9 +202,9 @@ void BiomeScatterGenerator::GenerateCandidates(std::vector<Math::Vec2f>& out) co
 
 			const float finalW = Math::saturate(surfaceW) * Math::saturate(br.wWetness * wet + (1.0f - br.wWetness));
 
-			// finalW‚ª’á‚¢‚È‚çŠü‹pi’n•\‚ª‡‚í‚È‚¢j
+			// finalWãŒä½ã„ãªã‚‰æ£„å´ï¼ˆåœ°è¡¨ãŒåˆã‚ãªã„ï¼‰
 			if (finalW < 0.15f) continue;
-			// ó——¦‚Æ‚µ‚Äg‚¤
+			// å—ç†ç‡ã¨ã—ã¦ä½¿ã†
 			if (U01(rng) > finalW) continue;
 
 			// model pick (weighted)
@@ -217,9 +217,9 @@ void BiomeScatterGenerator::GenerateCandidates(std::vector<Math::Vec2f>& out) co
 			inst.yaw = URange(rng, 0.0f, 6.28318530718f);
 			inst.uniformScale = URange(rng, br.scaleMin, br.scaleMax);
 
-			// tint base: ’n•\‚É­‚µŠñ‚¹‚é—ái”CˆÓj
+			// tint base: åœ°è¡¨ã«å°‘ã—å¯„ã›ã‚‹ä¾‹ï¼ˆä»»æ„ï¼‰
 			Math::Vec3f baseTint = { 1,1,1 };
-			baseTint.x = Math::lerp(1.0f, 0.90f, g.snow); // á‘½‚¢‚Æ­‚µÂ”’‚­
+			baseTint.x = Math::lerp(1.0f, 0.90f, g.snow); // é›ªå¤šã„ã¨å°‘ã—é’ç™½ã
 			baseTint.y = Math::lerp(1.0f, 0.95f, g.rock);
 			baseTint.z = Math::lerp(1.0f, 0.92f, g.dirt);
 
@@ -229,7 +229,7 @@ void BiomeScatterGenerator::GenerateCandidates(std::vector<Math::Vec2f>& out) co
 			inst.tint.z = Math::saturate(inst.tint.z + URange(rng, -br.tintJitter.z, br.tintJitter.z));
 
 			inst.roughness = URange(rng, br.roughnessMin, br.roughnessMax);
-			// ¼‚è‹C‚ª‚‚¢‚Æ‘e‚³ª‚İ‚½‚¢‚È•â³i”CˆÓj
+			// æ¹¿ã‚Šæ°—ãŒé«˜ã„ã¨ç²—ã•â†‘ã¿ãŸã„ãªè£œæ­£ï¼ˆä»»æ„ï¼‰
 			inst.roughness = Math::saturate(Math::lerp(inst.roughness, 1.0f, wet * 0.25f));
 
 			out.push_back(inst);

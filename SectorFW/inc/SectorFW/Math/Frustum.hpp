@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Frustum.hpp
- * @brief ƒtƒ‰ƒXƒ^ƒ€‚Æ•½–Ê‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã¨å¹³é¢ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -11,10 +11,10 @@
 #include <algorithm>
 #include "Vector.hpp"   // SectorFW::Math::Vec3f
 #include "AABB.hpp"     // SectorFW::Math::AABB2f / AABB3f (lb, ub)
-#include "Matrix.hpp"   // s—ñ‚©‚ç‚Ì’Šo‚Ég‚¤ê‡i•K—v‚È‚çj
+#include "Matrix.hpp"   // è¡Œåˆ—ã‹ã‚‰ã®æŠ½å‡ºã«ä½¿ã†å ´åˆï¼ˆå¿…è¦ãªã‚‰ï¼‰
 
 namespace SFW::Math {
-	// nEx + d = 0
+	// nãƒ»x + d = 0
 	struct Planef {
 		Vec3f n{ 0.f, 0.f, 1.f };
 		float d{ 0.f };
@@ -22,14 +22,14 @@ namespace SFW::Math {
 		Planef() = default;
 		constexpr Planef(const Vec3f& normal, float dd) : n(normal), d(dd) {}
 
-		// ax + by + cz + d = 0 ‚©‚çi³‹K‰»ƒIƒvƒVƒ‡ƒ“j
+		// ax + by + cz + d = 0 ã‹ã‚‰ï¼ˆæ­£è¦åŒ–ã‚ªãƒ—ã‚·ãƒ§ãƒ³ï¼‰
 		static Planef FromCoefficients(float a, float b, float c, float d, bool normalize = true) noexcept {
 			Planef pl{ {a,b,c}, d };
 			if (normalize) pl.Normalize();
 			return pl;
 		}
 
-		// “_{–@ü‚©‚ç
+		// ç‚¹ï¼‹æ³•ç·šã‹ã‚‰
 		static Planef FromPointNormal(const Vec3f& point, const Vec3f& normal, bool normalize = true) noexcept {
 			Vec3f nn = normal;
 			if (normalize) {
@@ -42,7 +42,7 @@ namespace SFW::Math {
 			return { nn, -(nn.x * point.x + nn.y * point.y + nn.z * point.z) };
 		}
 
-		// 3•½–Ê‚ÌŒğ“_B¸”s false
+		// 3å¹³é¢ã®äº¤ç‚¹ã€‚å¤±æ•—æ™‚ false
 		static bool Intersect3Planes(const Planef& p1, const Planef& p2, const Planef& p3, Math::Vec3f& out)
 		{
 			const auto n1 = p1.n, n2 = p2.n, n3 = p3.n;
@@ -69,7 +69,7 @@ namespace SFW::Math {
 			return true;
 		}
 
-		// •Ğ‘¤³‹K‰»
+		// ç‰‡å´æ­£è¦åŒ–
 		void Normalize() noexcept {
 			const float len = std::sqrt(n.x * n.x + n.y * n.y + n.z * n.z);
 			if (len > 0.f) {
@@ -79,7 +79,7 @@ namespace SFW::Math {
 		}
 		Planef Normalized() const noexcept { Planef t = *this; t.Normalize(); return t; }
 
-		// •„†•t‚«‹——£in ‚ª”ñ³‹K‰»‚Å‚à‚»‚ÌƒXƒP[ƒ‹‚Ì‹——£j
+		// ç¬¦å·ä»˜ãè·é›¢ï¼ˆn ãŒéæ­£è¦åŒ–ã§ã‚‚ãã®ã‚¹ã‚±ãƒ¼ãƒ«ã®è·é›¢ï¼‰
 		float SignedDistance(const Vec3f& p) const noexcept {
 			return n.x * p.x + n.y * p.y + n.z * p.z + d;
 		}
@@ -97,7 +97,7 @@ namespace SFW::Math {
 			for (auto& pl : p) pl.Normalize();
 		}
 
-		// Row-major 4x4iDirectX‘z’èj: m[16] = row-major ”z—ñ
+		// Row-major 4x4ï¼ˆDirectXæƒ³å®šï¼‰: m[16] = row-major é…åˆ—
 		static Frustumf FromRowMajor(const float m[16], bool normalize = true) noexcept {
 			auto M = [&](int r, int c) -> float { return m[r * 4 + c]; };
 			auto make = [normalize](float a, float b, float c, float d) {
@@ -106,7 +106,7 @@ namespace SFW::Math {
 
 			Frustumf fr;
 
-			// row4 } rowX ‚ÅŠe¬•ª‚ğì‚éia,b,c,d ‚Í—ñ 0,1,2,3j
+			// row4 Â± rowX ã§å„æˆåˆ†ã‚’ä½œã‚‹ï¼ˆa,b,c,d ã¯åˆ— 0,1,2,3ï¼‰
 			// Left:  row4 + row1
 			fr.p[(int)FrustumPlane::Left] = make(
 				M(3, 0) + M(0, 0),
@@ -158,7 +158,7 @@ namespace SFW::Math {
 			auto col = [&](int c) { return std::array<float, 4>{ C(0, c), C(1, c), C(2, c), C(3, c) }; };
 
 			Frustumf fr;
-			// —ñ’Šoicol4}colX, Near=col3, Far=col4-col3j
+			// åˆ—æŠ½å‡ºï¼ˆcol4Â±colX, Near=col3, Far=col4-col3ï¼‰
 			const auto c1 = col(0), c2 = col(1), c3 = col(2), c4 = col(3);
 			fr.p[(int)FrustumPlane::Left] = make(c4[0] + c1[0], c4[1] + c1[1], c4[2] + c1[2], c4[3] + c1[3]);
 			fr.p[(int)FrustumPlane::Right] = make(c4[0] - c1[0], c4[1] - c1[1], c4[2] - c1[2], c4[3] - c1[3]);
@@ -170,8 +170,8 @@ namespace SFW::Math {
 		}
 
 		//===============================
-		// Row-major ”z—ñ‚©‚ç’Šoi—ñƒxƒNƒgƒ‹‹K–ñj
-		//  Near/Far ‚Í ClipZRange ‚Å•ªŠò
+		// Row-major é…åˆ—ã‹ã‚‰æŠ½å‡ºï¼ˆåˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ï¼‰
+		//  Near/Far ã¯ ClipZRange ã§åˆ†å²
 		//===============================
 		static Frustumf FromRowMajorWithZ(const float m[16],
 			ClipZRange zrange,
@@ -184,7 +184,7 @@ namespace SFW::Math {
 
 			Frustumf fr;
 
-			// row4 } row{1,2,3}
+			// row4 Â± row{1,2,3}
 			fr.p[(int)FrustumPlane::Left] = make(M(3, 0) + M(0, 0), M(3, 1) + M(0, 1), M(3, 2) + M(0, 2), M(3, 3) + M(0, 3));
 			fr.p[(int)FrustumPlane::Right] = make(M(3, 0) - M(0, 0), M(3, 1) - M(0, 1), M(3, 2) - M(0, 2), M(3, 3) - M(0, 3));
 			fr.p[(int)FrustumPlane::Bottom] = make(M(3, 0) + M(1, 0), M(3, 1) + M(1, 1), M(3, 2) + M(1, 2), M(3, 3) + M(1, 3));
@@ -206,8 +206,8 @@ namespace SFW::Math {
 		}
 
 		//================================
-		// Column-major ”z—ñ‚©‚ç’Šoi—ñƒxƒNƒgƒ‹‹K–ñj
-		//  Near/Far ‚Í ClipZRange ‚Å•ªŠò
+		// Column-major é…åˆ—ã‹ã‚‰æŠ½å‡ºï¼ˆåˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ï¼‰
+		//  Near/Far ã¯ ClipZRange ã§åˆ†å²
 		//================================
 		static Frustumf FromColMajorWithZ(const float m[16],
 			ClipZRange zrange,
@@ -218,7 +218,7 @@ namespace SFW::Math {
 				return Planef::FromCoefficients(a, b, c, d, normalize);
 				};
 
-			// —ñƒxƒNƒgƒ‹ c1..c4 ‚ğ—pˆÓic4}c{1,2,3}j
+			// åˆ—ãƒ™ã‚¯ãƒˆãƒ« c1..c4 ã‚’ç”¨æ„ï¼ˆc4Â±c{1,2,3}ï¼‰
 			const float c1[4] = { C(0,0), C(1,0), C(2,0), C(3,0) };
 			const float c2[4] = { C(0,1), C(1,1), C(2,1), C(3,1) };
 			const float c3[4] = { C(0,2), C(1,2), C(2,2), C(3,2) };
@@ -246,10 +246,10 @@ namespace SFW::Math {
 			return fr;
 		}
 
-		// m ‚Í row-major ”z—ñifloat[16]j
+		// m ã¯ row-major é…åˆ—ï¼ˆfloat[16]ï¼‰
 		static void MakeFrustumPlanes_WorldSpace(const float ViewProj[16], float outPlanes[6][4]) {
 			auto fr = SFW::Math::Frustumf::FromRowMajorWithZ(ViewProj, SFW::Math::ClipZRange::ZeroToOne, /*normalize=*/true);
-			// nEd ‚ğ‚»‚Ì‚Ü‚Üo‚·iCS‘¤‚Ì”»’è: dot(n, X) + d >= 0 ‚ğ IN ‚Æ‚·‚éj
+			// nãƒ»d ã‚’ãã®ã¾ã¾å‡ºã™ï¼ˆCSå´ã®åˆ¤å®š: dot(n, X) + d >= 0 ã‚’ IN ã¨ã™ã‚‹ï¼‰
 			for (int i = 0; i < 6; ++i) {
 				outPlanes[i][0] = fr.p[i].n.x;
 				outPlanes[i][1] = fr.p[i].n.y;
@@ -261,15 +261,15 @@ namespace SFW::Math {
 		static void MakeFrustumPlanes_WorldSpace_Oriented(const float ViewProj[16],
 			const float camPos[3],
 			float* outPlanes) {
-			// 1) ‚Ü‚¸’Êí‚Ç‚¨‚è’ŠoiZeroToOne / ³‹K‰»j
+			// 1) ã¾ãšé€šå¸¸ã©ãŠã‚ŠæŠ½å‡ºï¼ˆZeroToOne / æ­£è¦åŒ–ï¼‰
 			float planes[6][4];
-			MakeFrustumPlanes_WorldSpace(ViewProj, planes); // ©‚ ‚È‚½‚ª¡g‚Á‚Ä‚¢‚éŠÖ”
+			MakeFrustumPlanes_WorldSpace(ViewProj, planes); // â†ã‚ãªãŸãŒä»Šä½¿ã£ã¦ã„ã‚‹é–¢æ•°
 
-			// 2) Še–Ê‚ğuƒJƒƒ‰ˆÊ’u‚ª“à‘¤i>=0jv‚É‚È‚é‚æ‚¤®‚¦‚é
+			// 2) å„é¢ã‚’ã€Œã‚«ãƒ¡ãƒ©ä½ç½®ãŒå†…å´ï¼ˆ>=0ï¼‰ã€ã«ãªã‚‹ã‚ˆã†æ•´ãˆã‚‹
 			for (int i = 0; i < 6; ++i) {
 				const float a = planes[i][0], b = planes[i][1], c = planes[i][2], d = planes[i][3];
 				float evalAtCam = a * camPos[0] + b * camPos[1] + c * camPos[2] + d;
-				// ‚à‚µƒJƒƒ‰ˆÊ’u‚ª•‰iŠO‘¤j‚È‚çA–@ü‚Æ d ‚ğ”½“]‚µ‚Äg“àŒü‚«h‚É‚·‚é
+				// ã‚‚ã—ã‚«ãƒ¡ãƒ©ä½ç½®ãŒè² ï¼ˆå¤–å´ï¼‰ãªã‚‰ã€æ³•ç·šã¨ d ã‚’åè»¢ã—ã¦â€œå†…å‘ãâ€ã«ã™ã‚‹
 				if (evalAtCam < 0.0f) {
 					planes[i][0] = -planes[i][0];
 					planes[i][1] = -planes[i][1];
@@ -280,9 +280,9 @@ namespace SFW::Math {
 			memcpy(outPlanes, planes, sizeof(planes));
 		}
 
-		// AABB ‚ªƒIƒuƒWƒFƒNƒg‹óŠÔ‚Ìê‡iVS‚Å mul(World, p) ‚µ‚Ä‚¢‚é‚È‚çA‚±‚±‚Å‚Í ViewProj*World ‚Å’Šoj
+		// AABB ãŒã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç©ºé–“ã®å ´åˆï¼ˆï¼VSã§ mul(World, p) ã—ã¦ã„ã‚‹ãªã‚‰ã€ã“ã“ã§ã¯ ViewProj*World ã§æŠ½å‡ºï¼‰
 		static void MakeFrustumPlanes_ObjectSpace(const float ViewProj[16], const float World[16], float outPlanes[6][4]) {
-			// s—ñ‚Í row-major “¯m‚Ì‚©‚¯Zirow-major‚Ì”®‚Å OKj
+			// è¡Œåˆ—ã¯ row-major åŒå£«ã®ã‹ã‘ç®—ï¼ˆrow-majorã®æ•°å¼ã§ OKï¼‰
 			auto mulRM = [](const float A[16], const float B[16], float M[16]) {
 				for (int r = 0; r < 4; ++r) for (int c = 0; c < 4; ++c) {
 					M[r * 4 + c] = A[r * 4 + 0] * B[0 * 4 + c] + A[r * 4 + 1] * B[1 * 4 + c] + A[r * 4 + 2] * B[2 * 4 + c] + A[r * 4 + 3] * B[3 * 4 + c];
@@ -298,7 +298,7 @@ namespace SFW::Math {
 			}
 		}
 
-		// Matrix<4,4,T> ‚©‚ç’¼Úì‚éƒwƒ‹ƒp
+		// Matrix<4,4,T> ã‹ã‚‰ç›´æ¥ä½œã‚‹ãƒ˜ãƒ«ãƒ‘
 		template<class T>
 		static Frustumf FromRowMajorMatrix(const Matrix<4, 4, T>& M,
 			ClipZRange zrange,
@@ -309,7 +309,7 @@ namespace SFW::Math {
 			return FromRowMajorWithZ(m, zrange, normalize);
 		}
 
-		// ”CˆÓF–Ê‚ÌŒü‚«‚ğu“à‘¤=³v‚É‘µ‚¦‚éi”»’è® s+r<0 ‚Æ®‡‚³‚¹‚é•ÛŒ¯j
+		// ä»»æ„ï¼šé¢ã®å‘ãã‚’ã€Œå†…å´=æ­£ã€ã«æƒãˆã‚‹ï¼ˆåˆ¤å®šå¼ s+r<0 ã¨æ•´åˆã•ã›ã‚‹ä¿é™ºï¼‰
 		static void FaceInward(Frustumf& fr,
 			const Vec3f& camPos,
 			const Vec3f& camFwd,
@@ -325,15 +325,15 @@ namespace SFW::Math {
 			}
 		}
 
-		// ƒwƒ‹ƒpFƒZƒ‹’†S (x,z) ‚É‚¨‚¯‚éƒtƒ‰ƒXƒ^ƒ€‚Ìc•ûŒü‰Â‹”ÍˆÍ‚ğ‹‚ßA
-		// [ymin,ymax] ‚ÆŒğ·‚³‚¹‚ÄuÀŒø“I centerY/extentYv‚ğ•Ô‚·B
-		// Œğ·‚ª–³‚¯‚ê‚Î false ‚ğ•Ô‚·B
+		// ãƒ˜ãƒ«ãƒ‘ï¼šã‚»ãƒ«ä¸­å¿ƒ (x,z) ã«ãŠã‘ã‚‹ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã®ç¸¦æ–¹å‘å¯è¦–ç¯„å›²ã‚’æ±‚ã‚ã€
+		// [ymin,ymax] ã¨äº¤å·®ã•ã›ã¦ã€Œå®ŸåŠ¹çš„ centerY/extentYã€ã‚’è¿”ã™ã€‚
+		// äº¤å·®ãŒç„¡ã‘ã‚Œã° false ã‚’è¿”ã™ã€‚
 		static inline bool ComputeYOverlapAtXZ(const Math::Frustumf& fr,
 			float x, float z,
 			float ymin, float ymax,
 			float& outCenterY, float& outExtentY) noexcept
 		{
-			// “ü—Í‚Ì‡˜‚ª‹t‚Å‚àˆÀ‘S‚É
+			// å…¥åŠ›ã®é †åºãŒé€†ã§ã‚‚å®‰å…¨ã«
 			if (ymin > ymax) std::swap(ymin, ymax);
 
 			const auto& top = fr.p[(int)Math::FrustumPlane::Top];
@@ -344,8 +344,8 @@ namespace SFW::Math {
 			// y = -(nx*x + nz*z + d) / ny
 			auto solveY = [&](const Math::Planef& pl)->float {
 				if (std::fabs(pl.n.y) < EPS) {
-					// ‚Ù‚Ú…•½§–ñ‚ª–³‚¢i= ‚±‚Ì•½–Ê‚Å‚Í Y ‚ğ”›‚ê‚È‚¢j
-					// ãŠE/‰ºŠE‚ğ•\‚·‚½‚ß‚É }‡ ‚ğ•Ô‚µ‚Ä‚¨‚­
+					// ã»ã¼æ°´å¹³åˆ¶ç´„ãŒç„¡ã„ï¼ˆ= ã“ã®å¹³é¢ã§ã¯ Y ã‚’ç¸›ã‚Œãªã„ï¼‰
+					// ä¸Šç•Œ/ä¸‹ç•Œã‚’è¡¨ã™ãŸã‚ã« Â±âˆ ã‚’è¿”ã—ã¦ãŠã
 					return (pl.n.y >= 0.f) ? std::numeric_limits<float>::infinity()
 						: -std::numeric_limits<float>::infinity();
 				}
@@ -355,43 +355,43 @@ namespace SFW::Math {
 			float yTop = solveY(top);
 			float yBottom = solveY(bottom);
 
-			// ƒtƒ‰ƒXƒ^ƒ€‚Ì Y ”ÍˆÍi‡˜³‹K‰»j
+			// ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã® Y ç¯„å›²ï¼ˆé †åºæ­£è¦åŒ–ï¼‰
 			float yFmin = (std::min)(yTop, yBottom);
 			float yFmax = (std::max)(yTop, yBottom);
 
-			// “ü—ÍƒXƒ‰ƒu‚ÆŒğ·
+			// å…¥åŠ›ã‚¹ãƒ©ãƒ–ã¨äº¤å·®
 			float y0 = (std::max)(ymin, yFmin);
 			float y1 = (std::min)(ymax, yFmax);
-			if (y0 > y1) return false; // ‚»‚à‚»‚à‚»‚Ì (x,z) ‚Åc‚Éd‚È‚ç‚È‚¢
+			if (y0 > y1) return false; // ãã‚‚ãã‚‚ãã® (x,z) ã§ç¸¦ã«é‡ãªã‚‰ãªã„
 
 			outCenterY = 0.5f * (y0 + y1);
 			outExtentY = 0.5f * (y1 - y0);
 			return true;
 		}
 
-		// “_
+		// ç‚¹
 		bool ContainsPoint(const Vec3f& pt) const noexcept {
 			for (const auto& pl : p) if (pl.SignedDistance(pt) < 0.f) return false;
 			return true;
 		}
 
-		// ‹…
+		// çƒ
 		bool IntersectsSphere(const Vec3f& c, float r) const noexcept {
 			for (const auto& pl : p) if (pl.SignedDistance(c) < -r) return false;
 			return true;
 		}
 
-		// AABB: center/extents ”Å
+		// AABB: center/extents ç‰ˆ
 		bool IntersectsAABB(const Vec3f& center, const Vec3f& extent) const noexcept {
 			for (const auto& pl : p) {
 				const float s = pl.n.x * center.x + pl.n.y * center.y + pl.n.z * center.z + pl.d;
 				const float r = std::fabs(pl.n.x) * extent.x + std::fabs(pl.n.y) * extent.y + std::fabs(pl.n.z) * extent.z;
-				if (s + r < 0.f) return false; // Š®‘SŠO
+				if (s + r < 0.f) return false; // å®Œå…¨å¤–
 			}
 			return true;
 		}
 
-		// AABB: lb/ub ”ÅiAABB3f ‚ª‚ ‚éê‡j
+		// AABB: lb/ub ç‰ˆï¼ˆAABB3f ãŒã‚ã‚‹å ´åˆï¼‰
 		template<class AABB3>
 		bool IntersectsAABB(const AABB3& aabb) const noexcept {
 			const Vec3f c{ (aabb.lb.x + aabb.ub.x) * 0.5f,
@@ -404,41 +404,41 @@ namespace SFW::Math {
 		}
 
 		//-----------------------------
-		// •ûŒüŒõ‚É‰ˆ‚Á‚Äƒtƒ‰ƒXƒ^ƒ€‚ğ‰Ÿ‚µL‚Î‚·
+		// æ–¹å‘å…‰ã«æ²¿ã£ã¦ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚’æŠ¼ã—ä¼¸ã°ã™
 		//-----------------------------
-		// @brief •ûŒüŒõ‚É‰ˆ‚Á‚Äƒtƒ‰ƒXƒ^ƒ€‚ğ‰Ÿ‚µL‚Î‚µ‚½‚à‚Ì‚ğ•Ô‚·
-		// @param lightDirWS ƒ[ƒ‹ƒh‹óŠÔ‚ÌŒõ‚Ì•ûŒüiƒ[ƒ‹ƒh¨ƒ‰ƒCƒg•ûŒüj
-		// @param length ‰Ÿ‚µL‚Î‚·‹——£iƒ[ƒ‹ƒhÀ•WŒn‚Ì’·‚³j
+		// @brief æ–¹å‘å…‰ã«æ²¿ã£ã¦ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚’æŠ¼ã—ä¼¸ã°ã—ãŸã‚‚ã®ã‚’è¿”ã™
+		// @param lightDirWS ãƒ¯ãƒ¼ãƒ«ãƒ‰ç©ºé–“ã®å…‰ã®æ–¹å‘ï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰â†’ãƒ©ã‚¤ãƒˆæ–¹å‘ï¼‰
+		// @param length æŠ¼ã—ä¼¸ã°ã™è·é›¢ï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã®é•·ã•ï¼‰
 		//
-		// Œ³‚Ìƒtƒ‰ƒXƒ^ƒ€“à‚Éu“_ P ‚ğ -lightDirWS •ûŒü‚É [0,length] ‚¾‚¯
-		// ƒXƒ‰ƒCƒh‚³‚¹‚½‚Ç‚±‚©‚Ì“_v‚ª“ü‚Á‚Ä‚¢‚ê‚Î P ‚à IN ‚Æ‚İ‚È‚·A
-		// ‚Æ‚¢‚¤‘ÌÏ‚ğ•\‚µ‚Ü‚·B
+		// å…ƒã®ãƒ•ãƒ©ã‚¹ã‚¿ãƒ å†…ã«ã€Œç‚¹ P ã‚’ -lightDirWS æ–¹å‘ã« [0,length] ã ã‘
+		// ã‚¹ãƒ©ã‚¤ãƒ‰ã•ã›ãŸã©ã“ã‹ã®ç‚¹ã€ãŒå…¥ã£ã¦ã„ã‚Œã° P ã‚‚ IN ã¨ã¿ãªã™ã€
+		// ã¨ã„ã†ä½“ç©ã‚’è¡¨ã—ã¾ã™ã€‚
 		//
-		// ”®“I‚É‚ÍAŠe•½–Ê nEx + d >= 0 ‚É‘Î‚µA
+		// æ•°å¼çš„ã«ã¯ã€å„å¹³é¢ nãƒ»x + d >= 0 ã«å¯¾ã—ã€
 		//   if dot(n, L) < 0 then d' = d - length * dot(n, L)
 		//   else d' = d
-		// ‚Æ‚µ‚ÄV‚µ‚¢”¼‹óŠÔ‚ğ’è‹`‚µ‚Ä‚¢‚Ü‚·B
+		// ã¨ã—ã¦æ–°ã—ã„åŠç©ºé–“ã‚’å®šç¾©ã—ã¦ã„ã¾ã™ã€‚
 		[[nodiscard]] Frustumf PushedAlongDirection(const Vec3f& lightDirWS, float length) const noexcept
 		{
 			Frustumf out = *this;
 
-			// L ‚ğ³‹K‰»
+			// L ã‚’æ­£è¦åŒ–
 			Vec3f L = lightDirWS;
 			float len = lightDirWS.length();
 			if (len <= 0.f) {
-				// ƒ[ƒƒxƒNƒgƒ‹‚È‚çŠg’£‚È‚µ
+				// ã‚¼ãƒ­ãƒ™ã‚¯ãƒˆãƒ«ãªã‚‰æ‹¡å¼µãªã—
 				return out;
 			}
 			float invLen = 1.f / len;
 			L.x *= invLen; L.y *= invLen; L.z *= invLen;
 
 			for (auto& pl : out.p) {
-				// •½–Ê–@ü‚Æƒ‰ƒCƒg•ûŒü‚Ì“àÏ
+				// å¹³é¢æ³•ç·šã¨ãƒ©ã‚¤ãƒˆæ–¹å‘ã®å†…ç©
 				float ndotl = pl.n.x * L.x + pl.n.y * L.y + pl.n.z * L.z;
 
-				// uƒ‰ƒCƒg•ûŒü‚É‘Î‚µ‚Ä— ‘¤‚ğŒü‚¢‚Ä‚¢‚é•½–Êv‚¾‚¯‚ğŠO‘¤‚Ö‰Ÿ‚µo‚·
+				// ã€Œãƒ©ã‚¤ãƒˆæ–¹å‘ã«å¯¾ã—ã¦è£å´ã‚’å‘ã„ã¦ã„ã‚‹å¹³é¢ã€ã ã‘ã‚’å¤–å´ã¸æŠ¼ã—å‡ºã™
 				if (ndotl < 0.f) {
-					// d' = d - length * (nEL)
+					// d' = d - length * (nãƒ»L)
 					pl.d -= length * ndotl;
 				}
 			}
@@ -446,39 +446,39 @@ namespace SFW::Math {
 		}
 
 		/*
-		@brief Far •½–Ê‚ğƒJƒƒ‰ˆÊ’u‚©‚ç maxFar ‚Ü‚Å‚É§ŒÀ‚µ‚½ƒtƒ‰ƒXƒ^ƒ€‚ğ•Ô‚·
-		@param eyeWS ƒ[ƒ‹ƒh‹óŠÔ‚ÌƒJƒƒ‰ˆÊ’u
-		@param maxFar ƒJƒƒ‰‚©‚ç Far •½–Ê‚Ü‚Å‚ÌÅ‘å‹——£
+		@brief Far å¹³é¢ã‚’ã‚«ãƒ¡ãƒ©ä½ç½®ã‹ã‚‰ maxFar ã¾ã§ã«åˆ¶é™ã—ãŸãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚’è¿”ã™
+		@param eyeWS ãƒ¯ãƒ¼ãƒ«ãƒ‰ç©ºé–“ã®ã‚«ãƒ¡ãƒ©ä½ç½®
+		@param maxFar ã‚«ãƒ¡ãƒ©ã‹ã‚‰ Far å¹³é¢ã¾ã§ã®æœ€å¤§è·é›¢
 		*/
 		[[nodiscard]] Frustumf ClampedFar(const Vec3f& eyeWS, float maxFar) const noexcept
 		{
 			Frustumf out = *this;
 
-			// Far •½–Êienum class FrustumPlane : int { Left, Right, Bottom, Top, Near, Far };j
+			// Far å¹³é¢ï¼ˆenum class FrustumPlane : int { Left, Right, Bottom, Top, Near, Far };ï¼‰
 			Planef& farPl = out.p[(int)FrustumPlane::Far];
 
-			// •½–Ê‚Í Normalize Ï‚İ‘O’ñ‚È‚Ì‚ÅASignedDistance ‚Íƒ[ƒ‹ƒh‹——£‚Æ‚İ‚È‚¹‚é
+			// å¹³é¢ã¯ Normalize æ¸ˆã¿å‰æãªã®ã§ã€SignedDistance ã¯ãƒ¯ãƒ¼ãƒ«ãƒ‰è·é›¢ã¨ã¿ãªã›ã‚‹
 			const float dist = farPl.SignedDistance(eyeWS);
 
-			// ƒJƒƒ‰‚ªƒtƒ‰ƒXƒ^ƒ€ŠO‚È‚ç‰½‚à‚µ‚È‚¢iˆÙíƒP[ƒX–h~j
+			// ã‚«ãƒ¡ãƒ©ãŒãƒ•ãƒ©ã‚¹ã‚¿ãƒ å¤–ãªã‚‰ä½•ã‚‚ã—ãªã„ï¼ˆç•°å¸¸ã‚±ãƒ¼ã‚¹é˜²æ­¢ï¼‰
 			if (dist < 0.0f) {
 				return out;
 			}
 
-			// ‚·‚Å‚É far ‚ª\•ªè‘O‚È‚ç‰½‚à‚µ‚È‚¢
+			// ã™ã§ã« far ãŒååˆ†æ‰‹å‰ãªã‚‰ä½•ã‚‚ã—ãªã„
 			if (dist <= maxFar) {
 				return out;
 			}
 
-			// ‚±‚±‚©‚ç Far ‚ğuƒJƒƒ‰‚©‚ç maxFar ‚ÌˆÊ’uv‚Ü‚ÅŠñ‚¹‚é
+			// ã“ã“ã‹ã‚‰ Far ã‚’ã€Œã‚«ãƒ¡ãƒ©ã‹ã‚‰ maxFar ã®ä½ç½®ã€ã¾ã§å¯„ã›ã‚‹
 			//
-			// •½–Ê: nEx + d = 0
-			// ƒJƒƒ‰ˆÊ’u eye ‚É‘Î‚µ‚ÄASignedDistance(eye) = nEeye + d = dist
-			// uƒJƒƒ‰‚©‚ç maxFar ‚Ì‹——£‚ÌˆÊ’u‚Å 0 ‚É‚È‚év‚æ‚¤‚É‚µ‚½‚¢‚Ì‚Å
-			//   nEeye + d' = maxFar
-			// ¨ d' = maxFar - nEeye
-			//   nEeye = dist - d ‚È‚Ì‚Å
-			// ¨ d' = d + maxFar - dist
+			// å¹³é¢: nãƒ»x + d = 0
+			// ã‚«ãƒ¡ãƒ©ä½ç½® eye ã«å¯¾ã—ã¦ã€SignedDistance(eye) = nãƒ»eye + d = dist
+			// ã€Œã‚«ãƒ¡ãƒ©ã‹ã‚‰ maxFar ã®è·é›¢ã®ä½ç½®ã§ 0 ã«ãªã‚‹ã€ã‚ˆã†ã«ã—ãŸã„ã®ã§
+			//   nãƒ»eye + d' = maxFar
+			// â†’ d' = maxFar - nãƒ»eye
+			//   nãƒ»eye = dist - d ãªã®ã§
+			// â†’ d' = d + maxFar - dist
 			const float delta = maxFar - dist;
 			farPl.d += delta;
 

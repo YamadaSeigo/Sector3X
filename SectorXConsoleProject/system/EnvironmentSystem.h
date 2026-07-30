@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "environment/EnvironmentService.h"
 #include "environment/WindService.h"
@@ -8,9 +8,9 @@ template<typename Partition>
 class EnvironmentSystem : public ITypeSystem<
 	EnvironmentSystem,
 	Partition,
-	//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
+	//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
 	ComponentAccess<>,
-	//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	ServiceContext<
 	EnvironmentService,
 	WindService,
@@ -43,7 +43,7 @@ public:
 	{
 		constexpr float audioVolumeRatio = 1.0f;
 
-		//Audio“Ç‚İ‚İ
+		//Audioèª­ã¿è¾¼ã¿
 		mainBGM.handle = audioService->EnqueueLoadWav("assets/audio/BGM/fjordnosundakaze.ogg");
 		Audio::AudioPlayParams bgmPlayParams;
 		bgmPlayParams.loop = true;
@@ -69,7 +69,7 @@ public:
 	{
 		auto slot = renderService->GetProduceSlot();
 
-		//‘‚Ìƒoƒbƒtƒ@‚ÌXV
+		//è‰ã®ãƒãƒƒãƒ•ã‚¡ã®æ›´æ–°
 		windService->UpdateBufferToGPU(slot);
 
 		Math::Vec3f windDir;
@@ -109,7 +109,7 @@ public:
 			 view[2][0], view[2][1], view[2][2]
 		};
 
-		Math::Vec3f sunPosWS = camPos - sunDirWS * 1000.0f; // “K“–‚É‰“‚­‚É”z’u
+		Math::Vec3f sunPosWS = camPos - sunDirWS * 1000.0f; // é©å½“ã«é ãã«é…ç½®
 		Math::Vec4f sunClip = viewProj * Math::Vec4f{ sunPosWS, 1.0f };
 		Math::Vec2f sunNDC = sunClip.xy / sunClip.w;
 		Math::Vec2f sunUV = sunNDC * 0.5f + 0.5f;
@@ -129,7 +129,7 @@ public:
 		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
 		NoDeletePtr<TimerService> timerService)
 	{
-		//BGM’â~
+		//BGMåœæ­¢
 		if (mainBGM.ticketID.IsValid()) {
 			auto voiceIDOpt = audioService->TryResolve(mainBGM.ticketID);
 			if (voiceIDOpt.has_value()) {
@@ -138,7 +138,7 @@ public:
 		}
 		audioService->EnqueueUnload(mainBGM.handle);
 
-		//•—‰¹’â~
+		//é¢¨éŸ³åœæ­¢
 		if (wind.ticketID.IsValid()) {
 			auto voiceIDOpt = audioService->TryResolve(wind.ticketID);
 			if (voiceIDOpt.has_value()) {

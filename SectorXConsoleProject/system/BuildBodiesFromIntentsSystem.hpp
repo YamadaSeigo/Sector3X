@@ -1,4 +1,4 @@
-// BuildBodiesFromIntentsSystem.hpp
+ï»¿// BuildBodiesFromIntentsSystem.hpp
 #pragma once
 #include <limits>
 
@@ -9,7 +9,7 @@
 #include <SectorFW/Core/SpatialChunkRegistryService.h>
 
 /**
- * @brief ƒ`ƒƒƒ“ƒN‚ğŒ×‚ª‚È‚¢Bodyì¬ƒRƒ}ƒ“ƒh‚ğì¬‚·‚éƒ†[ƒeƒBƒŠƒeƒB(Global‚âStatic)
+ * @brief ãƒãƒ£ãƒ³ã‚¯ã‚’è·¨ãŒãªã„Bodyä½œæˆã‚³ãƒãƒ³ãƒ‰ã‚’ä½œæˆã™ã‚‹ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£(Globalã‚„Static)
  * @param e Entity
  * @param tf Transform
  * @param body CPhyBody
@@ -25,7 +25,7 @@ inline Physics::CreateBodyCmd MakeNoMoveChunkCreateBodyCmd(
 {
 	using namespace SFW::Physics;
 
-	// Œ»İp¨iPhysicsInterpolation ‚Ì currj
+	// ç¾åœ¨å§¿å‹¢ï¼ˆPhysicsInterpolation ã® currï¼‰
 	Mat34f tm{};
 	tm.pos = tf.location;
 	tm.rot = tf.rotation;
@@ -35,7 +35,7 @@ inline Physics::CreateBodyCmd MakeNoMoveChunkCreateBodyCmd(
 
 	CreateBodyCmd cmd{};
 	cmd.e = e;
-	cmd.owner.code = SpatialChunkKey::kInvalidCode;   // ƒOƒ[ƒoƒ‹ Entity —p‚É–³ŒøƒL[‚ğƒZƒbƒg
+	cmd.owner.code = SpatialChunkKey::kInvalidCode;   // ã‚°ãƒ­ãƒ¼ãƒãƒ« Entity ç”¨ã«ç„¡åŠ¹ã‚­ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 	cmd.shape = shape;
 	cmd.worldTM = tm;
 	cmd.layer = layer;
@@ -46,12 +46,12 @@ inline Physics::CreateBodyCmd MakeNoMoveChunkCreateBodyCmd(
 }
 
 /**
-* @brief ¶¬ƒCƒ“ƒeƒ“ƒgiEntity  Š—L EntityManagerj‚¾‚¯‚ğˆ—‚µ‚Ä
-*        CreateBodyCmd ‚ğˆêŠ‡‚Å”­s‚·‚éB‘Sƒ`ƒƒƒ“ƒN‘–¸‚Í‚µ‚È‚¢B
+* @brief ç”Ÿæˆã‚¤ãƒ³ãƒ†ãƒ³ãƒˆï¼ˆEntity  æ‰€æœ‰ EntityManagerï¼‰ã ã‘ã‚’å‡¦ç†ã—ã¦
+*        CreateBodyCmd ã‚’ä¸€æ‹¬ã§ç™ºè¡Œã™ã‚‹ã€‚å…¨ãƒãƒ£ãƒ³ã‚¯èµ°æŸ»ã¯ã—ãªã„ã€‚
 *
-* g‚¢•û:
-*  - Entity ¶¬’¼Œã‚É PhysicsService::EnqueueCreateIntent(e, &em) ‚ğŒÄ‚Ô
-*  - –{ƒVƒXƒeƒ€‚ª ConsumeCreateIntents ‚Å—ñ‹“‚ğó‚¯æ‚èA•K—v—ñ‚¾‚¯QÆ‚µ‚Äì¬
+* ä½¿ã„æ–¹:
+*  - Entity ç”Ÿæˆç›´å¾Œã« PhysicsService::EnqueueCreateIntent(e, &em) ã‚’å‘¼ã¶
+*  - æœ¬ã‚·ã‚¹ãƒ†ãƒ ãŒ ConsumeCreateIntents ã§åˆ—æŒ™ã‚’å—ã‘å–ã‚Šã€å¿…è¦åˆ—ã ã‘å‚ç…§ã—ã¦ä½œæˆ
 */
 template<class Partition>
 class BuildBodiesFromIntentsSystem final : public ECS::ISystem<Partition> {
@@ -72,7 +72,7 @@ public:
 		bool stop = false;
 		size_t createCount = 0;
 		for (const auto& in : intents) {
-			//ƒ`ƒƒƒ“ƒN‚É‘®‚³‚È‚¢ê‡‚ÍƒXƒLƒbƒv
+			//ãƒãƒ£ãƒ³ã‚¯ã«å±ã•ãªã„å ´åˆã¯ã‚¹ã‚­ãƒƒãƒ—
 			if (in.owner.code == SpatialChunkKey::kInvalidCode) {
 				continue;
 			}
@@ -88,7 +88,7 @@ public:
 			auto locOpt = entityMgr.TryGetLocation(in.e);
 			if (!locOpt) {
 				LOG_WARNING("Not Get ChunkLocation");
-				continue; // Šù‚ÉÁ‚¦‚Ä‚¢‚é‚È‚Ç
+				continue; // æ—¢ã«æ¶ˆãˆã¦ã„ã‚‹ãªã©
 			}
 
 			ECS::ArchetypeChunk* ch = locOpt->chunk;
@@ -96,25 +96,25 @@ public:
 			const auto   count = ch->GetEntityCount();
 			if (row >= count) {
 				LOG_WARNING("Chunk row out of range");
-				continue; // ¢‘ãƒYƒŒ‚È‚Ç
+				continue; // ä¸–ä»£ã‚ºãƒ¬ãªã©
 			}
 
 			ComponentAccessor <
 				ECS::Read<CTransform>,
 				ECS::Read<CPhyBody>> chAccessor(ch);
 
-			// •K—v—ñ‚¾‚¯¶ƒ|ƒCƒ“ƒ^‚Åæ“¾iSoAj
+			// å¿…è¦åˆ—ã ã‘ç”Ÿãƒã‚¤ãƒ³ã‚¿ã§å–å¾—ï¼ˆSoAï¼‰
 			auto tfOpt = chAccessor.Get<Read<CTransform>>();
 			auto bodyOpt = chAccessor.Get<Read<CPhyBody>>();
 			if (!tfOpt || !bodyOpt) continue;
 			auto tf = tfOpt.value();
 			auto body = bodyOpt.value();
 
-			// ‚·‚Å‚É¶¬Ï‚İ‚È‚çƒXƒLƒbƒviƒZƒ“ƒ`ƒlƒ‹: 0xFFFFFFFFj
+			// ã™ã§ã«ç”Ÿæˆæ¸ˆã¿ãªã‚‰ã‚¹ã‚­ãƒƒãƒ—ï¼ˆã‚»ãƒ³ãƒãƒãƒ«: 0xFFFFFFFFï¼‰
 			if (body.body()[row].GetIndexAndSequenceNumber() != (std::numeric_limits<uint32_t>::max)())
 				continue;
 
-			// Œ»İp¨iPhysicsInterpolation ‚Ì currj
+			// ç¾åœ¨å§¿å‹¢ï¼ˆPhysicsInterpolation ã® currï¼‰
 			Mat34f tm{};
 			tm.pos = Vec3f(tf.px()[row], tf.py()[row], tf.pz()[row]);
 			tm.rot = Quatf(tf.qx()[row], tf.qy()[row], tf.qz()[row], tf.qw()[row]);
@@ -124,7 +124,7 @@ public:
 
 			CreateBodyCmd cmd{};
 			cmd.e = in.e;
-			cmd.owner = in.owner;   //‚Ç‚Ì EM ‚©‚ğ“`‚¦‚é
+			cmd.owner = in.owner;   //ã©ã® EM ã‹ã‚’ä¼ãˆã‚‹
 			cmd.shape = in.h;
 			cmd.worldTM = tm;
 			cmd.layer = layer;
@@ -135,7 +135,7 @@ public:
 			cmd.restitution = in.mat.restitution;
 			cmd.gravityFactor = in.mat.gravityFactor;
 
-			bool ok = ps->CreateBody(cmd); // ƒRƒ}ƒ“ƒhƒLƒ…[‚ÖiŒÅ’èƒ¢t‚ÅˆêŠ‡“K—pj
+			bool ok = ps->CreateBody(cmd); // ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼ã¸ï¼ˆå›ºå®šÎ”tã§ä¸€æ‹¬é©ç”¨ï¼‰
 			if (!ok) {
 				stop = true;
 				break;
@@ -146,11 +146,11 @@ public:
 
 		if (stop)
 		{
-			//¶¬Ï‚İ‚Ìintentíœ
+			//ç”Ÿæˆæ¸ˆã¿ã®intentå‰Šé™¤
 			if (createCount > 0)
 				intents.erase(intents.begin(), intents.begin() + (createCount - 1));
 
-			//–¢¶¬‚Ìintent‚ğ–ß‚·
+			//æœªç”Ÿæˆã®intentã‚’æˆ»ã™
 			ps->SwapCreateIntents(levelCtx.GetID(), intents);
 		}
 	}
@@ -168,11 +168,11 @@ public:
 
 			const size_t count = ch->GetEntityCount();
 			for (size_t i = 0; i < count; i++) {
-				//–¢¶¬‚È‚çƒXƒLƒbƒviƒZƒ“ƒ`ƒlƒ‹: 0xFFFFFFFFj
+				//æœªç”Ÿæˆãªã‚‰ã‚¹ã‚­ãƒƒãƒ—ï¼ˆã‚»ãƒ³ãƒãƒãƒ«: 0xFFFFFFFFï¼‰
 				if (body->body()[i].GetIndexAndSequenceNumber() == (std::numeric_limits<uint32_t>::max)())
 					continue;
 
-				// Body íœ—v‹
+				// Body å‰Šé™¤è¦æ±‚
 				ps->DestroyBody(entities[i]);
 			}
 		}
@@ -181,23 +181,23 @@ public:
 	void SetContext(const ServiceLocator& serviceLocator) noexcept {
 		ps = serviceLocator.Get<Physics::PhysicsService>();
 		if (!ps) {
-			LOG_ERROR("PhysicsService‚ªƒT[ƒrƒX‚Æ‚µ‚Ä“o˜^‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+			LOG_ERROR("PhysicsServiceãŒã‚µãƒ¼ãƒ“ã‚¹ã¨ã—ã¦ç™»éŒ²ã•ã‚Œã¦ã„ã¾ã›ã‚“");
 			return;
 		}
 		reg = serviceLocator.Get<SpatialChunkRegistry>();
 		if (!reg) {
-			LOG_ERROR("EntityManagerRegistry‚ªƒT[ƒrƒX‚Æ‚µ‚Ä“o˜^‚³‚ê‚Ä‚¢‚Ü");
+			LOG_ERROR("EntityManagerRegistryãŒã‚µãƒ¼ãƒ“ã‚¹ã¨ã—ã¦ç™»éŒ²ã•ã‚Œã¦ã„ã¾");
 			return;
 		}
 	}
 
 	ECS::AccessInfo GetAccessInfo() const noexcept override {
-		// ˆÊ’uî•ñ‚Í EntityManager “à‚Ì locations ‚ğ“Ç‚Ş‚¾‚¯‚ÅAƒ`ƒƒƒ“ƒN—ñ‚Í Read
+		// ä½ç½®æƒ…å ±ã¯ EntityManager å†…ã® locations ã‚’èª­ã‚€ã ã‘ã§ã€ãƒãƒ£ãƒ³ã‚¯åˆ—ã¯ Read
 		return ECS::ComponentAccess<ECS::Read<Physics::PhysicsInterpolation>, ECS::Read<Physics::CPhyBody>>::GetAccessInfo();
 	}
 
 private:
 	ShapeResolverFn resolveShape;
-	Physics::PhysicsService* ps = nullptr; // PhysicsService ‚Ö‚Ìƒ|ƒCƒ“ƒ^iƒT[ƒrƒXƒƒP[ƒ^[‚©‚çæ“¾j
-	SpatialChunkRegistry* reg = nullptr; // EntityManagerRegistry ‚Ö‚Ìƒ|ƒCƒ“ƒ^iƒT[ƒrƒXƒƒP[ƒ^[‚©‚çæ“¾j
+	Physics::PhysicsService* ps = nullptr; // PhysicsService ã¸ã®ãƒã‚¤ãƒ³ã‚¿ï¼ˆã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã‹ã‚‰å–å¾—ï¼‰
+	SpatialChunkRegistry* reg = nullptr; // EntityManagerRegistry ã¸ã®ãƒã‚¤ãƒ³ã‚¿ï¼ˆã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã‹ã‚‰å–å¾—ï¼‰
 };

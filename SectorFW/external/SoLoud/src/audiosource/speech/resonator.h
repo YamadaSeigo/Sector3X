@@ -1,4 +1,4 @@
-#ifndef RESONATOR_H
+﻿#ifndef RESONATOR_H
 #define RESONATOR_H
 
 class resonator

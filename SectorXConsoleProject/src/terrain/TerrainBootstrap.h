@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include <wrl/client.h>
 
@@ -28,7 +28,7 @@ namespace TerrainBoot
 	struct Result
 	{
 		SFW::Graphics::TerrainBuildParams params{};
-		SFW::Graphics::TerrainClustered* terrain = nullptr; // Build ‚ª static ‚ğ•Ô‚·‚È‚çƒ|ƒCƒ“ƒ^‚Åˆµ‚¤
+		SFW::Graphics::TerrainClustered* terrain = nullptr; // Build ãŒ static ã‚’è¿”ã™ãªã‚‰ãƒã‚¤ãƒ³ã‚¿ã§æ‰±ã†
 		std::vector<float> heightMap;
 
 		// GPU/CPU resources
@@ -46,10 +46,10 @@ namespace TerrainBoot
 	};
 
 	/**
-	 * @brief ’nŒ`‚Ìƒrƒ‹ƒh‚ÆŠÖ˜AƒŠƒ\[ƒX‚Ì¶¬‚ğs‚¤ŠÖ”
-	 * @param graphics DX11‚ÌƒOƒ‰ƒtƒBƒbƒNƒXƒfƒoƒCƒXBƒŠƒ\[ƒX¶¬‚É•K—vB
-	 * @param terrainRank ’nŒ`‚Ìƒ‰ƒ“ƒNBƒrƒ‹ƒh‚ÌÚ×‚âƒŠƒ\[ƒX‚Ì•i¿‚É‰e‹¿‚ğ—^‚¦‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B
-	 * @return Result ƒrƒ‹ƒh‚³‚ê‚½’nŒ`‚ÆŠÖ˜AƒŠƒ\[ƒX‚ğŠÜ‚Ş\‘¢‘ÌBƒrƒ‹ƒh‚É¸”s‚µ‚½ê‡‚ÍAnullptr ‚â‹ó‚Ì’l‚ªŠÜ‚Ü‚ê‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B
+	 * @brief åœ°å½¢ã®ãƒ“ãƒ«ãƒ‰ã¨é–¢é€£ãƒªã‚½ãƒ¼ã‚¹ã®ç”Ÿæˆã‚’è¡Œã†é–¢æ•°
+	 * @param graphics DX11ã®ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‡ãƒã‚¤ã‚¹ã€‚ãƒªã‚½ãƒ¼ã‚¹ç”Ÿæˆã«å¿…è¦ã€‚
+	 * @param terrainRank åœ°å½¢ã®ãƒ©ãƒ³ã‚¯ã€‚ãƒ“ãƒ«ãƒ‰ã®è©³ç´°ã‚„ãƒªã‚½ãƒ¼ã‚¹ã®å“è³ªã«å½±éŸ¿ã‚’ä¸ãˆã‚‹å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚
+	 * @return Result ãƒ“ãƒ«ãƒ‰ã•ã‚ŒãŸåœ°å½¢ã¨é–¢é€£ãƒªã‚½ãƒ¼ã‚¹ã‚’å«ã‚€æ§‹é€ ä½“ã€‚ãƒ“ãƒ«ãƒ‰ã«å¤±æ•—ã—ãŸå ´åˆã¯ã€nullptr ã‚„ç©ºã®å€¤ãŒå«ã¾ã‚Œã‚‹å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚
 	 */
 	Result BuildAll(
 		SFW::Graphics::DX11::GraphicsDevice& graphics,

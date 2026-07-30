@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <SectorFW/Physics/PhysicsComponent.h>
 #include <SectorFW/Debug/DebugType.h>
@@ -19,7 +19,7 @@
 
 using namespace SFW;
 
-// 24’¸“_+36ƒCƒ“ƒfƒbƒNƒX‚ğ¶¬i’†SŒ´“_A¡–@ w,h,dj
+// 24é ‚ç‚¹+36ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ç”Ÿæˆï¼ˆä¸­å¿ƒåŸç‚¹ã€å¯¸æ³• w,h,dï¼‰
 void MakeBox(float w, float h, float d,
 	std::vector<Debug::VertexPNUV>& outVerts,
 	std::vector<uint32_t>& outIndices);
@@ -28,23 +28,23 @@ void MakeBoxLines(float w, float h, float d,
 	std::vector<Debug::LineVertex>& outVerts,
 	std::vector<uint32_t>& outIndices);
 
-// ’¸“_/ƒCƒ“ƒfƒbƒNƒX¶¬iUV ‹…j
-//  radius: ”¼Œa
-//  slices: Œo“x•ªŠ„”iÅ¬ 3j
-//  stacks: ˆÜ“x•ªŠ„”iÅ¬ 2j
-// ¶¬Œ‹‰Ê‚Í CWiŒv‰ñ‚èj‚Å•\–Ê‚É‚È‚éƒCƒ“ƒfƒbƒNƒX
+// é ‚ç‚¹/ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç”Ÿæˆï¼ˆUV çƒï¼‰
+//  radius: åŠå¾„
+//  slices: çµŒåº¦åˆ†å‰²æ•°ï¼ˆæœ€å° 3ï¼‰
+//  stacks: ç·¯åº¦åˆ†å‰²æ•°ï¼ˆæœ€å° 2ï¼‰
+// ç”Ÿæˆçµæœã¯ CWï¼ˆæ™‚è¨ˆå›ã‚Šï¼‰ã§è¡¨é¢ã«ãªã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 void MakeSphere(float radius, uint32_t slices, uint32_t stacks,
 	std::vector<Debug::VertexPNUV>& outVerts,
 	std::vector<uint32_t>& outIndices);
 
 enum class CirclePlane { XY, XZ, YZ };
 
-// segments: 8 ˆÈã„§BLINELIST ‚È‚Ì‚Å•Âƒ‹[ƒv‚Í (i, i+1), (last, first) ‚ğ’£‚é
+// segments: 8 ä»¥ä¸Šæ¨å¥¨ã€‚LINELIST ãªã®ã§é–‰ãƒ«ãƒ¼ãƒ—ã¯ (i, i+1), (last, first) ã‚’å¼µã‚‹
 void AppendCircle(float radius, uint32_t segments, CirclePlane plane,
 	std::vector<Debug::LineVertex>& verts, std::vector<uint32_t>& idx,
 	float yOffset = 0.0f, float rotY = 0.0f, uint32_t rgba = 0xFFFFFFFF);
 
-// \ši3 –{j‚Ì‚İ
+// åå­—ï¼ˆ3 æœ¬ï¼‰ã®ã¿
 void MakeSphereCrossLines(float radius, uint32_t segments,
 	std::vector<Debug::LineVertex>& outVerts,
 	std::vector<uint32_t>& outIndices,
@@ -58,15 +58,15 @@ void MakeCapsuleLines(float radius, float halfHeight,
 class OncePerFrameGate
 {
 public:
-	// “¯‚¶ frameId ‚Å‚ÍÅ‰‚Ì1ƒXƒŒƒbƒh‚¾‚¯ true
+	// åŒã˜ frameId ã§ã¯æœ€åˆã®1ã‚¹ãƒ¬ãƒƒãƒ‰ã ã‘ true
 	bool TryEnter(uint16_t frameId) noexcept
 	{
-		// ‚·‚Å‚É‚±‚ÌƒtƒŒ[ƒ€‚ğ’Ê‰ß‚µ‚½‚©‚ğCAS‚ÅŠm’è‚³‚¹‚é
+		// ã™ã§ã«ã“ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’é€šéã—ãŸã‹ã‚’CASã§ç¢ºå®šã•ã›ã‚‹
 		uint16_t expected = m_lastFrame.load(std::memory_order_relaxed);
 		for (;;)
 		{
-			if (expected == frameId) return false; // ‚à‚¤’N‚©‚ª’Ê‚Á‚½
-			// expected != frameId ‚È‚çA‚±‚ÌƒXƒŒƒbƒh‚ª frameId ‚ğ‚ß‚½‚çŸ‚¿
+			if (expected == frameId) return false; // ã‚‚ã†èª°ã‹ãŒé€šã£ãŸ
+			// expected != frameId ãªã‚‰ã€ã“ã®ã‚¹ãƒ¬ãƒƒãƒ‰ãŒ frameId ã‚’åˆ»ã‚ãŸã‚‰å‹ã¡
 			if (m_lastFrame.compare_exchange_weak(
 				expected, frameId,
 				std::memory_order_acq_rel,
@@ -74,7 +74,7 @@ public:
 			{
 				return true;
 			}
-			// ¸”s‚µ‚½‚ç expected ‚ªXV‚³‚ê‚é‚Ì‚Åƒ‹[ƒvŒp‘±
+			// å¤±æ•—ã—ãŸã‚‰ expected ãŒæ›´æ–°ã•ã‚Œã‚‹ã®ã§ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 		}
 	}
 
@@ -86,7 +86,7 @@ template<typename Partition>
 class DebugRenderSystem : public ITypeSystem <
 	DebugRenderSystem,
 	Partition,
-	//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
+	//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
 	ComponentAccess<
 	Read<Physics::ShapeDims>,
 	Read<Physics::PhysicsInterpolation>,
@@ -96,7 +96,7 @@ class DebugRenderSystem : public ITypeSystem <
 	Read<CFireflyVolume>,
 	Read<CLeafVolume>
 	>,
-	//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	ServiceContext<
 	Graphics::RenderService,
 	Graphics::I3DPerCameraService,
@@ -218,7 +218,7 @@ public:
 		DX11::PSOCreateDesc psoDesc = { shaderHandle, RasterizerStateID::WireCullNone };
 		psoMgr->Add(psoDesc, psoLineHandle);
 
-		// --- Index BufferiŒÅ’èF0,1,2,3,4,5,cj---
+		// --- Index Bufferï¼ˆå›ºå®šï¼š0,1,2,3,4,5,â€¦ï¼‰---
 		std::vector<uint32_t> indices(MAX_CAPACITY_3DLINE);
 		for (uint32_t i = 0; i < MAX_CAPACITY_3DLINE; ++i) indices[i] = i;
 
@@ -242,7 +242,7 @@ public:
 		line2DVertices.reset(new LineVertex[MAX_CAPACITY_2DLINE]);
 	}
 
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(Partition& partition,
 		NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::I3DPerCameraService> camera3DService,
@@ -253,7 +253,7 @@ public:
 	{
 		if (!DebugRenderType::isHit) return;
 
-		//‹@”\‚ğ§ŒÀ‚µ‚½RenderQueue‚ğæ“¾
+		//æ©Ÿèƒ½ã‚’åˆ¶é™ã—ãŸRenderQueueã‚’å–å¾—
 		auto uiSession = renderService->GetProducerSession(PassGroupName[GROUP_UI]);
 		auto* meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
 		auto bufferManager = renderService->GetResourceManager<Graphics::DX11::BufferManager>();
@@ -323,7 +323,7 @@ public:
 		{
 			this->ForEachFrustumChunkWithAccessor<ModelAccessor>([&](ModelAccessor& accessor, size_t entityCount)
 				{
-					//“Ç‚İæ‚èê—p‚ÅTransformSoA‚ÌƒAƒNƒZƒT‚ğæ“¾
+					//èª­ã¿å–ã‚Šå°‚ç”¨ã§TransformSoAã®ã‚¢ã‚¯ã‚»ã‚µã‚’å–å¾—
 					auto transform = accessor.Get<Read<CTransform>>();
 					auto model = accessor.Get<Read<CModel>>();
 
@@ -337,14 +337,14 @@ public:
 						auto transMtx = Math::MakeTranslationMatrix(pos);
 						auto rotMtx = Math::MakeRotationMatrix(rot);
 						auto scaleMtx = Math::MakeScalingMatrix(scale);
-						//ƒ[ƒ‹ƒhs—ñ‚ğŒvZ
+						//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’è¨ˆç®—
 						auto worldMtx = transMtx * rotMtx * scaleMtx;
 
-						//ƒ‚ƒfƒ‹ƒAƒZƒbƒg‚ğæ“¾
+						//ãƒ¢ãƒ‡ãƒ«ã‚¢ã‚»ãƒƒãƒˆã‚’å–å¾—
 						auto modelAsset = modelManager->Get(model.value()[i].handle);
 
 						float dis = (pos - cameraPos).length();
-						if (dis > 200.0f) continue; // ‰“‚·‚¬‚é
+						if (dis > 200.0f) continue; // é ã™ãã‚‹
 						float alpha = 1.0f - (dis / 200.0f);
 						auto rgbaAABB = Math::LerpColor(0x00000ff, 0x00ff00ff, alpha);
 						auto rgbaRect = Math::LerpColor(0x00000ff, 0xffff00ff, alpha);
@@ -385,7 +385,7 @@ public:
 								if (mesh.occluder.candidate)
 								{
 									if (DebugRenderType::drawOccluderAABB)
-										newLineSize += mesh.occluder.meltAABBs.size() * 24; // OCcluder AABB •ª
+										newLineSize += mesh.occluder.meltAABBs.size() * 24; // OCcluder AABB åˆ†
 								}
 
 								if ((size_t)line3DCount + linePoss.size() + newLineSize > MAX_CAPACITY_3DLINE) {
@@ -457,7 +457,7 @@ public:
 
 							subMeshIdx++;
 						}
-						// 3dƒ‰ƒCƒ“‚ğƒ[ƒ‹ƒh•ÏŠ·‚µ‚ÄŠi”[
+						// 3dãƒ©ã‚¤ãƒ³ã‚’ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›ã—ã¦æ ¼ç´
 						if (linePoss.empty()) continue;
 
 						std::vector<Math::Vec3f> outPoss(linePoss.size());
@@ -489,7 +489,7 @@ public:
 					for (int i = 0; i < entityCount; ++i) {
 						Math::Vec3f pos(tf->px()[i], tf->py()[i], tf->pz()[i]);
 
-						// ‰“‚·‚¬‚é‚à‚Ì‚Í•`‰æ‚µ‚È‚¢
+						// é ã™ãã‚‹ã‚‚ã®ã¯æç”»ã—ãªã„
 						if ((cameraPos - pos).lengthSquared() > maxDrawDistance * maxDrawDistance) continue;
 
 						auto transMtx = Math::MakeTranslationMatrix(pos);
@@ -505,20 +505,20 @@ public:
 							cmd.mesh = boxMesh;
 							cmd.material = 0;
 							cmd.pso = pso;
-							cmd.sortKey = 0; // “KØ‚Èƒ\[ƒgƒL[‚ğİ’è
+							cmd.sortKey = 0; // é©åˆ‡ãªã‚½ãƒ¼ãƒˆã‚­ãƒ¼ã‚’è¨­å®š
 							cmd.viewMask = PASS_UI_3DLINE;
 							queue->Push(std::move(cmd));
 							break;
 						}
 						case Physics::ShapeDims::Type::Sphere:
 						{
-							auto mtx = transMtx * rotMtx * Math::MakeScalingMatrix(Math::Vec3f(d.r * 2)); // ‹…‚Í‹ÏˆêƒXƒP[ƒŠƒ“ƒO
+							auto mtx = transMtx * rotMtx * Math::MakeScalingMatrix(Math::Vec3f(d.r * 2)); // çƒã¯å‡ä¸€ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
 							Graphics::DrawCommand cmd;
 							cmd.instanceIndex = queue->AllocInstance({ mtx });
 							cmd.mesh = sphereMesh;
 							cmd.material = 0;
 							cmd.pso = pso;
-							cmd.sortKey = 0; // “KØ‚Èƒ\[ƒgƒL[‚ğİ’è
+							cmd.sortKey = 0; // é©åˆ‡ãªã‚½ãƒ¼ãƒˆã‚­ãƒ¼ã‚’è¨­å®š
 							cmd.viewMask = PASS_UI_3DLINE;
 							queue->Push(std::move(cmd));
 							break;
@@ -530,13 +530,13 @@ public:
 							auto offsetMtx = Math::MakeTranslationMatrix(offset);
 							auto scaleMtx = Math::MakeScalingMatrix(Math::Vec3f(d.r * 2));
 							auto instMtx = transMtx * rotMtx;
-							auto mtx = instMtx * offsetMtx * scaleMtx; // ‹…‚Í‹ÏˆêƒXƒP[ƒŠƒ“ƒO
+							auto mtx = instMtx * offsetMtx * scaleMtx; // çƒã¯å‡ä¸€ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
 							Graphics::DrawCommand cmd;
 							cmd.instanceIndex = queue->AllocInstance({ mtx });
 							cmd.mesh = sphereMesh;
 							cmd.material = 0;
 							cmd.pso = pso;
-							cmd.sortKey = 0; // “KØ‚Èƒ\[ƒgƒL[‚ğİ’è
+							cmd.sortKey = 0; // é©åˆ‡ãªã‚½ãƒ¼ãƒˆã‚­ãƒ¼ã‚’è¨­å®š
 							cmd.viewMask = PASS_UI_3DLINE;
 							queue->Push(cmd);
 
@@ -547,7 +547,7 @@ public:
 							cmd.instanceIndex = queue->AllocInstance({ mtx });
 							queue->Push(cmd);
 
-							// ^‚ñ’†‚Ìü
+							// çœŸã‚“ä¸­ã®ç·š
 							offset = d.localOffset;
 							offsetMtx = Math::MakeTranslationMatrix(offset);
 							scaleMtx = Math::MakeScalingMatrix(Math::Vec3f(d.r * 2, d.halfHeight * 2, d.r * 2));
@@ -564,7 +564,7 @@ public:
 							auto wireData = physicsService->GetShapeWireframeData(d.handle);
 							if (wireData.has_value())
 							{
-								//‚Æ‚è‚ ‚¦‚¸Transform‚ÌScale‚ğg—p‚·‚éB–{—ˆ‚ÍShapeDims‚ÉƒXƒP[ƒ‹î•ñ‚ğ‚½‚¹‚é‚×‚«
+								//ã¨ã‚Šã‚ãˆãšTransformã®Scaleã‚’ä½¿ç”¨ã™ã‚‹ã€‚æœ¬æ¥ã¯ShapeDimsã«ã‚¹ã‚±ãƒ¼ãƒ«æƒ…å ±ã‚’æŒãŸã›ã‚‹ã¹ã
 								auto mtx = transMtx * rotMtx;
 								const Physics::WireframeData& wire = wireData->data;
 								std::vector<Math::Vec3f> worldPos(wire.vertices.size());
@@ -605,17 +605,17 @@ public:
 						auto lightData = pointLightService->GetNoLock(light.handle);
 
 						auto transMtx = Math::MakeTranslationMatrix(lightData.offsetWS);
-						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ lightData.range * 2.0f }); // ‹…‚Í‹ÏˆêƒXƒP[ƒŠƒ“ƒO
+						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ lightData.range * 2.0f }); // çƒã¯å‡ä¸€ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
 						Graphics::DrawCommand cmd;
 						cmd.instanceIndex = uiSession.AllocInstance({ mtx });
 						cmd.mesh = sphereGreenHandle.index;
 						cmd.material = 0;
 						cmd.pso = psoLineHandle.index;
-						cmd.sortKey = 0; // “K“–‚Èƒ\[ƒgƒL[‚ğİ’è
+						cmd.sortKey = 0; // é©å½“ãªã‚½ãƒ¼ãƒˆã‚­ãƒ¼ã‚’è¨­å®š
 						cmd.viewMask = PASS_UI_3DLINE;
 						uiSession.Push(cmd);
 
-						// ’†S‚ğ¦‚·¬‚³‚¢‹…
+						// ä¸­å¿ƒã‚’ç¤ºã™å°ã•ã„çƒ
 						cmd.instanceIndex = uiSession.AllocInstance({ transMtx });
 						cmd.mesh = sphereWhiteHandle.index;
 						uiSession.Push(std::move(cmd));
@@ -636,17 +636,17 @@ public:
 						auto volume = fireflyVolume.value()[i];
 
 						auto transMtx = Math::MakeTranslationMatrix(volume.centerWS);
-						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.radius * 2.0f }); // ‹…‚Í‹ÏˆêƒXƒP[ƒŠƒ“ƒO
+						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.radius * 2.0f }); // çƒã¯å‡ä¸€ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
 						Graphics::DrawCommand cmd;
 						cmd.instanceIndex = uiSession.AllocInstance({ mtx });
 						cmd.mesh = sphereGreenHandle.index;
 						cmd.material = 0;
 						cmd.pso = psoLineHandle.index;
-						cmd.sortKey = 0; // “K“–‚Èƒ\[ƒgƒL[‚ğİ’è
+						cmd.sortKey = 0; // é©å½“ãªã‚½ãƒ¼ãƒˆã‚­ãƒ¼ã‚’è¨­å®š
 						cmd.viewMask = PASS_UI_3DLINE;
 						uiSession.Push(cmd);
 
-						mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.hitRadius * 2.0f }); // ‹…‚Í‹ÏˆêƒXƒP[ƒŠƒ“ƒO
+						mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.hitRadius * 2.0f }); // çƒã¯å‡ä¸€ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
 						cmd.instanceIndex = uiSession.AllocInstance({ mtx });
 						cmd.mesh = sphereWhiteHandle.index;
 						uiSession.Push(std::move(cmd));
@@ -665,13 +665,13 @@ public:
 					for (auto i = 0; i < entityCount; ++i) {
 						auto volume = leafVolume.value()[i];
 						auto transMtx = Math::MakeTranslationMatrix(volume.centerWS);
-						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.radius * 2.0f }); // ‹…‚Í‹ÏˆêƒXƒP[ƒŠƒ“ƒO
+						auto mtx = transMtx * Math::MakeScalingMatrix(Math::Vec3f{ volume.radius * 2.0f }); // çƒã¯å‡ä¸€ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
 						Graphics::DrawCommand cmd;
 						cmd.instanceIndex = uiSession.AllocInstance({ mtx });
 						cmd.mesh = sphereGreenHandle.index;
 						cmd.material = 0;
 						cmd.pso = psoLineHandle.index;
-						cmd.sortKey = 0; // “K“–‚Èƒ\[ƒgƒL[‚ğİ’è
+						cmd.sortKey = 0; // é©å½“ãªã‚½ãƒ¼ãƒˆã‚­ãƒ¼ã‚’è¨­å®š
 						cmd.viewMask = PASS_UI_3DLINE;
 						uiSession.Push(cmd);
 					}
@@ -691,7 +691,7 @@ public:
 			meshManager->SetIndexCount(line3DHandle, (uint32_t)line3DCount);
 			vbUpdateDesc.data = line3DVertices.get();
 			vbUpdateDesc.size = sizeof(Debug::LineVertex) * line3DCount;
-			vbUpdateDesc.isDelete = false; // XV‚Ííœ
+			vbUpdateDesc.isDelete = false; // æ›´æ–°æ™‚ã¯å‰Šé™¤
 			bufferManager->UpdateBuffer(vbUpdateDesc, slot);
 
 			Graphics::DrawCommand cmd;
@@ -699,7 +699,7 @@ public:
 			cmd.mesh = line3DHandle.index;
 			cmd.material = 0;
 			cmd.pso = psoLineHandle.index;
-			cmd.sortKey = 0; // –{—ˆ‚Í“KØ‚Èƒ\[ƒgƒL[‚ğİ’è
+			cmd.sortKey = 0; // æœ¬æ¥ã¯é©åˆ‡ãªã‚½ãƒ¼ãƒˆã‚­ãƒ¼ã‚’è¨­å®š
 			cmd.viewMask = PASS_UI_3DLINE;
 			uiSession.Push(cmd);
 		}
@@ -714,7 +714,7 @@ public:
 			meshManager->SetIndexCount(line2DHandle, (uint32_t)line2DCount);
 			vbUpdateDesc.data = line2DVertices.get();
 			vbUpdateDesc.size = sizeof(Debug::LineVertex) * line2DCount;
-			vbUpdateDesc.isDelete = false; // XV‚Ííœ‚µ‚È‚¢
+			vbUpdateDesc.isDelete = false; // æ›´æ–°æ™‚ã¯å‰Šé™¤ã—ãªã„
 
 			auto slot = renderService->GetProduceSlot();
 
@@ -726,7 +726,7 @@ public:
 			cmd.material = 0;
 			cmd.pso = psoLineHandle.index;
 			cmd.viewMask = PASS_UI_LINE;
-			cmd.sortKey = 0; // –{—ˆ‚Í“KØ‚Èƒ\[ƒgƒL[‚ğİ’è
+			cmd.sortKey = 0; // æœ¬æ¥ã¯é©åˆ‡ãªã‚½ãƒ¼ãƒˆã‚­ãƒ¼ã‚’è¨­å®š
 			uiSession.Push(cmd);
 		}
 	}
@@ -737,8 +737,8 @@ private:
 	std::unique_ptr<Debug::LineVertex> line3DVertices;
 	std::unique_ptr<Debug::LineVertex> line2DVertices;
 
-	Graphics::MeshHandle boxHandle = {}; // ƒfƒtƒHƒ‹ƒgƒƒbƒVƒ…i—§•û‘Ìj
-	Graphics::MeshHandle sphereWhiteHandle = {}; // ƒfƒtƒHƒ‹ƒgƒƒbƒVƒ…i‹…j
+	Graphics::MeshHandle boxHandle = {}; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ¡ãƒƒã‚·ãƒ¥ï¼ˆç«‹æ–¹ä½“ï¼‰
+	Graphics::MeshHandle sphereWhiteHandle = {}; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ¡ãƒƒã‚·ãƒ¥ï¼ˆçƒï¼‰
 	Graphics::MeshHandle sphereGreenHandle = {};
-	Graphics::MeshHandle capsuleLineHandle = {}; //ƒJƒvƒZƒ‹‚Ì^‚ñ’†‚Ì’¼ü
+	Graphics::MeshHandle capsuleLineHandle = {}; //ã‚«ãƒ—ã‚»ãƒ«ã®çœŸã‚“ä¸­ã®ç›´ç·š
 };

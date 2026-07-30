@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   DX11MaterialManager.h
- * @brief DirectX 11—p‚Ìƒ}ƒeƒŠƒAƒ‹ƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief DirectX 11ç”¨ã®ãƒãƒ†ãƒªã‚¢ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚¯ãƒ©ã‚¹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -22,23 +22,23 @@ namespace SFW
 		using ShaderResourceHandle = std::variant<std::monostate, TextureHandle, BufferHandle>;
 
 		/**
-		 * @brief DirectX 11—p‚Ìƒ}ƒeƒŠƒAƒ‹ì¬î•ñ\‘¢‘Ì
+		 * @brief DirectX 11ç”¨ã®ãƒãƒ†ãƒªã‚¢ãƒ«ä½œæˆæƒ…å ±æ§‹é€ ä½“
 		 */
 		struct MaterialCreateDesc {
 			ShaderHandle shader = {};
-			bool isBindVSSampler{ false }; // ’¸“_ƒVƒF[ƒ_[‚ÅƒTƒ“ƒvƒ‰[‚ğg—p‚·‚é‚©‚Ç‚¤‚©
+			bool isBindVSSampler{ false }; // é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã§ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚’ä½¿ç”¨ã™ã‚‹ã‹ã©ã†ã‹
 			std::unordered_map<uint32_t, ShaderResourceHandle> psSRV;
 			std::unordered_map<uint32_t, ShaderResourceHandle> vsSRV;
-			std::unordered_map<UINT, BufferHandle> psCBV; // CBVƒoƒCƒ“ƒfƒBƒ“ƒO
-			std::unordered_map<UINT, BufferHandle> vsCBV; // CBVƒoƒCƒ“ƒfƒBƒ“ƒO
-			std::unordered_map<UINT, SamplerHandle> samplerMap; // ƒTƒ“ƒvƒ‰[ƒoƒCƒ“ƒfƒBƒ“ƒO
+			std::unordered_map<UINT, BufferHandle> psCBV; // CBVãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°
+			std::unordered_map<UINT, BufferHandle> vsCBV; // CBVãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°
+			std::unordered_map<UINT, SamplerHandle> samplerMap; // ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°
 		};
 		/**
-		 * @brief ƒ}ƒeƒŠƒAƒ‹ƒoƒCƒ“ƒfƒBƒ“ƒOƒLƒƒƒbƒVƒ…\‘¢‘Ì
+		 * @brief ãƒãƒ†ãƒªã‚¢ãƒ«ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã‚­ãƒ£ãƒƒã‚·ãƒ¥æ§‹é€ ä½“
 		 */
 		template<typename CacheType>
 		struct MaterialBindingCache {
-			bool valid = false; // ƒLƒƒƒbƒVƒ…‚ª—LŒø‚©‚Ç‚¤‚©
+			bool valid = false; // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒæœ‰åŠ¹ã‹ã©ã†ã‹
 			bool contiguous = false;
 			UINT minSlot = 0;
 			UINT count = 0;
@@ -46,8 +46,8 @@ namespace SFW
 			std::vector<std::pair<UINT, CacheType>> individualViews;
 
 			/**
-			 * @brief ƒoƒCƒ“ƒfƒBƒ“ƒO‚ğ’Ç‰Á‚Ü‚½‚Íã‘‚«‚·‚é
-			 * @param bind ’Ç‰Á‚Ü‚½‚Íã‘‚«‚·‚éƒoƒCƒ“ƒfƒBƒ“ƒOî•ñ‚ÌƒyƒA (ƒXƒƒbƒg”Ô†, ƒoƒCƒ“ƒfƒBƒ“ƒOƒIƒuƒWƒFƒNƒg)
+			 * @brief ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã‚’è¿½åŠ ã¾ãŸã¯ä¸Šæ›¸ãã™ã‚‹
+			 * @param bind è¿½åŠ ã¾ãŸã¯ä¸Šæ›¸ãã™ã‚‹ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°æƒ…å ±ã®ãƒšã‚¢ (ã‚¹ãƒ­ãƒƒãƒˆç•ªå·, ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ)
 			 */
 			void PushOrOverwrite(std::pair<UINT, CacheType> bind) {
 				if (count == 0 || valid == false)
@@ -67,12 +67,12 @@ namespace SFW
 				{
 					auto slot = bind.first;
 					auto maxSlot = minSlot + count;
-					// ”ÍˆÍ“à‚È‚çã‘‚«
+					// ç¯„å›²å†…ãªã‚‰ä¸Šæ›¸ã
 					if (minSlot <= slot && slot < maxSlot)
 					{
 						contiguousViews[slot - minSlot] = bind.second;
 					}
-					//”ÍˆÍŠO‚¾‚¯‚Ç˜A‘±“I(æ“ª)
+					//ç¯„å›²å¤–ã ã‘ã©é€£ç¶šçš„(å…ˆé ­)
 					else if (slot == (std::max)(minSlot, (UINT)1) - 1)
 					{
 						contiguousViews.resize(contiguousViews.size() + 1);
@@ -83,13 +83,13 @@ namespace SFW
 						contiguousViews[0] = bind.second;
 						minSlot = slot;
 					}
-					//”ÍˆÍŠO‚¾‚¯‚Ç˜A‘±“I(––”ö)
+					//ç¯„å›²å¤–ã ã‘ã©é€£ç¶šçš„(æœ«å°¾)
 					else if (slot == maxSlot)
 					{
 						contiguousViews.push_back(bind.second);
 						count++;
 					}
-					//”ÍˆÍŠO‚Å˜A‘±“I‚Å‚È‚¢
+					//ç¯„å›²å¤–ã§é€£ç¶šçš„ã§ãªã„
 					else
 					{
 						contiguous = false;
@@ -108,7 +108,7 @@ namespace SFW
 					std::bitset<128> usedSlots;
 					for (auto i = 0; i < individualViews.size(); ++i)
 					{
-						// Šù‘¶‚ÌƒXƒƒbƒg‚È‚çã‘‚«
+						// æ—¢å­˜ã®ã‚¹ãƒ­ãƒƒãƒˆãªã‚‰ä¸Šæ›¸ã
 						if (individualViews[i].first == bind.first)
 						{
 							individualViews[i].second = bind.second;
@@ -124,11 +124,11 @@ namespace SFW
 					auto maxSlot = minSlot + count;
 					for (UINT i = minSlot; i <= maxSlot; ++i) {
 						if (!usedSlots.test(i)) {
-							return; // ˜A‘±‚Å‚È‚¢
+							return; // é€£ç¶šã§ãªã„
 						}
 					}
 
-					// ˜A‘±‚É‚È‚Á‚½
+					// é€£ç¶šã«ãªã£ãŸ
 					contiguous = true;
 					contiguousViews.resize(count);
 					for (const auto& [slot, view] : individualViews) {
@@ -143,30 +143,30 @@ namespace SFW
 		using MaterialBindingCacheCBV = MaterialBindingCache<ID3D11Buffer*>;
 		using MaterialBindingCacheSampler = MaterialBindingCache<ID3D11SamplerState*>;
 		/**
-		 * @brief DirectX 11—p‚Ìƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^\‘¢‘Ì
+		 * @brief DirectX 11ç”¨ã®ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 		 */
 		struct MaterialData {
 			MaterialTemplateID templateID;
 			ShaderHandle shader;
-			bool isBindVSSampler{ false }; // ’¸“_ƒVƒF[ƒ_[‚ÅƒTƒ“ƒvƒ‰[‚ğg—p‚·‚é‚©‚Ç‚¤‚©
+			bool isBindVSSampler{ false }; // é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã§ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚’ä½¿ç”¨ã™ã‚‹ã‹ã©ã†ã‹
 			MaterialBindingCacheSRV psSRV, vsSRV;
-			MaterialBindingCacheCBV psCBV, vsCBV; // CBVƒoƒCƒ“ƒfƒBƒ“ƒOƒLƒƒƒbƒVƒ…
-			MaterialBindingCacheSampler samplerCache; // ƒTƒ“ƒvƒ‰[ƒoƒCƒ“ƒfƒBƒ“ƒOƒLƒƒƒbƒVƒ…
-			std::vector<ShaderResourceHandle> usedSRVs; // g—p’†‚ÌSRVƒLƒƒƒbƒVƒ…
-			std::vector<BufferHandle> usedCBBuffers; // g—p’†‚ÌCBƒnƒ“ƒhƒ‹
-			std::vector<SamplerHandle> usedSamplers; // g—p’†‚ÌƒTƒ“ƒvƒ‰[ƒnƒ“ƒhƒ‹
+			MaterialBindingCacheCBV psCBV, vsCBV; // CBVãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã‚­ãƒ£ãƒƒã‚·ãƒ¥
+			MaterialBindingCacheSampler samplerCache; // ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã‚­ãƒ£ãƒƒã‚·ãƒ¥
+			std::vector<ShaderResourceHandle> usedSRVs; // ä½¿ç”¨ä¸­ã®SRVã‚­ãƒ£ãƒƒã‚·ãƒ¥
+			std::vector<BufferHandle> usedCBBuffers; // ä½¿ç”¨ä¸­ã®CBãƒãƒ³ãƒ‰ãƒ«
+			std::vector<SamplerHandle> usedSamplers; // ä½¿ç”¨ä¸­ã®ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ãƒãƒ³ãƒ‰ãƒ«
 		};
 		/**
-		 * @brief DirectX 11—p‚Ìƒ}ƒeƒŠƒAƒ‹ƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX.
+		 * @brief DirectX 11ç”¨ã®ãƒãƒ†ãƒªã‚¢ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚¯ãƒ©ã‚¹.
 		 */
 		class MaterialManager : public ResourceManagerBase<MaterialManager, MaterialHandle, MaterialCreateDesc, MaterialData> {
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param shaderMgr ƒVƒF[ƒ_[ƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX
-			 * @param textureMgr ƒeƒNƒXƒ`ƒƒƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX
-			 * @param cbMgr CBƒoƒbƒtƒ@ƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX
-			 * @param samplerMgr ƒTƒ“ƒvƒ‰[ƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param shaderMgr ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚¯ãƒ©ã‚¹
+			 * @param textureMgr ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚¯ãƒ©ã‚¹
+			 * @param cbMgr CBãƒãƒƒãƒ•ã‚¡ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚¯ãƒ©ã‚¹
+			 * @param samplerMgr ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚¯ãƒ©ã‚¹
 			 */
 			explicit MaterialManager(ShaderManager* shaderMgr,
 				TextureManager* textureMgr,
@@ -176,53 +176,53 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ResourceManagerBase ƒtƒbƒN
-			 * @param desc ƒ}ƒeƒŠƒAƒ‹ì¬î•ñ
-			 * @return std::optional<MaterialHandle> Šù‘¶‚Ìƒ}ƒeƒŠƒAƒ‹ƒnƒ“ƒhƒ‹A‘¶İ‚µ‚È‚¢ê‡‚Í std::nullopt
+			 * @brief ResourceManagerBase ãƒ•ãƒƒã‚¯
+			 * @param desc ãƒãƒ†ãƒªã‚¢ãƒ«ä½œæˆæƒ…å ±
+			 * @return std::optional<MaterialHandle> æ—¢å­˜ã®ãƒãƒ†ãƒªã‚¢ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã€å­˜åœ¨ã—ãªã„å ´åˆã¯ std::nullopt
 			 */
 			std::optional<MaterialHandle> FindExisting(const MaterialCreateDesc& desc) noexcept;
 			/**
-			 * @brief ResourceManagerBase ƒtƒbƒN
-			 * @param desc ƒ}ƒeƒŠƒAƒ‹ì¬î•ñ
-			 * @param h “o˜^‚·‚éƒ}ƒeƒŠƒAƒ‹ƒnƒ“ƒhƒ‹
+			 * @brief ResourceManagerBase ãƒ•ãƒƒã‚¯
+			 * @param desc ãƒãƒ†ãƒªã‚¢ãƒ«ä½œæˆæƒ…å ±
+			 * @param h ç™»éŒ²ã™ã‚‹ãƒãƒ†ãƒªã‚¢ãƒ«ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			void RegisterKey(const MaterialCreateDesc& desc, MaterialHandle h);
 			/**
-			 * @brief ResourceManagerBase ƒtƒbƒN
-			 * @param desc ƒ}ƒeƒŠƒAƒ‹ì¬î•ñ
-			 * @param h “o˜^‚·‚éƒ}ƒeƒŠƒAƒ‹ƒnƒ“ƒhƒ‹
-			 * @return DX11MaterialData ì¬‚³‚ê‚½ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^
+			 * @brief ResourceManagerBase ãƒ•ãƒƒã‚¯
+			 * @param desc ãƒãƒ†ãƒªã‚¢ãƒ«ä½œæˆæƒ…å ±
+			 * @param h ç™»éŒ²ã™ã‚‹ãƒãƒ†ãƒªã‚¢ãƒ«ãƒãƒ³ãƒ‰ãƒ«
+			 * @return DX11MaterialData ä½œæˆã•ã‚ŒãŸãƒãƒ†ãƒªã‚¢ãƒ«ãƒ‡ãƒ¼ã‚¿
 			 */
 			MaterialData CreateResource(const MaterialCreateDesc& desc, MaterialHandle h);
 			/**
-			 * @brief w’è‚µ‚½ƒCƒ“ƒfƒbƒNƒX‚Ìƒ}ƒeƒŠƒAƒ‹‚ğƒLƒƒƒbƒVƒ…‚©‚çíœ‚·‚éŠÖ”
-			 * @param idx íœ‚·‚éƒ}ƒeƒŠƒAƒ‹‚ÌƒCƒ“ƒfƒbƒNƒX
+			 * @brief æŒ‡å®šã—ãŸã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‹ã‚‰å‰Šé™¤ã™ã‚‹é–¢æ•°
+			 * @param idx å‰Šé™¤ã™ã‚‹ãƒãƒ†ãƒªã‚¢ãƒ«ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			 */
 			void RemoveFromCaches(uint32_t idx);
 			/**
-			 * @brief w’è‚µ‚½ƒCƒ“ƒfƒbƒNƒX‚Ìƒ}ƒeƒŠƒAƒ‹ƒŠƒ\[ƒX‚ğ”jŠü‚·‚éŠÖ”
-			 * @param idx ”jŠü‚·‚éƒ}ƒeƒŠƒAƒ‹‚ÌƒCƒ“ƒfƒbƒNƒX
-			 * @param currentFrame Œ»İ‚ÌƒtƒŒ[ƒ€”Ô†i’x‰„”jŠü—pj
+			 * @brief æŒ‡å®šã—ãŸã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®ãƒãƒ†ãƒªã‚¢ãƒ«ãƒªã‚½ãƒ¼ã‚¹ã‚’ç ´æ£„ã™ã‚‹é–¢æ•°
+			 * @param idx ç ´æ£„ã™ã‚‹ãƒãƒ†ãƒªã‚¢ãƒ«ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			 * @param currentFrame ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·ï¼ˆé…å»¶ç ´æ£„ç”¨ï¼‰
 			 */
 			void DestroyResource(uint32_t idx, uint64_t currentFrame);
 			/**
-			 * @brief ƒ}ƒeƒŠƒAƒ‹‚ÌƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[‚ğƒoƒCƒ“ƒh‚·‚éŠÖ”
-			 * @param ctx ƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒg
-			 * @param cache ƒoƒCƒ“ƒfƒBƒ“ƒOƒLƒƒƒbƒVƒ…
+			 * @brief ãƒãƒ†ãƒªã‚¢ãƒ«ã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã‚’ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹é–¢æ•°
+			 * @param ctx ãƒ‡ãƒã‚¤ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
+			 * @param cache ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã‚­ãƒ£ãƒƒã‚·ãƒ¥
 			 */
 			static void BindMaterialPSSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache);
 			static void BindMaterialVSSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache);
 			/**
-			 * @brief ƒ}ƒeƒŠƒAƒ‹‚Ì’è”ƒoƒbƒtƒ@ƒrƒ…[‚ğƒoƒCƒ“ƒh‚·‚éŠÖ”
-			 * @param ctx ƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒg
-			 * @param cache ƒoƒCƒ“ƒfƒBƒ“ƒOƒLƒƒƒbƒVƒ…
+			 * @brief ãƒãƒ†ãƒªã‚¢ãƒ«ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã‚’ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹é–¢æ•°
+			 * @param ctx ãƒ‡ãƒã‚¤ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
+			 * @param cache ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã‚­ãƒ£ãƒƒã‚·ãƒ¥
 			 */
 			static void BindMaterialPSCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache);
 			static void BindMaterialVSCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache);
 			/**
-			 * @brief ƒ}ƒeƒŠƒAƒ‹‚ÌƒTƒ“ƒvƒ‰[‚ğƒoƒCƒ“ƒh‚·‚éŠÖ”
-			 * @param ctx ƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒg
-			 * @param cache ƒoƒCƒ“ƒfƒBƒ“ƒOƒLƒƒƒbƒVƒ…
+			 * @brief ãƒãƒ†ãƒªã‚¢ãƒ«ã®ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚’ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹é–¢æ•°
+			 * @param ctx ãƒ‡ãƒã‚¤ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
+			 * @param cache ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã‚­ãƒ£ãƒƒã‚·ãƒ¥
 			 */
 			static void BindMaterialPSSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache);
 			static void BindMaterialVSSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache);
@@ -277,7 +277,7 @@ namespace SFW
 			BufferManager* cbManager;
 			SamplerManager* samplerManager;
 
-			// ==== ƒ}ƒeƒŠƒAƒ‹ƒL[i•s•Ï‚Ì‘g‚ğƒ\[ƒg‚µ‚ÄƒnƒbƒVƒ…‰»j====
+			// ==== ãƒãƒ†ãƒªã‚¢ãƒ«ã‚­ãƒ¼ï¼ˆä¸å¤‰ã®çµ„ã‚’ã‚½ãƒ¼ãƒˆã—ã¦ãƒãƒƒã‚·ãƒ¥åŒ–ï¼‰====
 			struct MaterialKey {
 				uint32_t shaderIndex{};
 				std::vector<std::pair<UINT, uint32_t>> psSrvs;

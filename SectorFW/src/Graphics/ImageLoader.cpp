@@ -1,4 +1,4 @@
-#include "Graphics/ImageLoader.h"
+ï»¿#include "Graphics/ImageLoader.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image/stb_image.h"
@@ -13,18 +13,18 @@ namespace SFW::Graphics
 
 	[[nodiscard]] ImageData LoadImageFromFileRGBA8(const std::string& path, bool flipVertically)
 	{
-		// “Ç‚İ‚İ‚Éã‰º”½“]‚·‚é‚©
+		// èª­ã¿è¾¼ã¿æ™‚ã«ä¸Šä¸‹åè»¢ã™ã‚‹ã‹
 		stbi_set_flip_vertically_on_load(flipVertically ? 1 : 0);
 
 		int w = 0, h = 0, comp = 0;
 
-		// STBI_rgb_alpha ‚ğw’è‚·‚é‚Æ•K‚¸ RGBA(4ch) ‚Å•Ô‚Á‚Ä‚­‚é
+		// STBI_rgb_alpha ã‚’æŒ‡å®šã™ã‚‹ã¨å¿…ãš RGBA(4ch) ã§è¿”ã£ã¦ãã‚‹
 		unsigned char* data =
 			stbi_load(path.c_str(), &w, &h, &comp, STBI_rgb_alpha);
 
 		if (!data)
 		{
-			// ¸”s——R‚Í stbi_failure_reason() ‚Åæ‚ê‚é
+			// å¤±æ•—ç†ç”±ã¯ stbi_failure_reason() ã§å–ã‚Œã‚‹
 			const char* reason = stbi_failure_reason();
 			throw std::runtime_error(
 				std::string("Failed to load image: ") + path +
@@ -34,9 +34,9 @@ namespace SFW::Graphics
 		ImageData img;
 		img.width = w;
 		img.height = h;
-		img.channels = comp;          // Œ³‰æ‘œ‚ÌÀƒ`ƒƒƒlƒ‹”
-		img.desiredChannels = 4;      // ¡‰ñ‚Í RGBA8
-		img.pixels.reset(data);       // unique_ptr ‚ÉŠ—LŒ ‚ğ“n‚·
+		img.channels = comp;          // å…ƒç”»åƒã®å®Ÿãƒãƒ£ãƒãƒ«æ•°
+		img.desiredChannels = 4;      // ä»Šå›ã¯ RGBA8
+		img.pixels.reset(data);       // unique_ptr ã«æ‰€æœ‰æ¨©ã‚’æ¸¡ã™
 
 		return img;
 	}
@@ -60,7 +60,7 @@ namespace SFW::Graphics
 		ImageData img;
 		img.width = w;
 		img.height = h;
-		img.channels = comp;             // Œ³‰æ‘œ‚Ìƒ`ƒƒƒlƒ‹”
+		img.channels = comp;             // å…ƒç”»åƒã®ãƒãƒ£ãƒãƒ«æ•°
 		img.desiredChannels = desiredChannels == 0 ? comp : desiredChannels;
 		img.pixels.reset(data);
 		return img;

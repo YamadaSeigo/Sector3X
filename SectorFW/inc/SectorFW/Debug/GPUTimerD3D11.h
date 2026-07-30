@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   GPUTimerD3D11.h
- * @brief  Direct3D11—p‚ÌGPUƒ^ƒCƒ}[‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief  Direct3D11ç”¨ã®GPUã‚¿ã‚¤ãƒãƒ¼ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -16,19 +16,19 @@ namespace SFW
 	namespace Debug
 	{
 		/**
-		 * @brief Direct3D11—p‚ÌGPUƒ^ƒCƒ}[
+		 * @brief Direct3D11ç”¨ã®GPUã‚¿ã‚¤ãƒãƒ¼
 		 *
-		 * - ƒ^ƒCƒ€ƒXƒ^ƒ“ƒvƒNƒGƒŠ‚ğƒŠƒ“ƒOƒoƒbƒtƒ@‚ÅŠÇ—
-		 * - –¢‰ğŒˆiGPU ‚ª‚Ü‚¾I‚í‚Á‚Ä‚¢‚È‚¢jƒNƒGƒŠ‚ÍÄ—˜—p‚µ‚È‚¢
-		 *   ¨ QUERY_BEGIN_ABANDONING_PREVIOUS_RESULTS / QUERY_END_ABANDONING_PREVIOUS_RESULTS ‚ğ‰ñ”ğ
-		 * - ‹ó‚«ƒXƒƒbƒg‚ª‚È‚¢ê‡A‚»‚ÌƒtƒŒ[ƒ€‚ÌŒv‘ª‚ÍƒXƒLƒbƒv‚·‚é
+		 * - ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚¯ã‚¨ãƒªã‚’ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã§ç®¡ç†
+		 * - æœªè§£æ±ºï¼ˆGPU ãŒã¾ã çµ‚ã‚ã£ã¦ã„ãªã„ï¼‰ã‚¯ã‚¨ãƒªã¯å†åˆ©ç”¨ã—ãªã„
+		 *   â†’ QUERY_BEGIN_ABANDONING_PREVIOUS_RESULTS / QUERY_END_ABANDONING_PREVIOUS_RESULTS ã‚’å›é¿
+		 * - ç©ºãã‚¹ãƒ­ãƒƒãƒˆãŒãªã„å ´åˆã€ãã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®è¨ˆæ¸¬ã¯ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹
 		 */
 		class GpuTimerD3D11 {
 		public:
 			/**
-			 * @brief ‰Šú‰»
-			 * @param dev      ƒfƒoƒCƒX
-			 * @param history  —š—ğ”i“¯ in-flight ‚³‚¹‚éÅ‘åƒtƒŒ[ƒ€”–ÚˆÀj
+			 * @brief åˆæœŸåŒ–
+			 * @param dev      ãƒ‡ãƒã‚¤ã‚¹
+			 * @param history  å±¥æ­´æ•°ï¼ˆåŒæ™‚ in-flight ã•ã›ã‚‹æœ€å¤§ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ç›®å®‰ï¼‰
 			 */
 			void init(ID3D11Device* dev, int history = 3)
 			{
@@ -38,16 +38,16 @@ namespace SFW
 
 				for (auto& r : rings_) {
 					D3D11_QUERY_DESC q{};
-					// ü”g”•Disjoint î•ñ
+					// å‘¨æ³¢æ•°ï¼†Disjoint æƒ…å ±
 					q.Query = D3D11_QUERY_TIMESTAMP_DISJOINT;
 					q.MiscFlags = 0;
 					dev->CreateQuery(&q, r.disjoint.ReleaseAndGetAddressOf());
 
-					// ŠJnƒ^ƒCƒ€ƒXƒ^ƒ“ƒv
+					// é–‹å§‹ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—
 					q.Query = D3D11_QUERY_TIMESTAMP;
 					dev->CreateQuery(&q, r.begin.ReleaseAndGetAddressOf());
 
-					// I—¹ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv
+					// çµ‚äº†ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—
 					dev->CreateQuery(&q, r.end.ReleaseAndGetAddressOf());
 
 					r.inFlight = false;
@@ -61,11 +61,11 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒtƒŒ[ƒ€æ“ªi•`‰æ’¼‘Oj
-			 * @param ctx ƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒg
+			 * @brief ãƒ•ãƒ¬ãƒ¼ãƒ å…ˆé ­ï¼ˆæç”»ç›´å‰ï¼‰
+			 * @param ctx ãƒ‡ãƒã‚¤ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 			 *
-			 * ‹ó‚¢‚Ä‚¢‚éƒŠƒ“ƒOƒXƒƒbƒgiinFlight == falsej‚Ì‚İ‚ğg—p‚·‚éB
-			 * ‘SƒXƒƒbƒg‚ª inFlight ‚Ìê‡‚ÍŒv‘ª‚ğƒXƒLƒbƒv‚·‚éB
+			 * ç©ºã„ã¦ã„ã‚‹ãƒªãƒ³ã‚°ã‚¹ãƒ­ãƒƒãƒˆï¼ˆinFlight == falseï¼‰ã®ã¿ã‚’ä½¿ç”¨ã™ã‚‹ã€‚
+			 * å…¨ã‚¹ãƒ­ãƒƒãƒˆãŒ inFlight ã®å ´åˆã¯è¨ˆæ¸¬ã‚’ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹ã€‚
 			 */
 			void begin(ID3D11DeviceContext* ctx)
 			{
@@ -74,7 +74,7 @@ namespace SFW
 					return;
 				}
 
-				// Œ»İ‚Ì writeIndex_ ‚©‚ç‹ó‚«ƒXƒƒbƒg‚ğ’T‚·
+				// ç¾åœ¨ã® writeIndex_ ã‹ã‚‰ç©ºãã‚¹ãƒ­ãƒƒãƒˆã‚’æ¢ã™
 				int start = writeIndex_;
 				int found = -1;
 				for (int i = 0; i < history_; ++i) {
@@ -85,7 +85,7 @@ namespace SFW
 					}
 				}
 
-				// ‹ó‚«‚ª‚È‚¢ ¨ ‚±‚ÌƒtƒŒ[ƒ€‚ÍŒv‘ª‚µ‚È‚¢
+				// ç©ºããŒãªã„ â†’ ã“ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã¯è¨ˆæ¸¬ã—ãªã„
 				if (found < 0) {
 					activeIndex_ = -1;
 					return;
@@ -94,7 +94,7 @@ namespace SFW
 				activeIndex_ = found;
 				auto& r = rings_[activeIndex_];
 
-				// V‚µ‚¢Œv‘ªŠJn
+				// æ–°ã—ã„è¨ˆæ¸¬é–‹å§‹
 				r.inFlight = true;
 				r.hasResult = false;
 				r.lastSec = -1.0;
@@ -104,10 +104,10 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒtƒŒ[ƒ€ÅŒãiPresent‘Oj
-			 * @param ctx ƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒg
+			 * @brief ãƒ•ãƒ¬ãƒ¼ãƒ æœ€å¾Œï¼ˆPresentå‰ï¼‰
+			 * @param ctx ãƒ‡ãƒã‚¤ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 			 *
-			 * begin() ‚É¬Œ÷‚µ‚½‚Æ‚«‚Ì‚İ End ‚ğ”­s‚·‚éB
+			 * begin() ã«æˆåŠŸã—ãŸã¨ãã®ã¿ End ã‚’ç™ºè¡Œã™ã‚‹ã€‚
 			 */
 			void end(ID3D11DeviceContext* ctx)
 			{
@@ -119,44 +119,44 @@ namespace SFW
 				ctx->End(r.end.Get());
 				ctx->End(r.disjoint.Get());
 
-				// Ÿ‰ñ’Tõ‚Ìƒx[ƒXˆÊ’u‚ği‚ß‚Ä‚¨‚­
+				// æ¬¡å›æ¢ç´¢ã®ãƒ™ãƒ¼ã‚¹ä½ç½®ã‚’é€²ã‚ã¦ãŠã
 				writeIndex_ = (activeIndex_ + 1) % history_;
 
-				// ‚±‚ÌƒtƒŒ[ƒ€‚ÌŒv‘ª‚ÍŠ®—¹iŒ‹‰Ê‚Í GPU ‘¤‚ÅŒã‚©‚çæ‚ê‚éj
+				// ã“ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®è¨ˆæ¸¬ã¯å®Œäº†ï¼ˆçµæœã¯ GPU å´ã§å¾Œã‹ã‚‰å–ã‚Œã‚‹ï¼‰
 				activeIndex_ = -1;
 			}
 
 			/**
-			 * @brief 1ƒtƒŒ’x‚ê‚Åæ“¾iƒmƒ“ƒuƒƒbƒLƒ“ƒOj
-			 * @param ctx ƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒg
-			 * @return •biV‚µ‚¢Œ‹‰Ê‚ªæ“¾‚Å‚«‚È‚©‚Á‚½ê‡‚Í < 0j
+			 * @brief 1ãƒ•ãƒ¬é…ã‚Œã§å–å¾—ï¼ˆãƒãƒ³ãƒ–ãƒ­ãƒƒã‚­ãƒ³ã‚°ï¼‰
+			 * @param ctx ãƒ‡ãƒã‚¤ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
+			 * @return ç§’ï¼ˆæ–°ã—ã„çµæœãŒå–å¾—ã§ããªã‹ã£ãŸå ´åˆã¯ < 0ï¼‰
 			 *
-			 * - ˆê”ÔŒÃ‚¢–¢‰ğŒˆ‚ÌƒŠƒ“ƒOireadIndex_ ‹N“_j‚©‚ç‡‚É‰ğŒˆ‚ğ‚İ‚é
-			 * - ‰ğŒˆ‚Å‚«‚½‚à‚Ì‚Í•K‚¸ GetData(S_OK) Ï‚İ‚É‚µ‚Ä inFlight = false ‚É‚·‚é
-			 * - ‚±‚ê‚É‚æ‚èu–¢æ“¾Œ‹‰Ê‚ğc‚µ‚½‚Ü‚Ü Query ‚ğÄ—˜—p‚·‚év‚±‚Æ‚ğ”ğ‚¯‚é
+			 * - ä¸€ç•ªå¤ã„æœªè§£æ±ºã®ãƒªãƒ³ã‚°ï¼ˆreadIndex_ èµ·ç‚¹ï¼‰ã‹ã‚‰é †ã«è§£æ±ºã‚’è©¦ã¿ã‚‹
+			 * - è§£æ±ºã§ããŸã‚‚ã®ã¯å¿…ãš GetData(S_OK) æ¸ˆã¿ã«ã—ã¦ inFlight = false ã«ã™ã‚‹
+			 * - ã“ã‚Œã«ã‚ˆã‚Šã€Œæœªå–å¾—çµæœã‚’æ®‹ã—ãŸã¾ã¾ Query ã‚’å†åˆ©ç”¨ã™ã‚‹ã€ã“ã¨ã‚’é¿ã‘ã‚‹
 			 */
 			double tryResolve(ID3D11DeviceContext* ctx)
 			{
 				if (rings_.empty())
 					return -1.0;
 
-				// ˆê“x‚É1‚Â‚¾‚¯‰ğŒˆ‚µ‚Ä•Ô‚·iŒÃ‚¢‚à‚Ì‚©‚çj
+				// ä¸€åº¦ã«1ã¤ã ã‘è§£æ±ºã—ã¦è¿”ã™ï¼ˆå¤ã„ã‚‚ã®ã‹ã‚‰ï¼‰
 				for (int i = 0; i < history_; ++i) {
 					int idx = (readIndex_ + i) % history_;
 					auto& r = rings_[idx];
 
 					if (!r.inFlight)
-						continue; // ‚±‚ÌƒXƒƒbƒg‚ÍŠù‚É‰ğŒˆÏ‚İ or –¢g—p
+						continue; // ã“ã®ã‚¹ãƒ­ãƒƒãƒˆã¯æ—¢ã«è§£æ±ºæ¸ˆã¿ or æœªä½¿ç”¨
 
 					D3D11_QUERY_DATA_TIMESTAMP_DISJOINT dj{};
 					HRESULT hr = ctx->GetData(r.disjoint.Get(), &dj, sizeof(dj), 0);
 
 					if (hr == S_FALSE) {
-						// ‚Ü‚¾ GPU ‚ªI‚í‚Á‚Ä‚¢‚È‚¢ ¨ Ÿ‚ÌƒtƒŒ[ƒ€‚ÅÄƒ`ƒƒƒŒƒ“ƒW
+						// ã¾ã  GPU ãŒçµ‚ã‚ã£ã¦ã„ãªã„ â†’ æ¬¡ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§å†ãƒãƒ£ãƒ¬ãƒ³ã‚¸
 						continue;
 					}
 					if (FAILED(hr)) {
-						// ‰½‚ç‚©‚ÌƒGƒ‰[ ¨ ‚±‚ÌƒXƒƒbƒg‚ÍÌ‚Ä‚é
+						// ä½•ã‚‰ã‹ã®ã‚¨ãƒ©ãƒ¼ â†’ ã“ã®ã‚¹ãƒ­ãƒƒãƒˆã¯æ¨ã¦ã‚‹
 						r.inFlight = false;
 						r.hasResult = false;
 						r.lastSec = -1.0;
@@ -164,7 +164,7 @@ namespace SFW
 						continue;
 					}
 
-					// ü”g”î•ñæ“¾¬Œ÷BDisjoint = true ‚Ìê‡‚ÍŒv‘ª–³Œø
+					// å‘¨æ³¢æ•°æƒ…å ±å–å¾—æˆåŠŸã€‚Disjoint = true ã®å ´åˆã¯è¨ˆæ¸¬ç„¡åŠ¹
 					if (dj.Disjoint) {
 						r.inFlight = false;
 						r.hasResult = false;
@@ -173,14 +173,14 @@ namespace SFW
 						continue;
 					}
 
-					// ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv2‚Â‚ğæ“¾
+					// ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—2ã¤ã‚’å–å¾—
 					UINT64 t0 = 0, t1 = 0;
 					hr = ctx->GetData(r.begin.Get(), &t0, sizeof(t0), 0);
 					if (hr != S_OK) {
-						// begin/end ‚Ç‚¿‚ç‚©‚ª‚Ü‚¾‚È‚çA‚à‚¤­‚µ‘Ò‚Â
+						// begin/end ã©ã¡ã‚‰ã‹ãŒã¾ã ãªã‚‰ã€ã‚‚ã†å°‘ã—å¾…ã¤
 						if (hr == S_FALSE) continue;
 
-						// ‚»‚êˆÈŠO‚ÌƒGƒ‰[ ¨ ‚±‚ÌƒXƒƒbƒg‚ÍÌ‚Ä‚é
+						// ãã‚Œä»¥å¤–ã®ã‚¨ãƒ©ãƒ¼ â†’ ã“ã®ã‚¹ãƒ­ãƒƒãƒˆã¯æ¨ã¦ã‚‹
 						r.inFlight = false;
 						r.hasResult = false;
 						r.lastSec = -1.0;
@@ -199,20 +199,20 @@ namespace SFW
 						continue;
 					}
 
-					// ³í‚É—¼•û‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ªæ‚ê‚½ ¨ Œv‘ªŠ®—¹
+					// æ­£å¸¸ã«ä¸¡æ–¹ã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ãŒå–ã‚ŒãŸ â†’ è¨ˆæ¸¬å®Œäº†
 					const double sec = double(t1 - t0) / double(dj.Frequency);
 
 					r.inFlight = false;
 					r.hasResult = true;
 					r.lastSec = sec;
 
-					// Ÿ‚Ì‰ğŒˆ‘ÎÛˆÊ’u‚ği‚ß‚é
+					// æ¬¡ã®è§£æ±ºå¯¾è±¡ä½ç½®ã‚’é€²ã‚ã‚‹
 					readIndex_ = (idx + 1) % history_;
 
 					return sec;
 				}
 
-				// ¡‰ñ‚ÍV‚µ‚¢Œ‹‰Ê‚ğ“¾‚ç‚ê‚È‚©‚Á‚½
+				// ä»Šå›ã¯æ–°ã—ã„çµæœã‚’å¾—ã‚‰ã‚Œãªã‹ã£ãŸ
 				return -1.0;
 			}
 
@@ -222,17 +222,17 @@ namespace SFW
 				Microsoft::WRL::ComPtr<ID3D11Query> begin;
 				Microsoft::WRL::ComPtr<ID3D11Query> end;
 
-				bool   inFlight = false; ///< GPU ‚É“Š‚°‚Ä–¢‰ğŒˆ‚È‚ç true
+				bool   inFlight = false; ///< GPU ã«æŠ•ã’ã¦æœªè§£æ±ºãªã‚‰ true
 				bool   hasResult = false;
-				double lastSec = -1.0;   ///< ’¼‹ß‚ÌŒ‹‰Êi¡‚ÍŠO‚É‚Í•Ô‚µ‚Ä‚¢‚È‚¢‚ª•ÛŒ¯‚Å•Ûj
+				double lastSec = -1.0;   ///< ç›´è¿‘ã®çµæœï¼ˆä»Šã¯å¤–ã«ã¯è¿”ã—ã¦ã„ãªã„ãŒä¿é™ºã§ä¿æŒï¼‰
 			};
 
 			std::vector<Ring> rings_;
 			int history_ = 0;
 
-			int writeIndex_ = 0;  ///< Ÿ‚É begin ‚Å’T‚µn‚ß‚éˆÊ’u
-			int readIndex_ = 0;  ///< Ÿ‚É tryResolve ‚·‚é‹N“_
-			int activeIndex_ = -1; ///< ’¼‹ß‚Ì begin/end ‘ÎÛi‚»‚ÌƒtƒŒ[ƒ€j
+			int writeIndex_ = 0;  ///< æ¬¡ã« begin ã§æ¢ã—å§‹ã‚ã‚‹ä½ç½®
+			int readIndex_ = 0;  ///< æ¬¡ã« tryResolve ã™ã‚‹èµ·ç‚¹
+			int activeIndex_ = -1; ///< ç›´è¿‘ã® begin/end å¯¾è±¡ï¼ˆãã®ãƒ•ãƒ¬ãƒ¼ãƒ ï¼‰
 		};
 	}
 }

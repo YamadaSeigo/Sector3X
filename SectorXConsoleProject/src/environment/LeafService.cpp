@@ -1,4 +1,4 @@
-#include "LeafService.h"
+ï»¿#include "LeafService.h"
 #include <SectorFW/Debug/message.h>
 #include <SectorFW/Util/convert_string.h>
 
@@ -63,7 +63,7 @@ HRESULT CreateLeafGuideCurveBuffer(
 
 	D3D11_BUFFER_DESC desc{};
 	desc.ByteWidth = sizeof(LeafService::GuideCurve) * LeafService::TotalGuideCurves;
-	desc.Usage = D3D11_USAGE_DYNAMIC;                    // –ˆƒtƒŒ[ƒ€XV‚È‚çOK
+	desc.Usage = D3D11_USAGE_DYNAMIC;                    // æ¯ãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°ãªã‚‰OK
 	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
 	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	desc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
@@ -105,7 +105,7 @@ HRESULT CreateLeafClumpBuffer(
 
 	D3D11_BUFFER_DESC desc{};
 	desc.ByteWidth = sizeof(LeafService::Clump) * LeafService::TotalClumps;
-	desc.Usage = D3D11_USAGE_DEFAULT; // GPU‘‚«‚İ—p
+	desc.Usage = D3D11_USAGE_DEFAULT; // GPUæ›¸ãè¾¼ã¿ç”¨
 	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
 	desc.CPUAccessFlags = 0;
 	desc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
@@ -128,7 +128,7 @@ HRESULT CreateLeafClumpBuffer(
 	uav.Format = DXGI_FORMAT_UNKNOWN;
 	uav.Buffer.FirstElement = 0;
 	uav.Buffer.NumElements = LeafService::TotalClumps;
-	uav.Buffer.Flags = 0; // Append/Counterg‚¤‚È‚ç‚±‚±‚ğİ’è
+	uav.Buffer.Flags = 0; // Append/Counterä½¿ã†ãªã‚‰ã“ã“ã‚’è¨­å®š
 
 	hr = dev->CreateUnorderedAccessView(*outBuf, &uav, outUAV);
 	if (FAILED(hr))
@@ -161,12 +161,12 @@ LeafService::LeafService(
 	const wchar_t* psPath)
 	: m_bufferMgr(bufferMgr)
 {
-	// ƒKƒCƒh‹Èüƒpƒ‰ƒ[ƒ^‰Šú‰»
+	// ã‚¬ã‚¤ãƒ‰æ›²ç·šãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿åˆæœŸåŒ–
 	InitCurveParams(12345);
 
 	InitClumpsCPU(67890, 6.0f, 5.0f);
 
-	// ƒ{ƒŠƒ…[ƒ€ƒoƒbƒtƒ@ì¬
+	// ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ä½œæˆ
 	ID3D11Buffer* buf = nullptr;
 	ID3D11ShaderResourceView* srv = nullptr;
 	ID3D11UnorderedAccessView* uav = nullptr;
@@ -189,8 +189,8 @@ LeafService::LeafService(
 	D3D11_SUBRESOURCE_DATA initialData{};
 	initialData.pSysMem = m_cpuClumps;
 
-	//‰Šú‰»‚ÉCPU‘¤‚Åì¬‚µ‚½ƒNƒ‰ƒXƒ^[ƒf[ƒ^‚ğ“]‘—
-	//‚»‚Ì‚ ‚Æ‚ÍGPU‘¤‚ÅXV‚µ‚Ä‚¢‚­
+	//åˆæœŸåŒ–æ™‚ã«CPUå´ã§ä½œæˆã—ãŸã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’è»¢é€
+	//ãã®ã‚ã¨ã¯GPUå´ã§æ›´æ–°ã—ã¦ã„ã
 	CreateLeafClumpBuffer(
 		pDevice,
 		&buf,
@@ -231,7 +231,7 @@ LeafService::LeafService(
 			assert(SUCCEEDED(hr) && "Failed to create compute shader.");
 		};
 
-	// ƒRƒ“ƒsƒ…[ƒgƒVƒF[ƒ_[ì¬
+	// ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ãƒˆã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ä½œæˆ
 	compileShader(csInitFreeListPath, m_initFreeListCS);
 	compileShader(csClumpUpdatePath, m_clumpUpdateCS);
 	compileShader(csSpawnPath, m_spawnCS);
@@ -258,7 +258,7 @@ LeafService::LeafService(
 
 	m_particlePool.Create(pDevice);
 
-	// FreeList‰Šú‰»
+	// FreeListåˆæœŸåŒ–
 	{
 		struct InitCB
 		{
@@ -327,19 +327,19 @@ void LeafService::Commit(double deltaTime)
 	updateDesc.isArray = true;
 	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
-	//“®“I‚ÉƒKƒCƒhƒJ[ƒu‚ğXV
+	//å‹•çš„ã«ã‚¬ã‚¤ãƒ‰ã‚«ãƒ¼ãƒ–ã‚’æ›´æ–°
 	BuildGuideCurves(m_elapsedTime);
 
 	float dt = static_cast<float>(deltaTime);
 
-	// GPU‚àXV
+	// GPUã‚‚æ›´æ–°
 	updateDesc.buffer = m_guideCurveBuffer;
 	updateDesc.size = sizeof(GuideCurve) * TotalGuideCurves;
 	updateDesc.data = m_cpuGuideCurves;
 	updateDesc.isDelete = false;
 	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
-	//XV‚ÍGPU‚Ås‚¤‚½‚ßƒRƒƒ“ƒgƒAƒEƒg(UAV‚ğg—p‚µ‚Ä‚¢‚é‚Ì‚ÅMap‚Å‚«‚È‚¢)
+	//æ›´æ–°ã¯GPUã§è¡Œã†ãŸã‚ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆ(UAVã‚’ä½¿ç”¨ã—ã¦ã„ã‚‹ã®ã§Mapã§ããªã„)
 	//UpdateClumpsCPU(dt, activeSize, 0.2f, 0.1f);
 
 	/*updateDesc.buffer = m_clumpBuffer;
@@ -399,7 +399,7 @@ void LeafService::Commit(double deltaTime)
 	updateDesc.data = &renderBuf;
 	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
-	// g—p‚µ‚Ä‚¢‚È‚¢ƒXƒƒbƒg‚ğ‰ğ•ú
+	// ä½¿ç”¨ã—ã¦ã„ãªã„ã‚¹ãƒ­ãƒƒãƒˆã‚’è§£æ”¾
 	ReleaseUnusedSlots();
 }
 
@@ -461,7 +461,7 @@ uint32_t LeafService::AllocateSlot(uint32_t volumeUID)
 		}
 	}
 
-	// ãŒÀ’´‰ßiİŒvƒ~ƒXj
+	// ä¸Šé™è¶…éï¼ˆè¨­è¨ˆãƒŸã‚¹ï¼‰
 	return UINT32_MAX;
 }
 
@@ -474,7 +474,7 @@ void LeafService::ReleaseUnusedSlots()
 	{
 		if (m_slots[i].used)
 		{
-			if (activeSlots.find(i) == activeSlots.end()) // © i ‚Í slot
+			if (activeSlots.find(i) == activeSlots.end()) // â† i ã¯ slot
 			{
 				m_slots[i].used = false;
 				m_uidToSlot.erase(m_slots[i].volumeUID);
@@ -492,32 +492,32 @@ void LeafService::InitCurveParams(uint32_t baseSeed)
 		CurveParams p{};
 		p.length = RandRange(s, 8.0f, 20.0f);
 
-		// ¶‰EŒğŒİ‚ÍˆÛi‘©Š´‚ªo‚â‚·‚¢j
+		// å·¦å³äº¤äº’ã¯ç¶­æŒï¼ˆæŸæ„ŸãŒå‡ºã‚„ã™ã„ï¼‰
 		float side = (i & 1) ? 1.0f : -1.0f;
 
-		// ‹È—¦‚Íu’·‚³‚É”ä—áv‚³‚¹‚éi–_‚ğ‰ñ”ğj
-		// —áFL=10m -> bendBase ~ 2mAL=20m -> bendBase ~ 4m ‚­‚ç‚¢
+		// æ›²ç‡ã¯ã€Œé•·ã•ã«æ¯”ä¾‹ã€ã•ã›ã‚‹ï¼ˆæ£’ã‚’å›é¿ï¼‰
+		// ä¾‹ï¼šL=10m -> bendBase ~ 2mã€L=20m -> bendBase ~ 4m ãã‚‰ã„
 		float bendBase = p.length * RandRange(s, 0.25f, 0.4f);   // 0.15..0.25 * L
-		float bendJit = RandRange(s, -0.4f, 0.4f);              // ”÷–­‚É•ö‚·
+		float bendJit = RandRange(s, -0.4f, 0.4f);              // å¾®å¦™ã«å´©ã™
 		p.bend = (bendBase + bendJit) * side;
 
-		// start/end ƒIƒtƒZƒbƒg‚Íu‰¡(right)v‚ğ‹­‚ßEu‘OŒã(fwd)v‚Íã‚ß
-		// ‚±‚±‚Å‚ÌXZ‚Íƒ[ƒJƒ‹(X=right, Z=fwdˆµ‚¢)‚Æ‚µ‚Äg‚¤‘z’è
-		// i‚ ‚È‚½‚ÌBuild‚Å Vec3{start.x, 0, start.y} ‚Æ‚µ‚Ä‚¢‚é‚Ì‚ÅAstart.y‚ªZ‚É‚È‚è‚Ü‚·j
-		float startRight = RandRange(s, -0.6f, 0.6f);            // start‚Í¬‚³‚­
+		// start/end ã‚ªãƒ•ã‚»ãƒƒãƒˆã¯ã€Œæ¨ª(right)ã€ã‚’å¼·ã‚ãƒ»ã€Œå‰å¾Œ(fwd)ã€ã¯å¼±ã‚
+		// ã“ã“ã§ã®XZã¯ãƒ­ãƒ¼ã‚«ãƒ«(X=right, Z=fwdæ‰±ã„)ã¨ã—ã¦ä½¿ã†æƒ³å®š
+		// ï¼ˆã‚ãªãŸã®Buildã§ Vec3{start.x, 0, start.y} ã¨ã—ã¦ã„ã‚‹ã®ã§ã€start.yãŒZã«ãªã‚Šã¾ã™ï¼‰
+		float startRight = RandRange(s, -0.6f, 0.6f);            // startã¯å°ã•ã
 		float startFwd = RandRange(s, -0.4f, 0.4f);
 
-		float endRight = RandRange(s, -1.5f, 1.5f);            // end‚Í­‚µL‚ß
+		float endRight = RandRange(s, -1.5f, 1.5f);            // endã¯å°‘ã—åºƒã‚
 		float endFwd = RandRange(s, -1.0f, 1.0f);
 
 		p.startOffXZ = { startRight, startFwd };
 		p.endOffXZ = { endRight,   endFwd };
 
-		// optional: ƒRƒ“ƒgƒ[ƒ‹“_‚Ì‘OiŠ„‡‚ğŒÂ‘Ì·i‘ÎÌ‚ğ•ö‚·j
-		p.t1 = RandRange(s, 0.25f, 0.40f); // P1‚Ìz”ä—¦
-		p.t2 = RandRange(s, 0.55f, 0.80f); // P2‚Ìz”ä—¦
+		// optional: ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ç‚¹ã®å‰é€²å‰²åˆã‚’å€‹ä½“å·®ï¼ˆå¯¾ç§°ã‚’å´©ã™ï¼‰
+		p.t1 = RandRange(s, 0.25f, 0.40f); // P1ã®zæ¯”ç‡
+		p.t2 = RandRange(s, 0.55f, 0.80f); // P2ã®zæ¯”ç‡
 
-		// optional: P1/P2‚Ì‰¡U‚è”ñ‘ÎÌŒW”iSš‚ğ©‘R‚Éj
+		// optional: P1/P2ã®æ¨ªæŒ¯ã‚Šéå¯¾ç§°ä¿‚æ•°ï¼ˆSå­—ã‚’è‡ªç„¶ã«ï¼‰
 		p.bendAsym = RandRange(s, 0.65f, 1.20f);
 
 		m_curveParams[i] = p;
@@ -534,24 +534,24 @@ void LeafService::BuildGuideCurves(float timeSec)
 
 		float L = prm.length;
 
-		// ‚ä‚Á‚­‚è—h‚ç‚·i‹È—¦‚ª–Ú‚ÉŒ©‚¦‚é‚æ‚¤‚ÉA­‚µ‚¾‚¯“®‚©‚·j
+		// ã‚†ã£ãã‚Šæºã‚‰ã™ï¼ˆæ›²ç‡ãŒç›®ã«è¦‹ãˆã‚‹ã‚ˆã†ã«ã€å°‘ã—ã ã‘å‹•ã‹ã™ï¼‰
 		float wob = 0.85f + 0.15f * std::sinf(timeSec * 0.7f + i * 0.31f);
 		float bend = prm.bend * wob;
 
-		// ƒ[ƒJƒ‹: X=right, Y=up, Z=fwd
+		// ãƒ­ãƒ¼ã‚«ãƒ«: X=right, Y=up, Z=fwd
 		Vec3f P0 = { prm.startOffXZ.x, 0.0f, prm.startOffXZ.y };
 		Vec3f P3 = { prm.endOffXZ.x,   0.0f, prm.endOffXZ.y + L };
 
-		// is•ûŒü‚ÌŠ„‡iCurveParams‚É‚½‚¹‚½ê‡j
+		// é€²è¡Œæ–¹å‘ã®å‰²åˆï¼ˆCurveParamsã«æŒãŸã›ãŸå ´åˆï¼‰
 		float t1 = prm.t1; // 0.25..0.40
 		float t2 = prm.t2; // 0.55..0.80
 
-		// ‰¡U‚è‚Ì”ñ‘ÎÌiSš‚ğ©‘R‚Éj
+		// æ¨ªæŒ¯ã‚Šã®éå¯¾ç§°ï¼ˆSå­—ã‚’è‡ªç„¶ã«ï¼‰
 		float b1 = bend * prm.bendAsym;
 		float b2 = -bend;
 
-		// P1/P2 ‚Ì‰¡U‚è‚Íum’PˆÊv‚É‚È‚Á‚ÄOKiL‚É”ä—á‚µ‚Ä‚é‚Ì‚Å©‘Rj
-		// ‚½‚¾‚µAP0‚Ìright‚ÆP3‚Ìright‚Æ‚Ì·‚à­‚µ¬‚º‚é‚Æ‘©‚ª•ö‚ê‚É‚­‚¢
+		// P1/P2 ã®æ¨ªæŒ¯ã‚Šã¯ã€Œmå˜ä½ã€ã«ãªã£ã¦OKï¼ˆLã«æ¯”ä¾‹ã—ã¦ã‚‹ã®ã§è‡ªç„¶ï¼‰
+		// ãŸã ã—ã€P0ã®rightã¨P3ã®rightã¨ã®å·®ã‚‚å°‘ã—æ··ãœã‚‹ã¨æŸãŒå´©ã‚Œã«ãã„
 		float right0 = P0.x;
 		float right3 = P3.x;
 		float rightLerp1 = std::lerp(right0, right3, t1);
@@ -566,8 +566,8 @@ void LeafService::BuildGuideCurves(float timeSec)
 		c.p2L = P2;
 		c.p3L = P3;
 
-		// ’·‚³‚ÍŒµ–§‚¶‚á‚È‚­‚ÄOK‚¾‚¯‚ÇASš‚Í­‚µ’·‚­‚È‚é‚Ì‚ÅŒy‚­•â³‚µ‚Ä‚à‚¢‚¢
-		// —áF|bend| ‚ª‘å‚«‚¢‚Ù‚Ç’·‚¢
+		// é•·ã•ã¯å³å¯†ã˜ã‚ƒãªãã¦OKã ã‘ã©ã€Så­—ã¯å°‘ã—é•·ããªã‚‹ã®ã§è»½ãè£œæ­£ã—ã¦ã‚‚ã„ã„
+		// ä¾‹ï¼š|bend| ãŒå¤§ãã„ã»ã©é•·ã„
 		c.lengthApprox = L * (1.0f + 0.08f * (std::min)(std::abs(bend) / (std::max)(L, 1e-3f), 1.0f));
 	}
 }
@@ -585,24 +585,24 @@ void LeafService::InitClumpsCPU(uint32_t baseSeed, float laneMax, float radialMa
 			Clump cl{};
 			cl.seed = s;
 
-			// ‚Ç‚ÌƒJ[ƒu‚Éæ‚é‚©ivolume“à‚©‚çj
+			// ã©ã®ã‚«ãƒ¼ãƒ–ã«ä¹—ã‚‹ã‹ï¼ˆvolumeå†…ã‹ã‚‰ï¼‰
 			cl.curveId = curveBase + (Hash(s) % CurvePerVolume);
 
-			// is“x‚Íƒoƒ‰‚·iÅ‰‚©‚ç‰ò‚ªU‚Á‚Ä‚¢‚éj
+			// é€²è¡Œåº¦ã¯ãƒãƒ©ã™ï¼ˆæœ€åˆã‹ã‚‰å¡ŠãŒæ•£ã£ã¦ã„ã‚‹ï¼‰
 			cl.s = RandRange(s, 0.0f, 1.0f);
 
-			// ‰ò‚Ì’†SƒIƒtƒZƒbƒgi‰ò‚²‚Æ‚ÉƒŒ[ƒ“‚ªˆá‚¤j
-			// gŒQ‚êh‚É‚µ‚½‚¢‚È‚ç’†S‚ÍL‚ß‚ÉU‚ç‚µA—±qŒÂ‘Ì·‚Í¬‚³‚ß‚É‚·‚é‚Ì‚ªƒRƒc
+			// å¡Šã®ä¸­å¿ƒã‚ªãƒ•ã‚»ãƒƒãƒˆï¼ˆå¡Šã”ã¨ã«ãƒ¬ãƒ¼ãƒ³ãŒé•ã†ï¼‰
+			// â€œç¾¤ã‚Œâ€ã«ã—ãŸã„ãªã‚‰ä¸­å¿ƒã¯åºƒã‚ã«æ•£ã‚‰ã—ã€ç²’å­å€‹ä½“å·®ã¯å°ã•ã‚ã«ã™ã‚‹ã®ãŒã‚³ãƒ„
 			cl.laneCenter = RandRange(s, -laneMax, laneMax);
 			cl.radialCenter = RandRange(s, -radialMax, radialMax);
 
-			// clump‚²‚Æ‚Ì‘¬“xƒuƒŒi­‚µ‚¾‚¯j
+			// clumpã”ã¨ã®é€Ÿåº¦ãƒ–ãƒ¬ï¼ˆå°‘ã—ã ã‘ï¼‰
 			cl.speedMul = RandRange(s, 0.85f, 1.15f);
 
-			// —h‚êˆÊ‘Š
+			// æºã‚Œä½ç›¸
 			cl.phase = RandRange(s, 0.0f, 6.2831853f);
 
-			// YƒIƒtƒZƒbƒgi’n–Ê‚©‚ç‚Ì‚‚³’²®—pj
+			// Yã‚ªãƒ•ã‚»ãƒƒãƒˆï¼ˆåœ°é¢ã‹ã‚‰ã®é«˜ã•èª¿æ•´ç”¨ï¼‰
 			cl.yOffset = RandRange(s, -0.5f, 0.5f);
 
 			cl.yVel = 0.0f;
@@ -626,11 +626,11 @@ void LeafService::UpdateClumpsCPU(float dt, uint32_t activeVolumeCount, float la
 			cl.s = std::fmod(cl.s + (sp * dt / (std::max)(m_cpuGuideCurves[cl.curveId].lengthApprox, 0.001f)), 1.0f);
 			if (cl.s < 0.0f) cl.s += 1.0f;
 
-			// gŒQ‚ê‚Ì‚¤‚Ë‚èhi‰ò‚ª¶‰Eã‰º‚É“¯’²‚µ‚Ä—h‚ê‚éj
+			// â€œç¾¤ã‚Œã®ã†ã­ã‚Šâ€ï¼ˆå¡ŠãŒå·¦å³ä¸Šä¸‹ã«åŒèª¿ã—ã¦æºã‚Œã‚‹ï¼‰
 			cl.laneCenter += std::sin(m_elapsedTime * 0.7f + cl.phase) * laneAmp * dt;
 			cl.radialCenter += std::sin(m_elapsedTime * 0.9f + cl.phase * 1.3f) * radialAmp * dt;
 
-			// ˆí’E‚µ‚·‚¬–h~iƒNƒ‰ƒ“ƒvj
+			// é€¸è„±ã—ã™ãé˜²æ­¢ï¼ˆã‚¯ãƒ©ãƒ³ãƒ—ï¼‰
 			float laneCenterLimit = volume.radius;
 			float radialLimit = volume.radius * 0.5f;
 			cl.laneCenter = std::clamp(cl.laneCenter, -laneCenterLimit, laneCenterLimit);

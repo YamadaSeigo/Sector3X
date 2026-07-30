@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   ImGuiBackend.h
- * @brief ImGui‚ÌƒoƒbƒNƒGƒ“ƒhƒCƒ“ƒ^[ƒtƒF[ƒX‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ImGuiã®ãƒãƒƒã‚¯ã‚¨ãƒ³ãƒ‰ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -12,17 +12,17 @@ namespace SFW
 {
 	namespace Debug {
 		/**
-		 * @brief ImGui‚Ì‰Šú‰»î•ñ‚ğŠi”[‚·‚é\‘¢‘Ì
+		 * @brief ImGuiã®åˆæœŸåŒ–æƒ…å ±ã‚’æ ¼ç´ã™ã‚‹æ§‹é€ ä½“
 		 */
 		struct ImGuiInitInfo {
-			void* platform_window = nullptr; // HWND / SDL_Window* / GLFWwindow* / NSWindow* ‚È‚Ç
-			void* device = nullptr;          // ID3D11Device* / VkDevice / MTLDevice* ‚È‚Ç
-			void* device_context = nullptr;  // ID3D11DeviceContext* / VkQueue / CAMetalLayer* ‚È‚Ç
+			void* platform_window = nullptr; // HWND / SDL_Window* / GLFWwindow* / NSWindow* ãªã©
+			void* device = nullptr;          // ID3D11Device* / VkDevice / MTLDevice* ãªã©
+			void* device_context = nullptr;  // ID3D11DeviceContext* / VkQueue / CAMetalLayer* ãªã©
 			int   display_w = 0, display_h = 0;
 			float dpi_scale = 1.0f;
 		};
 		/**
-		 * @brief ImGui‚ÌƒoƒbƒNƒGƒ“ƒhƒCƒ“ƒ^[ƒtƒF[ƒX(’ŠÛƒNƒ‰ƒX)
+		 * @brief ImGuiã®ãƒãƒƒã‚¯ã‚¨ãƒ³ãƒ‰ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹(æŠ½è±¡ã‚¯ãƒ©ã‚¹)
 		 */
 		class IImGuiBackend {
 		public:
@@ -33,11 +33,11 @@ namespace SFW
 			virtual void NewFrame() = 0;
 			virtual void Render() = 0;
 			virtual void Shutdown() = 0;
-			// i•K—v‚È‚çjƒŠƒTƒCƒYEƒtƒHƒ“ƒgÄ¶¬Eƒ}ƒ‹ƒ`ƒrƒ…[ƒ|[ƒg‘Î‰‚È‚Ç
+			// ï¼ˆå¿…è¦ãªã‚‰ï¼‰ãƒªã‚µã‚¤ã‚ºãƒ»ãƒ•ã‚©ãƒ³ãƒˆå†ç”Ÿæˆãƒ»ãƒãƒ«ãƒãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆå¯¾å¿œãªã©
 			virtual void OnResize(int w, int h) {}
 		};
 		/**
-		 * @brief IImGuiBackend‚ğŒp³‚µ‚Ä‚¢‚é‚©‚ğƒ`ƒFƒbƒN‚·‚éƒRƒ“ƒZƒvƒg
+		 * @brief IImGuiBackendã‚’ç¶™æ‰¿ã—ã¦ã„ã‚‹ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 		 */
 		template<typename T>
 		concept ImGuiBackendType = std::is_base_of_v<IImGuiBackend, T>;

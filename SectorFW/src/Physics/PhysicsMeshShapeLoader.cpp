@@ -1,10 +1,10 @@
-#include "Physics/PhysicsMeshShapeLoader.h"
+ï»¿#include "Physics/PhysicsMeshShapeLoader.h"
 
 namespace SFW::Physics
 {
 	namespace
 	{
-		// ˆÀ‘S‚È“Ç‚İæ‚è—p‚ÌŠÈ’P‚Èƒrƒ…[
+		// å®‰å…¨ãªèª­ã¿å–ã‚Šç”¨ã®ç°¡å˜ãªãƒ“ãƒ¥ãƒ¼
 		struct BinaryReader
 		{
 			const std::uint8_t* cur = nullptr;
@@ -47,7 +47,7 @@ namespace SFW::Physics
 
 		if (!data || size < 4 + 4 + 4 + 4)
 		{
-			// Å’áŒÀ‚Ìƒwƒbƒ_‚à‚È‚¢
+			// æœ€ä½é™ã®ãƒ˜ãƒƒãƒ€ã‚‚ãªã„
 			return false;
 		}
 
@@ -59,7 +59,7 @@ namespace SFW::Physics
 
 		if (std::memcmp(magic, "JMSH", 4) != 0)
 		{
-			// ˆÙ‚È‚éƒtƒH[ƒ}ƒbƒg
+			// ç•°ãªã‚‹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 			return false;
 		}
 
@@ -69,7 +69,7 @@ namespace SFW::Physics
 
 		if (version != expectedVersion)
 		{
-			// ƒoƒCƒiƒŠƒtƒH[ƒ}ƒbƒg‚Ìƒo[ƒWƒ‡ƒ“ˆá‚¢
+			// ãƒã‚¤ãƒŠãƒªãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³é•ã„
 			return false;
 		}
 
@@ -78,21 +78,21 @@ namespace SFW::Physics
 		if (!br.read(vertexCount) || !br.read(indexCount))
 			return false;
 
-		// ‚´‚Á‚­‚èˆÀ‘Sƒ`ƒFƒbƒNiƒTƒCƒYƒI[ƒo[–h~j
+		// ã–ã£ãã‚Šå®‰å…¨ãƒã‚§ãƒƒã‚¯ï¼ˆã‚µã‚¤ã‚ºã‚ªãƒ¼ãƒãƒ¼é˜²æ­¢ï¼‰
 		const std::size_t minRequired =
 			sizeof(float) * 3ull * vertexCount + // Vec3 * vertexCount
 			sizeof(std::uint32_t) * indexCount;
 
 		if (br.remaining() < minRequired)
 		{
-			// ƒtƒ@ƒCƒ‹ƒTƒCƒY‚ª‘«‚è‚È‚¢
+			// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºãŒè¶³ã‚Šãªã„
 			return false;
 		}
 
 		outData.vertices.resize(vertexCount);
 		outData.indices.resize(indexCount);
 
-		// ’¸“_“Ç‚İæ‚è
+		// é ‚ç‚¹èª­ã¿å–ã‚Š
 		for (std::uint32_t i = 0; i < vertexCount; ++i)
 		{
 			float xyz[3];
@@ -106,13 +106,13 @@ namespace SFW::Physics
 
 			if (flipRightHanded)
 			{
-				v.x = -v.x; // ‰EèŒnƒtƒŠƒbƒv: X ‚ğ”½“]
+				v.x = -v.x; // å³æ‰‹ç³»ãƒ•ãƒªãƒƒãƒ—: X ã‚’åè»¢
 			}
 
 			outData.vertices[i] = v;
 		}
 
-		// ƒCƒ“ƒfƒbƒNƒX“Ç‚İæ‚è
+		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹èª­ã¿å–ã‚Š
 		if (!br.readBytes(outData.indices.data(), sizeof(std::uint32_t) * indexCount))
 			return false;
 
@@ -126,7 +126,7 @@ namespace SFW::Physics
 		std::uint32_t expectedVersion
 	)
 	{
-		// ƒtƒ@ƒCƒ‹‘S‘Ì‚ğ“Ç‚İ‚ñ‚Å‚©‚çƒƒ‚ƒŠ”Å‚É“n‚·
+		// ãƒ•ã‚¡ã‚¤ãƒ«å…¨ä½“ã‚’èª­ã¿è¾¼ã‚“ã§ã‹ã‚‰ãƒ¡ãƒ¢ãƒªç‰ˆã«æ¸¡ã™
 		std::ifstream ifs(path, std::ios::binary);
 		if (!ifs)
 		{

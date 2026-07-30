@@ -1,4 +1,4 @@
-// FireflyParticlePool.hpp
+ï»¿// FireflyParticlePool.hpp
 #pragma once
 #include <d3d11.h>
 #include <cstdint>
@@ -9,41 +9,41 @@ struct FireflyParticleGPU
 	float posWS[3]; float life;
 	float velWS[3]; uint32_t volumeSlot;
 	float phase;
-	float band01; // 0..1i—±qŒÅ—L‚Ì‘ÑƒIƒtƒZƒbƒgj
-	float addSize; // ‰ÁZƒTƒCƒY
+	float band01; // 0..1ï¼ˆç²’å­å›ºæœ‰ã®å¸¯ã‚ªãƒ•ã‚»ãƒƒãƒˆï¼‰
+	float addSize; // åŠ ç®—ã‚µã‚¤ã‚º
 	uint32_t light; // 0=off, 1=on
 };
 
 struct FireflyUpdatePram
 {
-	float gDamping = 0.5f; // ‘¬“xŒ¸ŠŒW”
-	float gWanderFreq = 1.0f; // ‚Ó‚í‚Ó‚íƒmƒCƒYü”g”
-	float gWanderStrength = 10.0f; // ‚Ó‚í‚Ó‚íƒmƒCƒY‹­‚³
-	float gCenterPull = 0.01f; // ƒ{ƒŠƒ…[ƒ€’†S‚Ö‚Ìˆø‚«–ß‚µ‹­‚³
-	float gGroundBand = 20.0f; // ’n–Ê‚©‚ç‚Ì‚‚³‘Ñ
-	float gGroundPull = 0.25f; // ’n–Ê•t‹ß‚Ö‚Ìˆø‚«–ß‚µ‹­‚³(¬‚³‚¢‚Ù‚¤‚ª‹­)
+	float gDamping = 0.5f; // é€Ÿåº¦æ¸›è¡°ä¿‚æ•°
+	float gWanderFreq = 1.0f; // ãµã‚ãµã‚ãƒã‚¤ã‚ºå‘¨æ³¢æ•°
+	float gWanderStrength = 10.0f; // ãµã‚ãµã‚ãƒã‚¤ã‚ºå¼·ã•
+	float gCenterPull = 0.01f; // ãƒœãƒªãƒ¥ãƒ¼ãƒ ä¸­å¿ƒã¸ã®å¼•ãæˆ»ã—å¼·ã•
+	float gGroundBand = 20.0f; // åœ°é¢ã‹ã‚‰ã®é«˜ã•å¸¯
+	float gGroundPull = 0.25f; // åœ°é¢ä»˜è¿‘ã¸ã®å¼•ãæˆ»ã—å¼·ã•(å°ã•ã„ã»ã†ãŒå¼·)
 	float gHeightRange = 15.0f;
 
-	float burstStrength = 8.0f; // —áF3.0
-	float burstRadius = 8.0f; // —áF4.0iƒvƒŒƒCƒ„[‚©‚ç‰½m‚Ü‚Å‹­‚¢‚©j
-	float burstSwirl = 4.5f; // —áF1.5i‰Q¬•ªj
-	float burstUp = 6.0f; // —áF1.0iã•ûŒü‚Ì‰Ÿ‚µã‚°j
+	float burstStrength = 8.0f; // ä¾‹ï¼š3.0
+	float burstRadius = 8.0f; // ä¾‹ï¼š4.0ï¼ˆãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‹ã‚‰ä½•mã¾ã§å¼·ã„ã‹ï¼‰
+	float burstSwirl = 4.5f; // ä¾‹ï¼š1.5ï¼ˆæ¸¦æˆåˆ†ï¼‰
+	float burstUp = 6.0f; // ä¾‹ï¼š1.0ï¼ˆä¸Šæ–¹å‘ã®æŠ¼ã—ä¸Šã’ï¼‰
 
-	float gMaxSpeed = 2.0f; // ‘¬“xãŒÀ
+	float gMaxSpeed = 2.0f; // é€Ÿåº¦ä¸Šé™
 };
 
 class FireflyParticlePool
 {
 public:
-	static constexpr uint32_t MaxParticles = 100000;    // Å‘åŒÂ”B‚±‚êˆÈã‚ÍƒXƒ|[ƒ“‚³‚ê‚È‚¢B
-	static constexpr uint32_t MaxVolumeSlots = 256;     // Å‘åƒ{ƒŠƒ…[ƒ€ƒXƒƒbƒg”B
-	static constexpr uint32_t MaxSpawnPerVol = 32;      // 1ƒtƒŒ[ƒ€‚ ‚½‚è‚ÌƒXƒ|[ƒ“”B‚±‚êˆÈã‚ÍƒXƒ|[ƒ“‚³‚ê‚È‚¢B
-	static constexpr uint32_t MaxPointLight = 1u << 12; // Å‘åƒ|ƒCƒ“ƒgƒ‰ƒCƒg”iƒXƒ|[ƒ“ãŒÀ‚Æ‚Í•ÊjB
+	static constexpr uint32_t MaxParticles = 100000;    // æœ€å¤§å€‹æ•°ã€‚ã“ã‚Œä»¥ä¸Šã¯ã‚¹ãƒãƒ¼ãƒ³ã•ã‚Œãªã„ã€‚
+	static constexpr uint32_t MaxVolumeSlots = 256;     // æœ€å¤§ãƒœãƒªãƒ¥ãƒ¼ãƒ ã‚¹ãƒ­ãƒƒãƒˆæ•°ã€‚
+	static constexpr uint32_t MaxSpawnPerVol = 32;      // 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®ã‚¹ãƒãƒ¼ãƒ³æ•°ã€‚ã“ã‚Œä»¥ä¸Šã¯ã‚¹ãƒãƒ¼ãƒ³ã•ã‚Œãªã„ã€‚
+	static constexpr uint32_t MaxPointLight = 1u << 12; // æœ€å¤§ãƒã‚¤ãƒ³ãƒˆãƒ©ã‚¤ãƒˆæ•°ï¼ˆã‚¹ãƒãƒ¼ãƒ³ä¸Šé™ã¨ã¯åˆ¥ï¼‰ã€‚
 
 	void Create(ID3D11Device* dev);
 	void InitFreeList(ID3D11DeviceContext* ctx, ID3D11Buffer* spawnCB, ID3D11ComputeShader* initCS);
 
-	// SpawnivolumeSRV‚Í‘O’i‚ÌFireflyService‚ªì‚Á‚ÄCommit‚µ‚Ä‚¢‚éSRVj
+	// Spawnï¼ˆvolumeSRVã¯å‰æ®µã®FireflyServiceãŒä½œã£ã¦Commitã—ã¦ã„ã‚‹SRVï¼‰
 	void Spawn(
 		ID3D11DeviceContext* ctx,
 		ID3D11ComputeShader* spawnCS,
@@ -71,10 +71,10 @@ public:
 	}
 
 private:
-	StructuredBufferSRVUAV m_particles;                 // SRV+UAViRWParticlesj
+	StructuredBufferSRVUAV m_particles;                 // SRV+UAVï¼ˆRWParticlesï¼‰
 	StructuredBufferSRVUAV m_free;                      // UAV(APPEND) : FreeList
 	StructuredBufferSRVUAV m_alivePing, m_alivePong;    // UAV(APPEND) : AliveList
-	StructuredBufferSRVUAV m_volumeCount;               // UAV : slot‚²‚Æ‚ÌŒ»İ”
+	StructuredBufferSRVUAV m_volumeCount;               // UAV : slotã”ã¨ã®ç¾åœ¨æ•°
 
 	RawBufferSRVUAV m_aliveCountRaw;
 	RawBufferSRVUAV m_drawArgsRaw;

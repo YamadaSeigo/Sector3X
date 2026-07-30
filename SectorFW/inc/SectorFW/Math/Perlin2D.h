@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * \file   Perlin2D.h
- * \brief 2D Perlin ƒmƒCƒY‚ÌÀ‘•i—”ƒe[ƒuƒ‹•t‚«j
+ * \brief 2D Perlin ãƒã‚¤ã‚ºã®å®Ÿè£…ï¼ˆä¹±æ•°ãƒ†ãƒ¼ãƒ–ãƒ«ä»˜ãï¼‰
  * \author seigo
  * \date   December 2025
  *********************************************************************/
@@ -12,13 +12,13 @@
 
 namespace SFW::Math {
 	//-------------------------------
-	// —”ƒe[ƒuƒ‹•t‚« Perlin 2D
+	// ä¹±æ•°ãƒ†ãƒ¼ãƒ–ãƒ«ä»˜ã Perlin 2D
 
 	//-------------------------------
 	class Perlin2D {
 	public:
 		explicit Perlin2D(uint32_t seed) {
-			// ƒp[ƒ}ƒl[ƒVƒ‡ƒ“ƒe[ƒuƒ‹ 256*2
+			// ãƒ‘ãƒ¼ãƒãƒãƒ¼ã‚·ãƒ§ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ« 256*2
 			std::vector<int> base(256);
 			for (int i = 0; i < 256; i++) base[i] = i;
 			std::mt19937 rng(seed);
@@ -26,7 +26,7 @@ namespace SFW::Math {
 			for (int i = 0; i < 256; i++) { perm[i] = base[i]; perm[256 + i] = base[i]; }
 		}
 
-		// ’PƒIƒNƒ^[ƒu‚Ì Perlin ƒmƒCƒYi-1..1j
+		// å˜ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ã® Perlin ãƒã‚¤ã‚ºï¼ˆ-1..1ï¼‰
 		float noise(float x, float y) const {
 			int xi = fastfloor(x) & 255;
 			int yi = fastfloor(y) & 255;
@@ -49,7 +49,7 @@ namespace SFW::Math {
 			return lerp(x1, x2, v); // -1..1
 		}
 
-		// fBmiƒIƒNƒ^[ƒu‡¬j
+		// fBmï¼ˆã‚ªã‚¯ã‚¿ãƒ¼ãƒ–åˆæˆï¼‰
 		float fbm(float x, float y, int oct, float lac, float gain) const {
 			float amp = 1.0f;
 			float freq = 1.0f;
@@ -60,7 +60,7 @@ namespace SFW::Math {
 				freq *= lac;
 				amp *= gain;
 			}
-			return (norm > 0.0f) ? (sum / norm) : 0.0f; // -1..1 ‚ğ•½‹Ï‰»
+			return (norm > 0.0f) ? (sum / norm) : 0.0f; // -1..1 ã‚’å¹³å‡åŒ–
 		}
 
 	private:
@@ -70,7 +70,7 @@ namespace SFW::Math {
 		static inline float fade(float t) { return t * t * t * (t * (t * 6 - 15) + 10); }
 		static inline float lerp(float a, float b, float t) { return a + t * (b - a); }
 		static inline float grad(int h, float x, float y) {
-			// 8 •ûŒüƒOƒ‰ƒfƒBƒGƒ“ƒg
+			// 8 æ–¹å‘ã‚°ãƒ©ãƒ‡ã‚£ã‚¨ãƒ³ãƒˆ
 			int g = h & 7; // 0..7
 			float u = (g < 4) ? x : y;
 			float v = (g < 4) ? y : x;

@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   RegistryTypes.h
- * @brief ƒŒƒWƒXƒgƒŠŠÖ˜A‚ÌŒ^‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ãƒ¬ã‚¸ã‚¹ãƒˆãƒªé–¢é€£ã®å‹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -9,19 +9,19 @@
 
 namespace SFW
 {
-	// ƒŒƒxƒ‹‚²‚Æ‚ÉˆêˆÓ‚ÈƒCƒ“ƒXƒ^ƒ“ƒXIDiƒŒƒxƒ‹Äƒ[ƒh‚Ì‚½‚Ñ‚ÉV‹K’l‚ğŠ„‚è“–‚Äj
+	// ãƒ¬ãƒ™ãƒ«ã”ã¨ã«ä¸€æ„ãªã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹IDï¼ˆãƒ¬ãƒ™ãƒ«å†ãƒ­ãƒ¼ãƒ‰ã®ãŸã³ã«æ–°è¦å€¤ã‚’å‰²ã‚Šå½“ã¦ï¼‰
 	using LevelID = std::uint32_t;
 	/**
-	 * @brief PartitionScheme: ‹óŠÔ•ªŠ„‚Ì•û®‚ğ’è‹`‚·‚é—ñ‹“Œ^
+	 * @brief PartitionScheme: ç©ºé–“åˆ†å‰²ã®æ–¹å¼ã‚’å®šç¾©ã™ã‚‹åˆ—æŒ™å‹
 	 */
 	enum class PartitionScheme : uint8_t { Grid2D, Grid3D, Quadtree2D, Octree3D, BVH, SAP };
 	/**
-	 * @brief SpatialChunkKey: ‚Ç‚Ì SpatialChunk ‚ğw‚·‚©iLevel  ‹æ‰æ  ¢‘ãj
+	 * @brief SpatialChunkKey: ã©ã® SpatialChunk ã‚’æŒ‡ã™ã‹ï¼ˆLevel  åŒºç”»  ä¸–ä»£ï¼‰
 	 */
 	struct SpatialChunkKey {
 		LevelID     level{};
 		PartitionScheme scheme{ PartitionScheme::Grid2D };
-		uint8_t       depth{ 0 };          // Grid2D‚Íí‚É0AQuadtree/Octree‚ÅƒŒƒxƒ‹‚ğ“ü‚ê‚é
+		uint8_t       depth{ 0 };          // Grid2Dã¯å¸¸ã«0ã€Quadtree/Octreeã§ãƒ¬ãƒ™ãƒ«ã‚’å…¥ã‚Œã‚‹
 		std::uint16_t generation{ 0 };
 		uint64_t      code{ kInvalidCode };  // Grid2D: Morton2D(x,y) / Quad: Morton2D / Oct: Morton3D
 

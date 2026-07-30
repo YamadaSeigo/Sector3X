@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   PathView.hpp
- * @brief std::filesystem::path‚Ìƒ[ƒƒRƒs[ƒrƒ…[‚ğ’ñ‹Ÿ‚·‚éƒNƒ‰ƒX
+ * @brief std::filesystem::pathã®ã‚¼ãƒ­ã‚³ãƒ”ãƒ¼ãƒ“ãƒ¥ãƒ¼ã‚’æä¾›ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -13,7 +13,7 @@
 namespace SFW
 {
 	/**
-	 * @brief std::filesystem::path‚Ìƒ[ƒƒRƒs[ƒrƒ…[‚ğ’ñ‹Ÿ‚·‚éƒNƒ‰ƒX
+	 * @brief std::filesystem::pathã®ã‚¼ãƒ­ã‚³ãƒ”ãƒ¼ãƒ“ãƒ¥ãƒ¼ã‚’æä¾›ã™ã‚‹ã‚¯ãƒ©ã‚¹
 	 */
 	class path_view {
 	public:
@@ -22,7 +22,7 @@ namespace SFW
 		using string_type = typename path_type::string_type;
 
 		/**
-		 * @brief Šî‚É‚È‚é•¶š—ñƒrƒ…[‚ÌŒ^
+		 * @brief åŸºã«ãªã‚‹æ–‡å­—åˆ—ãƒ“ãƒ¥ãƒ¼ã®å‹
 		 */
 		using view_type = std::conditional_t<
 			std::is_same_v<value_type, char>,
@@ -30,59 +30,59 @@ namespace SFW
 			std::wstring_view
 		>;
 		/**
-		 * @brief ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^ (‹ó‚Ìƒrƒ…[‚ğì¬)
+		 * @brief ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ (ç©ºã®ãƒ“ãƒ¥ãƒ¼ã‚’ä½œæˆ)
 		 */
 		path_view() = default;
 
 		/**
-		 * @brief std::filesystem::path‚©‚ç\’z
-		 * @param path Œ³‚Æ‚È‚éƒpƒX
+		 * @brief std::filesystem::pathã‹ã‚‰æ§‹ç¯‰
+		 * @param path å…ƒã¨ãªã‚‹ãƒ‘ã‚¹
 		 */
 		explicit path_view(const path_type& path)
 			: view_(path.native().data(), path.native().size()) {
 		}
 		/**
-		 * @brief •¶š—ñ‚©‚ç\’z
-		 * @param str Œ³‚Æ‚È‚é•¶š—ñ
+		 * @brief æ–‡å­—åˆ—ã‹ã‚‰æ§‹ç¯‰
+		 * @param str å…ƒã¨ãªã‚‹æ–‡å­—åˆ—
 		 */
 		explicit path_view(const string_type& str)
 			: view_(str.data(), str.size()) {
 		}
 		/**
-		 * @brief ƒ|ƒCƒ“ƒ^‚Æ’·‚³‚©‚ç\’z
-		 * @param ptr Œ³‚Æ‚È‚é•¶š—ñ‚Ìƒ|ƒCƒ“ƒ^
-		 * @param len •¶š—ñ‚Ì’·‚³
+		 * @brief ãƒã‚¤ãƒ³ã‚¿ã¨é•·ã•ã‹ã‚‰æ§‹ç¯‰
+		 * @param ptr å…ƒã¨ãªã‚‹æ–‡å­—åˆ—ã®ãƒã‚¤ãƒ³ã‚¿
+		 * @param len æ–‡å­—åˆ—ã®é•·ã•
 		 */
 		path_view(const value_type* ptr, size_t len)
 			: view_(ptr, len) {
 		}
 		/**
-		 * @brief Šî‚É‚È‚é•¶š—ñƒrƒ…[‚ğæ“¾
-		 * @return view_type Šî‚É‚È‚é•¶š—ñƒrƒ…[
+		 * @brief åŸºã«ãªã‚‹æ–‡å­—åˆ—ãƒ“ãƒ¥ãƒ¼ã‚’å–å¾—
+		 * @return view_type åŸºã«ãªã‚‹æ–‡å­—åˆ—ãƒ“ãƒ¥ãƒ¼
 		 */
 		view_type view() const noexcept { return view_; }
 		/**
-		 * @brief Šî‚É‚È‚é•¶š—ñƒrƒ…[‚Ö‚ÌˆÃ–Ù“I•ÏŠ·
+		 * @brief åŸºã«ãªã‚‹æ–‡å­—åˆ—ãƒ“ãƒ¥ãƒ¼ã¸ã®æš—é»™çš„å¤‰æ›
 		 */
 		operator view_type() const noexcept { return view_; }
 		/**
-		 * @brief Šî‚É‚È‚é•¶š—ñƒf[ƒ^‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
-		 * @return const value_type* •¶š—ñƒf[ƒ^‚Ö‚Ìƒ|ƒCƒ“ƒ^
+		 * @brief åŸºã«ãªã‚‹æ–‡å­—åˆ—ãƒ‡ãƒ¼ã‚¿ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
+		 * @return const value_type* æ–‡å­—åˆ—ãƒ‡ãƒ¼ã‚¿ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 		 */
 		const value_type* data() const noexcept { return view_.data(); }
 		/**
-		 * @brief Šî‚É‚È‚é•¶š—ñ‚Ì’·‚³‚ğæ“¾
-		 * @return size_t •¶š—ñ‚Ì’·‚³
+		 * @brief åŸºã«ãªã‚‹æ–‡å­—åˆ—ã®é•·ã•ã‚’å–å¾—
+		 * @return size_t æ–‡å­—åˆ—ã®é•·ã•
 		 */
 		size_t size() const noexcept { return view_.size(); }
 		/**
-		 * @brief ƒrƒ…[‚ª‹ó‚©‚Ç‚¤‚©‚ğ”»’è
-		 * @return bool ‹ó‚È‚çtrueA‚»‚¤‚Å‚È‚¯‚ê‚Îfalse
+		 * @brief ãƒ“ãƒ¥ãƒ¼ãŒç©ºã‹ã©ã†ã‹ã‚’åˆ¤å®š
+		 * @return bool ç©ºãªã‚‰trueã€ãã†ã§ãªã‘ã‚Œã°false
 		 */
 		bool empty() const noexcept { return view_.empty(); }
 		/**
-		 * @brief std::filesystem::path‚É•ÏŠ·
-		 * @return path_type std::filesystem::pathƒIƒuƒWƒFƒNƒg
+		 * @brief std::filesystem::pathã«å¤‰æ›
+		 * @return path_type std::filesystem::pathã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		 */
 		path_type to_path() const { return path_type(view_); }
 	private:

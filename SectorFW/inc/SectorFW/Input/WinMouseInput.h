@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   WinMouseInput.h
- * @brief WindowsŒü‚¯ƒ}ƒEƒX“ü—Íˆ—ƒNƒ‰ƒX‚Ìƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief Windowså‘ã‘ãƒã‚¦ã‚¹å…¥åŠ›å‡¦ç†ã‚¯ãƒ©ã‚¹ã®ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -17,82 +17,82 @@ namespace SFW
 	namespace Input
 	{
 		/**
-		 * @brief WindowsŒü‚¯ƒ}ƒEƒX“ü—Íˆ—ƒNƒ‰ƒX
+		 * @brief Windowså‘ã‘ãƒã‚¦ã‚¹å…¥åŠ›å‡¦ç†ã‚¯ãƒ©ã‚¹
 		 */
 		class WinMouseInput {
 			friend class SFW::WindowHandler;
 
 		private:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param hwnd ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param hwnd ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			explicit WinMouseInput(HWND hwnd);
 			/**
-			 * @brief Raw Input‚Ì“o˜^‚Æ‰ğœ
-			 * @param enable —LŒø‰»‚·‚é‚©‚Ç‚¤‚©
-			 * @param noLegacy ƒŒƒKƒV[ƒƒbƒZ[ƒW(WM_MOUSEMOVE‚È‚Ç)‚ğ–³Œø‰»‚·‚é‚©‚Ç‚¤‚©
-			 * @param capture ƒLƒƒƒvƒ`ƒƒƒ‚[ƒh(—LŒø’†‚Í‘¼‚ÌƒEƒBƒ“ƒhƒE‚ğG‚ê‚È‚¢)‚É‚·‚é‚©‚Ç‚¤‚©
+			 * @brief Raw Inputã®ç™»éŒ²ã¨è§£é™¤
+			 * @param enable æœ‰åŠ¹åŒ–ã™ã‚‹ã‹ã©ã†ã‹
+			 * @param noLegacy ãƒ¬ã‚¬ã‚·ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(WM_MOUSEMOVEãªã©)ã‚’ç„¡åŠ¹åŒ–ã™ã‚‹ã‹ã©ã†ã‹
+			 * @param capture ã‚­ãƒ£ãƒ—ãƒãƒ£ãƒ¢ãƒ¼ãƒ‰(æœ‰åŠ¹ä¸­ã¯ä»–ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è§¦ã‚Œãªã„)ã«ã™ã‚‹ã‹ã©ã†ã‹
 			 */
 			void RegisterRawInput(bool enable, bool noLegacy = true, bool capture = true);
 			/**
-			 * @brief Raw InputƒƒbƒZ[ƒW‚Ìˆ—
-			 * @param lParam ƒƒbƒZ[ƒW‚Ìƒpƒ‰ƒ[ƒ^
+			 * @brief Raw Inputãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å‡¦ç†
+			 * @param lParam ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 			 */
 			void HandleRawInput(LPARAM lParam);
 			/**
-			 * @brief ƒEƒBƒ“ƒhƒE‚ÌƒtƒH[ƒJƒXæ“¾‚Ìˆ—
+			 * @brief ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å–å¾—ã®å‡¦ç†
 			 */
 			void OnFocus();
 			/**
-			 * @brief ƒEƒBƒ“ƒhƒE‚ÌƒtƒH[ƒJƒX‘r¸‚Ìˆ—
+			 * @brief ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å–ªå¤±ã®å‡¦ç†
 			 */
 			void OnFocusLost();
 			/**
-			 * @brief ƒNƒŠƒbƒsƒ“ƒO‚ÌÄİ’è
+			 * @brief ã‚¯ãƒªãƒƒãƒ”ãƒ³ã‚°ã®å†è¨­å®š
 			 */
 			void Reclip();
 			/**
-			 * @brief ’~Ï‚³‚ê‚½ƒ}ƒEƒX‚ÌˆÚ“®—Ê‚ğæ“¾‚µAƒŠƒZƒbƒg‚·‚é
-			 * @param outDx ƒ}ƒEƒX‚ÌX•ûŒü‚ÌˆÚ“®—Ê
-			 * @param outDy ƒ}ƒEƒX‚ÌY•ûŒü‚ÌˆÚ“®—Ê
+			 * @brief è“„ç©ã•ã‚ŒãŸãƒã‚¦ã‚¹ã®ç§»å‹•é‡ã‚’å–å¾—ã—ã€ãƒªã‚»ãƒƒãƒˆã™ã‚‹
+			 * @param outDx ãƒã‚¦ã‚¹ã®Xæ–¹å‘ã®ç§»å‹•é‡
+			 * @param outDy ãƒã‚¦ã‚¹ã®Yæ–¹å‘ã®ç§»å‹•é‡
 			 */
 			void ConsumeDelta(LONG& outDx, LONG& outDy) noexcept;
 			/**
-			 * @brief ƒfƒoƒCƒX‚ÌƒNƒŠ[ƒ“ƒAƒbƒv
+			 * @brief ãƒ‡ãƒã‚¤ã‚¹ã®ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—
 			 */
 			void Cleanup();
 		public:
 			/**
-			 * @brief ƒ}ƒEƒXƒLƒƒƒvƒ`ƒƒ‚ÌØ‚è‘Ö‚¦
-			 * @param on ƒLƒƒƒvƒ`ƒƒ‚ğ—LŒø‚É‚·‚é‚©‚Ç‚¤‚©
+			 * @brief ãƒã‚¦ã‚¹ã‚­ãƒ£ãƒ—ãƒãƒ£ã®åˆ‡ã‚Šæ›¿ãˆ
+			 * @param on ã‚­ãƒ£ãƒ—ãƒãƒ£ã‚’æœ‰åŠ¹ã«ã™ã‚‹ã‹ã©ã†ã‹
 			 */
 			void ToggleCapture(bool on);
 			/**
-			 * @brief ’~Ï‚³‚ê‚½ƒ}ƒEƒX‚ÌˆÚ“®—Ê‚ğæ“¾‚·‚é
-			 * @param outDx ƒ}ƒEƒX‚ÌX•ûŒü‚ÌˆÚ“®—Ê
-			 * @param outDy ƒ}ƒEƒX‚ÌY•ûŒü‚ÌˆÚ“®—Ê
+			 * @brief è“„ç©ã•ã‚ŒãŸãƒã‚¦ã‚¹ã®ç§»å‹•é‡ã‚’å–å¾—ã™ã‚‹
+			 * @param outDx ãƒã‚¦ã‚¹ã®Xæ–¹å‘ã®ç§»å‹•é‡
+			 * @param outDy ãƒã‚¦ã‚¹ã®Yæ–¹å‘ã®ç§»å‹•é‡
 			 */
 			void GetDelta(LONG& outDx, LONG& outDy) const noexcept { outDx = dx; outDy = dy; }
 			/**
-			 * @brief ƒ}ƒEƒXƒzƒC[ƒ‹‚Ì‰ñ“]—Ê‚ğæ“¾‚·‚é
-			 * @param outWheelV ‚’¼ƒzƒC[ƒ‹‚Ì‰ñ“]—Ê
-			 * @param outWheelH …•½ƒzƒC[ƒ‹‚Ì‰ñ“]—Ê
+			 * @brief ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ã®å›è»¢é‡ã‚’å–å¾—ã™ã‚‹
+			 * @param outWheelV å‚ç›´ãƒ›ã‚¤ãƒ¼ãƒ«ã®å›è»¢é‡
+			 * @param outWheelH æ°´å¹³ãƒ›ã‚¤ãƒ¼ãƒ«ã®å›è»¢é‡
 			 */
 			void GetMouseWheel(int& outWheelV, int& outWheelH) const noexcept { outWheelV = wheelV; outWheelH = wheelH; }
 			/**
-			 * @brief ƒ}ƒEƒX‚Ìó‘Ô‚ğæ“¾‚·‚éŠÖ”
-			 * @return bool ƒ}ƒEƒX‚ªƒLƒƒƒvƒ`ƒƒ‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
+			 * @brief ãƒã‚¦ã‚¹ã®çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return bool ãƒã‚¦ã‚¹ãŒã‚­ãƒ£ãƒ—ãƒãƒ£ã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹
 			 */
 			bool IsCaptured() const noexcept { return captured; }
 			/**
-			 * @brief ¶ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğæ“¾‚·‚éŠÖ”
-			 * @return bool ¶ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚éê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+			 * @brief å·¦ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return bool å·¦ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 			 */
 			bool IsLeftDown() const noexcept { return lDown; }
 			/**
-			 * @brief ‰Eƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğæ“¾‚·‚éŠÖ”
-			 * @return bool ‰Eƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚éê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+			 * @brief å³ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return bool å³ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 			 */
 			bool IsRightDown() const noexcept { return rDown; }
 
@@ -104,8 +104,8 @@ namespace SFW
 			bool mDown = false;
 			LONG dx = 0;
 			LONG dy = 0;
-			int wheelV = 0; // ‚’¼ƒzƒC[ƒ‹‚Ì‰ñ“]—Êi1 = ˆê’ij
-			int wheelH = 0; // …•½ƒzƒC[ƒ‹‚Ì‰ñ“]—Êi1 = ˆê’ij
+			int wheelV = 0; // å‚ç›´ãƒ›ã‚¤ãƒ¼ãƒ«ã®å›è»¢é‡ï¼ˆ1 = ä¸€æ®µï¼‰
+			int wheelH = 0; // æ°´å¹³ãƒ›ã‚¤ãƒ¼ãƒ«ã®å›è»¢é‡ï¼ˆ1 = ä¸€æ®µï¼‰
 
 			std::vector<BYTE> rawBuffer;
 		};

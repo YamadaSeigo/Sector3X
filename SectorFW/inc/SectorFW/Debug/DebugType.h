@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   DebugType.h
- * @brief ƒfƒoƒbƒO—p‚Ì\‘¢‘Ì‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ãƒ‡ãƒãƒƒã‚°ç”¨ã®æ§‹é€ ä½“ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -14,14 +14,14 @@ namespace SFW
 {
 	namespace Debug {
 		/**
-		 * @brief ƒ‰ƒCƒ“•`‰æ—p‚Ì’¸“_\‘¢‘Ì
+		 * @brief ãƒ©ã‚¤ãƒ³æç”»ç”¨ã®é ‚ç‚¹æ§‹é€ ä½“
 		 */
 		struct LineVertex {
 			Math::Vec3f pos;
 			uint32_t rgba = 0xFFFFFFFF;
 		};
 		/**
-		 * @brief ƒfƒoƒbƒO—p‚Ì’¸“_\‘¢‘ÌiˆÊ’uA–@üAUVj
+		 * @brief ãƒ‡ãƒãƒƒã‚°ç”¨ã®é ‚ç‚¹æ§‹é€ ä½“ï¼ˆä½ç½®ã€æ³•ç·šã€UVï¼‰
 		 */
 		struct VertexPNUV {
 			Math::Vec3f pos;
@@ -29,7 +29,7 @@ namespace SFW
 			Math::Vec2f uv;
 		};
 
-		/// AABB3f ‚ğ 12 –{‚Ìƒ‰ƒCƒ“—p 24 ’¸“_‚Å•Ô‚·id•¡‚ ‚èEƒCƒ“ƒfƒbƒNƒX•s—vj
+		/// AABB3f ã‚’ 12 æœ¬ã®ãƒ©ã‚¤ãƒ³ç”¨ 24 é ‚ç‚¹ã§è¿”ã™ï¼ˆé‡è¤‡ã‚ã‚Šãƒ»ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ä¸è¦ï¼‰
 		inline std::array<Debug::LineVertex, 24> MakeAABBLineVertices(const Math::AABB3f& box, uint32_t rgba = 0xFFFFFFFF)
 		{
 			using namespace Math;
@@ -37,7 +37,7 @@ namespace SFW
 			const auto& lb = box.lb; // (minX, minY, minZ)
 			const auto& ub = box.ub; // (maxX, maxY, maxZ)
 
-			// 8 ƒR[ƒi[iXYZ = 0/1 ‘g‚İ‡‚í‚¹j
+			// 8 ã‚³ãƒ¼ãƒŠãƒ¼ï¼ˆXYZ = 0/1 çµ„ã¿åˆã‚ã›ï¼‰
 			const Vec3f p000{ lb.x, lb.y, lb.z };
 			const Vec3f p100{ ub.x, lb.y, lb.z };
 			const Vec3f p110{ ub.x, ub.y, lb.z };
@@ -48,19 +48,19 @@ namespace SFW
 			const Vec3f p111{ ub.x, ub.y, ub.z };
 			const Vec3f p011{ lb.x, ub.y, ub.z };
 
-			// 12 ƒGƒbƒW‚ğ (from, to) ‚Ì‡‚É•À‚×‚é
+			// 12 ã‚¨ãƒƒã‚¸ã‚’ (from, to) ã®é †ã«ä¸¦ã¹ã‚‹
 			std::array<Vec3f, 24> pts = {
-				// ’ê–Ê (Z = min)
+				// åº•é¢ (Z = min)
 				p000, p100,
 				p100, p110,
 				p110, p010,
 				p010, p000,
-				// ã–Ê (Z = max)
+				// ä¸Šé¢ (Z = max)
 				p001, p101,
 				p101, p111,
 				p111, p011,
 				p011, p001,
-				// ‚’¼ 4 –{
+				// å‚ç›´ 4 æœ¬
 				p000, p001,
 				p100, p101,
 				p110, p111,
@@ -75,7 +75,7 @@ namespace SFW
 			return out;
 		}
 
-		/// AABB3f ‚ğ 8 ’¸“_ + 24 ƒCƒ“ƒfƒbƒNƒX‚Å’Ç‰Ái’¸“_‚Ìd•¡‚ğ”ğ‚¯‚½‚¢ê‡j
+		/// AABB3f ã‚’ 8 é ‚ç‚¹ + 24 ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã§è¿½åŠ ï¼ˆé ‚ç‚¹ã®é‡è¤‡ã‚’é¿ã‘ãŸã„å ´åˆï¼‰
 		inline void AppendAABBLineListIndexed(std::vector<Debug::LineVertex>& outVerts,
 			std::vector<uint32_t>& outIndices,
 			const Math::AABB3f& box,
@@ -88,7 +88,7 @@ namespace SFW
 			const auto& lb = box.lb;
 			const auto& ub = box.ub;
 
-			// ’¸“_ 8 ŒÂiŒÅ’è‡j
+			// é ‚ç‚¹ 8 å€‹ï¼ˆå›ºå®šé †ï¼‰
 			const Vec3f corners[8] = {
 				{ lb.x, lb.y, lb.z }, // 0: p000
 				{ ub.x, lb.y, lb.z }, // 1: p100
@@ -105,10 +105,10 @@ namespace SFW
 				outVerts.push_back(Debug::LineVertex{ corners[i], rgba });
 			}
 
-			// ƒ‰ƒCƒ“ƒŠƒXƒg—pƒCƒ“ƒfƒbƒNƒXi12 ƒGƒbƒW ~ 2 = 24j
-			// ’ê–Ê: 0-1, 1-2, 2-3, 3-0
-			// ã–Ê: 4-5, 5-6, 6-7, 7-4
-			// ‚’¼: 0-4, 1-5, 2-6, 3-7
+			// ãƒ©ã‚¤ãƒ³ãƒªã‚¹ãƒˆç”¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ï¼ˆ12 ã‚¨ãƒƒã‚¸ Ã— 2 = 24ï¼‰
+			// åº•é¢: 0-1, 1-2, 2-3, 3-0
+			// ä¸Šé¢: 4-5, 5-6, 6-7, 7-4
+			// å‚ç›´: 0-4, 1-5, 2-6, 3-7
 			const uint32_t idx[] = {
 				0,1,  1,2,  2,3,  3,0,
 				4,5,  5,6,  6,7,  7,4,
@@ -129,7 +129,7 @@ namespace SFW
 			const auto& Near = frustum.p[(int)FrustumPlane::Near];
 			const auto& Far = frustum.p[(int)FrustumPlane::Far];
 
-			// 8 ƒR[ƒi[æ“¾
+			// 8 ã‚³ãƒ¼ãƒŠãƒ¼å–å¾—
 			Vec3f ntl, ntr, nbl, nbr;
 			Vec3f ftl, ftr, fbl, fbr;
 
@@ -142,19 +142,19 @@ namespace SFW
 			Planef::Intersect3Planes(Far, Left, Bottom, fbl);
 			Planef::Intersect3Planes(Far, Right, Bottom, fbr);
 
-			// 12 ƒGƒbƒW‚ğ (from, to) ‚Ì‡‚É•À‚×‚é
+			// 12 ã‚¨ãƒƒã‚¸ã‚’ (from, to) ã®é †ã«ä¸¦ã¹ã‚‹
 			std::array<Vec3f, 24> pts = {
-				// ‹ßƒNƒŠƒbƒv–Ê
+				// è¿‘ã‚¯ãƒªãƒƒãƒ—é¢
 				ntl, ntr,
 				ntr, nbr,
 				nbr, nbl,
 				nbl, ntl,
-				// ‰“ƒNƒŠƒbƒv–Ê
+				// é ã‚¯ãƒªãƒƒãƒ—é¢
 				ftl, ftr,
 				ftr, fbr,
 				fbr, fbl,
 				fbl, ftl,
-				// Ú‘±ƒGƒbƒW 4 –{
+				// æ¥ç¶šã‚¨ãƒƒã‚¸ 4 æœ¬
 				ntl, ftl,
 				ntr, ftr,
 				nbr, fbr,

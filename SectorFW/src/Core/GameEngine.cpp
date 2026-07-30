@@ -1,4 +1,4 @@
-#include "Core/GameEngine.h"
+ï»¿#include "Core/GameEngine.h"
 
 #ifdef _WIN32 //timeBeginPeriod || timeEndPeriod
 
@@ -16,20 +16,20 @@ namespace SFW
 {
 	void InitializeGameEngine(bool initialize)
 	{
-		// ƒOƒ‰ƒtƒBƒbƒNƒfƒoƒCƒX‚ª‰Šú‰»‚³‚ê‚Ä‚¢‚È‚¢ê‡‚ÍAƒGƒ‰[‚ğo‚·
+		// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ‡ãƒã‚¤ã‚¹ãŒåˆæœŸåŒ–ã•ã‚Œã¦ã„ãªã„å ´åˆã¯ã€ã‚¨ãƒ©ãƒ¼ã‚’å‡ºã™
 		DYNAMIC_ASSERT_MESSAGE(initialize, "GraphicsDevice is not Configure");
 
-		SIMD::SimdInit(); // SIMD ‰Šú‰»
+		SIMD::SimdInit(); // SIMD åˆæœŸåŒ–
 
 #ifdef _WIN32
-		timeBeginPeriod(1);  // ¸“x‚ğ1ms‚Éİ’è
+		timeBeginPeriod(1);  // ç²¾åº¦ã‚’1msã«è¨­å®š
 #endif //_WIN32
 	}
 
 	void UnInitializeGameEngine()
 	{
 #ifdef _WIN32
-		timeEndPeriod(1);    // Œãn––
+		timeEndPeriod(1);    // å¾Œå§‹æœ«
 #endif //_WIN32
 	}
 }

@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   SystemScheduler.h
- * @brief ƒVƒXƒeƒ€ƒXƒPƒWƒ…[ƒ‰‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief ã‚·ã‚¹ãƒ†ãƒ ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ©ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -26,15 +26,15 @@ namespace SFW
 	namespace ECS
 	{
 		/**
-		 * @brief ƒVƒXƒeƒ€‚ğŠÇ—‚µA‹£‡‚ª‚È‚¢‚æ‚¤‚ÉƒXƒPƒWƒ…[ƒŠƒ“ƒO‚·‚éƒNƒ‰ƒX
-		 * @tparam Partition ƒp[ƒeƒBƒVƒ‡ƒ“‚ÌŒ^
+		 * @brief ã‚·ã‚¹ãƒ†ãƒ ã‚’ç®¡ç†ã—ã€ç«¶åˆãŒãªã„ã‚ˆã†ã«ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒªãƒ³ã‚°ã™ã‚‹ã‚¯ãƒ©ã‚¹
+		 * @tparam Partition ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã®å‹
 		 */
 		template<typename Partition>
 		class SystemScheduler {
 		public:
 			/**
-			 * @brief ƒVƒXƒeƒ€‚ğ’Ç‰Á‚·‚éŠÖ”
-			 * @param serviceLocator ƒT[ƒrƒXƒƒP[ƒ^[
+			 * @brief ã‚·ã‚¹ãƒ†ãƒ ã‚’è¿½åŠ ã™ã‚‹é–¢æ•°
+			 * @param serviceLocator ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼
 			 */
 			template<template<typename> class SystemType>
 			void AddSystem(const ServiceLocator& serviceLocator) {
@@ -46,7 +46,7 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒVƒXƒeƒ€‚ğíœ‚·‚éŠÖ”
+			 * @brief ã‚·ã‚¹ãƒ†ãƒ ã‚’å‰Šé™¤ã™ã‚‹é–¢æ•°
 			 */
 			template<template<typename> class SystemType>
 			void RemoveSystem()
@@ -80,22 +80,22 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ‚·‚×‚Ä‚ÌƒVƒXƒeƒ€‚ğXV‚·‚éŠÖ”.
-			 * @param partition ‘ÎÛ‚Ìƒp[ƒeƒBƒVƒ‡ƒ“
-			 * @param levelCtx ƒŒƒxƒ‹ƒRƒ“ƒeƒLƒXƒg
-			 * @param serviceLocator ƒT[ƒrƒXƒƒP[ƒ^[
-			 * @param executor ƒXƒŒƒbƒhƒGƒOƒ[ƒLƒ…[ƒ^[
-			 * @details •Û—¯‚³‚ê‚½’Ç‰ÁEíœEˆê’â~EÄŠJ‚Ìˆ—‚ğ“K—p‚µ‚½ŒãAƒXƒPƒWƒ…[ƒ‹‚ª•ÏX‚³‚ê‚½ê‡‚Íƒoƒbƒ`‚ğÄ\’z‚µAŠeƒoƒbƒ`‚²‚Æ‚É•À—ñÀs‚Æ’¼—ñÀs‚ğs‚¤B—áŠO‚ÍŠeƒVƒXƒeƒ€“à‚Åˆ¬‚è’×‚³‚¸A‚±‚±‚ÅŒÂ•Ê•ß‘¨‚·‚é‚±‚Æ‚à‰Â”\B
+			 * @brief ã™ã¹ã¦ã®ã‚·ã‚¹ãƒ†ãƒ ã‚’æ›´æ–°ã™ã‚‹é–¢æ•°.
+			 * @param partition å¯¾è±¡ã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³
+			 * @param levelCtx ãƒ¬ãƒ™ãƒ«ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
+			 * @param serviceLocator ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼
+			 * @param executor ã‚¹ãƒ¬ãƒƒãƒ‰ã‚¨ã‚°ã‚¼ã‚­ãƒ¥ãƒ¼ã‚¿ãƒ¼
+			 * @details ä¿ç•™ã•ã‚ŒãŸè¿½åŠ ãƒ»å‰Šé™¤ãƒ»ä¸€æ™‚åœæ­¢ãƒ»å†é–‹ã®å‡¦ç†ã‚’é©ç”¨ã—ãŸå¾Œã€ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«ãŒå¤‰æ›´ã•ã‚ŒãŸå ´åˆã¯ãƒãƒƒãƒã‚’å†æ§‹ç¯‰ã—ã€å„ãƒãƒƒãƒã”ã¨ã«ä¸¦åˆ—å®Ÿè¡Œã¨ç›´åˆ—å®Ÿè¡Œã‚’è¡Œã†ã€‚ä¾‹å¤–ã¯å„ã‚·ã‚¹ãƒ†ãƒ å†…ã§æ¡ã‚Šæ½°ã•ãšã€ã“ã“ã§å€‹åˆ¥æ•æ‰ã™ã‚‹ã“ã¨ã‚‚å¯èƒ½ã€‚
 			 */
 			void UpdateAll(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
-				//V‚µ‚¢ƒVƒXƒeƒ€‚Ìæ‚è‚İ
+				//æ–°ã—ã„ã‚·ã‚¹ãƒ†ãƒ ã®å–ã‚Šè¾¼ã¿
 				ApplyPendingAdditions(serviceLocator);
-				//íœ‚·‚éƒVƒXƒeƒ€‚Ì“K—p
+				//å‰Šé™¤ã™ã‚‹ã‚·ã‚¹ãƒ†ãƒ ã®é©ç”¨
 				ApplyPendingRemovals<true>(&partition, &levelCtx, &serviceLocator);
-				// ˆê’â~EÄŠJ‚Ì“K—p
+				// ä¸€æ™‚åœæ­¢ãƒ»å†é–‹ã®é©ç”¨
 				ApplyPendingPauseResume();
 
-				// --- •À—ñÀsƒvƒ‰ƒ“‚ÌÄ\’zi•K—v‚Ì‚İj ---
+				// --- ä¸¦åˆ—å®Ÿè¡Œãƒ—ãƒ©ãƒ³ã®å†æ§‹ç¯‰ï¼ˆå¿…è¦æ™‚ã®ã¿ï¼‰ ---
 				if (scheduleDirty) {
 					RebuildBatches();
 				}
@@ -107,17 +107,17 @@ namespace SFW
 					auto g = Debug::BeginTreeWrite(); // lock & back buffer
 					auto& frame = g.data();
 
-					// —á‚¦‚ÎƒvƒŠƒI[ƒ_{depth w’è‚Å•½’R‰»‚µ‚½ƒcƒŠ[‚ğ‹l‚ß‚é
+					// ä¾‹ãˆã°ãƒ—ãƒªã‚ªãƒ¼ãƒ€ï¼‹depth æŒ‡å®šã§å¹³å¦åŒ–ã—ãŸãƒ„ãƒªãƒ¼ã‚’è©°ã‚ã‚‹
 					std::string systemName = updateSystems[i]->derived_name();
 					std::string partitionName = typeid(Partition).name();
 					frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_SYSTEM, /*leaf=*/true, std::string(systemName.begin() + 6, systemName.end() - (partitionName.size() + 2)) });
-				} // guard ‚ÌƒfƒXƒgƒ‰ƒNƒg‚Å unlockBswap ‚Í UI ƒXƒŒƒbƒh‚ÅB
+				} // guard ã®ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆã§ unlockã€‚swap ã¯ UI ã‚¹ãƒ¬ãƒƒãƒ‰ã§ã€‚
 #endif
 
-				// --- ƒoƒbƒ`‚²‚Æ‚É•À—ñÀs ---
-				// —áŠO‚ÍŠeƒVƒXƒeƒ€“à‚Åˆ¬‚è’×‚³‚¸A‚±‚±‚ÅŒÂ•Ê•ß‘¨‚·‚é‚Ì‚à‰Â
+				// --- ãƒãƒƒãƒã”ã¨ã«ä¸¦åˆ—å®Ÿè¡Œ ---
+				// ä¾‹å¤–ã¯å„ã‚·ã‚¹ãƒ†ãƒ å†…ã§æ¡ã‚Šæ½°ã•ãšã€ã“ã“ã§å€‹åˆ¥æ•æ‰ã™ã‚‹ã®ã‚‚å¯
 				for (const auto& group : batches) {
-					// —LŒø‚È parallel ”‚¾‚¯ƒJƒEƒ“ƒg
+					// æœ‰åŠ¹ãª parallel æ•°ã ã‘ã‚«ã‚¦ãƒ³ãƒˆ
 					int parallelEnabledCount = 0;
 					for (auto idx : group.parallel)
 					{
@@ -132,7 +132,7 @@ namespace SFW
 						if (idx >= updateEnabled.size() || !updateEnabled[idx]) continue;
 
 						executor->Submit([&, idx]() noexcept {
-							// ÀÛ‚ÉƒVƒXƒeƒ€‚ÌXVŠÖ”‚ğŒÄ‚Ño‚· inc/core/ecs/ISystem.hpp ‚Ì Update‰¼‘•ŠÖ”
+							// å®Ÿéš›ã«ã‚·ã‚¹ãƒ†ãƒ ã®æ›´æ–°é–¢æ•°ã‚’å‘¼ã³å‡ºã™ inc/core/ecs/ISystem.hpp ã® Updateä»®è£…é–¢æ•°
 							updateSystems[idx]->Update(partition, levelCtx, serviceLocator, executor);
 							latch.CountDown();
 							});
@@ -150,29 +150,29 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ‚·‚×‚Ä‚ÌƒVƒXƒeƒ€‚ğƒOƒ[ƒoƒ‹‚ÉXV‚·‚éŠÖ”
-			 * @param serviceLocator ƒT[ƒrƒXƒƒP[ƒ^[
-			 * @param executor ƒXƒŒƒbƒhÀsƒNƒ‰ƒX
-			 * @details •Û—¯‚³‚ê‚½’Ç‰ÁEíœEˆê’â~EÄŠJ‚Ìˆ—‚ğ“K—p‚µ‚½ŒãAƒXƒPƒWƒ…[ƒ‹‚ª•ÏX‚³‚ê‚½ê‡‚Íƒoƒbƒ`‚ğÄ\’z‚µAŠeƒoƒbƒ`‚²‚Æ‚É•À—ñÀs‚Æ’¼—ñÀs‚ğs‚¤B—áŠO‚ÍŠeƒVƒXƒeƒ€“à‚Åˆ¬‚è’×‚³‚¸A‚±‚±‚ÅŒÂ•Ê•ß‘¨‚·‚é‚±‚Æ‚à‰Â”\B
-			@* @note Partition ‚â LevelContext ‚ğ•K—v‚Æ‚µ‚È‚¢ƒVƒXƒeƒ€‚ÌXV‚Ég—p‚·‚éB‚±‚ê‚ç‚ÌƒVƒXƒeƒ€‚Í UpdateGlobal ‚ğƒI[ƒo[ƒ‰ƒCƒh‚µ‚Ä‚¢‚é•K—v‚ª‚ ‚éB
+			 * @brief ã™ã¹ã¦ã®ã‚·ã‚¹ãƒ†ãƒ ã‚’ã‚°ãƒ­ãƒ¼ãƒãƒ«ã«æ›´æ–°ã™ã‚‹é–¢æ•°
+			 * @param serviceLocator ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼
+			 * @param executor ã‚¹ãƒ¬ãƒƒãƒ‰å®Ÿè¡Œã‚¯ãƒ©ã‚¹
+			 * @details ä¿ç•™ã•ã‚ŒãŸè¿½åŠ ãƒ»å‰Šé™¤ãƒ»ä¸€æ™‚åœæ­¢ãƒ»å†é–‹ã®å‡¦ç†ã‚’é©ç”¨ã—ãŸå¾Œã€ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«ãŒå¤‰æ›´ã•ã‚ŒãŸå ´åˆã¯ãƒãƒƒãƒã‚’å†æ§‹ç¯‰ã—ã€å„ãƒãƒƒãƒã”ã¨ã«ä¸¦åˆ—å®Ÿè¡Œã¨ç›´åˆ—å®Ÿè¡Œã‚’è¡Œã†ã€‚ä¾‹å¤–ã¯å„ã‚·ã‚¹ãƒ†ãƒ å†…ã§æ¡ã‚Šæ½°ã•ãšã€ã“ã“ã§å€‹åˆ¥æ•æ‰ã™ã‚‹ã“ã¨ã‚‚å¯èƒ½ã€‚
+			ã€€* @note Partition ã‚„ LevelContext ã‚’å¿…è¦ã¨ã—ãªã„ã‚·ã‚¹ãƒ†ãƒ ã®æ›´æ–°ã«ä½¿ç”¨ã™ã‚‹ã€‚ã“ã‚Œã‚‰ã®ã‚·ã‚¹ãƒ†ãƒ ã¯ UpdateGlobal ã‚’ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã—ã¦ã„ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚
 			 */
 			void UpdateGlobal(const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
-				//V‚µ‚¢ƒVƒXƒeƒ€‚Ìæ‚è‚İ
+				//æ–°ã—ã„ã‚·ã‚¹ãƒ†ãƒ ã®å–ã‚Šè¾¼ã¿
 				ApplyPendingAdditions(serviceLocator);
-				//íœ‚·‚éƒVƒXƒeƒ€‚Ì“K—p
+				//å‰Šé™¤ã™ã‚‹ã‚·ã‚¹ãƒ†ãƒ ã®é©ç”¨
 				ApplyPendingRemovals<false>(nullptr, nullptr, nullptr);
-				// ˆê’â~EÄŠJ‚Ì“K—p
+				// ä¸€æ™‚åœæ­¢ãƒ»å†é–‹ã®é©ç”¨
 				ApplyPendingPauseResume();
 
-				// --- •À—ñÀsƒvƒ‰ƒ“‚ÌÄ\’zi•K—v‚Ì‚İj ---
+				// --- ä¸¦åˆ—å®Ÿè¡Œãƒ—ãƒ©ãƒ³ã®å†æ§‹ç¯‰ï¼ˆå¿…è¦æ™‚ã®ã¿ï¼‰ ---
 				if (scheduleDirty) {
 					RebuildBatches();
 				}
 
-				// --- ƒoƒbƒ`‚²‚Æ‚É•À—ñÀs ---
-				// —áŠO‚ÍŠeƒVƒXƒeƒ€“à‚Åˆ¬‚è’×‚³‚¸A‚±‚±‚ÅŒÂ•Ê•ß‘¨‚·‚é‚Ì‚à‰Â
+				// --- ãƒãƒƒãƒã”ã¨ã«ä¸¦åˆ—å®Ÿè¡Œ ---
+				// ä¾‹å¤–ã¯å„ã‚·ã‚¹ãƒ†ãƒ å†…ã§æ¡ã‚Šæ½°ã•ãšã€ã“ã“ã§å€‹åˆ¥æ•æ‰ã™ã‚‹ã®ã‚‚å¯
 				for (const auto& group : batches) {
-					// —LŒø‚È parallel ”‚¾‚¯ƒJƒEƒ“ƒg
+					// æœ‰åŠ¹ãª parallel æ•°ã ã‘ã‚«ã‚¦ãƒ³ãƒˆ
 					int parallelEnabledCount = 0;
 					for (auto idx : group.parallel)
 					{
@@ -244,32 +244,32 @@ namespace SFW
 					auto g = Debug::BeginTreeWrite(); // lock & back buffer
 					auto& frame = g.data();
 
-					// —á‚¦‚ÎƒvƒŠƒI[ƒ_{depth w’è‚Å•½’R‰»‚µ‚½ƒcƒŠ[‚ğ‹l‚ß‚é
+					// ä¾‹ãˆã°ãƒ—ãƒªã‚ªãƒ¼ãƒ€ï¼‹depth æŒ‡å®šã§å¹³å¦åŒ–ã—ãŸãƒ„ãƒªãƒ¼ã‚’è©°ã‚ã‚‹
 					std::string systemName = updateSystems[i]->derived_name();
 					std::string partitionName = typeid(Partition).name();
 					frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/(Debug::WorldTreeDepth)treeDepth, /*leaf=*/true, std::string(systemName.begin() + 6, systemName.end() - (partitionName.size() + 2)) });
-				} // guard ‚ÌƒfƒXƒgƒ‰ƒNƒg‚Å unlockBswap ‚Í UI ƒXƒŒƒbƒh‚ÅB
+				} // guard ã®ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆã§ unlockã€‚swap ã¯ UI ã‚¹ãƒ¬ãƒƒãƒ‰ã§ã€‚
 #endif
 			}
 
 		private:
 			std::vector<std::unique_ptr<ISystem<Partition>>> systems;
-			//XV‚·‚éƒVƒXƒeƒ€‚ÌƒŠƒXƒg
+			//æ›´æ–°ã™ã‚‹ã‚·ã‚¹ãƒ†ãƒ ã®ãƒªã‚¹ãƒˆ
 			std::vector<std::unique_ptr<ISystem<Partition>>> updateSystems;
-			//ƒAƒNƒZƒXî•ñ‚ÌƒŠƒXƒg
+			//ã‚¢ã‚¯ã‚»ã‚¹æƒ…å ±ã®ãƒªã‚¹ãƒˆ
 			std::vector<AccessInfo> accessList;
-			//•Û—¯’†‚ÌƒVƒXƒeƒ€‚ÌƒŠƒXƒg
+			//ä¿ç•™ä¸­ã®ã‚·ã‚¹ãƒ†ãƒ ã®ãƒªã‚¹ãƒˆ
 			std::vector<std::unique_ptr<ISystem<Partition>>> pendingSystems;
-			//•Û—¯’†‚Ìíœƒ^ƒCƒv‚ÌƒŠƒXƒg
+			//ä¿ç•™ä¸­ã®å‰Šé™¤ã‚¿ã‚¤ãƒ—ã®ãƒªã‚¹ãƒˆ
 			std::vector<std::type_index> pendingRemoveTypes;
-			//•Û—¯’†‚ÌƒVƒXƒeƒ€‚ğŠÇ—‚·‚é‚½‚ß‚Ìƒ~ƒ…[ƒeƒbƒNƒX
+			//ä¿ç•™ä¸­ã®ã‚·ã‚¹ãƒ†ãƒ ã‚’ç®¡ç†ã™ã‚‹ãŸã‚ã®ãƒŸãƒ¥ãƒ¼ãƒ†ãƒƒã‚¯ã‚¹
 			std::mutex pendingMutex;
 
-			// --- Pause/Resume ó‘Ô ---
-			// updateSystems ‚Æ“¯‚¶ƒCƒ“ƒfƒbƒNƒX‚ÅŠÇ—‚·‚éibatches ‚ª index ‚ğ‚Â‚½‚ßj
+			// --- Pause/Resume çŠ¶æ…‹ ---
+			// updateSystems ã¨åŒã˜ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã§ç®¡ç†ã™ã‚‹ï¼ˆbatches ãŒ index ã‚’æŒã¤ãŸã‚ï¼‰
 			std::vector<uint8_t> updateEnabled; // 1=enabled, 0=paused
 
-			// pendingiAdd/Remove ‚Æ“¯‚¶v‘zj
+			// pendingï¼ˆAdd/Remove ã¨åŒã˜æ€æƒ³ï¼‰
 			std::vector<std::type_index> pendingPauseTypes;
 			std::vector<std::type_index> pendingResumeTypes;
 
@@ -278,20 +278,20 @@ namespace SFW
 				std::vector<uint32_t> parallel;
 			};
 
-			//‹£‡‚Ì‚È‚¢•À—ñÀsƒOƒ‹[ƒviƒCƒ“ƒfƒbƒNƒXW‡j
+			//ç«¶åˆã®ãªã„ä¸¦åˆ—å®Ÿè¡Œã‚°ãƒ«ãƒ¼ãƒ—ï¼ˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é›†åˆï¼‰
 			std::vector<Group> batches;
 
-			//•À—ñˆ—‚Ì“¯Šú—p
+			//ä¸¦åˆ—å‡¦ç†ã®åŒæœŸç”¨
 			std::mutex batchMutex;
 			std::condition_variable batchCv;
 
-			//’Ç‰Á“ü‘Ö‚Ì‚İÄ\’z
+			//è¿½åŠ å…¥æ›¿æ™‚ã®ã¿å†æ§‹ç¯‰
 			bool scheduleDirty = true;
 			/**
-			 * @brief ƒAƒNƒZƒXî•ñ‚ª‹£‡‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğŠm”F‚·‚éŠÖ”
-			 * @param a ƒAƒNƒZƒXî•ñA
-			 * @param b ƒAƒNƒZƒXî•ñB
-			 * @return bool ‹£‡‚µ‚Ä‚¢‚éê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+			 * @brief ã‚¢ã‚¯ã‚»ã‚¹æƒ…å ±ãŒç«¶åˆã—ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’ç¢ºèªã™ã‚‹é–¢æ•°
+			 * @param a ã‚¢ã‚¯ã‚»ã‚¹æƒ…å ±A
+			 * @param b ã‚¢ã‚¯ã‚»ã‚¹æƒ…å ±B
+			 * @return bool ç«¶åˆã—ã¦ã„ã‚‹å ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 			 */
 			static inline bool Conflicts(const AccessInfo& a, const AccessInfo& b) noexcept {
 				for (ComponentTypeID id : a.write) {
@@ -303,19 +303,19 @@ namespace SFW
 				return false;
 			}
 			/**
-			 * @brief ƒoƒbƒ`‚ğÄ\’zi‹£‡‚µ‚È‚¢ƒOƒ‹[ƒv‚É•ªŠ„j
+			 * @brief ãƒãƒƒãƒã‚’å†æ§‹ç¯‰ï¼ˆç«¶åˆã—ãªã„ã‚°ãƒ«ãƒ¼ãƒ—ã«åˆ†å‰²ï¼‰
 			 */
 			void RebuildBatches() {
 				batches.clear();
 				batches.reserve(updateSystems.size() / 2 + 1);
 
-				// Greedy coloring “I‚ÉÅ‰‚É“ü‚ê‚ç‚ê‚éƒoƒbƒ`‚Ö“Ë‚Á‚Ş
+				// Greedy coloring çš„ã«æœ€åˆã«å…¥ã‚Œã‚‰ã‚Œã‚‹ãƒãƒƒãƒã¸çªã£è¾¼ã‚€
 				for (uint32_t i = 0; i < updateSystems.size(); ++i) {
 					const auto& ai = accessList[i];
 					bool placed = false;
 					for (auto& group : batches) {
 						bool ok = true;
-						// ‚»‚Ìƒoƒbƒ`“à‚Æ‹£‡‚µ‚È‚¢‚©Šm”Fi‘Šúbreakj
+						// ãã®ãƒãƒƒãƒå†…ã¨ç«¶åˆã—ãªã„ã‹ç¢ºèªï¼ˆæ—©æœŸbreakï¼‰
 						for (size_t j : group.serial) {
 							const auto& aj = accessList[j];
 							if (Conflicts(ai, aj) || Conflicts(aj, ai)) {
@@ -351,7 +351,7 @@ namespace SFW
 				}
 				scheduleDirty = false;
 
-				// debug: updateSystems ‚Æ updateEnabled ‚ÌƒTƒCƒY‚ªˆê’v‚µ‚Ä‚¢‚é‚×‚«
+				// debug: updateSystems ã¨ updateEnabled ã®ã‚µã‚¤ã‚ºãŒä¸€è‡´ã—ã¦ã„ã‚‹ã¹ã
 				assert(updateEnabled.size() == updateSystems.size());
 			}
 
@@ -364,31 +364,31 @@ namespace SFW
 						newly.swap(pendingSystems);
 				}
 				if (newly.empty()) return;
-				// ‚Ü‚Æ‚ß‚Ä systems ‚Æ accessList ‚ÉˆÚ“®/pushireserve ‚ÅÄ”z’uíŒ¸j
+				// ã¾ã¨ã‚ã¦ systems ã¨ accessList ã«ç§»å‹•/pushï¼ˆreserve ã§å†é…ç½®å‰Šæ¸›ï¼‰
 				updateSystems.reserve(updateSystems.size() + newly.size());
 				accessList.reserve(accessList.size() + newly.size());
 				for (auto& uptr : newly) {
-					// ‹ó‚Ìƒp[ƒeƒBƒVƒ‡ƒ“‚ÅStart‚ğŒÄ‚Ô
+					// ç©ºã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã§Startã‚’å‘¼ã¶
 					uptr->Start(serviceLocator);
 
-					// UpdateImpl ‚ğ‚½‚È‚¢ƒVƒXƒeƒ€‚Í“o˜^‚µ‚È‚¢
+					// UpdateImpl ã‚’æŒãŸãªã„ã‚·ã‚¹ãƒ†ãƒ ã¯ç™»éŒ²ã—ãªã„
 					if constexpr (std::remove_reference_t<decltype(*uptr)>::IsUpdateable())
 					{
-						scheduleDirty = true; // ’Ç‰Á‚ª‚ ‚ê‚ÎÄ\’zƒtƒ‰ƒO
+						scheduleDirty = true; // è¿½åŠ ãŒã‚ã‚Œã°å†æ§‹ç¯‰ãƒ•ãƒ©ã‚°
 						updateSystems.emplace_back(std::move(uptr));
-						// AccessInfo ‚ğæ“¾‚µ‚ÄƒLƒƒƒbƒVƒ…
+						// AccessInfo ã‚’å–å¾—ã—ã¦ã‚­ãƒ£ãƒƒã‚·ãƒ¥
 						accessList.emplace_back(updateSystems.back()->GetAccessInfo());
-						// ’Ç‰Á‚³‚ê‚½ UpdateSystem ‚ÍƒfƒtƒHƒ‹ƒg
+						// è¿½åŠ ã•ã‚ŒãŸ UpdateSystem ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
 						updateEnabled.emplace_back(1);
 					}
 					else
 					{
-						systems.emplace_back(std::move(uptr)); // Update•s—v‚ÈƒVƒXƒeƒ€‚Í•Ê“r•Û‘¶
+						systems.emplace_back(std::move(uptr)); // Updateä¸è¦ãªã‚·ã‚¹ãƒ†ãƒ ã¯åˆ¥é€”ä¿å­˜
 					}
 				}
 			}
 
-			// system‚ğ‘ŒŸõ‚·‚é‚Ì‚Åˆ—‚Í’x‚ßBRemove‚ğ•p”É‚És‚¤İŒv‚Ìê‡‚Í’ˆÓB
+			// systemã‚’ç·æ¤œç´¢ã™ã‚‹ã®ã§å‡¦ç†ã¯é…ã‚ã€‚Removeã‚’é »ç¹ã«è¡Œã†è¨­è¨ˆã®å ´åˆã¯æ³¨æ„ã€‚
 			template<bool CallEnd = true>
 			void ApplyPendingRemovals(Partition* partition, LevelContext<Partition>* levelCtx, const ServiceLocator* serviceLocator)
 			{
@@ -405,7 +405,7 @@ namespace SFW
 						return std::type_index(typeid(*p)) == ti;
 					};
 
-				// ”ñUpdateŒn systems
+				// éUpdateç³» systems
 				for (const auto& ti : toRemove)
 				{
 					for (size_t i = 0; i < systems.size(); )
@@ -421,7 +421,7 @@ namespace SFW
 					}
 				}
 
-				// UpdateŒn updateSystems + accessList
+				// Updateç³» updateSystems + accessList
 				for (const auto& ti : toRemove)
 				{
 					for (size_t i = 0; i < updateSystems.size(); )

@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Morton.h
- * @brief ZigZag•ÏŠ·‚ÆMortonƒR[ƒhiZƒI[ƒ_[‹Èüj‚ğˆµ‚¤ƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ZigZagå¤‰æ›ã¨Mortonã‚³ãƒ¼ãƒ‰ï¼ˆZã‚ªãƒ¼ãƒ€ãƒ¼æ›²ç·šï¼‰ã‚’æ‰±ã†ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -8,25 +8,25 @@
 #include <cstdint>
 
 namespace SFW {
-	//ƒIƒvƒVƒ‡ƒ“F•‰‚ÌƒZƒ‹À•W‚ğˆµ‚¤ê‡‚Ì ZigZag •ÏŠ· ---
+	//ã‚ªãƒ—ã‚·ãƒ§ãƒ³ï¼šè² ã®ã‚»ãƒ«åº§æ¨™ã‚’æ‰±ã†å ´åˆã® ZigZag å¤‰æ› ---
 	[[nodiscard]] static inline constexpr uint64_t ZigZag64(int64_t v) noexcept {
 		// [-2^63, 2^63-1] -> [0, 2^64-1]
 		return (uint64_t(v) << 1) ^ uint64_t(v >> 63);
 	}
 
-	// ===== 2D Morton: (x,y) ‚Ì‰ºˆÊ32bit‚ğ 64bit ‚ÉƒCƒ“ƒ^[ƒŠ[ƒu =====
+	// ===== 2D Morton: (x,y) ã®ä¸‹ä½32bitã‚’ 64bit ã«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒªãƒ¼ãƒ– =====
 #if defined(__BMI2__) && (defined(__x86_64__) || defined(_M_X64))
-  // CPU ‚É BMI2 ‚ª‚ ‚ê‚Î PDEP ‚Å‚‘¬‰»
+  // CPU ã« BMI2 ãŒã‚ã‚Œã° PDEP ã§é«˜é€ŸåŒ–
 #include <immintrin.h>
 	[[nodiscard]] static inline constexpr uint64_t Morton2D64(uint64_t x, uint64_t y) noexcept {
-		// x,y ‚Ì‰ºˆÊ32bit‚Ì‚İg—p
-		const uint64_t XMASK = 0x5555555555555555ull; // ‹ô”ƒrƒbƒg
-		const uint64_t YMASK = 0xAAAAAAAAAAAAAAAAull; // Šï”ƒrƒbƒg
+		// x,y ã®ä¸‹ä½32bitã®ã¿ä½¿ç”¨
+		const uint64_t XMASK = 0x5555555555555555ull; // å¶æ•°ãƒ“ãƒƒãƒˆ
+		const uint64_t YMASK = 0xAAAAAAAAAAAAAAAAull; // å¥‡æ•°ãƒ“ãƒƒãƒˆ
 		return _pdep_u64(x & 0xFFFFFFFFull, XMASK) |
 			_pdep_u64(y & 0xFFFFFFFFull, YMASK);
 	}
 #else
-  // ƒtƒH[ƒ‹ƒoƒbƒNFƒrƒbƒg“WŠJipart1by1j
+  // ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ï¼šãƒ“ãƒƒãƒˆå±•é–‹ï¼ˆpart1by1ï¼‰
 	[[nodiscard]] static inline constexpr uint64_t Part1By1(uint64_t v) noexcept {
 		v &= 0x00000000FFFFFFFFull;
 		v = (v | (v << 16)) & 0x0000FFFF0000FFFFull;
@@ -41,7 +41,7 @@ namespace SFW {
 	}
 #endif
 
-	// ===== ‹t•ÏŠ·i”CˆÓjF64bit Morton -> 32bit x/y =====
+	// ===== é€†å¤‰æ›ï¼ˆä»»æ„ï¼‰ï¼š64bit Morton -> 32bit x/y =====
 	[[nodiscard]] static inline constexpr uint64_t Compact1By1(uint64_t v) noexcept {
 		v &= 0x5555555555555555ull;
 		v = (v ^ (v >> 1)) & 0x3333333333333333ull;
@@ -72,8 +72,8 @@ namespace SFW {
 	/* =============================================================
 	 * Bit interleave helpers for 3D Morton 64-bit
 	 * -------------------------------------------------------------
-	 *  3D Morton ‚Í x,y,z ‚ÌŠeƒrƒbƒg‚ğ [x0,y0,z0,x1,y1,z1,...] ‚Ì‡‚É•À‚×‚éB
-	 *  Še² 21bit ‚Ü‚ÅˆÀ‘S (21 * 3 = 63)B
+	 *  3D Morton ã¯ x,y,z ã®å„ãƒ“ãƒƒãƒˆã‚’ [x0,y0,z0,x1,y1,z1,...] ã®é †ã«ä¸¦ã¹ã‚‹ã€‚
+	 *  å„è»¸ 21bit ã¾ã§å®‰å…¨ (21 * 3 = 63)ã€‚
 	 * ============================================================= */
 	[[nodiscard]] static inline constexpr std::uint64_t Part1By2_64(std::uint64_t x) noexcept {
 		x &= 0x1fffffULL;                                 // 21 bits
@@ -81,7 +81,7 @@ namespace SFW {
 		x = (x | (x << 16)) & 0x1f0000ff0000ffULL;
 		x = (x | (x << 8)) & 0x100f00f00f00f00fULL;
 		x = (x | (x << 4)) & 0x10c30c30c30c30c3ULL;
-		x = (x | (x << 2)) & 0x1249249249249249ULL;   // 0b001001.. ƒpƒ^[ƒ“
+		x = (x | (x << 2)) & 0x1249249249249249ULL;   // 0b001001.. ãƒ‘ã‚¿ãƒ¼ãƒ³
 		return x;
 	}
 

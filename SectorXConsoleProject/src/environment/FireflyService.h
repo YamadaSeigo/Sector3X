@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "FireflyParticlePool.h"
 
@@ -10,15 +10,15 @@ struct FireflyVolumeGPU
 	Math::Vec3f color = { 1.0f,1.0f,1.0f };
 	float       intensity = 1.0f;
 
-	float       targetCount = 100;     // LODŒã‚ÌÅIŒÂ”
+	float       targetCount = 100;     // LODå¾Œã®æœ€çµ‚å€‹æ•°
 	float       speed = 0.1f;
 	float       noiseScale = 0.5f;
-	uint32_t    volumeSlot = 0;      // GPU‘¤ slot index
+	uint32_t    volumeSlot = 0;      // GPUå´ slot index
 
 	uint32_t    nearLightBudget = 3;
 	uint32_t    seed = 0;
 
-	float burstT = 0.0f; // 0..1i1=”­“®’¼ŒãAŠÔ‚Å0‚Öj
+	float burstT = 0.0f; // 0..1ï¼ˆ1=ç™ºå‹•ç›´å¾Œã€æ™‚é–“ã§0ã¸ï¼‰
 
 	float pad0 = 0.0f;
 };
@@ -34,9 +34,9 @@ public:
 		float gTime = 0.0f;
 
 		uint32_t gActiveVolumeCount = 0;
-		uint32_t gMaxSpawnPerVolumePerFrame = FireflyParticlePool::MaxSpawnPerVol; // —áF32
-		uint32_t gMaxParticles = FireflyParticlePool::MaxParticles; // FreeList‚ÉƒCƒ“ƒfƒbƒNƒX–„‚ß‚é—p
-		float gAddSizeScale = 0.02f; // ’Ç‰ÁƒTƒCƒYƒXƒP[ƒ‹i—á: 0.02j
+		uint32_t gMaxSpawnPerVolumePerFrame = FireflyParticlePool::MaxSpawnPerVol; // ä¾‹ï¼š32
+		uint32_t gMaxParticles = FireflyParticlePool::MaxParticles; // FreeListã«ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹åŸ‹ã‚ã‚‹ç”¨
+		float gAddSizeScale = 0.02f; // è¿½åŠ ã‚µã‚¤ã‚ºã‚¹ã‚±ãƒ¼ãƒ«ï¼ˆä¾‹: 0.02ï¼‰
 	};
 
 	struct UpdateCB
@@ -50,7 +50,7 @@ public:
 
 		float gNearPickLightProb = 0.5f; // 0..1
 		float gFarPickLightProb = 0.1f; // 0..1
-		float gPickLightDist = 30.0f; // ‹——£‚ÅŠm—¦•âŠÔ
+		float gPickLightDist = 30.0f; // è·é›¢ã§ç¢ºç‡è£œé–“
 
 		Math::Vec3f gPlayerPosWS = {};
 		float gPlayerRepelRadius = 10.0f;
@@ -63,7 +63,7 @@ public:
 	{
 		Math::Matrix4x4f gViewProj = {};
 		Math::Vec3f gCamRightWS = {};
-		float gSize = 0.05f; // billboard half-size —á: 0.05
+		float gSize = 0.05f; // billboard half-size ä¾‹: 0.05
 		Math::Vec3f gCamUpWS = { 0,1,0 };
 		float gTime = 0.0f;
 	};
@@ -108,7 +108,7 @@ public:
 
 	void SpawnDrawParticles(ID3D11DeviceContext* ctx, ComPtr<ID3D11ShaderResourceView>& heightMap, ComPtr<ID3D11Buffer>& terrainCB, uint32_t slot);
 
-	// GPUƒŠƒ\[ƒXæ“¾iŒã’i‚Åg—pj
+	// GPUãƒªã‚½ãƒ¼ã‚¹å–å¾—ï¼ˆå¾Œæ®µã§ä½¿ç”¨ï¼‰
 	ID3D11ShaderResourceView* GetVolumeSRV() const {
 		return m_volumeSRV.Get();
 	}
@@ -126,7 +126,7 @@ public:
 	}
 
 private:
-	// ---- CPUŠÇ— ----
+	// ---- CPUç®¡ç† ----
 	struct VolumeSlot
 	{
 		uint32_t volumeUID;
@@ -138,7 +138,7 @@ private:
 	VolumeSlot m_slots[MaxVolumes]{};
 	uint32_t m_activeVolumeCount[Graphics::RENDER_BUFFER_COUNT] = { 0 };
 
-	// ---- GPUƒŠƒ\[ƒX ----
+	// ---- GPUãƒªã‚½ãƒ¼ã‚¹ ----
 	ComPtr<ID3D11Buffer> m_volumeBuffer;
 	ComPtr<ID3D11ShaderResourceView> m_volumeSRV;
 

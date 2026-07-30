@@ -1,4 +1,4 @@
-#include "FireflyService.h"
+ï»¿#include "FireflyService.h"
 #include <SectorFW/Graphics/PointLightService.h>
 #include <SectorFW/Debug/message.h>
 #include <SectorFW/Util/convert_string.h>
@@ -51,7 +51,7 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
 	const wchar_t* psPath)
 	: m_bufferMgr(bufferMgr)
 {
-	// ƒ{ƒŠƒ…[ƒ€ƒoƒbƒtƒ@ì¬
+	// ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ä½œæˆ
 	ID3D11Buffer* buf = nullptr;
 	ID3D11ShaderResourceView* srv = nullptr;
 	CreateFireflyVolumeBuffer(
@@ -87,7 +87,7 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
 			assert(SUCCEEDED(hr) && "Failed to create compute shader.");
 		};
 
-	// ƒRƒ“ƒsƒ…[ƒgƒVƒF[ƒ_[ì¬
+	// ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ãƒˆã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ä½œæˆ
 	compileShader(csInitFreeListPath, m_initFreeListCS);
 	compileShader(csSpawnPath, m_spawnCS);
 	compileShader(csUpdatePath, m_updateCS);
@@ -113,7 +113,7 @@ FireflyService::FireflyService(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
 
 	m_particlePool.Create(pDevice);
 
-	// FreeList‰Šú‰»
+	// FreeListåˆæœŸåŒ–
 	{
 		struct InitCB
 		{
@@ -191,7 +191,7 @@ uint32_t FireflyService::AllocateSlot(uint32_t volumeUID)
 		}
 	}
 
-	// ãŒÀ’´‰ßiİŒvƒ~ƒXj
+	// ä¸Šé™è¶…éï¼ˆè¨­è¨ˆãƒŸã‚¹ï¼‰
 	return UINT32_MAX;
 }
 
@@ -204,7 +204,7 @@ void FireflyService::ReleaseUnusedSlots()
 	{
 		if (m_slots[i].used)
 		{
-			if (activeSlots.find(i) == activeSlots.end()) // © i ‚Í slot
+			if (activeSlots.find(i) == activeSlots.end()) // â† i ã¯ slot
 			{
 				m_slots[i].used = false;
 				m_uidToSlot.erase(m_slots[i].volumeUID);
@@ -289,7 +289,7 @@ void FireflyService::Commit(double deltaTime)
 	updateDesc.data = &renderBuf;
 	m_bufferMgr->UpdateBuffer(updateDesc, currentSlot);
 
-	// –¢g—pƒXƒƒbƒg‰ğ•ú
+	// æœªä½¿ç”¨ã‚¹ãƒ­ãƒƒãƒˆè§£æ”¾
 	ReleaseUnusedSlots();
 }
 

@@ -1,4 +1,4 @@
-#ifdef _WIN32
+ï»¿#ifdef _WIN32
 
 #include <iostream>
 
@@ -19,15 +19,15 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 
 namespace SFW
 {
-	// ƒEƒBƒ“ƒhƒE‚ªì¬‚³‚ê‚½‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒä½œæˆã•ã‚ŒãŸã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
 	bool WindowHandler::m_isCreated = false;
-	// ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
 	HWND WindowHandler::m_hWnd;
-	// ƒEƒBƒ“ƒhƒEƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«
 	HINSTANCE WindowHandler::m_hInstance;
-	// ƒƒbƒZ[ƒW\‘¢‘Ì
+	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æ§‹é€ ä½“
 	MSG WindowHandler::m_msg;
-	// ƒ}ƒEƒX“ü—Íƒnƒ“ƒhƒ‰
+	// ãƒã‚¦ã‚¹å…¥åŠ›ãƒãƒ³ãƒ‰ãƒ©
 	Input::WinMouseInput* WindowHandler::m_mouseInput = nullptr;
 
 #ifdef _ENABLE_IMGUI
@@ -39,13 +39,13 @@ namespace SFW
 		LONG dx = 0, dy = 0;
 		while (true)
 		{
-			// V‚½‚ÉƒƒbƒZ[ƒW‚ª‚ ‚ê‚Î
+			// æ–°ãŸã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒã‚ã‚Œã°
 			if (PeekMessage(&m_msg, NULL, 0, 0, PM_REMOVE))
 			{
 				TranslateMessage(&m_msg);
 				DispatchMessage(&m_msg);
 
-				// uWM_QUITvƒƒbƒZ[ƒW‚ğó‚¯æ‚Á‚½‚çƒ‹[ƒv‚ğ”²‚¯‚é
+				// ã€ŒWM_QUITã€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å—ã‘å–ã£ãŸã‚‰ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
 				if (m_msg.message == WM_QUIT) {
 					break;
 				}
@@ -58,7 +58,7 @@ namespace SFW
 			if (double c = g_cpuUsage.sample(); c >= 0.0) Debug::PublishCpu(float(c));
 #endif
 
-			// ƒƒbƒZ[ƒW‚ª–³‚¯‚ê‚ÎAƒ‹[ƒvˆ—‚ğÀs
+			// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒç„¡ã‘ã‚Œã°ã€ãƒ«ãƒ¼ãƒ—å‡¦ç†ã‚’å®Ÿè¡Œ
 			pLoop();
 
 			m_mouseInput->ConsumeDelta(dx, dy);
@@ -69,7 +69,7 @@ namespace SFW
 	{
 #ifdef _ENABLE_IMGUI
 		if (ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam))
-			return 0; // ImGui ‚ªˆ—‚µ‚½‚ç‚±‚±‚ÅŠ®—¹
+			return 0; // ImGui ãŒå‡¦ç†ã—ãŸã‚‰ã“ã“ã§å®Œäº†
 #endif
 
 		switch (uMsg) {
@@ -82,93 +82,93 @@ namespace SFW
 			static Input::WinMouseInput mouseInput(hwnd);
 			m_mouseInput = &mouseInput;
 			m_mouseInput->RegisterRawInput(false);
-			return 0; // ©‘O‚ÅŠ®—¹
+			return 0; // è‡ªå‰ã§å®Œäº†
 		}
 
-		// ¶ƒNƒŠƒbƒN‚Í ImGui ‚É”C‚¹‚é‚Æ‚µ‚ÄA‰EƒNƒŠƒbƒN‚Åg•ß‘¨ONh
+		// å·¦ã‚¯ãƒªãƒƒã‚¯ã¯ ImGui ã«ä»»ã›ã‚‹ã¨ã—ã¦ã€å³ã‚¯ãƒªãƒƒã‚¯ã§â€œæ•æ‰ONâ€
 		case WM_MBUTTONDOWN:
 		case WM_RBUTTONDOWN:
 			if (!m_mouseInput->IsCaptured())
 				m_mouseInput->ToggleCapture(true);
-			return 0; // ©‘O‚ÅŠ®—¹
+			return 0; // è‡ªå‰ã§å®Œäº†
 
 		case WM_KEYDOWN:
 #ifndef _DEBUG
 			if (wParam == VK_RETURN && !m_mouseInput->IsCaptured()) {
 				m_mouseInput->ToggleCapture(true);
-				return 0; // ©‘O‚ÅŠ®—¹
+				return 0; // è‡ªå‰ã§å®Œäº†
 			}
 			else
 #endif
 				if (wParam == VK_ESCAPE && m_mouseInput->IsCaptured()) {
 					m_mouseInput->ToggleCapture(false);
-					return 0; // ©‘O‚ÅŠ®—¹
+					return 0; // è‡ªå‰ã§å®Œäº†
 				}
-			break; // Šù’èˆ—‚É‰ñ‚·
+			break; // æ—¢å®šå‡¦ç†ã«å›ã™
 
 		case WM_INPUT:
 			m_mouseInput->HandleRawInput(lParam);
-			return 0; // ©‘O‚ÅŠ®—¹iRawInput‚Í©•ª‚ÅÁ”ïj
+			return 0; // è‡ªå‰ã§å®Œäº†ï¼ˆRawInputã¯è‡ªåˆ†ã§æ¶ˆè²»ï¼‰
 
 		case WM_SETFOCUS:
-			// •K—v‚È‚ç‚±‚±‚Å RawInput ‚Ì“o˜^‚ğ’Êíƒ‚[ƒh‚Ö–ß‚·‚È‚Ç
-			break; // Šù’èˆ—‚Ö
+			// å¿…è¦ãªã‚‰ã“ã“ã§ RawInput ã®ç™»éŒ²ã‚’é€šå¸¸ãƒ¢ãƒ¼ãƒ‰ã¸æˆ»ã™ãªã©
+			break; // æ—¢å®šå‡¦ç†ã¸
 
 		case WM_KILLFOCUS:
 			m_mouseInput->OnFocusLost();
-			return 0; // ©‘O‚ÅŠ®—¹ió‘ÔƒNƒŠƒAj
+			return 0; // è‡ªå‰ã§å®Œäº†ï¼ˆçŠ¶æ…‹ã‚¯ãƒªã‚¢ï¼‰
 
 		case WM_ACTIVATE:
 			if (LOWORD(wParam) == WA_INACTIVE) {
 				m_mouseInput->OnFocusLost();
-				// ‚±‚±‚ÍuŠù’èˆ—‚à•K—vv‚È‚Ì‚Å return ‚¹‚¸ break
+				// ã“ã“ã¯ã€Œæ—¢å®šå‡¦ç†ã‚‚å¿…è¦ã€ãªã®ã§ return ã›ãš break
 			}
-			break; // Šù’èˆ—‚Ö
+			break; // æ—¢å®šå‡¦ç†ã¸
 
 		case WM_MOUSEACTIVATE:
-			// Šù’èˆ—‚É‰ñ‚·‚Ì‚ªˆÀ‘SiƒNƒŠƒbƒN‚ÅƒAƒNƒeƒBƒu‰»‚Ì‹““®j
+			// æ—¢å®šå‡¦ç†ã«å›ã™ã®ãŒå®‰å…¨ï¼ˆã‚¯ãƒªãƒƒã‚¯ã§ã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŒ–ã®æŒ™å‹•ï¼‰
 			break;
 
 		case WM_MOVE:
 		case WM_SIZE:
 			m_mouseInput->Reclip();
 
-			return 0; // ©‘O‚ÅŠ®—¹
+			return 0; // è‡ªå‰ã§å®Œäº†
 
 		case WM_CLOSE:
 		{
 #ifdef _CHECK_EXIT_CONFIRM
-			int res = MessageBoxA(hwnd, "I—¹‚µ‚Ü‚·‚©H", "Šm”F", MB_OKCANCEL | MB_ICONQUESTION);
+			int res = MessageBoxA(hwnd, "çµ‚äº†ã—ã¾ã™ã‹ï¼Ÿ", "ç¢ºèª", MB_OKCANCEL | MB_ICONQUESTION);
 			if (res == IDOK) {
-				m_mouseInput->OnFocusLost(); // ”O‚Ì‚½‚ßó‘ÔƒNƒŠƒA
-				DestroyWindow(hwnd); // ¨ WM_DESTROY ‚Ö
+				m_mouseInput->OnFocusLost(); // å¿µã®ãŸã‚çŠ¶æ…‹ã‚¯ãƒªã‚¢
+				DestroyWindow(hwnd); // â†’ WM_DESTROY ã¸
 			}
 #else
-			m_mouseInput->OnFocusLost(); // ”O‚Ì‚½‚ßó‘ÔƒNƒŠƒA
-			DestroyWindow(hwnd); // ¨ WM_DESTROY ‚Ö
+			m_mouseInput->OnFocusLost(); // å¿µã®ãŸã‚çŠ¶æ…‹ã‚¯ãƒªã‚¢
+			DestroyWindow(hwnd); // â†’ WM_DESTROY ã¸
 #endif
-			return 0; // ©‘O‚ÅŠ®—¹iƒLƒƒƒ“ƒZƒ‹‚àŠù’è”jŠü‚Í‚³‚¹‚È‚¢j
+			return 0; // è‡ªå‰ã§å®Œäº†ï¼ˆã‚­ãƒ£ãƒ³ã‚»ãƒ«æ™‚ã‚‚æ—¢å®šç ´æ£„ã¯ã•ã›ãªã„ï¼‰
 		}
 
 		case WM_DESTROY:
 			if (m_mouseInput) m_mouseInput->OnFocusLost();
 			PostQuitMessage(0);
-			return 0; // ©‘O‚ÅŠ®—¹
+			return 0; // è‡ªå‰ã§å®Œäº†
 
 #ifdef _ENABLE_IMGUI
 		case WM_DPICHANGED:
 		{
-			const RECT* r = reinterpret_cast<const RECT*>(lParam); // „§‹éŒ`iƒXƒNƒŠ[ƒ“À•Wj
+			const RECT* r = reinterpret_cast<const RECT*>(lParam); // æ¨å¥¨çŸ©å½¢ï¼ˆã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ï¼‰
 			SetWindowPos(hwnd, nullptr, r->left, r->top,
 				r->right - r->left, r->bottom - r->top,
 				SWP_NOZORDER | SWP_NOACTIVATE);
-			if (m_mouseInput) m_mouseInput->Reclip();  // © Œãq
+			if (m_mouseInput) m_mouseInput->Reclip();  // â† å¾Œè¿°
 			return 0;
 		}
 #endif // _ENABLE_IMGUI
 		}
 
-		//ˆ—‚µ‚Ä‚¢‚È‚¢ƒƒbƒZ[ƒW‚ÍŠù’èˆ—‚Ö
+		//å‡¦ç†ã—ã¦ã„ãªã„ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã¯æ—¢å®šå‡¦ç†ã¸
 		return DefWindowProc(hwnd, uMsg, wParam, lParam);
 	}
 

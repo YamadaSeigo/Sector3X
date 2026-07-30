@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Graphics/IGraphicsDevice.hpp"
 
@@ -16,11 +16,11 @@ namespace SFW
 		//{
 		//public:
 		//	/**
-		//	 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		//	 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		//	 */
 		//	DX12GraphicsDevice() = default;
 		//	/**
-		//	 * @brief ƒfƒXƒgƒ‰ƒNƒ^
+		//	 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		//	 */
 		//	~DX12GraphicsDevice() = default;
 
@@ -28,18 +28,18 @@ namespace SFW
 		//	void Clear(const FLOAT clearColor[4]) override;
 		//	void Present() override;
 		//	/**
-		//	 * @brief ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğæ“¾
-		//	 * @return ƒRƒ}ƒ“ƒhƒŠƒXƒg
+		//	 * @brief ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’å–å¾—
+		//	 * @return ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 		//	 */
 		//	virtual std::shared_ptr<IGraphicsCommandList> CreateCommandList() override;
 		//	/**
-		//	 * @brief ƒeƒNƒXƒ`ƒƒ‚ğ¶¬
-		//	 * @return ƒeƒNƒXƒ`ƒƒƒCƒ“ƒ^[ƒtƒF[ƒX
+		//	 * @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ç”Ÿæˆ
+		//	 * @return ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 		//	 */
 		//	virtual std::shared_ptr<ITexture> CreateTexture(const std::string& path) override;
 		//	/**
-		//	 * @brief ƒo[ƒeƒbƒNƒXƒoƒbƒtƒ@[‚ğ¶¬
-		//	 * @return ƒo[ƒeƒbƒNƒXƒoƒbƒtƒ@[ƒCƒ“ƒ^[ƒtƒF[ƒX
+		//	 * @brief ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ¼ã‚’ç”Ÿæˆ
+		//	 * @return ãƒãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ¼ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 		//	 */
 		//	virtual std::shared_ptr<IVertexBuffer> CreateVertexBuffer(const void* data, size_t size, UINT stride) override;
 

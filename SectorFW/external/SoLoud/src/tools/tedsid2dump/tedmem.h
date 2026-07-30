@@ -1,4 +1,4 @@
-/*
+﻿/*
 	YAPE - Yet Another Plus/4 Emulator
 
 	The program emulates the Commodore 264 family of 8 bit microcomputers
@@ -7,7 +7,7 @@
 	and/or modify it under certain conditions. For more information,
 	read 'Copying'.
 
-	(c) 2000, 2001, 2004, 2007 Attila Gr�sz
+	(c) 2000, 2001, 2004, 2007 Attila Grz
 */
 #ifndef _TEDMEM_H
 #define _TEDMEM_H

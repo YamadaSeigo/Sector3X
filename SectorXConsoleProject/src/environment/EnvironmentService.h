@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <SectorFW/Debug/UIBus.h>
 #include "graphics/RenderDefine.h"
@@ -9,42 +9,42 @@ struct alignas(16) FogCB
 	// Distance fog
 	Math::Vec3f gFogColor = Math::Vec3f(0.8f, 0.8f, 1.0f);
 	float gFogStart = 100.0f;
-	float gFogEnd = 3000.0f;// (ƒ[ƒgƒ‹)
+	float gFogEnd = 3000.0f;// (ãƒ¡ãƒ¼ãƒˆãƒ«)
 	Math::Vec2f _padFog0;
 	uint32_t gEnableDistanceFog = 1; // 0/1
 
 	// Height fog
-	float gHeightFogBaseHeight = 50.0f; // –¶‚ÌŠî€‚‚³(‚±‚Ì‚‚³•t‹ß‚ªÅ‚à”Z‚¢‘z’è) —á: 1.0 (’n–Ê•t‹ß)
-	float gHeightFogDensity = 0.01f; // ‚‚³ƒtƒHƒO–§“x(‘S‘Ì‹­‚³) —á: 0.01
-	float gHeightFogFalloff = 0.07f; // ‚‚³Œ¸Š(‘å‚«‚¢‚Ù‚Çã‚És‚­‚Æ‹}‚É”–‚­‚È‚é) —á: 0.05
+	float gHeightFogBaseHeight = 50.0f; // éœ§ã®åŸºæº–é«˜ã•(ã“ã®é«˜ã•ä»˜è¿‘ãŒæœ€ã‚‚æ¿ƒã„æƒ³å®š) ä¾‹: 1.0 (åœ°é¢ä»˜è¿‘)
+	float gHeightFogDensity = 0.01f; // é«˜ã•ãƒ•ã‚©ã‚°å¯†åº¦(å…¨ä½“å¼·ã•) ä¾‹: 0.01
+	float gHeightFogFalloff = 0.07f; // é«˜ã•æ¸›è¡°(å¤§ãã„ã»ã©ä¸Šã«è¡Œãã¨æ€¥ã«è–„ããªã‚‹) ä¾‹: 0.05
 	uint32_t gEnableHeightFog = 1; // 0/1
 
 	// Height fog wind/noise
-	Math::Vec2f gFogDisplacementXZ = { 0.0f,0.0f }; // offset (ŠÔŒo‰ß‚Å•Ï‰»‚³‚¹‚é) —á: (0.0, 0.0)
-	float  gFogWindSpeed = 0.3f;     // —á: 0.2
-	float  gFogNoiseScale = 0.03f;    // —á: 0.08 (ƒ[ƒ‹ƒh->ƒmƒCƒY‹óŠÔ)
-	float  gFogNoiseAmount = 0.8f;   // —á: 0.35 (”Z’W‚Ì‹­‚³ 0..1)
-	float  gFogGroundBand = 20.0f;    // —á: 6.0  (’n–Ê•t‹ß‚ÌŒú‚İ)
-	float  gFogNoiseMinHeight = -1.0f;// —á: -1.0 (Šî€‚‚³‚©‚ç‰º‚Í‹­‚ß“™)
-	float  gFogNoiseMaxHeight = 8.0f;// —á: 8.0  (Šî€‚‚³‚©‚çã‚ÍŒ¸Š)
+	Math::Vec2f gFogDisplacementXZ = { 0.0f,0.0f }; // offset (æ™‚é–“çµŒéã§å¤‰åŒ–ã•ã›ã‚‹) ä¾‹: (0.0, 0.0)
+	float  gFogWindSpeed = 0.3f;     // ä¾‹: 0.2
+	float  gFogNoiseScale = 0.03f;    // ä¾‹: 0.08 (ãƒ¯ãƒ¼ãƒ«ãƒ‰->ãƒã‚¤ã‚ºç©ºé–“)
+	float  gFogNoiseAmount = 0.8f;   // ä¾‹: 0.35 (æ¿ƒæ·¡ã®å¼·ã• 0..1)
+	float  gFogGroundBand = 20.0f;    // ä¾‹: 6.0  (åœ°é¢ä»˜è¿‘ã®åšã¿)
+	float  gFogNoiseMinHeight = -1.0f;// ä¾‹: -1.0 (åŸºæº–é«˜ã•ã‹ã‚‰ä¸‹ã¯å¼·ã‚ç­‰)
+	float  gFogNoiseMaxHeight = 8.0f;// ä¾‹: 8.0  (åŸºæº–é«˜ã•ã‹ã‚‰ä¸Šã¯æ¸›è¡°)
 };
 
 struct GodRayCB
 {
-	Math::Vec2f gSunScreenUV = {}; // ‘¾—z‚ÌƒXƒNƒŠ[ƒ“UV(0..1) ¦CPU‚ÅŒvZ‚µ‚Ä“n‚·
-	float gGodRayIntensity = 0.6f; // ‹­‚³i—á: 0.6j
-	float gGodRayDecay = 0.96f; // Œ¸Ši—á: 0.96j
+	Math::Vec2f gSunScreenUV = {}; // å¤ªé™½ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³UV(0..1) â€»CPUã§è¨ˆç®—ã—ã¦æ¸¡ã™
+	float gGodRayIntensity = 0.6f; // å¼·ã•ï¼ˆä¾‹: 0.6ï¼‰
+	float gGodRayDecay = 0.96f; // æ¸›è¡°ï¼ˆä¾‹: 0.96ï¼‰
 
-	Math::Vec2f gSunDirSS = {}; // ‘¾—z‚ÌƒXƒNƒŠ[ƒ“•ûŒüƒxƒNƒgƒ‹i³‹K‰»Ï‚İAƒXƒNƒŠ[ƒ“’†S‚©‚ç‘¾—z‚Ö‚Ì•ûŒüj
+	Math::Vec2f gSunDirSS = {}; // å¤ªé™½ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ï¼ˆæ­£è¦åŒ–æ¸ˆã¿ã€ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ä¸­å¿ƒã‹ã‚‰å¤ªé™½ã¸ã®æ–¹å‘ï¼‰
 	float _padGR1[2] = {};
 
-	float gGodRayDensity = 0.9f; // L‚Ñ‹ï‡i—á: 0.9j
-	float gGodRayWeight = 0.02f; // ƒTƒ“ƒvƒ‹d‚İi—á: 0.02j
+	float gGodRayDensity = 0.9f; // ä¼¸ã³å…·åˆï¼ˆä¾‹: 0.9ï¼‰
+	float gGodRayWeight = 0.02f; // ã‚µãƒ³ãƒ—ãƒ«é‡ã¿ï¼ˆä¾‹: 0.02ï¼‰
 	uint32_t gEnableGodRay = 1; // 0/1
 	float _padGR0 = {};
 
-	Math::Vec3f gGodRayTint = { 1.0f,0.95f,0.5f }; // Fi—á: (1.0, 0.95, 0.8)j
-	float gGodRayMaxDepth = 0.9995f; // g‹ó/‰“•ûh”»’è‚Ì[“xè‡’li—á: 0.9995j
+	Math::Vec3f gGodRayTint = { 1.0f,0.95f,0.5f }; // è‰²ï¼ˆä¾‹: (1.0, 0.95, 0.8)ï¼‰
+	float gGodRayMaxDepth = 0.9995f; // â€œç©º/é æ–¹â€åˆ¤å®šã®æ·±åº¦é–¾å€¤ï¼ˆä¾‹: 0.9995ï¼‰
 };
 
 #define BIND_DEBUG_FOG_FLOAT_DATA(var, min, max, speed)\
@@ -95,7 +95,7 @@ struct TimeOfDayKey
 		return t < other.t;
 	}
 
-	// •K—v‚È‚ç‘¼‚É‚à (gFogNoiseAmount, gFogGroundBand ‚È‚Ç)
+	// å¿…è¦ãªã‚‰ä»–ã«ã‚‚ (gFogNoiseAmount, gFogGroundBand ãªã©)
 };
 
 enum class WeatherState : uint32_t
@@ -198,12 +198,12 @@ public:
 			factor = (t - beforeKey.t) / (afterKey.t - beforeKey.t);
 		}
 		else {
-			// ƒ‹[ƒv‚µ‚Ä‚¢‚éê‡
+			// ãƒ«ãƒ¼ãƒ—ã—ã¦ã„ã‚‹å ´åˆ
 			factor = (t - beforeKey.t) / (afterKey.t + 1.0f - beforeKey.t);
 		}
 		currentTimeOfDayKey = beforeKey.Lerp(afterKey, factor);
 
-		// SunDirection‚àXV
+		// SunDirectionã‚‚æ›´æ–°
 		float theta = Math::Deg2Rad(START_SUN_ANGLE + (END_SUN_ANGLE - START_SUN_ANGLE) * t);
 		m_sunDirection = Math::Vec3f{ 0.0f, -sin(theta), -cos(theta) }.normalized();
 	}
@@ -214,9 +214,9 @@ public:
 		out.tod = currentTimeOfDayKey;
 
 		const float rain01 = std::clamp(m_currentRainIntensity, 0.0f, 1.0f);
-		const float rainVis = rain01 * rain01; // Œ©‚½–ÚŒn‚ÍŒã”¼‹­‚­
-		const float rainLight = rain01;        // Œõ—Ê‚Í•’Ê‚ÉüŒ`
-		const float rainFog = rain01;          // fog‚ÍŠî–{üŒ`
+		const float rainVis = rain01 * rain01; // è¦‹ãŸç›®ç³»ã¯å¾ŒåŠå¼·ã
+		const float rainLight = rain01;        // å…‰é‡ã¯æ™®é€šã«ç·šå½¢
+		const float rainFog = rain01;          // fogã¯åŸºæœ¬ç·šå½¢
 
 		out.fogColor = Math::Lerp(
 			currentTimeOfDayKey.fogColor,
@@ -314,7 +314,7 @@ public:
 	}
 
 	/**
-	 * @brief@‘¾—z‚©‚ç‚Ì•ûŒü‚ğæ“¾
+	 * @briefã€€å¤ªé™½ã‹ã‚‰ã®æ–¹å‘ã‚’å–å¾—
 	 */
 	Math::Vec3f GetSunDirection() const noexcept {
 		return m_sunDirection;
@@ -417,24 +417,24 @@ private:
 		return Math::saturate(m_timeOfDay / m_dayLengthSec);
 	}
 
-	// 0 = Š£‘‡Šñ‚è, 1 = ¼Šñ‚è
+	// 0 = ä¹¾ç‡¥å¯„ã‚Š, 1 = æ¹¿æ½¤å¯„ã‚Š
 	float CalcClimateWetness01_RandOnly() const noexcept
 	{
-		// Å‰‚ÍŒÅ’è‚Å‚à\•ªB•K—v‚È‚çƒGƒŠƒA‚â‹Gß‚Å·‚µ‘Ö‚¦‚é
+		// æœ€åˆã¯å›ºå®šã§ã‚‚ååˆ†ã€‚å¿…è¦ãªã‚‰ã‚¨ãƒªã‚¢ã‚„å­£ç¯€ã§å·®ã—æ›¿ãˆã‚‹
 		return 0.55f;
 	}
 
-	// Œy—ÊƒnƒbƒVƒ…ƒmƒCƒYBPerlin ‚ğ‚Ü‚¾—pˆÓ‚µ‚Ä‚¢‚È‚¢ê‡‚Ì‘ã‘ÖB
+	// è»½é‡ãƒãƒƒã‚·ãƒ¥ãƒã‚¤ã‚ºã€‚Perlin ã‚’ã¾ã ç”¨æ„ã—ã¦ã„ãªã„å ´åˆã®ä»£æ›¿ã€‚
 	float HashNoise1D(float x) const noexcept
 	{
 		float n = std::sin(x * 12.9898f + 78.233f) * 43758.5453f;
 		return n - std::floor(n); // frac
 	}
 
-	// •â•—pB^‚Ì Perlin ‚ª‚ ‚é‚È‚ç·‚µ‘Ö‚¦‚ÄOK
+	// è£œåŠ©ç”¨ã€‚çœŸã® Perlin ãŒã‚ã‚‹ãªã‚‰å·®ã—æ›¿ãˆã¦OK
 	float SampleWeatherNoise01(float t) const noexcept
 	{
-		// ’·üŠú + ­‚µ’ZüŠú
+		// é•·å‘¨æœŸ + å°‘ã—çŸ­å‘¨æœŸ
 		const float n0 = HashNoise1D(t * 0.017f);
 		const float n1 = HashNoise1D(t * 0.0047f + 13.1f);
 		return Math::saturate(n0 * 0.7f + n1 * 0.3f);
@@ -459,8 +459,8 @@ private:
 	Graphics::BufferHandle fogCBHandle;
 	Graphics::BufferHandle godRayCBHandle;
 
-	float m_dayLengthSec = 120.0f; // ˆêü‚É‚©‚©‚éŠÔ(•b)
-	float m_timeOfDay = 0.0f; // Œ»İ‚ÌŠÔ(0.0~1.0)
+	float m_dayLengthSec = 120.0f; // ä¸€å‘¨ã«ã‹ã‹ã‚‹æ™‚é–“(ç§’)
+	float m_timeOfDay = 0.0f; // ç¾åœ¨ã®æ™‚é–“(0.0~1.0)
 
 	float m_fogWindBaseSpeed = 10.0f;
 
@@ -480,11 +480,11 @@ private:
 	float m_currentRainIntensity = 0.0f; // 0..1
 	float m_targetRainIntensity = 0.0f; // 0..1
 
-	float m_rainInSpeed = 0.15f; // •b‚ ‚½‚è
-	float m_rainOutSpeed = 0.08f; // °‚ê‚é•û‚Í­‚µ’x‚ß‚Å‚à‚æ‚¢
+	float m_rainInSpeed = 0.15f; // ç§’ã‚ãŸã‚Š
+	float m_rainOutSpeed = 0.08f; // æ™´ã‚Œã‚‹æ–¹ã¯å°‘ã—é…ã‚ã§ã‚‚ã‚ˆã„
 
-	float m_rainRiseSpeed = 0.10f; // ‰J‚ª‹­‚Ü‚é‘¬“x
-	float m_rainFallSpeed = 0.04f; // ‰J‚ªã‚Ü‚é‘¬“x
+	float m_rainRiseSpeed = 0.10f; // é›¨ãŒå¼·ã¾ã‚‹é€Ÿåº¦
+	float m_rainFallSpeed = 0.04f; // é›¨ãŒå¼±ã¾ã‚‹é€Ÿåº¦
 
 	bool  m_enableWeatherAutoTransition = true;
 	bool  m_enableWeatherPerlinAssist = false;
@@ -494,14 +494,14 @@ private:
 
 	float m_weatherGlobalClock = 0.0f;
 
-	// rand”Å‚Ì target ¬—h‚ê
+	// randç‰ˆã® target å°æºã‚Œ
 	float m_targetWobbleTimer = 0.0f;
 	float m_targetWobbleIntervalSec = 8.0f;
 	float m_cachedTargetWobble = 0.0f;
 
-	// Perlin•â•”Å‚Ìü”g”
-	float m_weatherClimateFreq = 0.0035f;      // ’·üŠú
-	float m_weatherTargetWobbleFreq = 0.025f;  // ó‘Ô“à—h‚ê
+	// Perlinè£œåŠ©ç‰ˆã®å‘¨æ³¢æ•°
+	float m_weatherClimateFreq = 0.0035f;      // é•·å‘¨æœŸ
+	float m_weatherTargetWobbleFreq = 0.025f;  // çŠ¶æ…‹å†…æºã‚Œ
 
 	std::mt19937 m_rng{ std::random_device{}() };
 

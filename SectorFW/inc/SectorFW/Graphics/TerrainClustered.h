@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * \file   TerrainClustered.h
- * \brief ’nŒ`‚ÌƒNƒ‰ƒXƒ^[‰»‚³‚ê‚½ƒƒbƒVƒ…‚ğ¶¬‚·‚é‹@”\‚ğ’ñ‹Ÿ‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * \brief åœ°å½¢ã®ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼åŒ–ã•ã‚ŒãŸãƒ¡ãƒƒã‚·ãƒ¥ã‚’ç”Ÿæˆã™ã‚‹æ©Ÿèƒ½ã‚’æä¾›ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * \author seigo
  * \date   December 2025
  *********************************************************************/
@@ -14,7 +14,7 @@
 #include <array>
 #include <functional>
 
-#include "../Math/Perlin2D.h" // SFW::Math::Perlin2Di-1..1j‚ğg—p
+#include "../Math/Perlin2D.h" // SFW::Math::Perlin2Dï¼ˆ-1..1ï¼‰ã‚’ä½¿ç”¨
 #include "../Math/AABB.hpp"
 
 namespace SFW {
@@ -34,7 +34,7 @@ namespace SFW {
 
 			bool IsValid() const { return width > 0 && height > 0 && !data.empty(); }
 
-			// u,v: 0..1 iƒ^ƒCƒ‹‘S‘Ì‚É‘Î‚·‚é UVj
+			// u,v: 0..1 ï¼ˆã‚¿ã‚¤ãƒ«å…¨ä½“ã«å¯¾ã™ã‚‹ UVï¼‰
 			float Sample(float u, float v) const
 			{
 				if (!IsValid()) return 0.0f;
@@ -65,9 +65,9 @@ namespace SFW {
 		};
 
 		struct TerrainBuildParams {
-			uint32_t cellsX = 256;      // X •ûŒüƒZƒ‹”i’¸“_‚Í +1j
-			uint32_t cellsZ = 256;      // Z •ûŒüƒZƒ‹”
-			float    cellSize = 1.0f;   // ƒOƒŠƒbƒhŠÔŠu
+			uint32_t cellsX = 256;      // X æ–¹å‘ã‚»ãƒ«æ•°ï¼ˆé ‚ç‚¹ã¯ +1ï¼‰
+			uint32_t cellsZ = 256;      // Z æ–¹å‘ã‚»ãƒ«æ•°
+			float    cellSize = 1.0f;   // ã‚°ãƒªãƒƒãƒ‰é–“éš”
 			float    heightScale = 30.f;
 
 			// Perlin fBm
@@ -75,21 +75,21 @@ namespace SFW {
 			int      octaves = 5;
 			float    lacunarity = 2.0f;
 			float    gain = 0.45f;
-			float    frequency = 1.0f / 64.0f; // ƒOƒŠƒbƒhã‚Å‚ÌƒXƒP[ƒ‹
+			float    frequency = 1.0f / 64.0f; // ã‚°ãƒªãƒƒãƒ‰ä¸Šã§ã®ã‚¹ã‚±ãƒ¼ãƒ«
 
-			// ƒNƒ‰ƒXƒ^[İ’èiƒZƒ‹Šî€j
-			uint32_t clusterCellsX = 32; // ƒNƒ‰ƒXƒ^[‚Ì•iƒZƒ‹”j
-			uint32_t clusterCellsZ = 32; // ƒNƒ‰ƒXƒ^[‚Ì‚‚³iƒZƒ‹”j
+			// ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼è¨­å®šï¼ˆã‚»ãƒ«åŸºæº–ï¼‰
+			uint32_t clusterCellsX = 32; // ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã®å¹…ï¼ˆã‚»ãƒ«æ•°ï¼‰
+			uint32_t clusterCellsZ = 32; // ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã®é«˜ã•ï¼ˆã‚»ãƒ«æ•°ï¼‰
 
-			Math::Vec3f offset = Math::Vec3f(0.0f, 0.0f, 0.0f); // ƒ[ƒ‹ƒhƒIƒtƒZƒbƒg
+			Math::Vec3f offset = Math::Vec3f(0.0f, 0.0f, 0.0f); // ãƒ¯ãƒ¼ãƒ«ãƒ‰ã‚ªãƒ•ã‚»ãƒƒãƒˆ
 
 			const DesignerHeightMap* designer = nullptr;
 		};
 
 		struct TerrainClustered {
 			struct ClusterRange {
-				uint32_t indexOffset = {}; // IndexPool “à‚ÌŠJnƒIƒtƒZƒbƒgiuint32_t —v‘f’PˆÊj
-				uint32_t indexCount = {};  // ‚±‚±‚©‚ç‰½ŒÂ‚Ì index ‚ğ“Ç‚Ş‚©
+				uint32_t indexOffset = {}; // IndexPool å†…ã®é–‹å§‹ã‚ªãƒ•ã‚»ãƒƒãƒˆï¼ˆuint32_t è¦ç´ å˜ä½ï¼‰
+				uint32_t indexCount = {};  // ã“ã“ã‹ã‚‰ä½•å€‹ã® index ã‚’èª­ã‚€ã‹
 				Math::AABB3f     bounds = {};
 
 				struct GridRect {
@@ -97,24 +97,24 @@ namespace SFW {
 				} gridRect = {};
 			};
 
-			// ---- Splat —pƒƒ^iƒŒƒ“ƒ_ƒ‰[”ñˆË‘¶j----
+			// ---- Splat ç”¨ãƒ¡ã‚¿ï¼ˆãƒ¬ãƒ³ãƒ€ãƒ©ãƒ¼éä¾å­˜ï¼‰----
 			static constexpr uint32_t kSplatMaxLayers = 4;
 
-			// GPU ‚É’u‚­‘z’è‚Ì g’¸“_ƒv[ƒ‹iSRV Œü‚¯ SoA ‚É‚µ‚Ä‚àOKB‚Ü‚¸‚Í AoSjh
+			// GPU ã«ç½®ãæƒ³å®šã® â€œé ‚ç‚¹ãƒ—ãƒ¼ãƒ«ï¼ˆSRV å‘ã‘ SoA ã«ã—ã¦ã‚‚OKã€‚ã¾ãšã¯ AoSï¼‰â€
 			std::vector<TerrainVertex> vertices;
-			// ‘SOŠpŒ`‚ğ gƒNƒ‰ƒXƒ^[‡‚Éh ˜AŒ‹‚µ‚½ IndexPooliTRIANGLELIST —pj
+			// å…¨ä¸‰è§’å½¢ã‚’ â€œã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼é †ã«â€ é€£çµã—ãŸ IndexPoolï¼ˆTRIANGLELIST ç”¨ï¼‰
 			std::vector<uint32_t>      indexPool;
 
-			// ƒNƒ‰ƒXƒ^[•\iIndexPool ã‚Ì”ÍˆÍ‚Æ AABBj
+			// ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼è¡¨ï¼ˆIndexPool ä¸Šã®ç¯„å›²ã¨ AABBï¼‰
 			uint32_t clustersX = 0;
 			uint32_t clustersZ = 0;
 			std::vector<ClusterRange> clusters; // size = clustersX * clustersZ
 
-			// ƒOƒŠƒbƒh‰ğ‘œ“xiƒfƒoƒbƒO‚âÀ•W•ÏŠ·‚Éj
+			// ã‚°ãƒªãƒƒãƒ‰è§£åƒåº¦ï¼ˆãƒ‡ãƒãƒƒã‚°ã‚„åº§æ¨™å¤‰æ›ã«ï¼‰
 			uint32_t vertsX = 0;
 			uint32_t vertsZ = 0;
 
-			// ¶¬
+			// ç”Ÿæˆ
 			static TerrainClustered Build(const TerrainBuildParams& p, std::vector<float>* outMap = nullptr);
 
 			struct HeightField {
@@ -132,20 +132,20 @@ namespace SFW {
 				const std::vector<TerrainClustered::ClusterRange>& clusters,
 				uint32_t clustersX, uint32_t clustersZ);
 
-			// ƒNƒ‰ƒXƒ^4•Ó‚Ég‰ºŒü‚«ƒXƒJ[ƒgh‚ğíİ‚·‚éiBuildClusters‚Ì’¼ŒãALOD¶¬‚Ì‘O‚Éˆê“x‚¾‚¯ŒÄ‚Ôj
+			// ã‚¯ãƒ©ã‚¹ã‚¿4è¾ºã«â€œä¸‹å‘ãã‚¹ã‚«ãƒ¼ãƒˆâ€ã‚’å¸¸è¨­ã™ã‚‹ï¼ˆBuildClustersã®ç›´å¾Œã€LODç”Ÿæˆã®å‰ã«ä¸€åº¦ã ã‘å‘¼ã¶ï¼‰
 			static void AddSkirtsToClusters(SFW::Graphics::TerrainClustered& t,
-				float skirtDepth /*= 0.2f ‚È‚Ç*/);
+				float skirtDepth /*= 0.2f ãªã©*/);
 
 			struct SplatLayerMeta {
-				uint32_t materialId = 0;     // ‘fŞ‚Ì˜_—IDiDX11‘¤‚ÅSRV‚É‰ğŒˆj
-				float    uvTilingU = 1.0f;   // ƒŒƒCƒ„–ˆƒ^ƒCƒ‹
+				uint32_t materialId = 0;     // ç´ æã®è«–ç†IDï¼ˆDX11å´ã§SRVã«è§£æ±ºï¼‰
+				float    uvTilingU = 1.0f;   // ãƒ¬ã‚¤ãƒ¤æ¯ã‚¿ã‚¤ãƒ«
 				float    uvTilingV = 1.0f;
 			};
 
 			struct ClusterSplatMeta {
 				uint32_t layerCount = 4;                         // 0..4
-				SplatLayerMeta layers[kSplatMaxLayers];          // 4ƒŒƒCƒ„
-				uint32_t splatTextureId = 0;                     // RGBA ƒEƒFƒCƒg‚ğ‚ÂƒXƒvƒ‰ƒbƒgƒeƒNƒXƒ`ƒƒ‚Ì˜_—ID
+				SplatLayerMeta layers[kSplatMaxLayers];          // 4ãƒ¬ã‚¤ãƒ¤
+				uint32_t splatTextureId = 0;                     // RGBA ã‚¦ã‚§ã‚¤ãƒˆã‚’æŒã¤ã‚¹ãƒ—ãƒ©ãƒƒãƒˆãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è«–ç†ID
 			};
 
 			std::vector<ClusterSplatMeta> splat; // size == clusters.size()
@@ -154,7 +154,7 @@ namespace SFW {
 				const uint32_t materialIds[4],
 				const float tilingUV[4][2]);
 
-			// ¶¬ŠÖ””ÅFƒNƒ‰ƒXƒ^[‚²‚Æ‚ÉD‚«‚ÈƒƒWƒbƒN‚ÅŒˆ‚ß‚é
+			// ç”Ÿæˆé–¢æ•°ç‰ˆï¼šã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ã”ã¨ã«å¥½ããªãƒ­ã‚¸ãƒƒã‚¯ã§æ±ºã‚ã‚‹
 			using SplatGenerator = std::function<ClusterSplatMeta(uint32_t cid, const ClusterRange& c)>;
 			void InitSplatWithGenerator(const SplatGenerator& gen);
 
@@ -163,24 +163,24 @@ namespace SFW {
 			}
 
 			struct RigidPose {
-				Math::Vec3f pos;      // ˆÊ’uiWSj
-				Math::Vec3f right;    // Šî’êXiWSj
-				Math::Vec3f up;       // Šî’êYiWSj
-				Math::Vec3f forward;  // Šî’êZiWSj
+				Math::Vec3f pos;      // ä½ç½®ï¼ˆWSï¼‰
+				Math::Vec3f right;    // åŸºåº•Xï¼ˆWSï¼‰
+				Math::Vec3f up;       // åŸºåº•Yï¼ˆWSï¼‰
+				Math::Vec3f forward;  // åŸºåº•Zï¼ˆWSï¼‰
 			};
 
-			// ’nŒ`ƒTƒ“ƒvƒ‹Fƒ[ƒ‹ƒhXZ‚©‚ç‚‚³/–@üiƒoƒCƒŠƒjƒAj‚ğæ“¾
+			// åœ°å½¢ã‚µãƒ³ãƒ—ãƒ«ï¼šãƒ¯ãƒ¼ãƒ«ãƒ‰XZã‹ã‚‰é«˜ã•/æ³•ç·šï¼ˆãƒã‚¤ãƒªãƒ‹ã‚¢ï¼‰ã‚’å–å¾—
 			bool SampleHeightNormalBilinear(float x, float z, float& outH, Math::Vec3f* outN = nullptr) const;
 
-			// ƒAƒ“ƒJ[‚Åg’ê–Êh‚ğ‡‚í‚¹‚Ä©‘R‚È‰ñ“]‚ğ•Ô‚·
+			// ã‚¢ãƒ³ã‚«ãƒ¼ã§â€œåº•é¢â€ã‚’åˆã‚ã›ã¦è‡ªç„¶ãªå›è»¢ã‚’è¿”ã™
 			RigidPose SolvePlacementByAnchors(
-				const Math::Vec3f& basePosWS,    // ”z’u‚ÌŠî€ix,zg—pAy‚Í–³‹‚µ‚Ä’nŒ`‚É‡‚í‚¹‚éj
-				float yawRad,                    // –‘O‚Ìƒˆ[‰ñ“]iã‚©‚çŒ©‚½‰ñ“]j
-				float scale,                     // ƒCƒ“ƒXƒ^ƒ“ƒX‚ÌƒXƒP[ƒ‹iXZ‚É“K—pj
-				const std::vector<Math::Vec2f>& anchorsLocalXZ, // ’ê–ÊƒAƒ“ƒJ[iƒ[ƒJƒ‹XZj
-				float maxTiltDeg = 15.0f,        // ãŒÀŒXÎi‰¡“|‚ê–h~j
-				float upBias = 0.5f,             // ãŒü‚«ƒoƒCƒAƒXi0=–@üŠñ‚è, 1=‚æ‚èãŒü‚«j
-				float baseBias = 0.01f           // ”÷¬‰Ÿ‚µã‚°i‚ß‚è‚İ–h~, m’PˆÊj
+				const Math::Vec3f& basePosWS,    // é…ç½®ã®åŸºæº–ï¼ˆx,zä½¿ç”¨ã€yã¯ç„¡è¦–ã—ã¦åœ°å½¢ã«åˆã‚ã›ã‚‹ï¼‰
+				float yawRad,                    // äº‹å‰ã®ãƒ¨ãƒ¼å›è»¢ï¼ˆä¸Šã‹ã‚‰è¦‹ãŸå›è»¢ï¼‰
+				float scale,                     // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ã‚¹ã‚±ãƒ¼ãƒ«ï¼ˆXZã«é©ç”¨ï¼‰
+				const std::vector<Math::Vec2f>& anchorsLocalXZ, // åº•é¢ã‚¢ãƒ³ã‚«ãƒ¼ï¼ˆãƒ­ãƒ¼ã‚«ãƒ«XZï¼‰
+				float maxTiltDeg = 15.0f,        // ä¸Šé™å‚¾æ–œï¼ˆæ¨ªå€’ã‚Œé˜²æ­¢ï¼‰
+				float upBias = 0.5f,             // ä¸Šå‘ããƒã‚¤ã‚¢ã‚¹ï¼ˆ0=æ³•ç·šå¯„ã‚Š, 1=ã‚ˆã‚Šä¸Šå‘ãï¼‰
+				float baseBias = 0.01f           // å¾®å°æŠ¼ã—ä¸Šã’ï¼ˆã‚ã‚Šè¾¼ã¿é˜²æ­¢, må˜ä½ï¼‰
 			) const;
 		private:
 			static void GenerateHeightsOnlyPerlin(std::vector<float>& outH,

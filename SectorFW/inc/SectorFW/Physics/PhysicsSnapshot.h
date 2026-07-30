@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   PhysicsSnapshot.h
- * @brief •¨—ƒGƒ“ƒWƒ“‚ÌƒXƒiƒbƒvƒVƒ‡ƒbƒgƒf[ƒ^‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ç‰©ç†ã‚¨ãƒ³ã‚¸ãƒ³ã®ã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆãƒ‡ãƒ¼ã‚¿ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -17,7 +17,7 @@ namespace SFW
 	namespace Physics
 	{
 		/**
-		 * @brief ƒGƒ“ƒeƒBƒeƒB‚Ìƒ|[ƒY‚ğ•\‚·\‘¢‘Ì
+		 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ãƒãƒ¼ã‚ºã‚’è¡¨ã™æ§‹é€ ä½“
 		 */
 		struct Pose {
 			ECS::EntityID e;
@@ -25,7 +25,7 @@ namespace SFW
 			Math::Quatf  rot;
 		};
 		/**
-		 * @brief ÚGƒCƒxƒ“ƒg‚ğ•\‚·\‘¢‘Ì
+		 * @brief æ¥è§¦ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¡¨ã™æ§‹é€ ä½“
 		 */
 		struct ContactEvent {
 			enum Type { Begin, Persist, End } type;
@@ -35,7 +35,7 @@ namespace SFW
 			float  impulse;
 		};
 		/**
-		 * @brief ƒŒƒCƒLƒƒƒXƒgƒqƒbƒgƒCƒxƒ“ƒg‚ğ•\‚·\‘¢‘Ì
+		 * @brief ãƒ¬ã‚¤ã‚­ãƒ£ã‚¹ãƒˆãƒ’ãƒƒãƒˆã‚¤ãƒ™ãƒ³ãƒˆã‚’è¡¨ã™æ§‹é€ ä½“
 		 */
 		struct RayCastHitEvent {
 			uint32_t requestId;
@@ -46,7 +46,7 @@ namespace SFW
 			float    distance;
 		};
 		/**
-		 * @brief •¨—ƒGƒ“ƒWƒ“‚ÌƒXƒiƒbƒvƒVƒ‡ƒbƒgƒf[ƒ^‚ğ•\‚·\‘¢‘Ì
+		 * @brief ç‰©ç†ã‚¨ãƒ³ã‚¸ãƒ³ã®ã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ã™æ§‹é€ ä½“
 		 */
 		struct PhysicsSnapshot {
 			std::vector<ContactEvent>  contacts;

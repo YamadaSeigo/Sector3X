@@ -1,4 +1,4 @@
-#include "RenderPipeline.h"
+ï»¿#include "RenderPipeline.h"
 #include "TiledDeferredRender.h"
 #include "app/AppContext.h"
 #include "app/appconfig.h"
@@ -74,7 +74,7 @@ void RenderPipe::Initialize(
 
 	auto& main3DGroup = renderGraph->AddPassGroup(PassGroupName[GROUP_3D_MAIN]);
 
-	//PS‚ğw’è‚µ‚È‚¢‚±‚Æ‚ÅDepthOnly‚ÌPSO‚ğì¬
+	//PSã‚’æŒ‡å®šã—ãªã„ã“ã¨ã§DepthOnlyã®PSOã‚’ä½œæˆ
 	DX11::ShaderCreateDesc shaderDesc;
 	shaderDesc.vsPath = L"assets/shader/VS_CascadeDepth.cso";
 
@@ -131,10 +131,10 @@ void RenderPipe::Initialize(
 		renderGraph->AddPassToGroup(main3DGroup, passDesc, PASS_3DMAIN_CASCADE0 << i);
 	}
 
-	// ‰J—p‚Ì[“xƒoƒbƒtƒ@ƒpƒX
+	// é›¨ç”¨ã®æ·±åº¦ãƒãƒƒãƒ•ã‚¡ãƒ‘ã‚¹
 
 	shaderDesc.vsPath = L"assets/shader/VS_RainDepth.cso";
-	shaderDesc.psPath.clear(); // PS‚È‚µ‚ÅDepthOnly‚ÌPSO‚ğì‚é
+	shaderDesc.psPath.clear(); // PSãªã—ã§DepthOnlyã®PSOã‚’ä½œã‚‹
 	shaderMgr->Add(shaderDesc, shaderHandle);
 	psoDesc.shader = shaderHandle;
 	psoMgr->Add(psoDesc, psoHandle);
@@ -192,8 +192,8 @@ void RenderPipe::Initialize(
 	static MaterialHandle skyboxMaterialHandle = modelData.ref().subMeshes[0].material;
 	static PSOHandle skyboxPsoHandle = psoHandle;
 
-	//–{“–‚Í‚â‚é‚×‚«‚Å‚Í‚È‚¢‚ª‚±‚±‚©‚ç
-	//static‚Å‚ ‚é‚±‚Æ‚ğ‘O’ñ‚É‚µ‚Äƒ‰ƒ€ƒ_®‚ÅƒLƒƒƒvƒ`ƒƒ‚È‚µ‚ÅƒAƒNƒZƒX‚·‚é‚½‚ß‚ÉŠ—LŒ •Û
+	//æœ¬å½“ã¯ã‚„ã‚‹ã¹ãã§ã¯ãªã„ãŒã“ã“ã‹ã‚‰
+	//staticã§ã‚ã‚‹ã“ã¨ã‚’å‰æã«ã—ã¦ãƒ©ãƒ ãƒ€å¼ã§ã‚­ãƒ£ãƒ—ãƒãƒ£ãªã—ã§ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ãŸã‚ã«æ‰€æœ‰æ¨©ä¿æŒ
 
 	static auto gGraphics = ctx.graphics;
 	static auto renderBackend = ctx.graphics->GetBackend();
@@ -243,7 +243,7 @@ void RenderPipe::Initialize(
 		deferreredSRVs.push_back(srv.Get());
 	}
 
-	// [“xƒXƒeƒ“ƒVƒ‹SRV‚à’Ç‰Á
+	// æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«SRVã‚‚è¿½åŠ 
 	deferreredSRVs.push_back(mainDepthSRV.Get());
 
 	struct LightTexBufferPack {
@@ -285,13 +285,13 @@ void RenderPipe::Initialize(
 	static ComPtr<ID3D11SamplerState> pointSampler;
 	{
 		D3D11_SAMPLER_DESC sampDesc;
-		sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT; // ‘S•” POINT
-		sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;    // 0`1 ‚ÌŠO‚ÍƒNƒ‰ƒ“ƒv
+		sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT; // å…¨éƒ¨ POINT
+		sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;    // 0ï½1 ã®å¤–ã¯ã‚¯ãƒ©ãƒ³ãƒ—
 		sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
 		sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
 		sampDesc.MipLODBias = 0.0f;
 		sampDesc.MaxAnisotropy = 1;
-		sampDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;        // •’Ê‚ÌƒTƒ“ƒvƒ‰‚È‚Ì‚Å ALWAYS
+		sampDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;        // æ™®é€šã®ã‚µãƒ³ãƒ—ãƒ©ãªã®ã§ ALWAYS
 		sampDesc.BorderColor[0] = 0.0f;
 		sampDesc.BorderColor[1] = 0.0f;
 		sampDesc.BorderColor[2] = 0.0f;
@@ -382,13 +382,13 @@ void RenderPipe::Initialize(
 			assert(SUCCEEDED(hr) && "Failed to create pixel shader.");
 		};
 
-	//@‰ğ‘œ“x‚ğ—‚Æ‚·‚±‚Æ‚Å‚É‚¶‚İ•\Œ»‚Æ•‰‰×ŒyŒ¸
+	//ã€€è§£åƒåº¦ã‚’è½ã¨ã™ã“ã¨ã§ã«ã˜ã¿è¡¨ç¾ã¨è² è·è»½æ¸›
 	constexpr uint32_t BLOOM_TEX_WIDTH = App::WINDOW_WIDTH / 2;
 	constexpr uint32_t BLOOM_TEX_HEIGHT = App::WINDOW_HEIGHT / 2;
 
 	static ComPtr<ID3D11ShaderResourceView> sceneColorSRV;
 	static ComPtr<ID3D11RenderTargetView> sceneColorRTV;
-	// 1.0ˆÈã‚Å‚à’×‚ê‚È‚¢ƒtƒH[ƒ}ƒbƒg
+	// 1.0ä»¥ä¸Šã§ã‚‚æ½°ã‚Œãªã„ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	createScreenTex(sceneColorSRV, sceneColorRTV, DXGI_FORMAT_R11G11B10_FLOAT, App::WINDOW_WIDTH, App::WINDOW_HEIGHT);
 
 	static ComPtr<ID3D11ShaderResourceView> transparentSRV;
@@ -401,7 +401,7 @@ void RenderPipe::Initialize(
 
 	static ComPtr<ID3D11ShaderResourceView> bloomSRV;
 	static ComPtr<ID3D11RenderTargetView> bloomRTV;
-	//ƒfƒoƒbƒN‚Ì‚½‚ß‚Éƒnƒ“ƒhƒ‹‚ğ•Û‚µ‚Ä‚¨‚­
+	//ãƒ‡ãƒãƒƒã‚¯ã®ãŸã‚ã«ãƒãƒ³ãƒ‰ãƒ«ã‚’ä¿æŒã—ã¦ãŠã
 	createScreenTex(bloomSRV, bloomRTV, DXGI_FORMAT_R8G8B8A8_UNORM, BLOOM_TEX_WIDTH, BLOOM_TEX_HEIGHT, &DebugRenderType::debugBloomTexHandle);
 
 	static ComPtr<ID3D11PixelShader> brightPS;
@@ -412,9 +412,9 @@ void RenderPipe::Initialize(
 	compileShaderPS(L"assets/shader/PS_Composite.cso", compositePS);
 
 	struct BloomCB {
-		float gBloomThreshold; // —á: 1.0iHDR‘O’ñj / LDR‚È‚ç0.8“™
-		float gBloomKnee; // —á: 0.5isoft thresholdj
-		float gBloomIntensity; // ‡¬‘¤‚Åg‚Á‚Ä‚àOK
+		float gBloomThreshold; // ä¾‹: 1.0ï¼ˆHDRå‰æï¼‰ / LDRãªã‚‰0.8ç­‰
+		float gBloomKnee; // ä¾‹: 0.5ï¼ˆsoft thresholdï¼‰
+		float gBloomIntensity; // åˆæˆå´ã§ä½¿ã£ã¦ã‚‚OK
 		float gBloomMaxDist;
 	};
 
@@ -481,7 +481,7 @@ void RenderPipe::Initialize(
 	static RainService* rainService = ctx.rain;
 
 	auto drawFullScreen = [](uint64_t frame) {
-		// ‘S‰æ–Ê•`‰æ‚Åƒ‰ƒCƒeƒBƒ“ƒOŒvZ
+		// å…¨ç”»é¢æç”»ã§ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°è¨ˆç®—
 		auto ctx = gGraphics->GetDeviceContext();
 
 		uint32_t slot = frame % Graphics::RENDER_BUFFER_COUNT;
@@ -505,10 +505,10 @@ void RenderPipe::Initialize(
 			ctx->Unmap(lightCountCB.Get(), 0);
 		}
 
-		// Gbuffer‚Ísrv‚Æ‚µ‚Äg‚¤‚Ì‚ÅŠO‚·
+		// Gbufferã¯srvã¨ã—ã¦ä½¿ã†ã®ã§å¤–ã™
 		ctx->OMSetRenderTargets(1, sceneColorRTV.GetAddressOf(), nullptr);
 
-		//ƒ^ƒCƒ‹ƒhƒfƒBƒtƒ@[ƒh‚Ìƒ‰ƒCƒeƒBƒ“ƒOƒpƒX
+		//ã‚¿ã‚¤ãƒ«ãƒ‰ãƒ‡ã‚£ãƒ•ã‚¡ãƒ¼ãƒ‰ã®ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ãƒ‘ã‚¹
 		//========================================================================-
 		deferredService->DrawTiledLightPass(ctx,
 			lightShadowResService->GetPointLightSRV().Get(),
@@ -531,12 +531,12 @@ void RenderPipe::Initialize(
 		ctx->IASetIndexBuffer(nullptr, DXGI_FORMAT_UNKNOWN, 0);
 		ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-		//(1) ƒfƒBƒtƒ@\ƒh‚Ìƒtƒ‹ƒXƒNƒŠ[ƒ“‡¬
+		//(1) ãƒ‡ã‚£ãƒ•ã‚¡â€•ãƒ‰ã®ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åˆæˆ
 		//=========================================================================
 
-		//CB‚Ì5‚ÉƒVƒƒƒhƒEƒ}ƒbƒv‚Ìƒpƒ‰ƒ[ƒ^[, Sampler‚ğ1‚ÉƒoƒCƒ“ƒh
+		//CBã®5ã«ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼, Samplerã‚’1ã«ãƒã‚¤ãƒ³ãƒ‰
 		lightShadowResService->BindShadowResources(ctx, 5);
-		//@ƒVƒƒƒhƒEƒ}ƒbƒvƒoƒCƒ“ƒh
+		//ã€€ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—ãƒã‚¤ãƒ³ãƒ‰
 		lightShadowResService->BindShadowPSShadowMap(ctx, 7);
 
 		ctx->PSSetShaderResources(11, (UINT)deferreredSRVs.size(), deferreredSRVs.data());
@@ -559,7 +559,7 @@ void RenderPipe::Initialize(
 
 		ctx->Draw(3, 0);
 
-		// SRV‚ğ‰ğœ
+		// SRVã‚’è§£é™¤
 		ID3D11ShaderResourceView* nullSRV[7] = { nullptr };
 
 		ctx->PSSetShaderResources(11, _countof(nullSRV), nullSRV);
@@ -577,7 +577,7 @@ void RenderPipe::Initialize(
 		ctx->IASetIndexBuffer(nullptr, DXGI_FORMAT_UNKNOWN, 0);
 		ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-		//(1) ƒuƒ‰ƒCƒg’Šo
+		//(1) ãƒ–ãƒ©ã‚¤ãƒˆæŠ½å‡º
 		//=========================================================================
 
 		if (bloomDataChanged) {
@@ -609,7 +609,7 @@ void RenderPipe::Initialize(
 
 		ctx->PSSetShaderResources(0, 1, sceneColorSRV.GetAddressOf());
 
-		//Depth‚ğSRV‚Æ‚µ‚ÄƒoƒCƒ“ƒh
+		//Depthã‚’SRVã¨ã—ã¦ãƒã‚¤ãƒ³ãƒ‰
 		ctx->PSSetShaderResources(1, 1, &deferreredSRVs[DEPTH]);
 
 		ctx->PSSetSamplers(0, 1, linearSampler.GetAddressOf());
@@ -621,10 +621,10 @@ void RenderPipe::Initialize(
 
 		ID3D11ShaderResourceView* nullSRV[2] = { nullptr };
 
-		// SRV‚ğ‰ğœ
+		// SRVã‚’è§£é™¤
 		ctx->PSSetShaderResources(0, 1, nullSRV);
 
-		//(2) ƒ{ƒPi‰¡j
+		//(2) ãƒœã‚±ï¼ˆæ¨ªï¼‰
 		//=========================================================================
 
 		ctx->OMSetRenderTargets(1, bloomRTV.GetAddressOf(), nullptr);
@@ -641,7 +641,7 @@ void RenderPipe::Initialize(
 
 		ctx->PSSetShaderResources(0, 1, nullSRV);
 
-		//(3) ‡¬
+		//(3) åˆæˆ
 		//=========================================================================
 
 		gGraphics->SetMainRenderTargetNoDepth();
@@ -660,7 +660,7 @@ void RenderPipe::Initialize(
 
 		ctx->Draw(3, 0);
 
-		// SRV‚ğ‰ğœ
+		// SRVã‚’è§£é™¤
 		ctx->PSSetShaderResources(0, 2, nullSRV);
 
 		//=========================================================================
@@ -740,7 +740,7 @@ void RenderPipe::Initialize(
 
 	renderGraph->AddPassToGroup(UIGroup, passDesc, PASS_UI_LINE);
 
-	//ƒOƒ‹[ƒv‚ÆƒpƒX‚ÌÀs‡˜‚ğİ’è(Œ»ó‚Í“o˜^‚µ‚½‡”Ô‚ÌƒCƒ“ƒfƒbƒNƒX‚Åw’è)
+	//ã‚°ãƒ«ãƒ¼ãƒ—ã¨ãƒ‘ã‚¹ã®å®Ÿè¡Œé †åºã‚’è¨­å®š(ç¾çŠ¶ã¯ç™»éŒ²ã—ãŸé †ç•ªã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã§æŒ‡å®š)
 	std::vector<DX11::GraphicsDevice::RenderGraph::PassNode> order = {
 		{ 0, 0 },
 		{ 0, 1 },

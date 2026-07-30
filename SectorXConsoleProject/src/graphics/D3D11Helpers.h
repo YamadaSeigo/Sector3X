@@ -1,4 +1,4 @@
-// D3D11Helpers.hpp
+﻿// D3D11Helpers.hpp
 #pragma once
 #include <d3d11.h>
 #include <wrl.h>
@@ -18,7 +18,7 @@ inline StructuredBufferSRVUAV CreateStructuredBufferSRVUAV(
 	uint32_t elementCount,
 	bool createSRV,
 	bool createUAV,
-	uint32_t uavFlags,               // D3D11_BUFFER_UAV_FLAG_APPEND �Ȃ�
+	uint32_t uavFlags,               // D3D11_BUFFER_UAV_FLAG_APPEND など
 	D3D11_USAGE usage,
 	uint32_t cpuAccessFlags,
 	const void* initialData = nullptr)

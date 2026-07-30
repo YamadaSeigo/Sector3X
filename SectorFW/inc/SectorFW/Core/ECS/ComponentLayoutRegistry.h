@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   ComponentLayoutRegistry.h
- * @brief ƒRƒ“ƒ|[ƒlƒ“ƒgƒŒƒCƒAƒEƒgƒŒƒWƒXƒgƒŠ‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆãƒ¬ã‚¸ã‚¹ãƒˆãƒªã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -18,37 +18,37 @@ namespace SFW
 	namespace ECS
 	{
 		/**
-		 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒf[ƒ^‚ÉƒAƒNƒZƒX‚·‚é‚½‚ß‚ÌƒŒƒCƒAƒEƒg‚ğ’è‹`‚·‚é\‘¢‘Ì
-		 * @details ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^ID‚ÆƒCƒ“ƒfƒbƒNƒXAƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìoffset‚Æstride‚ğŠi”[‚µ‚Ü‚·B
+		 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿ã«ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ãŸã‚ã®ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’å®šç¾©ã™ã‚‹æ§‹é€ ä½“
+		 * @details ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹IDã¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã€ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®offsetã¨strideã‚’æ ¼ç´ã—ã¾ã™ã€‚
 		 */
 		struct ComponentLayout
 		{
 			std::unordered_map<ComponentTypeID, uint32_t> infoIdx;
 			std::vector<OneOrMore<ComponentInfo>> info;
-			size_t capacity = 0; // ƒ`ƒƒƒ“ƒN‚Ì—e—Ê
+			size_t capacity = 0; // ãƒãƒ£ãƒ³ã‚¯ã®å®¹é‡
 		};
 		/**
-		 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒgƒŒƒCƒAƒEƒg‚ğˆêŒ³“I‚ÉŠÇ—‚·‚éƒNƒ‰ƒXiComponentMask‚²‚Æ‚É‹¤’Ê!j
+		 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’ä¸€å…ƒçš„ã«ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹ï¼ˆComponentMaskã”ã¨ã«å…±é€š!ï¼‰
 		 */
 		class ComponentLayoutRegistry
 		{
 		public:
 			/**
-			 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN‚É‘Î‰‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒgƒŒƒCƒAƒEƒg‚ğæ“¾‚µ‚Ü‚·B
-			 * @param mask ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
-			 * @return const ComponentLayout& ƒRƒ“ƒ|[ƒlƒ“ƒgƒŒƒCƒAƒEƒg‚Ö‚ÌQÆ
+			 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯ã«å¯¾å¿œã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @param mask ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
+			 * @return const ComponentLayout& ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã¸ã®å‚ç…§
 			 */
 			static const ComponentLayout& GetLayout(const ComponentMask& mask) noexcept;
 		private:
 			/**
-			 * @brief V‚µ‚¢ƒRƒ“ƒ|[ƒlƒ“ƒgƒŒƒCƒAƒEƒg‚ğ’Ç‰Á‚µ‚Ü‚·B
-			 * @param mask ƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
-			 * @details ƒ}ƒXƒN‚ÉŠÜ‚Ü‚ê‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒƒ^î•ñ‚ğŠî‚ÉƒŒƒCƒAƒEƒg‚ğŒvZ‚µ‚Ü‚·B
+			 * @brief æ–°ã—ã„ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’è¿½åŠ ã—ã¾ã™ã€‚
+			 * @param mask ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
+			 * @details ãƒã‚¹ã‚¯ã«å«ã¾ã‚Œã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ¡ã‚¿æƒ…å ±ã‚’åŸºã«ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’è¨ˆç®—ã—ã¾ã™ã€‚
 			 */
 			static void AddNewComponentLayout(const ComponentMask& mask);
-			//ƒRƒ“ƒ|[ƒlƒ“ƒgƒŒƒCƒAƒEƒg‚ğŠi”[‚·‚éƒ}ƒbƒv
+			//ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’æ ¼ç´ã™ã‚‹ãƒãƒƒãƒ—
 			static inline std::unordered_map<ComponentMask, ComponentLayout> componentLayout;
-			//ƒRƒ“ƒ|[ƒlƒ“ƒgƒŒƒCƒAƒEƒg‚Ìƒ}ƒbƒv‚Ö‚ÌƒAƒNƒZƒX‚ğ•ÛŒì‚·‚éƒ~ƒ…[ƒeƒbƒNƒX
+			//ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®ãƒãƒƒãƒ—ã¸ã®ã‚¢ã‚¯ã‚»ã‚¹ã‚’ä¿è­·ã™ã‚‹ãƒŸãƒ¥ãƒ¼ãƒ†ãƒƒã‚¯ã‚¹
 			static inline std::mutex map_mutex;
 		};
 	}

@@ -1,14 +1,14 @@
-#pragma once
+ï»¿#pragma once
 
 #include <cassert>
 #include <array>
 
 struct Packed2Bits32 {
-	static constexpr std::size_t kCapacity = 16; // 16ŒÂ“ü‚éi2bit * 16 = 32bitj
+	static constexpr std::size_t kCapacity = 16; // 16å€‹å…¥ã‚‹ï¼ˆ2bit * 16 = 32bitï¼‰
 
 	std::uint32_t data = 0;
 
-	// i”Ô–Ú(0..15)‚É’lv(0..3)‚ğƒZƒbƒg
+	// iç•ªç›®(0..15)ã«å€¤v(0..3)ã‚’ã‚»ãƒƒãƒˆ
 	void set(std::size_t i, std::uint8_t v) {
 		assert(i < kCapacity);
 		assert(v < 4);
@@ -17,14 +17,14 @@ struct Packed2Bits32 {
 		data = (data & ~mask) | (static_cast<std::uint32_t>(v) << shift);
 	}
 
-	// i”Ô–Ú(0..15)‚ğæ“¾
+	// iç•ªç›®(0..15)ã‚’å–å¾—
 	std::uint8_t get(std::size_t i) const {
 		assert(i < kCapacity);
 		const std::uint32_t shift = static_cast<std::uint32_t>(i * 2);
 		return static_cast<std::uint8_t>((data >> shift) & 0x3u);
 	}
 
-	// ”z—ñ‚©‚ç‚Ü‚Æ‚ß‚Ä‹l‚ß‚éi16—v‘fj
+	// é…åˆ—ã‹ã‚‰ã¾ã¨ã‚ã¦è©°ã‚ã‚‹ï¼ˆ16è¦ç´ ï¼‰
 	void pack(const std::array<std::uint8_t, kCapacity>& src) {
 		std::uint32_t tmp = 0;
 		for (std::size_t i = 0; i < kCapacity; ++i) {
@@ -34,7 +34,7 @@ struct Packed2Bits32 {
 		data = tmp;
 	}
 
-	// ‚Ü‚Æ‚ß‚Ä“WŠJ
+	// ã¾ã¨ã‚ã¦å±•é–‹
 	void unpack(std::array<std::uint8_t, kCapacity>& dst) const {
 		for (std::size_t i = 0; i < kCapacity; ++i) {
 			dst[i] = get(i);

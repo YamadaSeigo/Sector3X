@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   unique_variant.hpp
- * @brief ƒ†ƒj[ƒN‚ÈŒ^‚Ìvariant‚ğ¶¬‚·‚é‚½‚ß‚Ìƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªå‹ã®variantã‚’ç”Ÿæˆã™ã‚‹ãŸã‚ã®ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -14,30 +14,30 @@
 namespace SFW
 {
 	/**
-	 * @brief w’è‚³‚ê‚½Œ^T‚ªA‰Â•Ï’·ˆø”‚ÌŒ^ƒŠƒXƒgTs...‚Ì‚¢‚¸‚ê‚©‚Æ“¯‚¶‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
+	 * @brief æŒ‡å®šã•ã‚ŒãŸå‹TãŒã€å¯å¤‰é•·å¼•æ•°ã®å‹ãƒªã‚¹ãƒˆTs...ã®ã„ãšã‚Œã‹ã¨åŒã˜ã‹ã©ã†ã‹ã‚’åˆ¤å®šã™ã‚‹
 	 */
 	template <typename T, typename... Ts>
 	inline constexpr bool is_in_v = (std::is_same_v<T, Ts> || ...);
 	/**
-	 * @brief ƒ†ƒj[ƒN‚ÈŒ^‚ÌƒŠƒXƒg‚ğ¶¬‚·‚é‚½‚ß‚Ìƒwƒ‹ƒp[\‘¢‘Ì
+	 * @brief ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªå‹ã®ãƒªã‚¹ãƒˆã‚’ç”Ÿæˆã™ã‚‹ãŸã‚ã®ãƒ˜ãƒ«ãƒ‘ãƒ¼æ§‹é€ ä½“
 	 */
 	template <typename... Ts>
 	struct unique_types {
 	private:
 		/**
-		 * @brief Ä‹A“I‚Éƒ†ƒj[ƒN‚ÈŒ^‚ğ’Šo‚·‚é‚½‚ß‚Ì“à•”À‘•
+		 * @brief å†å¸°çš„ã«ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªå‹ã‚’æŠ½å‡ºã™ã‚‹ãŸã‚ã®å†…éƒ¨å®Ÿè£…
 		 */
 		template <typename... Us>
 		struct impl;
 		/**
-		 * @brief ‹ó‚Ìƒ^ƒvƒ‹‚ğ¶¬‚·‚é“Á‰»”Å
+		 * @brief ç©ºã®ã‚¿ãƒ—ãƒ«ã‚’ç”Ÿæˆã™ã‚‹ç‰¹åŒ–ç‰ˆ
 		 */
 		template <>
 		struct impl<> {
 			using type = std::tuple<>;
 		};
 		/**
-		 * @brief ƒ†ƒj[ƒN‚ÈŒ^‚ğ’Šo‚·‚é‚½‚ß‚ÌÄ‹A“I‚ÈÀ‘•
+		 * @brief ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªå‹ã‚’æŠ½å‡ºã™ã‚‹ãŸã‚ã®å†å¸°çš„ãªå®Ÿè£…
 		 */
 		template <typename T, typename... Us>
 		struct impl<T, Us...> {
@@ -50,48 +50,48 @@ namespace SFW
 		};
 	public:
 		/**
-		 * @brief ƒ†ƒj[ƒN‚ÈŒ^‚Ìƒ^ƒvƒ‹‚ğ¶¬‚·‚é
+		 * @brief ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªå‹ã®ã‚¿ãƒ—ãƒ«ã‚’ç”Ÿæˆã™ã‚‹
 		 */
 		using type = typename impl<Ts...>::type;
 	};
 	/**
-	 * @brief tuple ¨ variant ‚É•ÏŠ·
+	 * @brief tuple â†’ variant ã«å¤‰æ›
 	 */
 	template <typename Tuple>
 	struct tuple_to_variant;
 	/**
-	 * @brief tuple ¨ variant ‚É•ÏŠ·‚·‚é“Á‰»”Å
+	 * @brief tuple â†’ variant ã«å¤‰æ›ã™ã‚‹ç‰¹åŒ–ç‰ˆ
 	 */
 	template <typename... Ts>
 	struct tuple_to_variant<std::tuple<Ts...>> {
 		using type = std::variant<Ts...>;
 	};
 	/**
-	 * @brief unique_variantFTs... ‚Å‚à tuple<> ‚Å‚àOK‚ÈƒI[ƒo[ƒ[ƒh
+	 * @brief unique_variantï¼šTs... ã§ã‚‚ tuple<> ã§ã‚‚OKãªã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 	 */
 	template <typename T>
 	struct unique_variant_impl;
 	/**
-	 * @brief unique_variant_implFtuple<Ts...> ‚Ì“Á‰»”Å
+	 * @brief unique_variant_implï¼štuple<Ts...> ã®ç‰¹åŒ–ç‰ˆ
 	 */
 	template <typename... Ts>
 	struct unique_variant_impl<std::tuple<Ts...>> {
 		using type = typename tuple_to_variant<typename unique_types<Ts...>::type>::type;
 	};
 	/**
-	 * @brief unique_variant_impl_altF‰Â•Ï’·ˆø”ƒeƒ“ƒvƒŒ[ƒg‚ğg—p‚µ‚Äƒ†ƒj[ƒN‚ÈŒ^‚Ìvariant‚ğ¶¬‚·‚é
+	 * @brief unique_variant_impl_altï¼šå¯å¤‰é•·å¼•æ•°ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’ä½¿ç”¨ã—ã¦ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªå‹ã®variantã‚’ç”Ÿæˆã™ã‚‹
 	 */
 	template <typename... Ts>
 	struct unique_variant_impl_alt {
 		using type = typename tuple_to_variant<typename unique_types<Ts...>::type>::type;
 	};
 	/**
-	 * @brief ƒ†ƒj[ƒN‚ÈŒ^‚Ìvariant‚ğ¶¬‚·‚é‚½‚ß‚ÌƒGƒCƒŠƒAƒX(tuple”Å)
+	 * @brief ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªå‹ã®variantã‚’ç”Ÿæˆã™ã‚‹ãŸã‚ã®ã‚¨ã‚¤ãƒªã‚¢ã‚¹(tupleç‰ˆ)
 	 */
 	template <typename T>
 	using unique_variant_from_tuple = typename unique_variant_impl<T>::type;
 	/**
-	 * @brief ƒ†ƒj[ƒN‚ÈŒ^‚Ìvariant‚ğ¶¬‚·‚é‚½‚ß‚ÌƒGƒCƒŠƒAƒXi‰Â•Ï’·ˆø”ƒeƒ“ƒvƒŒ[ƒg”Åj
+	 * @brief ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªå‹ã®variantã‚’ç”Ÿæˆã™ã‚‹ãŸã‚ã®ã‚¨ã‚¤ãƒªã‚¢ã‚¹ï¼ˆå¯å¤‰é•·å¼•æ•°ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç‰ˆï¼‰
 	 */
 	template <typename... Ts>
 	using unique_variant_from_args = typename unique_variant_impl_alt<Ts...>::type;

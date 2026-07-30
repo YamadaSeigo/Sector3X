@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   PhysicsShapeManager.h
- * @brief •¨—Œ`ó‚ÌŠÇ—ƒNƒ‰ƒX
+ * @brief ç‰©ç†å½¢çŠ¶ã®ç®¡ç†ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -29,7 +29,7 @@
 #include <cstdint>
 
 #ifdef _DEBUG
-#define CACHE_SHAPE_WIRE_DATA // ƒƒCƒ„[ƒtƒŒ[ƒ€—p’¸“_/ƒCƒ“ƒfƒbƒNƒX‚ğƒLƒƒƒbƒVƒ…‚·‚é‚©‚Ç‚¤‚©
+#define CACHE_SHAPE_WIRE_DATA // ãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ç”¨é ‚ç‚¹/ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã™ã‚‹ã‹ã©ã†ã‹
 #endif
 
 namespace SFW
@@ -40,15 +40,15 @@ namespace SFW
 			return std::fabs(s.x - s.y) <= eps && std::fabs(s.y - s.z) <= eps;
 		}
 
-		// ”ñˆê—lƒXƒP[ƒ‹‚ª—ˆ‚½ê‡Amax —v‘f‚Åˆê—l‰»‚·‚éiˆÀ‘SŠñ‚èj
+		// éä¸€æ§˜ã‚¹ã‚±ãƒ¼ãƒ«ãŒæ¥ãŸå ´åˆã€max è¦ç´ ã§ä¸€æ§˜åŒ–ã™ã‚‹ï¼ˆå®‰å…¨å¯„ã‚Šï¼‰
 		inline Vec3f EnforceUniformScale(const Vec3f& s) {
 			float u = (std::max)(s.x, (std::max)(s.y, s.z));
 			return { u, u, u };
 		}
 
-		// ------------------ Keyid•¡”rœ—pj ------------------
+		// ------------------ Keyï¼ˆé‡è¤‡æ’é™¤ç”¨ï¼‰ ------------------
 		struct ShapeKey {
-			// ”Ä—pƒtƒB[ƒ‹ƒhig‚¤Š‚¾‚¯g‚¤j
+			// æ±ç”¨ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ï¼ˆä½¿ã†æ‰€ã ã‘ä½¿ã†ï¼‰
 			Vec3f he{};             // Box
 			float r{ 0.f };           // Sphere/Capsule.r
 			float hh{ 0.f };          // Capsule.halfHeight
@@ -61,16 +61,16 @@ namespace SFW
 			size_t hfHash{ 0 };
 			// Scale summary
 			Vec3f scale{ 1,1,1 };
-			// ƒ[ƒJƒ‹ƒIƒtƒZƒbƒg
+			// ãƒ­ãƒ¼ã‚«ãƒ«ã‚ªãƒ•ã‚»ãƒƒãƒˆ
 			Vec3f offset{ 0,0,0 };
-			// ƒ[ƒJƒ‹‰ñ“]iQuatfj
+			// ãƒ­ãƒ¼ã‚«ãƒ«å›è»¢ï¼ˆQuatfï¼‰
 			Quatf rotation = Quatf::Identity();
 			// ConvexHull summary
 			size_t chash{ 0 };
 			uint32_t pcount{ 0 };
 
 			// ConvexCompoundFile summary
-			size_t fileHash{ 0 };   // path ‚ÌƒnƒbƒVƒ…
+			size_t fileHash{ 0 };   // path ã®ãƒãƒƒã‚·ãƒ¥
 
 			enum class Kind : uint8_t {
 				Box,
@@ -84,8 +84,8 @@ namespace SFW
 				ConvexCompoundFile
 			} kind{};
 		};
-		// ƒnƒbƒVƒ…‚Æ”äŠriƒrƒbƒg“™‰¿j
-		// •‚“®¬”‚Íuƒrƒbƒg—ñv‚ğƒnƒbƒVƒ…‚·‚é‚Ì‚ªˆÓ}‚Ç‚¨‚èi‹ß—”äŠr‚Í”ğ‚¯‚éj
+		// ãƒãƒƒã‚·ãƒ¥ã¨æ¯”è¼ƒï¼ˆãƒ“ãƒƒãƒˆç­‰ä¾¡ï¼‰
+		// æµ®å‹•å°æ•°ã¯ã€Œãƒ“ãƒƒãƒˆåˆ—ã€ã‚’ãƒãƒƒã‚·ãƒ¥ã™ã‚‹ã®ãŒæ„å›³ã©ãŠã‚Šï¼ˆè¿‘ä¼¼æ¯”è¼ƒã¯é¿ã‘ã‚‹ï¼‰
 		static inline size_t HashFloatBits(float f) {
 			static_assert(sizeof(float) == 4, "float must be 32-bit");
 			uint32_t u; std::memcpy(&u, &f, 4);
@@ -183,13 +183,13 @@ namespace SFW
 			std::vector<uint32_t> indices;
 		};
 
-		// triIndices: 3 —v‘f‚Å 1 OŠpŒ`
+		// triIndices: 3 è¦ç´ ã§ 1 ä¸‰è§’å½¢
 		inline WireframeData BuildShapeWireframe(
 			const std::vector<Vec3f>& verts,
 			const std::vector<uint32_t>& triIndices)
 		{
 			WireframeData out;
-			out.vertices = verts; // ‚»‚Ì‚Ü‚ÜƒRƒs[i‚à‚µ‚­‚ÍQÆ‚ğ•ÊŠÇ—‚Å‚àOKj
+			out.vertices = verts; // ãã®ã¾ã¾ã‚³ãƒ”ãƒ¼ï¼ˆã‚‚ã—ãã¯å‚ç…§ã‚’åˆ¥ç®¡ç†ã§ã‚‚OKï¼‰
 
 			std::unordered_set<uint64_t> edgeSet;
 			edgeSet.reserve(triIndices.size() * 2);
@@ -198,14 +198,14 @@ namespace SFW
 				{
 					if (a == b) return;
 
-					// –³ŒüƒGƒbƒW‚Æ‚µ‚Äˆµ‚¤‚½‚ß (min,max) ‚É³‹K‰»
+					// ç„¡å‘ã‚¨ãƒƒã‚¸ã¨ã—ã¦æ‰±ã†ãŸã‚ (min,max) ã«æ­£è¦åŒ–
 					uint32_t i0 = (std::min)(a, b);
 					uint32_t i1 = (std::max)(a, b);
 					uint64_t key = (uint64_t(i0) << 32) | uint64_t(i1);
 
 					if (edgeSet.insert(key).second)
 					{
-						// V‹KƒGƒbƒW‚¾‚¯ LINELIST ƒCƒ“ƒfƒbƒNƒX‚É’Ç‰Á
+						// æ–°è¦ã‚¨ãƒƒã‚¸ã ã‘ LINELIST ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«è¿½åŠ 
 						out.indices.push_back(i0);
 						out.indices.push_back(i1);
 					}
@@ -262,20 +262,20 @@ namespace SFW
 		{
 			using Base = ResourceManagerBase<PhysicsShapeManager, ShapeHandle, ShapeCreateDesc, JPH::RefConst<JPH::Shape>>;
 		public:
-			// ---- ResourceManagerBase ‚©‚çŒÄ‚Î‚ê‚é•K{ƒƒ\ƒbƒhŒQ ----
-			// Šù‘¶ŒŸo
+			// ---- ResourceManagerBase ã‹ã‚‰å‘¼ã°ã‚Œã‚‹å¿…é ˆãƒ¡ã‚½ãƒƒãƒ‰ç¾¤ ----
+			// æ—¢å­˜æ¤œå‡º
 			std::optional<ShapeHandle> FindExisting(const ShapeCreateDesc& desc) const {
 				ShapeKey key = BuildKey(desc);
 				std::shared_lock lk(cacheMutex_);
 				auto it = keyToHandle_.find(key);
 				if (it == keyToHandle_.end()) return std::nullopt;
-				// IsValid ‚àŠm”Fi¢‘ã‚ª•Ï‚í‚Á‚Ä‚¢‚é‰Â”\«‚É”õ‚¦‚éj
+				// IsValid ã‚‚ç¢ºèªï¼ˆä¸–ä»£ãŒå¤‰ã‚ã£ã¦ã„ã‚‹å¯èƒ½æ€§ã«å‚™ãˆã‚‹ï¼‰
 				const ShapeHandle h = it->second;
 				if (!this->IsValid(h)) return std::nullopt;
 				return h;
 			}
 
-			// V‹K“o˜^‚ÉƒL[‚ğ‹L˜^
+			// æ–°è¦ç™»éŒ²æ™‚ã«ã‚­ãƒ¼ã‚’è¨˜éŒ²
 			void RegisterKey(const ShapeCreateDesc& desc, ShapeHandle h) {
 				ShapeKey key = BuildKey(desc);
 				{
@@ -286,7 +286,7 @@ namespace SFW
 				}
 			}
 
-			// ”jŠü‚ÉƒLƒƒƒbƒVƒ…‚©‚ç‘|œ
+			// ç ´æ£„æ™‚ã«ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‹ã‚‰æƒé™¤
 			void RemoveFromCaches(uint32_t index) {
 				std::unique_lock lk(cacheMutex_);
 				if (index < indexToKey_.size()) {
@@ -294,8 +294,8 @@ namespace SFW
 					if (it != keyToHandle_.end() && it->second.index == index) {
 						keyToHandle_.erase(it);
 					}
-					// Key ‚Í•s—v‚É‚È‚Á‚½‚Ì‚ÅƒfƒtƒHƒ‹ƒg‚É–ß‚·iƒIƒvƒVƒ‡ƒ“j
-					// indexToKey_[index] ‚Í‚»‚Ì‚Ü‚Ü‚Å‚à–â‘è‚È‚¢‚ªA–¾¦“I‚ÉÁ‚·‚È‚çF
+					// Key ã¯ä¸è¦ã«ãªã£ãŸã®ã§ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«æˆ»ã™ï¼ˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ï¼‰
+					// indexToKey_[index] ã¯ãã®ã¾ã¾ã§ã‚‚å•é¡Œãªã„ãŒã€æ˜ç¤ºçš„ã«æ¶ˆã™ãªã‚‰ï¼š
 					// indexToKey_[index] = ShapeKey{};
 				}
 
@@ -307,11 +307,11 @@ namespace SFW
 #endif
 			}
 
-			// À‘Ì¶¬
+			// å®Ÿä½“ç”Ÿæˆ
 			JPH::RefConst<JPH::Shape> CreateResource(const ShapeCreateDesc& desc, ShapeHandle h) {
 				using namespace JPH;
 
-				// ---- ƒXƒP[ƒ‹Œˆ’è ----
+				// ---- ã‚¹ã‚±ãƒ¼ãƒ«æ±ºå®š ----
 				Vec3f scale = desc.scale.s;
 				bool radial = std::holds_alternative<SphereDesc>(desc.shape) || std::holds_alternative<CapsuleDesc>(desc.shape);
 				if (radial && !IsUniformScale(scale)) scale = EnforceUniformScale(scale);
@@ -321,12 +321,12 @@ namespace SFW
 					return RefConst<Shape>(new ScaledShape(base, Vec3(scale.x, scale.y, scale.z)));
 					};
 
-				// RotatedTranslatedShape ‚ğŠš‚Ü‚¹‚é
+				// RotatedTranslatedShape ã‚’å™›ã¾ã›ã‚‹
 				const Vec3f& ofs = desc.localOffset;
 				const Quatf& local_rot = desc.localRotation;
 
 				auto make_rotated_translated = [&](RefConst<Shape> base)->RefConst<Shape> {
-					// ‰½‚à•ÏŠ·‚ª‚È‚¢‚È‚ç‚»‚Ì‚Ü‚Ü•Ô‚µ‚Ä‚àOKiÅ‰‚Íí‚É wrap ‚µ‚Ä‚à‚¢‚¢j
+					// ä½•ã‚‚å¤‰æ›ãŒãªã„ãªã‚‰ãã®ã¾ã¾è¿”ã—ã¦ã‚‚OKï¼ˆæœ€åˆã¯å¸¸ã« wrap ã—ã¦ã‚‚ã„ã„ï¼‰
 					bool has_offset =
 						(ofs.x != 0.0f) || (ofs.y != 0.0f) || (ofs.z != 0.0f);
 
@@ -369,11 +369,11 @@ namespace SFW
 							for (const auto& v : d.vertices) st.mTriangleVertices.emplace_back(v.x, v.y, v.z);
 
 							const bool wantCW = (d.winding == TriangleWinding::CW);
-							// ‰EèŒn•ÏŠ·‚Å x ‚ğ”½“]‚·‚é‚È‚ç winding ‚à”½“]‚·‚é‚Ì‚ªŠî–{iƒ~ƒ‰[‚Í–Ê‚ÌŒü‚«‚ğ”½“]‚³‚¹‚é‚½‚ßj
+							// å³æ‰‹ç³»å¤‰æ›ã§ x ã‚’åè»¢ã™ã‚‹ãªã‚‰ winding ã‚‚åè»¢ã™ã‚‹ã®ãŒåŸºæœ¬ï¼ˆãƒŸãƒ©ãƒ¼ã¯é¢ã®å‘ãã‚’åè»¢ã•ã›ã‚‹ãŸã‚ï¼‰
 							const bool flipByRH = (d.rhFlip && d.autoFlipWindingOnRHFlip);
-							// ÅI“I‚É”½“]‚·‚é‚©
+							// æœ€çµ‚çš„ã«åè»¢ã™ã‚‹ã‹
 							const bool flipWinding = wantCW ^ flipByRH;
-							// triangles ’Ç‰Á
+							// triangles è¿½åŠ 
 							AddTrianglesWinding(st.mIndexedTriangles, d.indices, flipWinding);
 
 #ifdef CACHE_SHAPE_WIRE_DATA
@@ -387,7 +387,7 @@ namespace SFW
 							if (!LoadMeshShapeBin(d.path, meshData, d.rhFlip))
 							{
 								LOG_WARNING("PhysicsShapeManager: Failed to load VHACD file: {%s}", d.path.c_str());
-								// “Ç‚İ‚İ¸”s‚ÌƒtƒH[ƒ‹ƒoƒbƒN
+								// èª­ã¿è¾¼ã¿å¤±æ•—æ™‚ã®ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯
 								return make_rotated_translated(make_scaled(RefConst<Shape>(new BoxShape(Vec3(0.5f, 0.5f, 0.5f)))));
 							}
 
@@ -395,11 +395,11 @@ namespace SFW
 							for (const auto& v : meshData.vertices) st.mTriangleVertices.emplace_back(v.x, v.y, v.z);
 
 							const bool wantCW = (d.winding == TriangleWinding::CW);
-							// ‰EèŒn•ÏŠ·‚Å x ‚ğ”½“]‚·‚é‚È‚ç winding ‚à”½“]‚·‚é‚Ì‚ªŠî–{iƒ~ƒ‰[‚Í–Ê‚ÌŒü‚«‚ğ”½“]‚³‚¹‚é‚½‚ßj
+							// å³æ‰‹ç³»å¤‰æ›ã§ x ã‚’åè»¢ã™ã‚‹ãªã‚‰ winding ã‚‚åè»¢ã™ã‚‹ã®ãŒåŸºæœ¬ï¼ˆãƒŸãƒ©ãƒ¼ã¯é¢ã®å‘ãã‚’åè»¢ã•ã›ã‚‹ãŸã‚ï¼‰
 							const bool flipByRH = (d.rhFlip && d.autoFlipWindingOnRHFlip);
-							// ÅI“I‚É”½“]‚·‚é‚©
+							// æœ€çµ‚çš„ã«åè»¢ã™ã‚‹ã‹
 							const bool flipWinding = wantCW ^ flipByRH;
-							// triangles ’Ç‰Á
+							// triangles è¿½åŠ 
 							AddTrianglesWinding(st.mIndexedTriangles, meshData.indices, flipWinding);
 
 #ifdef CACHE_SHAPE_WIRE_DATA
@@ -415,24 +415,24 @@ namespace SFW
 						return make_rotated_translated(base);
 					}
 					else if constexpr (std::is_same_v<T, HeightFieldDesc>) {
-						// Jolt‚ÌVAPI‚Í³•û‚Ì‚İ: count x count
+						// Joltã®æ–°APIã¯æ­£æ–¹ã®ã¿: count x count
 						if (d.sizeX != d.sizeY || d.sizeX <= 0) {
-							// ³•û‚Å‚È‚¢ê‡‚ÌƒtƒH[ƒ‹ƒoƒbƒNi•K—v‚É‰‚¶‚Ä•ÊÀ‘•‚Öj
+							// æ­£æ–¹ã§ãªã„å ´åˆã®ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ï¼ˆå¿…è¦ã«å¿œã˜ã¦åˆ¥å®Ÿè£…ã¸ï¼‰
 							return JPH::RefConst<JPH::Shape>(new JPH::BoxShape(JPH::Vec3(0.5f, 0.5f, 0.5f)));
 						}
 						const uint32_t count = static_cast<uint32_t>(d.sizeX);
 						if (d.samples.size() != static_cast<size_t>(count) * static_cast<size_t>(count)) {
-							// ƒTƒ“ƒvƒ‹”•sˆê’v ¨ ƒtƒH[ƒ‹ƒoƒbƒN
+							// ã‚µãƒ³ãƒ—ãƒ«æ•°ä¸ä¸€è‡´ â†’ ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯
 							return JPH::RefConst<JPH::Shape>(new JPH::BoxShape(JPH::Vec3(0.5f, 0.5f, 0.5f)));
 						}
 
-						// offset ‚Æ scale ‚ğİ’è
-						const JPH::Vec3 offset(0.0f, 0.0f, 0.0f);                      // •K—v‚È‚ç‚±‚±‚Å’nŒ`‚ÌŒ´“_‚ğ’²®
-						const JPH::Vec3 scale(d.cellSizeX, d.scaleY, d.cellSizeY);    // x=ƒOƒŠƒbƒhŠÔŠuX, y=‚‚³ƒXƒP[ƒ‹, z=ƒOƒŠƒbƒhŠÔŠuY
+						// offset ã¨ scale ã‚’è¨­å®š
+						const JPH::Vec3 offset(0.0f, 0.0f, 0.0f);                      // å¿…è¦ãªã‚‰ã“ã“ã§åœ°å½¢ã®åŸç‚¹ã‚’èª¿æ•´
+						const JPH::Vec3 scale(d.cellSizeX, d.scaleY, d.cellSizeY);    // x=ã‚°ãƒªãƒƒãƒ‰é–“éš”X, y=é«˜ã•ã‚¹ã‚±ãƒ¼ãƒ«, z=ã‚°ãƒªãƒƒãƒ‰é–“éš”Y
 
-						// material ‚Í–¢g—p‚È‚ç nullptr / Šù’èƒŠƒXƒg
+						// material ã¯æœªä½¿ç”¨ãªã‚‰ nullptr / æ—¢å®šãƒªã‚¹ãƒˆ
 						const uint8_t* materialIndices = nullptr;
-						JPH::PhysicsMaterialList materialList; // Šù’è
+						JPH::PhysicsMaterialList materialList; // æ—¢å®š
 
 						JPH::HeightFieldShapeSettings st(
 							d.samples.data(), offset, scale, count, materialIndices, materialList
@@ -444,7 +444,7 @@ namespace SFW
 							base = make_scaled(base);
 							return make_rotated_translated(base);
 						}
-						// HeightField ‚Í res.Get() ‚ğ‚»‚Ì‚Ü‚ÜƒIƒtƒZƒbƒg‚¾‚¯“K—p
+						// HeightField ã¯ res.Get() ã‚’ãã®ã¾ã¾ã‚ªãƒ•ã‚»ãƒƒãƒˆã ã‘é©ç”¨
 						return make_rotated_translated(res.Get());
 					}
 					else if constexpr (std::is_same_v<T, ConvexHullDesc>) {
@@ -471,7 +471,7 @@ namespace SFW
 					else if constexpr (std::is_same_v<T, ConvexCompoundDesc> || std::is_same_v<T, ConvexCompoundFileDesc>) {
 						using namespace SFW::Physics;
 
-						// 1) ƒoƒCƒiƒŠ‚ğ“Ç‚İ‚ñ‚Å hull ŒQ‚ğæ“¾
+						// 1) ãƒã‚¤ãƒŠãƒªã‚’èª­ã¿è¾¼ã‚“ã§ hull ç¾¤ã‚’å–å¾—
 						std::vector<VHACDHull> hulls;
 						if constexpr (std::is_same_v<T, ConvexCompoundDesc>)
 						{
@@ -494,7 +494,7 @@ namespace SFW
 						else
 						{
 							if (!LoadVHACDFile(d.path, hulls, desc.scale.s, d.rhFlip) || hulls.empty()) {
-								// “Ç‚İ‚İ¸”s ¨ ƒtƒH[ƒ‹ƒoƒbƒN Box
+								// èª­ã¿è¾¼ã¿å¤±æ•— â†’ ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ Box
 								RefConst<Shape> base = new BoxShape(Vec3(0.5f, 0.5f, 0.5f));
 								base = make_scaled(base);
 
@@ -504,7 +504,7 @@ namespace SFW
 							}
 						}
 
-						// 2) hull ‚ª 1‚Â‚¾‚¯‚È‚ç•’Ê‚Ì ConvexHull ‚Æ‚µ‚Äˆ—
+						// 2) hull ãŒ 1ã¤ã ã‘ãªã‚‰æ™®é€šã® ConvexHull ã¨ã—ã¦å‡¦ç†
 						if (hulls.size() == 1) {
 							ConvexHullShapeSettings hst;
 							hst.mMaxConvexRadius = d.maxConvexRadius;
@@ -523,7 +523,7 @@ namespace SFW
 							return make_rotated_translated(base);
 						}
 
-						// 3) hull ‚ª•¡”‚È‚ç StaticCompoundShape ‚Æ‚µ‚Ä‚Ü‚Æ‚ß‚é
+						// 3) hull ãŒè¤‡æ•°ãªã‚‰ StaticCompoundShape ã¨ã—ã¦ã¾ã¨ã‚ã‚‹
 						StaticCompoundShapeSettings cs;
 
 						for (auto& h : hulls) {
@@ -538,12 +538,12 @@ namespace SFW
 
 							auto res = hst.Create();
 							if (res.HasError()) {
-								// ‚±‚Ì hull ‚ÍƒXƒLƒbƒvi‚à‚µ‚­‚Í‘S‘ÌƒtƒH[ƒ‹ƒoƒbƒN‚É‚·‚é‚©‚ÍD‚İj
+								// ã“ã® hull ã¯ã‚¹ã‚­ãƒƒãƒ—ï¼ˆã‚‚ã—ãã¯å…¨ä½“ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ã«ã™ã‚‹ã‹ã¯å¥½ã¿ï¼‰
 								continue;
 							}
 
 							RefConst<Shape> hullShape = res.Get();
-							// Še hull ‚Ìƒ[ƒJƒ‹ƒIƒtƒZƒbƒg‚Í Python ‘¤‚Å bake Ï‚İ‚Æ‘z’è‚µA‚±‚±‚Å‚Í (0,0,0)
+							// å„ hull ã®ãƒ­ãƒ¼ã‚«ãƒ«ã‚ªãƒ•ã‚»ãƒƒãƒˆã¯ Python å´ã§ bake æ¸ˆã¿ã¨æƒ³å®šã—ã€ã“ã“ã§ã¯ (0,0,0)
 							cs.AddShape(Vec3::sZero(), Quat::sIdentity(), hullShape);
 						}
 
@@ -551,11 +551,11 @@ namespace SFW
 						std::vector<Vec3f> allVerts;
 						std::vector<uint32_t> allIndices;
 						for (auto& h : hulls) {
-							auto wf = BuildShapeWireframe(h.points, h.indices); // ƒCƒ“ƒfƒbƒNƒX‚Í•s—v
+							auto wf = BuildShapeWireframe(h.points, h.indices); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¯ä¸è¦
 							uint32_t baseIndex = static_cast<uint32_t>(allVerts.size());
 							allVerts.insert(allVerts.end(), wf.vertices.begin(), wf.vertices.end());
 							allIndices.reserve(allIndices.size() + wf.indices.size());
-							// ƒCƒ“ƒfƒbƒNƒX‚Í’¸“_’Ç‰Á•ª‚¾‚¯ƒIƒtƒZƒbƒg‚µ‚Ä’Ç‰Á
+							// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¯é ‚ç‚¹è¿½åŠ åˆ†ã ã‘ã‚ªãƒ•ã‚»ãƒƒãƒˆã—ã¦è¿½åŠ 
 							for (auto idx : wf.indices) {
 								allIndices.push_back(baseIndex + idx);
 							}
@@ -582,13 +582,13 @@ namespace SFW
 					}, desc.shape);
 			}
 
-			// À‘Ì”jŠüiRefConst ‚ÍQÆƒJƒEƒ“ƒg•t‚«FƒNƒŠƒA‚ÅOKj
+			// å®Ÿä½“ç ´æ£„ï¼ˆRefConst ã¯å‚ç…§ã‚«ã‚¦ãƒ³ãƒˆä»˜ãï¼šã‚¯ãƒªã‚¢ã§OKï¼‰
 			void DestroyResource(uint32_t index, uint64_t /*currentFrame*/) {
 				this->slots[index].data = nullptr;
 			}
 
-			// ---- ’Ç‰Áƒ†[ƒeƒBƒŠƒeƒB ----
-			// ŠO•”‚©‚ç Shape ‚ğæ‚èo‚·ƒwƒ‹ƒpi”–‚¢“œˆßj
+			// ---- è¿½åŠ ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ ----
+			// å¤–éƒ¨ã‹ã‚‰ Shape ã‚’å–ã‚Šå‡ºã™ãƒ˜ãƒ«ãƒ‘ï¼ˆè–„ã„ç³–è¡£ï¼‰
 			JPH::RefConst<JPH::Shape> Resolve(ShapeHandle h) const {
 				auto d = this->Get(h);
 				return d.ref();
@@ -600,24 +600,24 @@ namespace SFW
 
 				const Shape* shape = s;
 
-				// DecoratedShapei“Á‚É RotatedTranslatedShapej‚Ìƒ[ƒJƒ‹•ÏŠ·
+				// DecoratedShapeï¼ˆç‰¹ã« RotatedTranslatedShapeï¼‰ã®ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ›
 				Math::Vec3f localOffset{ 0.0f, 0.0f, 0.0f };
 				Math::Quatf localRot = Math::Quatf::Identity();
 				bool hasLocalTransform = false;
 
-				// ‚Ü‚¸ RotatedTranslatedShape ‚ğ‚Ù‚Ç‚­i1’i‚¾‚¯‚È‚ç‚±‚ê‚Å\•ªj
+				// ã¾ãš RotatedTranslatedShape ã‚’ã»ã©ãï¼ˆ1æ®µã ã‘ãªã‚‰ã“ã‚Œã§ååˆ†ï¼‰
 				if (shape->GetSubType() == EShapeSubType::RotatedTranslated)
 				{
 					auto rt = static_cast<const RotatedTranslatedShape*>(shape);
 
-					Vec3 p = rt->GetPosition();   // “à‘¤ƒVƒFƒCƒv‚É“K—p‚³‚ê‚½•½sˆÚ“®
-					Quat q = rt->GetRotation();   // “à‘¤ƒVƒFƒCƒv‚É“K—p‚³‚ê‚½‰ñ“]
+					Vec3 p = rt->GetPosition();   // å†…å´ã‚·ã‚§ã‚¤ãƒ—ã«é©ç”¨ã•ã‚ŒãŸå¹³è¡Œç§»å‹•
+					Quat q = rt->GetRotation();   // å†…å´ã‚·ã‚§ã‚¤ãƒ—ã«é©ç”¨ã•ã‚ŒãŸå›è»¢
 
 					localOffset = Math::Vec3f(p.GetX(), p.GetY(), p.GetZ());
 					localRot = Math::Quatf(q.GetX(), q.GetY(), q.GetZ(), q.GetW());
 					hasLocalTransform = true;
 
-					// ¡–@‚Í“à‘¤‚ÌƒVƒFƒCƒv‚©‚çæ‚é
+					// å¯¸æ³•ã¯å†…å´ã®ã‚·ã‚§ã‚¤ãƒ—ã‹ã‚‰å–ã‚‹
 					shape = rt->GetInnerShape();
 				}
 
@@ -638,7 +638,7 @@ namespace SFW
 					AABox b = shape->GetLocalBounds();
 					Vec3 d = b.GetSize();
 					out.dims = Math::Vec3f(d.GetX(), d.GetY(), d.GetZ());
-					out.r = 0.5f * d.GetX(); // “™•û
+					out.r = 0.5f * d.GetX(); // ç­‰æ–¹
 					out.type = ShapeDims::Type::Sphere;
 					break;
 				}
@@ -674,7 +674,7 @@ namespace SFW
 				}
 				default:
 				{
-					// ConvexHull / Mesh / HeightField / Compound ‚È‚Ç
+					// ConvexHull / Mesh / HeightField / Compound ãªã©
 					AABox b = shape->GetLocalBounds();
 					Vec3 d = b.GetSize();
 					out.dims = Math::Vec3f(d.GetX(), d.GetY(), d.GetZ());
@@ -685,7 +685,7 @@ namespace SFW
 				}
 				}
 
-				// ‚±‚±‚Åƒ[ƒJƒ‹•ÏŠ·‚ğ”½‰f
+				// ã“ã“ã§ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ›ã‚’åæ˜ 
 				out.localOffset = localOffset;
 				std::memcpy(out.localRotation, localRot.v, sizeof(out.localRotation));
 				out.hasLocalTransform = hasLocalTransform;
@@ -693,7 +693,7 @@ namespace SFW
 				return out;
 			}
 #ifdef CACHE_SHAPE_WIRE_DATA
-			// ƒƒCƒ„[ƒtƒŒ[ƒ€ƒf[ƒ^æ“¾
+			// ãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿å–å¾—
 			std::optional<ShareWireframeData> GetShapeWireframeData(ShapeHandle h) const {
 				std::shared_lock lk(cacheMutex_);
 				auto it = wireDataCache_.find(h.index);
@@ -703,10 +703,10 @@ namespace SFW
 #endif
 
 		private:
-			// Key ‚Ì¶¬
+			// Key ã®ç”Ÿæˆ
 			static ShapeKey BuildKey(const ShapeCreateDesc& d) {
 				ShapeKey k{};
-				// ‚Ü‚¸ƒXƒP[ƒ‹‚ğ“ü‚ê‚é‚ªASphere/Capsule ‚Ígˆê—l‹­§h‚·‚é
+				// ã¾ãšã‚¹ã‚±ãƒ¼ãƒ«ã‚’å…¥ã‚Œã‚‹ãŒã€Sphere/Capsule ã¯â€œä¸€æ§˜å¼·åˆ¶â€ã™ã‚‹
 				Vec3f scale = d.scale.s;
 
 				std::visit([&](auto&& s) {
@@ -745,7 +745,7 @@ namespace SFW
 					}
 					else if constexpr (std::is_same_v<T, MeshFileDesc>) {
 						k.kind = ShapeKey::Kind::MeshFile;
-						// ƒtƒ@ƒCƒ‹ƒpƒX‚ÌƒnƒbƒVƒ…‚ğæ‚é
+						// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã®ãƒãƒƒã‚·ãƒ¥ã‚’å–ã‚‹
 						k.fileHash = std::hash<std::string>{}(s.path);
 					}
 					else if constexpr (std::is_same_v<T, HeightFieldDesc>) {
@@ -763,12 +763,12 @@ namespace SFW
 					}
 					else if constexpr (std::is_same_v<T, ConvexCompoundDesc>) {
 						k.kind = ShapeKey::Kind::ConvexCompound;
-						// •¡” hull ‚ÌƒnƒbƒVƒ…‚ğ‚Ü‚Æ‚ß‚é
+						// è¤‡æ•° hull ã®ãƒãƒƒã‚·ãƒ¥ã‚’ã¾ã¨ã‚ã‚‹
 						size_t combinedHash = 0;
 						for (const auto& hull : s.hulls) {
 							if (!hull.points.empty()) {
 								size_t h = HashBufferContent(hull.points.data(), hull.points.size() * sizeof(Vec3f));
-								// ŠÈˆÕ“I‚Éƒ~ƒbƒNƒX
+								// ç°¡æ˜“çš„ã«ãƒŸãƒƒã‚¯ã‚¹
 								combinedHash ^= h + 0x9e3779b97f4a7c15ull + (combinedHash << 6) + (combinedHash >> 2);
 
 								k.pcount += static_cast<uint32_t>(hull.points.size());
@@ -778,7 +778,7 @@ namespace SFW
 					}
 					else if constexpr (std::is_same_v<T, ConvexCompoundFileDesc>) {
 						k.kind = ShapeKey::Kind::ConvexCompoundFile;
-						// ƒtƒ@ƒCƒ‹ƒpƒX‚ÌƒnƒbƒVƒ…‚ğæ‚é
+						// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã®ãƒãƒƒã‚·ãƒ¥ã‚’å–ã‚‹
 						k.fileHash = std::hash<std::string>{}(s.path);
 					}
 					}, d.shape);
@@ -787,10 +787,10 @@ namespace SFW
 			}
 
 		private:
-			// ‹¤—LƒLƒƒƒbƒVƒ…
+			// å…±æœ‰ã‚­ãƒ£ãƒƒã‚·ãƒ¥
 			mutable std::shared_mutex cacheMutex_;
 			std::unordered_map<ShapeKey, ShapeHandle, ShapeKeyHash, ShapeKeyEq> keyToHandle_;
-			std::vector<ShapeKey> indexToKey_; // index -> keyiRemoveFromCaches —pj
+			std::vector<ShapeKey> indexToKey_; // index -> keyï¼ˆRemoveFromCaches ç”¨ï¼‰
 #ifdef CACHE_SHAPE_WIRE_DATA
 			std::unordered_map<uint32_t, WireframeData> wireDataCache_;
 #endif

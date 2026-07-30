@@ -1,4 +1,4 @@
-// PhysicsDevice.cpp
+ï»¿// PhysicsDevice.cpp
 #include "Physics/PhysicsDevice.h"
 #include "Physics/PhysicsDevice_Util.h"
 #include "Physics/PhysicsLayers.h"
@@ -15,8 +15,8 @@
 #include <Jolt/Physics/Body/BodyLockMulti.h>
 
 namespace SFW::Physics {
-	// ===== PhysicsDevice ƒƒ“ƒo’Ç‰Áiƒwƒbƒ_‚É’Ç‹L‚ğ‘z’èj =====
-	// BroadPhase & Filters & Listener ‚ÍŠ—L
+	// ===== PhysicsDevice ãƒ¡ãƒ³ãƒè¿½åŠ ï¼ˆãƒ˜ãƒƒãƒ€ã«è¿½è¨˜ã‚’æƒ³å®šï¼‰ =====
+	// BroadPhase & Filters & Listener ã¯æ‰€æœ‰
 	static BroadPhaseLayerInterfaceImpl           g_bpInterface;
 	static ObjectVsBroadPhaseLayerFilterImpl      g_ovsbFilter;
 	static ObjectLayerPairFilterImpl              g_pairFilter;
@@ -25,7 +25,7 @@ namespace SFW::Physics {
 		assert(!m_initialized && "PhysicsDevice is already initialized!");
 		m_initialized = true;
 
-		// Jolt ƒOƒ[ƒoƒ‹
+		// Jolt ã‚°ãƒ­ãƒ¼ãƒãƒ«
 		JPH::RegisterDefaultAllocator();
 		JPH::Factory::sInstance = new JPH::Factory();
 		JPH::RegisterTypes();
@@ -34,13 +34,13 @@ namespace SFW::Physics {
 		const int hw = (int)std::thread::hardware_concurrency();
 		const int workers = (p.workerThreads <= 0) ? (std::max)(1, hw - 1) : p.workerThreads;
 
-		m_tempAlloc = new JPH::TempAllocatorImpl(16 * 1024 * 1024); // 16MBi’²®‰Âj
+		m_tempAlloc = new JPH::TempAllocatorImpl(16 * 1024 * 1024); // 16MBï¼ˆèª¿æ•´å¯ï¼‰
 		m_jobs = new JPH::JobSystemThreadPool(JPH::cMaxPhysicsJobs, JPH::cMaxPhysicsBarriers, workers);
 
-		// PhysicsSystem \’z
+		// PhysicsSystem æ§‹ç¯‰
 		m_physics.Init(
 			p.maxBodies,
-			0, // numBodyMutexesi0=©“®j
+			0, // numBodyMutexesï¼ˆ0=è‡ªå‹•ï¼‰
 			p.maxBodyPairs,
 			p.maxContactConstraints,
 			g_bpInterface,
@@ -48,7 +48,7 @@ namespace SFW::Physics {
 			g_pairFilter
 		);
 
-		// Šeíİ’èi•K—v‚É‰‚¶‚Ä’²®j
+		// å„ç¨®è¨­å®šï¼ˆå¿…è¦ã«å¿œã˜ã¦èª¿æ•´ï¼‰
 		auto settings = m_physics.GetPhysicsSettings();
 		settings.mBaumgarte = 0.2f;
 		settings.mNumPositionSteps = 1;
@@ -72,7 +72,7 @@ namespace SFW::Physics {
 
 	void PhysicsDevice::Shutdown() {
 		if (m_bi) {
-			// ‰Â”\‚È‚ç‘Sƒ{ƒfƒBíœiƒfƒoƒbƒOj
+			// å¯èƒ½ãªã‚‰å…¨ãƒœãƒ‡ã‚£å‰Šé™¤ï¼ˆãƒ‡ãƒãƒƒã‚°æ™‚ï¼‰
 		}
 
 		m_physics.SetContactListener(nullptr);
@@ -110,11 +110,11 @@ namespace SFW::Physics {
 
 	// ---- Create ----
 	void PhysicsDevice::ApplyCreate(const CreateBodyCmd& c) {
-		// Œ`ó‰ğŒˆ(ShapeManager ‚©‚çæ“¾j
+		// å½¢çŠ¶è§£æ±º(ShapeManager ã‹ã‚‰å–å¾—ï¼‰
 		JPH::RefConst<JPH::Shape> shape = ResolveShape(c.shape);
 		if (!shape) return;
 
-		// MotionType „’èFlayer‚É‰‚¶‚ÄÃ“I/“®“I/ƒZƒ“ƒT[
+		// MotionType æ¨å®šï¼šlayerã«å¿œã˜ã¦é™çš„/å‹•çš„/ã‚»ãƒ³ã‚µãƒ¼
 		JPH::EMotionType motion = JPH::EMotionType::Dynamic;
 		if (c.kinematic)                      motion = JPH::EMotionType::Kinematic;
 		else if (c.layer == Layers::NON_MOVING_RAY_HIT || c.layer == Layers::NON_MOVING_RAY_IGNORE) motion = JPH::EMotionType::Static;
@@ -124,14 +124,14 @@ namespace SFW::Physics {
 		bc.mRestitution = c.restitution;
 		bc.mGravityFactor = c.gravityFactor;
 		if (motion == JPH::EMotionType::Dynamic) {
-			bc.mOverrideMassProperties = JPH::EOverrideMassProperties::CalculateInertia; // –§“xw’è‚à‰Â
-			bc.mMassPropertiesOverride.mMass = c.density * 0.001f; // •Ö‹XãiÀÛ‚Í‘ÌÏ‚©‚çŒvZ‚ğ„§j
+			bc.mOverrideMassProperties = JPH::EOverrideMassProperties::CalculateInertia; // å¯†åº¦æŒ‡å®šã‚‚å¯
+			bc.mMassPropertiesOverride.mMass = c.density * 0.001f; // ä¾¿å®œä¸Šï¼ˆå®Ÿéš›ã¯ä½“ç©ã‹ã‚‰è¨ˆç®—ã‚’æ¨å¥¨ï¼‰
 		}
 
-		JPH::Body* body = m_bi->CreateBody(bc); // ¶¬‚Ì‚İ
+		JPH::Body* body = m_bi->CreateBody(bc); // ç”Ÿæˆã®ã¿
 		if (!body) return;
 
-		// ƒZƒ“ƒT[‚È‚çƒZƒ“ƒT[ˆµ‚¢i–³”½”­‚È‚Ç‚Ìƒtƒ‰ƒO’²®‚Í Contact ‚Åj
+		// ã‚»ãƒ³ã‚µãƒ¼ãªã‚‰ã‚»ãƒ³ã‚µãƒ¼æ‰±ã„ï¼ˆç„¡åç™ºãªã©ã®ãƒ•ãƒ©ã‚°èª¿æ•´ã¯ Contact ã§ï¼‰
 		if (c.layer == Layers::SENSOR) {
 			body->SetIsSensor(true);
 		}
@@ -139,11 +139,11 @@ namespace SFW::Physics {
 		auto id = body->GetID();
 		m_bi->AddBody(id, JPH::EActivation::Activate);
 
-		// ‘Î‰•\“o˜^
+		// å¯¾å¿œè¡¨ç™»éŒ²
 		m_e2b[c.e] = id;
 		m_b2e.emplace(id, c.e);
 
-		// ì¬Š®—¹ƒCƒxƒ“ƒg‚ğ’™‚ß‚éiŒã’i‚Å BodyComponent ‚É·‚µ‚İj
+		// ä½œæˆå®Œäº†ã‚¤ãƒ™ãƒ³ãƒˆã‚’è²¯ã‚ã‚‹ï¼ˆå¾Œæ®µã§ BodyComponent ã«å·®ã—è¾¼ã¿ï¼‰
 		{
 			std::scoped_lock lk(m_createdMutex);
 			m_created[c.owner.level].push_back(CreatedBody{ c.e, c.owner, id });
@@ -212,17 +212,17 @@ namespace SFW::Physics {
 		//m_bi->SetKinematicTarget(it->second, ToJMatRT(c.worldTM));
 	}
 
-	// ---- Collision Maski¦Å¬œ‘g‚İFÚ×À‘•‚ÍƒvƒƒWƒFƒNƒg•ûj‚ÉˆË‘¶j ----
+	// ---- Collision Maskï¼ˆâ€»æœ€å°éª¨çµ„ã¿ï¼šè©³ç´°å®Ÿè£…ã¯ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆæ–¹é‡ã«ä¾å­˜ï¼‰ ----
 	void PhysicsDevice::ApplySetCollisionMask(const SetCollisionMaskCmd& /*c*/) {
-		// •ûjFJolt‚Å‚Í ObjectLayer/GroupFilter/ContactFilter ‚Ì‘g‚İ‡‚í‚¹‚ÅÀŒ»B
-		// ‚±‚±‚Å‚Íœ‘g‚İ‚Ì‚İiƒvƒƒWƒFƒNƒg‚Ì—v‹‚É‡‚í‚¹‚Ä GroupFilterTable “™‚ÅÀ‘•jB
+		// æ–¹é‡ï¼šJoltã§ã¯ ObjectLayer/GroupFilter/ContactFilter ã®çµ„ã¿åˆã‚ã›ã§å®Ÿç¾ã€‚
+		// ã“ã“ã§ã¯éª¨çµ„ã¿ã®ã¿ï¼ˆãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®è¦æ±‚ã«åˆã‚ã›ã¦ GroupFilterTable ç­‰ã§å®Ÿè£…ï¼‰ã€‚
 	}
 
-	// ---- ObjectLayer •ÏX ----
+	// ---- ObjectLayer å¤‰æ›´ ----
 	void PhysicsDevice::ApplySetObjectLayer(const SetObjectLayerCmd& c) {
 		auto it = m_e2b.find(c.e);
 		if (it == m_e2b.end()) return;
-		// ’¼Ú Layer ‚ğ·‚µ‘Ö‚¦iJolt ‚É‚Í BodyInterface::SetObjectLayer ‚ª‚ ‚éj
+		// ç›´æ¥ Layer ã‚’å·®ã—æ›¿ãˆï¼ˆJolt ã«ã¯ BodyInterface::SetObjectLayer ãŒã‚ã‚‹ï¼‰
 		m_bi->SetObjectLayer(it->second, c.layer);
 	}
 
@@ -232,9 +232,9 @@ namespace SFW::Physics {
 		rc.mOrigin = JPH::Vec3(c.origin.x, c.origin.y, c.origin.z);
 		rc.mDirection = JPH::Vec3(c.dir.x * c.maxDist, c.dir.y * c.maxDist, c.dir.z * c.maxDist);
 
-		JPH::RayCastResult hit{}; // ioHiti‰Šú’l‚ÍuÅ‰“vˆµ‚¢j
+		JPH::RayCastResult hit{}; // ioHitï¼ˆåˆæœŸå€¤ã¯ã€Œæœ€é ã€æ‰±ã„ï¼‰
 
-		// ’Pˆêƒqƒbƒg”Å‚ÌƒI[ƒo[ƒ[ƒhFRayCastSettings ‚Íæ‚è‚Ü‚¹‚ñ
+		// å˜ä¸€ãƒ’ãƒƒãƒˆç‰ˆã®ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ï¼šRayCastSettings ã¯å–ã‚Šã¾ã›ã‚“
 		const bool any = m_physics.GetNarrowPhaseQuery().CastRay(
 			rc,
 			hit,
@@ -248,7 +248,7 @@ namespace SFW::Physics {
 		r.hit = any;
 
 		if (any) {
-			// ƒqƒbƒg“_
+			// ãƒ’ãƒƒãƒˆç‚¹
 #if defined(JPH_DOUBLE_PRECISION) && JPH_DOUBLE_PRECISION
 			JPH::RVec3 hitPos = rc.GetPointOnRay(hit.mFraction);
 #else
@@ -257,7 +257,7 @@ namespace SFW::Physics {
 			r.pos = FromJVec3(hitPos);
 			r.distance = hit.mFraction * c.maxDist;
 
-			// –@ü‚ğ³‚µ‚­æ“¾iƒhƒLƒ…ƒƒ“ƒg‚Ìw¦’Ê‚è Body Œo—Rj
+			// æ³•ç·šã‚’æ­£ã—ãå–å¾—ï¼ˆãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®æŒ‡ç¤ºé€šã‚Š Body çµŒç”±ï¼‰
 			{
 				JPH::BodyLockRead lock(m_physics.GetBodyLockInterface(), hit.mBodyID);
 				if (lock.Succeeded()) {
@@ -277,7 +277,7 @@ namespace SFW::Physics {
 
 	void PhysicsDevice::ApplyCreateCharacter(const CreateCharacterCmd& c)
 	{
-		// ShapeManager ‚©‚ç JPH::Shape ‚ğ‰ğŒˆ
+		// ShapeManager ã‹ã‚‰ JPH::Shape ã‚’è§£æ±º
 		JPH::RefConst<JPH::Shape> shape = ResolveShape(c.shape);
 		if (!shape) return;
 
@@ -285,12 +285,12 @@ namespace SFW::Physics {
 		settings.mShape = shape;
 		settings.mUp = JPH::Vec3::sAxisY();
 		settings.mMaxSlopeAngle = JPH::DegreesToRadians(c.maxSlopeDeg);
-		// •K—v‚É‰‚¶‚Ä SupportingVolume ‚â MaxStrength ‚È‚Çİ’è
+		// å¿…è¦ã«å¿œã˜ã¦ SupportingVolume ã‚„ MaxStrength ãªã©è¨­å®š
 
 		JPH::Vec3 pos = ToJVec3(c.worldTM.pos);
 		JPH::Quat rot = ToJQuat(c.worldTM.rot);
 
-		// CharacterVirtual ‚Í PhysicsSystem ‚ğg‚Á‚ÄL‹`‚Ìuƒ[ƒ‹ƒhv‚ÆÕ“ËŒŸo‚·‚é
+		// CharacterVirtual ã¯ PhysicsSystem ã‚’ä½¿ã£ã¦åºƒç¾©ã®ã€Œãƒ¯ãƒ¼ãƒ«ãƒ‰ã€ã¨è¡çªæ¤œå‡ºã™ã‚‹
 		auto* system = &m_physics;
 
 		JPH::Ref<JPH::CharacterVirtual> ch =
@@ -302,7 +302,7 @@ namespace SFW::Physics {
 
 		m_characters[c.e] = { ch, c.objectLayer };
 
-		// CharacterVirtual* -> Entity ‚Ì‹tˆø‚«
+		// CharacterVirtual* -> Entity ã®é€†å¼•ã
 		m_charToEntity[ch.GetPtr()] = c.e;
 	}
 
@@ -333,23 +333,23 @@ namespace SFW::Physics {
 		auto it = m_characters.find(c.e);
 		if (it == m_characters.end()) return;
 
-		// JPH::Ref<JPH::CharacterVirtual> ‚È‚Ì‚Å erase ‚·‚ê‚ÎQÆƒJƒEƒ“ƒg‚ªŒ¸‚Á‚Ä”jŠü‚³‚ê‚é
+		// JPH::Ref<JPH::CharacterVirtual> ãªã®ã§ erase ã™ã‚Œã°å‚ç…§ã‚«ã‚¦ãƒ³ãƒˆãŒæ¸›ã£ã¦ç ´æ£„ã•ã‚Œã‚‹
 		m_characters.erase(it);
 	}
 
 	// ===== Step =====
 	void PhysicsDevice::Step(float fixed_dt, int substeps) {
 		m_physics.Update(
-			fixed_dt,      // ‡Œvƒ¢tiŒÅ’èj
-			substeps,      // ƒTƒuƒXƒeƒbƒv”iÕ“Ë/“‡‚Ì“à•”•ªŠ„j
+			fixed_dt,      // åˆè¨ˆÎ”tï¼ˆå›ºå®šï¼‰
+			substeps,      // ã‚µãƒ–ã‚¹ãƒ†ãƒƒãƒ—æ•°ï¼ˆè¡çª/çµ±åˆã®å†…éƒ¨åˆ†å‰²ï¼‰
 			m_tempAlloc,
-			m_jobs    // ‚±‚±‚Å“à•”‚ª•À—ñ‰»
+			m_jobs    // ã“ã“ã§å†…éƒ¨ãŒä¸¦åˆ—åŒ–
 		);
 
-		// 2. CharacterVirtual ‚ÌƒXƒeƒbƒv
+		// 2. CharacterVirtual ã®ã‚¹ãƒ†ãƒƒãƒ—
 		if (!m_characters.empty())
 		{
-			// Gravity ‚Í PhysicsSystem ‚©‚çæ‚é
+			// Gravity ã¯ PhysicsSystem ã‹ã‚‰å–ã‚‹
 			JPH::Vec3 gravity = m_physics.GetGravity();
 
 			JPH::BodyFilter                   bodyFilter;
@@ -357,9 +357,9 @@ namespace SFW::Physics {
 
 			for (auto& [e, ch] : m_characters)
 			{
-				// ƒtƒBƒ‹ƒ^‚ÍƒvƒƒWƒFƒNƒg‚ÌƒŒƒCƒ„İŒv‚É‡‚í‚¹‚Ä
-				JPH::DefaultBroadPhaseLayerFilter bpFilter(g_ovsbFilter, ch.layer/*ƒLƒƒƒ‰—pBroadPhaseLayer*/);
-				JPH::DefaultObjectLayerFilter     objFilter(g_pairFilter, ch.layer/*ƒLƒƒƒ‰‚ªÕ“Ë‚·‚é ObjectLayer ‘g‚İ‡‚í‚¹*/);
+				// ãƒ•ã‚£ãƒ«ã‚¿ã¯ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¬ã‚¤ãƒ¤è¨­è¨ˆã«åˆã‚ã›ã¦
+				JPH::DefaultBroadPhaseLayerFilter bpFilter(g_ovsbFilter, ch.layer/*ã‚­ãƒ£ãƒ©ç”¨BroadPhaseLayer*/);
+				JPH::DefaultObjectLayerFilter     objFilter(g_pairFilter, ch.layer/*ã‚­ãƒ£ãƒ©ãŒè¡çªã™ã‚‹ ObjectLayer çµ„ã¿åˆã‚ã›*/);
 
 				ch.ref->Update(
 					fixed_dt,
@@ -377,7 +377,7 @@ namespace SFW::Physics {
 	// ===== Snapshot =====
 	void PhysicsDevice::BuildSnapshot(PhysicsSnapshot& out) {
 		{
-			// --- ContactsiContactListener ‚ª—­‚ß‚½‚à‚Ì‚ğ“f‚«o‚·j ---
+			// --- Contactsï¼ˆContactListener ãŒæºœã‚ãŸã‚‚ã®ã‚’åãå‡ºã™ï¼‰ ---
 			std::scoped_lock lk(m_pendingContactsMutex);
 			out.contacts.insert(out.contacts.end(), m_pendingContacts.begin(), m_pendingContacts.end());
 			m_pendingContacts.clear();
@@ -396,16 +396,16 @@ namespace SFW::Physics {
 	void PhysicsDevice::ReadPosesBatch(const PoseBatchView& v)
 	{
 		using namespace JPH;
-		constexpr size_t kChunk = 128; // ‚Ü‚Æ‚ßƒƒbƒN’PˆÊiŠÂ‹«‚Å’²®j
+		constexpr size_t kChunk = 128; // ã¾ã¨ã‚ãƒ­ãƒƒã‚¯å˜ä½ï¼ˆç’°å¢ƒã§èª¿æ•´ï¼‰
 
 		size_t i = 0;
 		while (i < v.count) {
 			const size_t n = (std::min)(kChunk, v.count - i);
 
-			// BodyID ‚Ìƒ`ƒƒƒ“ƒNæ“ªƒAƒhƒŒƒX
+			// BodyID ã®ãƒãƒ£ãƒ³ã‚¯å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
 			const BodyID* ids = v.bodyIDs + i;
 
-			// •¡”ƒ{ƒfƒB‚ğ**ˆêŠ‡‚Å Read ƒƒbƒN**
+			// è¤‡æ•°ãƒœãƒ‡ã‚£ã‚’**ä¸€æ‹¬ã§ Read ãƒ­ãƒƒã‚¯**
 			BodyLockMultiRead lock(m_physics.GetBodyLockInterface(), ids, (int)n);
 			for (size_t j = 0; j < n; ++j) {
 				const size_t idx = i + j;
@@ -413,10 +413,10 @@ namespace SFW::Physics {
 
 				if (v.isStaticMask && v.isStaticMask[idx]) {
 					if (v.updatedMask) v.updatedMask[idx] = 0;
-					continue; // Ã“I‚Í’ÊíƒXƒLƒbƒv
+					continue; // é™çš„ã¯é€šå¸¸ã‚¹ã‚­ãƒƒãƒ—
 				}
 
-				// Pendingi–¢¶¬j‚âƒƒbƒN¸”si”jŠü’†‚È‚Çj‚ÍƒXƒLƒbƒv
+				// Pendingï¼ˆæœªç”Ÿæˆï¼‰ã‚„ãƒ­ãƒƒã‚¯å¤±æ•—ï¼ˆç ´æ£„ä¸­ãªã©ï¼‰ã¯ã‚¹ã‚­ãƒƒãƒ—
 				if (IsPendingBodyID(id)) {
 					if (v.updatedMask) v.updatedMask[idx] = 0;
 					continue;
@@ -457,7 +457,7 @@ namespace SFW::Physics {
 	void PhysicsDevice::ApplyKinematicTargetsBatch(const KinematicBatchView& v, float fixed_dt)
 	{
 		using namespace JPH;
-		constexpr size_t kChunk = 128; // ƒƒbƒN—±“x(ŠÂ‹«‚É‡‚í‚¹‚Ä 64-256 ‚Åƒ`ƒ…[ƒjƒ“ƒO)
+		constexpr size_t kChunk = 128; // ãƒ­ãƒƒã‚¯ç²’åº¦(ç’°å¢ƒã«åˆã‚ã›ã¦ 64-256 ã§ãƒãƒ¥ãƒ¼ãƒ‹ãƒ³ã‚°)
 
 		size_t i = 0;
 		while (i < v.count) {
@@ -471,7 +471,7 @@ namespace SFW::Physics {
 				if (v.maskKinematic && !v.maskKinematic[idx]) continue;
 				//if (!lock.Succeeded(j)) continue;
 
-				// Pendingi–¢¶¬j‚âƒƒbƒN¸”si”jŠü’†‚È‚Çj‚ÍƒXƒLƒbƒv
+				// Pendingï¼ˆæœªç”Ÿæˆï¼‰ã‚„ãƒ­ãƒƒã‚¯å¤±æ•—ï¼ˆç ´æ£„ä¸­ãªã©ï¼‰ã¯ã‚¹ã‚­ãƒƒãƒ—
 				if (IsPendingBodyID(id)) continue;
 
 				Body* b = lock.GetBody((int)j);
@@ -484,8 +484,8 @@ namespace SFW::Physics {
 #endif
 				Quat  targetRot(v.rotX[idx], v.rotY[idx], v.rotZ[idx], v.rotW[idx]);
 
-				// ---- „§ƒpƒXFƒƒbƒNÏ‚İ Body ‚É’¼Ú MoveKinematic ----
-				// ¦ Jolt ‚Ì Body ‚É‚ÍƒƒbƒN‰º‚ÅŒÄ‚×‚é MoveKinematic ‚ª—pˆÓ‚³‚ê‚Ä‚¢‚Ü‚·
+				// ---- æ¨å¥¨ãƒ‘ã‚¹ï¼šãƒ­ãƒƒã‚¯æ¸ˆã¿ Body ã«ç›´æ¥ MoveKinematic ----
+				// â€» Jolt ã® Body ã«ã¯ãƒ­ãƒƒã‚¯ä¸‹ã§å‘¼ã¹ã‚‹ MoveKinematic ãŒç”¨æ„ã•ã‚Œã¦ã„ã¾ã™
 				b->MoveKinematic(targetPos, targetRot, fixed_dt);
 			}
 
@@ -525,12 +525,12 @@ namespace SFW::Physics {
 		ev.b = m_dev->ResolveEntity(b.GetID());
 
 		if (!m.mRelativeContactPointsOn1.empty()) {
-			// ‘ã•\“_‚Æ–@üiJolt‚ÌƒRƒƒ“ƒg€‹’j
+			// ä»£è¡¨ç‚¹ã¨æ³•ç·šï¼ˆJoltã®ã‚³ãƒ¡ãƒ³ãƒˆæº–æ‹ ï¼‰
 			auto hitPos = a.GetWorldTransform() * m.mRelativeContactPointsOn1[0];
 			ev.pointWorld = FromJVec3(hitPos);
 			ev.normalWorld = FromJVec3(m.mWorldSpaceNormal);
 		}
-		ev.impulse = 0.0f; // •K—v‚È‚ç•Ê‚ÌûWƒ|ƒCƒ“ƒg‚Å
+		ev.impulse = 0.0f; // å¿…è¦ãªã‚‰åˆ¥ã®åé›†ãƒã‚¤ãƒ³ãƒˆã§
 
 		m_dev->PushContactEvent(ev);
 	}
@@ -554,15 +554,15 @@ namespace SFW::Physics {
 		ContactEvent ev{};
 		ev.type = type;
 
-		// a: ƒLƒƒƒ‰ƒNƒ^[‚Ì Entity
+		// a: ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã® Entity
 		ev.a = m_dev->ResolveCharacterEntity(ch);
 
-		// b: “–‚½‚Á‚½ Body ‚Ì EntityiŠù‘¶‚Ì ResolveEntity ‚ğ—¬—pj
+		// b: å½“ãŸã£ãŸ Body ã® Entityï¼ˆæ—¢å­˜ã® ResolveEntity ã‚’æµç”¨ï¼‰
 		ev.b = m_dev->ResolveEntity(bodyID);
 
-		ev.pointWorld = FromJVec3(pos);     // ‚·‚Å‚É RVec3/Vec3 ¨ ©‘O Vec3 ‚Ì•ÏŠ·ŠÖ”‚ª‚ ‚è‚Ü‚·‚æ‚Ë
+		ev.pointWorld = FromJVec3(pos);     // ã™ã§ã« RVec3/Vec3 â†’ è‡ªå‰ Vec3 ã®å¤‰æ›é–¢æ•°ãŒã‚ã‚Šã¾ã™ã‚ˆã­
 		ev.normalWorld = FromJVec3(normal);
-		ev.impulse = 0.0f;               // CharacterContactListener ‚©‚ç‚ÍƒCƒ“ƒpƒ‹ƒX‚Íæ‚ê‚È‚¢‚Ì‚Å 0 ‚È‚Ç
+		ev.impulse = 0.0f;               // CharacterContactListener ã‹ã‚‰ã¯ã‚¤ãƒ³ãƒ‘ãƒ«ã‚¹ã¯å–ã‚Œãªã„ã®ã§ 0 ãªã©
 
 		m_dev->PushContactEvent(ev);
 	}

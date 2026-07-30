@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   DX11BufferManager.h
- * @brief DirectX 11‚Ìƒoƒbƒtƒ@ƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief DirectX 11ã®ãƒãƒƒãƒ•ã‚¡ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚¯ãƒ©ã‚¹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -18,20 +18,20 @@ namespace SFW
 	namespace Graphics::DX11
 	{
 		/**
-		 * @brief DirectX 11‚Ìƒoƒbƒtƒ@‚ğì¬‚·‚é‚½‚ß‚Ì\‘¢‘Ì
+		 * @brief DirectX 11ã®ãƒãƒƒãƒ•ã‚¡ã‚’ä½œæˆã™ã‚‹ãŸã‚ã®æ§‹é€ ä½“
 		 */
 		struct BufferCreateDesc {
 			std::string name;
 			uint32_t size = {};
-			uint32_t structureByteStride = 0; // StructuredBuffer —piCBV ‚Å‚Í–³‹‚³‚ê‚éj
-			const void* initialData = nullptr; // ‰Šúƒf[ƒ^inullptr ‚È‚çƒ[ƒƒNƒŠƒAj
+			uint32_t structureByteStride = 0; // StructuredBuffer ç”¨ï¼ˆCBV ã§ã¯ç„¡è¦–ã•ã‚Œã‚‹ï¼‰
+			const void* initialData = nullptr; // åˆæœŸãƒ‡ãƒ¼ã‚¿ï¼ˆnullptr ãªã‚‰ã‚¼ãƒ­ã‚¯ãƒªã‚¢ï¼‰
 			D3D11_USAGE usage = D3D11_USAGE_DYNAMIC;
 			D3D11_BIND_FLAG bindFlags = D3D11_BIND_CONSTANT_BUFFER;
 			D3D11_RESOURCE_MISC_FLAG miscFlags = {};
-			D3D11_CPU_ACCESS_FLAG cpuAccessFlags = D3D11_CPU_ACCESS_WRITE; // D3D11_USAGE_STAGING—p
+			D3D11_CPU_ACCESS_FLAG cpuAccessFlags = D3D11_CPU_ACCESS_WRITE; // D3D11_USAGE_STAGINGç”¨
 		};
 		/**
-		 * @brief DirectX 11‚Ìƒoƒbƒtƒ@ƒf[ƒ^‚ğŠi”[‚·‚é\‘¢‘Ì
+		 * @brief DirectX 11ã®ãƒãƒƒãƒ•ã‚¡ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹æ§‹é€ ä½“
 		 */
 		struct BufferData {
 			ComPtr<ID3D11Buffer> buffer;
@@ -40,7 +40,7 @@ namespace SFW
 			std::string_view name;
 		};
 		/**
-		 * @brief DirectX 11‚Ìƒoƒbƒtƒ@‚ÌƒnƒbƒVƒ…\‘¢‘Ì
+		 * @brief DirectX 11ã®ãƒãƒƒãƒ•ã‚¡ã®ãƒãƒƒã‚·ãƒ¥æ§‹é€ ä½“
 		 */
 		struct BufferCacheKey {
 			size_t hash;
@@ -51,7 +51,7 @@ namespace SFW
 			}
 		};
 		/**
-		 * @brief DirectX 11‚Ìƒoƒbƒtƒ@‚Ì“à—e‚ğƒnƒbƒVƒ…‰»‚·‚é‚½‚ß‚ÌŠÖ”
+		 * @brief DirectX 11ã®ãƒãƒƒãƒ•ã‚¡ã®å†…å®¹ã‚’ãƒãƒƒã‚·ãƒ¥åŒ–ã™ã‚‹ãŸã‚ã®é–¢æ•°
 		 */
 		struct BufferCacheKeyHash {
 			std::size_t operator()(const BufferCacheKey& k) const {
@@ -59,14 +59,14 @@ namespace SFW
 			}
 		};
 		/**
-		 * @brief DirectX 11‚Ìƒoƒbƒtƒ@‚ğXV‚·‚é‚½‚ß‚Ì\‘¢‘Ì
+		 * @brief DirectX 11ã®ãƒãƒƒãƒ•ã‚¡ã‚’æ›´æ–°ã™ã‚‹ãŸã‚ã®æ§‹é€ ä½“
 		 */
 		struct BufferUpdateDesc {
 			ComPtr<ID3D11Buffer> buffer;
 			const void* data = nullptr;
 			size_t size = (std::numeric_limits<size_t>::max)();
 
-			// ƒJƒXƒ^ƒ€XVŠÖ”‚ÌŒ^’è‹`(dst, src, size)
+			// ã‚«ã‚¹ã‚¿ãƒ æ›´æ–°é–¢æ•°ã®å‹å®šç¾©(dst, src, size)
 			using CustomUpdateFunc = void(*)(void*, const void*, size_t);
 
 			CustomUpdateFunc customUpdateFunc = nullptr;
@@ -83,7 +83,7 @@ namespace SFW
 			}
 		};
 		/**
-		 * @brief ƒoƒbƒtƒ@‚ÌŠÇ—ƒNƒ‰ƒXBDirectX 11‚Ìƒoƒbƒtƒ@‚ğì¬AƒLƒƒƒbƒVƒ…AXV‚·‚é‹@”\‚ğ’ñ‹Ÿ‚·‚éB
+		 * @brief ãƒãƒƒãƒ•ã‚¡ã®ç®¡ç†ã‚¯ãƒ©ã‚¹ã€‚DirectX 11ã®ãƒãƒƒãƒ•ã‚¡ã‚’ä½œæˆã€ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã€æ›´æ–°ã™ã‚‹æ©Ÿèƒ½ã‚’æä¾›ã™ã‚‹ã€‚
 		 */
 		class BufferManager : public ResourceManagerBase<
 			BufferManager, BufferHandle, BufferCreateDesc, BufferData>
@@ -92,15 +92,15 @@ namespace SFW
 			static constexpr inline uint32_t MAX_PENDING_UPDATE_NUM = 1024;
 
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param device DX11‚ÌƒfƒoƒCƒX
-			 * @param context@DX11‚ÌƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒg
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param device DX11ã®ãƒ‡ãƒã‚¤ã‚¹
+			 * @param contextã€€DX11ã®ãƒ‡ãƒã‚¤ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 			 */
 			BufferManager(ID3D11Device* device, ID3D11DeviceContext* context) noexcept
 				: device(device), context(context) {
 			}
 			/**
-			 * @brief ƒfƒXƒgƒ‰ƒNƒ^
+			 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 			 */
 			~BufferManager() {
 				for (auto& pendings : pendingUpdates) {
@@ -112,9 +112,9 @@ namespace SFW
 				}
 			}
 			/**
-			 * @brief Šù‘¶ŒŸõi–¼‘Oƒx[ƒXj
-			 * @param desc ƒoƒbƒtƒ@ì¬‹Lqq
-			 * @return std::optional<BufferHandle> Šù‘¶‚Ìƒoƒbƒtƒ@ƒnƒ“ƒhƒ‹A‘¶İ‚µ‚È‚¢ê‡‚Í std::nullopt
+			 * @brief æ—¢å­˜æ¤œç´¢ï¼ˆåå‰ãƒ™ãƒ¼ã‚¹ï¼‰
+			 * @param desc ãƒãƒƒãƒ•ã‚¡ä½œæˆè¨˜è¿°å­
+			 * @return std::optional<BufferHandle> æ—¢å­˜ã®ãƒãƒƒãƒ•ã‚¡ãƒãƒ³ãƒ‰ãƒ«ã€å­˜åœ¨ã—ãªã„å ´åˆã¯ std::nullopt
 			 */
 			std::optional<BufferHandle> FindExisting(const BufferCreateDesc& desc) noexcept {
 				if (auto it = nameToHandle.find(desc.name); it != nameToHandle.end())
@@ -122,18 +122,18 @@ namespace SFW
 				return std::nullopt;
 			}
 			/**
-			 * @brief ƒL[“o˜^
-			 * @param desc ƒoƒbƒtƒ@ì¬‹Lqq
-			 * @param h “o˜^‚·‚éƒoƒbƒtƒ@ƒnƒ“ƒhƒ‹
+			 * @brief ã‚­ãƒ¼ç™»éŒ²
+			 * @param desc ãƒãƒƒãƒ•ã‚¡ä½œæˆè¨˜è¿°å­
+			 * @param h ç™»éŒ²ã™ã‚‹ãƒãƒƒãƒ•ã‚¡ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			void RegisterKey(const BufferCreateDesc& desc, BufferHandle h) {
 				nameToHandle.emplace(desc.name, h);
 			}
 			/**
-			 * @brief ƒŠƒ\[ƒXì¬
-			 * @param desc ƒoƒbƒtƒ@ì¬‹Lqq
-			 * @param h “o˜^‚·‚éƒoƒbƒtƒ@ƒnƒ“ƒhƒ‹
-			 * @return DX11BufferData ì¬‚³‚ê‚½ƒoƒbƒtƒ@ƒf[ƒ^
+			 * @brief ãƒªã‚½ãƒ¼ã‚¹ä½œæˆ
+			 * @param desc ãƒãƒƒãƒ•ã‚¡ä½œæˆè¨˜è¿°å­
+			 * @param h ç™»éŒ²ã™ã‚‹ãƒãƒƒãƒ•ã‚¡ãƒãƒ³ãƒ‰ãƒ«
+			 * @return DX11BufferData ä½œæˆã•ã‚ŒãŸãƒãƒƒãƒ•ã‚¡ãƒ‡ãƒ¼ã‚¿
 			 */
 			BufferData CreateResource(const BufferCreateDesc& desc, BufferHandle h) {
 				BufferData out{};
@@ -145,7 +145,7 @@ namespace SFW
 					bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 				}
 				else if (desc.usage == D3D11_USAGE_STAGING) {
-					bd.CPUAccessFlags = desc.cpuAccessFlags; // CPU ƒAƒNƒZƒXƒtƒ‰ƒO‚ğw’è
+					bd.CPUAccessFlags = desc.cpuAccessFlags; // CPU ã‚¢ã‚¯ã‚»ã‚¹ãƒ•ãƒ©ã‚°ã‚’æŒ‡å®š
 				}
 				bd.ByteWidth = static_cast<UINT>(desc.size);
 				bd.MiscFlags = desc.miscFlags;
@@ -153,7 +153,7 @@ namespace SFW
 					bd.StructureByteStride = desc.structureByteStride;
 				}
 
-				assert(desc.bindFlags != D3D11_BIND_CONSTANT_BUFFER || desc.size % 16 == 0 && "’è”ƒoƒbƒtƒ@‚ÌƒTƒCƒY‚ª16”{”‚Å‚Í‚ ‚è‚Ü‚¹‚ñ");
+				assert(desc.bindFlags != D3D11_BIND_CONSTANT_BUFFER || desc.size % 16 == 0 && "å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚ºãŒ16å€æ•°ã§ã¯ã‚ã‚Šã¾ã›ã‚“");
 
 				HRESULT hr;
 				if (desc.initialData == nullptr) {
@@ -173,7 +173,7 @@ namespace SFW
 					assert(false && "Failed to create constant buffer");
 				}
 
-				// SRV ‚ª•K—v‚È‚çì¬
+				// SRV ãŒå¿…è¦ãªã‚‰ä½œæˆ
 				if (desc.bindFlags & D3D11_BIND_SHADER_RESOURCE) {
 					D3D11_SHADER_RESOURCE_VIEW_DESC sd{};
 					if (desc.miscFlags & D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS) {
@@ -195,7 +195,7 @@ namespace SFW
 					assert(SUCCEEDED(hr));
 				}
 
-				// UAV ‚ª•K—v‚È‚çì¬iCompute —pj
+				// UAV ãŒå¿…è¦ãªã‚‰ä½œæˆï¼ˆCompute ç”¨ï¼‰
 				if (desc.bindFlags & D3D11_BIND_UNORDERED_ACCESS) {
 					D3D11_UNORDERED_ACCESS_VIEW_DESC ud{};
 					if (desc.miscFlags & D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS) {
@@ -219,9 +219,9 @@ namespace SFW
 				return out;
 			}
 			/**
-			 * @brief –¼‘O‚Åƒoƒbƒtƒ@‚ğŒŸõ
-			 * @param name ŒŸõ‚·‚éƒoƒbƒtƒ@‚Ì–¼‘O
-			 * @return BufferHandle Œ©‚Â‚©‚Á‚½ƒoƒbƒtƒ@ƒnƒ“ƒhƒ‹AŒ©‚Â‚©‚ç‚È‚©‚Á‚½ê‡‚Í‹ó‚Ìƒnƒ“ƒhƒ‹
+			 * @brief åå‰ã§ãƒãƒƒãƒ•ã‚¡ã‚’æ¤œç´¢
+			 * @param name æ¤œç´¢ã™ã‚‹ãƒãƒƒãƒ•ã‚¡ã®åå‰
+			 * @return BufferHandle è¦‹ã¤ã‹ã£ãŸãƒãƒƒãƒ•ã‚¡ãƒãƒ³ãƒ‰ãƒ«ã€è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸå ´åˆã¯ç©ºã®ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			BufferHandle FindByName(const std::string& name) const noexcept {
 				auto it = nameToHandle.find(name);
@@ -230,10 +230,10 @@ namespace SFW
 				return {};
 			}
 			/**
-			 * @brief ©“®CB(“à—eƒLƒƒƒbƒVƒ…)‚Í AcquireAPI ‚Å
-			 * @param data ƒf[ƒ^‚Ìƒ|ƒCƒ“ƒ^
-			 * @param size ƒf[ƒ^‚ÌƒTƒCƒY
-			 * @return BufferHandle æ“¾‚µ‚½ƒoƒbƒtƒ@ƒnƒ“ƒhƒ‹
+			 * @brief è‡ªå‹•CB(å†…å®¹ã‚­ãƒ£ãƒƒã‚·ãƒ¥)ã¯ AcquireAPI ã§
+			 * @param data ãƒ‡ãƒ¼ã‚¿ã®ãƒã‚¤ãƒ³ã‚¿
+			 * @param size ãƒ‡ãƒ¼ã‚¿ã®ã‚µã‚¤ã‚º
+			 * @return BufferHandle å–å¾—ã—ãŸãƒãƒƒãƒ•ã‚¡ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			BufferHandle AcquireWithContent(const void* data, uint32_t size) {
 				assert(data && size > 0);
@@ -243,7 +243,7 @@ namespace SFW
 					AddRef(it->second);
 					return it->second;
 				}
-				// ‰‰ñì¬F“½–¼–¼‚Å AddiAdd ‚ª +1 ‚ğ•Ô‚·j
+				// åˆå›ä½œæˆï¼šåŒ¿ååã§ Addï¼ˆAdd ãŒ +1 ã‚’è¿”ã™ï¼‰
 				BufferHandle h;
 				BufferCreateDesc desc = {
 					.name = "auto_cb_" + std::to_string(key.hash),
@@ -257,20 +257,20 @@ namespace SFW
 				return h;
 			}
 			/**
-			 * @brief ƒoƒbƒtƒ@‚Ì“à—e‚ğ’x‰„‚ÅXV‚·‚é‚½‚ß‚ÉƒLƒ…[‚É’Ç‰Á
-			 * @param desc ƒoƒbƒtƒ@ì¬‹Lqq
+			 * @brief ãƒãƒƒãƒ•ã‚¡ã®å†…å®¹ã‚’é…å»¶ã§æ›´æ–°ã™ã‚‹ãŸã‚ã«ã‚­ãƒ¥ãƒ¼ã«è¿½åŠ 
+			 * @param desc ãƒãƒƒãƒ•ã‚¡ä½œæˆè¨˜è¿°å­
 			 */
 			void UpdateBuffer(const BufferUpdateDesc& desc, uint16_t slot) noexcept {
 				uint32_t count = pendingCount[slot].fetch_add(1, std::memory_order_acq_rel);
 				if (count >= MAX_PENDING_UPDATE_NUM) {
-					//LOG_ERROR("Å‘åXVˆ—”‚É’B‚µ‚Ü‚µ‚½");
+					//LOG_ERROR("æœ€å¤§æ›´æ–°å‡¦ç†æ•°ã«é”ã—ã¾ã—ãŸ");
 					return;
 				}
 
 				pendingUpdates[slot][count] = desc;
 			}
 			/**
-			 * @brief •Û—¯’†‚Ìƒoƒbƒtƒ@XV‚ğˆ—
+			 * @brief ä¿ç•™ä¸­ã®ãƒãƒƒãƒ•ã‚¡æ›´æ–°ã‚’å‡¦ç†
 			 */
 			void PendingUpdates(size_t frameIndex) {
 				uint16_t slot = frameIndex % RENDER_BUFFER_COUNT;
@@ -281,7 +281,7 @@ namespace SFW
 
 					for (uint32_t i = 0; i < count; ++i) {
 						auto& update = pendings[i];
-						assert(update.isValid() && "ƒoƒbƒtƒ@‚ÌXVî•ñ‚ª³‚µ‚­‚ ‚è‚Ü‚¹‚ñ");
+						assert(update.isValid() && "ãƒãƒƒãƒ•ã‚¡ã®æ›´æ–°æƒ…å ±ãŒæ­£ã—ãã‚ã‚Šã¾ã›ã‚“");
 
 						D3D11_MAPPED_SUBRESOURCE mapped;
 						HRESULT hr = context->Map(update.buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
@@ -308,8 +308,8 @@ namespace SFW
 			}
 
 			/**
-			 * @brief RemoveFromCaches: –¼‘O•\ / “à—eƒLƒƒƒbƒVƒ…‚ğ‘|œ
-			 * @param idx ƒnƒ“ƒhƒ‹‚ÌƒCƒ“ƒfƒbƒNƒX
+			 * @brief RemoveFromCaches: åå‰è¡¨ / å†…å®¹ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’æƒé™¤
+			 * @param idx ãƒãƒ³ãƒ‰ãƒ«ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			 */
 			void RemoveFromCaches(uint32_t idx) {
 				auto& d = slots[idx].data;
@@ -320,17 +320,17 @@ namespace SFW
 				}
 			}
 			/**
-			 * @brief DestroyResource: GPU ‰ğ•ú
-			 * @param idx ƒnƒ“ƒhƒ‹‚ÌƒCƒ“ƒfƒbƒNƒX
+			 * @brief DestroyResource: GPU è§£æ”¾
+			 * @param idx ãƒãƒ³ãƒ‰ãƒ«ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			 */
 			void DestroyResource(uint32_t idx, uint64_t /*currentFrame*/) {
 				slots[idx].data.buffer.Reset();
 			}
 			/**
-			 * @brief CreateSRV: ƒoƒbƒtƒ@—p‚ÌƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[‚ğì¬‚·‚éŠÖ”
-			 * @param buffer ƒoƒbƒtƒ@‚ÌComPtr
-			 * @param desc ƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[‚Ì‹Lqq
-			 * @return ID3D11ShaderResourceView‚ÌComPtr
+			 * @brief CreateSRV: ãƒãƒƒãƒ•ã‚¡ç”¨ã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã‚’ä½œæˆã™ã‚‹é–¢æ•°
+			 * @param buffer ãƒãƒƒãƒ•ã‚¡ã®ComPtr
+			 * @param desc ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã®è¨˜è¿°å­
+			 * @return ID3D11ShaderResourceViewã®ComPtr
 			 */
 			ComPtr<ID3D11ShaderResourceView> CreateSRV(ComPtr<ID3D11Buffer> buffer, D3D11_SHADER_RESOURCE_VIEW_DESC desc) const {
 				ComPtr<ID3D11ShaderResourceView> srv;
@@ -341,10 +341,10 @@ namespace SFW
 				return srv;
 			}
 			/**
-			 * @brief CreateUAV: ƒoƒbƒtƒ@—p‚ÌƒAƒ“ƒI[ƒ_[ƒhƒAƒNƒZƒXƒrƒ…[‚ğì¬‚·‚éŠÖ”
-			 * @param buffer ƒoƒbƒtƒ@‚ÌComPtr
-			 * @param desc ƒAƒ“ƒI[ƒ_[ƒhƒAƒNƒZƒXƒrƒ…[‚Ì‹Lqq
-			 * @return ID3D11UnorderedAccessView‚ÌComPtr
+			 * @brief CreateUAV: ãƒãƒƒãƒ•ã‚¡ç”¨ã®ã‚¢ãƒ³ã‚ªãƒ¼ãƒ€ãƒ¼ãƒ‰ã‚¢ã‚¯ã‚»ã‚¹ãƒ“ãƒ¥ãƒ¼ã‚’ä½œæˆã™ã‚‹é–¢æ•°
+			 * @param buffer ãƒãƒƒãƒ•ã‚¡ã®ComPtr
+			 * @param desc ã‚¢ãƒ³ã‚ªãƒ¼ãƒ€ãƒ¼ãƒ‰ã‚¢ã‚¯ã‚»ã‚¹ãƒ“ãƒ¥ãƒ¼ã®è¨˜è¿°å­
+			 * @return ID3D11UnorderedAccessViewã®ComPtr
 			 */
 			ComPtr<ID3D11UnorderedAccessView> CreateUAV(ComPtr<ID3D11Buffer> buffer, D3D11_UNORDERED_ACCESS_VIEW_DESC desc) const {
 				ComPtr<ID3D11UnorderedAccessView> uav;
@@ -364,7 +364,7 @@ namespace SFW
 
 			std::mutex pendingMutex[RENDER_BUFFER_COUNT];
 			std::atomic<uint32_t> pendingCount[RENDER_BUFFER_COUNT]{ 0 };
-			BufferUpdateDesc pendingUpdates[RENDER_BUFFER_COUNT][MAX_PENDING_UPDATE_NUM]; // XV‘Ò‚¿‚Ìƒf[ƒ^
+			BufferUpdateDesc pendingUpdates[RENDER_BUFFER_COUNT][MAX_PENDING_UPDATE_NUM]; // æ›´æ–°å¾…ã¡ã®ãƒ‡ãƒ¼ã‚¿
 		};
 	}
 }

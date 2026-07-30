@@ -1,4 +1,4 @@
-/*
+﻿/*
 Openmpt module for SoLoud audio engine
 Copyright (c) 2016 Jari Komppa
 

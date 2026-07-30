@@ -1,18 +1,18 @@
-// LeafParticlePool.h
+ï»¿// LeafParticlePool.h
 #pragma once
 #include <wrl.h>
 #include <d3d11.h>
 #include <cstdint>
-#include "graphics/D3D11Helpers.h" // StructuredBufferSRVUAV / RawBufferSRVUAV / Create` Œn
+#include "graphics/D3D11Helpers.h" // StructuredBufferSRVUAV / RawBufferSRVUAV / Createï½ ç³»
 
 //#define DEBUG_DEPTH_HIT
 
-// GPU ‘¤‚Ì LeafParticle ‚Æ“¯‚¶ƒŒƒCƒAƒEƒg‚É‚·‚é‘z’è
-// HLSL ‘¤‚Ì struct LeafParticle ‚Æ‡‚í‚¹‚Ä‚­‚¾‚³‚¢B
+// GPU å´ã® LeafParticle ã¨åŒã˜ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã«ã™ã‚‹æƒ³å®š
+// HLSL å´ã® struct LeafParticle ã¨åˆã‚ã›ã¦ãã ã•ã„ã€‚
 struct LeafParticleGPU
 {
-	float posWS[3]; float life;          // ˆÊ’u + c‚èõ–½
-	float velWS[3]; uint32_t volumeSlot; // ‘¬“x + Š‘® Volume Slot
+	float posWS[3]; float life;          // ä½ç½® + æ®‹ã‚Šå¯¿å‘½
+	float velWS[3]; uint32_t volumeSlot; // é€Ÿåº¦ + æ‰€å± Volume Slot
 	float phase; float size;
 	uint32_t curveId; // which guide curve
 	float s; // 0..1 progress on curve
@@ -20,17 +20,17 @@ struct LeafParticleGPU
 	float lane; // offset along curve-right (meters)
 	float radial; // offset along curve-binormal (meters)
 
-	float life0; // ‰Šúõ–½(sec)
-	float tint[3]; // —t‚Á‚ÏŒÅ—LF
+	float life0; // åˆæœŸå¯¿å‘½(sec)
+	float tint[3]; // è‘‰ã£ã±å›ºæœ‰è‰²
 
-	uint32_t normalOcta; // –@üi‹Èü‚ÌÚü‚É‘Î‚µ‚Äj‚ğƒIƒNƒ^‚ÅƒGƒ“ƒR[ƒh‚µ‚½‚à‚Ì
+	uint32_t normalOcta; // æ³•ç·šï¼ˆæ›²ç·šã®æ¥ç·šã«å¯¾ã—ã¦ï¼‰ã‚’ã‚ªã‚¯ã‚¿ã§ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã—ãŸã‚‚ã®
 
 #ifdef DEBUG_DEPTH_HIT
-	float depthHit; // ƒfƒoƒbƒO—p: [“xƒqƒbƒg‰ñ”ƒJƒEƒ“ƒg
+	float depthHit; // ãƒ‡ãƒãƒƒã‚°ç”¨: æ·±åº¦ãƒ’ãƒƒãƒˆå›æ•°ã‚«ã‚¦ãƒ³ãƒˆ
 #endif
 };
 
-// Update —p‚Ìƒpƒ‰ƒ[ƒ^iFireflyUpdatePram ‚ğ‚»‚Ì‚Ü‚Ü—¬—p‚µ‚Ä‚à—Ç‚¢j
+// Update ç”¨ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ï¼ˆFireflyUpdatePram ã‚’ãã®ã¾ã¾æµç”¨ã—ã¦ã‚‚è‰¯ã„ï¼‰
 struct LeafUpdateParam
 {
 	float gKillRadiusScale = 1.5f;
@@ -39,9 +39,9 @@ struct LeafUpdateParam
 	float gSteerKMax = 12.0f;
 	float gMaxSpeed = 20.0f;
 	float gGravity = 9.8f;
-	float gWindDrag = 2.0f;     // (flow - vel) ‚ÉŠ|‚¯‚éŒW”
-	float gLift = 12.0f;         // •—‚ª‹­‚¢‚Æ‚«‚ÌãŒü‚«‰Á‘¬“x
-	float gWobbleAmp = 3.0f;    // ‰¡—h‚êÅ‘å
+	float gWindDrag = 2.0f;     // (flow - vel) ã«æ›ã‘ã‚‹ä¿‚æ•°
+	float gLift = 12.0f;         // é¢¨ãŒå¼·ã„ã¨ãã®ä¸Šå‘ãåŠ é€Ÿåº¦
+	float gWobbleAmp = 3.0f;    // æ¨ªæºã‚Œæœ€å¤§
 	float gGroundMinClear = 0.05f;
 	float _padA = 0, _padB = 0;
 };
@@ -53,16 +53,16 @@ public:
 	static constexpr uint32_t MaxVolumeSlots = 256;
 	static constexpr uint32_t MaxSpawnPerVol = 32;
 
-	// GPUƒŠƒ\[ƒX¶¬
+	// GPUãƒªã‚½ãƒ¼ã‚¹ç”Ÿæˆ
 	void Create(ID3D11Device* dev);
 
-	// FreeList ‰Šú‰»iFirefly ‚Æ“¯‚¶ InitFreeList —pCS‚ğg‚¤ƒCƒ[ƒWj
+	// FreeList åˆæœŸåŒ–ï¼ˆFirefly ã¨åŒã˜ InitFreeList ç”¨CSã‚’ä½¿ã†ã‚¤ãƒ¡ãƒ¼ã‚¸ï¼‰
 	void InitFreeList(ID3D11DeviceContext* ctx,
 		ID3D11Buffer* spawnCB,
 		ID3D11ComputeShader* initCS);
 
-	// –ˆƒtƒŒ[ƒ€‚Ì Spawn + Update + Draw
-	// FireflyParticlePool::Spawn ‚Æ“¯‚¶ƒCƒ“ƒ^[ƒtƒF[ƒX
+	// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ã® Spawn + Update + Draw
+	// FireflyParticlePool::Spawn ã¨åŒã˜ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 	void Spawn(
 		ID3D11DeviceContext* ctx,
 		ID3D11ComputeShader* clumpCS,
@@ -91,7 +91,7 @@ public:
 		ID3D11VertexShader* vs,
 		ID3D11PixelShader* ps);
 
-	// UpdateParam ‚Ìİ’èiƒfƒoƒbƒOGUI‚È‚Ç‚©‚ç‚¢‚¶‚é—pj
+	// UpdateParam ã®è¨­å®šï¼ˆãƒ‡ãƒãƒƒã‚°GUIãªã©ã‹ã‚‰ã„ã˜ã‚‹ç”¨ï¼‰
 	void SetUpdateParam(const LeafUpdateParam& p)
 	{
 		m_cpuUpdateParam = p;
@@ -100,20 +100,20 @@ public:
 
 	const LeafUpdateParam& GetUpdateParam() const { return m_cpuUpdateParam; }
 
-	// •K—v‚È‚ç DrawIndirect ‚Ìƒoƒbƒtƒ@“™‚ğŠO‚©‚çG‚ê‚é‚æ‚¤‚É
+	// å¿…è¦ãªã‚‰ DrawIndirect ã®ãƒãƒƒãƒ•ã‚¡ç­‰ã‚’å¤–ã‹ã‚‰è§¦ã‚Œã‚‹ã‚ˆã†ã«
 	ID3D11Buffer* GetDrawArgsBuffer() const { return m_drawArgsRaw.buf.Get(); }
 	ID3D11ShaderResourceView* GetParticlesSRV() const { return m_particles.srv.Get(); }
 
 private:
-	// GPUƒŠƒ\[ƒX
+	// GPUãƒªã‚½ãƒ¼ã‚¹
 	StructuredBufferSRVUAV m_particles;    // RWStructuredBuffer<LeafParticleGPU>
 	StructuredBufferSRVUAV m_free;         // AppendStructuredBuffer<uint> : FreeList
-	StructuredBufferSRVUAV m_alivePing;    // AppendStructuredBuffer<uint> : ‘OƒtƒŒ[ƒ€Alive
-	StructuredBufferSRVUAV m_alivePong;    // AppendStructuredBuffer<uint> : ¡ƒtƒŒ[ƒ€Alive
-	StructuredBufferSRVUAV m_volumeCount;  // RWStructuredBuffer<uint>     : Volume‚²‚Æ‚ÌŒÂ”
+	StructuredBufferSRVUAV m_alivePing;    // AppendStructuredBuffer<uint> : å‰ãƒ•ãƒ¬ãƒ¼ãƒ Alive
+	StructuredBufferSRVUAV m_alivePong;    // AppendStructuredBuffer<uint> : ä»Šãƒ•ãƒ¬ãƒ¼ãƒ Alive
+	StructuredBufferSRVUAV m_volumeCount;  // RWStructuredBuffer<uint>     : Volumeã”ã¨ã®å€‹æ•°
 
-	RawBufferSRVUAV m_aliveCountRaw;       // alive”ƒJƒEƒ“ƒg—p RawBuffer
-	RawBufferSRVUAV m_drawArgsRaw;         // DrawInstancedIndirect —p Args
+	RawBufferSRVUAV m_aliveCountRaw;       // aliveæ•°ã‚«ã‚¦ãƒ³ãƒˆç”¨ RawBuffer
+	RawBufferSRVUAV m_drawArgsRaw;         // DrawInstancedIndirect ç”¨ Args
 
 	Microsoft::WRL::ComPtr<ID3D11Buffer>        m_cbUpdateParam;
 	Microsoft::WRL::ComPtr<ID3D11SamplerState>  m_linearSampler;

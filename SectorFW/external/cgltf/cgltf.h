@@ -1,4 +1,4 @@
-/**
+﻿/**
  * cgltf - a single-file glTF 2.0 parser written in C99.
  *
  * Version: 1.15

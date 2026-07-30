@@ -1,4 +1,4 @@
-#include "Graphics/RenderQueue.h"
+ï»¿#include "Graphics/RenderQueue.h"
 
 #include "Debug/logger.h"
 
@@ -10,16 +10,16 @@ namespace SFW
 			assert(inst.worldMtx.m[3][3] == 1.0f && "InstanceData.worldMtx should be affine matrix.");
 
 			RebindIfNeeded();
-			// Œ»İ‚ÌƒtƒŒ[ƒ€ƒXƒƒbƒg
+			// ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¹ãƒ­ãƒƒãƒˆ
 			const int slot = rq->current.load(std::memory_order_acquire);
 			auto& pos = rq->sharedInstanceArena->head[slot];
 			uint32_t idx = pos.fetch_add(1, std::memory_order_acq_rel);
-			// ŠÈˆÕƒ`ƒFƒbƒNi•K—v‚È‚ç LOG + clamp / ¸”sˆµ‚¢‚É‚·‚éj
+			// ç°¡æ˜“ãƒã‚§ãƒƒã‚¯ï¼ˆå¿…è¦ãªã‚‰ LOG + clamp / å¤±æ•—æ‰±ã„ã«ã™ã‚‹ï¼‰
 			if (idx >= rq->maxInstancesPerFrame) [[unlikely]] {
-				// –O˜a‚³‚¹‚é‚©AƒGƒ‰[ˆ—
+				// é£½å’Œã•ã›ã‚‹ã‹ã€ã‚¨ãƒ©ãƒ¼å‡¦ç†
 				idx = rq->maxInstancesPerFrame - 1;
 
-				LOG_ERROR("ˆêƒtƒŒ[ƒ€‚ÌÅ‘åƒCƒ“ƒXƒ^ƒ“ƒX”‚ğƒI[ƒoƒtƒ[‚µ‚Ü‚µ‚½ (max {%d})", rq->maxInstancesPerFrame);
+				LOG_ERROR("ä¸€ãƒ•ãƒ¬ãƒ¼ãƒ ã®æœ€å¤§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°ã‚’ã‚ªãƒ¼ãƒãƒ•ãƒ­ãƒ¼ã—ã¾ã—ãŸ (max {%d})", rq->maxInstancesPerFrame);
 			}
 			rq->sharedInstanceArena->Data(slot)[idx] = inst;
 			return InstanceIndex{ idx };
@@ -29,16 +29,16 @@ namespace SFW
 			assert(inst.worldMtx.m[3][3] == 1.0f && "InstanceData.worldMtx should be affine matrix.");
 
 			RebindIfNeeded();
-			// Œ»İ‚ÌƒtƒŒ[ƒ€ƒXƒƒbƒg
+			// ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¹ãƒ­ãƒƒãƒˆ
 			const int slot = rq->current.load(std::memory_order_acquire);
 			auto& pos = rq->sharedInstanceArena->head[slot];
 			uint32_t idx = pos.fetch_add(1, std::memory_order_acq_rel);
-			// ŠÈˆÕƒ`ƒFƒbƒNi•K—v‚È‚ç LOG + clamp / ¸”sˆµ‚¢‚É‚·‚éj
+			// ç°¡æ˜“ãƒã‚§ãƒƒã‚¯ï¼ˆå¿…è¦ãªã‚‰ LOG + clamp / å¤±æ•—æ‰±ã„ã«ã™ã‚‹ï¼‰
 			if (idx >= rq->maxInstancesPerFrame) [[unlikely]] {
-				// –O˜a‚³‚¹‚é‚©AƒGƒ‰[ˆ—
+				// é£½å’Œã•ã›ã‚‹ã‹ã€ã‚¨ãƒ©ãƒ¼å‡¦ç†
 				idx = rq->maxInstancesPerFrame - 1;
 
-				LOG_ERROR("ˆêƒtƒŒ[ƒ€‚ÌÅ‘åƒCƒ“ƒXƒ^ƒ“ƒX”‚ğƒI[ƒoƒtƒ[‚µ‚Ü‚µ‚½ (max {%d})", rq->maxInstancesPerFrame);
+				LOG_ERROR("ä¸€ãƒ•ãƒ¬ãƒ¼ãƒ ã®æœ€å¤§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°ã‚’ã‚ªãƒ¼ãƒãƒ•ãƒ­ãƒ¼ã—ã¾ã—ãŸ (max {%d})", rq->maxInstancesPerFrame);
 			}
 			rq->sharedInstanceArena->Data(slot)[idx] = std::move(inst);
 			return InstanceIndex{ idx };
@@ -46,16 +46,16 @@ namespace SFW
 		[[nodiscard]] InstanceIndex RenderQueue::ProducerSessionExternal::AllocInstance(const InstancePool& inst)
 		{
 			RebindIfNeeded();
-			// Œ»İ‚ÌƒtƒŒ[ƒ€ƒXƒƒbƒg
+			// ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¹ãƒ­ãƒƒãƒˆ
 			const int slot = rq->current.load(std::memory_order_acquire);
 			auto& pos = rq->sharedInstanceArena->head[slot];
 			uint32_t idx = pos.fetch_add(1, std::memory_order_acq_rel);
-			// ŠÈˆÕƒ`ƒFƒbƒNi•K—v‚È‚ç LOG + clamp / ¸”sˆµ‚¢‚É‚·‚éj
+			// ç°¡æ˜“ãƒã‚§ãƒƒã‚¯ï¼ˆå¿…è¦ãªã‚‰ LOG + clamp / å¤±æ•—æ‰±ã„ã«ã™ã‚‹ï¼‰
 			if (idx >= rq->maxInstancesPerFrame) [[unlikely]] {
-				// –O˜a‚³‚¹‚é‚©AƒGƒ‰[ˆ—
+				// é£½å’Œã•ã›ã‚‹ã‹ã€ã‚¨ãƒ©ãƒ¼å‡¦ç†
 				idx = rq->maxInstancesPerFrame - 1;
 
-				LOG_ERROR("ˆêƒtƒŒ[ƒ€‚ÌÅ‘åƒCƒ“ƒXƒ^ƒ“ƒX”‚ğƒI[ƒoƒtƒ[‚µ‚Ü‚µ‚½ (max {%d})", rq->maxInstancesPerFrame);
+				LOG_ERROR("ä¸€ãƒ•ãƒ¬ãƒ¼ãƒ ã®æœ€å¤§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°ã‚’ã‚ªãƒ¼ãƒãƒ•ãƒ­ãƒ¼ã—ã¾ã—ãŸ (max {%d})", rq->maxInstancesPerFrame);
 			}
 			rq->sharedInstanceArena->Data(slot)[idx] = inst;
 			return InstanceIndex{ idx };
@@ -63,16 +63,16 @@ namespace SFW
 		[[nodiscard]] InstanceIndex RenderQueue::ProducerSessionExternal::AllocInstance(InstancePool&& inst)
 		{
 			RebindIfNeeded();
-			// Œ»İ‚ÌƒtƒŒ[ƒ€ƒXƒƒbƒg
+			// ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¹ãƒ­ãƒƒãƒˆ
 			const int slot = rq->current.load(std::memory_order_acquire);
 			auto& pos = rq->sharedInstanceArena->head[slot];
 			uint32_t idx = pos.fetch_add(1, std::memory_order_acq_rel);
-			// ŠÈˆÕƒ`ƒFƒbƒNi•K—v‚È‚ç LOG + clamp / ¸”sˆµ‚¢‚É‚·‚éj
+			// ç°¡æ˜“ãƒã‚§ãƒƒã‚¯ï¼ˆå¿…è¦ãªã‚‰ LOG + clamp / å¤±æ•—æ‰±ã„ã«ã™ã‚‹ï¼‰
 			if (idx >= rq->maxInstancesPerFrame) [[unlikely]] {
-				// –O˜a‚³‚¹‚é‚©AƒGƒ‰[ˆ—
+				// é£½å’Œã•ã›ã‚‹ã‹ã€ã‚¨ãƒ©ãƒ¼å‡¦ç†
 				idx = rq->maxInstancesPerFrame - 1;
 
-				LOG_ERROR("ˆêƒtƒŒ[ƒ€‚ÌÅ‘åƒCƒ“ƒXƒ^ƒ“ƒX”‚ğƒI[ƒoƒtƒ[‚µ‚Ü‚µ‚½ (max {%d})", rq->maxInstancesPerFrame);
+				LOG_ERROR("ä¸€ãƒ•ãƒ¬ãƒ¼ãƒ ã®æœ€å¤§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°ã‚’ã‚ªãƒ¼ãƒãƒ•ãƒ­ãƒ¼ã—ã¾ã—ãŸ (max {%d})", rq->maxInstancesPerFrame);
 			}
 			rq->sharedInstanceArena->Data(slot)[idx] = std::move(inst);
 			return InstanceIndex{ idx };
@@ -80,28 +80,28 @@ namespace SFW
 		InstanceIndex RenderQueue::ProducerSessionExternal::NextInstanceIndex()
 		{
 			RebindIfNeeded();
-			// Œ»İ‚ÌƒtƒŒ[ƒ€ƒXƒƒbƒg
+			// ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¹ãƒ­ãƒƒãƒˆ
 			const int slot = rq->current.load(std::memory_order_acquire);
 			auto& pos = rq->sharedInstanceArena->head[slot];
 			uint32_t idx = pos.fetch_add(1, std::memory_order_acq_rel);
-			// ŠÈˆÕƒ`ƒFƒbƒNi•K—v‚È‚ç LOG + clamp / ¸”sˆµ‚¢‚É‚·‚éj
+			// ç°¡æ˜“ãƒã‚§ãƒƒã‚¯ï¼ˆå¿…è¦ãªã‚‰ LOG + clamp / å¤±æ•—æ‰±ã„ã«ã™ã‚‹ï¼‰
 			if (idx >= rq->maxInstancesPerFrame) [[unlikely]] {
-				// –O˜a‚³‚¹‚é‚©AƒGƒ‰[ˆ—
+				// é£½å’Œã•ã›ã‚‹ã‹ã€ã‚¨ãƒ©ãƒ¼å‡¦ç†
 				idx = rq->maxInstancesPerFrame - 1;
 
-				LOG_ERROR("ˆêƒtƒŒ[ƒ€‚ÌÅ‘åƒCƒ“ƒXƒ^ƒ“ƒX”‚ğƒI[ƒoƒtƒ[‚µ‚Ü‚µ‚½ (max {%d})", rq->maxInstancesPerFrame);
+				LOG_ERROR("ä¸€ãƒ•ãƒ¬ãƒ¼ãƒ ã®æœ€å¤§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°ã‚’ã‚ªãƒ¼ãƒãƒ•ãƒ­ãƒ¼ã—ã¾ã—ãŸ (max {%d})", rq->maxInstancesPerFrame);
 			}
 			return InstanceIndex{ idx };
 		}
 		void RenderQueue::ProducerSessionExternal::MemsetInstancePool(InstanceIndex index, const InstancePool& inst) noexcept
 		{
 			if (index.index < 0 || index.index >= rq->maxInstancesPerFrame) [[unlikely]] {
-				LOG_ERROR("instance index‚ª³í‚È”ÍˆÍ‚Å‚Í‚ ‚è‚Ü‚¹‚ñ (max {%d})", rq->maxInstancesPerFrame);
+				LOG_ERROR("instance indexãŒæ­£å¸¸ãªç¯„å›²ã§ã¯ã‚ã‚Šã¾ã›ã‚“ (max {%d})", rq->maxInstancesPerFrame);
 				return;
 			}
 
 			RebindIfNeeded();
-			// Œ»İ‚ÌƒtƒŒ[ƒ€ƒXƒƒbƒg
+			// ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¹ãƒ­ãƒƒãƒˆ
 			const int slot = rq->current.load(std::memory_order_acquire);
 			rq->sharedInstanceArena->Data(slot)[index.index] = inst;
 		}
@@ -112,7 +112,7 @@ namespace SFW
 
 			if (W.count == 0) return 0;
 
-			// “ü—Íƒ|ƒCƒ“ƒ^ŠÈˆÕƒ`ƒFƒbƒNi‘S—ñ•K{j
+			// å…¥åŠ›ãƒã‚¤ãƒ³ã‚¿ç°¡æ˜“ãƒã‚§ãƒƒã‚¯ï¼ˆå…¨åˆ—å¿…é ˆï¼‰
 			assert(W.m00 && W.m01 && W.m02 && W.tx &&
 				W.m10 && W.m11 && W.m12 && W.ty &&
 				W.m20 && W.m21 && W.m22 && W.tz && "WorldSoA has null pointer(s)");
@@ -121,29 +121,29 @@ namespace SFW
 
 			RebindIfNeeded();
 
-			const int slot = rq->current.load(std::memory_order_acquire); // •K‚¸ ProducerSession ‚ÌƒXƒƒbƒg‚É‘µ‚¦‚é
+			const int slot = rq->current.load(std::memory_order_acquire); // å¿…ãš ProducerSession ã®ã‚¹ãƒ­ãƒƒãƒˆã«æƒãˆã‚‹
 			auto& head = rq->sharedInstanceArena->head[slot];
 			const uint32_t count = static_cast<uint32_t>(W.count);
 			const uint32_t base = head.fetch_add(count, std::memory_order_acq_rel);
 			auto* dst = rq->sharedInstanceArena->Data(slot) + base;
 
-			// ‚Ü‚Æ‚ß‚Ä—ÌˆæŠm•Ûi–O˜a‘Îôj
+			// ã¾ã¨ã‚ã¦é ˜åŸŸç¢ºä¿ï¼ˆé£½å’Œå¯¾ç­–ï¼‰
 			const uint32_t cap = rq->maxInstancesPerFrame;
 			const uint32_t remain = (base < cap) ? (cap - base) : 0u;
 			const uint32_t toWrite = (std::min)(count, remain);
 
 			if (toWrite == 0) {
-				// –”t
-				LOG_ERROR("ˆêƒtƒŒ[ƒ€‚ÌÅ‘åƒCƒ“ƒXƒ^ƒ“ƒX”‚ğƒI[ƒoƒtƒ[‚µ‚Ü‚µ‚½ (max {%d})", rq->maxInstancesPerFrame);
+				// æº€æ¯
+				LOG_ERROR("ä¸€ãƒ•ãƒ¬ãƒ¼ãƒ ã®æœ€å¤§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°ã‚’ã‚ªãƒ¼ãƒãƒ•ãƒ­ãƒ¼ã—ã¾ã—ãŸ (max {%d})", rq->maxInstancesPerFrame);
 				return 0;
 			}
 			if (toWrite < W.count) {
-				// “ü‚èØ‚ç‚È‚©‚Á‚½•ª‚ª‚ ‚éiƒƒO‚Ì‚İj
-				LOG_ERROR("ƒCƒ“ƒXƒ^ƒ“ƒX‚Æ‚µ‚Ä“o˜^‚Å‚«‚È‚©‚Á‚½•ª‚ª‚ ‚è‚Ü‚· {%d} -> {%d} (pool max {%d})",
+				// å…¥ã‚Šåˆ‡ã‚‰ãªã‹ã£ãŸåˆ†ãŒã‚ã‚‹ï¼ˆãƒ­ã‚°ã®ã¿ï¼‰
+				LOG_ERROR("ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¨ã—ã¦ç™»éŒ²ã§ããªã‹ã£ãŸåˆ†ãŒã‚ã‚Šã¾ã™ {%d} -> {%d} (pool max {%d})",
 					W.count, toWrite, rq->maxInstancesPerFrame);
 			}
 
-			// 1 s = 4 —v‘f‚ğ memcpyiƒAƒ‰ƒCƒ“–¢•ÛØ‚Å‚àˆÀ‘Sj
+			// 1 è¡Œ = 4 è¦ç´ ã‚’ memcpyï¼ˆã‚¢ãƒ©ã‚¤ãƒ³æœªä¿è¨¼ã§ã‚‚å®‰å…¨ï¼‰
 			for (uint32_t i = 0; i < toWrite; ++i) {
 				float r0[4] = { W.m00[i], W.m01[i], W.m02[i], W.tx[i] };
 				float r1[4] = { W.m10[i], W.m11[i], W.m12[i], W.ty[i] };
@@ -164,7 +164,7 @@ namespace SFW
 
 			if (W.count == 0) return 0;
 
-			// “ü—Íƒ|ƒCƒ“ƒ^ŠÈˆÕƒ`ƒFƒbƒNi‘S—ñ•K{j
+			// å…¥åŠ›ãƒã‚¤ãƒ³ã‚¿ç°¡æ˜“ãƒã‚§ãƒƒã‚¯ï¼ˆå…¨åˆ—å¿…é ˆï¼‰
 			assert(W.m00 && W.m01 && W.m02 && W.tx &&
 				W.m10 && W.m11 && W.m12 && W.ty &&
 				W.m20 && W.m21 && W.m22 && W.tz && "WorldSoA has null pointer(s)");
@@ -173,29 +173,29 @@ namespace SFW
 
 			RebindIfNeeded();
 
-			const int slot = rq->current.load(std::memory_order_acquire); // •K‚¸ ProducerSession ‚ÌƒXƒƒbƒg‚É‘µ‚¦‚é
+			const int slot = rq->current.load(std::memory_order_acquire); // å¿…ãš ProducerSession ã®ã‚¹ãƒ­ãƒƒãƒˆã«æƒãˆã‚‹
 			auto& head = rq->sharedInstanceArena->head[slot];
 			const uint32_t count = static_cast<uint32_t>(W.count);
 			const uint32_t base = head.fetch_add(count, std::memory_order_acq_rel);
 			auto* dst = rq->sharedInstanceArena->Data(slot) + base;
 
-			// ‚Ü‚Æ‚ß‚Ä—ÌˆæŠm•Ûi–O˜a‘Îôj
+			// ã¾ã¨ã‚ã¦é ˜åŸŸç¢ºä¿ï¼ˆé£½å’Œå¯¾ç­–ï¼‰
 			const uint32_t cap = rq->maxInstancesPerFrame;
 			const uint32_t remain = (base < cap) ? (cap - base) : 0u;
 			const uint32_t toWrite = (std::min)(count, remain);
 
 			if (toWrite == 0) {
-				// –”t
-				LOG_ERROR("ˆêƒtƒŒ[ƒ€‚ÌÅ‘åƒCƒ“ƒXƒ^ƒ“ƒX”‚ğƒI[ƒoƒtƒ[‚µ‚Ü‚µ‚½ (max {%d})", rq->maxInstancesPerFrame);
+				// æº€æ¯
+				LOG_ERROR("ä¸€ãƒ•ãƒ¬ãƒ¼ãƒ ã®æœ€å¤§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°ã‚’ã‚ªãƒ¼ãƒãƒ•ãƒ­ãƒ¼ã—ã¾ã—ãŸ (max {%d})", rq->maxInstancesPerFrame);
 				return 0;
 			}
 			if (toWrite < W.count) {
-				// “ü‚èØ‚ç‚È‚©‚Á‚½•ª‚ª‚ ‚éiƒƒO‚Ì‚İj
-				LOG_ERROR("ƒCƒ“ƒXƒ^ƒ“ƒX‚Æ‚µ‚Ä“o˜^‚Å‚«‚È‚©‚Á‚½•ª‚ª‚ ‚è‚Ü‚· {%d} -> {%d} (pool max {%d})",
+				// å…¥ã‚Šåˆ‡ã‚‰ãªã‹ã£ãŸåˆ†ãŒã‚ã‚‹ï¼ˆãƒ­ã‚°ã®ã¿ï¼‰
+				LOG_ERROR("ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¨ã—ã¦ç™»éŒ²ã§ããªã‹ã£ãŸåˆ†ãŒã‚ã‚Šã¾ã™ {%d} -> {%d} (pool max {%d})",
 					W.count, toWrite, rq->maxInstancesPerFrame);
 			}
 
-			// 1 s = 4 —v‘f‚ğ memcpyiƒAƒ‰ƒCƒ“–¢•ÛØ‚Å‚àˆÀ‘Sj
+			// 1 è¡Œ = 4 è¦ç´ ã‚’ memcpyï¼ˆã‚¢ãƒ©ã‚¤ãƒ³æœªä¿è¨¼ã§ã‚‚å®‰å…¨ï¼‰
 			for (uint32_t i = 0; i < toWrite; ++i) {
 				float r0[4] = { W.m00[i], W.m01[i], W.m02[i], W.tx[i] };
 				float r1[4] = { W.m10[i], W.m11[i], W.m12[i], W.ty[i] };
@@ -205,7 +205,7 @@ namespace SFW
 				std::memcpy(&dst[i].world.m[1][0], r1, sizeof(r1));
 				std::memcpy(&dst[i].world.m[2][0], r2, sizeof(r2));
 
-				// Color SoA ‚©‚çF‚ğƒZƒbƒg
+				// Color SoA ã‹ã‚‰è‰²ã‚’ã‚»ãƒƒãƒˆ
 				dst[i].color = cSoa[i];
 
 				if (outIdx) outIdx[i] = InstanceIndex{ base + i };

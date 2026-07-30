@@ -1,4 +1,4 @@
-#include "Graphics/LODPolicy.h"
+ï»¿#include "Graphics/LODPolicy.h"
 #include <limits>
 
 namespace SFW::Graphics {
@@ -10,15 +10,15 @@ namespace SFW::Graphics {
 		LodThresholdsPx th{};
 		th.baseW = baseW; th.baseH = baseH;
 
-		// base[ ] ‚Í gŠî€‰ğ‘œ“x‚Å‚Ì‰æ–Ê–ÊÏ”äh ‚Ìƒ‰ƒt–ÚˆÀiLOD0/1/2‚Ì‹«ŠEj
+		// base[ ] ã¯ â€œåŸºæº–è§£åƒåº¦ã§ã®ç”»é¢é¢ç©æ¯”â€ ã®ãƒ©ãƒ•ç›®å®‰ï¼ˆLOD0/1/2ã®å¢ƒç•Œï¼‰
 		constexpr float baseFrac[3] = { 0.1f, 0.05f, 0.01f };
 
-		// ŒW” kF‚½‚­‚³‚ño‚é/‰“‹ß•L‚¢¨‘‚ß‚É—‚Æ‚·i‘å‚«‚­j
+		// ä¿‚æ•° kï¼šãŸãã•ã‚“å‡ºã‚‹/é è¿‘å¹…åºƒã„â†’æ—©ã‚ã«è½ã¨ã™ï¼ˆå¤§ããï¼‰
 		float perfPush =
 			0.10f * std::clamp(lg10(float((std::max)(1u, a.instancesPeak))), 0.0f, 2.0f) +
 			0.08f * std::clamp(lg10((std::max)(1.0f, a.viewMax / (std::max)(0.5f, a.viewMin))), 0.0f, 2.0f);
 
-		// •i¿Šñ‚è—vˆöFƒq[ƒ[/ƒXƒLƒ“/ƒJƒbƒgƒAƒEƒg ¨ ”S‚éi¬‚³‚­j
+		// å“è³ªå¯„ã‚Šè¦å› ï¼šãƒ’ãƒ¼ãƒ­ãƒ¼/ã‚¹ã‚­ãƒ³/ã‚«ãƒƒãƒˆã‚¢ã‚¦ãƒˆ â†’ ç²˜ã‚‹ï¼ˆå°ã•ãï¼‰
 		float qualPull =
 			(a.hero ? 0.15f : 0.0f) +
 			(a.skinned ? 0.10f : 0.0f) +
@@ -26,14 +26,14 @@ namespace SFW::Graphics {
 
 		float k = std::clamp(1.0f + perfPush - qualPull, 0.6f, 1.6f);
 
-		// ‰æ–Ê–ÊÏ”ä ¨ Šî€‰ğ‘œ“xƒsƒNƒZƒ‹‚Ö•ÏŠ·
+		// ç”»é¢é¢ç©æ¯” â†’ åŸºæº–è§£åƒåº¦ãƒ”ã‚¯ã‚»ãƒ«ã¸å¤‰æ›
 		const float basePixels = float(baseW * baseH);
 		for (int i = 0; i < 3; ++i) {
-			float depthMul = 1.0f + 0.05f * i; // [‚¢ LOD ‚Ù‚Ç­‚µŒµ‚µ‚­
+			float depthMul = 1.0f + 0.05f * i; // æ·±ã„ LOD ã»ã©å°‘ã—å³ã—ã
 			float frac = std::clamp(baseFrac[i] * k * depthMul, 0.005f, 0.6f);
 			th.Tpx[i] = frac * basePixels;
 		}
-		th.Tpx[3] = 0.0f; // ”Ô•º
+		th.Tpx[3] = 0.0f; // ç•ªå…µ
 		if (a.hero) { th.hysteresisUp = 0.20f; th.hysteresisDown = 0.12f; }
 
 		return th;
@@ -44,18 +44,18 @@ namespace SFW::Graphics {
 	{
 		if (lodCount <= 1) return 0;
 
-		// ÀƒsƒNƒZƒ‹ ¨ Šî€‰ğ‘œ“xŠ·ZƒsƒNƒZƒ‹ sP
+		// å®Ÿãƒ”ã‚¯ã‚»ãƒ« â†’ åŸºæº–è§£åƒåº¦æ›ç®—ãƒ”ã‚¯ã‚»ãƒ« sP
 		float P = CoveragePixelsFromNdcArea(ndcAreaFrac, renderW, renderH);
 		float sP = ToBasePixels(P, renderW, renderH, th.baseW, th.baseH);
 
 		if (outSp) *outSp = sP;
 
-		// globalBiasF’i”ƒoƒCƒAƒXi}1’i à ‚µ‚«‚¢’l~2^}1 ‚ÌŠ´Šoj
+		// globalBiasï¼šæ®µæ•°ãƒã‚¤ã‚¢ã‚¹ï¼ˆÂ±1æ®µ â‰’ ã—ãã„å€¤Ã—2^Â±1 ã®æ„Ÿè¦šï¼‰
 		float biasScale = std::pow(2.0f, globalBias);
 
 		auto T = [&](int i, bool up) {
 			float h = up ? (1.0f + th.hysteresisUp) : (1.0f - th.hysteresisDown);
-			// [‚¢ LOD ‚Ù‚Ç­‚µ‚¾‚¯’²®i“¯‚¶Š´Šo‚ğ“¥Pj
+			// æ·±ã„ LOD ã»ã©å°‘ã—ã ã‘èª¿æ•´ï¼ˆåŒã˜æ„Ÿè¦šã‚’è¸è¥²ï¼‰
 			return th.Tpx[i] * biasScale * (1.0f - 0.1f * i) * h;
 			};
 
@@ -73,7 +73,7 @@ namespace SFW::Graphics {
 
 	Extents ExtentsFromAABB(const Math::AABB3f& aabb)
 	{
-		// size() = ub - lb ‚ªg‚¦‚é‘O’ñ
+		// size() = ub - lb ãŒä½¿ãˆã‚‹å‰æ
 		const auto s = aabb.size(); // Vec3f
 		Extents e;
 		e.ex = 0.5f * (std::max)(s.x, 0.0f);
@@ -82,13 +82,13 @@ namespace SFW::Graphics {
 		return e;
 	}
 
-	// LOD ‚µ‚«‚¢’liŠî€‰ğ‘œ“x Pxj‚É‘Î‚µ‚Ä sP ‚ªg‹ß‚¢h‚©
+	// LOD ã—ãã„å€¤ï¼ˆåŸºæº–è§£åƒåº¦ Pxï¼‰ã«å¯¾ã—ã¦ sP ãŒâ€œè¿‘ã„â€ã‹
 	static bool NearAnyLodBoundary_BasePx(float sP, const LodThresholdsPx& th, int lodCount, float bandFrac)
 	{
-		const int lastIdx = (std::max)(0, (std::min)(lodCount - 2, 2)); // 0..2 ‚Ü‚Å
+		const int lastIdx = (std::max)(0, (std::min)(lodCount - 2, 2)); // 0..2 ã¾ã§
 		for (int i = 0; i <= lastIdx; ++i) {
 			const float T = th.Tpx[i];
-			const float band = (std::max)(1.0f, T * bandFrac); // Å’á 1px
+			const float band = (std::max)(1.0f, T * bandFrac); // æœ€ä½ 1px
 			if (std::fabs(sP - T) <= band) return true;
 		}
 		return false;
@@ -106,39 +106,39 @@ namespace SFW::Graphics {
 		RefineState st{};
 
 		if (!sphereRect.valid || sphereRect.wmin <= 0.0f) {
-			return st; // –³Œø or — ‘¤ ¨ Ä“Š‰e•s—v
+			return st; // ç„¡åŠ¹ or è£å´ â†’ å†æŠ•å½±ä¸è¦
 		}
 
-		// ÀƒsƒNƒZƒ‹ ¨ Šî€‰ğ‘œ“xŠ·ZƒsƒNƒZƒ‹
+		// å®Ÿãƒ”ã‚¯ã‚»ãƒ« â†’ åŸºæº–è§£åƒåº¦æ›ç®—ãƒ”ã‚¯ã‚»ãƒ«
 		ndcAreaFrac = clamp01(ndcAreaFrac);
 		const float P = ndcAreaFrac * float(renderW * renderH);
 		const float sP = ToBasePixels(P, renderW, renderH, policy.baseW, policy.baseH);
 
-		// 1) ’†ŠÔ‘ÑiB–†‘Ñˆæj
+		// 1) ä¸­é–“å¸¯ï¼ˆæ›–æ˜§å¸¯åŸŸï¼‰
 		if (sP > policy.midBandMinPxBase && sP < policy.midBandMaxPxBase) {
 			st.reasons |= RefineReason::MidBand;
 		}
 
-		// 2) ×’·‚¢ AABB
+		// 2) ç´°é•·ã„ AABB
 		const float emax = (std::max)({ e.ex, e.ey, e.ez });
 		const float emin = (std::max)(1e-6f, (std::min)({ e.ex, e.ey, e.ez }));
 		if (emax / emin >= policy.elongationRatio) {
 			st.reasons |= RefineReason::Elongated;
 		}
 
-		// 3) ‹ßƒNƒŠƒbƒv‹ß–T
+		// 3) è¿‘ã‚¯ãƒªãƒƒãƒ—è¿‘å‚
 		if (zCam <= (std::max)(nearZ, 1e-6f) * policy.nearClipMul) {
 			st.reasons |= RefineReason::NearClip;
 		}
 
-		// 4) NDC ’[‚ÉÚG
+		// 4) NDC ç«¯ã«æ¥è§¦
 		const float ax = (std::max)(std::fabs(sphereRect.xmin), std::fabs(sphereRect.xmax));
 		const float ay = (std::max)(std::fabs(sphereRect.ymin), std::fabs(sphereRect.ymax));
 		if (ax >= policy.edgeNdcAbs || ay >= policy.edgeNdcAbs) {
 			st.reasons |= RefineReason::NearEdge;
 		}
 
-		// 5) LOD ‹«ŠE•t‹ß
+		// 5) LOD å¢ƒç•Œä»˜è¿‘
 		if (NearAnyLodBoundary_BasePx(sP, lodPx, lodCount, policy.lodBoundaryBandFrac)) {
 			st.reasons |= RefineReason::LodBoundary;
 		}

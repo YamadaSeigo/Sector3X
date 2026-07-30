@@ -1,4 +1,4 @@
-/*
+﻿/*
 MP3 audio decoder. Choice of public domain or MIT-0. See license statements at the end of this file.
 dr_mp3 - v0.5.5 - 2020-01-29
 

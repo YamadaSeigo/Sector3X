@@ -1,4 +1,4 @@
-#include "Graphics/DX11/DX11LightShadowResourceService.h"
+ï»¿#include "Graphics/DX11/DX11LightShadowResourceService.h"
 
 namespace SFW
 {
@@ -28,7 +28,7 @@ namespace SFW
 
 		bool LightShadowResourceService::CreateResources(ID3D11Device* device)
 		{
-			// Šù‘¶‚ğ”jŠüiComPtr ‚Í‘ã“ü‚ÅƒŠƒZƒbƒg‚³‚ê‚éj
+			// æ—¢å­˜ã‚’ç ´æ£„ï¼ˆComPtr ã¯ä»£å…¥ã§ãƒªã‚»ãƒƒãƒˆã•ã‚Œã‚‹ï¼‰
 			m_shadowTex.Reset();
 			m_shadowSRV.Reset();
 
@@ -48,7 +48,7 @@ namespace SFW
 			texDesc.Height = m_config.height;
 			texDesc.MipLevels = 1;
 			texDesc.ArraySize = m_cascadeCount;
-			texDesc.Format = m_config.texFormat; // R32_TYPELESS „§
+			texDesc.Format = m_config.texFormat; // R32_TYPELESS æ¨å¥¨
 			texDesc.SampleDesc.Count = 1;
 			texDesc.SampleDesc.Quality = 0;
 			texDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -59,7 +59,7 @@ namespace SFW
 			hr = device->CreateTexture2D(&texDesc, nullptr, &m_shadowTex);
 			if (FAILED(hr)) return false;
 
-			// ---------- 2) DSV (ŠeƒJƒXƒP[ƒh‚²‚Æ) ----------
+			// ---------- 2) DSV (å„ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰ã”ã¨) ----------
 			D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 			dsvDesc.Format = m_config.dsvFormat;
 			dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DARRAY;
@@ -74,7 +74,7 @@ namespace SFW
 				if (FAILED(hr)) return false;
 			}
 
-			// Viewport ‚à‚±‚±‚Åİ’è‚µ‚Ä‚¨‚­
+			// Viewport ã‚‚ã“ã“ã§è¨­å®šã—ã¦ãŠã
 			D3D11_VIEWPORT vp{};
 			vp.TopLeftX = 0.0f;
 			vp.TopLeftY = 0.0f;
@@ -96,7 +96,7 @@ namespace SFW
 			hr = device->CreateShaderResourceView(m_shadowTex.Get(), &srvDesc, &m_shadowSRV);
 			if (FAILED(hr)) return false;
 
-			// ---------- 4) ”äŠrƒTƒ“ƒvƒ‰ ----------
+			// ---------- 4) æ¯”è¼ƒã‚µãƒ³ãƒ—ãƒ© ----------
 			{
 				D3D11_SAMPLER_DESC sampDesc = {};
 				sampDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT;
@@ -115,14 +115,14 @@ namespace SFW
 				if (FAILED(hr)) return false;
 			}
 
-			// ---------- 5) DepthBias ƒ‰ƒXƒ^ƒ‰ƒCƒU ----------
+			// ---------- 5) DepthBias ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ ----------
 			{
 				D3D11_RASTERIZER_DESC rsDesc = {};
 				rsDesc.FillMode = D3D11_FILL_SOLID;
-				rsDesc.CullMode = D3D11_CULL_BACK; // •K—v‚É‰‚¶‚Ä FRONT/ NONE
+				rsDesc.CullMode = D3D11_CULL_BACK; // å¿…è¦ã«å¿œã˜ã¦ FRONT/ NONE
 				rsDesc.FrontCounterClockwise = TRUE;
-				rsDesc.DepthBias = 0;   // —v’²®
-				rsDesc.SlopeScaledDepthBias = 0.0f;   // —v’²®
+				rsDesc.DepthBias = 0;   // è¦èª¿æ•´
+				rsDesc.SlopeScaledDepthBias = 0.0f;   // è¦èª¿æ•´
 				rsDesc.DepthBiasClamp = 0.0f;
 				rsDesc.DepthClipEnable = FALSE;
 				rsDesc.ScissorEnable = FALSE;
@@ -133,7 +133,7 @@ namespace SFW
 				if (FAILED(hr)) return false;
 			}
 
-			// ---------- 6) ’è”ƒoƒbƒtƒ@ ----------
+			// ---------- 6) å®šæ•°ãƒãƒƒãƒ•ã‚¡ ----------
 			{
 				D3D11_BUFFER_DESC bd = {};
 				bd.ByteWidth = sizeof(CBShadowCascadesData);

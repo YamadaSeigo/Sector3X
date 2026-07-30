@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <SectorFW/Graphics/PointLightService.h>
 #include <SectorFW/Graphics/DX11/DX11LightShadowResourceService.h>
@@ -7,7 +7,7 @@ template<typename Partition>
 class LightShadowSystem : public ITypeSystem<
 	LightShadowSystem,
 	Partition,
-	ComponentAccess<>,//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
+	ComponentAccess<>,//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
 	ServiceContext<
 	InputService,
 	Graphics::I3DPerCameraService,
@@ -15,7 +15,7 @@ class LightShadowSystem : public ITypeSystem<
 	Graphics::LightShadowService,
 	Graphics::PointLightService,
 	Graphics::DX11::LightShadowResourceService
-	>>{//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	>>{//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	using Accessor = ComponentAccessor<>;
 public:
 	void StartImpl(
@@ -53,7 +53,7 @@ public:
 			});
 	}
 
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(
 		NoDeletePtr<InputService> inputService,
 		NoDeletePtr<Graphics::I3DPerCameraService> perCameraService,
@@ -114,7 +114,7 @@ public:
 			lightShadowService->SetDirectionalLight(dirLight);
 		}
 
-		//ƒJƒXƒP[ƒh‚Æƒ‰ƒCƒgƒf[ƒ^‚ÌXV
+		//ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰ã¨ãƒ©ã‚¤ãƒˆãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°
 		{
 			Graphics::CameraParams camParams;
 			camParams.view = perCameraService->MakeViewMatrix();
@@ -152,7 +152,7 @@ public:
 			uint32_t plCount = 0;
 			const auto* pointLightData = pointLightService->BuildGpuLights(plCount);
 
-			// CPU ‘¤‚Ìƒ‰ƒCƒgƒf[ƒ^‚ğ GPU ‘¤‚É“]‘—
+			// CPU å´ã®ãƒ©ã‚¤ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’ GPU å´ã«è»¢é€
 			cbUpdateDesc.buffer = resourceService->GetLightDataCB();
 			cbUpdateDesc.data = &cpuLightData;
 			cbUpdateDesc.size = sizeof(Graphics::CPULightData);

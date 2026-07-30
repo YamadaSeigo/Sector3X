@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <SectorFW/Graphics/PointLightService.h>
 #include <SectorFW/Graphics/DX11/DX11LightShadowResourceService.h>
@@ -12,12 +12,12 @@ template<typename Partition>
 class PointLightSystem : public ITypeSystem<
 	PointLightSystem,
 	Partition,
-	//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
+	//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
 	ComponentAccess<
 	Read<CPointLight>,
 	Read<CTransform>
 	>,
-	//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	ServiceContext<
 	Graphics::PointLightService,
 	Graphics::I3DPerCameraService
@@ -25,7 +25,7 @@ class PointLightSystem : public ITypeSystem<
 	using Accessor = ComponentAccessor<Read<CPointLight>, Read<CTransform>>;
 public:
 
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(Partition& partition,
 		NoDeletePtr<Graphics::PointLightService> pointLightService,
 		NoDeletePtr<Graphics::I3DPerCameraService> perCameraService) {
@@ -47,7 +47,7 @@ public:
 
 					auto desc = pointLightService->GetNoLock(light.handle);
 
-					//ƒtƒ‰ƒXƒ^ƒ€‚É“–‚½‚Á‚Ä‚¢‚È‚¯‚ê‚ÎƒXƒLƒbƒv
+					//ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã«å½“ãŸã£ã¦ã„ãªã‘ã‚Œã°ã‚¹ã‚­ãƒƒãƒ—
 					if (!fru.IntersectsSphere(pos + desc.offsetWS, desc.range)) continue;
 
 					pointLightService->PushShowHandle(light.handle, pos);

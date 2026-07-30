@@ -1,4 +1,4 @@
-/*
+﻿/*
 SFXR module for SoLoud audio engine
 Copyright (c) 2014 Jari Komppa
 Based on code (c) by Tomas Pettersson, re-licensed under zlib by permission

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 enum  { // AsmAdressingMode
 	AM_UNKNOWN = 0,
@@ -30,12 +30,12 @@ typedef struct INSTR
              2 - two-unsigned char instruction eg.: lda #$20
              3 - three-unsigned char instruction eg.: jmp $2000
              4 - three-unsigned char indirect instruction eg.: jmp ($2000)
-             5 - two-unsigned char zero slap eg.: lda $50
-             6 - two-unsigned char zero slap X indexed eg.: lda $60,x
-             7 - two-unsigned char zero slap Y indexed eg.: ldx $70,y
+             5 - two-unsigned char zeroï£°slap eg.: lda $50
+             6 - two-unsigned char zeroï£°slap X indexed eg.: lda $60,x
+             7 - two-unsigned char zeroï£°slap Y indexed eg.: ldx $70,y
              8 - three-unsigned char X indexed eg.: sta $8000,x
              9 - three-unsigned char Y indexed eg.: sta $8000,y
-            10 - two-unsigned char zero slap Y, indexed eg.: lda ($a0),Y
+            10 - two-unsigned char zeroï£°slap Y, indexed eg.: lda ($a0),Y
             11 - two-unsigned char zero slap X, indexed eg.: lda ($b0,X)
             12 - two-unsigned char relative jump eg.: beq $c000
 

@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   function_trait.h
- * @brief ŠÖ”‚Ì“Á’è‚ÌŒ^‚ª‚ ‚é‚©‚Ç‚¤‚©‚ğ’²‚×‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief é–¢æ•°ã®ç‰¹å®šã®å‹ãŒã‚ã‚‹ã‹ã©ã†ã‹ã‚’èª¿ã¹ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -10,11 +10,11 @@
 
 namespace SFW
 {
-	// ---- function_traitsiÅ¬ŒÀj ----
+	// ---- function_traitsï¼ˆæœ€å°é™ï¼‰ ----
 	template<class>
 	struct function_traits;
 
-	// ŠÖ”Œ^
+	// é–¢æ•°å‹
 	template<class R, class... A>
 	struct function_traits<R(A...)> {
 		using result_type = R;
@@ -22,17 +22,17 @@ namespace SFW
 		static constexpr std::size_t arity = sizeof...(A);
 	};
 
-	// ŠÖ”ƒ|ƒCƒ“ƒ^
+	// é–¢æ•°ãƒã‚¤ãƒ³ã‚¿
 	template<class R, class... A>
 	struct function_traits<R(*)(A...)> : function_traits<R(A...)> {};
 
-	// ŠÖ”QÆ
+	// é–¢æ•°å‚ç…§
 	template<class R, class... A>
 	struct function_traits<R(&)(A...)> : function_traits<R(A...)> {};
 	template<class R, class... A>
 	struct function_traits<R(&&)(A...)> : function_traits<R(A...)> {};
 
-	// ƒƒ“ƒoŠÖ”ƒ|ƒCƒ“ƒ^icv/ref/ noexcept ‚à‚´‚Á‚­‚è‘Î‰j
+	// ãƒ¡ãƒ³ãƒé–¢æ•°ãƒã‚¤ãƒ³ã‚¿ï¼ˆcv/ref/ noexcept ã‚‚ã–ã£ãã‚Šå¯¾å¿œï¼‰
 	template<class C, class R, class... A>
 	struct function_traits<R(C::*)(A...)> : function_traits<R(A...)> {};
 	template<class C, class R, class... A>
@@ -43,13 +43,13 @@ namespace SFW
 	struct function_traits<R(C::*)(A...) const&> : function_traits<R(A...)> {};
 	template<class C, class R, class... A>
 	struct function_traits<R(C::*)(A...) noexcept> : function_traits<R(A...)> {};
-	// •K—v‚È‚ç‘¼‚ÌCü‚à’Ç‰Á
+	// å¿…è¦ãªã‚‰ä»–ã®ä¿®é£¾ã‚‚è¿½åŠ 
 
-	// ƒ‰ƒ€ƒ_/ŠÖ”ƒIƒuƒWƒFƒNƒgFoperator() ‚©‚ç’Šo
+	// ãƒ©ãƒ ãƒ€/é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆï¼šoperator() ã‹ã‚‰æŠ½å‡º
 	template<class F>
 	struct function_traits : function_traits<decltype(&F::operator())> {};
 
-	// ---- U ‚ğŠÜ‚Ş‚©H ----
+	// ---- U ã‚’å«ã‚€ã‹ï¼Ÿ ----
 
 	template<class F, class U>
 	struct function_mentions

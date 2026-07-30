@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Grid2DPartition.h
- * @brief 2DƒOƒŠƒbƒhƒp[ƒeƒBƒVƒ‡ƒ“‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief 2Dã‚°ãƒªãƒƒãƒ‰ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -16,32 +16,32 @@
 #include "../Util/Grid.hpp"
 
  //==========================================================================
- // ¦Œ»óƒtƒ‰ƒXƒ^ƒ€ƒJƒŠƒ“ƒO‚Å‚Æ‚è‚ ‚¦‚¸ymin‚Æymax‚ğchunkSize‚É‚µ‚Ä‚¢‚é‚Ì‚ÅŒë”»’è‚ğ‚·‚é‚±‚Æ‚ª‚ ‚é
- // i–{—ˆ‚Íƒ`ƒƒƒ“ƒN‚ÉEntity‚ğ‰Á‚¦‚éÛ‚ÉAABB‚ğXV‚µ‚Ä‚¨‚«A‚»‚±‚©‚ç³Šm‚É”»’è‚·‚é‚×‚«j
+ // â€»ç¾çŠ¶ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚«ãƒªãƒ³ã‚°ã§ã¨ã‚Šã‚ãˆãšyminã¨ymaxã‚’chunkSizeã«ã—ã¦ã„ã‚‹ã®ã§èª¤åˆ¤å®šã‚’ã™ã‚‹ã“ã¨ãŒã‚ã‚‹
+ // ï¼ˆæœ¬æ¥ã¯ãƒãƒ£ãƒ³ã‚¯ã«Entityã‚’åŠ ãˆã‚‹éš›ã«AABBã‚’æ›´æ–°ã—ã¦ãŠãã€ãã“ã‹ã‚‰æ­£ç¢ºã«åˆ¤å®šã™ã‚‹ã¹ãï¼‰
  //==========================================================================
 
 namespace SFW
 {
 	/**
-	 * @brief 2D(x-z)ƒOƒŠƒbƒhƒp[ƒeƒBƒVƒ‡ƒ“‚ğ•\‚·ƒNƒ‰ƒX
+	 * @brief 2D(x-z)ã‚°ãƒªãƒƒãƒ‰ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã‚’è¡¨ã™ã‚¯ãƒ©ã‚¹
 	 */
 	class Grid2DPartition
 	{
 	public:
 		/**
-		 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @param chunkWidth ƒ`ƒƒƒ“ƒN‚Ì•
-		 * @param chunkHeight ƒ`ƒƒƒ“ƒN‚Ì‚‚³
-		 * @param chunkSize ƒ`ƒƒƒ“ƒN‚ÌƒTƒCƒY
+		 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @param chunkWidth ãƒãƒ£ãƒ³ã‚¯ã®å¹…
+		 * @param chunkHeight ãƒãƒ£ãƒ³ã‚¯ã®é«˜ã•
+		 * @param chunkSize ãƒãƒ£ãƒ³ã‚¯ã®ã‚µã‚¤ã‚º
 		 */
 		explicit Grid2DPartition(Math::Vec3f originWS, ChunkSizeType chunkWidth, ChunkSizeType chunkHeight, float chunkSize) noexcept :
 			levelOriginWS(originWS), grid(chunkWidth, chunkHeight), chunkSize(chunkSize) {
 		}
 		/**
-		 * @brief w’è‚µ‚½ˆÊ’u‚ÉŠî‚Ã‚¢‚Äƒ`ƒƒƒ“ƒN‚ğæ“¾‚µ‚Ü‚·B
-		 * @param wp ˆÊ’uiƒ[ƒ‹ƒhÀ•Wj
-		 * @param policy ƒAƒEƒgƒIƒuƒoƒEƒ“ƒYƒ|ƒŠƒV[
-		 * @return std::optional<SpatialChunk*> ƒ`ƒƒƒ“ƒN‚Ö‚Ìƒ|ƒCƒ“ƒ^
+		 * @brief æŒ‡å®šã—ãŸä½ç½®ã«åŸºã¥ã„ã¦ãƒãƒ£ãƒ³ã‚¯ã‚’å–å¾—ã—ã¾ã™ã€‚
+		 * @param wp ä½ç½®ï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ï¼‰
+		 * @param policy ã‚¢ã‚¦ãƒˆã‚ªãƒ–ãƒã‚¦ãƒ³ã‚ºãƒãƒªã‚·ãƒ¼
+		 * @return std::optional<SpatialChunk*> ãƒãƒ£ãƒ³ã‚¯ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 		 */
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f wp,
 			SpatialChunkRegistry& reg, LevelID level,
@@ -52,8 +52,8 @@ namespace SFW
 			using Signed = long long;
 			const Signed cx = static_cast<Signed>(std::floor(double(localPos.x) / double(chunkSize)));
 			const Signed cz = static_cast<Signed>(std::floor(double(localPos.z) / double(chunkSize)));
-			const Signed w = static_cast<Signed>(grid.width());   // X•ûŒüƒZƒ‹”
-			const Signed d = static_cast<Signed>(grid.height());  // Z•ûŒüƒZƒ‹”i–¼‚Íheight‚Å‚àˆÓ–¡‚ÍDepthj
+			const Signed w = static_cast<Signed>(grid.width());   // Xæ–¹å‘ã‚»ãƒ«æ•°
+			const Signed d = static_cast<Signed>(grid.height());  // Zæ–¹å‘ã‚»ãƒ«æ•°ï¼ˆåã¯heightã§ã‚‚æ„å‘³ã¯Depthï¼‰
 
 			if (policy == EOutOfBoundsPolicy::ClampToEdge) {
 				const Signed ix = std::clamp<Signed>(cx, 0, w - 1);
@@ -65,24 +65,24 @@ namespace SFW
 			return &grid(static_cast<ChunkSizeType>(cx), static_cast<ChunkSizeType>(cz));
 		}
 		/**
-		 * @brief ƒOƒŠƒbƒh‚ğæ“¾‚µ‚Ü‚·B
-		 * @return const Grid2D<SpatialChunk, ChunkSizeType>& ƒOƒŠƒbƒh‚Ö‚ÌQÆ
+		 * @brief ã‚°ãƒªãƒƒãƒ‰ã‚’å–å¾—ã—ã¾ã™ã€‚
+		 * @return const Grid2D<SpatialChunk, ChunkSizeType>& ã‚°ãƒªãƒƒãƒ‰ã¸ã®å‚ç…§
 		 */
 		const Grid2D<SpatialChunk, ChunkSizeType>& GetGrid() const noexcept {
 			return grid;
 		}
 		/**
-		 * @brief ƒOƒ[ƒoƒ‹ƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[‚ğæ“¾‚µ‚Ü‚·B
-		 * @return ECS::EntityManager& ƒOƒ[ƒoƒ‹ƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[‚Ö‚ÌQÆ
+		 * @brief ã‚°ãƒ­ãƒ¼ãƒãƒ«ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚’å–å¾—ã—ã¾ã™ã€‚
+		 * @return ECS::EntityManager& ã‚°ãƒ­ãƒ¼ãƒãƒ«ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã¸ã®å‚ç…§
 		 */
 		ECS::EntityManager& GetGlobalEntityManager() noexcept {
 			return globalEntityManager;
 		}
 
 		/**
-		 * @brief ‰Šú“o˜^F‘SƒZƒ‹‚ğ Registry ‚É“o˜^‚µANodeKey ‚ğ–„‚ß‚é
-		 * @param reg “o˜^æ‚ÌƒŒƒWƒXƒgƒŠ
-		 * @param level ƒŒƒxƒ‹ID
+		 * @brief åˆæœŸç™»éŒ²ï¼šå…¨ã‚»ãƒ«ã‚’ Registry ã«ç™»éŒ²ã—ã€NodeKey ã‚’åŸ‹ã‚ã‚‹
+		 * @param reg ç™»éŒ²å…ˆã®ãƒ¬ã‚¸ã‚¹ãƒˆãƒª
+		 * @param level ãƒ¬ãƒ™ãƒ«ID
 		 */
 		void RegisterAllChunks(SpatialChunkRegistry& reg, LevelID level) {
 			if (isRegistryChunk) return;
@@ -100,8 +100,8 @@ namespace SFW
 			}
 		}
 		/**
-		 * @brief ‘SƒGƒ“ƒeƒBƒeƒB”‚ğæ“¾‚µ‚Ü‚·B
-		 * @return size_t ‘SƒGƒ“ƒeƒBƒeƒB”
+		 * @brief å…¨ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£æ•°ã‚’å–å¾—ã—ã¾ã™ã€‚
+		 * @return size_t å…¨ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£æ•°
 		 */
 		size_t GetEntityNum() {
 			size_t num = globalEntityManager.GetEntityCount();
@@ -117,9 +117,9 @@ namespace SFW
 			return num;
 		}
 		/**
-		 * @brief ƒtƒ‰ƒXƒ^ƒ€ƒJƒŠƒ“ƒO‚ğs‚¢A‰Â‹‚Èƒ`ƒƒƒ“ƒN‚ÌƒŠƒXƒg‚ğæ“¾‚µ‚Ü‚·B
-		 * @param fr ƒtƒ‰ƒXƒ^ƒ€
-		 * @return std::vector<SpatialChunk*> ‰Â‹‚Èƒ`ƒƒƒ“ƒN‚ÌƒŠƒXƒg
+		 * @brief ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚«ãƒªãƒ³ã‚°ã‚’è¡Œã„ã€å¯è¦–ãªãƒãƒ£ãƒ³ã‚¯ã®ãƒªã‚¹ãƒˆã‚’å–å¾—ã—ã¾ã™ã€‚
+		 * @param fr ãƒ•ãƒ©ã‚¹ã‚¿ãƒ 
+		 * @return std::vector<SpatialChunk*> å¯è¦–ãªãƒãƒ£ãƒ³ã‚¯ã®ãƒªã‚¹ãƒˆ
 		 */
 		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr) const noexcept
 		{
@@ -143,8 +143,8 @@ namespace SFW
 			Signed iz0 = floor_div_z(frAabb.lb.z);
 			Signed iz1 = floor_div_z(frAabb.ub.z);
 
-			// ƒ}[ƒWƒ“Fƒtƒ‰ƒXƒ^ƒ€‚ÌAABB‚ÍƒZƒ‹‹«ŠE‚É‘Î‚µ‚ÄŒë·‚ª‚ ‚é‰Â”\«‚ª‚ ‚é‚½‚ßA­‚µ—]—T‚ğ‚½‚¹‚é
-			const Signed margin = 1; // ‚Ü‚¸‚Í1ƒZƒ‹B–â‘è‚ªc‚é‚È‚ç‘‚â‚·
+			// ãƒãƒ¼ã‚¸ãƒ³ï¼šãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã®AABBã¯ã‚»ãƒ«å¢ƒç•Œã«å¯¾ã—ã¦èª¤å·®ãŒã‚ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ãŸã‚ã€å°‘ã—ä½™è£•ã‚’æŒãŸã›ã‚‹
+			const Signed margin = 1; // ã¾ãšã¯1ã‚»ãƒ«ã€‚å•é¡ŒãŒæ®‹ã‚‹ãªã‚‰å¢—ã‚„ã™
 
 			ix0 -= margin; ix1 += margin;
 			iz0 -= margin; iz1 += margin;
@@ -170,7 +170,7 @@ namespace SFW
 					auto& chunk = grid(static_cast<ChunkSizeType>(x), static_cast<ChunkSizeType>(z));
 					if (chunk.GetEntityManager().GetEntityCount() == 0) continue;
 
-					// ÅI”»’èFƒ`ƒƒƒ“ƒN‚ÌÀAABB‚ª‚ ‚é‚È‚ç‚»‚ê‚ğg‚¤
+					// æœ€çµ‚åˆ¤å®šï¼šãƒãƒ£ãƒ³ã‚¯ã®å®ŸAABBãŒã‚ã‚‹ãªã‚‰ãã‚Œã‚’ä½¿ã†
 					if (chunk.HasStaticBounds()) {
 						if (fr.IntersectsAABB(chunk.GetStaticBoundsWS())) {
 							out.push_back(const_cast<SpatialChunk*>(&chunk));
@@ -178,7 +178,7 @@ namespace SFW
 						continue;
 					}
 
-					// ƒtƒH[ƒ‹ƒoƒbƒNiÀAABB–³‚µjF]—ˆ‚ÌƒZƒ‹AABB + YOverlap
+					// ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ï¼ˆå®ŸAABBç„¡ã—ï¼‰ï¼šå¾“æ¥ã®ã‚»ãƒ«AABB + YOverlap
 					const float cx = levelOriginWS.x + (float(x) + 0.5f) * cell;
 					const float cz = levelOriginWS.z + (float(z) + 0.5f) * cell;
 
@@ -197,7 +197,7 @@ namespace SFW
 			return out;
 		}
 
-		// i”CˆÓjƒAƒƒP[ƒVƒ‡ƒ“‰ñ”ğ‚ÌƒR[ƒ‹ƒoƒbƒN”Å
+		// ï¼ˆä»»æ„ï¼‰ã‚¢ãƒ­ã‚±ãƒ¼ã‚·ãƒ§ãƒ³å›é¿ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ç‰ˆ
 		template<class F>
 		void CullChunks(const Math::Frustumf& fr, float ymin, float ymax, F&& f) const noexcept
 		{
@@ -220,8 +220,8 @@ namespace SFW
 			Signed iz0 = floor_div_z(frAabb.lb.z);
 			Signed iz1 = floor_div_z(frAabb.ub.z);
 
-			// ƒ}[ƒWƒ“Fƒtƒ‰ƒXƒ^ƒ€‚ÌAABB‚ÍƒZƒ‹‹«ŠE‚É‘Î‚µ‚ÄŒë·‚ª‚ ‚é‰Â”\«‚ª‚ ‚é‚½‚ßA­‚µ—]—T‚ğ‚½‚¹‚é
-			const Signed margin = 1; // ‚Ü‚¸‚Í1ƒZƒ‹B–â‘è‚ªc‚é‚È‚ç‘‚â‚·
+			// ãƒãƒ¼ã‚¸ãƒ³ï¼šãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã®AABBã¯ã‚»ãƒ«å¢ƒç•Œã«å¯¾ã—ã¦èª¤å·®ãŒã‚ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ãŸã‚ã€å°‘ã—ä½™è£•ã‚’æŒãŸã›ã‚‹
+			const Signed margin = 1; // ã¾ãšã¯1ã‚»ãƒ«ã€‚å•é¡ŒãŒæ®‹ã‚‹ãªã‚‰å¢—ã‚„ã™
 
 			ix0 -= margin; ix1 += margin;
 			iz0 -= margin; iz1 += margin;
@@ -271,8 +271,8 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ˆÊ’u(center)‚Æ”¼Œa(radius)‚Åƒ`ƒƒƒ“ƒN‚ğƒJƒŠƒ“ƒO‚·‚éiXZ ‚Ì Circle vs chunk AABBj
-		 *        Grid2D ‚Íu’n–Êvˆµ‚¢iY ‚Í–³‹j‚Æ‚µ‚ÄAXZ ‚Ì‚İ‚Å”»’è‚µ‚Ü‚·B
+		 * @brief ä½ç½®(center)ã¨åŠå¾„(radius)ã§ãƒãƒ£ãƒ³ã‚¯ã‚’ã‚«ãƒªãƒ³ã‚°ã™ã‚‹ï¼ˆXZ ã® Circle vs chunk AABBï¼‰
+		 *        Grid2D ã¯ã€Œåœ°é¢ã€æ‰±ã„ï¼ˆY ã¯ç„¡è¦–ï¼‰ã¨ã—ã¦ã€XZ ã®ã¿ã§åˆ¤å®šã—ã¾ã™ã€‚
 		 */
 		std::vector<SpatialChunk*> CullChunks(const Math::Vec3f& center, float radius) const noexcept
 		{
@@ -296,8 +296,8 @@ namespace SFW
 			Signed ix1 = floor_div(center.x + r);
 			Signed iz1 = floor_div(center.z + r);
 
-			// ƒ}[ƒWƒ“Fƒtƒ‰ƒXƒ^ƒ€‚ÌAABB‚ÍƒZƒ‹‹«ŠE‚É‘Î‚µ‚ÄŒë·‚ª‚ ‚é‰Â”\«‚ª‚ ‚é‚½‚ßA­‚µ—]—T‚ğ‚½‚¹‚é
-			const Signed margin = 1; // ‚Ü‚¸‚Í1ƒZƒ‹B–â‘è‚ªc‚é‚È‚ç‘‚â‚·
+			// ãƒãƒ¼ã‚¸ãƒ³ï¼šãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã®AABBã¯ã‚»ãƒ«å¢ƒç•Œã«å¯¾ã—ã¦èª¤å·®ãŒã‚ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ãŸã‚ã€å°‘ã—ä½™è£•ã‚’æŒãŸã›ã‚‹
+			const Signed margin = 1; // ã¾ãšã¯1ã‚»ãƒ«ã€‚å•é¡ŒãŒæ®‹ã‚‹ãªã‚‰å¢—ã‚„ã™
 
 			ix0 -= margin; ix1 += margin;
 			iz0 -= margin; iz1 += margin;
@@ -347,7 +347,7 @@ namespace SFW
 			return dx * dx + dy * dy + dz * dz;
 		}
 
-		// ‰Â‹ƒ`ƒƒƒ“ƒN‚ğuƒJƒƒ‰ˆÊ’u‚©‚ç‹ß‚¢‡v‚ÉãˆÊKŒ•Ô‚·
+		// å¯è¦–ãƒãƒ£ãƒ³ã‚¯ã‚’ã€Œã‚«ãƒ¡ãƒ©ä½ç½®ã‹ã‚‰è¿‘ã„é †ã€ã«ä¸Šä½Kä»¶è¿”ã™
 		std::vector<SpatialChunk*> CullChunksNear(const Math::Frustumf& fr,
 			const Math::Vec3f& camPos,
 			size_t maxCount = (std::numeric_limits<size_t>::max)()) const noexcept
@@ -376,8 +376,8 @@ namespace SFW
 			Signed iz0 = floor_div_z(frAabb.lb.z);
 			Signed iz1 = floor_div_z(frAabb.ub.z);
 
-			// ƒ}[ƒWƒ“Fƒtƒ‰ƒXƒ^ƒ€‚ÌAABB‚ÍƒZƒ‹‹«ŠE‚É‘Î‚µ‚ÄŒë·‚ª‚ ‚é‰Â”\«‚ª‚ ‚é‚½‚ßA­‚µ—]—T‚ğ‚½‚¹‚é
-			const Signed margin = 1; // ‚Ü‚¸‚Í1ƒZƒ‹B–â‘è‚ªc‚é‚È‚ç‘‚â‚·
+			// ãƒãƒ¼ã‚¸ãƒ³ï¼šãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã®AABBã¯ã‚»ãƒ«å¢ƒç•Œã«å¯¾ã—ã¦èª¤å·®ãŒã‚ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ãŸã‚ã€å°‘ã—ä½™è£•ã‚’æŒãŸã›ã‚‹
+			const Signed margin = 1; // ã¾ãšã¯1ã‚»ãƒ«ã€‚å•é¡ŒãŒæ®‹ã‚‹ãªã‚‰å¢—ã‚„ã™
 
 			ix0 -= margin; ix1 += margin;
 			iz0 -= margin; iz1 += margin;
@@ -403,7 +403,7 @@ namespace SFW
 					auto& chunk = grid(static_cast<ChunkSizeType>(x), static_cast<ChunkSizeType>(z));
 					if (chunk.GetEntityManager().GetEntityCount() == 0) continue;
 
-					// ÅI”»’èFƒ`ƒƒƒ“ƒN‚ÌÀAABB‚ª‚ ‚é‚È‚ç‚»‚ê‚ğg‚¤
+					// æœ€çµ‚åˆ¤å®šï¼šãƒãƒ£ãƒ³ã‚¯ã®å®ŸAABBãŒã‚ã‚‹ãªã‚‰ãã‚Œã‚’ä½¿ã†
 					if (chunk.HasStaticBounds()) {
 						const auto& bounds = chunk.GetStaticBoundsWS();
 						if (fr.IntersectsAABB(bounds)) {
@@ -414,7 +414,7 @@ namespace SFW
 						continue;
 					}
 
-					// ƒtƒH[ƒ‹ƒoƒbƒNiÀAABB–³‚µjF]—ˆ‚ÌƒZƒ‹AABB + YOverlap
+					// ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ï¼ˆå®ŸAABBç„¡ã—ï¼‰ï¼šå¾“æ¥ã®ã‚»ãƒ«AABB + YOverlap
 					const float cx = levelOriginWS.x + (float(x) + 0.5f) * cell;
 					const float cz = levelOriginWS.z + (float(z) + 0.5f) * cell;
 
@@ -452,23 +452,23 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒtƒ‰ƒXƒ^ƒ€ƒJƒŠƒ“ƒO‚ğs‚¢A‰Â‹‚Èƒ`ƒƒƒ“ƒN‚ÌƒƒCƒ„[ƒtƒŒ[ƒ€ƒ‰ƒCƒ“‚ğæ“¾‚µ‚Ü‚·B
-		 * @param fr ƒtƒ‰ƒXƒ^ƒ€
-		 * @param cp ƒJƒƒ‰ˆÊ’u
-		 * @param hy ƒ`ƒƒƒ“ƒN‚Ì‚‚³‚Ì”¼•ª
-		 * @param outLine o—Íæ‚Ìƒ‰ƒCƒ“ƒoƒbƒtƒ@
-		 * @param capacity ƒ‰ƒCƒ“ƒoƒbƒtƒ@‚Ì—e—Êi’¸“_”j
-		 * @param displayCount •\¦‹——£iƒ`ƒƒƒ“ƒN”j
-		 * @return uint32_t —LŒø‚Èƒ‰ƒCƒ“’¸“_”
+		 * @brief ãƒ•ãƒ©ã‚¹ã‚¿ãƒ ã‚«ãƒªãƒ³ã‚°ã‚’è¡Œã„ã€å¯è¦–ãªãƒãƒ£ãƒ³ã‚¯ã®ãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ©ã‚¤ãƒ³ã‚’å–å¾—ã—ã¾ã™ã€‚
+		 * @param fr ãƒ•ãƒ©ã‚¹ã‚¿ãƒ 
+		 * @param cp ã‚«ãƒ¡ãƒ©ä½ç½®
+		 * @param hy ãƒãƒ£ãƒ³ã‚¯ã®é«˜ã•ã®åŠåˆ†
+		 * @param outLine å‡ºåŠ›å…ˆã®ãƒ©ã‚¤ãƒ³ãƒãƒƒãƒ•ã‚¡
+		 * @param capacity ãƒ©ã‚¤ãƒ³ãƒãƒƒãƒ•ã‚¡ã®å®¹é‡ï¼ˆé ‚ç‚¹æ•°ï¼‰
+		 * @param displayCount è¡¨ç¤ºè·é›¢ï¼ˆãƒãƒ£ãƒ³ã‚¯æ•°ï¼‰
+		 * @return uint32_t æœ‰åŠ¹ãªãƒ©ã‚¤ãƒ³é ‚ç‚¹æ•°
 		 */
 		uint32_t CullChunkLine(const Math::Frustumf& fr,
 			Math::Vec3f cp, float hy, Debug::LineVertex* outLine,
 			uint32_t capacity, uint32_t displayCount) const noexcept
 		{
-			// c‚è‚Í]—ˆ‚ÌƒZƒ‹AABB‚Å•\¦
+			// æ®‹ã‚Šã¯å¾“æ¥ã®ã‚»ãƒ«AABBã§è¡¨ç¤º
 			const uint32_t w = grid.width(), d = grid.height();
 			const float cell = float(chunkSize);
-			const float exz = 0.5f * cell; // x,z ‚ÍŠeƒZƒ‹‚Ì”¼Œa
+			const float exz = 0.5f * cell; // x,z ã¯å„ã‚»ãƒ«ã®åŠå¾„
 
 			uint32_t validCount = 0;
 			float maxLengthD2 = std::pow(displayCount * chunkSize, 2.0f);
@@ -485,14 +485,14 @@ namespace SFW
 					Math::Vec2 vec = { cx - cp.x, cz - cp.z };
 					float len = vec.lengthSquared();
 
-					if (len > maxLengthD2) continue; // •\¦‹——£ŠO
+					if (len > maxLengthD2) continue; // è¡¨ç¤ºè·é›¢å¤–
 
-					if (capacity - validCount < 30) break; // ƒ‰ƒCƒ“ƒoƒbƒtƒ@•s‘«
+					if (capacity - validCount < 30) break; // ãƒ©ã‚¤ãƒ³ãƒãƒƒãƒ•ã‚¡ä¸è¶³
 
 					float cyEff, eyEff;
 					if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz,
 						std::numeric_limits<float>::lowest(), (std::numeric_limits<float>::max)(), cyEff, eyEff)) {
-						continue; // c‚ÉˆêØd‚È‚ç‚È‚¢ ¨ ‰Â‹‚É‚È‚è“¾‚È‚¢
+						continue; // ç¸¦ã«ä¸€åˆ‡é‡ãªã‚‰ãªã„ â†’ å¯è¦–ã«ãªã‚Šå¾—ãªã„
 					}
 
 					const Math::Vec3f center{ cx, cp.y, cz };
@@ -531,23 +531,23 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒZƒ‹‚ÌÄƒ[ƒhF‹Œ“o˜^‚ğŠO‚µAgeneration‚ÅÄ“o˜^
-		 * @param cx XƒZƒ‹À•W
-		 * @param cy ZƒZƒ‹À•W
-		 * @param reg “o˜^æ‚ÌƒŒƒWƒXƒgƒŠ
+		 * @brief ã‚»ãƒ«ã®å†ãƒ­ãƒ¼ãƒ‰æ™‚ï¼šæ—§ç™»éŒ²ã‚’å¤–ã—ã€generationã§å†ç™»éŒ²
+		 * @param cx Xã‚»ãƒ«åº§æ¨™
+		 * @param cy Zã‚»ãƒ«åº§æ¨™
+		 * @param reg ç™»éŒ²å…ˆã®ãƒ¬ã‚¸ã‚¹ãƒˆãƒª
 		 */
 		void ReloadCell(uint32_t cx, uint32_t cy, SpatialChunkRegistry& reg) {
 			SpatialChunk& cell = grid(cx, cy);
-			// ‹Œ¢‘ã‚ğƒAƒ“ƒŒƒWƒXƒg
+			// æ—§ä¸–ä»£ã‚’ã‚¢ãƒ³ãƒ¬ã‚¸ã‚¹ãƒˆ
 			reg.UnregisterOwner(cell.GetNodeKey());
-			// ¢‘ã‚µ‚ÄƒL[XVEÄ“o˜^
-			SpatialChunk newCell = std::move(cell); // ¶¬‚µ’¼‚·—¬‹V‚Å‚àOK
+			// ä¸–ä»£ã—ã¦ã‚­ãƒ¼æ›´æ–°ãƒ»å†ç™»éŒ²
+			SpatialChunk newCell = std::move(cell); // ç”Ÿæˆã—ç›´ã™æµå„€ã§ã‚‚OK
 			newCell.BumpGeneration();
 			reg.RegisterOwner(newCell.GetNodeKey(), &newCell);
 			grid(cx, cy) = std::move(newCell);
 		}
 		/*
-		* @brief ƒ`ƒƒƒ“ƒN‚ğƒŠƒZƒbƒg‚·‚é
+		* @brief ãƒãƒ£ãƒ³ã‚¯ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
 		*/
 		void CleanChunk()
 		{
@@ -562,12 +562,12 @@ namespace SFW
 		}
 	private:
 		/**
-		 * @brief 2DƒOƒŠƒbƒh‚Ìƒ`ƒƒƒ“ƒNƒL[‚ğì¬‚µ‚Ü‚·B
-		 * @param level ƒŒƒxƒ‹ID
-		 * @param gx XƒOƒŠƒbƒhÀ•W
-		 * @param gz ZƒOƒŠƒbƒhÀ•W
-		 * @param gen ¢‘ãiƒfƒtƒHƒ‹ƒg‚Í0j
-		 * @return SpatialChunkKey ƒ`ƒƒƒ“ƒNƒL[
+		 * @brief 2Dã‚°ãƒªãƒƒãƒ‰ã®ãƒãƒ£ãƒ³ã‚¯ã‚­ãƒ¼ã‚’ä½œæˆã—ã¾ã™ã€‚
+		 * @param level ãƒ¬ãƒ™ãƒ«ID
+		 * @param gx Xã‚°ãƒªãƒƒãƒ‰åº§æ¨™
+		 * @param gz Zã‚°ãƒªãƒƒãƒ‰åº§æ¨™
+		 * @param gen ä¸–ä»£ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯0ï¼‰
+		 * @return SpatialChunkKey ãƒãƒ£ãƒ³ã‚¯ã‚­ãƒ¼
 		 */
 		inline SpatialChunkKey MakeGrid2DKey(LevelID level, int32_t gx, int32_t gz, uint16_t gen = 0) {
 			SpatialChunkKey k{};
@@ -575,29 +575,29 @@ namespace SFW
 			k.scheme = PartitionScheme::Grid2D;
 			k.depth = 0;
 			k.generation = gen;
-			k.code = Morton2D64(ZigZag64(gx), ZigZag64(gz)); // © X,Z
+			k.code = Morton2D64(ZigZag64(gx), ZigZag64(gz)); // â† X,Z
 			return k;
 		}
 
 	private:
-		//ƒOƒ[ƒoƒ‹ƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[
+		//ã‚°ãƒ­ãƒ¼ãƒãƒ«ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 		ECS::EntityManager globalEntityManager;
-		//2DƒOƒŠƒbƒh•ªŠ„ƒ`ƒƒƒ“ƒNƒŠƒXƒg
+		//2Dã‚°ãƒªãƒƒãƒ‰åˆ†å‰²ãƒãƒ£ãƒ³ã‚¯ãƒªã‚¹ãƒˆ
 		Grid2D<SpatialChunk, ChunkSizeType> grid;
-		//ƒŒƒxƒ‹‚ÌŒ´“_(ƒ[ƒ‹ƒhÀ•W)
+		//ãƒ¬ãƒ™ãƒ«ã®åŸç‚¹(ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™)
 		Math::Vec3f levelOriginWS;
-		//ƒ`ƒƒƒ“ƒN‚ÌƒTƒCƒY
+		//ãƒãƒ£ãƒ³ã‚¯ã®ã‚µã‚¤ã‚º
 		float chunkSize;
-		//ƒ`ƒƒƒ“ƒN‚ğ“o˜^‚µ‚½‚©
+		//ãƒãƒ£ãƒ³ã‚¯ã‚’ç™»éŒ²ã—ãŸã‹
 		bool isRegistryChunk = false;
 	};
 
 	namespace ECS
 	{
 		/**
-		 * @brief Grid2DPartition‚ÌƒNƒGƒŠ‚ğ•\‚·ƒNƒ‰ƒX(“Áê‰»)
-		 * @param context Grid2DPartition‚ÌƒRƒ“ƒeƒLƒXƒg
-		 * @return std::vector<ArchetypeChunk*> ƒ}ƒbƒ`‚·‚éƒ`ƒƒƒ“ƒN‚ÌƒxƒNƒ^[
+		 * @brief Grid2DPartitionã®ã‚¯ã‚¨ãƒªã‚’è¡¨ã™ã‚¯ãƒ©ã‚¹(ç‰¹æ®ŠåŒ–)
+		 * @param context Grid2DPartitionã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
+		 * @return std::vector<ArchetypeChunk*> ãƒãƒƒãƒã™ã‚‹ãƒãƒ£ãƒ³ã‚¯ã®ãƒ™ã‚¯ã‚¿ãƒ¼
 		 */
 		template<>
 		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(Grid2DPartition& context) const noexcept
@@ -609,7 +609,7 @@ namespace SFW
 					const ComponentMask& mask = arch->GetMask();
 					if ((mask & required) == required && (mask & excluded).none()) {
 						const auto& chunks = arch->GetChunks();
-						// æ‚É•K—v•ª‚¾‚¯‚Ü‚Æ‚ß‚ÄŠg’£i•½‹Ï“I‚ÉÄŠm•Û‚ğŒ¸‚ç‚·j
+						// å…ˆã«å¿…è¦åˆ†ã ã‘ã¾ã¨ã‚ã¦æ‹¡å¼µï¼ˆå¹³å‡çš„ã«å†ç¢ºä¿ã‚’æ¸›ã‚‰ã™ï¼‰
 						result.reserve(result.size() + chunks.size());
 						for (const auto& ch : chunks) {
 							result.push_back(ch.get());
@@ -618,9 +618,9 @@ namespace SFW
 				}
 				};
 
-			// ƒOƒ[ƒoƒ‹
+			// ã‚°ãƒ­ãƒ¼ãƒãƒ«
 			collect_from(context.GetGlobalEntityManager());
-			// ‹óŠÔ‚²‚Æ
+			// ç©ºé–“ã”ã¨
 			const auto& grid = context.GetGrid();
 			for (const auto& spatial : grid) {
 				collect_from(spatial.GetEntityManager());

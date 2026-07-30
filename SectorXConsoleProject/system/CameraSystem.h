@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "graphics/DeferredRenderingService.h"
 #include "environment/FireflyService.h"
@@ -6,15 +6,15 @@
 #include "environment/RainService.h"
 
 /**
- * @brief ƒJƒƒ‰‚Ìƒoƒbƒtƒ@‚ÌXVAƒtƒ‹ƒXƒNƒŠ[ƒ“•`‰æ—p‚ÌƒJƒƒ‰ƒoƒbƒtƒ@‚ÆFireflyService‚ÌƒJƒƒ‰ƒoƒbƒtƒ@‚àXV,
+ * @brief ã‚«ãƒ¡ãƒ©ã®ãƒãƒƒãƒ•ã‚¡ã®æ›´æ–°ã€ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³æç”»ç”¨ã®ã‚«ãƒ¡ãƒ©ãƒãƒƒãƒ•ã‚¡ã¨FireflyServiceã®ã‚«ãƒ¡ãƒ©ãƒãƒƒãƒ•ã‚¡ã‚‚æ›´æ–°,
  */
 template<typename Partition>
 class CameraSystem : public ITypeSystem<
 	CameraSystem,
 	Partition,
-	//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
+	//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
 	ComponentAccess<>,
-	//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	ServiceContext<
 	InputService,
 	Graphics::I3DPerCameraService,
@@ -32,7 +32,7 @@ class CameraSystem : public ITypeSystem<
 
 	static constexpr float MOVE_SPEED_WHEEL_RATE = 0.5f;
 public:
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(
 		NoDeletePtr<InputService> inputService,
 		NoDeletePtr<Graphics::I3DPerCameraService> perCameraService,
@@ -46,9 +46,9 @@ public:
 #endif
 	)
 	{
-		//¦‚±‚±‚ÌƒfƒoƒbƒNˆ—‚ÍDX11ŒÅ—L‚È‚Ì‚ÅAperCameraService‚ªDX11”Å‚Å‚ ‚é‚±‚Æ‚ª‘O’ñ
+		//â€»ã“ã“ã®ãƒ‡ãƒãƒƒã‚¯å‡¦ç†ã¯DX11å›ºæœ‰ãªã®ã§ã€perCameraServiceãŒDX11ç‰ˆã§ã‚ã‚‹ã“ã¨ãŒå‰æ
 #ifdef _DEBUG
-		// ƒfƒoƒbƒO‚Ì‚½‚ß‚ÉƒJƒƒ‰ŒÅ’è
+		// ãƒ‡ãƒãƒƒã‚°ã®ãŸã‚ã«ã‚«ãƒ¡ãƒ©å›ºå®š
 		if (inputService->IsKeyTrigger(Input::Key::F2)) {
 			fixedCamera = !fixedCamera;
 			if (fixedCamera) {
@@ -58,7 +58,7 @@ public:
 				debugPitchAccum = perCameraService->GetPitchAccum();
 			}
 			else {
-				// Œ³‚É–ß‚·‚½‚ß‚É“K“–‚Èî•ñ‚ğƒZƒbƒg‚µ‚Äƒoƒbƒtƒ@‚ğXV
+				// å…ƒã«æˆ»ã™ãŸã‚ã«é©å½“ãªæƒ…å ±ã‚’ã‚»ãƒƒãƒˆã—ã¦ãƒãƒƒãƒ•ã‚¡ã‚’æ›´æ–°
 				perCameraService->Move({ 0.0f,0.0f,0.0f });
 			}
 		}
@@ -103,7 +103,7 @@ public:
 				moveSpeed = std::clamp(moveSpeed + (float)mouseWheelV * MOVE_SPEED_WHEEL_RATE * (std::max)(1.0f, moveSpeed / 20.0f), 0.1f, 200.0f);
 			}
 
-			//“K“–‚ÈdeltaTime
+			//é©å½“ãªdeltaTime
 			auto deltaMove = moveVec * static_cast<float>(1.0f / 60.0f);
 
 			debugEye += deltaMove;
@@ -113,22 +113,22 @@ public:
 				float sensX, sensY;
 				perCameraService->GetSensitivity(sensX, sensY);
 
-				// ƒ}ƒEƒX ¨ Šp“xi1px‚ ‚½‚è‰½ƒ‰ƒWƒAƒ“‰ñ‚·‚©‚ğ sens* ‚ÅŒˆ‚ß‚éj
-				float yaw = dx * sensX; // ‰E‚É“®‚©‚·‚Æ‰Eù‰ñ‚É‚µ‚½‚¢“™‚Å•„†’²®
+				// ãƒã‚¦ã‚¹ â†’ è§’åº¦ï¼ˆ1pxã‚ãŸã‚Šä½•ãƒ©ã‚¸ã‚¢ãƒ³å›ã™ã‹ã‚’ sens* ã§æ±ºã‚ã‚‹ï¼‰
+				float yaw = dx * sensX; // å³ã«å‹•ã‹ã™ã¨å³æ—‹å›ã«ã—ãŸã„ç­‰ã§ç¬¦å·èª¿æ•´
 				float pitch = dy * sensY;
 
-				// ƒsƒbƒ`§ŒÀiƒIƒXƒXƒF—İÏŠp‚ÅŠÇ—j
+				// ãƒ”ãƒƒãƒåˆ¶é™ï¼ˆã‚ªã‚¹ã‚¹ãƒ¡ï¼šç´¯ç©è§’ã§ç®¡ç†ï¼‰
 				float newPitch = std::clamp(debugPitchAccum + pitch, Math::Deg2Rad(-89.0f), Math::Deg2Rad(89.0f));
 				pitch = newPitch - debugPitchAccum;
 				debugPitchAccum = newPitch;
 
-				// 1) Yaw ‚ğƒ[ƒ‹ƒhUp‚Å“K—p
+				// 1) Yaw ã‚’ãƒ¯ãƒ¼ãƒ«ãƒ‰Upã§é©ç”¨
 				const Math::Vec3f worldUp{ 0,1,0 };
 				Math::Quatf qYaw = Math::Quatf::FromAxisAngle(worldUp, yaw);
 				debugRot = qYaw * debugRot;
 				debugRot.Normalize();
 
-				// 2) Yaw Œã‚Ì Right ‚ğæ‚è’¼‚µ‚Ä Pitch
+				// 2) Yaw å¾Œã® Right ã‚’å–ã‚Šç›´ã—ã¦ Pitch
 				Math::Vec3f right = debugRot.RotateVector(Math::Vec3f{ 1,0,0 });
 				Math::Quatf qPitch = Math::Quatf::FromAxisAngle(right, pitch);
 				debugRot = qPitch * debugRot;
@@ -139,7 +139,7 @@ public:
 
 			auto& buffer = debugCameraBuffer[currentSlot];
 
-			buffer.view = Math::MakeLookAtMatrixLH(debugEye, debugTarget, u);  // V‚µ‚¢ u ‚ğg—p
+			buffer.view = Math::MakeLookAtMatrixLH(debugEye, debugTarget, u);  // æ–°ã—ã„ u ã‚’ä½¿ç”¨
 			float fovRad = perCameraService->GetFOV();
 			float aspectRatio = perCameraService->GetAspectRatio();
 			float nearClip = perCameraService->GetNearClip();
@@ -154,9 +154,9 @@ public:
 				cbUpdateDesc.buffer = data.ref().buffer;
 			}
 
-			buffer.viewProj = buffer.proj * buffer.view; // ƒrƒ…[“Š‰es—ñ
+			buffer.viewProj = buffer.proj * buffer.view; // ãƒ“ãƒ¥ãƒ¼æŠ•å½±è¡Œåˆ—
 			cbUpdateDesc.data = &buffer;
-			cbUpdateDesc.isDelete = false; // XV‚Ííœ‚µ‚È‚¢
+			cbUpdateDesc.isDelete = false; // æ›´æ–°æ™‚ã¯å‰Šé™¤ã—ãªã„
 
 			cbUpdateDesc.size = sizeof(Graphics::CameraBuffer);
 			bufferManager->UpdateBuffer(cbUpdateDesc, currentSlot);
@@ -168,7 +168,7 @@ public:
 
 			auto fixedEye = perCameraService->GetEyePos();
 
-			//ƒfƒBƒtƒ@\ƒh—p‚Ìƒoƒbƒtƒ@XV
+			//ãƒ‡ã‚£ãƒ•ã‚¡â€•ãƒ‰ç”¨ã®ãƒãƒƒãƒ•ã‚¡æ›´æ–°
 			DeferredCameraBuffer lightCameraBufferData{};
 			lightCameraBufferData.viewProj = buffer.viewProj;
 			lightCameraBufferData.invViewProj = Math::Inverse(buffer.viewProj);
@@ -317,7 +317,7 @@ private:
 	float moveSpeed = 1.0f;
 
 #ifdef _DEBUG
-	//ƒJƒƒ‰‚Ìƒoƒbƒtƒ@ƒf[ƒ^
+	//ã‚«ãƒ¡ãƒ©ã®ãƒãƒƒãƒ•ã‚¡ãƒ‡ãƒ¼ã‚¿
 	Graphics::CameraBuffer debugCameraBuffer[Graphics::RENDER_BUFFER_COUNT] = {};
 
 	Math::Quatf debugRot;

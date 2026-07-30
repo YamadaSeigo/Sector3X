@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   ArchetypeManager.h
- * @brief ƒA[ƒLƒ^ƒCƒvƒ}ƒl[ƒWƒƒ[‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -15,15 +15,15 @@ namespace SFW
 	namespace ECS
 	{
 		/**
-		 * @brief ŠeƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN‚²‚Æ‚ÌƒA[ƒLƒ^ƒCƒvƒ`ƒƒƒ“ƒN‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+		 * @brief å„ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯ã”ã¨ã®ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒ£ãƒ³ã‚¯ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 		 */
 		class ArchetypeManager {
 		public:
 			/**
-			 * @brief ‘ÎÛ‚Ìƒ}ƒXƒN‚É‘Î‰‚·‚éƒA[ƒLƒ^ƒCƒv‚ğæ“¾‚Ü‚½‚Íì¬‚µ‚Ü‚·B
-			 * @details mask‚ÉSparseComponent‚ğ“ü‚ê‚Ä‚Í‚¢‚¯‚È‚¢
-			 * @param mask ‘ÎÛ‚ÌƒRƒ“ƒ|[ƒlƒ“ƒgƒ}ƒXƒN
-			 * @return ‘ÎÛ‚ÌƒA[ƒLƒ^ƒCƒvƒ|ƒCƒ“ƒ^
+			 * @brief å¯¾è±¡ã®ãƒã‚¹ã‚¯ã«å¯¾å¿œã™ã‚‹ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã‚’å–å¾—ã¾ãŸã¯ä½œæˆã—ã¾ã™ã€‚
+			 * @details maskã«SparseComponentã‚’å…¥ã‚Œã¦ã¯ã„ã‘ãªã„
+			 * @param mask å¯¾è±¡ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒã‚¹ã‚¯
+			 * @return å¯¾è±¡ã®ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒã‚¤ãƒ³ã‚¿
 			 */
 			Archetype* GetOrCreate(const ComponentMask& mask);
 
@@ -37,30 +37,30 @@ namespace SFW
 				return archetypeIndices;
 			}
 			/**
-			 * @brief ‚·‚×‚Ä‚ÌƒA[ƒLƒ^ƒCƒv‚ğæ“¾‚µ‚Ü‚·B
-			 * @return ƒA[ƒLƒ^ƒCƒv‚Ì”z—ñ‚ÌQÆ
+			 * @brief ã™ã¹ã¦ã®ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã‚’å–å¾—ã—ã¾ã™ã€‚
+			 * @return ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã®é…åˆ—ã®å‚ç…§
 			 */
 			const std::vector<std::unique_ptr<Archetype>>& GetAllData() const noexcept {
 				return archetypeData;
 			}
 		private:
-			//ƒA[ƒLƒ^ƒCƒvƒ}ƒl[ƒWƒƒ[‚ÌƒA[ƒLƒ^ƒCƒv‚ğŠi”[‚·‚éƒ}ƒbƒv
+			//ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã‚’æ ¼ç´ã™ã‚‹ãƒãƒƒãƒ—
 			std::unordered_map<ComponentMask, uint32_t> archetypeIndices;
-			//ÀÛ‚ÌƒA[ƒLƒ^ƒCƒv‚Ìƒf[ƒ^
+			//å®Ÿéš›ã®ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã®ãƒ‡ãƒ¼ã‚¿
 			std::vector<std::unique_ptr<Archetype>> archetypeData;
 		};
 
 		/**
-		 * @brief ƒGƒ“ƒeƒBƒeƒB‚ÌƒA[ƒLƒ^ƒCƒv‚ÌˆÊ’u‚ğ•\‚·\‘¢‘Ì
+		 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ã®ä½ç½®ã‚’è¡¨ã™æ§‹é€ ä½“
 		 */
 		struct EntityLocation {
 			ArchetypeChunk* chunk;
 			size_t index;
 		};
 		/**
-		 * @brief ArchetypeManager‚ÌƒNƒGƒŠ‚ğ•\‚·ƒNƒ‰ƒX(“Áê‰»)
-		 * @param context ƒA[ƒLƒ^ƒCƒvƒ}ƒl[ƒWƒƒ[‚ÌƒRƒ“ƒeƒLƒXƒg
-		 * @return std::vector<ArchetypeChunk*> ƒ}ƒbƒ`‚·‚éƒ`ƒƒƒ“ƒN‚ÌƒxƒNƒ^[
+		 * @brief ArchetypeManagerã®ã‚¯ã‚¨ãƒªã‚’è¡¨ã™ã‚¯ãƒ©ã‚¹(ç‰¹æ®ŠåŒ–)
+		 * @param context ã‚¢ãƒ¼ã‚­ã‚¿ã‚¤ãƒ—ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
+		 * @return std::vector<ArchetypeChunk*> ãƒãƒƒãƒã™ã‚‹ãƒãƒ£ãƒ³ã‚¯ã®ãƒ™ã‚¯ã‚¿ãƒ¼
 		 */
 		template<>
 		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(ArchetypeManager& context) const noexcept

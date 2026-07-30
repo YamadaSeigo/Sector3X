@@ -1,38 +1,38 @@
-#pragma once
+ï»¿#pragma once
 
 #include "environment/LeafService.h"
 #include "app/PlayerService.h"
 
 struct CLeafVolume
 {
-	// ‹óŠÔiÅ’áŒÀj
+	// ç©ºé–“ï¼ˆæœ€ä½é™ï¼‰
 	Math::Vec3f centerWS = {};
-	float       radius = 30.0f;    // ”­¶”ÍˆÍ
+	float       radius = 30.0f;    // ç™ºç”Ÿç¯„å›²
 
-	float orbitR = 2.0f;     // ‰ñ“]”¼Œa
-	float orbitW = 0.9f;     // ‰ñ“]‘¬“x(rad/s‚Å‚àOK)
-	float k = 8.0f; // ’Ç]‚Ì‹­‚³
+	float orbitR = 2.0f;     // å›è»¢åŠå¾„
+	float orbitW = 0.9f;     // å›è»¢é€Ÿåº¦(rad/sã§ã‚‚OK)
+	float k = 8.0f; // è¿½å¾“ã®å¼·ã•
 
-	// Œ©‚½–Úiemissive / bloom Šî€j
+	// è¦‹ãŸç›®ï¼ˆemissive / bloom åŸºæº–ï¼‰
 	Math::Vec3f color = { 1.0f, 1.0f, 1.0f };
 	float       intensity = 1.0f;
 
-	// ŒQ‚ê–§“xiGPU targetCount ‚ÌŒ³j
-	uint32_t    maxCountNear = 2000;    // ‹ß‹——£‚Å‚ÌÅ‘åŒÂ‘Ì”
+	// ç¾¤ã‚Œå¯†åº¦ï¼ˆGPU targetCount ã®å…ƒï¼‰
+	uint32_t    maxCountNear = 2000;    // è¿‘è·é›¢ã§ã®æœ€å¤§å€‹ä½“æ•°
 
-	// “®‚«iUpdateCS‚Åg‚¤j
+	// å‹•ãï¼ˆUpdateCSã§ä½¿ã†ï¼‰
 	float       speed = 1.0f;
 	float       noiseScale = 0.1f;
 
-	// LOD‹——£iCPU‚ªactive”»’èEtargetCountŒvZj
-	float       nearDistance = 0.1f;    // ‚±‚±‚æ‚è‹ß‚¢FmaxCountNear
-	float       farDistance = 20.0f;     // ‚±‚±‚æ‚è‰“‚¢Finactivei0j
+	// LODè·é›¢ï¼ˆCPUãŒactiveåˆ¤å®šãƒ»targetCountè¨ˆç®—ï¼‰
+	float       nearDistance = 0.1f;    // ã“ã“ã‚ˆã‚Šè¿‘ã„ï¼šmaxCountNear
+	float       farDistance = 20.0f;     // ã“ã“ã‚ˆã‚Šé ã„ï¼šinactiveï¼ˆ0ï¼‰
 
 	uint32_t seed = 0;
 
 	bool        isHit = false;
 
-	// —áFindex 20bit + generation 12bit = 32bit
+	// ä¾‹ï¼šindex 20bit + generation 12bit = 32bit
 	uint32_t MakeUID(uint32_t index, uint32_t gen)
 	{
 		return (gen << 20) | (index & ((1u << 20) - 1));
@@ -43,12 +43,12 @@ template<typename Partition>
 class LeafSystem : public ITypeSystem<
 	LeafSystem,
 	Partition,
-	//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
+	//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
 	ComponentAccess<
 	Write<CLeafVolume>,
 	Write<CSpatialMotionTag>
 	>,
-	//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	ServiceContext<
 	LeafService,
 	PlayerService,
@@ -59,7 +59,7 @@ class LeafSystem : public ITypeSystem<
 	using Accessor = ComponentAccessor<Write<CLeafVolume>, Write<CSpatialMotionTag>>;
 public:
 
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(Partition& partition,
 		LevelContext<Partition>& levelCtx,
 		NoDeletePtr<LeafService> leafService,
@@ -68,7 +68,7 @@ public:
 		NoDeletePtr<SpatialChunkRegistry> chunkReg) {
 		auto playerPos = playerService->GetPlayerPosition();
 
-		//ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚ğfireflyService‚É‚à‹³‚¦‚é
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ã‚’fireflyServiceã«ã‚‚æ•™ãˆã‚‹
 		leafService->SetPlayerPos(playerPos);
 
 		constexpr float chunkRadius = 200.0f;
@@ -100,29 +100,29 @@ public:
 
 				if (chasePlayer)
 				{
-					// dtiTimerService‚ÌAPI‚É‡‚í‚¹‚ÄC³j
-					const float dt = static_cast<float>(timerService->GetDeltaTime()); // <-- ‚±‚±‚¾‚¯‡‚í‚¹‚é
+					// dtï¼ˆTimerServiceã®APIã«åˆã‚ã›ã¦ä¿®æ­£ï¼‰
+					const float dt = static_cast<float>(timerService->GetDeltaTime()); // <-- ã“ã“ã ã‘åˆã‚ã›ã‚‹
 
 					const float t = leafService->GetElapsedTime();
 
-					// u‚Ü‚Æ‚í‚è‚Â‚­v—p‚Ì–Ú•WˆÊ’uFƒvƒŒƒCƒ„[ü‚è‚ğ‚Ó‚í‚Á‚Æ‰ñ‚·
-					const float orbitR = volume.orbitR;     // ‰ñ“]”¼Œa
-					const float orbitW = volume.orbitW;     // ‰ñ“]‘¬“x(rad/s‚Å‚àOK)
+					// ã€Œã¾ã¨ã‚ã‚Šã¤ãã€ç”¨ã®ç›®æ¨™ä½ç½®ï¼šãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å‘¨ã‚Šã‚’ãµã‚ã£ã¨å›ã™
+					const float orbitR = volume.orbitR;     // å›è»¢åŠå¾„
+					const float orbitW = volume.orbitW;     // å›è»¢é€Ÿåº¦(rad/sã§ã‚‚OK)
 					Math::Vec3f orbitOff{
 						std::cos(t * orbitW) * orbitR,
-						1.2f + std::sin(t * 1.7f) * 0.4f,   // ­‚µã‰º
+						1.2f + std::sin(t * 1.7f) * 0.4f,   // å°‘ã—ä¸Šä¸‹
 						std::sin(t * orbitW) * orbitR
 					};
 
 					Math::Vec3f target = playerPos + orbitOff;
 
-					// ’Ç]ó‘ÔiSystem“à static ‚Å\•ªF1ƒvƒŒƒCƒ„[‘z’èj
+					// è¿½å¾“çŠ¶æ…‹ï¼ˆSystemå†… static ã§ååˆ†ï¼š1ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æƒ³å®šï¼‰
 					static Math::Vec3f s_pos = target;
 					static Math::Vec3f s_vel = {};
 
-					// ‚Î‚Ë’Ç]iŒy‚¢/Œ©‚½–Ú—Ç‚¢j
-					const float k = volume.k;   // ’Ç]‚Ì‹­‚³
-					const float d = volume.radius;    // Œ¸Ši‘å‚«‚¢‚Ù‚Ç”S‚é/’x‚ê‚éj
+					// ã°ã­è¿½å¾“ï¼ˆè»½ã„/è¦‹ãŸç›®è‰¯ã„ï¼‰
+					const float k = volume.k;   // è¿½å¾“ã®å¼·ã•
+					const float d = volume.radius;    // æ¸›è¡°ï¼ˆå¤§ãã„ã»ã©ç²˜ã‚‹/é…ã‚Œã‚‹ï¼‰
 					Math::Vec3f a = (target - s_pos) * k - s_vel * d;
 
 					s_vel += a * dt;
@@ -136,7 +136,7 @@ public:
 				}
 
 				float distSqrt = (playerPos - volume.centerWS).lengthSquared();
-				// ”ÍˆÍŠO‚È‚ç“o˜^‚µ‚È‚¢
+				// ç¯„å›²å¤–ãªã‚‰ç™»éŒ²ã—ãªã„
 				if (distSqrt > volume.radius * volume.radius) {
 					continue;
 				}
@@ -147,7 +147,7 @@ public:
 
 				LeafVolumeGPU follow{};
 				follow.centerWS = volume.centerWS;
-				follow.radius = volume.radius;              // ƒvƒŒƒCƒ„[ü‚è‚Ì—t‚Á‚Ï”ÍˆÍ
+				follow.radius = volume.radius;              // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å‘¨ã‚Šã®è‘‰ã£ã±ç¯„å›²
 				follow.color = volume.color;
 				follow.intensity = volume.intensity;
 				follow.targetCount = targetCount;

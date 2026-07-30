@@ -1,4 +1,4 @@
-#include "Core/ECS/ArchetypeChunk.h"
+﻿#include "Core/ECS/ArchetypeChunk.h"
 #include "Debug/message.h"
 
 namespace SFW

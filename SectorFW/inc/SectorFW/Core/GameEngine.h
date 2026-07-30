@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   GameEngine.h
- * @brief  ƒQ[ƒ€ƒƒWƒbƒN‚ğÀs‚·‚éƒNƒ‰ƒX
+ * @brief  ã‚²ãƒ¼ãƒ ãƒ­ã‚¸ãƒƒã‚¯ã‚’å®Ÿè¡Œã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   May 2025
  *********************************************************************/
@@ -18,24 +18,24 @@
 namespace SFW
 {
 	/**
-	 * @brief Graphics::IGraphicsDevice‚ğCRTP‚ÅŒp³‚µ‚Ä‚¢‚éŒ^‚ğƒ`ƒFƒbƒN‚·‚éƒRƒ“ƒZƒvƒg
+	 * @brief Graphics::IGraphicsDeviceã‚’CRTPã§ç¶™æ‰¿ã—ã¦ã„ã‚‹å‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 	 */
 	template<typename T>
 	concept GraphicsType = is_crtp_base_of_1arg<T, Graphics::IGraphicsDevice>;
 
 	/**
-	 * @brief ƒQ[ƒ€ƒGƒ“ƒWƒ“‚Ì‰Šú‰»
+	 * @brief ã‚²ãƒ¼ãƒ ã‚¨ãƒ³ã‚¸ãƒ³ã®åˆæœŸåŒ–
 	 */
 	void InitializeGameEngine(bool initialize);
 	/**
-	 * @brief ƒQ[ƒ€ƒGƒ“ƒWƒ“‚ÌI—¹ˆ—
+	 * @brief ã‚²ãƒ¼ãƒ ã‚¨ãƒ³ã‚¸ãƒ³ã®çµ‚äº†å‡¦ç†
 	 */
 	void UnInitializeGameEngine();
 
 	/**
-	 * @brief ƒQ[ƒ€ƒGƒ“ƒWƒ“
+	 * @brief ã‚²ãƒ¼ãƒ ã‚¨ãƒ³ã‚¸ãƒ³
 	 * @class GameEngine
-	 * @details ƒQ[ƒ€ƒƒWƒbƒN‚ğÀs‚·‚éƒNƒ‰ƒX
+	 * @details ã‚²ãƒ¼ãƒ ãƒ­ã‚¸ãƒƒã‚¯ã‚’å®Ÿè¡Œã™ã‚‹ã‚¯ãƒ©ã‚¹
 	 */
 	template<GraphicsType Graphics, typename... LevelTypes>
 	class GameEngine final : NonCopyable
@@ -44,10 +44,10 @@ namespace SFW
 
 	public:
 		/**
-		 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @param fps ƒtƒŒ[ƒ€ƒŒ[ƒg
-		 * @param graphicsDevice ƒOƒ‰ƒtƒBƒbƒNƒfƒoƒCƒX
-		 * @details FPS§ŒäƒNƒ‰ƒX‚ğ‰Šú‰»‚µAƒOƒ‰ƒtƒBƒbƒNƒfƒoƒCƒX‚ğİ’è‚µ‚Ü‚·B
+		 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @param fps ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆ
+		 * @param graphicsDevice ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ‡ãƒã‚¤ã‚¹
+		 * @details FPSåˆ¶å¾¡ã‚¯ãƒ©ã‚¹ã‚’åˆæœŸåŒ–ã—ã€ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ‡ãƒã‚¤ã‚¹ã‚’è¨­å®šã—ã¾ã™ã€‚
 		 */
 		explicit GameEngine(Graphics&& graphicsDevice, WorldType&& world, double fps = 60.0)
 			: m_graphicsDevice(std::move(graphicsDevice)), m_world(std::move(world))
@@ -59,33 +59,33 @@ namespace SFW
 			m_frameTimer.SetMaxFrameRate(fps);
 		}
 		/**
-		 * @brief ƒfƒXƒgƒ‰ƒNƒ^
+		 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		 */
 		~GameEngine()
 		{
 			UnInitializeGameEngine();
 		}
 
-		//ƒ€[ƒu‹Ö~
+		//ãƒ ãƒ¼ãƒ–ç¦æ­¢
 		GameEngine(GameEngine&&) = delete;
 		GameEngine& operator=(GameEngine&&) = delete;
 
 		/**
-		 * @brief ˆê’è‚ÌŠÔŠu‚ÅXV‚Æ•`‰æ‚ÌŠÖ”‚ğŒÄ‚Ño‚·ƒ‹[ƒv
-		 * @param fpsControl FPS§ŒäƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
-		 * @details FPS§ŒäƒNƒ‰ƒX‚ğg—p‚µ‚ÄAƒƒCƒ“ƒ‹[ƒv‚ğÀs‚µ‚Ü‚·B
+		 * @brief ä¸€å®šã®é–“éš”ã§æ›´æ–°ã¨æç”»ã®é–¢æ•°ã‚’å‘¼ã³å‡ºã™ãƒ«ãƒ¼ãƒ—
+		 * @param fpsControl FPSåˆ¶å¾¡ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
+		 * @details FPSåˆ¶å¾¡ã‚¯ãƒ©ã‚¹ã‚’ä½¿ç”¨ã—ã¦ã€ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
 		 */
 		void MainLoop(IThreadExecutor* executor)
 		{
-			// XVˆ—A•`‰æˆ—‚ğŒÄ‚Ño‚·
+			// æ›´æ–°å‡¦ç†ã€æç”»å‡¦ç†ã‚’å‘¼ã³å‡ºã™
 			Update(m_frameTimer.GetDeltaTime(), executor);
 			Draw();
 
-			//Œo‰ßŠÔ‚ğŒvZ‚Æ‘Ò‹@
+			//çµŒéæ™‚é–“ã‚’è¨ˆç®—ã¨å¾…æ©Ÿ
 			m_frameTimer.Tick();
 		}
 		/**
-		 * @brief World‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾‚·‚é
+		 * @brief Worldã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ã™ã‚‹
 		 */
 		WorldType& GetWorld() noexcept
 		{
@@ -93,24 +93,24 @@ namespace SFW
 		}
 	private:
 		/**
-		 * @brief XVˆ—
-		 * @param delta_time ‘O‰ñÀs‚³‚ê‚Ä‚©‚ç‚ÌŒo‰ßŠÔ
-		 * @details XVˆ—‚ğÀs‚µ‚Ü‚·B
+		 * @brief æ›´æ–°å‡¦ç†
+		 * @param delta_time å‰å›å®Ÿè¡Œã•ã‚Œã¦ã‹ã‚‰ã®çµŒéæ™‚é–“
+		 * @details æ›´æ–°å‡¦ç†ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
 		 */
 		void Update(double delta_time, IThreadExecutor* executor)
 		{
 #ifdef _ENABLE_IMGUI
-			//Œo‰ßŠÔŒv‘ª—p
+			//çµŒéæ™‚é–“è¨ˆæ¸¬ç”¨
 			auto t0 = std::chrono::steady_clock::now();
 #endif //_ENABLE_IMGUI
 
-			// ƒT[ƒrƒX‚ÌXV
+			// ã‚µãƒ¼ãƒ“ã‚¹ã®æ›´æ–°
 			m_world.UpdateServiceLocator(delta_time, executor);
 
-			// ƒŒƒxƒ‹‚ÌXV
+			// ãƒ¬ãƒ™ãƒ«ã®æ›´æ–°
 			m_world.UpdateAllLevels(delta_time, executor);
 
-			// ƒT[ƒrƒX‚ÌƒRƒ~ƒbƒg
+			// ã‚µãƒ¼ãƒ“ã‚¹ã®ã‚³ãƒŸãƒƒãƒˆ
 			m_world.CommitServiceLocator(delta_time);
 
 #ifdef _ENABLE_IMGUI
@@ -118,34 +118,34 @@ namespace SFW
 			auto t1 = std::chrono::steady_clock::now();
 			double ms = std::chrono::duration<double, std::milli>(t1 - t0).count();
 
-			// ƒƒWƒbƒN‚ÌÀsŠÔ‚ğƒfƒoƒbƒOî•ñ‚É‘—M
+			// ãƒ­ã‚¸ãƒƒã‚¯ã®å®Ÿè¡Œæ™‚é–“ã‚’ãƒ‡ãƒãƒƒã‚°æƒ…å ±ã«é€ä¿¡
 			Debug::PublishLogicMs(float(ms));
 
 #endif//_ENABLE_IMGUI
 		}
 		/**
-		 * @brief •`‰æˆ—
-		 * @param delta_time ‘O‰ñÀs‚³‚ê‚Ä‚©‚ç‚ÌŒo‰ßŠÔ
-		 * @details •`‰æˆ—‚ğÀs‚µ‚Ü‚·B
+		 * @brief æç”»å‡¦ç†
+		 * @param delta_time å‰å›å®Ÿè¡Œã•ã‚Œã¦ã‹ã‚‰ã®çµŒéæ™‚é–“
+		 * @details æç”»å‡¦ç†ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
 		 */
 		void Draw()
 		{
-			// ‰æ–Ê‚ğƒNƒŠƒA
+			// ç”»é¢ã‚’ã‚¯ãƒªã‚¢
 			float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
-			// ƒtƒŒ[ƒ€‚ğ’ñoBÅ‘åƒtƒŒ[ƒ€ƒŒ[ƒg‚É’B‚µ‚Ä‚¢‚éê‡‚ÍA“à•”‚Å‘Ò‹@‚µ‚Ä‚­‚ê‚éB
+			// ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’æå‡ºã€‚æœ€å¤§ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆã«é”ã—ã¦ã„ã‚‹å ´åˆã¯ã€å†…éƒ¨ã§å¾…æ©Ÿã—ã¦ãã‚Œã‚‹ã€‚
 			m_graphicsDevice.SubmitFrame(clearColor, m_frameCounter++);
 
-			// Œv‘ª‚âƒXƒNƒVƒ‡“™‚Å•K—v‚È‚ç: m_graphicsDevice.WaitSubmittedFrames(m_frameCounter - 1);
+			// è¨ˆæ¸¬ã‚„ã‚¹ã‚¯ã‚·ãƒ§ç­‰ã§å¿…è¦ãªã‚‰: m_graphicsDevice.WaitSubmittedFrames(m_frameCounter - 1);
 		}
 	private:
-		// FPS§ŒäƒNƒ‰ƒX
+		// FPSåˆ¶å¾¡ã‚¯ãƒ©ã‚¹
 		FrameTimer m_frameTimer;
-		// ƒOƒ‰ƒtƒBƒbƒNƒfƒoƒCƒX
+		// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ‡ãƒã‚¤ã‚¹
 		Graphics m_graphicsDevice;
-		//ƒ[ƒ‹ƒhŠÇ—
+		//ãƒ¯ãƒ¼ãƒ«ãƒ‰ç®¡ç†
 		WorldType m_world;
-		// ƒtƒŒ[ƒ€ƒJƒEƒ“ƒ^
+		// ãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ã‚¿
 		uint64_t m_frameCounter = 0;
 	};
 }

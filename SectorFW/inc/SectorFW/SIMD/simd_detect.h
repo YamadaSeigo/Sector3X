@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   simd_detect.h
- * @brief SIMD–½—ßƒZƒbƒg‚ÌƒTƒ|[ƒg‚ğŒŸo‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief SIMDå‘½ä»¤ã‚»ãƒƒãƒˆã®ã‚µãƒãƒ¼ãƒˆã‚’æ¤œå‡ºã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -13,8 +13,8 @@ namespace SFW
 	namespace SIMD
 	{
 		/**
-		 * @brief CPU‚ªAVX‚ğƒTƒ|[ƒg‚µ‚Ä‚¢‚é‚©‚ğƒ`ƒFƒbƒN‚·‚éŠÖ”
-		 * @return bool AVXƒTƒ|[ƒg‚Ì—L–³
+		 * @brief CPUãŒAVXã‚’ã‚µãƒãƒ¼ãƒˆã—ã¦ã„ã‚‹ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹é–¢æ•°
+		 * @return bool AVXã‚µãƒãƒ¼ãƒˆã®æœ‰ç„¡
 		 */
 		inline bool cpu_has_avx_os_support() {
 			int info[4]{};
@@ -23,15 +23,15 @@ namespace SFW
 			const bool avx = (info[2] & (1 << 28)) != 0; // ECX.AVX
 			if (!(osxsave && avx)) return false;
 
-			// XCR0: XMM(bit1) ‚Æ YMM(bit2) ‚ª OS ‚É‚æ‚è—LŒø‚©
+			// XCR0: XMM(bit1) ã¨ YMM(bit2) ãŒ OS ã«ã‚ˆã‚Šæœ‰åŠ¹ã‹
 			unsigned long long xcr0 = _xgetbv(0);
 			const bool xmm_ok = (xcr0 & 0x2) != 0;
 			const bool ymm_ok = (xcr0 & 0x4) != 0;
 			return xmm_ok && ymm_ok;
 		}
 		/**
-		 * @brief CPU‚ªAVX2‚ğƒTƒ|[ƒg‚µ‚Ä‚¢‚é‚©‚ğƒ`ƒFƒbƒN‚·‚éŠÖ”
-		 * @return bool AVX2ƒTƒ|[ƒg‚Ì—L–³
+		 * @brief CPUãŒAVX2ã‚’ã‚µãƒãƒ¼ãƒˆã—ã¦ã„ã‚‹ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹é–¢æ•°
+		 * @return bool AVX2ã‚µãƒãƒ¼ãƒˆã®æœ‰ç„¡
 		 */
 		inline bool cpu_has_avx2() {
 			if (!cpu_has_avx_os_support()) return false;

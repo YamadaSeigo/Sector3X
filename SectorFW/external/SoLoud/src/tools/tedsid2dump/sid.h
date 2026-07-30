@@ -1,4 +1,4 @@
-#ifndef _SID_H
+﻿#ifndef _SID_H
 #define _SID_H
 
 #define SOUND_FREQ_PAL_C64 985248

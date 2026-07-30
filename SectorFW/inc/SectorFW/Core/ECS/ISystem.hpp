@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   ISystem.h
- * @brief ƒVƒXƒeƒ€‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ã‚·ã‚¹ãƒ†ãƒ ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -22,9 +22,9 @@
 
 #ifdef _WIN32
  /**
-  * @brief MSVC‚ÌƒfƒRƒŒ[ƒg‚³‚ê‚½–¼‘O‚ğƒfƒ}ƒ“ƒOƒ‹‚·‚éŠÖ”
-  * @param decorated ƒfƒRƒŒ[ƒg‚³‚ê‚½–¼‘O
-  * @return ƒfƒ}ƒ“ƒOƒ‹‚³‚ê‚½–¼‘O
+  * @brief MSVCã®ãƒ‡ã‚³ãƒ¬ãƒ¼ãƒˆã•ã‚ŒãŸåå‰ã‚’ãƒ‡ãƒãƒ³ã‚°ãƒ«ã™ã‚‹é–¢æ•°
+  * @param decorated ãƒ‡ã‚³ãƒ¬ãƒ¼ãƒˆã•ã‚ŒãŸåå‰
+  * @return ãƒ‡ãƒãƒ³ã‚°ãƒ«ã•ã‚ŒãŸåå‰
   */
 inline std::string demangle_msvc(const char* decorated) {
 	char buf[1024];
@@ -32,98 +32,98 @@ inline std::string demangle_msvc(const char* decorated) {
 		UNDNAME_NAME_ONLY | UNDNAME_NO_ARGUMENTS | UNDNAME_NO_MS_KEYWORDS)) {
 		return buf;
 	}
-	return decorated; // ¸”s‚Í‚»‚Ì‚Ü‚Ü
+	return decorated; // å¤±æ•—æ™‚ã¯ãã®ã¾ã¾
 }
 #endif
 
 namespace SFW
 {
-	//‘O•û’è‹`
+	//å‰æ–¹å®šç¾©
 	template<class Partition>
 	struct LevelContext;
 
 	namespace ECS
 	{
-		//‘O•û’è‹`
+		//å‰æ–¹å®šç¾©
 		class EntityManager;
 		class SpatialChunk;
 
 		/**
-		 * @brief ƒVƒXƒeƒ€‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX
-		 * @details •ªŠ„‚ÌƒNƒ‰ƒX‚ğw’è‚·‚é
-		 * @tparam Partition ƒp[ƒeƒBƒVƒ‡ƒ“‚ÌŒ^
+		 * @brief ã‚·ã‚¹ãƒ†ãƒ ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
+		 * @details åˆ†å‰²ã®ã‚¯ãƒ©ã‚¹ã‚’æŒ‡å®šã™ã‚‹
+		 * @tparam Partition ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã®å‹
 		 */
 		template<typename Partition>
 		class ISystem {
 		public:
 			/**
-			 * @brief UpdateImplŠÖ”‚ğ•Û‚µ‚Ä‚¢‚é‚©H
-			 * @return •Û‚µ‚Ä‚¢‚éê‡true
+			 * @brief UpdateImplé–¢æ•°ã‚’ä¿æŒã—ã¦ã„ã‚‹ã‹ï¼Ÿ
+			 * @return ä¿æŒã—ã¦ã„ã‚‹å ´åˆtrue
 			 */
 			static constexpr bool IsUpdateable() noexcept {
 				return true;
 			}
 			/**
-			 * @brief EndImplŠÖ”‚ğ•Û‚µ‚Ä‚¢‚é‚©H
-			 * @return •Û‚µ‚Ä‚¢‚éê‡true
+			 * @brief EndImplé–¢æ•°ã‚’ä¿æŒã—ã¦ã„ã‚‹ã‹ï¼Ÿ
+			 * @return ä¿æŒã—ã¦ã„ã‚‹å ´åˆtrue
 			 */
 			static constexpr bool IsEndSystem() noexcept {
 				return true;
 			}
 			/**
-			 * @brief ƒVƒXƒeƒ€‚ÌŠJnŠÖ”
-			 * @param partition ‘ÎÛ‚Ìƒp[ƒeƒBƒVƒ‡ƒ“
-			 * @param serviceLocator ƒT[ƒrƒXƒƒP[ƒ^[
+			 * @brief ã‚·ã‚¹ãƒ†ãƒ ã®é–‹å§‹é–¢æ•°
+			 * @param partition å¯¾è±¡ã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³
+			 * @param serviceLocator ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼
 			 */
 			virtual void Start(const ServiceLocator& serviceLocator) {}
 
 			/**
-			 * @brief ƒVƒXƒeƒ€‚ÌXVŠÖ”(World‚©‚çƒOƒ[ƒoƒ‹‚ÉŒÄ‚Ño‚·)
-			 * @param serviceLocator ƒT[ƒrƒXƒƒP[ƒ^[
-			 * @param executor ƒXƒŒƒbƒhÀsƒNƒ‰ƒX
+			 * @brief ã‚·ã‚¹ãƒ†ãƒ ã®æ›´æ–°é–¢æ•°(Worldã‹ã‚‰ã‚°ãƒ­ãƒ¼ãƒãƒ«ã«å‘¼ã³å‡ºã™)
+			 * @param serviceLocator ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼
+			 * @param executor ã‚¹ãƒ¬ãƒƒãƒ‰å®Ÿè¡Œã‚¯ãƒ©ã‚¹
 			 */
 			virtual void Update(const ServiceLocator& serviceLocator, IThreadExecutor* executor) {}
 
 			/**
-			 * @brief ƒVƒXƒeƒ€‚ÌXVŠÖ”
-			 * @param partition ‘ÎÛ‚Ìƒp[ƒeƒBƒVƒ‡ƒ“
-			 * @param serviceLocator ƒT[ƒrƒYƒƒP[ƒ^[
+			 * @brief ã‚·ã‚¹ãƒ†ãƒ ã®æ›´æ–°é–¢æ•°
+			 * @param partition å¯¾è±¡ã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³
+			 * @param serviceLocator ã‚µãƒ¼ãƒ“ã‚ºãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼
 			 */
 			virtual void Update(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) = 0;
 
 			/**
-			 * @brief ƒVƒXƒeƒ€‚ÌI—¹ŠÖ”(World‚©‚çƒOƒ[ƒoƒ‹‚ÉŒÄ‚Ño‚·)
-			 * @param serviceLocator ƒT[ƒrƒYƒƒP[ƒ^[
+			 * @brief ã‚·ã‚¹ãƒ†ãƒ ã®çµ‚äº†é–¢æ•°(Worldã‹ã‚‰ã‚°ãƒ­ãƒ¼ãƒãƒ«ã«å‘¼ã³å‡ºã™)
+			 * @param serviceLocator ã‚µãƒ¼ãƒ“ã‚ºãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼
 			 */
 			virtual void End(const ServiceLocator& serviceLocator) {}
 
 			/**
-			 * @brief ƒVƒXƒeƒ€‚ÌI—¹ŠÖ”
-			 * @param partition ‘ÎÛ‚Ìƒp[ƒeƒBƒVƒ‡ƒ“
-			 * @param serviceLocator ƒT[ƒrƒYƒƒP[ƒ^[
+			 * @brief ã‚·ã‚¹ãƒ†ãƒ ã®çµ‚äº†é–¢æ•°
+			 * @param partition å¯¾è±¡ã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³
+			 * @param serviceLocator ã‚µãƒ¼ãƒ“ã‚ºãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼
 			 */
 			virtual void End(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator) {}
 			/**
-			 * @brief ƒAƒNƒZƒXî•ñ‚Ìæ“¾ŠÖ”
-			 * @return AccessInfo ƒAƒNƒZƒXî•ñ
+			 * @brief ã‚¢ã‚¯ã‚»ã‚¹æƒ…å ±ã®å–å¾—é–¢æ•°
+			 * @return AccessInfo ã‚¢ã‚¯ã‚»ã‚¹æƒ…å ±
 			 */
 			virtual AccessInfo GetAccessInfo() const noexcept = 0;
 
 			/**
-			 * @brief •À—ñ‚ÉUpdate‚ªÀs‚³‚ê‚é‚©H
-			 * @return •À—ñ‚ÉÀs‚³‚ê‚éê‡true
+			 * @brief ä¸¦åˆ—ã«UpdateãŒå®Ÿè¡Œã•ã‚Œã‚‹ã‹ï¼Ÿ
+			 * @return ä¸¦åˆ—ã«å®Ÿè¡Œã•ã‚Œã‚‹å ´åˆtrue
 			 */
 			virtual constexpr bool IsParallelUpdate() const noexcept {
 				return false;
 			}
 
 			/**
-			 * @brief ƒfƒXƒgƒ‰ƒNƒ^
+			 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 			 */
 			virtual ~ISystem() = default;
 			/**
-			 * @brief Œp³æ‚ÌƒNƒ‰ƒX–¼‚ğæ“¾‚·‚é
-			 * @return Œp³ƒNƒ‰ƒX–¼
+			 * @brief ç¶™æ‰¿å…ˆã®ã‚¯ãƒ©ã‚¹åã‚’å–å¾—ã™ã‚‹
+			 * @return ç¶™æ‰¿ã‚¯ãƒ©ã‚¹å
 			 */
 			std::string derived_name() const {
 #ifdef _WIN32

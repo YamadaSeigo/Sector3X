@@ -1,8 +1,8 @@
-/*
+﻿/*
 SoLoud audio engine
 Copyright (c) 2013-2018 Jari Komppa
 
-vizsn speech synthesizer (c) by Ville-Matias Heikkilä,
+vizsn speech synthesizer (c) by Ville-Matias Heikkilﾃ､,
 released under WTFPL, http://www.wtfpl.net/txt/copying/
 (in short, "do whatever you want to")
 
@@ -18,7 +18,7 @@ released under same license.
 
 /*
 
- lähtöfunktiot: voice, noise
+ lﾃ､htﾃｶfunktiot: voice, noise
  muut:          pitch
  volyymit:      voice, asp, fric, bypass (4kpl)
  resonaattorit: lp, nz (ar), npc, 1p, 2p, 3p, 4p, 5p, 6p, out (10kpl)
@@ -46,7 +46,7 @@ released under same license.
    |           |
   [-]-(re.4P)--[
    |           |
-  [-]-(re.3P)--[   <-- selvitäänkö kahdella tuossa vaiheessa?
+  [-]-(re.3P)--[   <-- selvitﾃ､ﾃ､nkﾃｶ kahdella tuossa vaiheessa?
    |           |
   [-]-(re.2P)--[
    |           |
@@ -62,13 +62,13 @@ released under same license.
 
     x = a*input + b*y + c*z
 
-    ja tulos kiertää x=>y=>z
+    ja tulos kiertﾃ､ﾃ､ x=>y=>z
 
     antiresonaattori:
 
     x = a*input + b*y + c*z
 
-    inputti kiertää i=>y=>z
+    inputti kiertﾃ､ﾃ､ i=>y=>z
 */
 
 #define RLP 0
@@ -111,10 +111,10 @@ released under same license.
 static const float vowtab[8][4][2] =
 {
 	/* a */ 0.10f, 1.6f, 0, 0, 0.2f, 1.5f,  0, 0,
-	/* ä */ 0.10f, 1.6f, 0, 0, 0.2f, 0,     0, 0,
+	/* ﾃ､ */ 0.10f, 1.6f, 0, 0, 0.2f, 0,     0, 0,
 
 	/* e */ 0.08f, 1.8f, 0, 0, 0.2f, -0.8f, 0, 0,
-	/* ö */ 0.08f, 1.8f, 0, 0, 0.3f, 0.9f,  0, 0,
+	/* ﾃｶ */ 0.08f, 1.8f, 0, 0, 0.3f, 0.9f,  0, 0,
 	/* o */ 0.08f, 1.8f, 0, 0, 0.2f, 1.6f,  0, 0,
 
 	/* i */ 0.05f, 1.9f, 0, 0, 0.2f, -1.5f, 0, 0,
@@ -515,8 +515,8 @@ namespace SoLoud
 		for (i = 0; i < len; i++)
 		{
 			int c = mText[i + 1];
-			if (c == '\x84' || c == -124) c = '{'; // ä
-			if (c == '\x94' || c == -108) c = '|'; // ö
+			if (c == '\x84' || c == -124) c = '{'; // ﾃ､
+			if (c == '\x94' || c == -108) c = '|'; // ﾃｶ
 			if (c >= 'a' && c <= '|')
 			{
 				mText[i + 1] = keyz[c - 'a'];

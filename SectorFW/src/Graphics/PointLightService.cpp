@@ -1,4 +1,4 @@
-// PointLightService.cpp
+ï»¿// PointLightService.cpp
 #include "Graphics/PointLightService.h"
 
 namespace SFW::Graphics
@@ -32,7 +32,7 @@ namespace SFW::Graphics
 			idx = m_freeList.back();
 			m_freeList.pop_back();
 
-			// Ä—˜—pF¢‘ã‚ði‚ß‚éiŒÃ‚¢ƒnƒ“ƒhƒ‹–³Œø‰»j
+			// å†åˆ©ç”¨ï¼šä¸–ä»£ã‚’é€²ã‚ã‚‹ï¼ˆå¤ã„ãƒãƒ³ãƒ‰ãƒ«ç„¡åŠ¹åŒ–ï¼‰
 			++m_generation[idx];
 
 			m_slots[idx].desc = desc;
@@ -121,7 +121,7 @@ namespace SFW::Graphics
 	{
 		if (!IsValid(h)) return false;
 
-		// 1ƒtƒŒ[ƒ€æ‚ÌƒXƒƒbƒg‚ðŽw’è
+		// 1ãƒ•ãƒ¬ãƒ¼ãƒ å…ˆã®ã‚¹ãƒ­ãƒƒãƒˆã‚’æŒ‡å®š
 		auto countSlot = (m_frameIndex + 1) % 2;
 		auto n = m_showCount[countSlot].fetch_add(1, std::memory_order_acq_rel);
 		if (n >= MAX_FRAME_POINTLIGHT) return false;

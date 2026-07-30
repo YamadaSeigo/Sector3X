@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * \file   TimerService.h
- * \brief ƒQ[ƒ€“àŠÔ‚ÌŠÇ—‚ğs‚¤ƒT[ƒrƒXBƒXƒ[ƒ‚[ƒVƒ‡ƒ“‚âƒ|[ƒY‹@”\‚ğ’ñ‹ŸB
+ * \brief ã‚²ãƒ¼ãƒ å†…æ™‚é–“ã®ç®¡ç†ã‚’è¡Œã†ã‚µãƒ¼ãƒ“ã‚¹ã€‚ã‚¹ãƒ­ãƒ¼ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã‚„ãƒãƒ¼ã‚ºæ©Ÿèƒ½ã‚’æä¾›ã€‚
  * \author seigo
  * \date   December 2025
  *********************************************************************/
@@ -15,35 +15,35 @@ namespace SFW
 	{
 	public:
 		void PreUpdate(double rawDtSeconds) override {
-			m_rawDeltaTime = static_cast<float>(rawDtSeconds);          // ÀŠÔ dtiƒXƒ[ƒ‚[ƒVƒ‡ƒ“‚È‚µj
+			m_rawDeltaTime = static_cast<float>(rawDtSeconds);          // å®Ÿæ™‚é–“ dtï¼ˆã‚¹ãƒ­ãƒ¼ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ãªã—ï¼‰
 
-			// ƒXƒ[ƒ‚[ƒVƒ‡ƒ“ / ƒ|[ƒY‚ğ”½‰f
+			// ã‚¹ãƒ­ãƒ¼ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ / ãƒãƒ¼ã‚ºã‚’åæ˜ 
 			float scale = m_isPaused ? 0.0f : m_timeScale;
 			m_scaledDeltaTime = m_rawDeltaTime * scale;
 
-			m_unscaledTotalTime += m_rawDeltaTime;  // ÀŠÔ‚Ì—İÏ
-			m_scaledTotalTime += m_scaledDeltaTime; // ƒQ[ƒ€“àŠÔ‚Ì—İÏ
+			m_unscaledTotalTime += m_rawDeltaTime;  // å®Ÿæ™‚é–“ã®ç´¯ç©
+			m_scaledTotalTime += m_scaledDeltaTime; // ã‚²ãƒ¼ãƒ å†…æ™‚é–“ã®ç´¯ç©
 		}
 
 		// --- getter ---
-		// ƒXƒ[ƒ‚[ƒVƒ‡ƒ“”½‰fÏ‚İiƒQ[ƒ€ƒƒWƒbƒN—pj
+		// ã‚¹ãƒ­ãƒ¼ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³åæ˜ æ¸ˆã¿ï¼ˆã‚²ãƒ¼ãƒ ãƒ­ã‚¸ãƒƒã‚¯ç”¨ï¼‰
 		float GetDeltaTime() const { return m_scaledDeltaTime; }
 
-		// ƒXƒ[ƒ‚[ƒVƒ‡ƒ“–³‹iUI‚ÌƒAƒjƒAƒJƒƒ‰ƒVƒFƒCƒN“™—pj
+		// ã‚¹ãƒ­ãƒ¼ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ç„¡è¦–ï¼ˆUIã®ã‚¢ãƒ‹ãƒ¡ã€ã‚«ãƒ¡ãƒ©ã‚·ã‚§ã‚¤ã‚¯ç­‰ç”¨ï¼‰
 		float GetUnscaledDeltaTime() const { return m_rawDeltaTime; }
 
 		float GetTimeScale() const { return m_timeScale; }
-		void  SetTimeScale(float s) { m_timeScale = s; }   // 0.1f ‚È‚ç 1/10 ƒXƒ[
+		void  SetTimeScale(float s) { m_timeScale = s; }   // 0.1f ãªã‚‰ 1/10 ã‚¹ãƒ­ãƒ¼
 		void  SetPaused(bool p) { m_isPaused = p; }
 
-		float GetGameTime() const { return m_scaledTotalTime; }   // ƒXƒ[ƒ‚[ƒVƒ‡ƒ“‚ğŠÜ‚ŞƒQ[ƒ€ŠÔ
-		float GetRealTime() const { return m_unscaledTotalTime; } // ÀÛ‚ÉŒo‰ß‚µ‚½ŠÔ
+		float GetGameTime() const { return m_scaledTotalTime; }   // ã‚¹ãƒ­ãƒ¼ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å«ã‚€ã‚²ãƒ¼ãƒ æ™‚é–“
+		float GetRealTime() const { return m_unscaledTotalTime; } // å®Ÿéš›ã«çµŒéã—ãŸæ™‚é–“
 
 	private:
-		float m_rawDeltaTime = 0.0f; // ¶ dt
-		float m_scaledDeltaTime = 0.0f; // ƒXƒP[ƒ‹Œã dt
+		float m_rawDeltaTime = 0.0f; // ç”Ÿ dt
+		float m_scaledDeltaTime = 0.0f; // ã‚¹ã‚±ãƒ¼ãƒ«å¾Œ dt
 
-		float m_timeScale = 1.0f; // 0.1f = ƒXƒ[ƒ‚[ƒVƒ‡ƒ“
+		float m_timeScale = 1.0f; // 0.1f = ã‚¹ãƒ­ãƒ¼ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³
 		bool  m_isPaused = false;
 
 		float m_unscaledTotalTime = 0.0f;

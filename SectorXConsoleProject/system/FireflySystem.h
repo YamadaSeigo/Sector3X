@@ -1,40 +1,40 @@
-#pragma once
+ï»¿#pragma once
 
 #include "environment/FireflyService.h"
 #include "app/PlayerService.h"
 
 struct CFireflyVolume
 {
-	// ‹óŠÔiÅ’áŒÀj
+	// ç©ºé–“ï¼ˆæœ€ä½é™ï¼‰
 	Math::Vec3f centerWS = {};
-	float       hitRadius = 20.0f;      // ‹…ƒ{ƒŠƒ…[ƒ€i‚Ü‚¸‚Í‹…‚ªŠyj
-	float       radius = 30.0f;    // ”­¶”ÍˆÍ
+	float       hitRadius = 20.0f;      // çƒãƒœãƒªãƒ¥ãƒ¼ãƒ ï¼ˆã¾ãšã¯çƒãŒæ¥½ï¼‰
+	float       radius = 30.0f;    // ç™ºç”Ÿç¯„å›²
 
-	// Œ©‚½–Úiemissive / bloom Šî€j
+	// è¦‹ãŸç›®ï¼ˆemissive / bloom åŸºæº–ï¼‰
 	Math::Vec3f color = { 0.6f, 2.25f, 0.0f };
 	float       intensity = 1.0f;
 
-	// ŒQ‚ê–§“xiGPU targetCount ‚ÌŒ³j
-	uint32_t    maxCountNear = 10000;    // ‹ß‹——£‚Å‚ÌÅ‘åŒÂ‘Ì”
+	// ç¾¤ã‚Œå¯†åº¦ï¼ˆGPU targetCount ã®å…ƒï¼‰
+	uint32_t    maxCountNear = 10000;    // è¿‘è·é›¢ã§ã®æœ€å¤§å€‹ä½“æ•°
 
-	// “®‚«iUpdateCS‚Åg‚¤j
+	// å‹•ãï¼ˆUpdateCSã§ä½¿ã†ï¼‰
 	float       speed = 0.1f;
 	float       noiseScale = 0.25f;
 
-	// LOD‹——£iCPU‚ªactive”»’èEtargetCountŒvZj
-	float       nearDistance = 0.1f;    // ‚±‚±‚æ‚è‹ß‚¢FmaxCountNear
-	float       farDistance = 20.0f;     // ‚±‚±‚æ‚è‰“‚¢Finactivei0j
+	// LODè·é›¢ï¼ˆCPUãŒactiveåˆ¤å®šãƒ»targetCountè¨ˆç®—ï¼‰
+	float       nearDistance = 0.1f;    // ã“ã“ã‚ˆã‚Šè¿‘ã„ï¼šmaxCountNear
+	float       farDistance = 20.0f;     // ã“ã“ã‚ˆã‚Šé ã„ï¼šinactiveï¼ˆ0ï¼‰
 
-	// ƒ‰ƒCƒg‰»—\Zi‹ß‹——£‚¾‚¯NŒÂƒ‰ƒCƒg‰»‚·‚éj
+	// ãƒ©ã‚¤ãƒˆåŒ–äºˆç®—ï¼ˆè¿‘è·é›¢ã ã‘Nå€‹ãƒ©ã‚¤ãƒˆåŒ–ã™ã‚‹ï¼‰
 	uint32_t    nearLightBudget = 8;
 
 	uint32_t seed = 0;
 
-	float burstT = 0.0f; // 0..1i1=”­“®’¼ŒãAŠÔ‚Å0‚Öj
+	float burstT = 0.0f; // 0..1ï¼ˆ1=ç™ºå‹•ç›´å¾Œã€æ™‚é–“ã§0ã¸ï¼‰
 
 	bool        isHit = false;
 
-	// —áFindex 20bit + generation 12bit = 32bit
+	// ä¾‹ï¼šindex 20bit + generation 12bit = 32bit
 	uint32_t MakeUID(uint32_t index, uint32_t gen)
 	{
 		return (gen << 20) | (index & ((1u << 20) - 1));
@@ -45,11 +45,11 @@ template<typename Partition>
 class FireflySystem : public ITypeSystem<
 	FireflySystem,
 	Partition,
-	//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
+	//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
 	ComponentAccess<
 	Read<CFireflyVolume>
 	>,
-	//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	ServiceContext<
 	FireflyService,
 	PlayerService,
@@ -59,14 +59,14 @@ class FireflySystem : public ITypeSystem<
 	using Accessor = ComponentAccessor<Read<CFireflyVolume>>;
 public:
 
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(Partition& partition,
 		NoDeletePtr< FireflyService> fireflyService,
 		NoDeletePtr<PlayerService> playerService,
 		NoDeletePtr<TimerService> timerService) {
 		auto playerPos = playerService->GetPlayerPosition();
 
-		//ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚ğfireflyService‚É‚à‹³‚¦‚é
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ã‚’fireflyServiceã«ã‚‚æ•™ãˆã‚‹
 		fireflyService->SetPlayerPos(playerPos);
 
 		constexpr float chunkRadius = 100.0f;
@@ -91,7 +91,7 @@ public:
 			for (auto i = 0; i < entityCount; ++i) {
 				auto volume = fireflyVolume.value()[i];
 
-				//”ÍˆÍŠO‚Ìê‡‚ÍƒXƒLƒbƒv
+				//ç¯„å›²å¤–ã®å ´åˆã¯ã‚¹ã‚­ãƒƒãƒ—
 				auto length = (volume.centerWS - playerPos).lengthSquared();
 
 				if (length > volume.hitRadius * volume.hitRadius) {
@@ -111,13 +111,13 @@ public:
 				gpuVolume.seed = volume.seed;
 
 				if (volume.isHit == false) {
-					volume.burstT = 1.0f; // ”­“®’¼Œã
+					volume.burstT = 1.0f; // ç™ºå‹•ç›´å¾Œ
 					volume.isHit = true;
 				}
 
 				gpuVolume.burstT = volume.burstT;
 
-				volume.burstT = (std::max)(0.0f, volume.burstT - timerService->GetDeltaTime() / 4.0f); //4•bŒp‘±
+				volume.burstT = (std::max)(0.0f, volume.burstT - timerService->GetDeltaTime() / 4.0f); //4ç§’ç¶™ç¶š
 
 				fireflyService->PushActiveVolume(entities[i].index, gpuVolume);
 			}

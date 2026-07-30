@@ -1,4 +1,4 @@
-/*
+﻿/*
 SoLoud audio engine - tool to develop resamplers with
 Copyright (c) 2013-2015 Jari Komppa
 

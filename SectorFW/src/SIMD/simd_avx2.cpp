@@ -1,4 +1,4 @@
-// simd_avx2.cpp
+ï»¿// simd_avx2.cpp
 #include "SIMD/simd_api.h"
 #include <immintrin.h>
 
@@ -25,7 +25,7 @@ namespace SFW::SIMD
 			__m256  m = _mm256_castsi256_ps(
 				_mm256_cmpgt_epi32(
 					_mm256_loadu_si256((const __m256i*)(mask01 + i)), zI));
-			// ƒ^ƒCƒ‹Å“K‰»F‘S0/‘S1 ‚È‚ç•ªŠò
+			// ã‚¿ã‚¤ãƒ«æœ€é©åŒ–ï¼šå…¨0/å…¨1 ãªã‚‰åˆ†å²
 			int mm = _mm256_movemask_ps(m);
 			if (mm == 0xFF) { _mm256_storeu_ps(dst + i, vlerp); }
 			else if (mm == 0x00) { /* no-op */ }
@@ -49,7 +49,7 @@ namespace SFW::SIMD
 	{
 #if defined(__AVX2__)
 		const __m256 vA = _mm256_set1_ps(alpha);
-		const __m256 sign = _mm256_set1_ps(-0.0f); // •„†ƒrƒbƒg
+		const __m256 sign = _mm256_set1_ps(-0.0f); // ç¬¦å·ãƒ“ãƒƒãƒˆ
 		const __m256i zI = _mm256_setzero_si256();
 
 		size_t i = 0;
@@ -59,7 +59,7 @@ namespace SFW::SIMD
 
 			// dot(a,b)
 			__m256 dot = _mm256_fmadd_ps(axv, bxv, _mm256_fmadd_ps(ayv, byv, _mm256_fmadd_ps(azv, bzv, _mm256_mul_ps(awv, bwv))));
-			// dot<0 ¨ b ‚ğ”½“] (XOR •„†)
+			// dot<0 â†’ b ã‚’åè»¢ (XOR ç¬¦å·)
 			__m256 negMask = _mm256_castsi256_ps(_mm256_cmpgt_epi32(_mm256_setzero_si256(), _mm256_castps_si256(dot)));
 			bxv = _mm256_xor_ps(bxv, _mm256_and_ps(sign, negMask));
 			byv = _mm256_xor_ps(byv, _mm256_and_ps(sign, negMask));

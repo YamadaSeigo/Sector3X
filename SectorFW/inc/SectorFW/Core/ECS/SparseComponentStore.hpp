@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   SparseComponentStore.h
- * @brief ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+ * @brief ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -14,47 +14,47 @@ namespace SFW
 	namespace ECS
 	{
 		/**
-		 * @brief ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğŠÇ—‚·‚éƒNƒ‰ƒX
-		 * @tparam T ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^
-		 * @details EntityID‚ğƒL[‚É‚µ‚ÄA‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğŠÇ—‚µ‚Ü‚·B
+		 * @brief ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
+		 * @tparam T ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹
+		 * @details EntityIDã‚’ã‚­ãƒ¼ã«ã—ã¦ã€ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’ç®¡ç†ã—ã¾ã™ã€‚
 		 */
 		template<typename T>
 		class SparseComponentStore {
 		public:
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚ÌID‚ğƒL[‚É‚µ‚ÄA‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ’Ç‰Á
-			 * @param id ƒGƒ“ƒeƒBƒeƒB‚ÌID
-			 * @param value ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’l
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®IDã‚’ã‚­ãƒ¼ã«ã—ã¦ã€ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è¿½åŠ 
+			 * @param id ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ID
+			 * @param value ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å€¤
 			 */
 			void Add(EntityID id, const T& value) { components[id] = value; }
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚ÌID‚ğƒL[‚É‚µ‚ÄA‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ª‘¶İ‚·‚é‚©Šm”F
-			 * @param id ƒGƒ“ƒeƒBƒeƒB‚ÌID
-			 * return ‘¶İ‚·‚éê‡‚ÍtrueA‘¶İ‚µ‚È‚¢ê‡‚Ífalse
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®IDã‚’ã‚­ãƒ¼ã«ã—ã¦ã€ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒå­˜åœ¨ã™ã‚‹ã‹ç¢ºèª
+			 * @param id ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ID
+			 * return å­˜åœ¨ã™ã‚‹å ´åˆã¯trueã€å­˜åœ¨ã—ãªã„å ´åˆã¯false
 			 */
 			bool Has(EntityID id) const noexcept { return components.find(id) != components.end(); }
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚ÌID‚ğƒL[‚É‚µ‚ÄA‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
-			 * @param id ƒGƒ“ƒeƒBƒeƒB‚ÌID
-			 * @return T* ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒ|ƒCƒ“ƒ^
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®IDã‚’ã‚­ãƒ¼ã«ã—ã¦ã€ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—
+			 * @param id ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ID
+			 * @return T* ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒã‚¤ãƒ³ã‚¿
 			 */
 			T* Get(EntityID id) const noexcept {
 				auto it = components.find(id);
 				return it != components.end() ? &it->second : nullptr;
 			}
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚ÌID‚ğƒL[‚É‚µ‚ÄA‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğíœ
-			 * @param id ƒGƒ“ƒeƒBƒeƒB‚ÌID
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®IDã‚’ã‚­ãƒ¼ã«ã—ã¦ã€ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å‰Šé™¤
+			 * @param id ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ID
 			 */
 			void Remove(EntityID id) { components.erase(id); }
 			/**
-			 * @brief ‚Ü‚Î‚ç‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì‘S‚Ä‚ğæ“¾
+			 * @brief ã¾ã°ã‚‰ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å…¨ã¦ã‚’å–å¾—
 			 * @return std::unordered_map<EntityID, T>&
 			 */
 			std::unordered_map<EntityID, T>& GetComponents() noexcept { return components; }
 		private:
 			/**
-			 * @brief ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğŠi”[‚·‚éƒ}ƒbƒv
+			 * @brief ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’æ ¼ç´ã™ã‚‹ãƒãƒƒãƒ—
 			 */
 			std::unordered_map<EntityID, T> components;
 		};

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // Minimum and maximum header length
 const int PSID_MIN_HEADER_LENGTH = 118;		// Version 1

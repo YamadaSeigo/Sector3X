@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   TypeChecker.hpp
- * @brief Œ^ƒ`ƒFƒbƒN‚ÆƒRƒ“ƒZƒvƒg‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief å‹ãƒã‚§ãƒƒã‚¯ã¨ã‚³ãƒ³ã‚»ãƒ—ãƒˆã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -12,11 +12,11 @@
 
 namespace SFW
 {
-	// ”CˆÓ‚Ìƒeƒ“ƒvƒŒ[ƒgˆø””‚É‘Î‰‚·‚éCRTPŒp³”»’è
+	// ä»»æ„ã®ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå¼•æ•°æ•°ã«å¯¾å¿œã™ã‚‹CRTPç¶™æ‰¿åˆ¤å®š
 	template <typename T, template <typename, typename...> class CRTP>
 	struct is_crtp_base_of {
 	private:
-		// ‚Ç‚ñ‚È’Ç‰Áˆø”...‚Å‚àCRTP<T, ...>‚Æˆê’v‚·‚ê‚ÎOK
+		// ã©ã‚“ãªè¿½åŠ å¼•æ•°...ã§ã‚‚CRTP<T, ...>ã¨ä¸€è‡´ã™ã‚Œã°OK
 		template <typename U>
 		static auto test(CRTP<U, std::decay_t<T> >*) -> std::true_type {}
 
@@ -29,7 +29,7 @@ namespace SFW
 		static constexpr bool value = decltype(test<T>(std::declval<T*>()))::value;
 	};
 
-	// CRTP<T> ‚É‘Î‰‚µ‚½1ˆø”—p”»’è
+	// CRTP<T> ã«å¯¾å¿œã—ãŸ1å¼•æ•°ç”¨åˆ¤å®š
 	template <typename T, template <typename> class CRTP>
 	concept is_crtp_base_of_1arg = requires(T * t) {
 		static_cast<CRTP<T>*>(t);
@@ -38,23 +38,23 @@ namespace SFW
 	template <typename T, template <typename, typename...> class CRTP>
 	constexpr bool is_crtp_base_of_v = is_crtp_base_of<T, CRTP>::value;
 
-	// ƒ†[ƒU[Šg’£“_FƒfƒtƒHƒ‹ƒg‚Í false
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼æ‹¡å¼µç‚¹ï¼šãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ false
 	template<class T> struct user_primitive : std::false_type {};
 	template<class T>
 	inline constexpr bool user_primitive_v = user_primitive<std::remove_cv_t<T>>::value;
 
 	/**
-	 * @brief ƒvƒŠƒ~ƒeƒBƒuŒ^‚ğƒ`ƒFƒbƒN‚·‚éƒRƒ“ƒZƒvƒg
+	 * @brief ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 	 */
 	template<typename T>
 	concept IsPrimitive = std::is_arithmetic_v<T> || std::is_enum_v<T> || user_primitive_v<T>;
 	/**
-	 * @brief Œ^ T ‚ª AllowedTypes... ‚Ì‚¢‚¸‚ê‚©‚Æˆê’v‚·‚é‚©‚ğƒ`ƒFƒbƒN‚·‚éƒRƒ“ƒZƒvƒg
+	 * @brief å‹ T ãŒ AllowedTypes... ã®ã„ãšã‚Œã‹ã¨ä¸€è‡´ã™ã‚‹ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 	 */
 	template<typename T, typename... AllowedTypes>
 	concept OneOf = (std::is_same_v<T, AllowedTypes> || ...);
 	/**
-	 * @brief QueryTypes ‚Ì‚·‚×‚Ä‚ª AllowedTypes... ‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚é‚©‚ğƒ`ƒFƒbƒN‚·‚éƒRƒ“ƒZƒvƒg
+	 * @brief QueryTypes ã®ã™ã¹ã¦ãŒ AllowedTypes... ã«å«ã¾ã‚Œã¦ã„ã‚‹ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
 	 */
 	template<typename... QueryTypes, typename... AllowedTypes>
 	concept AllOf = (OneOf<QueryTypes, AllowedTypes...> && ...);

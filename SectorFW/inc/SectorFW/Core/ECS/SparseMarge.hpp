@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * \file   SparseMarge.hpp
- * \brief Dense ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì‚‘¬‘–¸‚Æ Sparse ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒ}[ƒW‚ğx‰‡‚·‚éƒ†[ƒeƒBƒŠƒeƒB
+ * \brief Dense ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®é«˜é€Ÿèµ°æŸ»ã¨ Sparse ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒãƒ¼ã‚¸ã‚’æ”¯æ´ã™ã‚‹ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£
  * \author lenov
  * \date   March 2025
  *********************************************************************/
@@ -18,9 +18,9 @@
 
 namespace SFW::ECS {
 	//==============================
-	// 1) Dense Å‘¬ƒ‰ƒ“ƒi
-	//   - Dense ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì‚İ‘ÎÛiSparse ‚È‚µj
-	//   - ƒ`ƒƒƒ“ƒN‚²‚Æ‚É—ñƒ|ƒCƒ“ƒ^‚ğˆê“x‚¾‚¯æ‚Á‚Ä˜A‘±ƒAƒNƒZƒX
+	// 1) Dense æœ€é€Ÿãƒ©ãƒ³ãƒŠ
+	//   - Dense ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ã¿å¯¾è±¡ï¼ˆSparse ãªã—ï¼‰
+	//   - ãƒãƒ£ãƒ³ã‚¯ã”ã¨ã«åˆ—ãƒã‚¤ãƒ³ã‚¿ã‚’ä¸€åº¦ã ã‘å–ã£ã¦é€£ç¶šã‚¢ã‚¯ã‚»ã‚¹
 	//   - fn(EntityID, Dense&...)
 	//==============================
 	struct DenseRunner {
@@ -28,16 +28,16 @@ namespace SFW::ECS {
 			requires (sizeof...(Dense) > 0)
 		static size_t Run(ArchetypeManager& am, Fn&& fn) {
 			Query q;
-			q.With<Dense...>(); // Dense ŒÀ’èƒNƒGƒŠiAllDense §–ñj :contentReference[oaicite:4]{index=4}
-			auto chunks = q.MatchingChunks(am);    // ƒ}ƒXƒNˆê’vƒ`ƒƒƒ“ƒN—ñ‹“ :contentReference[oaicite:5]{index=5}
+			q.With<Dense...>(); // Dense é™å®šã‚¯ã‚¨ãƒªï¼ˆAllDense åˆ¶ç´„ï¼‰ :contentReference[oaicite:4]{index=4}
+			auto chunks = q.MatchingChunks(am);    // ãƒã‚¹ã‚¯ä¸€è‡´ãƒãƒ£ãƒ³ã‚¯åˆ—æŒ™ :contentReference[oaicite:5]{index=5}
 
 			size_t total = 0;
 			for (auto* chunk : chunks) {
-				// —ñƒ|ƒCƒ“ƒ^‚ğæ‚É‘©‚Ë‚éiGetColumn<T>() ‚Í—ñæ“ª‚Ì¶ƒ|ƒCƒ“ƒ^‚ğ•Ô‚·j
-				// ˆÈŒã‚Í &col[i] ‚Å˜A‘±ƒƒ‚ƒŠƒAƒNƒZƒXB :contentReference[oaicite:6]{index=6}
+				// åˆ—ãƒã‚¤ãƒ³ã‚¿ã‚’å…ˆã«æŸã­ã‚‹ï¼ˆGetColumn<T>() ã¯åˆ—å…ˆé ­ã®ç”Ÿãƒã‚¤ãƒ³ã‚¿ã‚’è¿”ã™ï¼‰
+				// ä»¥å¾Œã¯ &col[i] ã§é€£ç¶šãƒ¡ãƒ¢ãƒªã‚¢ã‚¯ã‚»ã‚¹ã€‚ :contentReference[oaicite:6]{index=6}
 				auto cols = std::tuple{ chunk->GetColumn<Dense>().value()... };
 
-				const auto& ids = chunk->GetEntityIDs(); // ¸‡ ID ”z—ñ‚ğ‘z’è :contentReference[oaicite:7]{index=7}
+				const auto& ids = chunk->GetEntityIDs(); // æ˜‡é † ID é…åˆ—ã‚’æƒ³å®š :contentReference[oaicite:7]{index=7}
 				const size_t n = chunk->GetEntityCount();
 
 				for (size_t i = 0; i < n; ++i) {
@@ -52,13 +52,13 @@ namespace SFW::ECS {
 	};
 
 	//==============================
-	// 2) Sparse ƒ}[ƒW•â•
-	//   - unordered_map<EntityID, S> ‚È‚Ç g‘ah ‚ğ Dense ‘–¸‚Éƒ}[ƒW
-	//   - ƒtƒŒ[ƒ€“ª‚È‚Ç‚ÅƒL[‚ğˆê“x‚¾‚¯’Šo¨¸‡ƒ\[ƒg
-	//   - Šeƒ`ƒƒƒ“ƒN‚Ì entities(¸‡) ‚Æ“ñ–{wƒ}[ƒW‚Å–½’†‚¾‚¯“K—p
+	// 2) Sparse ãƒãƒ¼ã‚¸è£œåŠ©
+	//   - unordered_map<EntityID, S> ãªã© â€œç–â€ ã‚’ Dense èµ°æŸ»ã«ãƒãƒ¼ã‚¸
+	//   - ãƒ•ãƒ¬ãƒ¼ãƒ é ­ãªã©ã§ã‚­ãƒ¼ã‚’ä¸€åº¦ã ã‘æŠ½å‡ºâ†’æ˜‡é †ã‚½ãƒ¼ãƒˆ
+	//   - å„ãƒãƒ£ãƒ³ã‚¯ã® entities(æ˜‡é †) ã¨äºŒæœ¬æŒ‡ãƒãƒ¼ã‚¸ã§å‘½ä¸­ã ã‘é©ç”¨
 	//==============================
 	struct SparseMerge {
-		// ---- (A) ƒL[’Šo & ƒ\[ƒgiƒtƒŒ[ƒ€‚É1‰ñ„§j ----
+		// ---- (A) ã‚­ãƒ¼æŠ½å‡º & ã‚½ãƒ¼ãƒˆï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ ã«1å›æ¨å¥¨ï¼‰ ----
 		template<class SparseMap>
 		static void BuildSortedKeys(const SparseMap& m, std::vector<EntityID>& outSortedKeys) {
 			outSortedKeys.clear();
@@ -67,8 +67,8 @@ namespace SFW::ECS {
 			std::sort(outSortedKeys.begin(), outSortedKeys.end());
 		}
 
-		// ---- (B) “ñ–{wƒ}[ƒW‚Å–½’†‚¾‚¯ fn ‚ğŒÄ‚Ô ----
-		// fn ‚ÌŒ`: fn(rowIndexInChunk, const S& sparseValue)
+		// ---- (B) äºŒæœ¬æŒ‡ãƒãƒ¼ã‚¸ã§å‘½ä¸­ã ã‘ fn ã‚’å‘¼ã¶ ----
+		// fn ã®å½¢: fn(rowIndexInChunk, const S& sparseValue)
 		template<class SparseMap, class Fn>
 		static size_t MergeJoinApply(const std::vector<EntityID>& chunkIDs,
 			const SparseMap& sparseMap,
@@ -84,7 +84,7 @@ namespace SFW::ECS {
 				if (a < b) { ++i; }
 				else if (a > b) { ++j; }
 				else {
-					// –½’†: find ‚Í–½’†‚Ì‚İÀsi‰ñ”Å¬‰»j
+					// å‘½ä¸­: find ã¯å‘½ä¸­æ™‚ã®ã¿å®Ÿè¡Œï¼ˆå›æ•°æœ€å°åŒ–ï¼‰
 					if (auto it = sparseMap.find(a); it != sparseMap.end()) {
 						fn(i, it->second);
 						++hits;
@@ -95,20 +95,20 @@ namespace SFW::ECS {
 			return hits;
 		}
 
-		// ---- (C) Dense ‚Æ•¹—p‚·‚éƒ†[ƒeƒBƒŠƒeƒB ----
-		// DenseRunner ‚Æ“¯‚¶‚­ Dense —ñ‚ğˆ¬‚èA–½’†s‚É‚¾‚¯ applyDense(row, sparseVal, denseRefs...)
+		// ---- (C) Dense ã¨ä½µç”¨ã™ã‚‹ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ ----
+		// DenseRunner ã¨åŒã˜ã Dense åˆ—ã‚’æ¡ã‚Šã€å‘½ä¸­è¡Œã«ã ã‘ applyDense(row, sparseVal, denseRefs...)
 		template<class S, class... Dense, class Apply>
 		static size_t RunDenseWithSparse(ArchetypeManager& am,
 			const std::unordered_map<EntityID, S>& sparseMap,
 			const std::vector<EntityID>& sortedKeys,
 			Apply&& applyDense)
 		{
-			Query q; q.With<Dense...>();               // Dense ŒÀ’è‚Åƒ`ƒƒƒ“ƒN—ñ‹“ :contentReference[oaicite:8]{index=8}
+			Query q; q.With<Dense...>();               // Dense é™å®šã§ãƒãƒ£ãƒ³ã‚¯åˆ—æŒ™ :contentReference[oaicite:8]{index=8}
 			auto chunks = q.MatchingChunks(am);        // :contentReference[oaicite:9]{index=9}
 			size_t totalHits = 0;
 
 			for (auto* chunk : chunks) {
-				auto cols = std::tuple{ chunk->GetColumn<Dense>().value()... }; // —ñƒ|ƒCƒ“ƒ^æ“¾ :contentReference[oaicite:10]{index=10}
+				auto cols = std::tuple{ chunk->GetColumn<Dense>().value()... }; // åˆ—ãƒã‚¤ãƒ³ã‚¿å–å¾— :contentReference[oaicite:10]{index=10}
 				const auto& ids = chunk->GetEntityIDs();                         // :contentReference[oaicite:11]{index=11}
 
 				totalHits += MergeJoinApply(ids, sparseMap, sortedKeys,

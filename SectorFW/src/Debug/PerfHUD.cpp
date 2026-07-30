@@ -1,4 +1,4 @@
-#include "Debug/PerfHUD.h"
+ï»¿#include "Debug/PerfHUD.h"
 #include "Debug/UIBus.h"
 #include "../external/imgui/imgui_internal.h"
 
@@ -24,7 +24,7 @@ namespace SFW
 			inited_ = true;
 		}
 
-		// PathArcToReverse ‚ğg‚í‚¸AƒXƒgƒ[ƒN‚Åƒh[ƒiƒc‚ğ•`‚­
+		// PathArcToReverse ã‚’ä½¿ã‚ãšã€ã‚¹ãƒˆãƒ­ãƒ¼ã‚¯ã§ãƒ‰ãƒ¼ãƒŠãƒ„ã‚’æã
 		void PerfHUD::DrawDonutGauge(const char* label, float value01, float sizePx,
 			ImU32 colBg, ImU32 colFill, ImU32 colText) {
 			value01 = std::clamp(value01, 0.f, 1.f);
@@ -35,26 +35,26 @@ namespace SFW
 			const float thickness = sizePx * 0.16f;
 			const float radius = sizePx * 0.5f;
 
-			// ”wŒiƒŠƒ“ƒOi‘Süj
+			// èƒŒæ™¯ãƒªãƒ³ã‚°ï¼ˆå…¨å‘¨ï¼‰
 			dl->AddCircle(center, radius, colBg, 0, thickness);
 
-			// ’lƒA[ƒNiŠJnŠp -135‹ ‚©‚ç 360‹ ‘|ˆø‚Ìˆê•”j
-			const float start = -IM_PI * 0.75f;   // -135‹
-			const float span = IM_PI * 2.0f;    // 360‹
+			// å€¤ã‚¢ãƒ¼ã‚¯ï¼ˆé–‹å§‹è§’ -135Â° ã‹ã‚‰ 360Â° æƒå¼•ã®ä¸€éƒ¨ï¼‰
+			const float start = -IM_PI * 0.75f;   // -135Â°
+			const float span = IM_PI * 2.0f;    // 360Â°
 			const float a0 = start;
 			const float a1 = start + span * value01;
 
 			dl->PathClear();
-			dl->PathArcTo(center, radius, a0, a1, 0); // ‹t•ûŒü‚É‚µ‚½‚¢ê‡‚Í (a1, a0)
+			dl->PathArcTo(center, radius, a0, a1, 0); // é€†æ–¹å‘ã«ã—ãŸã„å ´åˆã¯ (a1, a0)
 			dl->PathStroke(colFill, 0, thickness);
 
-			// ’†‰›ƒeƒLƒXƒgi%j
+			// ä¸­å¤®ãƒ†ã‚­ã‚¹ãƒˆï¼ˆ%ï¼‰
 			char buf[64];
 			ImFormatString(buf, IM_ARRAYSIZE(buf), "%.0f%%", value01 * 100.f);
 			ImVec2 ts = ImGui::CalcTextSize(buf);
 			dl->AddText(ImVec2(center.x - ts.x * 0.5f, center.y - ts.y * 0.5f), colText, buf);
 
-			// ƒ‰ƒxƒ‹
+			// ãƒ©ãƒ™ãƒ«
 			ImVec2 ls = ImGui::CalcTextSize(label);
 			dl->AddText(ImVec2(center.x - ls.x * 0.5f, p.y + sizePx + 4.f), colText, label);
 
@@ -77,7 +77,7 @@ namespace SFW
 
 		void PerfHUD::DrawStackedFrameBar(float logicMs, float renderMs, float gpuMs, float budgetMs, float barWidth, float barHeight)
 		{
-			// –Ú·‚è‚Í budget ‚ğŠî€i’´‚¦‚½‚ç‰E‚Éˆì‚ê‚é•`‚«•û‚à‰Â”\‚¾‚ªA‚±‚±‚Íclampj
+			// ç›®ç››ã‚Šã¯ budget ã‚’åŸºæº–ï¼ˆè¶…ãˆãŸã‚‰å³ã«æº¢ã‚Œã‚‹æãæ–¹ã‚‚å¯èƒ½ã ãŒã€ã“ã“ã¯clampï¼‰
 			auto clamp01 = [](float v) { return std::clamp(v, 0.0f, 1.0f); };
 			float l01 = clamp01(logicMs / budgetMs);
 			float r01 = clamp01(renderMs / budgetMs);
@@ -87,11 +87,11 @@ namespace SFW
 			ImVec2 p0 = ImGui::GetCursorScreenPos();
 			ImVec2 p1 = ImVec2(p0.x + barWidth, p0.y + barHeight);
 
-			// ”wŒi
+			// èƒŒæ™¯
 			dl->AddRectFilled(p0, p1, IM_COL32(50, 50, 60, 180), 4.0f);
 
-			// ‰¡•ûŒü‚ÉuÏ‚İã‚°v‚ÉŒ©‚¹‚éi•À‚×‚éj•û®
-			// ¦–{“–‚ÌƒNƒŠƒeƒBƒJƒ‹ƒpƒX‚Í max(logic, render, gpu) ‚È‚Ì‚ÅA‰º‚Ì•\¦‚Å‹­’²‚·‚é
+			// æ¨ªæ–¹å‘ã«ã€Œç©ã¿ä¸Šã’ã€ã«è¦‹ã›ã‚‹ï¼ˆä¸¦ã¹ã‚‹ï¼‰æ–¹å¼
+			// â€»æœ¬å½“ã®ã‚¯ãƒªãƒ†ã‚£ã‚«ãƒ«ãƒ‘ã‚¹ã¯ max(logic, render, gpu) ãªã®ã§ã€ä¸‹ã®è¡¨ç¤ºã§å¼·èª¿ã™ã‚‹
 			float x = p0.x;
 
 			auto seg = [&](float w01, ImU32 col) {
@@ -105,10 +105,10 @@ namespace SFW
 			seg(r01, IM_COL32(120, 255, 140, 220)); // Render
 			seg(g01, IM_COL32(255, 140, 90, 220));  // GPU
 
-			// ˜g
+			// æ 
 			dl->AddRect(p0, p1, IM_COL32(255, 255, 255, 60), 4.0f);
 
-			// ƒc[ƒ‹ƒ`ƒbƒv
+			// ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—
 			ImGui::InvisibleButton("##stackbar", ImVec2(barWidth, barHeight));
 			if (ImGui::IsItemHovered()) {
 				ImGui::BeginTooltip();
@@ -123,15 +123,15 @@ namespace SFW
 		void PerfHUD::TickAndDraw(float frameBudgetSec, bool overlayTopRight) {
 			if (!inited_) Init();
 
-			// 0..1 ’læ“¾
+			// 0..1 å€¤å–å¾—
 			float cpu = GetUIBus().cpuLoad.consume();
 			float gpu = GetUIBus().gpuLoad.consume();
 
-			// EMA ‚ÅŒ©‚â‚·‚­
+			// EMA ã§è¦‹ã‚„ã™ã
 			cpuEMA_ = EMA(cpuEMA_, cpu, 0.25f);
 			gpuEMA_ = EMA(gpuEMA_, gpu, 0.25f);
 
-			// ƒtƒŒ[ƒ€ŠÔimsj
+			// ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“ï¼ˆmsï¼‰
 			float dt = ImGui::GetIO().DeltaTime;
 			float ms = dt * 1000.f;
 
@@ -147,11 +147,11 @@ namespace SFW
 			renderMsBuf_.push(renderMs);
 			gpuMsBuf_.push(gpuMs);
 
-			// u‚±‚ÌƒtƒŒ[ƒ€‚Ìƒ{ƒgƒ‹ƒlƒbƒNiƒNƒŠƒeƒBƒJƒ‹jv‚Í max ‚ğÌ—p
+			// ã€Œã“ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®ãƒœãƒˆãƒ«ãƒãƒƒã‚¯ï¼ˆã‚¯ãƒªãƒ†ã‚£ã‚«ãƒ«ï¼‰ã€ã¯ max ã‚’æ¡ç”¨
 			float criticalMs = std::max(logicMs, std::max(renderMs, gpuMs));
 			criticalMsBuf_.push(criticalMs);
 
-			// ”z’ui‰EãƒI[ƒo[ƒŒƒCj
+			// é…ç½®ï¼ˆå³ä¸Šã‚ªãƒ¼ãƒãƒ¼ãƒ¬ã‚¤ï¼‰
 			ImGuiViewport* vp = ImGui::GetMainViewport();
 			if (overlayTopRight) {
 				ImVec2 pos = ImVec2(vp->WorkPos.x + vp->WorkSize.x - 8.f, vp->WorkPos.y + 8.f);
@@ -163,30 +163,30 @@ namespace SFW
 				ImGuiWindowFlags_NoNav;
 
 			if (ImGui::Begin("Perf", nullptr, wf)) {
-				// ƒh[ƒiƒcƒQ[ƒWiCPU/GPUj
+				// ãƒ‰ãƒ¼ãƒŠãƒ„ã‚²ãƒ¼ã‚¸ï¼ˆCPU/GPUï¼‰
 				ImGui::BeginGroup();
 
 				float budgetMs = frameBudgetSec * 1000.0f;
 
-				// Œ©‚½–Ú‚Ì—vFÏ‚İã‚°ƒo[i1–{‚Å’¼Š´“I‚Éj
+				// è¦‹ãŸç›®ã®è¦ï¼šç©ã¿ä¸Šã’ãƒãƒ¼ï¼ˆ1æœ¬ã§ç›´æ„Ÿçš„ã«ï¼‰
 				ImGui::TextUnformatted("Frame Breakdown (this frame)");
 
-				// ƒ{ƒgƒ‹ƒlƒbƒN”»’èimax ‚Ì—v‘f–¼j
+				// ãƒœãƒˆãƒ«ãƒãƒƒã‚¯åˆ¤å®šï¼ˆmax ã®è¦ç´ åï¼‰
 				const char* bottleneck = "Logic";
 				if (renderMs >= logicMs && renderMs >= gpuMs) bottleneck = "Render";
 				else if (gpuMs >= logicMs && gpuMs >= renderMs) bottleneck = "GPU";
 
 				if (ImGui::BeginTable("crit", 2, ImGuiTableFlags_SizingFixedFit))
 				{
-					ImGui::TableSetupColumn("Left");                          // ©“®
-					ImGui::TableSetupColumn("Right", ImGuiTableColumnFlags_WidthFixed, 220.0f); // ŒÅ’è
+					ImGui::TableSetupColumn("Left");                          // è‡ªå‹•
+					ImGui::TableSetupColumn("Right", ImGuiTableColumnFlags_WidthFixed, 220.0f); // å›ºå®š
 
 					ImGui::TableNextRow();
 					ImGui::TableSetColumnIndex(0);
-					ImGui::Text("Critical: %6.2f ms", criticalMs); // ”š‚àŒ…ŒÅ’è
+					ImGui::Text("Critical: %6.2f ms", criticalMs); // æ•°å­—ã‚‚æ¡å›ºå®š
 
 					ImGui::TableSetColumnIndex(1);
-					ImGui::Text("Bottleneck: %-6s", bottleneck);   // •¶š‚àŒÅ’èi—á: "Render"‚Ü‚Å‘z’èj
+					ImGui::Text("Bottleneck: %-6s", bottleneck);   // æ–‡å­—ã‚‚å›ºå®šï¼ˆä¾‹: "Render"ã¾ã§æƒ³å®šï¼‰
 
 					ImGui::EndTable();
 				}
@@ -195,7 +195,7 @@ namespace SFW
 
 				ImVec2 spSize = ImVec2(220.f, 48.f);
 
-				// ƒtƒŒ[ƒ€ŠÔimsj
+				// ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“ï¼ˆmsï¼‰
 				frameMsBuf_.autoscale();
 				float minMs = std::min(0.f, frameMsBuf_.lastMin);
 				float maxMs = std::max(33.3f, frameMsBuf_.lastMax);
@@ -208,7 +208,7 @@ namespace SFW
 				ImGui::Text("%.1f ms \n(budget %.1f)",
 					tmp.empty() ? 0.f : tmp.back(), frameBudgetSec * 1000.f);
 
-				// —š—ğ‚àŒ©‚½‚¢ê‡i10•bƒXƒp[ƒNj
+				// å±¥æ­´ã‚‚è¦‹ãŸã„å ´åˆï¼ˆ10ç§’ã‚¹ãƒ‘ãƒ¼ã‚¯ï¼‰
 				ImVec2 sp2 = ImVec2(220.f, 40.f);
 				ImGui::PushID("logicMs");
 				DrawSparkline("Logic ms (10s)", logicMsBuf_, sp2, 0.f, budgetMs, "%.2f ms", 1.f);
@@ -220,7 +220,7 @@ namespace SFW
 				DrawSparkline("GPU ms (10s)", gpuMsBuf_, sp2, 0.f, budgetMs, "%.2f ms", 1.f);
 				ImGui::PopID();
 
-				// ƒXƒp[ƒNƒ‰ƒCƒ“i’¼‹ß10•bj
+				// ã‚¹ãƒ‘ãƒ¼ã‚¯ãƒ©ã‚¤ãƒ³ï¼ˆç›´è¿‘10ç§’ï¼‰
 				ImGui::Separator();
 
 				ImGui::Text("Usage Rates");
@@ -240,7 +240,7 @@ namespace SFW
 					colText);
 				ImGui::EndGroup();
 
-				// ƒXƒp[ƒNƒ‰ƒCƒ“i’¼‹ß10•bj
+				// ã‚¹ãƒ‘ãƒ¼ã‚¯ãƒ©ã‚¤ãƒ³ï¼ˆç›´è¿‘10ç§’ï¼‰
 				ImGui::Separator();
 
 				ImGui::PushID("sparksCPU");

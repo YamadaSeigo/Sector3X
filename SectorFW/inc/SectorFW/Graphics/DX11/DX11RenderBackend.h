@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   DX11RenderBackend.h
- * @brief DirectX 11ƒŒƒ“ƒ_ƒŠƒ“ƒOƒoƒbƒNƒGƒ“ƒh‚Ì’è‹`
+ * @brief DirectX 11ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒãƒƒã‚¯ã‚¨ãƒ³ãƒ‰ã®å®šç¾©
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -27,34 +27,34 @@ namespace SFW
 	namespace Graphics::DX11
 	{
 		/**
-		 * @brief DirectX 11‚ÌƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒW[•ÏŠ·—pƒ‹ƒbƒNƒAƒbƒvƒe[ƒuƒ‹
-		 * @param t ƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒW[
-		 * @return D3D_PRIMITIVE_TOPOLOGY DirectX 11‚ÌƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒW[
+		 * @brief DirectX 11ã®ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ãƒˆãƒãƒ­ã‚¸ãƒ¼å¤‰æ›ç”¨ãƒ«ãƒƒã‚¯ã‚¢ãƒƒãƒ—ãƒ†ãƒ¼ãƒ–ãƒ«
+		 * @param t ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ãƒˆãƒãƒ­ã‚¸ãƒ¼
+		 * @return D3D_PRIMITIVE_TOPOLOGY DirectX 11ã®ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ãƒˆãƒãƒ­ã‚¸ãƒ¼
 		 */
 		inline D3D_PRIMITIVE_TOPOLOGY ToD3DTopology(PrimitiveTopology t) {
 			return D3DTopologyLUT[static_cast<size_t>(t)];
 		}
 		/**
-		 * @brief DirectX 11ƒŒƒ“ƒ_ƒŠƒ“ƒOƒoƒbƒNƒGƒ“ƒhƒNƒ‰ƒX.
+		 * @brief DirectX 11ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒãƒƒã‚¯ã‚¨ãƒ³ãƒ‰ã‚¯ãƒ©ã‚¹.
 		 */
 		class RenderBackend : public RenderBackendBase<RenderBackend, ID3D11RenderTargetView*, ID3D11DepthStencilView*, ID3D11ShaderResourceView*, ID3D11Buffer*, ComPtr> {
 		public:
 			/**
-			 * @brief ‚Ğ‚Æ•`‰æ–½—ß“–‚½‚è‚ÌƒCƒ“ƒXƒ^ƒ“ƒXƒf[ƒ^‚ÌÅ‘å”
+			 * @brief ã²ã¨æç”»å‘½ä»¤å½“ãŸã‚Šã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‡ãƒ¼ã‚¿ã®æœ€å¤§æ•°
 			 */
 			static inline constexpr uint32_t MAX_DRAW_CALL_INSTANCES_NUM = 1024 * 4;
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param device ID3D11Device‚Ìƒ|ƒCƒ“ƒ^
-			 * @param context ID3D11DeviceContext‚Ìƒ|ƒCƒ“ƒ^
-			 * @param meshMgr ƒƒbƒVƒ…ƒ}ƒl[ƒWƒƒ[
-			 * @param matMgr ƒ}ƒeƒŠƒAƒ‹ƒ}ƒl[ƒWƒƒ[
-			 * @param shaderMgr ƒVƒF[ƒ_[ƒ}ƒl[ƒWƒƒ[
-			 * @param psoMgr PSOƒ}ƒl[ƒWƒƒ[
-			 * @param textureMgr ƒeƒNƒXƒ`ƒƒƒ}ƒl[ƒWƒƒ[
-			 * @param cbMgr ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@ƒ}ƒl[ƒWƒƒ[
-			 * @param samplerMgr ƒTƒ“ƒvƒ‰[ƒ}ƒl[ƒWƒƒ[
-			 * @param modelAssetMgr ƒ‚ƒfƒ‹ƒAƒZƒbƒgƒ}ƒl[ƒWƒƒ[
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param device ID3D11Deviceã®ãƒã‚¤ãƒ³ã‚¿
+			 * @param context ID3D11DeviceContextã®ãƒã‚¤ãƒ³ã‚¿
+			 * @param meshMgr ãƒ¡ãƒƒã‚·ãƒ¥ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+			 * @param matMgr ãƒãƒ†ãƒªã‚¢ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+			 * @param shaderMgr ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+			 * @param psoMgr PSOãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+			 * @param textureMgr ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+			 * @param cbMgr ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+			 * @param samplerMgr ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+			 * @param modelAssetMgr ãƒ¢ãƒ‡ãƒ«ã‚¢ã‚»ãƒƒãƒˆãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 			 */
 			explicit RenderBackend(ID3D11Device* device, ID3D11DeviceContext* context,
 				MeshManager* meshMgr, MaterialManager* matMgr,
@@ -62,70 +62,70 @@ namespace SFW
 				TextureManager* textureMgr, BufferManager* cbMgr,
 				SamplerManager* samplerMgr, ModelAssetManager* modelAssetMgr);
 			/**
-			 * @brief RendderGraph‚ÉƒŠƒ\[ƒXƒ}ƒl[ƒWƒƒ[‚ğ’Ç‰Á‚·‚éŠÖ”
-			 * @param graph ƒŒƒ“ƒ_[ƒOƒ‰ƒt
+			 * @brief RendderGraphã«ãƒªã‚½ãƒ¼ã‚¹ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚’è¿½åŠ ã™ã‚‹é–¢æ•°
+			 * @param graph ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚°ãƒ©ãƒ•
 			 */
 			void AddResourceManagerToRenderServiceImpl(
 				RenderGraph<RenderBackend, ID3D11RenderTargetView*, ID3D11DepthStencilView*, ID3D11ShaderResourceView*, ID3D11Buffer*, ComPtr>& graph);
 			/**
-			 * @brief ƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒW[‚ğİ’è‚·‚éŠÖ”
-			 * @param topology ƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒW[
+			 * @brief ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ãƒˆãƒãƒ­ã‚¸ãƒ¼ã‚’è¨­å®šã™ã‚‹é–¢æ•°
+			 * @param topology ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ãƒˆãƒãƒ­ã‚¸ãƒ¼
 			 */
 			void SetPrimitiveTopologyImpl(PrimitiveTopology topology) const {
 				context->IASetPrimitiveTopology(ToD3DTopology(topology));
 			}
 			/**
-			 * @brief ƒuƒŒƒ“ƒhƒXƒe[ƒg‚ğİ’è‚·‚éŠÖ”
-			 * @param state ƒuƒŒƒ“ƒhƒXƒe[ƒgID
+			 * @brief ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹é–¢æ•°
+			 * @param state ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆID
 			 */
 			void SetBlendStateImpl(BlendStateID state) const;
 			/**
-			 * @brief ƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒg‚ğİ’è‚·‚éŠÖ”
-			 * @param state ƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒgID
+			 * @brief ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹é–¢æ•°
+			 * @param state ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆID
 			 */
 			void SetRasterizerStateImpl(RasterizerStateID state) const;
 			/**
-			 * @brief ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒXƒe[ƒg‚ğİ’è‚·‚éŠÖ”
-			 * @param state ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒXƒe[ƒgID
+			 * @brief ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹é–¢æ•°
+			 * @param state ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆID
 			 */
 			void SetDepthStencilStateImpl(DepthStencilStateID state, UINT stencilRef = 0) const {
 				context->OMSetDepthStencilState(depthStencilStates[(size_t)state].Get(), stencilRef);
 			}
 			/**
-			 * @brief ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ÆƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒrƒ…[‚ğİ’è‚·‚éŠÖ”
-			 * @param rtvs ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ì”z—ñ
-			 * @param dsv ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒrƒ…[
+			 * @brief ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ã‚’è¨­å®šã™ã‚‹é–¢æ•°
+			 * @param rtvs ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã®é…åˆ—
+			 * @param dsv ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼
 			 */
 			void SetRenderTargetsImpl(const std::vector<ID3D11RenderTargetView*>& rtvs, void* dsv) const {
 				context->OMSetRenderTargets((UINT)rtvs.size(), rtvs.data(), (ID3D11DepthStencilView*)dsv);
 			}
 			/**
-			 * @brief ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[‚ğƒoƒCƒ“ƒh‚·‚éŠÖ”
-			 * @param srvs ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[‚Ì”z—ñ
-			 * @param startSlot ŠJnƒXƒƒbƒg
+			 * @brief ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã‚’ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹é–¢æ•°
+			 * @param srvs ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã®é…åˆ—
+			 * @param startSlot é–‹å§‹ã‚¹ãƒ­ãƒƒãƒˆ
 			 */
 			void BindPSSRVsImpl(const std::vector<ID3D11ShaderResourceView*>& srvs, uint32_t startSlot = 0) const {
 				context->PSSetShaderResources(startSlot, (UINT)srvs.size(), srvs.data());
 			}
 			/**
-			 * @brief ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@‚ğƒoƒCƒ“ƒh‚·‚éŠÖ”
-			 * @param cbvs ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@‚Ì”z—ñ
-			 * @param startSlot ŠJnƒXƒƒbƒg
+			 * @brief ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã‚’ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹é–¢æ•°
+			 * @param cbvs ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã®é…åˆ—
+			 * @param startSlot é–‹å§‹ã‚¹ãƒ­ãƒƒãƒˆ
 			 */
 			void BindVSCBVsImpl(const std::vector<ID3D11Buffer*>& cbvs, uint32_t startSlot = 0) const {
 				context->VSSetConstantBuffers(startSlot, (UINT)cbvs.size(), cbvs.data());
 			}
 			/**
-			 * @brief ƒsƒNƒZƒ‹ƒVƒF[ƒ_[—pƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@‚ğƒoƒCƒ“ƒh‚·‚éŠÖ”
-			 * @param cbvs ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@‚Ì”z—ñ
-			 * @param startSlot ŠJnƒXƒƒbƒg
+			 * @brief ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”¨ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã‚’ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹é–¢æ•°
+			 * @param cbvs ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã®é…åˆ—
+			 * @param startSlot é–‹å§‹ã‚¹ãƒ­ãƒƒãƒˆ
 			 */
 			void BindPSCBVsImpl(const std::vector<ID3D11Buffer*>& cbvs, uint32_t startSlot = 0) const {
 				context->PSSetConstantBuffers(startSlot, (UINT)cbvs.size(), cbvs.data());
 			}
 			/**
-			 * @brief ‹¤’Ê‚ÌƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@‚ğƒoƒCƒ“ƒh‚·‚éŠÖ”
-			 * @param cbvs ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@‚Ì”z—ñ
+			 * @brief å…±é€šã®ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã‚’ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹é–¢æ•°
+			 * @param cbvs ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã®é…åˆ—
 			 */
 			void BindGlobalVSCBVsImpl(const std::vector<BindSlotBuffer>& cbvs) const {
 				for (const auto& cb : cbvs) {
@@ -146,9 +146,9 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒCƒ“ƒXƒ^ƒ“ƒXƒf[ƒ^‚ğƒtƒŒ[ƒ€‘O‚ÉƒAƒbƒvƒ[ƒh‚·‚éŠÖ”
-			 * @param framePool ƒCƒ“ƒXƒ^ƒ“ƒXƒf[ƒ^‚Ì”z—ñ
-			 * @param instCount ƒCƒ“ƒXƒ^ƒ“ƒXƒf[ƒ^‚Ì”
+			 * @brief ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ•ãƒ¬ãƒ¼ãƒ å‰ã«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã™ã‚‹é–¢æ•°
+			 * @param framePool ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‡ãƒ¼ã‚¿ã®é…åˆ—
+			 * @param instCount ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‡ãƒ¼ã‚¿ã®æ•°
 			 */
 			void BeginFrameUploadImpl(const SharedInstanceArena::InstancePool* framePool, uint32_t instCount) const
 			{
@@ -158,9 +158,9 @@ namespace SFW
 				context->Unmap(m_instanceSB.Get(), 0);
 			}
 			/**
-			 * @brief ƒCƒ“ƒXƒ^ƒ“ƒXƒhƒ[‚ğÀs‚·‚éŠÖ”‚ÌÀ‘•
-			 * @param cmds ƒCƒ“ƒXƒ^ƒ“ƒXƒhƒ[ƒRƒ}ƒ“ƒh‚Ì”z—ñ
-			 * @param usePSORasterizer PSO‚Ìƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒg‚ğg—p‚·‚é‚©‚Ç‚¤‚©
+			 * @brief ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‰ãƒ­ãƒ¼ã‚’å®Ÿè¡Œã™ã‚‹é–¢æ•°ã®å®Ÿè£…
+			 * @param cmds ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‰ãƒ­ãƒ¼ã‚³ãƒãƒ³ãƒ‰ã®é…åˆ—
+			 * @param usePSORasterizer PSOã®ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä½¿ç”¨ã™ã‚‹ã‹ã©ã†ã‹
 			 */
 			template<typename VecT>
 			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, std::optional<PSOHandle> psoOverride, bool usePSORasterizer, bool rebindPSO)
@@ -179,7 +179,7 @@ namespace SFW
 				size_t cmdCount = cmds.size();
 				std::vector<DrawBatch> batches;
 				if (psoOverride.has_value()) {
-					// PSOƒI[ƒo[ƒ‰ƒCƒh‚ª‚ ‚éê‡A‚·‚×‚Ä“¯‚¶PSO‚Å•`‰æ‚·‚é
+					// PSOã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãŒã‚ã‚‹å ´åˆã€ã™ã¹ã¦åŒã˜PSOã§æç”»ã™ã‚‹
 					uint32_t overriddenPSO = psoOverride.value().index;
 					while (i < cmdCount) {
 						auto currentMat = cmds[i].material;
@@ -187,17 +187,17 @@ namespace SFW
 						uint32_t currentMesh = cmds[i].mesh;
 						uint32_t instanceCount = 0;
 
-						const uint32_t base = m_idxHead;        // ‚±‚Ìƒhƒ[‚Ì index æ“ª
+						const uint32_t base = m_idxHead;        // ã“ã®ãƒ‰ãƒ­ãƒ¼ã® index å…ˆé ­
 
-						// 1) “¯PSO/Mat/Mesh ‚ğ‘©‚Ë‚Â‚ÂAindex ‚ğ SRV ‚Ég’¼Úh‘‚­
+						// 1) åŒPSO/Mat/Mesh ã‚’æŸã­ã¤ã¤ã€index ã‚’ SRV ã«â€œç›´æ¥â€æ›¸ã
 						auto* dst = reinterpret_cast<uint32_t*>(m_idxMapped) + m_idxHead;
 
-						// “¯‚¶PSO + Material + Mesh‚ğ‚Ü‚Æ‚ß‚é
+						// åŒã˜PSO + Material + Meshã‚’ã¾ã¨ã‚ã‚‹
 						while (i < cmdCount &&
 							cmds[i].material == currentMat &&
 							cmds[i].mesh == currentMesh &&
 							instanceCount < MAX_DRAW_CALL_INSTANCES_NUM) {
-							dst[instanceCount++] = cmds[i].instanceIndex.index; // © ’¼Ú‘‚­ = instances[idx];
+							dst[instanceCount++] = cmds[i].instanceIndex.index; // â† ç›´æ¥æ›¸ã = instances[idx];
 							++i;
 						}
 						m_idxHead += instanceCount;
@@ -214,18 +214,18 @@ namespace SFW
 						uint32_t currentMesh = cmds[i].mesh;
 						uint32_t instanceCount = 0;
 
-						const uint32_t base = m_idxHead;        // ‚±‚Ìƒhƒ[‚Ì index æ“ª
+						const uint32_t base = m_idxHead;        // ã“ã®ãƒ‰ãƒ­ãƒ¼ã® index å…ˆé ­
 
-						// 1) “¯PSO/Mat/Mesh ‚ğ‘©‚Ë‚Â‚ÂAindex ‚ğ SRV ‚Ég’¼Úh‘‚­
+						// 1) åŒPSO/Mat/Mesh ã‚’æŸã­ã¤ã¤ã€index ã‚’ SRV ã«â€œç›´æ¥â€æ›¸ã
 						auto* dst = reinterpret_cast<uint32_t*>(m_idxMapped) + m_idxHead;
 
-						// “¯‚¶PSO + Material + Mesh‚ğ‚Ü‚Æ‚ß‚é
+						// åŒã˜PSO + Material + Meshã‚’ã¾ã¨ã‚ã‚‹
 						while (i < cmdCount &&
 							cmds[i].pso == currentPSO &&
 							cmds[i].material == currentMat &&
 							cmds[i].mesh == currentMesh &&
 							instanceCount < MAX_DRAW_CALL_INSTANCES_NUM) {
-							dst[instanceCount++] = cmds[i].instanceIndex.index; // © ’¼Ú‘‚­ = instances[idx];
+							dst[instanceCount++] = cmds[i].instanceIndex.index; // â† ç›´æ¥æ›¸ã = instances[idx];
 							++i;
 						}
 						m_idxHead += instanceCount;
@@ -239,7 +239,7 @@ namespace SFW
 				context->VSSetShaderResources(0, 1, m_instanceSRV.GetAddressOf()); // InstanceData (t0)
 				context->VSSetConstantBuffers(1, 1, m_perDrawCB.GetAddressOf()); // (b1)
 				for (const auto& b : batches) {
-					// PerDraw CB ‚É base ‚Æ count ‚ğİ’è
+					// PerDraw CB ã« base ã¨ count ã‚’è¨­å®š
 					struct { uint32_t base, count, pad0, pad1; }
 					perDraw{ b.base, b.instanceCount, 0, 0 };
 					D3D11_MAPPED_SUBRESOURCE m{};
@@ -251,10 +251,10 @@ namespace SFW
 				}
 			}
 			/**
-			 * @brief ƒCƒ“ƒXƒ^ƒ“ƒXƒhƒ[‚ğÀs‚·‚éŠÖ”‚ÌÀ‘•
-			 * @param cmds ƒCƒ“ƒXƒ^ƒ“ƒXƒhƒ[ƒRƒ}ƒ“ƒh‚Ì”z—ñ
-			 * @param indices ƒCƒ“ƒfƒbƒNƒX”z—ñ
-			 * @param usePSORasterizer PSO‚Ìƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒg‚ğg—p‚·‚é‚©‚Ç‚¤‚©
+			 * @brief ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‰ãƒ­ãƒ¼ã‚’å®Ÿè¡Œã™ã‚‹é–¢æ•°ã®å®Ÿè£…
+			 * @param cmds ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‰ãƒ­ãƒ¼ã‚³ãƒãƒ³ãƒ‰ã®é…åˆ—
+			 * @param indices ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—
+			 * @param usePSORasterizer PSOã®ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä½¿ç”¨ã™ã‚‹ã‹ã©ã†ã‹
 			 */
 			template<typename VecT>
 			void ExecuteDrawIndexedInstancedImpl(const VecT& cmds, std::span<const uint32_t> indices, std::optional<PSOHandle> psoOverride, bool usePSORasterizer, bool rebindPSO)
@@ -300,7 +300,7 @@ namespace SFW
 					}
 				}
 				else if (psoOverride.has_value()) {
-					// PSOƒI[ƒo[ƒ‰ƒCƒh‚ª‚ ‚éê‡A‚·‚×‚Ä“¯‚¶PSO‚Å•`‰æ‚·‚é
+					// PSOã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãŒã‚ã‚‹å ´åˆã€ã™ã¹ã¦åŒã˜PSOã§æç”»ã™ã‚‹
 					uint32_t overriddenPSO = psoOverride.value().index;
 					while (k < K) {
 						const DrawCommand& first = cmds[indices[k]];
@@ -351,7 +351,7 @@ namespace SFW
 				context->VSSetShaderResources(0, 1, m_instanceSRV.GetAddressOf()); // InstanceData (t0)
 				context->VSSetConstantBuffers(1, 1, m_perDrawCB.GetAddressOf()); // (b1)
 				for (const auto& b : batches) {
-					// PerDraw CB ‚É base ‚Æ count ‚ğİ’è
+					// PerDraw CB ã« base ã¨ count ã‚’è¨­å®š
 					struct { uint32_t base, count, pad0, pad1; }
 					perDraw{ b.base, b.instanceCount, 0, 0 };
 					D3D11_MAPPED_SUBRESOURCE m{};
@@ -364,8 +364,8 @@ namespace SFW
 			}
 
 			/**
-			 * @brief •Û—¯’†‚Ìíœ‚ğˆ—‚·‚éŠÖ”‚ÌÀ‘•
-			 * @param currentFrame Œ»İ‚ÌƒtƒŒ[ƒ€”Ô†
+			 * @brief ä¿ç•™ä¸­ã®å‰Šé™¤ã‚’å‡¦ç†ã™ã‚‹é–¢æ•°ã®å®Ÿè£…
+			 * @param currentFrame ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·
 			 */
 			void ProcessDeferredDeletesImpl(uint64_t currentFrame);
 
@@ -377,12 +377,12 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒCƒ“ƒXƒ^ƒ“ƒXƒhƒ[‚ğÀs‚·‚éŠÖ”
-			 * @param meshIdx ƒƒbƒVƒ…ƒCƒ“ƒfƒbƒNƒX
-			 * @param matIdx ƒ}ƒeƒŠƒAƒ‹ƒCƒ“ƒfƒbƒNƒX
-			 * @param psoIdx PSOƒCƒ“ƒfƒbƒNƒX
-			 * @param count ƒCƒ“ƒXƒ^ƒ“ƒX”
-			 * @param usePSORasterizer PSO‚Ìƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒg‚ğg—p‚·‚é‚©‚Ç‚¤‚©
+			 * @brief ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‰ãƒ­ãƒ¼ã‚’å®Ÿè¡Œã™ã‚‹é–¢æ•°
+			 * @param meshIdx ãƒ¡ãƒƒã‚·ãƒ¥ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			 * @param matIdx ãƒãƒ†ãƒªã‚¢ãƒ«ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			 * @param psoIdx PSOã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			 * @param count ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°
+			 * @param usePSORasterizer PSOã®ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä½¿ç”¨ã™ã‚‹ã‹ã©ã†ã‹
 			 */
 			void DrawInstanced(uint32_t meshIdx, uint32_t matIdx, uint32_t psoIdx, uint32_t count, bool usePSORasterizer, bool rebindPSO) const;
 		private:
@@ -410,7 +410,7 @@ namespace SFW
 				context->Unmap(m_instIndexSB.Get(), 0);
 				m_idxMapped = nullptr;
 
-				context->VSSetShaderResources(1, 1, m_instIndexSRV.GetAddressOf()); // t1 ‚ğ VS ‚ÉƒZƒbƒg
+				context->VSSetShaderResources(1, 1, m_instIndexSRV.GetAddressOf()); // t1 ã‚’ VS ã«ã‚»ãƒƒãƒˆ
 			}
 
 		private:
@@ -425,20 +425,20 @@ namespace SFW
 			SamplerManager* samplerManager;
 			ModelAssetManager* modelAssetManager;
 
-			// ƒtƒŒ[ƒ€s—ñ—p StructuredBuffer (SRV)
+			// ãƒ•ãƒ¬ãƒ¼ãƒ è¡Œåˆ—ç”¨ StructuredBuffer (SRV)
 			ComPtr<ID3D11Buffer>            m_instanceSB;
 			ComPtr<ID3D11ShaderResourceView> m_instanceSRV;
 
-			// ƒCƒ“ƒfƒbƒNƒX—ñ—p StructuredBuffer (SRV)  ¦uinti4B/—v‘fj
+			// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹åˆ—ç”¨ StructuredBuffer (SRV)  â€»uintï¼ˆ4B/è¦ç´ ï¼‰
 			ComPtr<ID3D11Buffer>            m_instIndexSB;
 			ComPtr<ID3D11ShaderResourceView> m_instIndexSRV;
 
-			// PerDraw ’è”ƒoƒbƒtƒ@igIndexBase, gIndexCountj
+			// PerDraw å®šæ•°ãƒãƒƒãƒ•ã‚¡ï¼ˆgIndexBase, gIndexCountï¼‰
 			ComPtr<ID3D11Buffer>            m_perDrawCB;
 
-			// CPU‘‚«‚İ—pƒ|ƒCƒ“ƒ^iMap‚µ‚½ŠÔ‚¾‚¯—LŒøj
+			// CPUæ›¸ãè¾¼ã¿ç”¨ãƒã‚¤ãƒ³ã‚¿ï¼ˆMapã—ãŸé–“ã ã‘æœ‰åŠ¹ï¼‰
 			std::byte* m_idxMapped = nullptr;
-			uint32_t    m_idxHead = 0;  // ‘‚«‚İƒJ[ƒ\ƒ‹
+			uint32_t    m_idxHead = 0;  // æ›¸ãè¾¼ã¿ã‚«ãƒ¼ã‚½ãƒ«
 
 			ComPtr<ID3D11RasterizerState> rasterizerStates[(size_t)RasterizerStateID::MAX_COUNT];
 			ComPtr<ID3D11BlendState> blendStates[(size_t)BlendStateID::MAX_COUNT];

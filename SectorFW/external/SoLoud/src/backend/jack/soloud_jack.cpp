@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2019 Samson Close
 
 This software is provided 'as-is', without any express or implied

@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   ChunkCrossingMove.hpp
- * @brief ƒ`ƒƒƒ“ƒNŒ×‚¬ŒŸo‚ÆƒGƒ“ƒeƒBƒeƒBˆÚ‘—‚Ìƒ†[ƒeƒBƒŠƒeƒB
+ * @brief ãƒãƒ£ãƒ³ã‚¯è·¨ãæ¤œå‡ºã¨ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ç§»é€ã®ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -17,16 +17,16 @@
 namespace SFW
 {
 	/**
-	 * @brief Šî–{ƒnƒ“ƒhƒ‹iƒL[åEƒ|ƒCƒ“ƒ^]‚Ì“ñ’i\‚¦j
+	 * @brief åŸºæœ¬ãƒãƒ³ãƒ‰ãƒ«ï¼ˆã‚­ãƒ¼ä¸»ãƒ»ãƒã‚¤ãƒ³ã‚¿å¾“ã®äºŒæ®µæ§‹ãˆï¼‰
 	 */
 	struct ChunkHandle {
-		SpatialChunkKey key{};        // í‚É^‚Ìƒ\[ƒXiQuad/Oct‚Í•K{j
-		SpatialChunk* cached = nullptr; // ”CˆÓ‚Ì‚‘¬ƒLƒƒƒbƒVƒ…i–³Œø‰»OKj
+		SpatialChunkKey key{};        // å¸¸ã«çœŸã®ã‚½ãƒ¼ã‚¹ï¼ˆQuad/Octã¯å¿…é ˆï¼‰
+		SpatialChunk* cached = nullptr; // ä»»æ„ã®é«˜é€Ÿã‚­ãƒ£ãƒƒã‚·ãƒ¥ï¼ˆç„¡åŠ¹åŒ–OKï¼‰
 		bool is_valid() const { return key.code != 0 || cached != nullptr; }
 	};
 
 	/**
-	 * @brief PartitionTraits: ƒ|ƒCƒ“ƒ^ˆÀ’è«‚ÅØ‘ÖiƒfƒtƒHƒ‹ƒgfalsej
+	 * @brief PartitionTraits: ãƒã‚¤ãƒ³ã‚¿å®‰å®šæ€§ã§åˆ‡æ›¿ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆfalseï¼‰
 	 */
 	template<class Partition> struct PartitionTraits { static constexpr bool stable_ptr = false; };
 
@@ -37,11 +37,11 @@ namespace SFW
 	template<> struct PartitionTraits<OctreePartition> { static constexpr bool stable_ptr = false; };
 
 	/**
-	 * @brief ’áƒŒƒxƒ‹FEMŠÔ ˆÚ‘—i”ñƒXƒp[ƒX¨ƒXƒp[ƒXj
-	 * @param id ˆÚ‘—‚·‚éƒGƒ“ƒeƒBƒeƒBID
-	 * @param src ˆÚ‘—Œ³‚ÌEM
-	 * @param dst@ˆÚ‘—æ‚ÌEM
-	 * @return@¬Œ÷‚µ‚½‚çtrueA¸”s‚µ‚½‚çfalse
+	 * @brief ä½ãƒ¬ãƒ™ãƒ«ï¼šEMé–“ ç§»é€ï¼ˆéã‚¹ãƒ‘ãƒ¼ã‚¹â†’ã‚¹ãƒ‘ãƒ¼ã‚¹ï¼‰
+	 * @param id ç§»é€ã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
+	 * @param src ç§»é€å…ƒã®EM
+	 * @param dstã€€ç§»é€å…ˆã®EM
+	 * @returnã€€æˆåŠŸã—ãŸã‚‰trueã€å¤±æ•—ã—ãŸã‚‰false
 	 */
 	inline bool RelocateEntityBetweenManagers(ECS::EntityID id, ECS::EntityManager& src, ECS::EntityManager& dst)
 	{
@@ -52,10 +52,10 @@ namespace SFW
 		return true;
 	}
 	/**
-	 * @brief ’áƒŒƒxƒ‹Fƒ`ƒƒƒ“ƒNƒL[‚©‚çƒ`ƒƒƒ“ƒNæ“¾
-	 * @param h ƒnƒ“ƒhƒ‹
-	 * @param reg ƒ`ƒƒƒ“ƒNƒŒƒWƒXƒgƒŠ
-	 * @return ‰ğŒˆ‚µ‚½ƒ`ƒƒƒ“ƒNƒ|ƒCƒ“ƒ^i¸”snullptrj
+	 * @brief ä½ãƒ¬ãƒ™ãƒ«ï¼šãƒãƒ£ãƒ³ã‚¯ã‚­ãƒ¼ã‹ã‚‰ãƒãƒ£ãƒ³ã‚¯å–å¾—
+	 * @param h ãƒãƒ³ãƒ‰ãƒ«
+	 * @param reg ãƒãƒ£ãƒ³ã‚¯ãƒ¬ã‚¸ã‚¹ãƒˆãƒª
+	 * @return è§£æ±ºã—ãŸãƒãƒ£ãƒ³ã‚¯ãƒã‚¤ãƒ³ã‚¿ï¼ˆå¤±æ•—æ™‚nullptrï¼‰
 	 */
 	inline SpatialChunk* ResolveChunk(ChunkHandle& h, SpatialChunkRegistry& reg)
 	{
@@ -66,15 +66,15 @@ namespace SFW
 	}
 
 	/**
-	 * @brief ’P‘ÌFƒ`ƒƒƒ“ƒNŒ×‚¬ŒŸo ¨ •K—v‚Ì‚İEMŠÔˆÚ‘—
-	 * @tparam Partition •ªŠ„ƒNƒ‰ƒX
-	 * @param id ˆÚ‘—‚·‚éƒGƒ“ƒeƒBƒeƒBID
-	 * @param newPos V‚µ‚¢ˆÊ’u
-	 * @param partition •ªŠ„ƒNƒ‰ƒX
-	 * @param reg ƒ`ƒƒƒ“ƒNƒŒƒWƒXƒgƒŠ
-	 * @param level ƒŒƒxƒ‹ID
-	 * @param handle ƒ`ƒƒƒ“ƒNƒnƒ“ƒhƒ‹
-	 * @param policy ”ÍˆÍŠOƒ|ƒŠƒV[iƒfƒtƒHƒ‹ƒgClampToEdgej
+	 * @brief å˜ä½“ï¼šãƒãƒ£ãƒ³ã‚¯è·¨ãæ¤œå‡º â†’ å¿…è¦æ™‚ã®ã¿EMé–“ç§»é€
+	 * @tparam Partition åˆ†å‰²ã‚¯ãƒ©ã‚¹
+	 * @param id ç§»é€ã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
+	 * @param newPos æ–°ã—ã„ä½ç½®
+	 * @param partition åˆ†å‰²ã‚¯ãƒ©ã‚¹
+	 * @param reg ãƒãƒ£ãƒ³ã‚¯ãƒ¬ã‚¸ã‚¹ãƒˆãƒª
+	 * @param level ãƒ¬ãƒ™ãƒ«ID
+	 * @param handle ãƒãƒ£ãƒ³ã‚¯ãƒãƒ³ãƒ‰ãƒ«
+	 * @param policy ç¯„å›²å¤–ãƒãƒªã‚·ãƒ¼ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆClampToEdgeï¼‰
 	 */
 	template<class Partition>
 	inline bool MoveIfCrossed(ECS::EntityID id,
@@ -118,13 +118,13 @@ namespace SFW
 	}
 
 	/**
-	 * @brief ƒoƒbƒ`F—t / ƒZƒ‹’PˆÊ‚Åˆê‹C‚Éd•ª‚¯
-	 * @tparam Partition •ªŠ„ƒNƒ‰ƒX
-	 * @param partition •ªŠ„ƒNƒ‰ƒX
-	 * @param srcChunk ˆÚ‘—Œ³ƒ`ƒƒƒ“ƒN
-	 * @param reg ƒ`ƒƒƒ“ƒNƒŒƒWƒXƒgƒŠ
-	 * @param level ƒŒƒxƒ‹ID
-	 * @param positionFn ˆÊ’uæ“¾ŠÖ”iˆø”FEntityID, EntityManager&A–ß‚è’lFVec3fj
+	 * @brief ãƒãƒƒãƒï¼šè‘‰ / ã‚»ãƒ«å˜ä½ã§ä¸€æ°—ã«ä»•åˆ†ã‘
+	 * @tparam Partition åˆ†å‰²ã‚¯ãƒ©ã‚¹
+	 * @param partition åˆ†å‰²ã‚¯ãƒ©ã‚¹
+	 * @param srcChunk ç§»é€å…ƒãƒãƒ£ãƒ³ã‚¯
+	 * @param reg ãƒãƒ£ãƒ³ã‚¯ãƒ¬ã‚¸ã‚¹ãƒˆãƒª
+	 * @param level ãƒ¬ãƒ™ãƒ«ID
+	 * @param positionFn ä½ç½®å–å¾—é–¢æ•°ï¼ˆå¼•æ•°ï¼šEntityID, EntityManager&ã€æˆ»ã‚Šå€¤ï¼šVec3fï¼‰
 	 */
 	template<class Partition, class PositionFn>
 	inline size_t RelocateCrossedBatch(Partition& partition,
@@ -143,15 +143,15 @@ namespace SFW
 		return src.SplitByAll(router);
 	}
 	/**
-	 * @brief ‘Ş”ğƒXƒe[ƒgiFloat EMj
+	 * @brief é€€é¿ã‚¹ãƒ†ãƒ¼ãƒˆï¼ˆFloat EMï¼‰
 	 */
 	enum class SpatialState : uint8_t { Attached, Detached };
 	/**
-	 * @brief “®“IƒGƒ“ƒeƒBƒeƒB—pƒ^ƒOiƒ`ƒƒƒ“ƒNŒ×‚¬ŒŸo‚ÆEMŠÔˆÚ‘—‚Ìó‘ÔŠÇ—j
+	 * @brief å‹•çš„ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ç”¨ã‚¿ã‚°ï¼ˆãƒãƒ£ãƒ³ã‚¯è·¨ãæ¤œå‡ºã¨EMé–“ç§»é€ã®çŠ¶æ…‹ç®¡ç†ï¼‰
 	 */
 	struct CSpatialMotionTag {
 		CSpatialMotionTag() = default;
-		//ƒnƒ“ƒhƒ‹‚¾‚¯ƒZƒbƒg‚·‚ê‚Î‚ ‚Æ‚ÍŸè‚É‚â‚Á‚Ä‚­‚ê‚éƒXƒ^ƒCƒ‹
+		//ãƒãƒ³ãƒ‰ãƒ«ã ã‘ã‚»ãƒƒãƒˆã™ã‚Œã°ã‚ã¨ã¯å‹æ‰‹ã«ã‚„ã£ã¦ãã‚Œã‚‹ã‚¹ã‚¿ã‚¤ãƒ«
 		CSpatialMotionTag(const ChunkHandle& h) : handle(h) {}
 
 		ChunkHandle handle;
@@ -208,7 +208,7 @@ namespace SFW
 		}
 	}
 	/**
-	 * @brief —\Z•t‚«ƒoƒbƒ`ˆÚ‘—ƒNƒ‰ƒX
+	 * @brief äºˆç®—ä»˜ããƒãƒƒãƒç§»é€ã‚¯ãƒ©ã‚¹
 	 */
 	class BudgetMover {
 	public:
@@ -225,7 +225,7 @@ namespace SFW
 		};
 
 		/**
-		 * @brief ƒ[ƒJƒ‹ˆêƒoƒbƒtƒ@ithread_local ‚ğg‚í‚È‚¢‡ˆÓ“Iƒoƒbƒ`j
+		 * @brief ãƒ­ãƒ¼ã‚«ãƒ«ä¸€æ™‚ãƒãƒƒãƒ•ã‚¡ï¼ˆthread_local ã‚’ä½¿ã‚ãªã„åˆæ„çš„ãƒãƒƒãƒï¼‰
 		 */
 		class LocalBatch {
 		public:
@@ -234,7 +234,7 @@ namespace SFW
 				if (reserve_n) buf_.reserve(reserve_n);
 			}
 
-			// Move-onlyiŠ—LŒ ‚Ì“ñdFlush‚ğ–h‚®j
+			// Move-onlyï¼ˆæ‰€æœ‰æ¨©ã®äºŒé‡Flushã‚’é˜²ãï¼‰
 			LocalBatch(LocalBatch&& o) noexcept
 				: owner_(o.owner_), buf_(std::move(o.buf_)) {
 				o.owner_ = nullptr;
@@ -253,7 +253,7 @@ namespace SFW
 			~LocalBatch() noexcept { FlushNoThrow(); }
 
 			inline void Add(ECS::EntityID id, const SpatialChunkKey& src, const SpatialChunkKey& dst) {
-				if (src == dst) return; // •K—v‚È‚ç IsValid(src/dst) ‚Ö•ÏX
+				if (src == dst) return; // å¿…è¦ãªã‚‰ IsValid(src/dst) ã¸å¤‰æ›´
 				buf_.push_back({ id, src, dst });
 			}
 			template<class Range>
@@ -271,7 +271,7 @@ namespace SFW
 					owner_->EnqueueBulk(buf_);
 				}
 				catch (...) {
-					/*ÅŒã‚Ìè’iFÌ‚Ä‚¸‚É•Û*/
+					/*æœ€å¾Œã®æ‰‹æ®µï¼šæ¨ã¦ãšã«ä¿æŒ*/
 				}
 				buf_.clear();
 			}
@@ -289,33 +289,33 @@ namespace SFW
 				return buf_.size();
 			}
 		private:
-			BudgetMover* owner_{};                  // ¦ owner_ ‚Ìõ–½ > ‚±‚Ìƒoƒbƒ`‚Ìõ–½‚Å‚ ‚é‚±‚Æ
-			std::vector<PendingMove> buf_{};        // ŒÄ‚Ño‚µ‘¤‚ªõ–½ŠÇ—‚·‚éƒ[ƒJƒ‹ˆê
+			BudgetMover* owner_{};                  // â€» owner_ ã®å¯¿å‘½ > ã“ã®ãƒãƒƒãƒã®å¯¿å‘½ã§ã‚ã‚‹ã“ã¨
+			std::vector<PendingMove> buf_{};        // å‘¼ã³å‡ºã—å´ãŒå¯¿å‘½ç®¡ç†ã™ã‚‹ãƒ­ãƒ¼ã‚«ãƒ«ä¸€æ™‚
 		};
 
 	private:
-		mutable std::mutex mtx_;                // Enqueue/Flush ‚Å‹¤—LƒLƒ…[‚ğ•ÛŒì
-		std::vector<PendingMove> queue_;        // ‹¤—LƒLƒ…[i•¡”ƒXƒŒƒbƒh‚©‚çÏ‚Ü‚ê‚éj
-		std::vector<PendingMove> temp_;         // Flush —pˆê
+		mutable std::mutex mtx_;                // Enqueue/Flush ã§å…±æœ‰ã‚­ãƒ¥ãƒ¼ã‚’ä¿è­·
+		std::vector<PendingMove> queue_;        // å…±æœ‰ã‚­ãƒ¥ãƒ¼ï¼ˆè¤‡æ•°ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰ç©ã¾ã‚Œã‚‹ï¼‰
+		std::vector<PendingMove> temp_;         // Flush ç”¨ä¸€æ™‚
 	public:
-		// ‘¦‚Å‚Í‚È‚­uŒã‚ÅvˆÚ‚·‚½‚ß‚ÉÏ‚Ş
+		// å³æ™‚ã§ã¯ãªãã€Œå¾Œã§ã€ç§»ã™ãŸã‚ã«ç©ã‚€
 		inline void TryEnqueue(ECS::EntityID id, const SpatialChunkKey& src, const SpatialChunkKey& dst) {
-			// ‚±‚±‚ÅƒL[‘Ã“–«ƒ`ƒFƒbƒN‚ğ“ü‚ê‚éê‡‚Í IsValid(src/dst) ‚É’u‚«Š·‚¦‚Ä‚­‚¾‚³‚¢
+			// ã“ã“ã§ã‚­ãƒ¼å¦¥å½“æ€§ãƒã‚§ãƒƒã‚¯ã‚’å…¥ã‚Œã‚‹å ´åˆã¯ IsValid(src/dst) ã«ç½®ãæ›ãˆã¦ãã ã•ã„
 			if (src == dst) return;
 			std::lock_guard<std::mutex> lock(mtx_);
 			queue_.push_back({ id, src, dst });
 		}
 
-		// ‚Ü‚Æ‚ßÏ‚İiƒƒbƒN‚ğ1‰ñ‚Éj
+		// ã¾ã¨ã‚ç©ã¿ï¼ˆãƒ­ãƒƒã‚¯ã‚’1å›ã«ï¼‰
 		template<class Range>
 		inline void EnqueueBulk(const Range& moves) {
 			std::lock_guard<std::mutex> lock(mtx_);
 			queue_.insert(queue_.end(), moves.begin(), moves.end());
 		}
 
-		// ‚»‚ÌƒtƒŒ[ƒ€‚ÌãŒÀ budget Œ‚Ü‚Åˆ—‚µAc‚è‚ÍŸƒtƒŒ[ƒ€‚Ö‚¿‰z‚·
+		// ãã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®ä¸Šé™ budget ä»¶ã¾ã§å‡¦ç†ã—ã€æ®‹ã‚Šã¯æ¬¡ãƒ•ãƒ¬ãƒ¼ãƒ ã¸æŒã¡è¶Šã™
 		size_t Flush(const SpatialChunkRegistry& reg, size_t budget) {
-			// ‹¤—LƒLƒ…[‚©‚çæ“ª budget Œ‚ğæ‚èo‚·i—ÕŠE‹æŠÔ‚ÍÅ¬ŒÀj
+			// å…±æœ‰ã‚­ãƒ¥ãƒ¼ã‹ã‚‰å…ˆé ­ budget ä»¶ã‚’å–ã‚Šå‡ºã™ï¼ˆè‡¨ç•ŒåŒºé–“ã¯æœ€å°é™ï¼‰
 			if (budget == 0) return 0;
 
 			temp_.clear();
@@ -327,7 +327,7 @@ namespace SFW
 				queue_.erase(queue_.begin(), queue_.begin() + n);
 			}
 
-			// ‚±‚±‚©‚ç‚ÍƒƒbƒN–³‚µ‚Åˆ—
+			// ã“ã“ã‹ã‚‰ã¯ãƒ­ãƒƒã‚¯ç„¡ã—ã§å‡¦ç†
 			struct EMKeyPair { ECS::EntityManager* src; ECS::EntityManager* dst; };
 			struct PairHash { size_t operator()(const EMKeyPair& p) const noexcept { return (reinterpret_cast<uintptr_t>(p.src) >> 3) ^ (reinterpret_cast<uintptr_t>(p.dst) << 1); } };
 			struct PairEq { bool operator()(const EMKeyPair& a, const EMKeyPair& b) const noexcept { return a.src == b.src && a.dst == b.dst; } };
@@ -358,15 +358,15 @@ namespace SFW
 			return moved;
 		}
 
-		// ƒLƒ…[‚ğ‘S”jŠü
+		// ã‚­ãƒ¥ãƒ¼ã‚’å…¨ç ´æ£„
 		void Clear() { queue_.clear(); temp_.clear(); }
 		size_t Size() const { return queue_.size(); }
 	};
 	/**
-	 * @brief ‘¦¨ƒfƒBƒtƒ@[ƒh”Å MoveIfCrossediˆÚ‘—‚ÍƒLƒ…[‚Öj
-	 * @details * Flush ‚ğƒtƒŒ[ƒ€––‚ÉŒÄ‚ñ‚ÅÀÛ‚É“®‚©‚·
-	 * @details ƒXƒŒƒbƒhI‚í‚è‚É•K‚¸ BudgetMover::PublishTLS() ‚ğŒÄ‚Ô‚±‚Æ
-	 * @return ˆÚ‘——\’è‚ªÏ‚Ü‚ê‚½‚ç trueA‚»‚¤‚Å‚È‚¯‚ê‚Î false
+	 * @brief å³æ™‚â†’ãƒ‡ã‚£ãƒ•ã‚¡ãƒ¼ãƒ‰ç‰ˆ MoveIfCrossedï¼ˆç§»é€ã¯ã‚­ãƒ¥ãƒ¼ã¸ï¼‰
+	 * @details * Flush ã‚’ãƒ•ãƒ¬ãƒ¼ãƒ æœ«ã«å‘¼ã‚“ã§å®Ÿéš›ã«å‹•ã‹ã™
+	 * @details ã‚¹ãƒ¬ãƒƒãƒ‰çµ‚ã‚ã‚Šã«å¿…ãš BudgetMover::PublishTLS() ã‚’å‘¼ã¶ã“ã¨
+	 * @return ç§»é€äºˆå®šãŒç©ã¾ã‚ŒãŸã‚‰ trueã€ãã†ã§ãªã‘ã‚Œã° false
 	 */
 	template<class Partition>
 	inline bool MoveIfCrossed_Deferred(ECS::EntityID id,
@@ -384,7 +384,7 @@ namespace SFW
 
 		if constexpr (PartitionTraits<Partition>::stable_ptr) {
 			if (dst == handle.cached) return false;
-			// ‹ŒŠ‘®‚ª‚ ‚ê‚ÎA(srcKey,dstKey) ‚ğÏ‚Ş
+			// æ—§æ‰€å±ãŒã‚ã‚Œã°ã€(srcKey,dstKey) ã‚’ç©ã‚€
 			if (handle.cached) {
 				moverBatch.Add(id, handle.key, dst->GetNodeKey());
 			}
@@ -394,12 +394,12 @@ namespace SFW
 		}
 		else {
 			const SpatialChunkKey dstKey = dst->GetNodeKey();
-			// •Ï‰»–³‚µ
+			// å¤‰åŒ–ç„¡ã—
 			if (dstKey.code == handle.key.code && dstKey.level == handle.key.level) {
 				handle.cached = dst;
 				return false;
 			}
-			// ÀˆÚ‘—‚¹‚¸A(srcKey,dstKey) ‚ğÏ‚Ş
+			// å®Ÿç§»é€ã›ãšã€(srcKey,dstKey) ã‚’ç©ã‚€
 			if (handle.key.code) moverBatch.Add(id, handle.key, dstKey);
 			handle.key = dstKey;
 			handle.cached = dst;

@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include <atomic>
 #include <memory>
 
 #include <wrl/client.h>
 using Microsoft::WRL::ComPtr;
 
-// forward declarationsi•K—v‚È‚à‚Ì‚¾‚¯ includej
+// forward declarationsï¼ˆå¿…è¦ãªã‚‚ã®ã ã‘ includeï¼‰
 namespace SFW::Graphics::DX11 {
 	class GraphicsDevice;
 	class LightShadowResourceService;
@@ -26,7 +26,7 @@ namespace App
 {
 	struct Context
 	{
-		// Àsƒtƒ‰ƒO
+		// å®Ÿè¡Œãƒ•ãƒ©ã‚°
 		std::atomic<bool> executeCustom{ false };
 
 		// graphics / render
@@ -44,7 +44,7 @@ namespace App
 		LeafService* leaf = nullptr;
 		RainService* rain = nullptr;
 
-		// ‹¤—L‚·‚é D3D SRV/CB ‚È‚Çi•K—v‚È‚ç’Ç‰Áj
+		// å…±æœ‰ã™ã‚‹ D3D SRV/CB ãªã©ï¼ˆå¿…è¦ãªã‚‰è¿½åŠ ï¼‰
 		ComPtr<ID3D11ShaderResourceView> mainDepthSRV;
 	};
 }

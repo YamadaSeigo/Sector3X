@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   DX11PSOManager.h
- * @brief DirectX 11‚ÌƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒgƒIƒuƒWƒFƒNƒgiPSOj‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+ * @brief DirectX 11ã®ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆï¼ˆPSOï¼‰ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -17,49 +17,49 @@ namespace SFW
 	namespace Graphics::DX11
 	{
 		/**
-		 * @brief DirectX 11‚ÌƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒgƒIƒuƒWƒFƒNƒgiPSOj‚ğì¬‚·‚é‚½‚ß‚Ì‹Lqq\‘¢‘Ì
+		 * @brief DirectX 11ã®ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆï¼ˆPSOï¼‰ã‚’ä½œæˆã™ã‚‹ãŸã‚ã®è¨˜è¿°å­æ§‹é€ ä½“
 		 */
 		struct PSOCreateDesc {
 			ShaderHandle shader = {};
 			RasterizerStateID rasterizerState = RasterizerStateID::SolidCullBack;
-			std::optional<ShaderHandle> rebindShader = std::nullopt; // ƒVƒF[ƒ_[ƒŠƒoƒCƒ“ƒh—piƒIƒvƒVƒ‡ƒ“j
+			std::optional<ShaderHandle> rebindShader = std::nullopt; // ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªãƒã‚¤ãƒ³ãƒ‰ç”¨ï¼ˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ï¼‰
 		};
 		/**
-		 * @brief DirectX 11‚ÌƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒgƒIƒuƒWƒFƒNƒgiPSOj‚Ìƒf[ƒ^\‘¢‘Ì
+		 * @brief DirectX 11ã®ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆï¼ˆPSOï¼‰ã®ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 		 */
 		struct PSOData {
 			ComPtr<ID3D11InputLayout> inputLayout = nullptr;
 			ShaderHandle shader;
-			ComPtr<ID3D11InputLayout> rebindInputLayout = nullptr;		// ƒVƒF[ƒ_[ƒŠƒoƒCƒ“ƒh—piƒIƒvƒVƒ‡ƒ“j
-			ShaderHandle rebindShader;									// ƒVƒF[ƒ_[ƒŠƒoƒCƒ“ƒh—piƒIƒvƒVƒ‡ƒ“j
+			ComPtr<ID3D11InputLayout> rebindInputLayout = nullptr;		// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªãƒã‚¤ãƒ³ãƒ‰ç”¨ï¼ˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ï¼‰
+			ShaderHandle rebindShader;									// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªãƒã‚¤ãƒ³ãƒ‰ç”¨ï¼ˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ï¼‰
 			RasterizerStateID rasterizerState = RasterizerStateID::SolidCullBack;
 		};
 		/**
-		 * @brief DirectX 11‚ÌƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒgƒIƒuƒWƒFƒNƒgiPSOj‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+		 * @brief DirectX 11ã®ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆï¼ˆPSOï¼‰ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 		 */
 		class PSOManager : public ResourceManagerBase<PSOManager, PSOHandle, PSOCreateDesc, PSOData> {
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param device DirectX 11‚ÌƒfƒoƒCƒX
-			 * @param shaderMgr ƒVƒF[ƒ_[ƒ}ƒl[ƒWƒƒ[
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param device DirectX 11ã®ãƒ‡ãƒã‚¤ã‚¹
+			 * @param shaderMgr ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 			 */
 			explicit PSOManager(ID3D11Device* device, ShaderManager* shaderMgr) noexcept
 				: device(device), shaderManager(shaderMgr) {
 			}
 
 			/**
-			 * @brief ResourceManagerBase ‚ªŒÄ‚ÔƒtƒbƒN
-			 * @param desc PSO‚Ìì¬‹Lqq
-			 * @return std::optional<PSOHandle> Šù‘¶‚ÌPSOƒnƒ“ƒhƒ‹A‘¶İ‚µ‚È‚¢ê‡‚Ístd::nullopt
+			 * @brief ResourceManagerBase ãŒå‘¼ã¶ãƒ•ãƒƒã‚¯
+			 * @param desc PSOã®ä½œæˆè¨˜è¿°å­
+			 * @return std::optional<PSOHandle> æ—¢å­˜ã®PSOãƒãƒ³ãƒ‰ãƒ«ã€å­˜åœ¨ã—ãªã„å ´åˆã¯std::nullopt
 			 */
 			std::optional<PSOHandle> FindExisting(const PSOCreateDesc& desc) noexcept;
 			void RegisterKey(const PSOCreateDesc& desc, PSOHandle h);
 			/**
-			 * @brief V‚µ‚¢PSOƒŠƒ\[ƒX‚ğì¬‚·‚éŠÖ”
-			 * @param desc PSO‚Ìì¬‹Lqq
-			 * @param h PSOƒnƒ“ƒhƒ‹
-			 * @return DX11PSOData ì¬‚³‚ê‚½PSOƒf[ƒ^
+			 * @brief æ–°ã—ã„PSOãƒªã‚½ãƒ¼ã‚¹ã‚’ä½œæˆã™ã‚‹é–¢æ•°
+			 * @param desc PSOã®ä½œæˆè¨˜è¿°å­
+			 * @param h PSOãƒãƒ³ãƒ‰ãƒ«
+			 * @return DX11PSOData ä½œæˆã•ã‚ŒãŸPSOãƒ‡ãƒ¼ã‚¿
 			 */
 			PSOData CreateResource(const PSOCreateDesc& desc, PSOHandle h);
 
@@ -68,7 +68,7 @@ namespace SFW
 			ShaderManager* shaderManager;
 
 			std::mutex mapMutex;
-			// ShaderHandle.index ¨ PSOHandle
+			// ShaderHandle.index â†’ PSOHandle
 			std::unordered_map<uint32_t, PSOHandle> shaderToPSO_;
 		};
 	}

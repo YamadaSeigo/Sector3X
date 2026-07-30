@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * \file   aabb_util.h
- * \brief  Axis-Aligned Bounding Box (AABB) ‚ğŒvZ‚·‚é‚½‚ß‚Ìƒ†[ƒeƒBƒŠƒeƒBŠÖ”‚ğ’ñ‹Ÿ‚·‚éB
+ * \brief  Axis-Aligned Bounding Box (AABB) ã‚’è¨ˆç®—ã™ã‚‹ãŸã‚ã®ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£é–¢æ•°ã‚’æä¾›ã™ã‚‹ã€‚
  * \author seigo
  * \date   December 2025
  *********************************************************************/
@@ -14,23 +14,23 @@
 #include "Matrix.hpp"
 
 #if defined(_MSC_VER)
-#include <immintrin.h>   // SSE2/AVX2 (MSVC x64 ‚ÍSSE2í—LŒø)
+#include <immintrin.h>   // SSE2/AVX2 (MSVC x64 ã¯SSE2å¸¸æ™‚æœ‰åŠ¹)
 #elif defined(__SSE2__)
 #include <immintrin.h>
 #endif
 
 namespace SFW::Math {
 	//-------------------------------
-	// ‹¤’Êƒwƒ‹ƒp
+	// å…±é€šãƒ˜ãƒ«ãƒ‘
 	//-------------------------------
 	inline float SanitizeFinite(float v) noexcept {
-		// •K—v‚È‚¯‚ê‚Î‚»‚Ì‚Ü‚Ü•Ô‚·BNaN/Inf ‚ğ’e‚«‚½‚¢ê‡‚ÍƒRƒƒ“ƒgƒAƒEƒg‰ğœ
+		// å¿…è¦ãªã‘ã‚Œã°ãã®ã¾ã¾è¿”ã™ã€‚NaN/Inf ã‚’å¼¾ããŸã„å ´åˆã¯ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆè§£é™¤
 		// return std::isfinite(v) ? v : 0.0f;
 		return v;
 	}
 
 	//===============================
-	// AoS: Vec3f ‚Ì”z—ñ‚©‚çAABB
+	// AoS: Vec3f ã®é…åˆ—ã‹ã‚‰AABB
 	//===============================
 	inline AABB3f MakeAABB_FromAoS(const Vec3f* positions, size_t count, size_t strideBytes = sizeof(Vec3f)) noexcept
 	{
@@ -41,7 +41,7 @@ namespace SFW::Math {
 			return out;
 		}
 
-		// ‰Šú’l
+		// åˆæœŸå€¤
 		float minx = std::numeric_limits<float>::infinity();
 		float miny = std::numeric_limits<float>::infinity();
 		float minz = std::numeric_limits<float>::infinity();
@@ -52,13 +52,13 @@ namespace SFW::Math {
 		const unsigned char* base = reinterpret_cast<const unsigned char*>(positions);
 
 #if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-		// SSE2: 3²‚ğ“¯‚ÉXVi1’¸“_/ƒ‹[ƒvj
+		// SSE2: 3è»¸ã‚’åŒæ™‚ã«æ›´æ–°ï¼ˆ1é ‚ç‚¹/ãƒ«ãƒ¼ãƒ—ï¼‰
 		__m128 vmin = _mm_set1_ps(std::numeric_limits<float>::infinity());
 		__m128 vmax = _mm_set1_ps(-std::numeric_limits<float>::infinity());
 
 		for (size_t i = 0; i < count; ++i) {
 			const Vec3f* p = reinterpret_cast<const Vec3f*>(base + i * strideBytes);
-			// ˆÀ‘S‚Ì‚½‚ßŠe¬•ª‚ÍƒXƒJƒ‰[ƒ[ƒh‚µAw ‚Í +infimin ŒvZ‚Å‰e‹¿‚ğ—^‚¦‚È‚¢j‚É‚·‚é
+			// å®‰å…¨ã®ãŸã‚å„æˆåˆ†ã¯ã‚¹ã‚«ãƒ©ãƒ¼ãƒ­ãƒ¼ãƒ‰ã—ã€w ã¯ +infï¼ˆmin è¨ˆç®—ã§å½±éŸ¿ã‚’ä¸ãˆãªã„ï¼‰ã«ã™ã‚‹
 			const float x = SanitizeFinite(p->x);
 			const float y = SanitizeFinite(p->y);
 			const float z = SanitizeFinite(p->z);
@@ -67,7 +67,7 @@ namespace SFW::Math {
 			vmin = _mm_min_ps(vmin, v);
 			vmax = _mm_max_ps(vmax, v);
 		}
-		// Œ‹‰Ê‚ğæ‚èo‚µ
+		// çµæœã‚’å–ã‚Šå‡ºã—
 		alignas(16) float mins[4], maxs[4];
 		_mm_store_ps(mins, vmin);
 		_mm_store_ps(maxs, vmax);
@@ -76,7 +76,7 @@ namespace SFW::Math {
 		minz = (std::min)(minz, mins[2]);  maxz = (std::max)(maxz, maxs[2]); // z
 
 #else
-		// ƒXƒJƒ‰[”Å
+		// ã‚¹ã‚«ãƒ©ãƒ¼ç‰ˆ
 		for (size_t i = 0; i < count; ++i) {
 			const Vec3f* p = reinterpret_cast<const Vec3f*>(base + i * strideBytes);
 			const float x = SanitizeFinite(p->x);
@@ -94,7 +94,7 @@ namespace SFW::Math {
 	}
 
 	//===============================
-	// AoS: Vec3f ‚Ì”z—ñ‚©‚çAABB
+	// AoS: Vec3f ã®é…åˆ—ã‹ã‚‰AABB
 	//===============================
 	inline AABB3f MakeAABB_FromAoSWithIndex(const Vec3f* positions, size_t posCount, const uint32_t* indices, size_t idxCount, size_t strideBytes = sizeof(Vec3f)) noexcept
 	{
@@ -105,7 +105,7 @@ namespace SFW::Math {
 			return out;
 		}
 
-		// ‰Šú’l
+		// åˆæœŸå€¤
 		float minx = std::numeric_limits<float>::infinity();
 		float miny = std::numeric_limits<float>::infinity();
 		float minz = std::numeric_limits<float>::infinity();
@@ -116,15 +116,15 @@ namespace SFW::Math {
 		const unsigned char* base = reinterpret_cast<const unsigned char*>(positions);
 
 #if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
-		// SSE2: 3²‚ğ“¯‚ÉXVi1’¸“_/ƒ‹[ƒvj
+		// SSE2: 3è»¸ã‚’åŒæ™‚ã«æ›´æ–°ï¼ˆ1é ‚ç‚¹/ãƒ«ãƒ¼ãƒ—ï¼‰
 		__m128 vmin = _mm_set1_ps(std::numeric_limits<float>::infinity());
 		__m128 vmax = _mm_set1_ps(-std::numeric_limits<float>::infinity());
 
 		for (size_t i = 0; i < idxCount; ++i) {
-			if (indices[i] >= posCount) [[unlikely]] continue; // ”O‚Ì‚½‚ß”ÍˆÍƒ`ƒFƒbƒN
+			if (indices[i] >= posCount) [[unlikely]] continue; // å¿µã®ãŸã‚ç¯„å›²ãƒã‚§ãƒƒã‚¯
 
 			const Vec3f* p = reinterpret_cast<const Vec3f*>(base + indices[i] * strideBytes);
-			// ˆÀ‘S‚Ì‚½‚ßŠe¬•ª‚ÍƒXƒJƒ‰[ƒ[ƒh‚µAw ‚Í +infimin ŒvZ‚Å‰e‹¿‚ğ—^‚¦‚È‚¢j‚É‚·‚é
+			// å®‰å…¨ã®ãŸã‚å„æˆåˆ†ã¯ã‚¹ã‚«ãƒ©ãƒ¼ãƒ­ãƒ¼ãƒ‰ã—ã€w ã¯ +infï¼ˆmin è¨ˆç®—ã§å½±éŸ¿ã‚’ä¸ãˆãªã„ï¼‰ã«ã™ã‚‹
 			const float x = SanitizeFinite(p->x);
 			const float y = SanitizeFinite(p->y);
 			const float z = SanitizeFinite(p->z);
@@ -133,7 +133,7 @@ namespace SFW::Math {
 			vmin = _mm_min_ps(vmin, v);
 			vmax = _mm_max_ps(vmax, v);
 		}
-		// Œ‹‰Ê‚ğæ‚èo‚µ
+		// çµæœã‚’å–ã‚Šå‡ºã—
 		alignas(16) float mins[4], maxs[4];
 		_mm_store_ps(mins, vmin);
 		_mm_store_ps(maxs, vmax);
@@ -142,7 +142,7 @@ namespace SFW::Math {
 		minz = (std::min)(minz, mins[2]);  maxz = (std::max)(maxz, maxs[2]); // z
 
 #else
-		// ƒXƒJƒ‰[”Å
+		// ã‚¹ã‚«ãƒ©ãƒ¼ç‰ˆ
 		for (size_t i = 0; i < idxCount; ++i) {
 			if (indices[i] >= posCount) continue;
 			const Vec3f* p = reinterpret_cast<const Vec3f*>(base + indices[i] * strideBytes);
@@ -161,7 +161,7 @@ namespace SFW::Math {
 	}
 
 	//===============================
-	// SoA: x[], y[], z[] ‚©‚çAABB
+	// SoA: x[], y[], z[] ã‹ã‚‰AABB
 	//===============================
 	inline AABB3f MakeAABB_FromSoA(const float* xs, const float* ys, const float* zs, size_t count) noexcept
 	{
@@ -180,7 +180,7 @@ namespace SFW::Math {
 		float maxz = -std::numeric_limits<float>::infinity();
 
 #if (defined(__AVX2__) || (defined(_MSC_VER) && defined(__AVX2__))) && !defined(__arm64__)
-		// AVX2: 8—v‘f‚¸‚Â
+		// AVX2: 8è¦ç´ ãšã¤
 		const size_t step = 8;
 		size_t i = 0;
 
@@ -203,7 +203,7 @@ namespace SFW::Math {
 			ymaxv = _mm256_max_ps(ymaxv, vy);
 			zmaxv = _mm256_max_ps(zmaxv, vz);
 		}
-		// …•½k–ñ
+		// æ°´å¹³ç¸®ç´„
 		alignas(32) float xmins[8], ymins[8], zmins[8], xmaxs[8], ymaxs[8], zmaxs[8];
 		_mm256_store_ps(xmins, xminv);
 		_mm256_store_ps(ymins, yminv);
@@ -216,7 +216,7 @@ namespace SFW::Math {
 			miny = (std::min)(miny, ymins[k]); maxy = (std::max)(maxy, ymaxs[k]);
 			minz = (std::min)(minz, zmins[k]); maxz = (std::max)(maxz, zmaxs[k]);
 		}
-		// ’[”
+		// ç«¯æ•°
 		for (; i < count; ++i) {
 			const float x = SanitizeFinite(xs[i]);
 			const float y = SanitizeFinite(ys[i]);
@@ -227,7 +227,7 @@ namespace SFW::Math {
 		}
 
 #else
-		// SSE2 ‚Ü‚½‚ÍƒXƒJƒ‰[
+		// SSE2 ã¾ãŸã¯ã‚¹ã‚«ãƒ©ãƒ¼
 #if (defined(_MSC_VER) && defined(_M_X64)) || defined(__SSE2__)
 		const size_t step = 4;
 		size_t i = 0;
@@ -269,7 +269,7 @@ namespace SFW::Math {
 			minz = (std::min)(minz, z); maxz = (std::max)(maxz, z);
 		}
 #else
-  // ƒƒXƒJƒ‰[
+  // ç´”ã‚¹ã‚«ãƒ©ãƒ¼
 		for (size_t i = 0; i < count; ++i) {
 			const float x = SanitizeFinite(xs[i]);
 			const float y = SanitizeFinite(ys[i]);
@@ -287,7 +287,7 @@ namespace SFW::Math {
 	}
 
 	//===============================
-	// ƒ‰ƒbƒpFstd::vector<Vec3f> ‚©‚ç
+	// ãƒ©ãƒƒãƒ‘ï¼šstd::vector<Vec3f> ã‹ã‚‰
 	//===============================
 	inline AABB3f MakeAABB(const std::vector<Vec3f>& positions) noexcept {
 		return MakeAABB_FromAoS(positions.data(), positions.size(), sizeof(Vec3f));
@@ -297,7 +297,7 @@ namespace SFW::Math {
 		return MakeAABB_FromAoSWithIndex(positions.data(), positions.size(), indices.data(), indices.size(), sizeof(Vec3f));
 	}
 
-	/// ‚Â‚¢‚Å‚É 8 ƒR[ƒi[‚¾‚¯—~‚µ‚¢ê‡
+	/// ã¤ã„ã§ã« 8 ã‚³ãƒ¼ãƒŠãƒ¼ã ã‘æ¬²ã—ã„å ´åˆ
 	inline std::array<Vec3f, 8> AABBCorners(const AABB3f& box)
 	{
 		const auto& lb = box.lb;
@@ -315,25 +315,25 @@ namespace SFW::Math {
 	}
 
 	//======================================================================
-	// AABB ~ s—ñi—ñƒxƒNƒgƒ‹‹K–ñ / row-major •ÛŠÇ / ‰E—ñ=•½sˆÚ“®j
-	// 4x4”Å‚Æ3x4”Åi48Bƒ[ƒ‹ƒhs—ñj‚ğ—pˆÓ
-	//   ¦ƒAƒtƒBƒ“ŒÀ’èB“§‹iW‚ª•Ï‚í‚éj‚Í8’¸“_•ÏŠ·‚ª•K—vB
+	// AABB Ã— è¡Œåˆ—ï¼ˆåˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ / row-major ä¿ç®¡ / å³åˆ—=å¹³è¡Œç§»å‹•ï¼‰
+	// 4x4ç‰ˆã¨3x4ç‰ˆï¼ˆ48Bãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ï¼‰ã‚’ç”¨æ„
+	//   â€»ã‚¢ãƒ•ã‚£ãƒ³é™å®šã€‚é€è¦–ï¼ˆWãŒå¤‰ã‚ã‚‹ï¼‰ã¯8é ‚ç‚¹å¤‰æ›ãŒå¿…è¦ã€‚
 	//======================================================================
 
 	template<class T>
 	inline AABB<T, Vec3<T>>
 		TransformAABB_Affine(const Matrix<4, 4, T>& M, const AABB<T, Vec3<T>>& box) noexcept
 	{
-		// ’†S‚Æ”¼Œaiextentj
+		// ä¸­å¿ƒã¨åŠå¾„ï¼ˆextentï¼‰
 		const Vec3<T> c = (box.lb + box.ub) * T(0.5);
 		const Vec3<T> e = (box.ub - box.lb) * T(0.5);
 
-		// —ñƒxƒNƒgƒ‹‹K–ñ‚È‚Ì‚Å x' = dot(row0.xyz, c) + M[0][3] ‚È‚Ç‚Å OK
+		// åˆ—ãƒ™ã‚¯ãƒˆãƒ«è¦ç´„ãªã®ã§ x' = dot(row0.xyz, c) + M[0][3] ãªã©ã§ OK
 		const T cx = M[0][0] * c.x + M[0][1] * c.y + M[0][2] * c.z + M[0][3];
 		const T cy = M[1][0] * c.x + M[1][1] * c.y + M[1][2] * c.z + M[1][3];
 		const T cz = M[2][0] * c.x + M[2][1] * c.y + M[2][2] * c.z + M[2][3];
 
-		// extent ‚ÍüŒ`•”‚Ìâ‘Î’l‚ğg‚Á‚Ä‰Ÿ‚µL‚°‚é
+		// extent ã¯ç·šå½¢éƒ¨ã®çµ¶å¯¾å€¤ã‚’ä½¿ã£ã¦æŠ¼ã—åºƒã’ã‚‹
 		const T ex = std::abs(M[0][0]) * e.x + std::abs(M[0][1]) * e.y + std::abs(M[0][2]) * e.z;
 		const T ey = std::abs(M[1][0]) * e.x + std::abs(M[1][1]) * e.y + std::abs(M[1][2]) * e.z;
 		const T ez = std::abs(M[2][0]) * e.x + std::abs(M[2][1]) * e.y + std::abs(M[2][2]) * e.z;
@@ -344,7 +344,7 @@ namespace SFW::Math {
 		return out;
 	}
 
-	// 48Bi3x4jƒ[ƒ‹ƒhs—ñ‚É‚à‚»‚Ì‚Ü‚Ü‘Î‰
+	// 48Bï¼ˆ3x4ï¼‰ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«ã‚‚ãã®ã¾ã¾å¯¾å¿œ
 	template<class T>
 	inline AABB<T, Vec3<T>>
 		TransformAABB_Affine(const Matrix<3, 4, T>& M, const AABB<T, Vec3<T>>& box) noexcept

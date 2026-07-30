@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Level.hpp
- * @brief ƒŒƒxƒ‹‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief ãƒ¬ãƒ™ãƒ«ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -24,7 +24,7 @@
 namespace SFW
 {
 	/**
-	 * @brief ƒŒƒxƒ‹‚Ìó‘Ô‚ğ’è‹`‚·‚é—ñ‹“Œ^
+	 * @brief ãƒ¬ãƒ™ãƒ«ã®çŠ¶æ…‹ã‚’å®šç¾©ã™ã‚‹åˆ—æŒ™å‹
 	 */
 	enum class ELevelState : uint32_t {
 		None = 0,
@@ -48,7 +48,7 @@ namespace SFW
 	}
 
 	constexpr ELevelState operator~(ELevelState a) {
-		// —LŒøƒrƒbƒg‚¾‚¯”½“]‚µ‚½‚¢‚È‚çƒ}ƒXƒN‚·‚é
+		// æœ‰åŠ¹ãƒ“ãƒƒãƒˆã ã‘åè»¢ã—ãŸã„ãªã‚‰ãƒã‚¹ã‚¯ã™ã‚‹
 		constexpr uint32_t Mask =
 			static_cast<uint32_t>(ELevelState::Main) |
 			static_cast<uint32_t>(ELevelState::Sub) |
@@ -83,7 +83,7 @@ namespace SFW
 	}
 
 	/**
-	 * @brief System‚É“n‚·ƒŒƒxƒ‹‚Ìî•ñ‚â‘€ì‚ğ’ñ‹Ÿ‚·‚é\‘¢‘Ì
+	 * @brief Systemã«æ¸¡ã™ãƒ¬ãƒ™ãƒ«ã®æƒ…å ±ã‚„æ“ä½œã‚’æä¾›ã™ã‚‹æ§‹é€ ä½“
 	 */
 	template<class Partition>
 	struct LevelContext {
@@ -93,7 +93,7 @@ namespace SFW
 			virtual void Execute(Level<Partition>::Session& pLevelSession) = 0;
 		};
 
-		// 2) ƒfƒBƒtƒ@[ƒh‰^—p
+		// 2) ãƒ‡ã‚£ãƒ•ã‚¡ãƒ¼ãƒ‰é‹ç”¨
 		BudgetMover mover;
 
 		inline LevelID GetID() const noexcept { return id; }
@@ -104,20 +104,20 @@ namespace SFW
 	};
 
 	/**
-	 * @brief ƒfƒtƒHƒ‹ƒg‚Ìƒ`ƒƒƒ“ƒNƒ‰ƒCƒ“ƒTƒCƒY‚ğ’è‹`‚·‚éŒ^
+	 * @brief ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒãƒ£ãƒ³ã‚¯ãƒ©ã‚¤ãƒ³ã‚µã‚¤ã‚ºã‚’å®šç¾©ã™ã‚‹å‹
 	 */
-	static constexpr ChunkSizeType DefaultChunkHeight = 32; // ƒfƒtƒHƒ‹ƒg‚Ìƒ`ƒƒƒ“ƒNƒ‰ƒCƒ“ƒTƒCƒY
+	static constexpr ChunkSizeType DefaultChunkHeight = 32; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒãƒ£ãƒ³ã‚¯ãƒ©ã‚¤ãƒ³ã‚µã‚¤ã‚º
 	/**
-	 * @brief ƒfƒtƒHƒ‹ƒg‚Ìƒ`ƒƒƒ“ƒNƒJƒ‰ƒ€ƒTƒCƒY‚ğ’è‹`‚·‚éŒ^
+	 * @brief ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒãƒ£ãƒ³ã‚¯ã‚«ãƒ©ãƒ ã‚µã‚¤ã‚ºã‚’å®šç¾©ã™ã‚‹å‹
 	 */
-	static constexpr ChunkSizeType DefaultChunkWidth = 32; // ƒfƒtƒHƒ‹ƒg‚Ìƒ`ƒƒƒ“ƒNƒJƒ‰ƒ€ƒTƒCƒY
+	static constexpr ChunkSizeType DefaultChunkWidth = 32; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒãƒ£ãƒ³ã‚¯ã‚«ãƒ©ãƒ ã‚µã‚¤ã‚º
 
-	static constexpr float DefaultChunkCellSize = 128.0f; // ƒfƒtƒHƒ‹ƒg‚Ìƒ`ƒƒƒ“ƒNƒTƒCƒY
+	static constexpr float DefaultChunkCellSize = 128.0f; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒãƒ£ãƒ³ã‚¯ã‚µã‚¤ã‚º
 
-	//ŠeŒ^‚ÌLevelŠÔ‚ÅID‚ğ‹¤—L‚·‚é‚½‚ß‚É‚»‚Æ‚É“¦‚ª‚·
+	//å„å‹ã®Levelé–“ã§IDã‚’å…±æœ‰ã™ã‚‹ãŸã‚ã«ãã¨ã«é€ƒãŒã™
 	class LelveIDManager {
-		//ƒŒƒxƒ‹‚Ì¢‘ã‚ğ¶¬‚·‚é‚½‚ß‚ÌÃ“I‚ÈƒAƒgƒ~ƒbƒN•Ï”
-		//ƒŒƒxƒ‹‚²‚Æ‚ÉˆêˆÓ‚È¢‘ã‚ğ¶¬‚·‚é‚½‚ß‚Ég—p‚³‚ê‚Ü‚·B
+		//ãƒ¬ãƒ™ãƒ«ã®ä¸–ä»£ã‚’ç”Ÿæˆã™ã‚‹ãŸã‚ã®é™çš„ãªã‚¢ãƒˆãƒŸãƒƒã‚¯å¤‰æ•°
+		//ãƒ¬ãƒ™ãƒ«ã”ã¨ã«ä¸€æ„ãªä¸–ä»£ã‚’ç”Ÿæˆã™ã‚‹ãŸã‚ã«ä½¿ç”¨ã•ã‚Œã¾ã™ã€‚
 		static inline std::atomic<LevelID> nextID;
 
 		template<PartitionConcept Partition>
@@ -125,29 +125,29 @@ namespace SFW
 	};
 
 	/**
-	 * @brief ƒŒƒxƒ‹(ƒV[ƒ“’PˆÊ)‚ğ’è‹`‚·‚éƒNƒ‰ƒX
-	 * @tparam Partition ƒp[ƒeƒBƒVƒ‡ƒ“‚ÌŒ^
+	 * @brief ãƒ¬ãƒ™ãƒ«(ã‚·ãƒ¼ãƒ³å˜ä½)ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
+	 * @tparam Partition ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã®å‹
 	 */
 	template<PartitionConcept Partition>
 	class Level {
 		using SchedulerType = ECS::SystemScheduler<Partition>;
 		using SystemType = ECS::ISystem<Partition>;
 
-		using TransformType = CTransform; // TransformƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^
+		using TransformType = CTransform; // Transformã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹
 
 	public:
 		/**
-		 * @brief ƒŒƒxƒ‹‚Ö‚Ì—v‹‚ğŠÇ—‚·‚éƒZƒbƒVƒ‡ƒ“\‘¢‘Ì
-		 * @details ê—LƒƒbƒN‚ğæ“¾‚µ‚Ä‚¢‚é‚Ì‚ÅAƒVƒXƒeƒ€‚ÌXV‚Å¶¬‚·‚é‚ÆƒfƒbƒhƒƒbƒN‚Ì‰Â”\«‚ ‚è
+		 * @brief ãƒ¬ãƒ™ãƒ«ã¸ã®è¦æ±‚ã‚’ç®¡ç†ã™ã‚‹ã‚»ãƒƒã‚·ãƒ§ãƒ³æ§‹é€ ä½“
+		 * @details å°‚æœ‰ãƒ­ãƒƒã‚¯ã‚’å–å¾—ã—ã¦ã„ã‚‹ã®ã§ã€ã‚·ã‚¹ãƒ†ãƒ ã®æ›´æ–°ã§ç”Ÿæˆã™ã‚‹ã¨ãƒ‡ãƒƒãƒ‰ãƒ­ãƒƒã‚¯ã®å¯èƒ½æ€§ã‚ã‚Š
 		 */
 		struct Session
 		{
 			Session(Level<Partition>& _level, std::shared_mutex& _m) : level(_level), lock(_m) {}
 
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒB‚ğ’Ç‰Á‚·‚éŠÖ”
-			 * @param ...components ’Ç‰Á‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì‰Â•Ïˆø”
-			 * @return std::optional<ECS::EntityID> ƒGƒ“ƒeƒBƒeƒBID‚ÌƒIƒvƒVƒ‡ƒ“
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã‚’è¿½åŠ ã™ã‚‹é–¢æ•°
+			 * @param ...components è¿½åŠ ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å¯å¤‰å¼•æ•°
+			 * @return std::optional<ECS::EntityID> ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 			 */
 			template<typename... Components>
 			std::optional<ECS::EntityID> AddEntity(const Components&... components)
@@ -157,45 +157,45 @@ namespace SFW
 				ComponentMask mask;
 				(SetMask<Components>(mask), ...);
 
-				// TransformƒRƒ“ƒ|[ƒlƒ“ƒg‚ª‘¶İ‚·‚é‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN
+				// Transformã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒå­˜åœ¨ã™ã‚‹ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯
 				ComponentTypeID typeID = ComponentTypeRegistry::GetID<TransformType>();
 				bool hasTransform = mask.test(typeID);
 
 				EntityID id = EntityID::Invalid();
 
-				//TransformƒRƒ“ƒ|[ƒlƒ“ƒg‚ª‘¶İ‚·‚éê‡Aƒp[ƒeƒBƒVƒ‡ƒ“‚©‚çƒ`ƒƒƒ“ƒN‚ğæ“¾
+				//Transformã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒå­˜åœ¨ã™ã‚‹å ´åˆã€ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã‹ã‚‰ãƒãƒ£ãƒ³ã‚¯ã‚’å–å¾—
 				if (hasTransform)
 				{
 					auto transform = extract_first_of_type<TransformType>(components...);
 					if (transform)
 					{
-						auto chunk = level.partition.GetChunk(transform->location, level.entityManagerReg, level.levelCtx.id, EOutOfBoundsPolicy::ClampToEdge); // Transform‚ÌˆÊ’u‚ÉŠî‚Ã‚¢‚Äƒ`ƒƒƒ“ƒN‚ğæ“¾
+						auto chunk = level.partition.GetChunk(transform->location, level.entityManagerReg, level.levelCtx.id, EOutOfBoundsPolicy::ClampToEdge); // Transformã®ä½ç½®ã«åŸºã¥ã„ã¦ãƒãƒ£ãƒ³ã‚¯ã‚’å–å¾—
 						if (chunk)
 						{
 							id = (*chunk)->GetEntityManager().AddEntity<Components...>(mask, components...);
 						}
 					}
 				}
-				// TransformƒRƒ“ƒ|[ƒlƒ“ƒg‚ª‘¶İ‚µ‚È‚¢ê‡AƒOƒ[ƒoƒ‹ƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[‚ğg—p
+				// Transformã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒå­˜åœ¨ã—ãªã„å ´åˆã€ã‚°ãƒ­ãƒ¼ãƒãƒ«ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚’ä½¿ç”¨
 				else
 				{
 					id = level.partition.GetGlobalEntityManager().AddEntity<Components...>(mask, components...);
 				}
 
-				// ƒGƒ“ƒeƒBƒeƒBID‚ª–³Œø‚Èê‡‚ÍƒGƒ‰[‚ğƒƒOo—Í
+				// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDãŒç„¡åŠ¹ãªå ´åˆã¯ã‚¨ãƒ©ãƒ¼ã‚’ãƒ­ã‚°å‡ºåŠ›
 				if (!id.IsValid()) {
 					LOG_ERROR("EntityID is not Valid : %d", id.index);
-					return std::nullopt; // ƒGƒ“ƒeƒBƒeƒB‚Ì’Ç‰Á‚É¸”s‚µ‚½ê‡
+					return std::nullopt; // ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®è¿½åŠ ã«å¤±æ•—ã—ãŸå ´åˆ
 				}
 
 				return id;
 			}
 
 			/**
-			 * @brief Ã“I‹«ŠEƒ{ƒŠƒ…[ƒ€‚ğ‚ÂƒGƒ“ƒeƒBƒeƒB‚ğ’Ç‰Á‚·‚éŠÖ”
-			 * @param boundsWS ƒ[ƒ‹ƒh‹óŠÔ‚Å‚Ì‹«ŠEƒ{ƒŠƒ…[ƒ€
-			 * @param ...components ’Ç‰Á‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì‰Â•Ïˆø”
-			 * @return std::optional<ECS::EntityID> ƒGƒ“ƒeƒBƒeƒBID
+			 * @brief é™çš„å¢ƒç•Œãƒœãƒªãƒ¥ãƒ¼ãƒ ã‚’æŒã¤ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã‚’è¿½åŠ ã™ã‚‹é–¢æ•°
+			 * @param boundsWS ãƒ¯ãƒ¼ãƒ«ãƒ‰ç©ºé–“ã§ã®å¢ƒç•Œãƒœãƒªãƒ¥ãƒ¼ãƒ 
+			 * @param ...components è¿½åŠ ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å¯å¤‰å¼•æ•°
+			 * @return std::optional<ECS::EntityID> ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
 			 * */
 			template<typename... Components>
 			std::optional<ECS::EntityID> AddStaticBoundsEntity(SpatialChunk::Bounds3f boundsWS, const Components&... components)
@@ -205,47 +205,47 @@ namespace SFW
 				ComponentMask mask;
 				(SetMask<Components>(mask), ...);
 
-				// TransformƒRƒ“ƒ|[ƒlƒ“ƒg‚ª‘¶İ‚·‚é‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN
+				// Transformã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒå­˜åœ¨ã™ã‚‹ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯
 				ComponentTypeID typeID = ComponentTypeRegistry::GetID<TransformType>();
 				bool hasTransform = mask.test(typeID);
 
 				EntityID id = EntityID::Invalid();
 
-				//TransformƒRƒ“ƒ|[ƒlƒ“ƒg‚ª‘¶İ‚·‚éê‡Aƒp[ƒeƒBƒVƒ‡ƒ“‚©‚çƒ`ƒƒƒ“ƒN‚ğæ“¾
+				//Transformã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒå­˜åœ¨ã™ã‚‹å ´åˆã€ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã‹ã‚‰ãƒãƒ£ãƒ³ã‚¯ã‚’å–å¾—
 				if (hasTransform)
 				{
 					auto transform = extract_first_of_type<TransformType>(components...);
 					if (transform)
 					{
-						auto chunk = level.partition.GetChunk(transform->location, level.entityManagerReg, level.levelCtx.id, EOutOfBoundsPolicy::ClampToEdge); // Transform‚ÌˆÊ’u‚ÉŠî‚Ã‚¢‚Äƒ`ƒƒƒ“ƒN‚ğæ“¾
+						auto chunk = level.partition.GetChunk(transform->location, level.entityManagerReg, level.levelCtx.id, EOutOfBoundsPolicy::ClampToEdge); // Transformã®ä½ç½®ã«åŸºã¥ã„ã¦ãƒãƒ£ãƒ³ã‚¯ã‚’å–å¾—
 						if (chunk)
 						{
 							id = (*chunk)->GetEntityManager().AddEntity<Components...>(mask, components...);
-							// Ã“I‹«ŠEƒ{ƒŠƒ…[ƒ€‚ğŠg’£
+							// é™çš„å¢ƒç•Œãƒœãƒªãƒ¥ãƒ¼ãƒ ã‚’æ‹¡å¼µ
 							(*chunk)->ExpandStaticBoundsWS(boundsWS);
 						}
 					}
 				}
-				// TransformƒRƒ“ƒ|[ƒlƒ“ƒg‚ª‘¶İ‚µ‚È‚¢ê‡AƒOƒ[ƒoƒ‹ƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[‚ğg—p
+				// Transformã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒå­˜åœ¨ã—ãªã„å ´åˆã€ã‚°ãƒ­ãƒ¼ãƒãƒ«ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚’ä½¿ç”¨
 				else
 				{
 					id = level.partition.GetGlobalEntityManager().AddEntity<Components...>(mask, components...);
 				}
 
-				// ƒGƒ“ƒeƒBƒeƒBID‚ª–³Œø‚Èê‡‚ÍƒGƒ‰[‚ğƒƒOo—Í
+				// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDãŒç„¡åŠ¹ãªå ´åˆã¯ã‚¨ãƒ©ãƒ¼ã‚’ãƒ­ã‚°å‡ºåŠ›
 				if (!id.IsValid()) {
 					LOG_ERROR("EntityID is not Valid : %d", id.index);
-					return std::nullopt; // ƒGƒ“ƒeƒBƒeƒB‚Ì’Ç‰Á‚É¸”s‚µ‚½ê‡
+					return std::nullopt; // ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®è¿½åŠ ã«å¤±æ•—ã—ãŸå ´åˆ
 				}
 
 				return id;
 			}
 
 			/**
-			 * @brief ˆÊ’u‚ğw’è‚µ‚ÄƒGƒ“ƒeƒBƒeƒB‚ğ’Ç‰Á‚·‚éŠÖ”
-			 * @param location ƒGƒ“ƒeƒBƒeƒB‚ÌˆÊ’u
-			 * @param ...components ’Ç‰Á‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì‰Â•Ïˆø”
-			 * @return std::optional<ECS::EntityID> ƒGƒ“ƒeƒBƒeƒBID
+			 * @brief ä½ç½®ã‚’æŒ‡å®šã—ã¦ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã‚’è¿½åŠ ã™ã‚‹é–¢æ•°
+			 * @param location ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®ä½ç½®
+			 * @param ...components è¿½åŠ ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å¯å¤‰å¼•æ•°
+			 * @return std::optional<ECS::EntityID> ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
 			 * */
 			template<typename... Components>
 			std::optional<ECS::EntityID> AddEntityWithLocation(Math::Vec3f location, const Components&... components)
@@ -255,37 +255,37 @@ namespace SFW
 				ComponentMask mask;
 				(SetMask<Components>(mask), ...);
 
-				// TransformƒRƒ“ƒ|[ƒlƒ“ƒg‚ª‘¶İ‚·‚é‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN
+				// Transformã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒå­˜åœ¨ã™ã‚‹ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯
 				ComponentTypeID typeID = ComponentTypeRegistry::GetID<TransformType>();
 				bool hasTransform = mask.test(typeID);
 
 				EntityID id = EntityID::Invalid();
 
-				//TransformƒRƒ“ƒ|[ƒlƒ“ƒg‚ª‘¶İ‚·‚éê‡Aƒp[ƒeƒBƒVƒ‡ƒ“‚©‚çƒ`ƒƒƒ“ƒN‚ğæ“¾
+				//Transformã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒå­˜åœ¨ã™ã‚‹å ´åˆã€ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã‹ã‚‰ãƒãƒ£ãƒ³ã‚¯ã‚’å–å¾—
 				if (hasTransform)
 				{
-					LOG_WARNING("AddEntityWithLocation: Transform‚ÌˆÊ’u‚Í–³‹‚³‚ê‚Ü‚·!");
+					LOG_WARNING("AddEntityWithLocation: Transformã®ä½ç½®ã¯ç„¡è¦–ã•ã‚Œã¾ã™!");
 				}
 
-				auto chunk = level.partition.GetChunk(location, level.entityManagerReg, level.levelCtx.id, EOutOfBoundsPolicy::ClampToEdge); // Transform‚ÌˆÊ’u‚ÉŠî‚Ã‚¢‚Äƒ`ƒƒƒ“ƒN‚ğæ“¾
+				auto chunk = level.partition.GetChunk(location, level.entityManagerReg, level.levelCtx.id, EOutOfBoundsPolicy::ClampToEdge); // Transformã®ä½ç½®ã«åŸºã¥ã„ã¦ãƒãƒ£ãƒ³ã‚¯ã‚’å–å¾—
 				if (chunk)
 				{
 					id = (*chunk)->GetEntityManager().AddEntity<Components...>(mask, components...);
 				}
 
-				// ƒGƒ“ƒeƒBƒeƒBID‚ª–³Œø‚Èê‡‚ÍƒGƒ‰[‚ğƒƒOo—Í
+				// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDãŒç„¡åŠ¹ãªå ´åˆã¯ã‚¨ãƒ©ãƒ¼ã‚’ãƒ­ã‚°å‡ºåŠ›
 				if (!id.IsValid()) {
 					LOG_ERROR("EntityID is not Valid : %d", id.index);
-					return std::nullopt; // ƒGƒ“ƒeƒBƒeƒB‚Ì’Ç‰Á‚É¸”s‚µ‚½ê‡
+					return std::nullopt; // ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®è¿½åŠ ã«å¤±æ•—ã—ãŸå ´åˆ
 				}
 
 				return id;
 			}
 
 			/**
-			 * @brief ƒOƒ[ƒoƒ‹ƒGƒ“ƒeƒBƒeƒB‚ğ’Ç‰Á‚·‚éŠÖ”
-			 * @param ...components ’Ç‰Á‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì‰Â•Ïˆø”
-			 * @return std::optional<ECS::EntityID> ƒGƒ“ƒeƒBƒeƒBID‚ÌƒIƒvƒVƒ‡ƒ“
+			 * @brief ã‚°ãƒ­ãƒ¼ãƒãƒ«ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã‚’è¿½åŠ ã™ã‚‹é–¢æ•°
+			 * @param ...components è¿½åŠ ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å¯å¤‰å¼•æ•°
+			 * @return std::optional<ECS::EntityID> ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 			 */
 			template<typename... Components>
 			std::optional<ECS::EntityID> AddGlobalEntity(const Components&... components)
@@ -299,10 +299,10 @@ namespace SFW
 
 				id = level.partition.GetGlobalEntityManager().AddEntity<Components...>(mask, components...);
 
-				// ƒGƒ“ƒeƒBƒeƒBID‚ª–³Œø‚Èê‡‚ÍƒGƒ‰[‚ğƒƒOo—Í
+				// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDãŒç„¡åŠ¹ãªå ´åˆã¯ã‚¨ãƒ©ãƒ¼ã‚’ãƒ­ã‚°å‡ºåŠ›
 				if (!id.IsValid()) {
 					LOG_ERROR("EntityID is not Valid : %d", id.index);
-					return std::nullopt; // ƒGƒ“ƒeƒBƒeƒB‚Ì’Ç‰Á‚É¸”s‚µ‚½ê‡
+					return std::nullopt; // ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®è¿½åŠ ã«å¤±æ•—ã—ãŸå ´åˆ
 				}
 
 				return id;
@@ -313,12 +313,12 @@ namespace SFW
 		};
 	public:
 		/**
-		 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @param name ƒŒƒxƒ‹‚Ì–¼‘O
-		 * @param state ƒŒƒxƒ‹‚Ìó‘Ô
-		 * @param _chunkWidth ƒ`ƒƒƒ“ƒN‚Ì•
-		 * @param _chunkHeight ƒ`ƒƒƒ“ƒN‚Ì‚‚³
-		 * @param _chunkCellSize ƒ`ƒƒƒ“ƒN‚ÌƒZƒ‹ƒTƒCƒY
+		 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @param name ãƒ¬ãƒ™ãƒ«ã®åå‰
+		 * @param state ãƒ¬ãƒ™ãƒ«ã®çŠ¶æ…‹
+		 * @param _chunkWidth ãƒãƒ£ãƒ³ã‚¯ã®å¹…
+		 * @param _chunkHeight ãƒãƒ£ãƒ³ã‚¯ã®é«˜ã•
+		 * @param _chunkCellSize ãƒãƒ£ãƒ³ã‚¯ã®ã‚»ãƒ«ã‚µã‚¤ã‚º
 		 */
 		explicit Level(const std::string& name, SpatialChunkRegistry& reg, ELevelState _state = ELevelState::Main,
 			Math::Vec3f originWS = { 0.0f,0.0f,0.0f }, ChunkSizeType _chunkWidth = DefaultChunkWidth, ChunkSizeType _chunkHeight = DefaultChunkHeight,
@@ -326,7 +326,7 @@ namespace SFW
 		) noexcept
 			: name(name), state(static_cast<uint32_t>(_state)), entityManagerReg(reg),
 			partition(originWS, _chunkWidth, _chunkHeight, _chunkCellSize) {
-			// Active ‚ğ—‚Æ‚·i‘¼ƒrƒbƒg‚Ì•ÀsXV‚ğ‰ó‚³‚È‚¢j
+			// Active ã‚’è½ã¨ã™ï¼ˆä»–ãƒ“ãƒƒãƒˆã®ä¸¦è¡Œæ›´æ–°ã‚’å£Šã•ãªã„ï¼‰
 			state.fetch_and(~static_cast<uint32_t>(ELevelState::Active),
 				std::memory_order_acq_rel);
 
@@ -334,18 +334,18 @@ namespace SFW
 			partition.RegisterAllChunks(reg, levelCtx.id);
 		}
 		/**
-		 * @brief T ‚ª Args... ‚Å\’z‰Â”\‚È‚Æ‚«‚¾‚¯A‚±‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ—LŒø‰»
+		 * @brief T ãŒ Args... ã§æ§‹ç¯‰å¯èƒ½ãªã¨ãã ã‘ã€ã“ã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’æœ‰åŠ¹åŒ–
 		 * @
 		 */
 		template<class... Args>
 			requires std::constructible_from<Partition, Args...> &&
-		(!(std::same_as<std::remove_cvref_t<Args>, Level> || ...)) // ©•ª©g‚ÌƒRƒs[/ƒ€[ƒu‚ÆÕ“Ë‚µ‚È‚¢‚æ‚¤ƒK[ƒh
-			explicit(sizeof...(Args) == 1) // ˆø”1ŒÂ‚Ì‚Æ‚«‚¾‚¯ explicitA‚È‚Ç‚ÌD‚İ’²®‚à‰Â
+		(!(std::same_as<std::remove_cvref_t<Args>, Level> || ...)) // è‡ªåˆ†è‡ªèº«ã®ã‚³ãƒ”ãƒ¼/ãƒ ãƒ¼ãƒ–ã¨è¡çªã—ãªã„ã‚ˆã†ã‚¬ãƒ¼ãƒ‰
+			explicit(sizeof...(Args) == 1) // å¼•æ•°1å€‹ã®ã¨ãã ã‘ explicitã€ãªã©ã®å¥½ã¿èª¿æ•´ã‚‚å¯
 			Level(const std::string& name, SpatialChunkRegistry& reg, ELevelState _state = ELevelState::Main,
 				Args&&... args) noexcept
 			: name(name), state(static_cast<uint32_t>(_state)), entityManagerReg(reg),
 			partition(std::forward<Args>(args)...) {
-			// Active ‚ğ—‚Æ‚·i‘¼ƒrƒbƒg‚Ì•ÀsXV‚ğ‰ó‚³‚È‚¢j
+			// Active ã‚’è½ã¨ã™ï¼ˆä»–ãƒ“ãƒƒãƒˆã®ä¸¦è¡Œæ›´æ–°ã‚’å£Šã•ãªã„ï¼‰
 			state.fetch_and(~static_cast<uint32_t>(ELevelState::Active),
 				std::memory_order_acq_rel);
 
@@ -353,17 +353,17 @@ namespace SFW
 			partition.RegisterAllChunks(reg, levelCtx.id);
 		}
 		/**
-		 * @brief LevelID‚Ìæ“¾ŠÖ”
+		 * @brief LevelIDã®å–å¾—é–¢æ•°
 		 */
 		LevelID GetID() const noexcept { return levelCtx.id; }
 
 		/**
-		* @brief “o˜^‚µ‚½ƒVƒXƒeƒ€‚ğƒXƒPƒWƒ…[ƒ‹’Ê‚è‚ÉXV‚·‚éŠÖ”
-		* @param serviceLocator ƒT[ƒrƒXƒƒP[ƒ^[‚ÌQÆ
-		* @param deltaTime ‘O‰ñ‚ÌXV‚©‚ç‚ÌŒo‰ßŠÔ
-		* @param executor ƒVƒXƒeƒ€‚ÌXV‚Ég—p‚·‚éƒXƒŒƒbƒhƒGƒOƒ[ƒLƒ…[ƒ^[‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		* @details SystemScheduler‚ÌSystem‚ÌUpdateŠÖ”‚ğŒÄ‚Ño‚·Bƒ`ƒƒƒ“ƒN‚ğŒ×‚¢‚¾ˆÚ“®‚à‚±‚±‚Åˆ—‚·‚éB
-		* ƒfƒoƒbƒOUI‚ª—LŒø‚Èê‡‚ÍAƒŒƒxƒ‹‚Ìî•ñ‚ğUI‚É‘—‚éB
+		* @brief ç™»éŒ²ã—ãŸã‚·ã‚¹ãƒ†ãƒ ã‚’ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«é€šã‚Šã«æ›´æ–°ã™ã‚‹é–¢æ•°
+		* @param serviceLocator ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã®å‚ç…§
+		* @param deltaTime å‰å›ã®æ›´æ–°ã‹ã‚‰ã®çµŒéæ™‚é–“
+		* @param executor ã‚·ã‚¹ãƒ†ãƒ ã®æ›´æ–°ã«ä½¿ç”¨ã™ã‚‹ã‚¹ãƒ¬ãƒƒãƒ‰ã‚¨ã‚°ã‚¼ã‚­ãƒ¥ãƒ¼ã‚¿ãƒ¼ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		* @details SystemSchedulerã®Systemã®Updateé–¢æ•°ã‚’å‘¼ã³å‡ºã™ã€‚ãƒãƒ£ãƒ³ã‚¯ã‚’è·¨ã„ã ç§»å‹•ã‚‚ã“ã“ã§å‡¦ç†ã™ã‚‹ã€‚
+		* ãƒ‡ãƒãƒƒã‚°UIãŒæœ‰åŠ¹ãªå ´åˆã¯ã€ãƒ¬ãƒ™ãƒ«ã®æƒ…å ±ã‚’UIã«é€ã‚‹ã€‚
 		*/
 		void Update(const ECS::ServiceLocator& serviceLocator, double deltaTime, IThreadExecutor* executor) {
 #ifdef _ENABLE_IMGUI
@@ -371,43 +371,43 @@ namespace SFW
 				auto g = Debug::BeginTreeWrite(); // lock & back buffer
 				auto& frame = g.data();
 
-				// —á‚¦‚ÎƒvƒŠƒI[ƒ_{depth w’è‚Å•½’R‰»‚µ‚½ƒcƒŠ[‚ğ‹l‚ß‚é
+				// ä¾‹ãˆã°ãƒ—ãƒªã‚ªãƒ¼ãƒ€ï¼‹depth æŒ‡å®šã§å¹³å¦åŒ–ã—ãŸãƒ„ãƒªãƒ¼ã‚’è©°ã‚ã‚‹
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVEL, /*leaf=*/false, "Level : " + name });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "Id : " + std::to_string(levelCtx.id) });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "EntityCount : " + std::to_string(partition.GetEntityNum()) });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "Partition : " + std::string(typeid(Partition).name()).substr(6) });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/false, "System" });
-			} // guard ‚ÌƒfƒXƒgƒ‰ƒNƒg‚Å unlockBswap ‚Í UI ƒXƒŒƒbƒh‚ÅB
+			} // guard ã®ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆã§ unlockã€‚swap ã¯ UI ã‚¹ãƒ¬ãƒƒãƒ‰ã§ã€‚
 #endif
-			//Entity©‘Ì‚É•ÏX‚ª“ü‚é‚í‚¯‚Å‚Í‚È‚¢‚Ì‚Å‹¤—LƒƒbƒN‚Å\•ª
+			//Entityè‡ªä½“ã«å¤‰æ›´ãŒå…¥ã‚‹ã‚ã‘ã§ã¯ãªã„ã®ã§å…±æœ‰ãƒ­ãƒƒã‚¯ã§ååˆ†
 			std::shared_lock lock(updateEntityMutex);
 
-			//•ªŠ„‚ÌƒNƒ‰ƒX‚ÉXV‚ª•K—v‚Èê‡‚ÍXV‚·‚é
+			//åˆ†å‰²ã®ã‚¯ãƒ©ã‚¹ã«æ›´æ–°ãŒå¿…è¦ãªå ´åˆã¯æ›´æ–°ã™ã‚‹
 			if constexpr (HasPartitionUpdate<Partition>) {
 				partition.Update(deltaTime);
 			}
 
-			// ƒXƒPƒWƒ…[ƒ‰‚Å‚·‚×‚Ä‚ÌƒVƒXƒeƒ€‚ğXV
+			// ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ©ã§ã™ã¹ã¦ã®ã‚·ã‚¹ãƒ†ãƒ ã‚’æ›´æ–°
 			scheduler.UpdateAll(partition, levelCtx, serviceLocator, executor);
 
-			//ŠeƒXƒŒƒbƒh‚Åƒ`ƒƒƒ“ƒN‚ğŒ×‚¢‚¾ˆÚ“®‚ğÀs
+			//å„ã‚¹ãƒ¬ãƒƒãƒ‰ã§ãƒãƒ£ãƒ³ã‚¯ã‚’è·¨ã„ã ç§»å‹•ã‚’å®Ÿè¡Œ
 			BudgetMover::Accessor::MoverFlush(levelCtx.mover, *serviceLocator.Get<SpatialChunkRegistry>(), 2000);
 		}
 		/**
-		 * @brief I—¹ˆ—
-		 * @details SystemScheduler‚ÌSystem‚ÌEndŠÖ”‚ğŒÄ‚Ño‚·
+		 * @brief çµ‚äº†å‡¦ç†
+		 * @details SystemSchedulerã®Systemã®Endé–¢æ•°ã‚’å‘¼ã³å‡ºã™
 		 */
 		void Clean(const ECS::ServiceLocator& serviceLocator) {
 			std::unique_lock lock(updateEntityMutex);
 
 			scheduler.CleanSystem(partition, levelCtx, serviceLocator);
 
-			//ƒ`ƒƒƒ“ƒN‚ğƒNƒŠƒA
+			//ãƒãƒ£ãƒ³ã‚¯ã‚’ã‚¯ãƒªã‚¢
 			partition.CleanChunk();
 		}
 
 		/**
-		 * @brief ŒÀ’è“I‚ÈXVˆ—
+		 * @brief é™å®šçš„ãªæ›´æ–°å‡¦ç†
 		 */
 		void UpdateLimited(const ECS::ServiceLocator& serviceLocator, double deltaTime, IThreadExecutor* executor) {
 #ifdef _ENABLE_IMGUI
@@ -415,47 +415,47 @@ namespace SFW
 				auto g = Debug::BeginTreeWrite(); // lock & back buffer
 				auto& frame = g.data();
 
-				// —á‚¦‚ÎƒvƒŠƒI[ƒ_{depth w’è‚Å•½’R‰»‚µ‚½ƒcƒŠ[‚ğ‹l‚ß‚é
+				// ä¾‹ãˆã°ãƒ—ãƒªã‚ªãƒ¼ãƒ€ï¼‹depth æŒ‡å®šã§å¹³å¦åŒ–ã—ãŸãƒ„ãƒªãƒ¼ã‚’è©°ã‚ã‚‹
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVEL, /*leaf=*/false, "Limited Level : " + name });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "Id : " + std::to_string(levelCtx.id) });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "EntityCount : " + std::to_string(partition.GetEntityNum()) });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "Partition : " + std::string(typeid(Partition).name()).substr(6) });
-			} // guard ‚ÌƒfƒXƒgƒ‰ƒNƒg‚Å unlockBswap ‚Í UI ƒXƒŒƒbƒh‚ÅB
+			} // guard ã®ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆã§ unlockã€‚swap ã¯ UI ã‚¹ãƒ¬ãƒƒãƒ‰ã§ã€‚
 #endif
 			std::shared_lock lock(updateEntityMutex);
 
-			// ŒÀ’è“I‚ÈSystem‚¾‚¯‚ğÀsi—áFˆÊ’u•âŠÔ‚âƒtƒF[ƒhƒAƒEƒgˆ—j
+			// é™å®šçš„ãªSystemã ã‘ã‚’å®Ÿè¡Œï¼ˆä¾‹ï¼šä½ç½®è£œé–“ã‚„ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆå‡¦ç†ï¼‰
 			for (auto& sys : limitedSystems) {
 				sys->Update(partition, levelCtx, serviceLocator, executor);
 			}
 		}
 
 		/**
-		 * @brief ‚·‚×‚Ä‚Ìƒ`ƒƒƒ“ƒN‚ÌEntityManager‚ğƒŒƒWƒXƒ^[‚É“o˜^‚·‚é
-		 * @param reg EntityManagerRegistry‚ÌQÆ
+		 * @brief ã™ã¹ã¦ã®ãƒãƒ£ãƒ³ã‚¯ã®EntityManagerã‚’ãƒ¬ã‚¸ã‚¹ã‚¿ãƒ¼ã«ç™»éŒ²ã™ã‚‹
+		 * @param reg EntityManagerRegistryã®å‚ç…§
 		 */
 		void RegisterAllChunks(SpatialChunkRegistry& reg) {
 			partition.RegisterAllChunks(reg, levelCtx.id);
 		}
 
 		/**
-		 * @brief ƒOƒ[ƒoƒ‹‚ÈƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[‚ğæ“¾‚·‚éŠÖ”
-		 * @return const ECS::EntityManager& ƒOƒ[ƒoƒ‹ƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[‚Ö‚ÌQÆ
+		 * @brief ã‚°ãƒ­ãƒ¼ãƒãƒ«ãªã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return const ECS::EntityManager& ã‚°ãƒ­ãƒ¼ãƒãƒ«ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã¸ã®å‚ç…§
 		 */
 		const ECS::EntityManager& GetGlobalEntityManager() noexcept { return partition.GetGlobalEntityManager(); }
 		/**
-		 * @brief ƒXƒPƒWƒ…[ƒ‰‚ğæ“¾‚·‚éŠÖ”
-		 * @return SchedulerType& ƒXƒPƒWƒ…[ƒ‰‚Ö‚ÌQÆ
+		 * @brief ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ©ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return SchedulerType& ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ©ã¸ã®å‚ç…§
 		 */
 		SchedulerType& GetScheduler() noexcept { return scheduler; }
 		/**
-		 * @brief ƒŒƒxƒ‹‚Ì–¼‘O‚ğæ“¾‚·‚éŠÖ”
-		 * @return const std::string& ƒŒƒxƒ‹‚Ì–¼‘O‚Ö‚ÌQÆ
+		 * @brief ãƒ¬ãƒ™ãƒ«ã®åå‰ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return const std::string& ãƒ¬ãƒ™ãƒ«ã®åå‰ã¸ã®å‚ç…§
 		 */
 		const std::string& GetName() const noexcept { return name; }
 		/**
-		 * @brief ƒŒƒxƒ‹‚Ìó‘Ô‚ğİ’è‚·‚éŠÖ”
-		 * @param s ƒŒƒxƒ‹‚Ìó‘Ô
+		 * @brief ãƒ¬ãƒ™ãƒ«ã®çŠ¶æ…‹ã‚’è¨­å®šã™ã‚‹é–¢æ•°
+		 * @param s ãƒ¬ãƒ™ãƒ«ã®çŠ¶æ…‹
 		 */
 		void ChangeState(ELevelState bits, bool set = true,
 			std::memory_order mo = std::memory_order_acq_rel) {
@@ -467,9 +467,9 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒrƒbƒg‚ğ—§‚Ä‚é‚Ì‚Æ—‚Æ‚·‚Ì‚ğ“¯‚És‚¤ŠÖ”
-		 * @param setMask —§‚Ä‚éƒrƒbƒg‚Ìƒ}ƒXƒN
-		 * @param clearMask —‚Æ‚·ƒrƒbƒg‚Ìƒ}ƒXƒN
+		 * @brief ãƒ“ãƒƒãƒˆã‚’ç«‹ã¦ã‚‹ã®ã¨è½ã¨ã™ã®ã‚’åŒæ™‚ã«è¡Œã†é–¢æ•°
+		 * @param setMask ç«‹ã¦ã‚‹ãƒ“ãƒƒãƒˆã®ãƒã‚¹ã‚¯
+		 * @param clearMask è½ã¨ã™ãƒ“ãƒƒãƒˆã®ãƒã‚¹ã‚¯
 		 */
 		void UpdateState(ELevelState setBits, ELevelState clearBits,
 			std::memory_order success = std::memory_order_acq_rel,
@@ -481,40 +481,40 @@ namespace SFW
 				if (state.compare_exchange_weak(expected, desired, success, fail)) {
 					return;
 				}
-				// ¸”s expected ‚ªÅV’l‚ÉXV‚³‚ê‚é‚Ì‚Åƒ‹[ƒvŒp‘±
+				// å¤±æ•—æ™‚ expected ãŒæœ€æ–°å€¤ã«æ›´æ–°ã•ã‚Œã‚‹ã®ã§ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 			}
 		}
 		/**
-		 * @brief ƒŒƒxƒ‹‚Ìó‘Ô‚ğæ“¾‚·‚éŠÖ”
-		 * @return ELevelState ƒŒƒxƒ‹‚Ìó‘Ô
+		 * @brief ãƒ¬ãƒ™ãƒ«ã®çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return ELevelState ãƒ¬ãƒ™ãƒ«ã®çŠ¶æ…‹
 		 */
 		ELevelState GetState(std::memory_order mo = std::memory_order_acquire) const {
 			return static_cast<ELevelState>(state.load(mo));
 		}
 
 		/**
-		 * @brief ƒŒƒxƒ‹‚ªƒAƒNƒeƒBƒuó‘Ô‚©‚Ç‚¤‚©‚ğæ“¾‚·‚éŠÖ”
-		 * @return bool ƒAƒNƒeƒBƒuó‘Ô‚Ìê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+		 * @brief ãƒ¬ãƒ™ãƒ«ãŒã‚¢ã‚¯ãƒ†ã‚£ãƒ–çŠ¶æ…‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return bool ã‚¢ã‚¯ãƒ†ã‚£ãƒ–çŠ¶æ…‹ã®å ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 		 */
 		bool IsActive(std::memory_order mo = std::memory_order_acquire) const {
 			return HasAny(static_cast<ELevelState>(state.load(mo)), ELevelState::Active);
 		}
 		/**
-		 * @brief ƒŒƒxƒ‹‚ªƒ[ƒfƒBƒ“ƒOó‘Ô‚©‚Ç‚¤‚©‚ğæ“¾‚·‚éŠÖ”
-		 * @return bool ƒ[ƒfƒBƒ“ƒOó‘Ô‚Ìê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+		 * @brief ãƒ¬ãƒ™ãƒ«ãŒãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°çŠ¶æ…‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return bool ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°çŠ¶æ…‹ã®å ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 		 */
 		bool IsLoading(std::memory_order mo = std::memory_order_acquire) const {
 			return HasAny(static_cast<ELevelState>(state.load(mo)), ELevelState::Loading);
 		}
 
 		/**
-		 * @brief ƒŒƒxƒ‹‚ÌƒAƒNƒeƒBƒuó‘Ô‚ğİ’è‚·‚éŠÖ”
-		 * @param active ƒAƒNƒeƒBƒuó‘Ô
+		 * @brief ãƒ¬ãƒ™ãƒ«ã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–çŠ¶æ…‹ã‚’è¨­å®šã™ã‚‹é–¢æ•°
+		 * @param active ã‚¢ã‚¯ãƒ†ã‚£ãƒ–çŠ¶æ…‹
 		 */
 		void SetActive(bool active,
 			std::memory_order mo = std::memory_order_acq_rel) {
 			if (active) {
-				//”O‚Ì‚½‚ßƒ[ƒhÏ‚İ‚Å‚ ‚é‚±‚Æ‚ğŠm”F
+				//å¿µã®ãŸã‚ãƒ­ãƒ¼ãƒ‰æ¸ˆã¿ã§ã‚ã‚‹ã“ã¨ã‚’ç¢ºèª
 				assert(state.load(std::memory_order_acquire) & static_cast<uint32_t>(ELevelState::Loaded) && "Cannot set level active when it is not loaded.");
 
 				state.fetch_or(static_cast<uint32_t>(ELevelState::Active), mo);
@@ -525,8 +525,8 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒŒƒxƒ‹‚Ìƒ[ƒfƒBƒ“ƒO‚ğŠJn‚µA¬Œ÷‚µ‚½‚©‚Ç‚¤‚©‚ğ•Ô‚·ŠÖ”
-		 * @return bool ƒ[ƒfƒBƒ“ƒO‚ÌŠJn‚É¬Œ÷‚µ‚½ê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+		 * @brief ãƒ¬ãƒ™ãƒ«ã®ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã‚’é–‹å§‹ã—ã€æˆåŠŸã—ãŸã‹ã©ã†ã‹ã‚’è¿”ã™é–¢æ•°
+		 * @return bool ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã®é–‹å§‹ã«æˆåŠŸã—ãŸå ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 		 */
 		bool TryBeginLoading(
 			std::memory_order success = std::memory_order_acq_rel,
@@ -535,22 +535,22 @@ namespace SFW
 			uint32_t expected = state.load(std::memory_order_relaxed);
 
 			for (;;) {
-				// ‚·‚Å‚É Loaded / Loading ‚È‚çŠJn‚Å‚«‚È‚¢
+				// ã™ã§ã« Loaded / Loading ãªã‚‰é–‹å§‹ã§ããªã„
 				if (expected & static_cast<uint32_t>(ELevelState::Loaded))  return false;
 				if (expected & static_cast<uint32_t>(ELevelState::Loading)) return false;
 
 				const uint32_t desired = expected | static_cast<uint32_t>(ELevelState::Loading);
 
 				if (state.compare_exchange_weak(expected, desired, success, fail)) {
-					return true; // Loading ‚ğ—§‚Ä‚é‚±‚Æ‚É¬Œ÷
+					return true; // Loading ã‚’ç«‹ã¦ã‚‹ã“ã¨ã«æˆåŠŸ
 				}
-				// compare_exchange_weak ‚ª¸”s‚·‚é‚Æ expected ‚ªXV‚³‚ê‚é‚Ì‚ÅA‚»‚Ì‚Ü‚Üƒ‹[ƒvŒp‘±
+				// compare_exchange_weak ãŒå¤±æ•—ã™ã‚‹ã¨ expected ãŒæ›´æ–°ã•ã‚Œã‚‹ã®ã§ã€ãã®ã¾ã¾ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 			}
 		}
 
 		/**
-		 * @brief ƒŒƒxƒ‹‚ÌƒNƒŠ[ƒ“‚ğŠJn‚µA¬Œ÷‚µ‚½‚©‚Ç‚¤‚©‚ğ•Ô‚·ŠÖ”
-		 * @return bool ƒNƒŠ[ƒ“‚ÌŠJn‚É¬Œ÷‚µ‚½ê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+		 * @brief ãƒ¬ãƒ™ãƒ«ã®ã‚¯ãƒªãƒ¼ãƒ³ã‚’é–‹å§‹ã—ã€æˆåŠŸã—ãŸã‹ã©ã†ã‹ã‚’è¿”ã™é–¢æ•°
+		 * @return bool ã‚¯ãƒªãƒ¼ãƒ³ã®é–‹å§‹ã«æˆåŠŸã—ãŸå ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 		 */
 		bool TryBeginClean(
 			std::memory_order success = std::memory_order_acq_rel,
@@ -559,16 +559,16 @@ namespace SFW
 			uint32_t expected = state.load(std::memory_order_relaxed);
 
 			for (;;) {
-				// Loaded‚Å‚Í‚È‚¢ / Loading ‚È‚çŠJn‚Å‚«‚È‚¢
+				// Loadedã§ã¯ãªã„ / Loading ãªã‚‰é–‹å§‹ã§ããªã„
 				if (!(expected & static_cast<uint32_t>(ELevelState::Loaded)))  return false;
 				if (expected & static_cast<uint32_t>(ELevelState::Loading)) return false;
 
 				const uint32_t desired = expected | static_cast<uint32_t>(ELevelState::Loading);
 
 				if (state.compare_exchange_weak(expected, desired, success, fail)) {
-					return true; // Loading ‚ğ—§‚Ä‚é‚±‚Æ‚É¬Œ÷
+					return true; // Loading ã‚’ç«‹ã¦ã‚‹ã“ã¨ã«æˆåŠŸ
 				}
-				// compare_exchange_weak ‚ª¸”s‚·‚é‚Æ expected ‚ªXV‚³‚ê‚é‚Ì‚ÅA‚»‚Ì‚Ü‚Üƒ‹[ƒvŒp‘±
+				// compare_exchange_weak ãŒå¤±æ•—ã™ã‚‹ã¨ expected ãŒæ›´æ–°ã•ã‚Œã‚‹ã®ã§ã€ãã®ã¾ã¾ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 			}
 		}
 
@@ -576,10 +576,10 @@ namespace SFW
 			return partition.GetChunk(location, entityManagerReg, this->levelCtx.id, policy);
 		}
 		/**
-		 * @brief Entity‚ğXV‚·‚é‚½‚ß‚ÌƒNƒ‰ƒXæ“¾
-		 * @return Session Entity‚ğXV‚·‚é‚½‚ß‚ÌƒNƒ‰ƒX
-		 * @details Session‚Íê—LƒƒbƒN‚ğæ“¾‚µ‚Ä‚¢‚é‚½‚ßAƒVƒXƒeƒ€‚ÌXV‚Å¶¬‚·‚é‚ÆƒfƒbƒhƒƒbƒN‚Ì‰Â”\«‚ª‚ ‚è‚Ü‚·B
-		 * ƒVƒXƒeƒ€‚ÌXVˆÈŠO‚Ìƒ^ƒCƒ~ƒ“ƒO‚Å¶¬‚µ‚Ä‚­‚¾‚³‚¢B
+		 * @brief Entityã‚’æ›´æ–°ã™ã‚‹ãŸã‚ã®ã‚¯ãƒ©ã‚¹å–å¾—
+		 * @return Session Entityã‚’æ›´æ–°ã™ã‚‹ãŸã‚ã®ã‚¯ãƒ©ã‚¹
+		 * @details Sessionã¯å°‚æœ‰ãƒ­ãƒƒã‚¯ã‚’å–å¾—ã—ã¦ã„ã‚‹ãŸã‚ã€ã‚·ã‚¹ãƒ†ãƒ ã®æ›´æ–°ã§ç”Ÿæˆã™ã‚‹ã¨ãƒ‡ãƒƒãƒ‰ãƒ­ãƒƒã‚¯ã®å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚
+		 * ã‚·ã‚¹ãƒ†ãƒ ã®æ›´æ–°ä»¥å¤–ã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã§ç”Ÿæˆã—ã¦ãã ã•ã„ã€‚
 		 */
 		[[nodiscard]] Session GetSession()
 		{
@@ -593,30 +593,30 @@ namespace SFW
 				auto g = Debug::BeginTreeWrite(); // lock & back buffer
 				auto& frame = g.data();
 
-				// —á‚¦‚ÎƒvƒŠƒI[ƒ_{depth w’è‚Å•½’R‰»‚µ‚½ƒcƒŠ[‚ğ‹l‚ß‚é
+				// ä¾‹ãˆã°ãƒ—ãƒªã‚ªãƒ¼ãƒ€ï¼‹depth æŒ‡å®šã§å¹³å¦åŒ–ã—ãŸãƒ„ãƒªãƒ¼ã‚’è©°ã‚ã‚‹
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVEL, /*leaf=*/false, "Level(Inactive) : " + name });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "Id : " + std::to_string(levelCtx.id) });
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_LEVELNODE, /*leaf=*/true, "Partition : " + std::string(typeid(Partition).name()).substr(6) });
-			} // guard ‚ÌƒfƒXƒgƒ‰ƒNƒg‚Å unlockBswap ‚Í UI ƒXƒŒƒbƒh‚ÅB
+			} // guard ã®ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆã§ unlockã€‚swap ã¯ UI ã‚¹ãƒ¬ãƒƒãƒ‰ã§ã€‚
 #endif
 		}
 
 	private:
-		//ƒŒƒxƒ‹‚ÌƒRƒ“ƒeƒLƒXƒg
+		//ãƒ¬ãƒ™ãƒ«ã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 		LevelContext<Partition> levelCtx;
-		//ƒŒƒxƒ‹‚Ì–¼‘O
+		//ãƒ¬ãƒ™ãƒ«ã®åå‰
 		std::string name;
-		//ƒŒƒxƒ‹‚Ìó‘Ô(d—lãEÀ‘•ã‚Æ‚à‚ÉÅ‚àèŒú‚­Å“K‰»‚³‚ê‚é‘ÎÛ‚Ìuint32_t‚Å‚Â)
+		//ãƒ¬ãƒ™ãƒ«ã®çŠ¶æ…‹(ä»•æ§˜ä¸Šãƒ»å®Ÿè£…ä¸Šã¨ã‚‚ã«æœ€ã‚‚æ‰‹åšãæœ€é©åŒ–ã•ã‚Œã‚‹å¯¾è±¡ã®uint32_tã§æŒã¤)
 		std::atomic<uint32_t> state;
-		//ƒXƒPƒWƒ…[ƒ‰
+		//ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ©
 		SchedulerType scheduler;
-		//ŒÀ’è“I‚Èê‡‚ÉXV‚·‚éƒVƒXƒeƒ€‚ÌƒŠƒXƒg
+		//é™å®šçš„ãªå ´åˆã«æ›´æ–°ã™ã‚‹ã‚·ã‚¹ãƒ†ãƒ ã®ãƒªã‚¹ãƒˆ
 		std::vector<std::unique_ptr<SystemType>> limitedSystems;
-		//•ªŠ„ƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
+		//åˆ†å‰²ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 		Partition partition;
-		//Entity‚ğ•ÏX‚·‚éÛ
+		//Entityã‚’å¤‰æ›´ã™ã‚‹éš›
 		std::shared_mutex updateEntityMutex;
-		//EntityManagerRegistry‚ÌQÆ
+		//EntityManagerRegistryã®å‚ç…§
 		SpatialChunkRegistry& entityManagerReg;
 	};
 }

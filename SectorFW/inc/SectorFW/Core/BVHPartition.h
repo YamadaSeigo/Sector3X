@@ -1,9 +1,9 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   BVHPartition.h
- * @brief  Bounding Volume Hierarchy (BVH) ƒp[ƒeƒBƒVƒ‡ƒ“iPartitionConcept €‹’j
- *         - “®“I‚É—t(AABB)‚ğ’Ç‰ÁEXVEÄ\’z
- *         - Š‚¤ŒÀ‚èŒy—Ê‚ÈSAH‹ß—‚Ì‘}“ü‚Å–Ø‚ğˆÛiŠÈˆÕÀ‘•j
- *         - FrustumƒJƒŠƒ“ƒO / ƒfƒoƒbƒOƒƒCƒ„•`‰æ / Query“‡
+ * @brief  Bounding Volume Hierarchy (BVH) ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ï¼ˆPartitionConcept æº–æ‹ ï¼‰
+ *         - å‹•çš„ã«è‘‰(AABB)ã‚’è¿½åŠ ãƒ»æ›´æ–°ãƒ»å†æ§‹ç¯‰
+ *         - å¶ã†é™ã‚Šè»½é‡ãªSAHè¿‘ä¼¼ã®æŒ¿å…¥ã§æœ¨ã‚’ç¶­æŒï¼ˆç°¡æ˜“å®Ÿè£…ï¼‰
+ *         - Frustumã‚«ãƒªãƒ³ã‚° / ãƒ‡ãƒãƒƒã‚°ãƒ¯ã‚¤ãƒ¤æç”» / Queryçµ±åˆ
  *
  * @author seigo
  * @date   September 2025
@@ -34,8 +34,8 @@ namespace SectorFW
 		struct Leaf
 		{
 			AABB box{};                 // 3D AABB
-			SpatialChunk chunk{};       // Še—t‚É1‚Â‚ÌEM‚ğ•Ûi•K—v‚É‰‚¶‚ÄW–ñİŒv‚É•ÏX‰Âj
-			uint32_t id = 0;            // ˜A”ÔiEntityManagerKey”­s—pj
+			SpatialChunk chunk{};       // å„è‘‰ã«1ã¤ã®EMã‚’ä¿æŒï¼ˆå¿…è¦ã«å¿œã˜ã¦é›†ç´„è¨­è¨ˆã«å¤‰æ›´å¯ï¼‰
+			uint32_t id = 0;            // é€£ç•ªï¼ˆEntityManagerKeyç™ºè¡Œç”¨ï¼‰
 		};
 
 		struct Node
@@ -44,15 +44,15 @@ namespace SectorFW
 			int32_t parent = -1;
 			int32_t left = -1;
 			int32_t right = -1;
-			int32_t leaf = -1;  // —t‚Ìê‡‚Í Leaf ”z—ñ‚ÌƒCƒ“ƒfƒbƒNƒXA‚»‚êˆÈŠO‚Í -1
+			int32_t leaf = -1;  // è‘‰ã®å ´åˆã¯ Leaf é…åˆ—ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã€ãã‚Œä»¥å¤–ã¯ -1
 			bool IsLeaf() const noexcept { return leaf >= 0; }
 		};
 
 	public:
 		BVHPartition() noexcept = default;
 		/**
-		 * @brief —tƒm[ƒh(SpatialChunk)‚ğ’Ç‰Á‚µA‚»‚ÌQÆ‚ğ•Ô‚·
-		 * @details ’Ç‰ÁŒã‚Í Build() ‚Ü‚½‚Í IncrementalInsert() ‚ğŒÄ‚ñ‚Å–Ø‚É”½‰f
+		 * @brief è‘‰ãƒãƒ¼ãƒ‰(SpatialChunk)ã‚’è¿½åŠ ã—ã€ãã®å‚ç…§ã‚’è¿”ã™
+		 * @details è¿½åŠ å¾Œã¯ Build() ã¾ãŸã¯ IncrementalInsert() ã‚’å‘¼ã‚“ã§æœ¨ã«åæ˜ 
 		 */
 		SpatialChunk* CreateLeaf(const AABB& box) noexcept
 		{
@@ -65,7 +65,7 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief —t‚ÌAABB‚ğXViRefit‚Í Build/Refit ‚És‚¤j
+		 * @brief è‘‰ã®AABBã‚’æ›´æ–°ï¼ˆRefitã¯ Build/Refit æ™‚ã«è¡Œã†ï¼‰
 		 */
 		void UpdateLeafBounds(uint32_t leafIndex, const AABB& newBox) noexcept
 		{
@@ -74,7 +74,7 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief ‚·‚×‚Ä‚Ì—t‚©‚çBVH‚ğÄ\’ziƒgƒbƒvƒ_ƒEƒ“E’†‰›’l•ªŠ„‚ÌŠÈˆÕSAHj
+		 * @brief ã™ã¹ã¦ã®è‘‰ã‹ã‚‰BVHã‚’å†æ§‹ç¯‰ï¼ˆãƒˆãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒ»ä¸­å¤®å€¤åˆ†å‰²ã®ç°¡æ˜“SAHï¼‰
 		 */
 		void Build() noexcept
 		{
@@ -82,7 +82,7 @@ namespace SectorFW
 			root = -1;
 			if (leaves.empty()) { bvhDirty = false; return; }
 
-			// ƒCƒ“ƒfƒbƒNƒX”z—ñ‚ğì‚èAÄ‹A“I‚É•ªŠ„‚µ‚Äƒm[ƒh‚ğ\’z
+			// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—ã‚’ä½œã‚Šã€å†å¸°çš„ã«åˆ†å‰²ã—ã¦ãƒãƒ¼ãƒ‰ã‚’æ§‹ç¯‰
 			std::vector<int32_t> idx(leaves.size());
 			for (int32_t i = 0; i < (int32_t)leaves.size(); ++i) idx[i] = i;
 			root = BuildRecursive(idx.begin(), idx.end());
@@ -90,7 +90,7 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief —t‚ª‘Œ¸‚µ‚Ä‚¢‚È‚¢‘O’ñ‚ÅAABB‚ğe•ûŒü‚ÉÄŒvZiŒy‚¢j
+		 * @brief è‘‰ãŒå¢—æ¸›ã—ã¦ã„ãªã„å‰æã§AABBã‚’è¦ªæ–¹å‘ã«å†è¨ˆç®—ï¼ˆè»½ã„ï¼‰
 		 */
 		void Refit() noexcept
 		{
@@ -100,7 +100,7 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief ˆÊ’ui“_j‚ğŠÜ‚Ş—t(SpatialChunk)‚ğ•Ô‚·
+		 * @brief ä½ç½®ï¼ˆç‚¹ï¼‰ã‚’å«ã‚€è‘‰(SpatialChunk)ã‚’è¿”ã™
 		 */
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f p,
 			EOutOfBoundsPolicy /*policy*/ = EOutOfBoundsPolicy::ClampToEdge) noexcept
@@ -109,11 +109,11 @@ namespace SectorFW
 			int32_t n = root;
 			while (n >= 0) {
 				const Node& node = nodes[n];
-				if (!node.box.contains(p)) return std::nullopt; // ª‚ÅŠÜ‚Ü‚È‚¯‚ê‚ÎI—¹
+				if (!node.box.contains(p)) return std::nullopt; // æ ¹ã§å«ã¾ãªã‘ã‚Œã°çµ‚äº†
 				if (node.IsLeaf()) {
 					return &leaves[node.leaf].chunk;
 				}
-				// ‚Ç‚¿‚ç‚©‚ÉŠÜ‚Ü‚ê‚é‚Ü‚Åö‚éi—¼•ûŠÜ‚Şê‡‚Í¶—Dæj
+				// ã©ã¡ã‚‰ã‹ã«å«ã¾ã‚Œã‚‹ã¾ã§æ½œã‚‹ï¼ˆä¸¡æ–¹å«ã‚€å ´åˆã¯å·¦å„ªå…ˆï¼‰
 				const Node& L = nodes[node.left];
 				const Node& R = nodes[node.right];
 				bool inL = L.box.contains(p);
@@ -123,10 +123,10 @@ namespace SectorFW
 			return std::nullopt;
 		}
 
-		/** @brief ƒOƒ[ƒoƒ‹EMiBVHŠO‚Ì‹¤’ÊƒŒƒCƒ„j */
+		/** @brief ã‚°ãƒ­ãƒ¼ãƒãƒ«EMï¼ˆBVHå¤–ã®å…±é€šãƒ¬ã‚¤ãƒ¤ï¼‰ */
 		ECS::EntityManager& GetGlobalEntityManager() noexcept { return globalEntityManager; }
 
-		/** @brief ‘SƒGƒ“ƒeƒBƒeƒB”iƒOƒ[ƒoƒ‹{Še—tj */
+		/** @brief å…¨ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£æ•°ï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ«ï¼‹å„è‘‰ï¼‰ */
 		size_t GetEntityNum()
 		{
 			size_t num = globalEntityManager.GetEntityCount();
@@ -135,7 +135,7 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief Registry“o˜^iŠe—t‚É PartitionScheme::BVH ‚ÌƒL[‚ğ•t—^j
+		 * @brief Registryç™»éŒ²ï¼ˆå„è‘‰ã« PartitionScheme::BVH ã®ã‚­ãƒ¼ã‚’ä»˜ä¸ï¼‰
 		 */
 		void RegisterAllChunks(EntityManagerRegistry& reg, LevelID level)
 		{
@@ -146,14 +146,14 @@ namespace SectorFW
 				key.scheme = PartitionScheme::BVH;
 				key.depth = 0;
 				key.generation = gen;
-				key.code = static_cast<std::uint64_t>(lf.id); // ƒVƒ“ƒvƒ‹‚ÉID
+				key.code = static_cast<std::uint64_t>(lf.id); // ã‚·ãƒ³ãƒ—ãƒ«ã«ID
 				lf.chunk.SetNodeKey(key);
 				reg.RegisterOwner(key, &lf.chunk.GetEntityManager());
 			}
 		}
 
 		/**
-		 * @brief FrustumƒJƒŠƒ“ƒOFŒğ·‚·‚é—t(SpatialChunk)‚ğ—ñ‹“
+		 * @brief Frustumã‚«ãƒªãƒ³ã‚°ï¼šäº¤å·®ã™ã‚‹è‘‰(SpatialChunk)ã‚’åˆ—æŒ™
 		 */
 		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr) const noexcept
 		{
@@ -171,7 +171,7 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief ƒfƒoƒbƒO—pF—tAABB‚ÌƒƒCƒ„[ƒtƒŒ[ƒ€i12•Ó x 2’¸“_j‚ğo—Í
+		 * @brief ãƒ‡ãƒãƒƒã‚°ç”¨ï¼šè‘‰AABBã®ãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ï¼ˆ12è¾º x 2é ‚ç‚¹ï¼‰ã‚’å‡ºåŠ›
 		 */
 		uint32_t CullChunkLine(const Math::Frustumf& fr,
 			Math::Vec3f cp,
@@ -194,7 +194,7 @@ namespace SectorFW
 			auto draw_box = [&](const AABB& b) {
 				const Math::Vec3f c = b.center();
 				const float len = (c - cp).length();
-				if (len > maxLen) return; // ‹——£§ŒÀi”CˆÓ’PˆÊj
+				if (len > maxLen) return; // è·é›¢åˆ¶é™ï¼ˆä»»æ„å˜ä½ï¼‰
 				const uint32_t col = Math::LerpColor(0xFFFFFFFFu, 0x000000FFu, (std::min)(1.0f, len / maxLen));
 
 				const Math::Vec3f mn = b.lb;
@@ -214,7 +214,7 @@ namespace SectorFW
 				push_edge(v100, v110, col); push_edge(v001, v011, col); push_edge(v001, v101, col);
 				};
 
-			// ‘–¸
+			// èµ°æŸ»
 			std::vector<int32_t> stack;
 			stack.reserve(64);
 			stack.push_back(root);
@@ -229,7 +229,7 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief —t‚ÌÄƒ[ƒhi¢‘ãis ¨ Ä“o˜^j
+		 * @brief è‘‰ã®å†ãƒ­ãƒ¼ãƒ‰ï¼ˆä¸–ä»£é€²è¡Œ â†’ å†ç™»éŒ²ï¼‰
 		 */
 		void ReloadLeaf(uint32_t leafIndex, EntityManagerRegistry& reg)
 		{
@@ -242,7 +242,7 @@ namespace SectorFW
 		}
 
 	private:
-		// ====== Ä‹A\’zi’†‰›’l•ªŠ„FÅ‘å²j ======
+		// ====== å†å¸°æ§‹ç¯‰ï¼ˆä¸­å¤®å€¤åˆ†å‰²ï¼šæœ€å¤§è»¸ï¼‰ ======
 		template<class It>
 		int32_t BuildRecursive(It first, It last)
 		{
@@ -251,7 +251,7 @@ namespace SectorFW
 			nodes.push_back(Node{});
 			Node& node = nodes.back();
 
-			// ”ÍˆÍ‚ÌAABB
+			// ç¯„å›²ã®AABB
 			AABB bounds = leaves[*first].box;
 			for (It it = first + 1; it != last; ++it) bounds = AABB::Union(bounds, leaves[*it].box);
 			node.box = bounds;
@@ -261,7 +261,7 @@ namespace SectorFW
 				return nodeIdx;
 			}
 
-			// •ªŠ„² = Å’·²
+			// åˆ†å‰²è»¸ = æœ€é•·è»¸
 			Math::Vec3f ext = bounds.extent();
 			int axis = (ext.x >= ext.y && ext.x >= ext.z) ? 0 : (ext.y >= ext.z ? 1 : 2);
 			auto mid = first + count / 2;
@@ -290,7 +290,7 @@ namespace SectorFW
 			node.box = AABB::Union(nodes[node.left].box, nodes[node.right].box);
 		}
 
-		// ƒxƒNƒ^o—Í”Å
+		// ãƒ™ã‚¯ã‚¿å‡ºåŠ›ç‰ˆ
 		void CullDFS(int32_t n, const Math::Frustumf& fr, std::vector<SpatialChunk*>& out) const noexcept
 		{
 			const Node& node = nodes[n];
@@ -300,7 +300,7 @@ namespace SectorFW
 			CullDFS(node.right, fr, out);
 		}
 
-		// ƒR[ƒ‹ƒoƒbƒN”Å
+		// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ç‰ˆ
 		template<class F>
 		void CullDFS(int32_t n, const Math::Frustumf& fr, F&& f) const noexcept
 		{
@@ -319,7 +319,7 @@ namespace SectorFW
 		bool bvhDirty = true;
 	};
 
-	// ===== ECS::Query ‚Æ‚Ì“‡ =====
+	// ===== ECS::Query ã¨ã®çµ±åˆ =====
 	namespace ECS
 	{
 		template<>
@@ -340,9 +340,9 @@ namespace SectorFW
 				};
 
 			collect_from(context.GetGlobalEntityManager());
-			// BVH ‚ÌŠe—t
-			// ’¼ÚƒAƒNƒZƒX—pAPI‚Í—pˆÓ‚µ‚Ä‚¢‚È‚¢‚Ì‚ÅAŠÈˆÕ‚ÉƒJƒŠƒ“ƒO–³‚µ—ñ‹“‚ª•K—v‚È‚ç
-			// Frustum ‚ğ–³ŒÀ‚É‚µ‚Ä Cull ‚·‚ég‚¢•û‚à‰Âi‚±‚±‚Å‚Í•Ûç“I‚ÉÈ—ªjB
+			// BVH ã®å„è‘‰
+			// ç›´æ¥ã‚¢ã‚¯ã‚»ã‚¹ç”¨APIã¯ç”¨æ„ã—ã¦ã„ãªã„ã®ã§ã€ç°¡æ˜“ã«ã‚«ãƒªãƒ³ã‚°ç„¡ã—åˆ—æŒ™ãŒå¿…è¦ãªã‚‰
+			// Frustum ã‚’ç„¡é™ã«ã—ã¦ Cull ã™ã‚‹ä½¿ã„æ–¹ã‚‚å¯ï¼ˆã“ã“ã§ã¯ä¿å®ˆçš„ã«çœç•¥ï¼‰ã€‚
 			return result;
 		}
 	}

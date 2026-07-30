@@ -1,4 +1,4 @@
-#include "tedmem.h"
+﻿#include "tedmem.h"
 #include <math.h>
 #ifdef _DEBUG
 #include <cstdio>
@@ -167,7 +167,7 @@ inline unsigned int TED::getWaveSample(unsigned int channel, unsigned int wave)
 			return waveTriangle(channel);
 			break;
 
-		// combined waveforms � la SID
+		// combined waveforms ・la SID
 		case 3: // square + sawtooth
 			sm = waveSawTooth(channel) + waveSquare(channel);
 			return sm /= 2;

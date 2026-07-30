@@ -1,4 +1,4 @@
-#include "Core/ECS/ComponentTypeRegistry.h"
+﻿#include "Core/ECS/ComponentTypeRegistry.h"
 #include "Debug/message.h"
 
 namespace SFW

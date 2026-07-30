@@ -1,6 +1,6 @@
-/*****************************************************************//**
+﻿/*****************************************************************//**
  * \file   AudioType.h
- * \brief �I�[�f�B�I�Ǘ��T�[�r�X�Ŏg�p������{�I�Ȍ^��`��񋟂��܂��B�T�E���h�n���h���A�{�C�XID�A�Đ��p�����[�^�Ȃǂ̍\���̂��܂܂�܂��B
+ * \brief オーディオ管理サービスで使用される基本的な型定義を提供します。サウンドハンドル、ボイスID、再生パラメータなどの構造体が含まれます。
  * \author seigo
  * \date   December 2026
  *********************************************************************/
@@ -9,25 +9,25 @@
 
 namespace SFW::Audio
 {
-	// �T�E���h�����ʂ��邽�߂̃n���h���B�����I�ɂ�ID��ێ����A0�͖����ȃn���h����\���B
+	// サウンドを識別するためのハンドル。内部的にはIDを保持し、0は無効なハンドルを表す。
 	struct SoundHandle
 	{
 		uint32_t id = 0;
 		explicit operator bool() const noexcept { return id != 0; }
 	};
 
-	// SoLoud�̃{�C�X�n���h����\���^�B0�͖����ȃ{�C�XID��\���܂��B
+	// SoLoudのボイスハンドルを表す型。0は無効なボイスIDを表します。
 	using VoiceID = uint64_t; // store SoLoud::handle; 0 = invalid
 
-	// �I�[�f�B�I�Đ��̃`�P�b�gID�B�Đ��v���𔭍s����Ƃ��Ɋ��蓖�Ă��A��Ń{�C�XID�ɉ��������\��������܂��B
+	// オーディオ再生のチケットID。再生要求を発行するときに割り当てられ、後でボイスIDに解決される可能性があります。
 	struct AudioTicketID
 	{
 		uint32_t index = UINT32_MAX;
 		uint32_t generation = 0;
 
-		// �`�P�b�g���L�����ǂ������m�F���邽�߂̃��[�e�B���e�B�֐�
+		// チケットが有効かどうかを確認するためのユーティリティ関数
 		bool IsValid() const noexcept { return index != UINT32_MAX; }
-		// �����ȃ`�P�b�gID��Ԃ����߂̐ÓI�֐�
+		// 無効なチケットIDを返すための静的関数
 		static constexpr AudioTicketID Invalid() noexcept { return AudioTicketID{ UINT32_MAX, 0 }; }
 
 		bool operator==(const AudioTicketID& o) const noexcept {
@@ -35,14 +35,14 @@ namespace SFW::Audio
 		}
 	};
 
-	// �T�E���h�Đ��̃p�����[�^���܂Ƃ߂��\���́B���ʁA�p���A�s�b�`�A���[�v�ݒ�Ȃǂ��܂݂܂��B
+	// サウンド再生のパラメータをまとめた構造体。音量、パン、ピッチ、ループ設定などを含みます。
 	struct AudioPlayParams
 	{
-		float volume = 1.0f; // 0=�����A1=�f�t�H���g�A2=2�{�Ȃ�
-		float pan = 0.0f; // -1=���A0=�����A1=�E
-		float pitch = 1.0f; // 1=�f�t�H���g�A0.5=�����A2=2�{�Ȃ�
-		bool  loop = false; // ���[�v�Đ����邩�ǂ���
-		bool  paused = false; // �Đ��J�n���Ɉꎞ��~���邩�ǂ���
+		float volume = 1.0f; // 0=無音、1=デフォルト、2=2倍など
+		float pan = 0.0f; // -1=左、0=中央、1=右
+		float pitch = 1.0f; // 1=デフォルト、0.5=半分、2=2倍など
+		bool  loop = false; // ループ再生するかどうか
+		bool  paused = false; // 再生開始時に一時停止するかどうか
 
 		// 3D optional
 		bool  is3D = false;

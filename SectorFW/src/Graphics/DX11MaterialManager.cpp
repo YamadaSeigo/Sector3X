@@ -1,4 +1,4 @@
-#include "Graphics/DX11/DX11MaterialManager.h"
+ï»¿#include "Graphics/DX11/DX11MaterialManager.h"
 
 #include "Debug/logger.h"
 
@@ -6,7 +6,7 @@ namespace SFW
 {
 	namespace Graphics::DX11
 	{
-		// --- ’Ç‰Á: Key ì¬ƒwƒ‹ƒp ---
+		// --- è¿½åŠ : Key ä½œæˆãƒ˜ãƒ«ãƒ‘ ---
 		MaterialManager::MaterialKey MaterialManager::MakeKey(const MaterialCreateDesc& desc) {
 			MaterialManager::MaterialKey k;
 			k.shaderIndex = desc.shader.index;
@@ -65,14 +65,14 @@ namespace SFW
 			for (const auto& [slot, texHandle] : desc.psSRV) {
 				psSRVMap[slot] = ResolveSRV(texHandle, *textureManager, *cbManager);
 				mat.usedSRVs.push_back(texHandle);
-				AddRefSRV(texHandle, *textureManager, *cbManager); // Š—LŒ ’ÇÕŠJn
+				AddRefSRV(texHandle, *textureManager, *cbManager); // æ‰€æœ‰æ¨©è¿½è·¡é–‹å§‹
 			}
 
 			std::unordered_map<UINT, ID3D11ShaderResourceView*> vsSRVMap;
 			for (const auto& [slot, texHandle] : desc.vsSRV) {
 				vsSRVMap[slot] = ResolveSRV(texHandle, *textureManager, *cbManager);
 				mat.usedSRVs.push_back(texHandle);
-				AddRefSRV(texHandle, *textureManager, *cbManager); // Š—LŒ ’ÇÕŠJn
+				AddRefSRV(texHandle, *textureManager, *cbManager); // æ‰€æœ‰æ¨©è¿½è·¡é–‹å§‹
 			}
 
 			std::unordered_map<UINT, ID3D11Buffer*> psCBVMap;
@@ -80,7 +80,7 @@ namespace SFW
 				auto cbData = cbManager->Get(cbHandle);
 				psCBVMap[slot] = cbData.ref().buffer.Get();
 				mat.usedCBBuffers.push_back(cbHandle);
-				cbManager->AddRef(cbHandle);  // Š—LŒ ’ÇÕŠJn
+				cbManager->AddRef(cbHandle);  // æ‰€æœ‰æ¨©è¿½è·¡é–‹å§‹
 			}
 
 			std::unordered_map<UINT, ID3D11Buffer*> vsCBVMap;
@@ -88,7 +88,7 @@ namespace SFW
 				auto cbData = cbManager->Get(cbHandle);
 				vsCBVMap[slot] = cbData.ref().buffer.Get();
 				mat.usedCBBuffers.push_back(cbHandle);
-				cbManager->AddRef(cbHandle);  // Š—LŒ ’ÇÕŠJn
+				cbManager->AddRef(cbHandle);  // æ‰€æœ‰æ¨©è¿½è·¡é–‹å§‹
 			}
 
 			std::unordered_map<UINT, ID3D11SamplerState*> samplerMap;
@@ -96,32 +96,32 @@ namespace SFW
 				auto samplerData = samplerManager->Get(samplerHandle);
 				samplerMap[slot] = samplerData.ref().state.Get();
 				mat.usedSamplers.push_back(samplerHandle);
-				samplerManager->AddRef(samplerHandle); // Š—LŒ ’ÇÕŠJn
+				samplerManager->AddRef(samplerHandle); // æ‰€æœ‰æ¨©è¿½è·¡é–‹å§‹
 			}
 
 			auto shader = shaderManager->Get(desc.shader);
 			mat.templateID = shader.ref().templateID;
 			mat.shader = desc.shader;
 
-			// === ƒŠƒtƒŒƒNƒVƒ‡ƒ“î•ñæ“¾ ===
+			// === ãƒªãƒ•ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³æƒ…å ±å–å¾— ===
 			const auto& psBindings = shader.ref().psBindings;
 			const auto& vsBindings = shader.ref().vsBindings;
 
-			// === ƒLƒƒƒbƒVƒ…\’z ===
+			// === ã‚­ãƒ£ãƒƒã‚·ãƒ¥æ§‹ç¯‰ ===
 			mat.psSRV = BuildBindingCacheSRV(psBindings, psSRVMap);
-			mat.psSRV.valid = mat.psSRV.minSlot != UINT_MAX; // ƒLƒƒƒbƒVƒ…‚ª—LŒø
+			mat.psSRV.valid = mat.psSRV.minSlot != UINT_MAX; // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒæœ‰åŠ¹
 
 			mat.vsSRV = BuildBindingCacheSRV(vsBindings, vsSRVMap);
-			mat.vsSRV.valid = mat.vsSRV.minSlot != UINT_MAX; // ƒLƒƒƒbƒVƒ…‚ª—LŒø
+			mat.vsSRV.valid = mat.vsSRV.minSlot != UINT_MAX; // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒæœ‰åŠ¹
 
 			mat.psCBV = BuildBindingCacheCBV(psBindings, psCBVMap);
-			mat.psCBV.valid = mat.psCBV.minSlot != UINT_MAX; // CBVƒLƒƒƒbƒVƒ…‚ª—LŒø
+			mat.psCBV.valid = mat.psCBV.minSlot != UINT_MAX; // CBVã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒæœ‰åŠ¹
 
 			mat.vsCBV = BuildBindingCacheCBV(vsBindings, vsCBVMap);
-			mat.vsCBV.valid = mat.vsCBV.minSlot != UINT_MAX; // CBVƒLƒƒƒbƒVƒ…‚ª—LŒø
+			mat.vsCBV.valid = mat.vsCBV.minSlot != UINT_MAX; // CBVã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒæœ‰åŠ¹
 
 			mat.samplerCache = BuildBindingCacheSampler(psBindings, samplerMap);
-			mat.samplerCache.valid = mat.samplerCache.minSlot != UINT_MAX; // ƒTƒ“ƒvƒ‰ƒLƒƒƒbƒVƒ…‚ª—LŒø
+			mat.samplerCache.valid = mat.samplerCache.minSlot != UINT_MAX; // ã‚µãƒ³ãƒ—ãƒ©ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒæœ‰åŠ¹
 
 			return mat;
 		}
@@ -143,7 +143,7 @@ namespace SFW
 			m.vsCBV.valid = false;
 			m.samplerCache.valid = false;
 
-			// q‚ÌQÆ‚ğ˜A½‰ğ•úi1`2ƒtƒŒæ‚É’x‰„j
+			// å­ã®å‚ç…§ã‚’é€£é–è§£æ”¾ï¼ˆ1ï½2ãƒ•ãƒ¬å…ˆã«é…å»¶ï¼‰
 			const uint64_t del = currentFrame + RENDER_BUFFER_COUNT;
 			for (auto& th : m.usedSRVs)  ReleaseSRV(th, *textureManager, *cbManager, del);
 			for (auto& cb : m.usedCBBuffers) cbManager->Release(cb, del);
@@ -152,37 +152,37 @@ namespace SFW
 
 		void MaterialManager::BindMaterialPSSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache)
 		{
-			if (!cache.valid) return; // ƒLƒƒƒbƒVƒ…‚ª–³Œø‚È‚ç‰½‚à‚µ‚È‚¢
+			if (!cache.valid) return; // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒç„¡åŠ¹ãªã‚‰ä½•ã‚‚ã—ãªã„
 			if (cache.contiguous) ctx->PSSetShaderResources(cache.minSlot, cache.count, cache.contiguousViews.data());
 			else for (auto& [slot, srv] : cache.individualViews) ctx->PSSetShaderResources(slot, 1, &srv);
 		}
 		void MaterialManager::BindMaterialVSSRVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheSRV& cache)
 		{
-			if (!cache.valid) return; // ƒLƒƒƒbƒVƒ…‚ª–³Œø‚È‚ç‰½‚à‚µ‚È‚¢
+			if (!cache.valid) return; // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒç„¡åŠ¹ãªã‚‰ä½•ã‚‚ã—ãªã„
 			if (cache.contiguous) ctx->VSSetShaderResources(cache.minSlot, cache.count, cache.contiguousViews.data());
 			else for (auto& [slot, srv] : cache.individualViews) ctx->VSSetShaderResources(slot, 1, &srv);
 		}
 		void MaterialManager::BindMaterialPSCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache)
 		{
-			if (!cache.valid) return; // ƒLƒƒƒbƒVƒ…‚ª–³Œø‚È‚ç‰½‚à‚µ‚È‚¢
+			if (!cache.valid) return; // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒç„¡åŠ¹ãªã‚‰ä½•ã‚‚ã—ãªã„
 			if (cache.contiguous) ctx->PSSetConstantBuffers(cache.minSlot, cache.count, cache.contiguousViews.data());
 			else for (auto& [slot, cbv] : cache.individualViews) ctx->PSSetConstantBuffers(slot, 1, &cbv);
 		}
 		void MaterialManager::BindMaterialVSCBVs(ID3D11DeviceContext* ctx, const MaterialBindingCacheCBV& cache)
 		{
-			if (!cache.valid) return; // ƒLƒƒƒbƒVƒ…‚ª–³Œø‚È‚ç‰½‚à‚µ‚È‚¢
+			if (!cache.valid) return; // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒç„¡åŠ¹ãªã‚‰ä½•ã‚‚ã—ãªã„
 			if (cache.contiguous) ctx->VSSetConstantBuffers(cache.minSlot, cache.count, cache.contiguousViews.data());
 			else for (auto& [slot, cbv] : cache.individualViews) ctx->VSSetConstantBuffers(slot, 1, &cbv);
 		}
 		void MaterialManager::BindMaterialPSSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache)
 		{
-			if (!cache.valid) return; // ƒLƒƒƒbƒVƒ…‚ª–³Œø‚È‚ç‰½‚à‚µ‚È‚¢
+			if (!cache.valid) return; // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒç„¡åŠ¹ãªã‚‰ä½•ã‚‚ã—ãªã„
 			if (cache.contiguous) ctx->PSSetSamplers(cache.minSlot, cache.count, cache.contiguousViews.data());
 			else for (auto& [slot, sampler] : cache.individualViews) ctx->PSSetSamplers(slot, 1, &sampler);
 		}
 		void MaterialManager::BindMaterialVSSamplers(ID3D11DeviceContext* ctx, const MaterialBindingCacheSampler& cache)
 		{
-			if (!cache.valid) return; // ƒLƒƒƒbƒVƒ…‚ª–³Œø‚È‚ç‰½‚à‚µ‚È‚¢
+			if (!cache.valid) return; // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒç„¡åŠ¹ãªã‚‰ä½•ã‚‚ã—ãªã„
 			if (cache.contiguous) ctx->VSSetSamplers(cache.minSlot, cache.count, cache.contiguousViews.data());
 			else for (auto& [slot, sampler] : cache.individualViews) ctx->VSSetSamplers(slot, 1, &sampler);
 		}
@@ -200,7 +200,7 @@ namespace SFW
 					return bd.ref().srv.Get();
 				}
 				else {
-					return nullptr; // monostate “™
+					return nullptr; // monostate ç­‰
 				}
 				}, h);
 		}

@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   EntityIDAllocator.h
- * @brief ƒGƒ“ƒeƒBƒeƒBID‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+ * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -20,13 +20,13 @@ namespace SFW
 	namespace ECS
 	{
 		/**
-		 * @brief ƒGƒ“ƒeƒBƒeƒBID‚ğŠÇ—‚·‚éƒNƒ‰ƒX(ƒXƒŒƒbƒhƒZ[ƒt)
+		 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹(ã‚¹ãƒ¬ãƒƒãƒ‰ã‚»ãƒ¼ãƒ•)
 		 */
 		class EntityIDAllocator {
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param maxEntities Å‘åƒGƒ“ƒeƒBƒeƒB”
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param maxEntities æœ€å¤§ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£æ•°
 			 */
 			explicit EntityIDAllocator(size_t maxEntities)
 				: maxEntities(static_cast<uint32_t>(maxEntities)),
@@ -37,31 +37,31 @@ namespace SFW
 				// Initially empty
 			}
 			/**
-			 * @brief V‚µ‚¢ƒGƒ“ƒeƒBƒeƒBID‚ğì¬‚·‚éŠÖ”
-			 * @return EntityID V‚µ‚¢ƒGƒ“ƒeƒBƒeƒBID
+			 * @brief æ–°ã—ã„ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã‚’ä½œæˆã™ã‚‹é–¢æ•°
+			 * @return EntityID æ–°ã—ã„ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
 			 */
 			EntityID Create() {
 				uint32_t index;
 
-				// Ä—˜—p‚Å‚«‚éƒCƒ“ƒfƒbƒNƒX‚ğæ“¾
+				// å†åˆ©ç”¨ã§ãã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—
 				if (freeQueue.try_dequeue(index)) {
 					uint32_t gen = generations[index].load(std::memory_order_acquire);
 					return EntityID{ index, gen };
 				}
 
-				// V‚µ‚¢ƒCƒ“ƒfƒbƒNƒX‚ğŠ„‚è“–‚Ä
+				// æ–°ã—ã„ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å‰²ã‚Šå½“ã¦
 				index = nextIndex.fetch_add(1, std::memory_order_relaxed);
 				if (index >= maxEntities) [[unlikely]] {
 					return EntityID::Invalid(); // Exhausted
 				}
 
-				// V‚µ‚¢ID‚Ì¢‘ã‚ğ0‚É‰Šú‰»
+				// æ–°ã—ã„IDã®ä¸–ä»£ã‚’0ã«åˆæœŸåŒ–
 				generations[index].store(0, std::memory_order_release);
 				return EntityID{ index, 0 };
 			}
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒBID‚ğ”jŠü‚·‚éŠÖ”
-			 * @param id ”jŠü‚·‚éƒGƒ“ƒeƒBƒeƒBID
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã‚’ç ´æ£„ã™ã‚‹é–¢æ•°
+			 * @param id ç ´æ£„ã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
 			 */
 			void Destroy(EntityID id) {
 				if (id.index >= maxEntities) [[unlikely]] return;
@@ -71,7 +71,7 @@ namespace SFW
 
 				// Reuse the index
 				bool success = freeQueue.try_enqueue(id.index);
-				// Free queue full ¨ ID leaki–³‹‚µ‚Ä‚à‚æ‚¢ or ƒƒOo—Íj
+				// Free queue full â†’ ID leakï¼ˆç„¡è¦–ã—ã¦ã‚‚ã‚ˆã„ or ãƒ­ã‚°å‡ºåŠ›ï¼‰
 				SFW_ASSERT(success && "EntityIDAllocator: Free queue is full, ID leak occurred.");
 			}
 
@@ -94,32 +94,32 @@ namespace SFW
 
 				// Reuse the indices
 				bool success = freeQueue.try_enqueue_bulk(pt, indices.data(), indices.size());
-				// Free queue full ¨ ID leaki–³‹‚µ‚Ä‚à‚æ‚¢ or ƒƒOo—Íj
+				// Free queue full â†’ ID leakï¼ˆç„¡è¦–ã—ã¦ã‚‚ã‚ˆã„ or ãƒ­ã‚°å‡ºåŠ›ï¼‰
 				SFW_ASSERT(success && "EntityIDAllocator: Free queue is full, ID leak occurred.");
 			}
 
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒBID‚ª—LŒø‚©‚Ç‚¤‚©‚ğŠm”F‚·‚éŠÖ”
-			 * @param id ƒGƒ“ƒeƒBƒeƒBID
-			 * @return bool —LŒø‚Èê‡‚ÍtrueA–³Œø‚Èê‡‚Ífalse
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDãŒæœ‰åŠ¹ã‹ã©ã†ã‹ã‚’ç¢ºèªã™ã‚‹é–¢æ•°
+			 * @param id ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ID
+			 * @return bool æœ‰åŠ¹ãªå ´åˆã¯trueã€ç„¡åŠ¹ãªå ´åˆã¯false
 			 */
 			bool IsAlive(EntityID id) const noexcept {
 				if (id.index >= maxEntities) [[unlikely]] return false;
 				return generations[id.index].load(std::memory_order_acquire) == id.generation;
 			}
 			/**
-			 * @brief ƒGƒ“ƒeƒBƒeƒBID‚ÌÅ‘å”‚ğæ“¾‚·‚éŠÖ”
-			 * @return uint32_t Å‘åƒGƒ“ƒeƒBƒeƒB”
+			 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã®æœ€å¤§æ•°ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+			 * @return uint32_t æœ€å¤§ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£æ•°
 			 */
 			uint32_t Capacity() const noexcept { return maxEntities; }
 		private:
-			//Å‘åƒGƒ“ƒeƒBƒeƒB”
+			//æœ€å¤§ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£æ•°
 			const uint32_t maxEntities;
-			//Ÿ‚ÌƒGƒ“ƒeƒBƒeƒBID‚ÌƒCƒ“ƒfƒbƒNƒX
+			//æ¬¡ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			std::atomic<uint32_t> nextIndex;
-			//¢‘ãŠÇ—‚Ì‚½‚ß‚Ì”z—ñ
+			//ä¸–ä»£ç®¡ç†ã®ãŸã‚ã®é…åˆ—
 			std::vector<std::atomic<uint32_t>> generations;
-			//–¢g—p‚ÌƒGƒ“ƒeƒBƒeƒBID‚ğŠÇ—‚·‚éƒLƒ…[
+			//æœªä½¿ç”¨ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£IDã‚’ç®¡ç†ã™ã‚‹ã‚­ãƒ¥ãƒ¼
 			moodycamel::ConcurrentQueue<uint32_t> freeQueue;
 		};
 	}

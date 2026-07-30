@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   convert.hpp
- * @brief Œ^•ÏŠ·‚ğs‚¤‚½‚ß‚Ìƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief å‹å¤‰æ›ã‚’è¡Œã†ãŸã‚ã®ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   July 2025
  *********************************************************************/
@@ -29,7 +29,7 @@ namespace SFW
 		}
 
 		template<typename To, typename From>
-		To Convert(const From& from); // ’è‹`‚È‚µF“Áê‰»‚Ì‚İ‹–‰Â
+		To Convert(const From& from); // å®šç¾©ãªã—ï¼šç‰¹æ®ŠåŒ–ã®ã¿è¨±å¯
 
 		template<typename To, typename From>
 		To Convert(const From& from) { return To(); }

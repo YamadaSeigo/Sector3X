@@ -1,4 +1,4 @@
-#include "normalmap_bc5.h"
+﻿#include "normalmap_bc5.h"
 #include <cassert>
 #include <algorithm>
 #include <cmath>

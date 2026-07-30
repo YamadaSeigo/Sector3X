@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * \file   build_order.h
- * \brief ƒJƒƒ‰‚©‚ç‚Ì‹——£‚ÉŠî‚Ã‚¢‚ÄƒGƒ“ƒeƒBƒeƒB‚Ì•`‰æ‡˜‚ğ\’z‚·‚é‚½‚ß‚Ìƒ†[ƒeƒBƒŠƒeƒBŠÖ”
+ * \brief ã‚«ãƒ¡ãƒ©ã‹ã‚‰ã®è·é›¢ã«åŸºã¥ã„ã¦ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®æç”»é †åºã‚’æ§‹ç¯‰ã™ã‚‹ãŸã‚ã®ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£é–¢æ•°
  * \author lenov
  * \date   March 2025
  *********************************************************************/
@@ -38,7 +38,7 @@ namespace SFW
 		return (b < 0 ? 0 : (b >= B ? B - 1 : b));
 	}
 
-	// dx^2 + dy^2 + dz^2iƒJƒƒ‰ˆÊ’u‚©‚ç‚Ì‹——£^2j
+	// dx^2 + dy^2 + dz^2ï¼ˆã‚«ãƒ¡ãƒ©ä½ç½®ã‹ã‚‰ã®è·é›¢^2ï¼‰
 	inline float Dist2(const SoAPositions& T, uint32_t i,
 		float cx, float cy, float cz) noexcept {
 		float dx = T.x[i] - cx;
@@ -47,7 +47,7 @@ namespace SFW
 		return dx * dx + dy * dy + dz * dz;
 	}
 
-	// ‹ß¨‰“‚Ì‹ß—‡‚Å order ‚ğ\’ziˆÀ’èj
+	// è¿‘â†’é ã®è¿‘ä¼¼é †ã§ order ã‚’æ§‹ç¯‰ï¼ˆå®‰å®šï¼‰
 	template<int B = 32>
 	void BuildNearToFar_Order_Buckets(const SoAPositions& T,
 		float cx, float cy, float cz,
@@ -57,9 +57,9 @@ namespace SFW
 		const uint32_t N = T.N;
 		order.resize(N);
 
-		// 1) Šeƒrƒ“‚ÌŒÂ”ƒJƒEƒ“ƒg
+		// 1) å„ãƒ“ãƒ³ã®å€‹æ•°ã‚«ã‚¦ãƒ³ãƒˆ
 		uint32_t count[B] = {}; // 0 init
-		std::vector<uint8_t> bins(N); // i”Ô–Ú‚ª‚Ç‚Ìƒrƒ“‚©
+		std::vector<uint8_t> bins(N); // iç•ªç›®ãŒã©ã®ãƒ“ãƒ³ã‹
 
 		for (uint32_t i = 0; i < N; ++i) {
 			float d2 = Dist2(T, i, cx, cy, cz);
@@ -68,7 +68,7 @@ namespace SFW
 			++count[b];
 		}
 
-		// 2) prefix sum ¨ ‘‚«‚İŠJnˆÊ’u
+		// 2) prefix sum â†’ æ›¸ãè¾¼ã¿é–‹å§‹ä½ç½®
 		uint32_t offset[B];
 		uint32_t sum = 0;
 		for (int b = 0; b < B; ++b) {
@@ -76,14 +76,14 @@ namespace SFW
 			sum += count[b];
 		}
 
-		// 3) ˆÀ’è‚É˜AŒ‹
+		// 3) å®‰å®šã«é€£çµ
 		for (uint32_t i = 0; i < N; ++i) {
 			int b = bins[i];
 			order[offset[b]++] = i;
 		}
 	}
 
-	// d2 ‚ğ [near2, far2] ¨ [0, 65535] ‚É—Êq‰»iŒÅ’è¬”ƒL[j
+	// d2 ã‚’ [near2, far2] â†’ [0, 65535] ã«é‡å­åŒ–ï¼ˆå›ºå®šå°æ•°ã‚­ãƒ¼ï¼‰
 	inline uint16_t QuantizeD2(float d2, float near2, float far2) noexcept {
 		float t = (d2 - near2) / (std::max)(far2 - near2, 1e-12f);
 		int v = (int)std::lrintf(t * 65535.0f);
@@ -91,7 +91,7 @@ namespace SFW
 		return (uint16_t)v;
 	}
 
-	// 16bitƒL[‚ğg‚Á‚½ˆÀ’è‚È‹ß¨‰“ƒ\[ƒgiRadix16jBƒrƒ“•ªŠ„‚æ‚è‚à¸×‚È‡˜‚ª“¾‚ç‚ê‚éBˆÀ’èB
+	// 16bitã‚­ãƒ¼ã‚’ä½¿ã£ãŸå®‰å®šãªè¿‘â†’é ã‚½ãƒ¼ãƒˆï¼ˆRadix16ï¼‰ã€‚ãƒ“ãƒ³åˆ†å‰²ã‚ˆã‚Šã‚‚ç²¾ç´°ãªé †åºãŒå¾—ã‚‰ã‚Œã‚‹ã€‚å®‰å®šã€‚
 	static void BuildOrder_FixedRadix16(const SoAPositions& T,
 		float cx, float cy, float cz,
 		float near2, float far2,
@@ -129,7 +129,7 @@ namespace SFW
 			__m256 maxv = _mm256_set1_ps(65535.0f);
 			t = _mm256_max_ps(zero, _mm256_min_ps(t, maxv));
 
-			// —Êq‰»iŠÛ‚ßj
+			// é‡å­åŒ–ï¼ˆä¸¸ã‚ï¼‰
 			__m256i qi = _mm256_cvtps_epi32(t); // 32bit int
 			alignas(32) uint32_t tmp[8];
 			_mm256_store_si256((__m256i*)tmp, qi);
@@ -144,10 +144,10 @@ namespace SFW
 		}
 #endif
 
-		// ---- 16bit key ‚Ì2ƒpƒXŒv”/RadixiˆÀ’èj ----
-		// LSB 8bit ¨ MSB 8bit
+		// ---- 16bit key ã®2ãƒ‘ã‚¹è¨ˆæ•°/Radixï¼ˆå®‰å®šï¼‰ ----
+		// LSB 8bit â†’ MSB 8bit
 		std::vector<uint32_t> tmpOrder(N);
-		// ‰Šú‡iˆÀ’è«ˆÛ‚Ì‚½‚ßj
+		// åˆæœŸé †ï¼ˆå®‰å®šæ€§ç¶­æŒã®ãŸã‚ï¼‰
 		for (uint32_t i = 0; i < N; ++i) tmpOrder[i] = i;
 
 		auto pass = [&](int shift, const std::vector<uint32_t>& src, std::vector<uint32_t>& dst) {
@@ -164,12 +164,12 @@ namespace SFW
 
 		pass(0, tmpOrder, order);      // LSB
 		pass(8, order, tmpOrder);      // MSB
-		order.swap(tmpOrder);          // ÅIŒ‹‰Ê‚ğ order ‚É
+		order.swap(tmpOrder);          // æœ€çµ‚çµæœã‚’ order ã«
 	}
 
 	struct KeyRow { float dist2; uint32_t row; };
 
-	// Œµ–§‚È‹ß¨‰“ƒ\[ƒgiˆÀ’èjB‹——£^2‚ğƒL[‚É‚µ‚Ä std::nth_element + sortB
+	// å³å¯†ãªè¿‘â†’é ã‚½ãƒ¼ãƒˆï¼ˆå®‰å®šï¼‰ã€‚è·é›¢^2ã‚’ã‚­ãƒ¼ã«ã—ã¦ std::nth_element + sortã€‚
 	static void BuildFrontK_Strict(const SoAPositions& T,
 		float cx, float cy, float cz,
 		uint32_t K,

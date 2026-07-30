@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <SectorFW/Physics/PhysicsLayers.h>
 
@@ -14,13 +14,13 @@ public:
 	SPARSE_TAG
 };
 
-// ƒvƒŒƒCƒ„[§ŒäƒVƒXƒeƒ€
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åˆ¶å¾¡ã‚·ã‚¹ãƒ†ãƒ 
 template<typename Partition>
 class PlayerSystem : public ITypeSystem<
 	PlayerSystem,
 	Partition,
-	ComponentAccess<Write<CTransform>>,//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
-	//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	ComponentAccess<Write<CTransform>>,//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
+	//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	ServiceContext<
 	Physics::PhysicsService,
 	Graphics::I3DPerCameraService,
@@ -31,7 +31,7 @@ class PlayerSystem : public ITypeSystem<
 	Audio::AudioService
 	>>{
 public:
-	// “ü—Í‚©‚çŠó–]‚·‚é‘¬“x‚ğŒvZ‚·‚éi‰¼À‘•j
+	// å…¥åŠ›ã‹ã‚‰å¸Œæœ›ã™ã‚‹é€Ÿåº¦ã‚’è¨ˆç®—ã™ã‚‹ï¼ˆä»®å®Ÿè£…ï¼‰
 	Math::Vec3f CalcWishVelocityFromInput(
 		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
 		NoDeletePtr<InputService> inputService)
@@ -73,23 +73,23 @@ public:
 		float boostBias = inputService->IsKeyPressed(Input::Key::LShift) ? PlayerService::BOOST_POWER : 1.0f;
 
 		wishVelocity +=
-			playerRight * inputDir.x * PlayerService::MOVE_SPEED * boostBias + // ‰¡ˆÚ“®‘¬“x
-			playerForward * inputDir.y * PlayerService::MOVE_SPEED * boostBias; // ‘OŒãˆÚ“®‘¬“x
+			playerRight * inputDir.x * PlayerService::MOVE_SPEED * boostBias + // æ¨ªç§»å‹•é€Ÿåº¦
+			playerForward * inputDir.y * PlayerService::MOVE_SPEED * boostBias; // å‰å¾Œç§»å‹•é€Ÿåº¦
 
 		return wishVelocity;
 	}
 
 	float WrapAngle(float a) {
-		// [-ƒÎ, ƒÎ] ‚É³‹K‰»
+		// [-Ï€, Ï€] ã«æ­£è¦åŒ–
 		a = std::fmod(a + Math::pi_v<float>, Math::tau_v<float>);
 		if (a < 0.0f) a += Math::tau_v<float>;
 		return a - Math::pi_v<float>;
 	}
 
-	// current ‚©‚çŒ©‚Ä target ‚Ö‚ÌuÅ’Z‚Ì·Špv‚ğ•Ô‚·
+	// current ã‹ã‚‰è¦‹ã¦ target ã¸ã®ã€Œæœ€çŸ­ã®å·®è§’ã€ã‚’è¿”ã™
 	float ShortestAngleDiff(float current, float target) {
 		float diff = target - current;
-		return WrapAngle(diff); // Œ‹‰Ê‚Í [-ƒÎ, ƒÎ]
+		return WrapAngle(diff); // çµæœã¯ [-Ï€, Ï€]
 	}
 
 	struct FollowCamState
@@ -98,7 +98,7 @@ public:
 		bool initialized = false;
 	};
 
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void StartImpl(
 		NoDeletePtr<Physics::PhysicsService> physicsService,
 		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
@@ -111,7 +111,7 @@ public:
 		grassStepHandle = audioService->EnqueueLoadWav("assets/audio/SE/walk-on-grass.wav");
 	}
 
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(Partition& partition,
 		NoDeletePtr<Physics::PhysicsService> physicsService,
 		NoDeletePtr<Graphics::I3DPerCameraService> cameraService,
@@ -148,14 +148,14 @@ public:
 			auto entityID = player.first;
 			auto& comp = player.second;
 
-			//VelocityXV
+			//Velocityæ›´æ–°
 			{
-				// ‘OƒtƒŒ[ƒ€•Û‘¶‚µ‚Ä‚¨‚¢‚½ currentVelocity ‚ğƒx[ƒX‚É
+				// å‰ãƒ•ãƒ¬ãƒ¼ãƒ ä¿å­˜ã—ã¦ãŠã„ãŸ currentVelocity ã‚’ãƒ™ãƒ¼ã‚¹ã«
 				Math::Vec3f v = comp.currentVelocity;
 				float currentYaw = comp.yaw;
 				float targetYaw = currentYaw;
 
-				// ‹ó’†§Œä‚ª—~‚µ‚¢‚È‚ç XZ ‚¾‚¯•â³
+				// ç©ºä¸­åˆ¶å¾¡ãŒæ¬²ã—ã„ãªã‚‰ XZ ã ã‘è£œæ­£
 				Math::Vec3f wish = CalcWishVelocityFromInput(cameraService, inputService);
 
 				static float stepSoundDelay = 0.0f;
@@ -163,27 +163,27 @@ public:
 				float wishSquared = wish.lengthSquared();
 				bool move = wishSquared > 0.0f;
 				if (move) {
-					// Œü‚«‚ğ•Ï‚¦‚é
+					// å‘ãã‚’å¤‰ãˆã‚‹
 					targetYaw = std::atan2(wish.x, wish.z);
 
-					stepSoundDelay -= dt * (2.0f + std::sqrt(wishSquared) * 0.2f); // ƒtƒŒ[ƒ€”Š·Z
+					stepSoundDelay -= dt * (2.0f + std::sqrt(wishSquared) * 0.2f); // ãƒ•ãƒ¬ãƒ¼ãƒ æ•°æ›ç®—
 					if (stepSoundDelay < 0.0f)
 						stepSoundDelay = 0.0f;
 				}
 				else
 				{
-					// ~‚Ü‚Á‚Ä‚¢‚é‚Æ‚«‚Í•às‰¹‚ğƒŠƒZƒbƒg
+					// æ­¢ã¾ã£ã¦ã„ã‚‹ã¨ãã¯æ­©è¡ŒéŸ³ã‚’ãƒªã‚»ãƒƒãƒˆ
 					stepSoundDelay = 0.0f;
 				}
 
 				if (comp.isGrounded) {
-					// ’n–Ê‚É‚¢‚é‚Ì‚Åc¬•ª‚ğÁ‚·•â‚ÅŠŠ‚ç‚¹‚È‚¢
+					// åœ°é¢ã«ã„ã‚‹ã®ã§ç¸¦æˆåˆ†ã‚’æ¶ˆã™ï¼†å‚ã§æ»‘ã‚‰ã›ãªã„
 					float vy = v.dot(PlayerService::UP);
 					v -= PlayerService::UP * vy;
 
 					if (move)
 					{
-						// •às‰¹
+						// æ­©è¡ŒéŸ³
 						if (stepSoundDelay <= 0.0f)
 						{
 							Audio::AudioPlayParams params;
@@ -195,7 +195,7 @@ public:
 					}
 				}
 				else {
-					// ‹ó’†F©‘O‚Åd—Í‚ğ‘«‚·
+					// ç©ºä¸­ï¼šè‡ªå‰ã§é‡åŠ›ã‚’è¶³ã™
 					v += PlayerService::GRAVITY * dt;
 				}
 
@@ -208,23 +208,23 @@ public:
 
 				v.y += wish.y;
 
-				float diff = ShortestAngleDiff(currentYaw, targetYaw); // [-ƒÎ, ƒÎ]
+				float diff = ShortestAngleDiff(currentYaw, targetYaw); // [-Ï€, Ï€]
 
-				// ‚±‚ÌƒtƒŒ[ƒ€‚Å‰ñ‚µ‚Ä‚¢‚¢Å‘åŠp“x
-				float maxStep = PlayerService::TURN_SPEED * dt; // rad/s ~ •b
+				// ã“ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§å›ã—ã¦ã„ã„æœ€å¤§è§’åº¦
+				float maxStep = PlayerService::TURN_SPEED * dt; // rad/s Ã— ç§’
 
-				// ÀÛ‚É‰ñ‚·—Ê‚ğƒNƒ‰ƒ“ƒv
+				// å®Ÿéš›ã«å›ã™é‡ã‚’ã‚¯ãƒ©ãƒ³ãƒ—
 				diff = std::clamp(diff, -maxStep, maxStep);
 
-				// 1ƒtƒŒ[ƒ€•ª‚¾‚¯‰ñ“]
+				// 1ãƒ•ãƒ¬ãƒ¼ãƒ åˆ†ã ã‘å›è»¢
 				float newYaw = currentYaw + diff;
 
 				comp.yaw = newYaw;
 
-				physicsService->SetCharacterVelocity(entityID, v);//‘¬“x‚ğƒŠƒZƒbƒg
+				physicsService->SetCharacterVelocity(entityID, v);//é€Ÿåº¦ã‚’ãƒªã‚»ãƒƒãƒˆ
 
 				Math::Quatf newYawQuat = Math::Quatf::FromAxisAngle(PlayerService::UP, newYaw);
-				physicsService->SetCharacterRotation(entityID, newYawQuat);//‰ñ“]‚ğƒŠƒZƒbƒg
+				physicsService->SetCharacterRotation(entityID, newYawQuat);//å›è»¢ã‚’ãƒªã‚»ãƒƒãƒˆ
 			}
 
 			if (inputService->IsKeyTrigger(Input::Key::F3))
@@ -235,7 +235,7 @@ public:
 				physicsService->TeleportCharacter(entityID, tm);
 			}
 
-			//Pose“Ç‚İ‚İ & ”½‰f
+			//Poseèª­ã¿è¾¼ã¿ & åæ˜ 
 			{
 				using namespace Physics;
 
@@ -277,7 +277,7 @@ public:
 
 				if (playerCamera)
 				{
-					// ƒJƒƒ‰‚ÉŒ©‚Ä‚Ù‚µ‚¢—‘zˆÊ’ui­‚µ“ª‚Ìã‚Æ‚©j
+					// ã‚«ãƒ¡ãƒ©ã«è¦‹ã¦ã»ã—ã„ç†æƒ³ä½ç½®ï¼ˆå°‘ã—é ­ã®ä¸Šã¨ã‹ï¼‰
 					const Math::Vec3f desiredTarget = playerPos + PlayerService::CAMERA_OFFSET;
 
 					static FollowCamState camState;
@@ -287,14 +287,14 @@ public:
 						camState.initialized = true;
 					}
 
-					// === Lerp ƒx[ƒX‚ÌƒXƒ€[ƒWƒ“ƒO ===
-					const float followSpeed = 6.0f; // ’l‚ğ‘å‚«‚­‚·‚é‚Æ‘‚­’Ç]A¬‚³‚­‚·‚é‚Æƒkƒ‹ƒkƒ‹
+					// === Lerp ãƒ™ãƒ¼ã‚¹ã®ã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚° ===
+					const float followSpeed = 6.0f; // å€¤ã‚’å¤§ããã™ã‚‹ã¨æ—©ãè¿½å¾“ã€å°ã•ãã™ã‚‹ã¨ãƒŒãƒ«ãƒŒãƒ«
 
-					// ƒtƒŒ[ƒ€ƒŒ[ƒg‚É‚»‚±‚»‚±‹­‚¢‘‚«•û
+					// ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆã«ãã“ãã“å¼·ã„æ›¸ãæ–¹
 					float alpha = 1.0f - std::exp(-followSpeed * dt);  // 0..1
 					camState.smoothedTarget += (desiredTarget - camState.smoothedTarget) * alpha;
 
-					// ƒJƒƒ‰‚É‚ÍuƒXƒ€[ƒWƒ“ƒOŒã‚Ìƒ^[ƒQƒbƒgv‚ğ“n‚·
+					// ã‚«ãƒ¡ãƒ©ã«ã¯ã€Œã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°å¾Œã®ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã€ã‚’æ¸¡ã™
 					cameraService->SetTarget(camState.smoothedTarget);
 
 					static float cameraDistance = cameraService->GetFocusDistance();
@@ -313,11 +313,11 @@ public:
 					rayCmd.objectLayerMask = MakeObjectLayerMask(Layers::NON_MOVING_RAY_HIT);
 					rayCmd.origin = camState.smoothedTarget;
 
-					//ÅV‚ÌƒJƒƒ‰‚ÌŒü‚«‚ğŒvZ‚µ‚Ä‹‚ß‚é(Ray‚ÌŒ‹‰Êæ“¾‚ÉˆêƒtƒŒ[ƒ€’x‰„‚ª‚ ‚é‚½‚ß)
+					//æœ€æ–°ã®ã‚«ãƒ¡ãƒ©ã®å‘ãã‚’è¨ˆç®—ã—ã¦æ±‚ã‚ã‚‹(Rayã®çµæœå–å¾—ã«ä¸€ãƒ•ãƒ¬ãƒ¼ãƒ é…å»¶ãŒã‚ã‚‹ãŸã‚)
 					auto camRot = cameraService->CalcCurrentRotation();
 					auto basis = Math::FastBasisFromQuat(camRot);
 
-					rayCmd.dir = basis.forward * -1.0f; // ƒJƒƒ‰‚ÌŒã‚ë•ûŒü
+					rayCmd.dir = basis.forward * -1.0f; // ã‚«ãƒ¡ãƒ©ã®å¾Œã‚æ–¹å‘
 					rayCmd.maxDist = cameraDistance;
 
 					float focusDist = cameraDistance;
@@ -330,7 +330,7 @@ public:
 						{
 							if (rayHit.hit)
 							{
-								float focusDist = (std::max)(rayHit.distance - 0.5f, 1.0f); // ­‚µè‘O‚É
+								float focusDist = (std::max)(rayHit.distance - 0.5f, 1.0f); // å°‘ã—æ‰‹å‰ã«
 								cameraService->SetFocusDistance(focusDist);
 								prevCameraHit = 2;
 							}
@@ -351,13 +351,13 @@ public:
 					cameraService->SetMouseDelta(static_cast<float>(dx), static_cast<float>(dy));
 				}
 
-				//‘«Œ³‚ÌˆÊ’u‚ğPlayerService‚ÉƒZƒbƒg
+				//è¶³å…ƒã®ä½ç½®ã‚’PlayerServiceã«ã‚»ãƒƒãƒˆ
 				playerService->SetFootData(playerPos);
 
-				//PlayerService‚É‚àˆÊ’u‚ğƒZƒbƒg
+				//PlayerServiceã«ã‚‚ä½ç½®ã‚’ã‚»ãƒƒãƒˆ
 				playerService->SetPlayerPosition(playerPos);
 
-				//ˆÊ’u‚Æ‰ñ“]‚ğ”½‰f
+				//ä½ç½®ã¨å›è»¢ã‚’åæ˜ 
 				globalEntityManager.ReadWriteComponent<CTransform>(entityID,
 					[&](CTransform tf) {
 						tf.location = playerPos;
@@ -388,7 +388,7 @@ public:
 		{
 			auto entityID = player.first;
 
-			// ƒLƒƒƒ‰ƒNƒ^[ƒRƒ“ƒgƒ[ƒ‰[íœ
+			// ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼å‰Šé™¤
 			physicsService->DestroyCharacter(entityID);
 		}
 	}

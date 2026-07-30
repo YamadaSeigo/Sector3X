@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   DX11Graphics.h
- * @brief DX11—p‚ÌƒOƒ‰ƒtƒBƒbƒNƒXƒfƒoƒCƒXƒNƒ‰ƒX‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief DX11ç”¨ã®ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‡ãƒã‚¤ã‚¹ã‚¯ãƒ©ã‚¹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   July 2025
  *********************************************************************/
@@ -26,7 +26,7 @@
 #include <condition_variable>
 #include <queue>
 
- // ƒƒCƒ“ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒNƒŠƒA‚·‚é‚©‚Ç‚¤‚©‚Ì’è‹`
+ // ãƒ¡ã‚¤ãƒ³ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚¯ãƒªã‚¢ã™ã‚‹ã‹ã©ã†ã‹ã®å®šç¾©
 #define CLEAR_MAIN_RENDER_TARGET 0
 
 namespace SFW
@@ -34,8 +34,8 @@ namespace SFW
 	namespace Graphics::DX11
 	{
 		/**
-		 * @brief DX11—pƒOƒ‰ƒtƒBƒbƒNƒXƒfƒoƒCƒXƒNƒ‰ƒX
-		 * @details ƒRƒs[‹Ö~Aƒ€[ƒu‰Â”\BIGraphicsDevice‚ğŒp³‚µADX11‚É“Á‰»‚µ‚½À‘•‚ğ’ñ‹Ÿ‚·‚éBƒŒƒ“ƒ_[ƒXƒŒƒbƒh‚ğ“à•”‚É‚¿A•`‰æƒRƒ}ƒ“ƒh‚ÌƒTƒuƒ~ƒbƒg‚ÆÀs‚ğ”ñ“¯Šú‚És‚¤‚±‚Æ‚ª‚Å‚«‚éBRenderGraph‚ğg—p‚µ‚Ä•`‰æƒpƒX‚ğŠÇ—‚µARenderBackend‚ğ’Ê‚¶‚ÄƒŠƒ\[ƒXŠÇ—‚â•`‰æó‘Ô‚Ìİ’è‚ğs‚¤B
+		 * @brief DX11ç”¨ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‡ãƒã‚¤ã‚¹ã‚¯ãƒ©ã‚¹
+		 * @details ã‚³ãƒ”ãƒ¼ç¦æ­¢ã€ãƒ ãƒ¼ãƒ–å¯èƒ½ã€‚IGraphicsDeviceã‚’ç¶™æ‰¿ã—ã€DX11ã«ç‰¹åŒ–ã—ãŸå®Ÿè£…ã‚’æä¾›ã™ã‚‹ã€‚ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’å†…éƒ¨ã«æŒã¡ã€æç”»ã‚³ãƒãƒ³ãƒ‰ã®ã‚µãƒ–ãƒŸãƒƒãƒˆã¨å®Ÿè¡Œã‚’éåŒæœŸã«è¡Œã†ã“ã¨ãŒã§ãã‚‹ã€‚RenderGraphã‚’ä½¿ç”¨ã—ã¦æç”»ãƒ‘ã‚¹ã‚’ç®¡ç†ã—ã€RenderBackendã‚’é€šã˜ã¦ãƒªã‚½ãƒ¼ã‚¹ç®¡ç†ã‚„æç”»çŠ¶æ…‹ã®è¨­å®šã‚’è¡Œã†ã€‚
 		 * @class DX11GraphicsDevice
 		 */
 		class GraphicsDevice : public IGraphicsDevice<GraphicsDevice>
@@ -45,11 +45,11 @@ namespace SFW
 
 			GraphicsDevice() = default;
 			/**
-			 * @brief@DX11‚ÌƒŠƒ\[ƒX‚ÍComPtr‚ÅŠÇ—‚³‚ê‚Ä‚¢‚é‚½‚ßA“Á‚É‰ğ•úˆ—‚Í•K—v‚ ‚è‚Ü‚¹‚ñ‚ªARenderGraph‚âRenderBackend‚È‚Ç‚Ìƒƒ“ƒo[•Ï”‚Ì”jŠü‚ªs‚í‚ê‚Ü‚·B
+			 * @briefã€€DX11ã®ãƒªã‚½ãƒ¼ã‚¹ã¯ComPtrã§ç®¡ç†ã•ã‚Œã¦ã„ã‚‹ãŸã‚ã€ç‰¹ã«è§£æ”¾å‡¦ç†ã¯å¿…è¦ã‚ã‚Šã¾ã›ã‚“ãŒã€RenderGraphã‚„RenderBackendãªã©ã®ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã®ç ´æ£„ãŒè¡Œã‚ã‚Œã¾ã™ã€‚
 			 */
 			~GraphicsDevice();
 
-			// ƒRƒs[‹Ö~Aƒ€[ƒu‰Â”\
+			// ã‚³ãƒ”ãƒ¼ç¦æ­¢ã€ãƒ ãƒ¼ãƒ–å¯èƒ½
 
 			GraphicsDevice(GraphicsDevice&& rhs) noexcept;
 			GraphicsDevice& operator=(GraphicsDevice&& rhs) noexcept;
@@ -57,44 +57,44 @@ namespace SFW
 			GraphicsDevice& operator=(const GraphicsDevice&) = delete;
 
 			/**
-			 * @brief ‰Šú‰»BƒfƒoƒCƒXŠÖ˜A‚Ì¶¬BŠî’êƒNƒ‰ƒX‚©‚çŒÄ‚Ño‚³‚ê‚éB
-			 * @param nativeWindowHandle ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-			 * @param width ƒEƒBƒ“ƒhƒE•
-			 * @param height ƒEƒBƒ“ƒhƒE‚‚³
-			 * @return bool ‰Šú‰»‚É¬Œ÷‚µ‚½‚©‚Ç‚¤‚©
+			 * @brief åˆæœŸåŒ–ã€‚ãƒ‡ãƒã‚¤ã‚¹é–¢é€£ã®ç”Ÿæˆã€‚åŸºåº•ã‚¯ãƒ©ã‚¹ã‹ã‚‰å‘¼ã³å‡ºã•ã‚Œã‚‹ã€‚
+			 * @param nativeWindowHandle ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+			 * @param width ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å¹…
+			 * @param height ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é«˜ã•
+			 * @return bool åˆæœŸåŒ–ã«æˆåŠŸã—ãŸã‹ã©ã†ã‹
 			 */
 			bool InitializeImpl(const NativeWindowHandle& nativeWindowHandle, uint32_t width, uint32_t height, double fps);
 
 			/**
-			 * @brief ‰æ–Ê‚ğƒNƒŠƒA‚·‚éŠÖ”
-			 * @param clearColor ƒNƒŠƒAƒJƒ‰[iRGBAj
+			 * @brief ç”»é¢ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹é–¢æ•°
+			 * @param clearColor ã‚¯ãƒªã‚¢ã‚«ãƒ©ãƒ¼ï¼ˆRGBAï¼‰
 			 */
 			void ClearImpl(const FLOAT clearColor[4]);
 
 			/**
-			 * @brief •`‰æ‚ğÀs‚·‚éŠÖ”
-			 * @detailss RenderGraph‚ğg—p‚µ‚Ä•`‰æ‚ğÀs‚µ‚Ü‚·B
+			 * @brief æç”»ã‚’å®Ÿè¡Œã™ã‚‹é–¢æ•°
+			 * @detailss RenderGraphã‚’ä½¿ç”¨ã—ã¦æç”»ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
 			 */
 			void DrawImpl();
 
 			/**
-			 * @brief •`‰æ‚ğÀs‚·‚éŠÖ”‚ÌÀ‘•
-			 * @detailss RenderGraph‚ğg—p‚µ‚Ä•`‰æ‚ğÀs‚µ‚Ü‚·B
-			 * @param renderGraph RenderGraph‚ÌQÆ
+			 * @brief æç”»ã‚’å®Ÿè¡Œã™ã‚‹é–¢æ•°ã®å®Ÿè£…
+			 * @detailss RenderGraphã‚’ä½¿ç”¨ã—ã¦æç”»ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
+			 * @param renderGraph RenderGraphã®å‚ç…§
 			 */
 			void PresentImpl();
 
 			/**
-			 * @brief •`‰æƒtƒŒ[ƒ€‚ğƒŒƒ“ƒ_[ƒXƒŒƒbƒh‚É’ño‚·‚éŠÖ”
-			 * @details •`‰æƒtƒŒ[ƒ€‚ªÅ‘å‚Ìê‡A‚±‚ÌŠÖ”‚Í’ño‚ª‰Â”\‚É‚È‚é‚Ü‚ÅƒuƒƒbƒN‚µ‚Ü‚·B’ño‚³‚ê‚½ƒtƒŒ[ƒ€‚ÍAƒŒƒ“ƒ_[ƒXƒŒƒbƒh‚É‚æ‚Á‚Ä‡Ÿˆ—‚³‚ê‚Ü‚·B
-			 * @param clearColor ƒNƒŠƒAƒJƒ‰[iRGBAj
-			 * @param frameIdx ƒtƒŒ[ƒ€ƒCƒ“ƒfƒbƒNƒX
+			 * @brief æç”»ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰ã«æå‡ºã™ã‚‹é–¢æ•°
+			 * @details æç”»ãƒ•ãƒ¬ãƒ¼ãƒ ãŒæœ€å¤§ã®å ´åˆã€ã“ã®é–¢æ•°ã¯æå‡ºãŒå¯èƒ½ã«ãªã‚‹ã¾ã§ãƒ–ãƒ­ãƒƒã‚¯ã—ã¾ã™ã€‚æå‡ºã•ã‚ŒãŸãƒ•ãƒ¬ãƒ¼ãƒ ã¯ã€ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰ã«ã‚ˆã£ã¦é †æ¬¡å‡¦ç†ã•ã‚Œã¾ã™ã€‚
+			 * @param clearColor ã‚¯ãƒªã‚¢ã‚«ãƒ©ãƒ¼ï¼ˆRGBAï¼‰
+			 * @param frameIdx ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			 */
 			void SubmitFrameImpl(const FLOAT clearColor[4], uint64_t frameIdx);
 
 			/**
-			 * @brief w’è‚µ‚½ƒtƒŒ[ƒ€ƒCƒ“ƒfƒbƒNƒX‚Ü‚Å‚Ì’ñoÏ‚İƒtƒŒ[ƒ€‚ÌŠ®—¹‚ğ‘Ò‚ÂŠÖ”
-			 * @param uptoFrame ‘Ò‚ÂƒtƒŒ[ƒ€ƒCƒ“ƒfƒbƒNƒX
+			 * @brief æŒ‡å®šã—ãŸãƒ•ãƒ¬ãƒ¼ãƒ ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¾ã§ã®æå‡ºæ¸ˆã¿ãƒ•ãƒ¬ãƒ¼ãƒ ã®å®Œäº†ã‚’å¾…ã¤é–¢æ•°
+			 * @param uptoFrame å¾…ã¤ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 			 */
 			void WaitSubmittedFramesImpl(uint64_t uptoFrame);
 
@@ -109,8 +109,8 @@ namespace SFW
 				return renderGraph->GetRenderService();
 			}
 			/**
-			 * @brief w’è‚µ‚½ŠÖ”ƒIƒuƒWƒFƒNƒg‚Éˆø”‚ğ“n‚µ‚ÄÀs‚·‚é
-			 * @param func RenderGraph,ID3D11RenderTargetView,ID3D11DepthStencilView‚ğˆø”‚Éæ‚éŠÖ”ƒIƒuƒWƒFƒNƒg
+			 * @brief æŒ‡å®šã—ãŸé–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å¼•æ•°ã‚’æ¸¡ã—ã¦å®Ÿè¡Œã™ã‚‹
+			 * @param func RenderGraph,ID3D11RenderTargetView,ID3D11DepthStencilViewã‚’å¼•æ•°ã«å–ã‚‹é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 			 */
 			template<typename F>
 			void ExecuteCustomFunc(F&& func)
@@ -148,7 +148,7 @@ namespace SFW
 			void StopRenderThread();
 
 		private:
-			// ===== ƒŒƒ“ƒ_[ƒXƒŒƒbƒhÀ‘• =====
+			// ===== ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰å®Ÿè£… =====
 			struct RenderSubmit {
 				FLOAT clearColor[4]{ 0,0,0,1 };
 				uint64_t frameIdx{};
@@ -168,31 +168,31 @@ namespace SFW
 
 				std::atomic<GraphicsDevice*> owner{ nullptr };
 
-				// ƒtƒŒ[ƒ€i’»
+				// ãƒ•ãƒ¬ãƒ¼ãƒ é€²æ—
 				std::atomic<uint64_t> lastSubmitted{ 0 };
 				std::atomic<uint64_t> lastCompleted{ 0 };
 
-				// ãŒÀi= ƒoƒbƒtƒ@”j
+				// ä¸Šé™ï¼ˆ= ãƒãƒƒãƒ•ã‚¡æ•°ï¼‰
 				static constexpr uint16_t MaxInFlight = RENDER_BUFFER_COUNT;
 			};
 
 			void RenderThreadMain(std::shared_ptr<RTState> st);
 		private:
-			// ƒfƒoƒCƒX
+			// ãƒ‡ãƒã‚¤ã‚¹
 			ComPtr<ID3D11Device> m_device;
-			// ƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒg
+			// ãƒ‡ãƒã‚¤ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 			ComPtr<ID3D11DeviceContext> m_context;
-			// ƒXƒƒbƒvƒ`ƒF[ƒ“
+			// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³
 			ComPtr<IDXGISwapChain> m_swapChain;
-			// ƒfƒtƒHƒ‹ƒg‚ÌƒŒƒ“ƒ_ƒŠƒ“ƒOƒ^[ƒQƒbƒgƒrƒ…[
+			// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼
 			ComPtr<ID3D11RenderTargetView> m_renderTargetView;
-			// ƒfƒtƒHƒ‹ƒg‚Ì[“xƒXƒeƒ“ƒVƒ‹ƒoƒbƒtƒ@
+			// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒãƒƒãƒ•ã‚¡
 			ComPtr<ID3D11Texture2D> m_depthStencilBuffer;
-			// ƒfƒtƒHƒ‹ƒg‚Ì[“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[
+			// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼
 			ComPtr<ID3D11DepthStencilView> m_depthStencilView;
-			// “Ç‚İæ‚èê—p[“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[
+			// èª­ã¿å–ã‚Šå°‚ç”¨æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼
 			ComPtr<ID3D11DepthStencilView> m_depthStencilViewReadOnly;
-			// ƒfƒtƒHƒ‹ƒg‚Ì[“x‚ÌSRV
+			// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®æ·±åº¦ã®SRV
 			ComPtr<ID3D11ShaderResourceView> m_depthStencilSRV;
 
 			D3D11_VIEWPORT m_viewport{};

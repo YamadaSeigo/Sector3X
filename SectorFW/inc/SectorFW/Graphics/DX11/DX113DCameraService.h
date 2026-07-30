@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   DX113DCameraService.h
- * @brief DirectX11—p‚Ì3DƒJƒƒ‰ƒT[ƒrƒX
+ * @brief DirectX11ç”¨ã®3Dã‚«ãƒ¡ãƒ©ã‚µãƒ¼ãƒ“ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -16,17 +16,17 @@ namespace SFW
 	namespace Graphics::DX11
 	{
 		/**
-		 * @brief DirectX11—p‚Ì3DƒJƒƒ‰ƒT[ƒrƒXBƒJƒƒ‰‚Ì’è”ƒoƒbƒtƒ@‚ğŠÇ—‚µAXV‚·‚éB
+		 * @brief DirectX11ç”¨ã®3Dã‚«ãƒ¡ãƒ©ã‚µãƒ¼ãƒ“ã‚¹ã€‚ã‚«ãƒ¡ãƒ©ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ã‚’ç®¡ç†ã—ã€æ›´æ–°ã™ã‚‹ã€‚
 		 */
 		class PerCamera3DService : public I3DCameraService<ProjectionType::Perspective> {
 		public:
 			/**
-			 * @brief ƒJƒƒ‰‚Ì’è”ƒoƒbƒtƒ@‚Ì–¼‘O
+			 * @brief ã‚«ãƒ¡ãƒ©ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®åå‰
 			 */
 			constexpr static inline char BUFFER_NAME[] = "DX113DPerCamera";
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param bufferMgr BufferManager‚Ìƒ|ƒCƒ“ƒ^
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param bufferMgr BufferManagerã®ãƒã‚¤ãƒ³ã‚¿
 			 */
 			explicit PerCamera3DService(BufferManager* bufferMgr, const uint32_t width, const uint32_t height)
 				: I3DCameraService([&] {
@@ -38,8 +38,8 @@ namespace SFW
 			}
 
 					/**
-					 * @brief ƒJƒƒ‰‚ÌXVŠÖ”
-					 * @param deltaTime ‘O‚ÌƒtƒŒ[ƒ€‚©‚ç‚ÌŒo‰ßŠÔi•bj
+					 * @brief ã‚«ãƒ¡ãƒ©ã®æ›´æ–°é–¢æ•°
+					 * @param deltaTime å‰ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‹ã‚‰ã®çµŒéæ™‚é–“ï¼ˆç§’ï¼‰
 					 */
 					void PreUpdate(double deltaTime) override {
 						++frameIdx;
@@ -66,13 +66,13 @@ namespace SFW
 							}
 
 							if (dx != 0 || dy != 0) {
-								UpdateCameraFromMouse();   // rot ‚ğ‚±‚±‚ÅXV
+								UpdateCameraFromMouse();   // rot ã‚’ã“ã“ã§æ›´æ–°
 							}
 						}
 
 						auto& buffer = cameraBuffer[currentSlot];
 
-						buffer.view = Math::MakeLookAtMatrixLH(eye, target, u);  // V‚µ‚¢ u ‚ğg—p
+						buffer.view = Math::MakeLookAtMatrixLH(eye, target, u);  // æ–°ã—ã„ u ã‚’ä½¿ç”¨
 						buffer.proj = Math::MakePerspectiveFovT<Math::Handedness::LH, Math::ClipZRange::ZeroToOne>(fovRad, aspectRatio, nearClip, farClip);
 
 						BufferUpdateDesc cbUpdateDesc;
@@ -81,14 +81,14 @@ namespace SFW
 							cbUpdateDesc.buffer = data.ref().buffer;
 						}
 
-						buffer.viewProj = buffer.proj * buffer.view; // ƒrƒ…[“Š‰es—ñ
+						buffer.viewProj = buffer.proj * buffer.view; // ãƒ“ãƒ¥ãƒ¼æŠ•å½±è¡Œåˆ—
 						cbUpdateDesc.data = &buffer;
-						cbUpdateDesc.isDelete = false; // XV‚Ííœ‚µ‚È‚¢
+						cbUpdateDesc.isDelete = false; // æ›´æ–°æ™‚ã¯å‰Šé™¤ã—ãªã„
 
 						cbUpdateDesc.size = sizeof(CameraBuffer);
 						bufferManager->UpdateBuffer(cbUpdateDesc, currentSlot);
 
-						moveVec = Math::Vec3f(0.0f, 0.0f, 0.0f); // ˆÚ“®ƒxƒNƒgƒ‹‚ğƒŠƒZƒbƒg
+						moveVec = Math::Vec3f(0.0f, 0.0f, 0.0f); // ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«ã‚’ãƒªã‚»ãƒƒãƒˆ
 						isUpdateBuffer = false;
 					}
 
@@ -97,17 +97,17 @@ namespace SFW
 		};
 
 		/**
-		 * @brief DirectX11—p‚Ì3DƒJƒƒ‰ƒT[ƒrƒXBƒJƒƒ‰‚Ì’è”ƒoƒbƒtƒ@‚ğŠÇ—‚µAXV‚·‚éB
+		 * @brief DirectX11ç”¨ã®3Dã‚«ãƒ¡ãƒ©ã‚µãƒ¼ãƒ“ã‚¹ã€‚ã‚«ãƒ¡ãƒ©ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ã‚’ç®¡ç†ã—ã€æ›´æ–°ã™ã‚‹ã€‚
 		 */
 		class OrtCamera3DService : public I3DCameraService<ProjectionType::Orthographic> {
 		public:
 			/**
-			 * @brief ƒJƒƒ‰‚Ì’è”ƒoƒbƒtƒ@‚Ì–¼‘O
+			 * @brief ã‚«ãƒ¡ãƒ©ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®åå‰
 			 */
 			constexpr static inline char BUFFER_NAME[] = "3DOrtCamera";
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param bufferMgr BufferManager‚Ìƒ|ƒCƒ“ƒ^
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param bufferMgr BufferManagerã®ãƒã‚¤ãƒ³ã‚¿
 			 */
 			explicit OrtCamera3DService(BufferManager* bufferMgr, const uint32_t width, const uint32_t height)
 				: I3DCameraService<ProjectionType::Orthographic>([&] {
@@ -119,8 +119,8 @@ namespace SFW
 			}
 
 					/**
-					 * @brief ƒJƒƒ‰‚ÌXVŠÖ”
-					 * @param deltaTime ‘O‚ÌƒtƒŒ[ƒ€‚©‚ç‚ÌŒo‰ßŠÔi•bj
+					 * @brief ã‚«ãƒ¡ãƒ©ã®æ›´æ–°é–¢æ•°
+					 * @param deltaTime å‰ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‹ã‚‰ã®çµŒéæ™‚é–“ï¼ˆç§’ï¼‰
 					 */
 					void PreUpdate(double deltaTime) override {
 						++frameIdx;
@@ -144,7 +144,7 @@ namespace SFW
 							}
 
 							if (dx != 0 || dy != 0) {
-								UpdateCameraFromMouse();   // rot ‚ğ‚±‚±‚ÅXV
+								UpdateCameraFromMouse();   // rot ã‚’ã“ã“ã§æ›´æ–°
 							}
 						}
 
@@ -160,14 +160,14 @@ namespace SFW
 
 						currentSlot = frameIdx % RENDER_BUFFER_COUNT;
 
-						buffer.viewProj = buffer.proj * buffer.view; // ƒrƒ…[“Š‰es—ñ
+						buffer.viewProj = buffer.proj * buffer.view; // ãƒ“ãƒ¥ãƒ¼æŠ•å½±è¡Œåˆ—
 						cbUpdateDesc.data = &buffer;
-						cbUpdateDesc.isDelete = false; // XV‚Ííœ‚µ‚È‚¢
+						cbUpdateDesc.isDelete = false; // æ›´æ–°æ™‚ã¯å‰Šé™¤ã—ãªã„
 
 						cbUpdateDesc.size = sizeof(CameraBuffer);
 						bufferManager->UpdateBuffer(cbUpdateDesc, currentSlot);
 
-						moveVec = Math::Vec3f(0.0f, 0.0f, 0.0f); // ˆÚ“®ƒxƒNƒgƒ‹‚ğƒŠƒZƒbƒg
+						moveVec = Math::Vec3f(0.0f, 0.0f, 0.0f); // ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«ã‚’ãƒªã‚»ãƒƒãƒˆ
 						isUpdateBuffer = false;
 					}
 

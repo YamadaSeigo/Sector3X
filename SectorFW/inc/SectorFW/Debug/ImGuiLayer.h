@@ -1,13 +1,13 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   ImGuiLayer.h
- * @brief ImGui‚Ì•`‰æ‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+ * @brief ImGuiã®æç”»ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
 #pragma once
 
 #if _DEBUG
- // ƒfƒoƒbƒOƒrƒ‹ƒh‚Í ImGui ‚ğ—LŒø‰»
+ // ãƒ‡ãƒãƒƒã‚°ãƒ“ãƒ«ãƒ‰æ™‚ã¯ ImGui ã‚’æœ‰åŠ¹åŒ–
 #define _ENABLE_IMGUI
 #endif // _DEBUG
 
@@ -18,55 +18,55 @@
 namespace SFW
 {
 	namespace Debug {
-		//‘O•û’è‹`
+		//å‰æ–¹å®šç¾©
 		class IImGuiBackend;
 		/**
-		 * @brief ƒoƒbƒNƒGƒ“ƒh‚ğg—p‚µ‚ÄImGui‚Ì•`‰æ‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+		 * @brief ãƒãƒƒã‚¯ã‚¨ãƒ³ãƒ‰ã‚’ä½¿ç”¨ã—ã¦ImGuiã®æç”»ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 		 */
 		class ImGuiLayer {
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @details UIBus.cpp‚ÅÀ‘•
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @details UIBus.cppã§å®Ÿè£…
 			 * @param backend
 			 * @return
 			 */
 			explicit ImGuiLayer(std::unique_ptr<IImGuiBackend> backend);
 			~ImGuiLayer();
 			/**
-			 * @brief ƒEƒBƒ“ƒhƒE‚ÌŒ^î•ñ‚ğæ“¾‚·‚éŠÖ”
+			 * @brief ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å‹æƒ…å ±ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 			 * @return const std::type_info&
 			 */
 			const std::type_info& GetWindowType() const {
 				return backend_->GetWindowType();
 			}
 			/**
-			 * @brief ƒfƒoƒCƒX‚ÌŒ^î•ñ‚ğæ“¾‚·‚éŠÖ”
+			 * @brief ãƒ‡ãƒã‚¤ã‚¹ã®å‹æƒ…å ±ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 			 * @return const std::type_info&
 			 */
 			const std::type_info& GetDeviceType() const {
 				return backend_->GetDeviceType();
 			}
 			/**
-			 * @brief ImGui‚Ì‰Šú‰»‚ğs‚¤ŠÖ”
-			 * @param info ‰Šú‰»î•ñ
-			 * @return bool ‰Šú‰»‚É¬Œ÷‚µ‚½ê‡‚ÍtrueA¸”s‚µ‚½ê‡‚Ífalse
+			 * @brief ImGuiã®åˆæœŸåŒ–ã‚’è¡Œã†é–¢æ•°
+			 * @param info åˆæœŸåŒ–æƒ…å ±
+			 * @return bool åˆæœŸåŒ–ã«æˆåŠŸã—ãŸå ´åˆã¯trueã€å¤±æ•—ã—ãŸå ´åˆã¯false
 			 */
 			bool Init(const ImGuiInitInfo& info);
 			/**
-			 * @brief ƒtƒŒ[ƒ€‚ÌŠJn‚ğs‚¤ŠÖ”B ImGui::NewFrame() ‚ğŠÜ‚Ş
+			 * @brief ãƒ•ãƒ¬ãƒ¼ãƒ ã®é–‹å§‹ã‚’è¡Œã†é–¢æ•°ã€‚ ImGui::NewFrame() ã‚’å«ã‚€
 			 */
 			void BeginFrame();
 			/**
-			 * @brief UI‚Ì•`‰æ‚ğs‚¤ŠÖ”.UIBus.cpp‚ÅÀ‘•
+			 * @brief UIã®æç”»ã‚’è¡Œã†é–¢æ•°.UIBus.cppã§å®Ÿè£…
 			 */
 			void DrawUI(float frameSec);
 			/**
-			 * @brief ƒtƒŒ[ƒ€‚ÌI—¹‚ğs‚¤ŠÖ”B ImGui::Render() ‚Ü‚Å
+			 * @brief ãƒ•ãƒ¬ãƒ¼ãƒ ã®çµ‚äº†ã‚’è¡Œã†é–¢æ•°ã€‚ ImGui::Render() ã¾ã§
 			 */
 			void EndFrame();
 			/**
-			 * @brief •`‰æƒRƒ}ƒ“ƒh‚Ì”­s‚ğs‚¤ŠÖ”B ImGui::Render() ‚ÌŒã‚ÉŒÄ‚Ô
+			 * @brief æç”»ã‚³ãƒãƒ³ãƒ‰ã®ç™ºè¡Œã‚’è¡Œã†é–¢æ•°ã€‚ ImGui::Render() ã®å¾Œã«å‘¼ã¶
 			 */
 			void Render();
 

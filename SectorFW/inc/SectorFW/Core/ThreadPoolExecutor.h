@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * \file   ThreadPoolExecutor.h
- * \brief ƒXƒŒƒbƒhƒv[ƒ‹‚ğÀ‘•‚·‚éƒNƒ‰ƒX‚ÆAƒXƒŒƒbƒhƒJƒEƒ“ƒgƒ_ƒEƒ“ƒ‰ƒbƒ`‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * \brief ã‚¹ãƒ¬ãƒƒãƒ‰ãƒ—ãƒ¼ãƒ«ã‚’å®Ÿè£…ã™ã‚‹ã‚¯ãƒ©ã‚¹ã¨ã€ã‚¹ãƒ¬ãƒƒãƒ‰ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³ãƒ©ãƒƒãƒã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * \author seigo
  * \date   December 2025
  *********************************************************************/
@@ -24,7 +24,7 @@ namespace SFW
 
 	class SimpleThreadPool final : public IThreadExecutor {
 	public:
-		//RenderThraed‚Ì‚½‚ß‚ªƒXƒŒƒbƒh‚ğ1‚Âg‚Á‚Ä‚¢‚é‚Ì‚Å-1‚·‚é
+		//RenderThraedã®ãŸã‚ãŒã‚¹ãƒ¬ãƒƒãƒ‰ã‚’1ã¤ä½¿ã£ã¦ã„ã‚‹ã®ã§-1ã™ã‚‹
 		explicit SimpleThreadPool(uint32_t n = std::thread::hardware_concurrency() - 1)
 			: stop_(false)
 			, busy_(0)
@@ -68,10 +68,10 @@ namespace SFW
 				w.join();
 		}
 
-		// ƒ[ƒJƒXƒŒƒbƒh‚Åw’è‚µ‚½job‚ğÀs‚·‚éBSubmit “à‚Å‚³‚ç‚É Submit ‚³‚ê‚½ê‡‚ÍA‘Sƒ[ƒJ[‚ªƒrƒW[‚È‚ç‚»‚Ìê‚ÅÀs‚·‚éiƒlƒXƒg‚µ‚½ Submit ‚ÌƒXƒ^ƒbƒN‚ª[‚­‚È‚è‚·‚¬‚È‚¢‚æ‚¤‚Éj
+		// ãƒ¯ãƒ¼ã‚«ã‚¹ãƒ¬ãƒƒãƒ‰ã§æŒ‡å®šã—ãŸjobã‚’å®Ÿè¡Œã™ã‚‹ã€‚Submit å†…ã§ã•ã‚‰ã« Submit ã•ã‚ŒãŸå ´åˆã¯ã€å…¨ãƒ¯ãƒ¼ã‚«ãƒ¼ãŒãƒ“ã‚¸ãƒ¼ãªã‚‰ãã®å ´ã§å®Ÿè¡Œã™ã‚‹ï¼ˆãƒã‚¹ãƒˆã—ãŸ Submit ã®ã‚¹ã‚¿ãƒƒã‚¯ãŒæ·±ããªã‚Šã™ããªã„ã‚ˆã†ã«ï¼‰
 		void Submit(std::function<void()> job) override {
-			// ƒv[ƒ‹“à‚©‚ç‚ÌƒlƒXƒg‚µ‚½ Submit ‚ÅA
-			// ‚©‚Â‘Sƒ[ƒJ[‚ªƒrƒW[‚È‚çA‚»‚Ìê‚ÅÀs
+			// ãƒ—ãƒ¼ãƒ«å†…ã‹ã‚‰ã®ãƒã‚¹ãƒˆã—ãŸ Submit ã§ã€
+			// ã‹ã¤å…¨ãƒ¯ãƒ¼ã‚«ãƒ¼ãŒãƒ“ã‚¸ãƒ¼ãªã‚‰ã€ãã®å ´ã§å®Ÿè¡Œ
 			if (tls_inPool_
 				&& tls_depth_ > 0
 				&& busy_.load(std::memory_order_relaxed) >= static_cast<int>(workers_.size())) {
@@ -88,7 +88,7 @@ namespace SFW
 			cv_.notify_one();
 		}
 
-		// ƒ[ƒJ[ƒXƒŒƒbƒh”‚ğ•Ô‚·
+		// ãƒ¯ãƒ¼ã‚«ãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰æ•°ã‚’è¿”ã™
 		uint32_t Concurrency() const override { return threadCount; }
 
 	private:
@@ -108,20 +108,20 @@ namespace SFW
 		STATIC_SERVICE_TAG
 	};
 
-	// ƒXƒŒƒbƒhƒJƒEƒ“ƒgƒ_ƒEƒ“ƒ‰ƒbƒ`
+	// ã‚¹ãƒ¬ãƒƒãƒ‰ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³ãƒ©ãƒƒãƒ
 	class ThreadCountDownLatch {
 	public:
 		explicit ThreadCountDownLatch(uint32_t count) : count_(count) {}
 
 		/**
-		 *@brief ƒJƒEƒ“ƒg‚ğ1Œ¸‚ç‚µA0‚É‚È‚Á‚½‚ç‘Ò‹@‚µ‚Ä‚¢‚éƒXƒŒƒbƒh‚ğ‘S‚Ä‹N‚±‚·
-		 *@detials Šî–{“I‚Éƒ[ƒJ[ƒXƒŒƒbƒh‚Ìˆ—‚ªI‚í‚Á‚½‚±‚Æ‚ğ’Ê’m‚·‚é‚½‚ß‚Ég‚¤Bƒ[ƒJ[ƒXƒŒƒbƒh‚Íˆ—‚ªI‚í‚é‚½‚Ñ‚É CountDown() ‚ğŒÄ‚ÑAƒƒCƒ“ƒXƒŒƒbƒh‚Í Wait() ‚Å‘S‚Ä‚Ìƒ[ƒJ[‚ªI‚í‚é‚Ì‚ğ‘Ò‚ÂB
+		 *@brief ã‚«ã‚¦ãƒ³ãƒˆã‚’1æ¸›ã‚‰ã—ã€0ã«ãªã£ãŸã‚‰å¾…æ©Ÿã—ã¦ã„ã‚‹ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’å…¨ã¦èµ·ã“ã™
+		 *@detials åŸºæœ¬çš„ã«ãƒ¯ãƒ¼ã‚«ãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰ã®å‡¦ç†ãŒçµ‚ã‚ã£ãŸã“ã¨ã‚’é€šçŸ¥ã™ã‚‹ãŸã‚ã«ä½¿ã†ã€‚ãƒ¯ãƒ¼ã‚«ãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰ã¯å‡¦ç†ãŒçµ‚ã‚ã‚‹ãŸã³ã« CountDown() ã‚’å‘¼ã³ã€ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰ã¯ Wait() ã§å…¨ã¦ã®ãƒ¯ãƒ¼ã‚«ãƒ¼ãŒçµ‚ã‚ã‚‹ã®ã‚’å¾…ã¤ã€‚
 		 */
 		void CountDown() {
 			std::lock_guard lk(m_);
 			if (--count_ == 0) cv_.notify_all();
 		}
-		// count_ ‚ª0‚É‚È‚é‚Ü‚Å‘Ò‹@
+		// count_ ãŒ0ã«ãªã‚‹ã¾ã§å¾…æ©Ÿ
 		void Wait() {
 			std::unique_lock lk(m_);
 			cv_.wait(lk, [&] { return count_ == 0; });
@@ -132,7 +132,7 @@ namespace SFW
 		uint32_t count_;
 	};
 
-	// ŠO•”‚Å mutex ‚Æ condition_variable ‚ğ—pˆÓ‚µ‚Äg‚¤ƒo[ƒWƒ‡ƒ“i•¡”‚Ìƒ‰ƒbƒ`‚ğ“¯‚É Wait ‚âÄ—˜—p‚ÅŒy—Ê‰»‚µ‚½‚¢ê‡‚Ég‚¤j
+	// å¤–éƒ¨ã§ mutex ã¨ condition_variable ã‚’ç”¨æ„ã—ã¦ä½¿ã†ãƒãƒ¼ã‚¸ãƒ§ãƒ³ï¼ˆè¤‡æ•°ã®ãƒ©ãƒƒãƒã‚’åŒæ™‚ã« Wait ã‚„å†åˆ©ç”¨ã§è»½é‡åŒ–ã—ãŸã„å ´åˆã«ä½¿ã†ï¼‰
 	class ThreadCountDownLatchExternalSync {
 	public:
 		explicit ThreadCountDownLatchExternalSync(std::mutex& mutex, std::condition_variable& cv, int count)

@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * \file   ImageLoader.h
- * \brief STB Image ‚ğƒ‰ƒbƒv‚µ‚Ä‰æ‘œ‚ğ“Ç‚İ‚Şƒ†[ƒeƒBƒŠƒeƒB
+ * \brief STB Image ã‚’ãƒ©ãƒƒãƒ—ã—ã¦ç”»åƒã‚’èª­ã¿è¾¼ã‚€ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£
  * \author lenov
  * \date   March 2026
  *********************************************************************/
@@ -21,8 +21,8 @@ namespace SFW::Graphics
 	{
 		int width = 0;
 		int height = 0;
-		int channels = 0;  // Œ³‚Ìƒ`ƒƒƒlƒ‹”i3,4 ‚È‚Çj
-		int desiredChannels = 0; // •ÏŠ·Œã‚Ìƒ`ƒƒƒlƒ‹”i—á: 4=RGBAj
+		int channels = 0;  // å…ƒã®ãƒãƒ£ãƒãƒ«æ•°ï¼ˆ3,4 ãªã©ï¼‰
+		int desiredChannels = 0; // å¤‰æ›å¾Œã®ãƒãƒ£ãƒãƒ«æ•°ï¼ˆä¾‹: 4=RGBAï¼‰
 
 		std::unique_ptr<unsigned char, StbImageDeleter> pixels;
 
@@ -30,22 +30,22 @@ namespace SFW::Graphics
 	};
 
 	/*
-	* @brief ‰æ‘œƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İARGBA8Œ`®‚Å•Ô‚µ‚Ü‚·B
-	* @param path ƒtƒ@ƒCƒ‹‚ÌƒpƒX
-	* @param flipVertically “Ç‚İ‚İ‚Éã‰º”½“]‚·‚é‚©‚Ç‚¤‚©
+	* @brief ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿ã€RGBA8å½¢å¼ã§è¿”ã—ã¾ã™ã€‚
+	* @param path ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
+	* @param flipVertically èª­ã¿è¾¼ã¿æ™‚ã«ä¸Šä¸‹åè»¢ã™ã‚‹ã‹ã©ã†ã‹
 	*/
 	[[nodiscard]] ImageData LoadImageFromFileRGBA8(
 		const std::string& path,
 		bool flipVertically = false);
 
 	/*
-	* @brief ‰æ‘œƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İ‚Ü‚·B
-	* @param path ƒtƒ@ƒCƒ‹‚ÌƒpƒX
-	* @param desiredChannels •ÏŠ·Œã‚Ìƒ`ƒƒƒlƒ‹”B0 ‚Ìê‡‚ÍŒ³‚Ìƒ`ƒƒƒlƒ‹”‚Ì‚Ü‚ÜB
-	* @param flipVertically “Ç‚İ‚İ‚Éã‰º”½“]‚·‚é‚©‚Ç‚¤‚©
+	* @brief ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿ã¾ã™ã€‚
+	* @param path ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
+	* @param desiredChannels å¤‰æ›å¾Œã®ãƒãƒ£ãƒãƒ«æ•°ã€‚0 ã®å ´åˆã¯å…ƒã®ãƒãƒ£ãƒãƒ«æ•°ã®ã¾ã¾ã€‚
+	* @param flipVertically èª­ã¿è¾¼ã¿æ™‚ã«ä¸Šä¸‹åè»¢ã™ã‚‹ã‹ã©ã†ã‹
 	*/
 	[[nodiscard]] ImageData LoadImageFromFile(
 		const std::string& path,
-		int desiredChannels = 0,   // 0 ‚È‚çŒ³‚Ìƒ`ƒƒƒlƒ‹”‚Ì‚Ü‚Ü
+		int desiredChannels = 0,   // 0 ãªã‚‰å…ƒã®ãƒãƒ£ãƒãƒ«æ•°ã®ã¾ã¾
 		bool flipVertically = false);
 }

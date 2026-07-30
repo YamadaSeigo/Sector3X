@@ -1,72 +1,72 @@
-#pragma once
+ï»¿#pragma once
 
 struct CChasePlayer
 {
-	float chaseStrength = 5.0f; // ’Ç]‚Ì‹­‚³
+	float chaseStrength = 5.0f; // è¿½å¾“ã®å¼·ã•
 };
 
 struct FollowParams {
 	float targetRadius = 2.0f;   // R
 	float springK = 80.0f;  // k
 	float dampingC = 30.0f;  // c
-	float omega = 2.5f;   // ü‰ñŠp‘¬“x(rad/s) ¦Œ©‚½–Ú’²®
-	float tanGain = 6.0f;   // Úü‘¬“x’Ç]‚Ì‹­‚³
-	float maxAccel = 80.0f;  // ‰Á‘¬“xãŒÀ
+	float omega = 2.5f;   // å‘¨å›è§’é€Ÿåº¦(rad/s) â€»è¦‹ãŸç›®èª¿æ•´
+	float tanGain = 6.0f;   // æ¥ç·šé€Ÿåº¦è¿½å¾“ã®å¼·ã•
+	float maxAccel = 80.0f;  // åŠ é€Ÿåº¦ä¸Šé™
 };
 
-/// playerPos/playerVel: ƒvƒŒƒCƒ„[
-/// pos/vel: •‚—V•¨
-/// upHint: ü‰ñ•½–Ê‚Ìã•ûŒüi’Êí‚Í {0,1,0} ‚©ƒvƒŒƒCƒ„[‚ÌUpj
+/// playerPos/playerVel: ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
+/// pos/vel: æµ®éŠç‰©
+/// upHint: å‘¨å›å¹³é¢ã®ä¸Šæ–¹å‘ï¼ˆé€šå¸¸ã¯ {0,1,0} ã‹ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®Upï¼‰
 /// dt: delta time
-/// return: u‰Á‚¦‚é‰Á‘¬“xv(m/s^2)  ¦—Í‚È‚ç mass ‚ğŠ|‚¯‚é
+/// return: ã€ŒåŠ ãˆã‚‹åŠ é€Ÿåº¦ã€(m/s^2)  â€»åŠ›ãªã‚‰ mass ã‚’æ›ã‘ã‚‹
 static Math::Vec3f ComputeFloaterAccel(
 	const Math::Vec3f& playerPos, const Math::Vec3f& playerVel,
 	const Math::Vec3f& pos, const Math::Vec3f& vel,
 	const Math::Vec3f& upHint,
 	const FollowParams& p)
 {
-	// ‘Š‘Î
+	// ç›¸å¯¾
 	Math::Vec3f to = pos - playerPos;
 	float r = to.length();
 	if (r < 1e-4f) {
-		// ^ã‚É”ò‚Î‚·“™‚Å‰ñ”ğiƒ[ƒŠ„–h~j
+		// çœŸä¸Šã«é£›ã°ã™ç­‰ã§å›é¿ï¼ˆã‚¼ãƒ­å‰²é˜²æ­¢ï¼‰
 		to = { 0, 0, 1 };
 		r = 1.0f;
 	}
 
 	Math::Vec3f rad = to * (1.0f / r);
 
-	// •‚—V•¨‚Ì‘Š‘Î‘¬“xiƒvƒŒƒCƒ„[‘¬“x‚ğˆø‚­‚Æg‚Ü‚Æ‚í‚èh‚ªˆÀ’è‚µ‚â‚·‚¢j
+	// æµ®éŠç‰©ã®ç›¸å¯¾é€Ÿåº¦ï¼ˆãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼é€Ÿåº¦ã‚’å¼•ãã¨â€œã¾ã¨ã‚ã‚Šâ€ãŒå®‰å®šã—ã‚„ã™ã„ï¼‰
 	Math::Vec3f relVel = vel - playerVel;
 
-	// --- ”¼Œa•ûŒü: ƒoƒl + Œ¸Š ---
-	float e = (r - p.targetRadius);           // ‹——£Œë·
-	float vr = Dot(relVel, rad);              // ”¼Œa•ûŒü‘¬“x
+	// --- åŠå¾„æ–¹å‘: ãƒãƒ + æ¸›è¡° ---
+	float e = (r - p.targetRadius);           // è·é›¢èª¤å·®
+	float vr = Dot(relVel, rad);              // åŠå¾„æ–¹å‘é€Ÿåº¦
 	Math::Vec3f a_spring = rad * (-p.springK * e);
 	Math::Vec3f a_damp = rad * (-p.dampingC * vr);
 
-	// --- Úü•ûŒü: ü‰ñ ---
+	// --- æ¥ç·šæ–¹å‘: å‘¨å› ---
 	Math::Vec3f up = Normalize(upHint);
 	if (up.lengthSquared() < 1e-6f) up = { 0,1,0 };
 
 	Math::Vec3f tan = Cross(up, rad);
 	float tanL2 = tan.lengthSquared();
 	if (tanL2 < 1e-6f) {
-		// up ‚Æ rad ‚ª•½s‚È‚ç•Ê²‚Å
+		// up ã¨ rad ãŒå¹³è¡Œãªã‚‰åˆ¥è»¸ã§
 		Math::Vec3f alt = (std::fabs(rad.y) < 0.99f) ? Math::Vec3f{ 0,1,0 } : Math::Vec3f{ 1,0,0 };
 		tan = Cross(alt, rad);
 	}
 	tan = Normalize(tan);
 
-	// –Ú•WÚü‘¬“x = omega * R
+	// ç›®æ¨™æ¥ç·šé€Ÿåº¦ = omega * R
 	Math::Vec3f v_tgt = tan * (p.omega * p.targetRadius);
 
-	// Œ»İ‚ÌÚü‘¬“xi‘Š‘Î‘¬“x‚©‚ç”¼Œa¬•ª‚ğœŠOj
+	// ç¾åœ¨ã®æ¥ç·šé€Ÿåº¦ï¼ˆç›¸å¯¾é€Ÿåº¦ã‹ã‚‰åŠå¾„æˆåˆ†ã‚’é™¤å¤–ï¼‰
 	Math::Vec3f v_tan = relVel - rad * Dot(relVel, rad);
 
 	Math::Vec3f a_tan = (v_tgt - v_tan) * p.tanGain;
 
-	// ‡¬ + ƒNƒ‰ƒ“ƒv
+	// åˆæˆ + ã‚¯ãƒ©ãƒ³ãƒ—
 	Math::Vec3f a = a_spring + a_damp + a_tan;
 	float clampLen = (std::min)(a.length(), p.maxAccel);
 	a = a.normalized() * clampLen;
@@ -94,13 +94,13 @@ template<typename Partition>
 class ChasePlayerSystem : public ITypeSystem <
 	ChasePlayerSystem,
 	Partition,
-	//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
+	//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
 	ComponentAccess<
 	Read<CChasePlayer>,
 	Read<CTransform>,
 	Read<Physics::PhysicsInterpolation>
 	>,
-	//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	ServiceContext <
 	Physics::PhysicsService,
 	PlayerService,
@@ -108,7 +108,7 @@ class ChasePlayerSystem : public ITypeSystem <
 	>>{
 	using Accessor = ComponentAccessor<Read<CChasePlayer>, Read<CTransform>, Read<Physics::PhysicsInterpolation>>;
 public:
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(Partition& partition,
 		NoDeletePtr<Physics::PhysicsService> physicsService,
 		NoDeletePtr<PlayerService> playerService,
@@ -122,7 +122,7 @@ public:
 
 		auto spatialChunks = partition.CullChunks(targetPos, chunkRadius);
 
-		targetPos.y += 5.0f; // ƒvƒŒƒCƒ„[‚Ì“ªã5m‚ğ–Ú•WˆÊ’u‚É‚·‚é
+		targetPos.y += 5.0f; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®é ­ä¸Š5mã‚’ç›®æ¨™ä½ç½®ã«ã™ã‚‹
 
 		Query query;
 		query.With<CChasePlayer, CTransform, Physics::PhysicsInterpolation>();
@@ -148,15 +148,15 @@ public:
 				Math::Vec3f oldPos = { interpolationComp.value().ppx()[i], interpolationComp.value().ppy()[i], interpolationComp.value().ppz()[i] };
 				Math::Vec3f position = { transformComp.value().px()[i],transformComp.value().py()[i], transformComp.value().pz()[i] };
 
-				// ‰“‚·‚¬‚½‚çƒeƒŒƒ|[ƒg‚µ‚Ä‚µ‚Ü‚¤i’Ç]‚ª”j’]‚·‚é‚Ì‚ğ–h‚®‚½‚ßj
+				// é ã™ããŸã‚‰ãƒ†ãƒ¬ãƒãƒ¼ãƒˆã—ã¦ã—ã¾ã†ï¼ˆè¿½å¾“ãŒç ´ç¶»ã™ã‚‹ã®ã‚’é˜²ããŸã‚ï¼‰
 				float distToPlayer = (position - targetPos).lengthSquared();
 				if (distToPlayer > 10000.0f) {
 					Math::Quatf rot = { interpolationComp.value().crx()[i],  interpolationComp.value().cry()[i] , interpolationComp.value().crz()[i] , interpolationComp.value().crw()[i] };
 					Math::Vec3f vec = position - targetPos.normalized();
-					Math::Vec3f newPos = targetPos + Math::Vec3f{ vec.x, 5.0f, vec.z }.normalized() * 30.0f; // ƒvƒŒƒCƒ„[‚©‚ç30m‚ÌˆÊ’u‚ÉƒeƒŒƒ|[ƒg
+					Math::Vec3f newPos = targetPos + Math::Vec3f{ vec.x, 5.0f, vec.z }.normalized() * 30.0f; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‹ã‚‰30mã®ä½ç½®ã«ãƒ†ãƒ¬ãƒãƒ¼ãƒˆ
 					physicsService->Teleport(entities[i], { newPos, rot });
 
-					continue; // ƒvƒŒƒCƒ„[‚©‚ç‰“‚·‚¬‚éƒGƒ“ƒeƒBƒeƒB‚Íˆ—‚µ‚È‚¢
+					continue; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‹ã‚‰é ã™ãã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã¯å‡¦ç†ã—ãªã„
 				}
 
 				Math::Vec3f velocity = (position - oldPos);

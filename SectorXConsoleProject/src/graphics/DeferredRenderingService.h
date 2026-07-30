@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "RenderDefine.h"
 #include "TiledDeferredRender.h"
@@ -53,7 +53,7 @@ public:
 		bufferDesc.size = sizeof(DeferredCameraBuffer);
 		bufferManager->Add(bufferDesc, lightCameraBufferHandle);
 
-		// Tile—pƒJƒƒ‰ƒoƒbƒtƒ@
+		// Tileç”¨ã‚«ãƒ¡ãƒ©ãƒãƒƒãƒ•ã‚¡
 		D3D11_BUFFER_DESC tileBufDesc = {};
 		tileBufDesc.ByteWidth = sizeof(TileCameraBuffer);
 		tileBufDesc.Usage = D3D11_USAGE_DYNAMIC;
@@ -74,7 +74,7 @@ public:
 		recipe.usage = D3D11_USAGE_DEFAULT;
 		recipe.arraySize = 1;
 
-		//Albedo‚àHDR‚É‘Î‰‚³‚¹‚éê‡‚ÍDXGI_FORMAT_R16G16B16A16_FLOAT‚É‚·‚é
+		//Albedoã‚‚HDRã«å¯¾å¿œã•ã›ã‚‹å ´åˆã¯DXGI_FORMAT_R16G16B16A16_FLOATã«ã™ã‚‹
 		DXGI_FORMAT texFormats[DeferredTextureCount] = {
 			DXGI_FORMAT_R8G8B8A8_UNORM,		//"AlbedoAO",
 			DXGI_FORMAT_R8G8B8A8_UNORM,		//"NormalRoughness",
@@ -86,7 +86,7 @@ public:
 			DX11::TextureCreateDesc texDesc;
 			recipe.format = texFormats[i];
 			texDesc.recipe = &recipe;
-			texDesc.path = ""; // ‹óƒpƒX‚Å¶¬ƒ‚[ƒh
+			texDesc.path = ""; // ç©ºãƒ‘ã‚¹ã§ç”Ÿæˆãƒ¢ãƒ¼ãƒ‰
 			textureManager->Add(texDesc, GBufferHandle[i]);
 		}
 
@@ -167,10 +167,10 @@ public:
 		ID3D11SamplerState* pointSampler
 	)
 	{
-		// ƒ^ƒCƒ‹ƒtƒ‰ƒXƒ^ƒ€\’z
+		// ã‚¿ã‚¤ãƒ«ãƒ•ãƒ©ã‚¹ã‚¿ãƒ æ§‹ç¯‰
 		tiledDeferredRender.BuildTileFrustums(ctx, tileCameraBuffer.Get());
 
-		// ƒ‰ƒCƒgƒJƒŠƒ“ƒO
+		// ãƒ©ã‚¤ãƒˆã‚«ãƒªãƒ³ã‚°
 		tiledDeferredRender.TileCullingLight(
 			ctx,
 			normalLightSRV,
@@ -180,7 +180,7 @@ public:
 			lightCountCB
 		);
 
-		// ƒ^ƒCƒ‹ƒ‰ƒCƒg•`‰æ
+		// ã‚¿ã‚¤ãƒ«ãƒ©ã‚¤ãƒˆæç”»
 		tiledDeferredRender.DrawTileLight(
 			ctx,
 			normalLightSRV,
@@ -226,7 +226,7 @@ private:
 	TileCameraBuffer tileCameraBufferData[Graphics::RENDER_BUFFER_COUNT];
 	ComPtr<ID3D11Buffer> tileCameraBuffer;
 
-	//static‚È‚±‚Æ‚ğ‘O’ñ‚É•Û‚³‚¹‚é
+	//staticãªã“ã¨ã‚’å‰æã«ä¿æŒã•ã›ã‚‹
 	Graphics::DX11::BufferManager* bufferManager;
 	uint8_t currentSlot = 0;
 

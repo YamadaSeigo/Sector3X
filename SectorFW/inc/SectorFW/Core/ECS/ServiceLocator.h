@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   ServiceLocator.h
- * @brief ƒT[ƒrƒXƒƒP[ƒ^[ƒNƒ‰ƒX
+ * @brief ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -21,15 +21,15 @@
 
 namespace SFW
 {
-	// ‘O•ûéŒ¾
+	// å‰æ–¹å®£è¨€
 	template<typename... LevelTypes>
 	class World;
 
 	namespace ECS
 	{
 		/**
-		 * @brief System‚ªˆË‘¶‚·‚éƒT[ƒrƒX‚ğŠÇ—‚·‚éƒNƒ‰ƒX
-		 * @details “à•”‚Åshared_mutex‚ğg—p‚µ‚Ä‚¢‚é‚Ì‚Åƒ€[ƒu‚Ì‚İ‹–‰Â‚·‚é
+		 * @brief SystemãŒä¾å­˜ã™ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
+		 * @details å†…éƒ¨ã§shared_mutexã‚’ä½¿ç”¨ã—ã¦ã„ã‚‹ã®ã§ãƒ ãƒ¼ãƒ–ã®ã¿è¨±å¯ã™ã‚‹
 		 */
 		class ServiceLocator {
 			struct Location {
@@ -43,12 +43,12 @@ namespace SFW
 				}
 			};
 
-			inline static bool created = false; // ƒNƒ‰ƒXƒXƒR[ƒv‚ÉˆÚ“®
+			inline static bool created = false; // ã‚¯ãƒ©ã‚¹ã‚¹ã‚³ãƒ¼ãƒ—ã«ç§»å‹•
 		public:
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param executor XVˆ—‚ÌÛ‚Ì•À—ñ‚½‚ß‚Ég—p‚·‚éƒXƒŒƒbƒhƒv[ƒ‹
-			 * @details •¡”‰ñ¶¬‚·‚é‚ÆÀsƒGƒ‰[
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param executor æ›´æ–°å‡¦ç†ã®éš›ã®ä¸¦åˆ—ãŸã‚ã«ä½¿ç”¨ã™ã‚‹ã‚¹ãƒ¬ãƒƒãƒ‰ãƒ—ãƒ¼ãƒ«
+			 * @details è¤‡æ•°å›ç”Ÿæˆã™ã‚‹ã¨å®Ÿè¡Œæ™‚ã‚¨ãƒ©ãƒ¼
 			 */
 			template<PointerType... Service>
 			explicit ServiceLocator(Service... service)
@@ -64,30 +64,30 @@ namespace SFW
 			}
 
 			/**
-			 * @brief@ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğíœ
+			 * @briefã€€ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‰Šé™¤
 			 */
 			ServiceLocator(const ServiceLocator&) = delete;
 			/**
-			 * @brief ƒRƒs[‘ã“ü‰‰Zq‚ğíœ
+			 * @brief ã‚³ãƒ”ãƒ¼ä»£å…¥æ¼”ç®—å­ã‚’å‰Šé™¤
 			 */
 			ServiceLocator& operator=(const ServiceLocator&) = delete;
 			/**
-			 * @brief ƒ€[ƒuƒRƒ“ƒXƒgƒ‰ƒNƒ^
+			 * @brief ãƒ ãƒ¼ãƒ–ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 			 */
 			ServiceLocator(ServiceLocator&&) noexcept = default;
 			/**
-			 * @brief ƒ€[ƒu‘ã“ü‰‰Zq
+			 * @brief ãƒ ãƒ¼ãƒ–ä»£å…¥æ¼”ç®—å­
 			 */
 			ServiceLocator& operator=(ServiceLocator&&) noexcept = default;
 			/**
-			 * @brief ƒfƒXƒgƒ‰ƒNƒ^
+			 * @brief ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 			 */
 			~ServiceLocator() {
 				created = false;
 			}
 
 			/**
-			 * @brief ‰Šú‰»ˆ—(•¡”‰ñŒÄ‚Ño‚µ‹Ö~)
+			 * @brief åˆæœŸåŒ–å‡¦ç†(è¤‡æ•°å›å‘¼ã³å‡ºã—ç¦æ­¢)
 			 */
 			template<typename... Services>
 			void InitAndRegisterStaticService() noexcept {
@@ -97,17 +97,17 @@ namespace SFW
 				RebuildPlan_NeedLock();
 			}
 			/**
-			 * @brief “®“IƒT[ƒrƒX‚Ì“o˜^‚ğs‚¤
-			 * @tparam T ƒT[ƒrƒX‚ÌŒ^
+			 * @brief å‹•çš„ã‚µãƒ¼ãƒ“ã‚¹ã®ç™»éŒ²ã‚’è¡Œã†
+			 * @tparam T ã‚µãƒ¼ãƒ“ã‚¹ã®å‹
 			 */
 			template<typename... T>
 			void RegisterDynamicService() noexcept {
-				// “®“IƒT[ƒrƒX‚Ì“o˜^‚ğs‚¤
+				// å‹•çš„ã‚µãƒ¼ãƒ“ã‚¹ã®ç™»éŒ²ã‚’è¡Œã†
 				(AllRegisterDynamicService<T>(), ...);
 			}
 			/**
-			 * @brief ƒT[ƒrƒX‚Ì“o˜^‚ğ‰ğœ‚·‚é(“®“I‚ÈƒT[ƒrƒXŒÀ’è)
-			 * @tparam T ƒT[ƒrƒX‚ÌŒ^
+			 * @brief ã‚µãƒ¼ãƒ“ã‚¹ã®ç™»éŒ²ã‚’è§£é™¤ã™ã‚‹(å‹•çš„ãªã‚µãƒ¼ãƒ“ã‚¹é™å®š)
+			 * @tparam T ã‚µãƒ¼ãƒ“ã‚¹ã®å‹
 			 */
 			template<typename T>
 			void UnregisterDynamicService() {
@@ -152,9 +152,9 @@ namespace SFW
 				RebuildPlan_NeedLock();
 			}
 			/**
-			 * @brief ƒT[ƒrƒX‚ğæ“¾‚·‚é(const‹­§‰ğœ)
-			 * @tparam T ƒT[ƒrƒX‚ÌŒ^
-			 * @return ƒT[ƒrƒX‚Ìƒ|ƒCƒ“ƒ^
+			 * @brief ã‚µãƒ¼ãƒ“ã‚¹ã‚’å–å¾—ã™ã‚‹(constå¼·åˆ¶è§£é™¤)
+			 * @tparam T ã‚µãƒ¼ãƒ“ã‚¹ã®å‹
+			 * @return ã‚µãƒ¼ãƒ“ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 			 */
 			template<typename T>
 			T* Get() const noexcept {
@@ -170,26 +170,26 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒvƒ‰ƒ“’Ê‚è‚ÉƒT[ƒrƒX‚ÌXV‚ğs‚¤
+			 * @brief ãƒ—ãƒ©ãƒ³é€šã‚Šã«ã‚µãƒ¼ãƒ“ã‚¹ã®æ›´æ–°ã‚’è¡Œã†
 			 */
 			void UpdateService(double dt, IThreadExecutor* executor) {
-				// ƒƒbƒN•s—vF•s•Ï plan_ ‚ğ“Ç‚Ş‚¾‚¯
-				auto p = plan_;                 // shared_ptr ‚ÌƒRƒs[‚Í lock-free
+				// ãƒ­ãƒƒã‚¯ä¸è¦ï¼šä¸å¤‰ plan_ ã‚’èª­ã‚€ã ã‘
+				auto p = plan_;                 // shared_ptr ã®ã‚³ãƒ”ãƒ¼ã¯ lock-free
 				if (!p) {
-					// ‰‰ñ‚¾‚¯•ÛŒ¯i’Êí‚Í‰Šú‰»‚Å\’zÏ‚İj
+					// åˆå›ã ã‘ä¿é™ºï¼ˆé€šå¸¸ã¯åˆæœŸåŒ–ã§æ§‹ç¯‰æ¸ˆã¿ï¼‰
 					std::shared_lock<std::shared_mutex> lk(*mapMutex);
-					// Executor æ“¾‚â‘©‚Ë’¼‚µ‚Ís‚í‚¸A’¼—ñƒtƒH[ƒ‹ƒoƒbƒN‚Å‚à—Ç‚¢‚ª
-					// ƒvƒ‰ƒ“–¢\’z‚È‚ç‰½‚à‚µ‚È‚¢‚©A‹Œ’¼—ñƒ‹[ƒv‚É‘Ş”ğ‚µ‚Ä‚àOK
-					for (auto* s : updateServices) if (s) s->PreUpdate(dt); // ƒtƒH[ƒ‹ƒoƒbƒN
+					// Executor å–å¾—ã‚„æŸã­ç›´ã—ã¯è¡Œã‚ãšã€ç›´åˆ—ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ã§ã‚‚è‰¯ã„ãŒ
+					// ãƒ—ãƒ©ãƒ³æœªæ§‹ç¯‰ãªã‚‰ä½•ã‚‚ã—ãªã„ã‹ã€æ—§ç›´åˆ—ãƒ«ãƒ¼ãƒ—ã«é€€é¿ã—ã¦ã‚‚OK
+					for (auto* s : updateServices) if (s) s->PreUpdate(dt); // ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯
 					return;
 				}
 				for (const auto& phase : plan_->phases) {
-					// group>=1‚ÌƒOƒ‹[ƒv‚ğ•À—ñ‚ÅXV
+					// group>=1ã®ã‚°ãƒ«ãƒ¼ãƒ—ã‚’ä¸¦åˆ—ã§æ›´æ–°
 					ThreadCountDownLatch latch((int)phase.parallelGroups.size());
 					for (auto& g : phase.parallelGroups)
 					{
 						executor->Submit([&g, &latch, dt]() {
-							// ƒOƒ‹[ƒv“à‚Í order ‡‚É’¼—ñ
+							// ã‚°ãƒ«ãƒ¼ãƒ—å†…ã¯ order é †ã«ç›´åˆ—
 							for (IUpdateService* s : g.serial) {
 								s->PreUpdate(dt);
 							}
@@ -197,16 +197,16 @@ namespace SFW
 							});
 					}
 
-					// group==0 ‚Ìg’¼—ñƒŒ[ƒ“h‚ğƒƒCƒ“ƒXƒŒƒbƒh‚Å‡‚ÉÀs
+					// group==0 ã®â€œç›´åˆ—ãƒ¬ãƒ¼ãƒ³â€ã‚’ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰ã§é †ã«å®Ÿè¡Œ
 					for (auto* s : phase.serialLane) s->PreUpdate(dt);
 
-					//•À—ñXV‘Ò‚¿
+					//ä¸¦åˆ—æ›´æ–°å¾…ã¡
 					latch.Wait();
 				}
 			}
 
 			/**
-			 * @brief ƒRƒ~ƒbƒgƒT[ƒrƒX‚ÌŠÖ”ŒÄ‚Ño‚µ
+			 * @brief ã‚³ãƒŸãƒƒãƒˆã‚µãƒ¼ãƒ“ã‚¹ã®é–¢æ•°å‘¼ã³å‡ºã—
 			 */
 			void CommitService(double deltaTime) {
 				for (auto* service : commitServices) {
@@ -216,8 +216,8 @@ namespace SFW
 
 		private:
 			/**
-			 * @brief ƒT[ƒrƒX‚ğ“o˜^‚·‚é(Ã“I‚ÈƒT[ƒrƒXŒÀ’èAˆø”‚ ‚è)
-			 * @param service ƒT[ƒrƒX‚Ìƒ|ƒCƒ“ƒ^
+			 * @brief ã‚µãƒ¼ãƒ“ã‚¹ã‚’ç™»éŒ²ã™ã‚‹(é™çš„ãªã‚µãƒ¼ãƒ“ã‚¹é™å®šã€å¼•æ•°ã‚ã‚Š)
+			 * @param service ã‚µãƒ¼ãƒ“ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 			 */
 			template<typename T>
 			void AllRegisterStaticServiceWithArg(T* service) noexcept {
@@ -242,16 +242,16 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ‚·‚×‚Ä‚ÌƒT[ƒrƒX‚ğ“o˜^‚·‚é
-			 * @param service ƒT[ƒrƒX‚Ìƒ|ƒCƒ“ƒ^
+			 * @brief ã™ã¹ã¦ã®ã‚µãƒ¼ãƒ“ã‚¹ã‚’ç™»éŒ²ã™ã‚‹
+			 * @param service ã‚µãƒ¼ãƒ“ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 			 */
 			template<typename T>
 			void AllRegisterStaticService() noexcept {
 				static_assert(T::isStatic, "Cannot register dynamic service.");
 				SFW_ASSERT((!IsRegistered<T>()) && "Cannot re-register static service.");
 
-				// ServiceLocator ‚Í—Bˆê‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Æ‚µ‚ÄİŒv‚³‚ê‚Ä‚¨‚èA
-				// ŠeƒT[ƒrƒXŒ^‚²‚Æ‚É1‚Â‚¾‚¯ static ‚É•Û‚µ‚Ä–â‘è‚È‚¢
+				// ServiceLocator ã¯å”¯ä¸€ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¨ã—ã¦è¨­è¨ˆã•ã‚Œã¦ãŠã‚Šã€
+				// å„ã‚µãƒ¼ãƒ“ã‚¹å‹ã”ã¨ã«1ã¤ã ã‘ static ã«ä¿æŒã—ã¦å•é¡Œãªã„
 				static std::unique_ptr<T> service = std::make_unique<T>();
 
 				size_t updateIndex = updateServices.size();
@@ -271,8 +271,8 @@ namespace SFW
 				services[typeid(T)] = Location{ service.get(),updateIndex, T::isStatic };
 			}
 			/**
-			 * @brief ƒT[ƒrƒX‚ğ“o˜^‚·‚é(“®“I‚ÈƒT[ƒrƒXŒÀ’è)
-			 * @tparam T ƒT[ƒrƒX‚ÌŒ^
+			 * @brief ã‚µãƒ¼ãƒ“ã‚¹ã‚’ç™»éŒ²ã™ã‚‹(å‹•çš„ãªã‚µãƒ¼ãƒ“ã‚¹é™å®š)
+			 * @tparam T ã‚µãƒ¼ãƒ“ã‚¹ã®å‹
 			 */
 			template<typename T>
 			void AllRegisterDynamicService() noexcept {
@@ -283,8 +283,8 @@ namespace SFW
 					return;
 				}
 
-				// ServiceLocator ‚Í—Bˆê‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Æ‚µ‚ÄİŒv‚³‚ê‚Ä‚¨‚èA
-				// ŠeƒT[ƒrƒXŒ^‚²‚Æ‚É1‚Â‚¾‚¯ static ‚É•Û‚µ‚Ä–â‘è‚È‚¢
+				// ServiceLocator ã¯å”¯ä¸€ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¨ã—ã¦è¨­è¨ˆã•ã‚Œã¦ãŠã‚Šã€
+				// å„ã‚µãƒ¼ãƒ“ã‚¹å‹ã”ã¨ã«1ã¤ã ã‘ static ã«ä¿æŒã—ã¦å•é¡Œãªã„
 				static std::unique_ptr<T> service;
 				service = std::make_unique<T>();
 
@@ -310,26 +310,26 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒT[ƒrƒX‚ª“o˜^‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
-			 * @return “o˜^‚³‚ê‚Ä‚¢‚éê‡true
+			 * @brief ã‚µãƒ¼ãƒ“ã‚¹ãŒç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹
+			 * @return ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹å ´åˆtrue
 			 */
 			template<typename T>
 			bool IsRegistered() const {
 				return services.find(typeid(T)) != services.end();
 			}
 			/**
-			 * @brief UpdateService‚©‚çÀsƒvƒ‰ƒ“‚ğÄ\’z‚·‚é
+			 * @brief UpdateServiceã‹ã‚‰å®Ÿè¡Œãƒ—ãƒ©ãƒ³ã‚’å†æ§‹ç¯‰ã™ã‚‹
 			 */
 			void RebuildPlan_NeedLock() {
-				// “o˜^Ï‚İ UpdateEntry ‚ğƒtƒF[ƒY¨ƒOƒ‹[ƒv¨order ‚Å‘©‚Ë’¼‚·
-				// ‚±‚±‚ÍA‘O‰ñˆÄ‚Ì’Ê‚è UpdateEntry ƒxƒNƒ^‚ğ‚Á‚Ä‚¢‚é‘O’ñ
+				// ç™»éŒ²æ¸ˆã¿ UpdateEntry ã‚’ãƒ•ã‚§ãƒ¼ã‚ºâ†’ã‚°ãƒ«ãƒ¼ãƒ—â†’order ã§æŸã­ç›´ã™
+				// ã“ã“ã¯ã€å‰å›æ¡ˆã®é€šã‚Š UpdateEntry ãƒ™ã‚¯ã‚¿ã‚’æŒã£ã¦ã„ã‚‹å‰æ
 				std::vector<UpdateEntry> entries;
 				entries.reserve(updateServices.size());
 				for (auto* s : updateServices) {
 					if (!s) continue;
 					UpdateEntry e{};
 					e.ptr = s;
-					e.typeIndex = s->typeIndex;              // Šù‘¶ƒR[ƒh‚ªİ’èÏ‚İ :contentReference[oaicite:4]{index=4}
+					e.typeIndex = s->typeIndex;              // æ—¢å­˜ã‚³ãƒ¼ãƒ‰ãŒè¨­å®šæ¸ˆã¿ :contentReference[oaicite:4]{index=4}
 					e.phase = s->phase;
 					e.group = s->group;
 					e.order = s->order;
@@ -340,11 +340,11 @@ namespace SFW
 				if (entries.empty()) { return; }
 
 				plan_->phases.resize(size_t(maxPhase - minPhase + 1));
-				// group id ‚Í–§‚Å‚È‚¢‰Â”\«‚ ‚è ¨ ‚Ü‚¸ grouping
+				// group id ã¯å¯†ã§ãªã„å¯èƒ½æ€§ã‚ã‚Š â†’ ã¾ãš grouping
 				std::unordered_map<uint16_t, std::vector<UpdateEntry>> tmpGroups;
 
 				for (uint16_t ph = minPhase; ph <= maxPhase; ++ph) {
-					// ƒtƒF[ƒY“àFgroup==0 ‚Íg’¼—ñƒŒ[ƒ“hAgroup>=1 ‚Íg•À—ñƒOƒ‹[ƒvh
+					// ãƒ•ã‚§ãƒ¼ã‚ºå†…ï¼šgroup==0 ã¯â€œç›´åˆ—ãƒ¬ãƒ¼ãƒ³â€ã€group>=1 ã¯â€œä¸¦åˆ—ã‚°ãƒ«ãƒ¼ãƒ—â€
 					std::unordered_map<uint16_t, std::vector<UpdateEntry>> groups;
 					std::vector<UpdateEntry> lane0;
 					for (auto& e : entries) if (e.phase == ph) {
@@ -354,13 +354,13 @@ namespace SFW
 
 					auto& phase = plan_->phases[size_t(ph - minPhase)];
 
-					// lane0 ‚Í order ¸‡‚Å’¼—ñÀs
+					// lane0 ã¯ order æ˜‡é †ã§ç›´åˆ—å®Ÿè¡Œ
 					std::sort(lane0.begin(), lane0.end(), [](auto& a, auto& b) { return a.order < b.order; });
 					phase.serialLane.clear();
 					phase.serialLane.reserve(lane0.size());
 					for (auto& e : lane0) phase.serialLane.push_back(e.ptr);
 
-					// group>=1 ‚ÍŠeƒOƒ‹[ƒv“à‚ğ order ƒ\[ƒg ¨ parallelGroups ‚É“ü‚ê‚é
+					// group>=1 ã¯å„ã‚°ãƒ«ãƒ¼ãƒ—å†…ã‚’ order ã‚½ãƒ¼ãƒˆ â†’ parallelGroups ã«å…¥ã‚Œã‚‹
 					phase.parallelGroups.clear();
 					phase.parallelGroups.reserve(groups.size());
 					for (auto& kv : groups) {
@@ -375,11 +375,11 @@ namespace SFW
 			}
 
 			/**
-			 * @brief ƒT[ƒrƒXƒ}ƒbƒv(GetŠÖ”‚Å‘ÎÛ‚ÌŒ^‚Écast‚·‚é)
+			 * @brief ã‚µãƒ¼ãƒ“ã‚¹ãƒãƒƒãƒ—(Geté–¢æ•°ã§å¯¾è±¡ã®å‹ã«castã™ã‚‹)
 			 */
 			std::unordered_map<std::type_index, Location> services;
 
-			//ƒT[ƒrƒXƒ}ƒbƒv‚Ö‚ÌƒAƒNƒZƒX“¯Šú
+			//ã‚µãƒ¼ãƒ“ã‚¹ãƒãƒƒãƒ—ã¸ã®ã‚¢ã‚¯ã‚»ã‚¹åŒæœŸ
 			std::unique_ptr<std::shared_mutex> mapMutex;
 
 			struct UpdateEntry {
@@ -390,25 +390,25 @@ namespace SFW
 				uint16_t order = 0;
 			};
 
-			// Àsƒvƒ‰ƒ“i•s•ÏƒIƒuƒWƒFƒNƒg‚Æ‚µ‚Ä‹¤—Lj
+			// å®Ÿè¡Œãƒ—ãƒ©ãƒ³ï¼ˆä¸å¤‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦å…±æœ‰ï¼‰
 			struct ExecPlan {
-				struct GroupPlan { std::vector<IUpdateService*> serial; };      // ƒOƒ‹[ƒv“à‚Í’¼—ñ
+				struct GroupPlan { std::vector<IUpdateService*> serial; };      // ã‚°ãƒ«ãƒ¼ãƒ—å†…ã¯ç›´åˆ—
 				struct PhasePlan {
-					std::vector<IUpdateService*> serialLane; // group==0 ‚ğ’¼—ñ‚ÅÀs
-					std::vector<GroupPlan> parallelGroups;  // group>=1 ‚ğ•À—ñƒOƒ‹[ƒv‚Æ‚µ‚ÄÀs
+					std::vector<IUpdateService*> serialLane; // group==0 ã‚’ç›´åˆ—ã§å®Ÿè¡Œ
+					std::vector<GroupPlan> parallelGroups;  // group>=1 ã‚’ä¸¦åˆ—ã‚°ãƒ«ãƒ¼ãƒ—ã¨ã—ã¦å®Ÿè¡Œ
 				};
 				std::vector<PhasePlan> phases;
 			};
-			// XVƒT[ƒrƒX‚ÌƒŠƒXƒg
-			std::shared_ptr<ExecPlan> plan_;    // –ˆƒtƒŒ[ƒ€“Ç‚İæ‚è‚Ì‚İ
+			// æ›´æ–°ã‚µãƒ¼ãƒ“ã‚¹ã®ãƒªã‚¹ãƒˆ
+			std::shared_ptr<ExecPlan> plan_;    // æ¯ãƒ•ãƒ¬ãƒ¼ãƒ èª­ã¿å–ã‚Šã®ã¿
 
 			std::vector<IUpdateService*> updateServices;
 
 			std::vector<ICommitService*> commitServices;
 
 		public:
-			// ƒ[ƒ‹ƒh‚É‚¾‚¯Ã“IƒT[ƒrƒX‚ğ’Ç‰Á“o˜^‚³‚¹‚é‚½‚ß‚ÌƒtƒŒƒ“ƒhƒNƒ‰ƒX
-			// WorldRequestService‚ğ“o˜^‚·‚é‚½‚ß‚É—˜—p‚µ‚Ä‚¢‚é
+			// ãƒ¯ãƒ¼ãƒ«ãƒ‰ã«ã ã‘é™çš„ã‚µãƒ¼ãƒ“ã‚¹ã‚’è¿½åŠ ç™»éŒ²ã•ã›ã‚‹ãŸã‚ã®ãƒ•ãƒ¬ãƒ³ãƒ‰ã‚¯ãƒ©ã‚¹
+			// WorldRequestServiceã‚’ç™»éŒ²ã™ã‚‹ãŸã‚ã«åˆ©ç”¨ã—ã¦ã„ã‚‹
 			class WorldAccessor {
 				template<PointerType... Services>
 				static void AddStaticService(ServiceLocator* locator, Services... service) {

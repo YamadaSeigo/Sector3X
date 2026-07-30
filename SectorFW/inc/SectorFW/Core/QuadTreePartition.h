@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   QuadTreePartition.h
- * @brief ƒNƒAƒbƒhƒcƒŠ[ƒp[ƒeƒBƒVƒ‡ƒ“‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief ã‚¯ã‚¢ãƒƒãƒ‰ãƒ„ãƒªãƒ¼ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -25,7 +25,7 @@
 namespace SFW
 {
 	/**
-	 * @brief ƒNƒAƒbƒhƒcƒŠ[(x-z)ƒp[ƒeƒBƒVƒ‡ƒ“‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+	 * @brief ã‚¯ã‚¢ãƒƒãƒ‰ãƒ„ãƒªãƒ¼(x-z)ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 	 */
 	class QuadTreePartition
 	{
@@ -35,18 +35,18 @@ namespace SFW
 
 		enum class ZPositive { North, South };
 		//========================================================================
-		// Z+‚ª–k‚©“ì‚©
+		// Z+ãŒåŒ—ã‹å—ã‹
 		static constexpr ZPositive kZPositive = ZPositive::North;
 		//========================================================================
 
-		//“‡‚·‚é‚©ƒ`ƒFƒbƒNŠÔŠu
-		static inline constexpr double coalesceInterval = 10.0; // •b
+		//çµ±åˆã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯é–“éš”
+		static inline constexpr double coalesceInterval = 10.0; // ç§’
 		/**
-		 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @param worldW X•ûŒü‚ÌÅ¬—t‚Ì”
-		 * @param worldH Z•ûŒü‚ÌÅ¬—t‚Ì”
-		 * @param minLeafSize Å¬—t‚ÌƒTƒCƒY(ƒ[ƒ‹ƒhƒTƒCƒY‚É‘Î‚·‚é”ä—¦A0.0~1.0)
-		 * @param maxEntitiesPerLeaf 1‚Â‚Ì—t‚ÉŠi”[‚Å‚«‚éƒGƒ“ƒeƒBƒeƒB‚ÌÅ‘å”
+		 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @param worldW Xæ–¹å‘ã®æœ€å°è‘‰ã®æ•°
+		 * @param worldH Zæ–¹å‘ã®æœ€å°è‘‰ã®æ•°
+		 * @param minLeafSize æœ€å°è‘‰ã®ã‚µã‚¤ã‚º(ãƒ¯ãƒ¼ãƒ«ãƒ‰ã‚µã‚¤ã‚ºã«å¯¾ã™ã‚‹æ¯”ç‡ã€0.0~1.0)
+		 * @param maxEntitiesPerLeaf 1ã¤ã®è‘‰ã«æ ¼ç´ã§ãã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®æœ€å¤§æ•°
 		 */
 		explicit QuadTreePartition(
 			Math::Vec3f originWS,
@@ -63,11 +63,11 @@ namespace SFW
 			m_root = std::make_unique<Node>();
 			m_root->depth = 0;
 			m_root->bounds = { Math::Vec2f(0.f, 0.f), Math::Vec2f(float(m_worldW), float(m_worldH)) };
-			m_leafCount = 1; // —t‚Æ‚µ‚ÄƒXƒ^[ƒg
+			m_leafCount = 1; // è‘‰ã¨ã—ã¦ã‚¹ã‚¿ãƒ¼ãƒˆ
 		}
 		/**
-		 * @brief ƒGƒ“ƒeƒBƒeƒB‚Ì”‚ª­‚È‚¢—t‚ğ“‡‚½‚ß‚ÉXV
-		 * @param deltaTime ‘O‰ñ‚ÌXV‚©‚ç‚ÌŒo‰ßŠÔ(•b)
+		 * @brief ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®æ•°ãŒå°‘ãªã„è‘‰ã‚’çµ±åˆãŸã‚ã«æ›´æ–°
+		 * @param deltaTime å‰å›ã®æ›´æ–°ã‹ã‚‰ã®çµŒéæ™‚é–“(ç§’)
 		 */
 		void Update(double deltaTime) {
 			m_coalesceTimer += deltaTime;
@@ -77,12 +77,12 @@ namespace SFW
 			}
 		}
 		/**
-		 * @brief w’è‚µ‚½ˆÊ’u‚É‚ ‚éƒ`ƒƒƒ“ƒN‚ğæ“¾‚·‚éŠÖ”
-		 * @param wp ƒ[ƒ‹ƒhˆÊ’u(x,z)
-		 * @param reg ƒ`ƒƒƒ“ƒNƒŒƒWƒXƒgƒŠ
-		 * @param level ƒŒƒxƒ‹ID
-		 * @param policy ”ÍˆÍŠOƒ|ƒŠƒV[
-		 * @return ƒ`ƒƒƒ“ƒN‚Ö‚Ìƒ|ƒCƒ“ƒ^(‘¶İ‚µ‚È‚¢ê‡‚Ístd::nullopt)
+		 * @brief æŒ‡å®šã—ãŸä½ç½®ã«ã‚ã‚‹ãƒãƒ£ãƒ³ã‚¯ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @param wp ãƒ¯ãƒ¼ãƒ«ãƒ‰ä½ç½®(x,z)
+		 * @param reg ãƒãƒ£ãƒ³ã‚¯ãƒ¬ã‚¸ã‚¹ãƒˆãƒª
+		 * @param level ãƒ¬ãƒ™ãƒ«ID
+		 * @param policy ç¯„å›²å¤–ãƒãƒªã‚·ãƒ¼
+		 * @return ãƒãƒ£ãƒ³ã‚¯ã¸ã®ãƒã‚¤ãƒ³ã‚¿(å­˜åœ¨ã—ãªã„å ´åˆã¯std::nullopt)
 		 */
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f wp,
 			SpatialChunkRegistry& reg, LevelID level,
@@ -101,14 +101,14 @@ namespace SFW
 			return &leaf->chunk;
 		}
 		/**
-		 * @brief ƒOƒ[ƒoƒ‹ƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[‚ğæ“¾‚·‚éŠÖ”
-		 * @return ƒOƒ[ƒoƒ‹ƒGƒ“ƒeƒBƒeƒBƒ}ƒl[ƒWƒƒ[‚Ö‚ÌQÆ
+		 * @brief ã‚°ãƒ­ãƒ¼ãƒãƒ«ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return ã‚°ãƒ­ãƒ¼ãƒãƒ«ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã¸ã®å‚ç…§
 		 */
 		ECS::EntityManager& GetGlobalEntityManager() noexcept { return m_global; }
 		/**
-		 * @brief ‚·‚×‚Ä‚Ìƒ`ƒƒƒ“ƒN‚ğƒŒƒWƒXƒgƒŠ‚É“o˜^‚·‚éŠÖ”
-		 * @param reg ƒ`ƒƒƒ“ƒNƒŒƒWƒXƒgƒŠ
-		 * @param level ƒŒƒxƒ‹ID
+		 * @brief ã™ã¹ã¦ã®ãƒãƒ£ãƒ³ã‚¯ã‚’ãƒ¬ã‚¸ã‚¹ãƒˆãƒªã«ç™»éŒ²ã™ã‚‹é–¢æ•°
+		 * @param reg ãƒãƒ£ãƒ³ã‚¯ãƒ¬ã‚¸ã‚¹ãƒˆãƒª
+		 * @param level ãƒ¬ãƒ™ãƒ«ID
 		 */
 		void RegisterAllChunks(SpatialChunkRegistry& reg, LevelID level)
 		{
@@ -120,8 +120,8 @@ namespace SFW
 				});
 		}
 		/**
-		 * @brief ‚·‚×‚Ä‚ÌƒGƒ“ƒeƒBƒeƒB”‚ğæ“¾‚·‚éŠÖ”
-		 * @return ƒGƒ“ƒeƒBƒeƒB”
+		 * @brief ã™ã¹ã¦ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£æ•°ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£æ•°
 		 */
 		size_t GetEntityNum() const noexcept
 		{
@@ -132,9 +132,9 @@ namespace SFW
 			return n;
 		}
 		/**
-		 * @brief w’è‚µ‚½‹‘ä‚ÉŠÜ‚Ü‚ê‚éƒ`ƒƒƒ“ƒN‚ğ—ñ‹“‚·‚éŠÖ”
-		 * @param fr ‹‘ä
-		 * @return ƒ`ƒƒƒ“ƒN‚Ìƒ|ƒCƒ“ƒ^”z—ñ
+		 * @brief æŒ‡å®šã—ãŸè¦–éŒå°ã«å«ã¾ã‚Œã‚‹ãƒãƒ£ãƒ³ã‚¯ã‚’åˆ—æŒ™ã™ã‚‹é–¢æ•°
+		 * @param fr è¦–éŒå°
+		 * @return ãƒãƒ£ãƒ³ã‚¯ã®ãƒã‚¤ãƒ³ã‚¿é…åˆ—
 		 */
 		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr) noexcept
 		{
@@ -207,7 +207,7 @@ namespace SFW
 			std::vector<Item> items; items.reserve(128);
 			if (!m_root) return {};
 
-			// ‰Â‹—t (chunk, bounds) ‚ğ“¯‚ÉûW‚·‚é“à•”Ä‹A
+			// å¯è¦–è‘‰ (chunk, bounds) ã‚’åŒæ™‚ã«åé›†ã™ã‚‹å†…éƒ¨å†å¸°
 			std::function<void(const Node&)> rec = [&](const Node& n) {
 				if (!nodeIntersectsFrustum(n, fr, -m_minLeaf, m_minLeaf)) return;
 				if (n.isLeaf()) {
@@ -251,14 +251,14 @@ namespace SFW
 			cullRecursive(*m_root, fr, ymin, ymax, std::forward<F>(f));
 		}
 		/**
-		 * @brief ƒ`ƒƒƒ“ƒN‚Ì‹«ŠEü‚ğƒfƒoƒbƒO•`‰æ‚·‚éŠÖ”
-		 * @param fr ‹‘ä
-		 * @param cp ƒJƒƒ‰ˆÊ’u
-		 * @param hy ƒJƒƒ‰‚‚³‚©‚ç‚Ìã‰º‚ÌL‚Ñ
-		 * @param outLine o—Íæ‚Ìƒ‰ƒCƒ“ƒoƒbƒtƒ@
-		 * @param capacity o—Íæ‚Ìƒ‰ƒCƒ“ƒoƒbƒtƒ@‚Ì—e—Ê(’¸“_”)
-		 * @param displayCount •\¦‚·‚éƒ`ƒƒƒ“ƒN‚ÌÅ‘å”(0‚Ìê‡‚Í•\¦‚µ‚È‚¢)
-		 * @return ‘‚«‚ñ‚¾’¸“_”
+		 * @brief ãƒãƒ£ãƒ³ã‚¯ã®å¢ƒç•Œç·šã‚’ãƒ‡ãƒãƒƒã‚°æç”»ã™ã‚‹é–¢æ•°
+		 * @param fr è¦–éŒå°
+		 * @param cp ã‚«ãƒ¡ãƒ©ä½ç½®
+		 * @param hy ã‚«ãƒ¡ãƒ©é«˜ã•ã‹ã‚‰ã®ä¸Šä¸‹ã®ä¼¸ã³
+		 * @param outLine å‡ºåŠ›å…ˆã®ãƒ©ã‚¤ãƒ³ãƒãƒƒãƒ•ã‚¡
+		 * @param capacity å‡ºåŠ›å…ˆã®ãƒ©ã‚¤ãƒ³ãƒãƒƒãƒ•ã‚¡ã®å®¹é‡(é ‚ç‚¹æ•°)
+		 * @param displayCount è¡¨ç¤ºã™ã‚‹ãƒãƒ£ãƒ³ã‚¯ã®æœ€å¤§æ•°(0ã®å ´åˆã¯è¡¨ç¤ºã—ãªã„)
+		 * @return æ›¸ãè¾¼ã‚“ã é ‚ç‚¹æ•°
 		 */
 		uint32_t CullChunkLine(const Math::Frustumf& fr,
 			Math::Vec3f cp, float hy, Debug::LineVertex* outLine,
@@ -289,7 +289,7 @@ namespace SFW
 				[](const Item& a, const Item& b) { return a.dist < b.dist; });
 			const size_t useN = std::min<size_t>(displayCount, items.size());
 
-			// 3) F‚Í‹——£ƒOƒ‰ƒfi‹ß=”’¨‰“=•j
+			// 3) è‰²ã¯è·é›¢ã‚°ãƒ©ãƒ‡ï¼ˆè¿‘=ç™½â†’é =é»’ï¼‰
 			float maxD = 0.f; for (size_t i = 0; i < useN; ++i) maxD = (std::max)(maxD, items[i].dist);
 			if (maxD <= 1e-6f) maxD = 1.f;
 
@@ -301,9 +301,9 @@ namespace SFW
 				const Math::Vec2f vec{ center.x - cp.x, center.y - cp.z };
 				const float len = vec.length();
 
-				if (len > maxD) continue; // •\¦‹——£ŠO
+				if (len > maxD) continue; // è¡¨ç¤ºè·é›¢å¤–
 
-				if (capacity - written < 8) break; // •K{F—e—Êƒ`ƒFƒbƒN
+				if (capacity - written < 8) break; // å¿…é ˆï¼šå®¹é‡ãƒã‚§ãƒƒã‚¯
 
 				const uint32_t rgba = Math::LerpColor(0xFFFFFFFFu, 0x00000000u, len / maxD);
 
@@ -322,7 +322,7 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒ`ƒƒƒ“ƒN‚ÌƒNƒŠƒA
+		 * @brief ãƒãƒ£ãƒ³ã‚¯ã®ã‚¯ãƒªã‚¢
 		 */
 		void CleanChunk()
 		{
@@ -341,14 +341,14 @@ namespace SFW
 			}
 			Node* n = m_root.get();
 			while (canSplit(*n)) {
-				if (n->isLeaf()) ensureChildren(*n);   // —t‚Ì‚Æ‚«q‚ğì‚é
-				const int qi = quadrant(*n, p.x, p.z);  //xz “ˆê
+				if (n->isLeaf()) ensureChildren(*n);   // è‘‰ã®ã¨ãå­ã‚’ä½œã‚‹
+				const int qi = quadrant(*n, p.x, p.z);  //xz çµ±ä¸€
 				n = n->child[qi].get();
 			}
 			return &n->chunk;
 		}
 
-		// —t‚ğğŒ‚Å•ªŠ„‚µ‚ÄÄ”z’u
+		// è‘‰ã‚’æ¡ä»¶ã§åˆ†å‰²ã—ã¦å†é…ç½®
 		void SubdivideIf(std::function<bool(const SpatialChunk&)> predicate,
 			std::function<Math::Vec3f(ECS::EntityID, ECS::EntityManager&)> posFn)
 		{
@@ -392,14 +392,14 @@ namespace SFW
 		{
 			std::vector<SpatialChunk*> out;
 			if (!m_root) return out;
-			queryAABB(*m_root, aabb, out); // ”ñ const ”Å
+			queryAABB(*m_root, aabb, out); // é const ç‰ˆ
 			return out;
 		}
 		std::vector<const SpatialChunk*> GetChunksAABB(const AABB& aabb) const
 		{
 			std::vector<const SpatialChunk*> out;
 			if (!m_root) return out;
-			queryAABB(*m_root, aabb, out); // const ”Å
+			queryAABB(*m_root, aabb, out); // const ç‰ˆ
 			return out;
 		}
 
@@ -407,14 +407,14 @@ namespace SFW
 		{
 			std::vector<SpatialChunk*> out;
 			if (!m_root) return out;
-			queryCircle(*m_root, c, out); // ”ñ const ”Å
+			queryCircle(*m_root, c, out); // é const ç‰ˆ
 			return out;
 		}
 		std::vector<const SpatialChunk*> GetChunksCircle(const Circle& c) const
 		{
 			std::vector<const SpatialChunk*> out;
 			if (!m_root) return out;
-			queryCircle(*m_root, c, out); // const ”Å
+			queryCircle(*m_root, c, out); // const ç‰ˆ
 			return out;
 		}
 
@@ -429,17 +429,17 @@ namespace SFW
 			const size_t cnt = em.GetEntityCount();
 
 			if (cnt > m_maxPerLeafCount && canSplit(*leaf)) {
-				// •ªŠ„‚µ‚ÄÄŠ„‚è“–‚Äi‘SID‚ğq‚Öj
+				// åˆ†å‰²ã—ã¦å†å‰²ã‚Šå½“ã¦ï¼ˆå…¨IDã‚’å­ã¸ï¼‰
 				subdivideAndReassign(*leaf, std::forward<PosFn>(posFn));
 
-				// ‚±‚Ì“_ p ‚Ìq—t‚ğ•Ô‚·
+				// ã“ã®ç‚¹ p ã®å­è‘‰ã‚’è¿”ã™
 				const int qi = quadrant(*leaf, p.x, p.z);
 				return &leaf->child[qi]->chunk;
 			}
 			return sc;
 		}
 
-		// —ñ‹“ƒ†[ƒeƒBƒŠƒeƒB
+		// åˆ—æŒ™ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£
 		template<class F> void ForEachLeaf(F&& f) { forEachLeaf(std::forward<F>(f)); }
 		template<class F> void ForEachLeaf(F&& f) const { forEachLeaf(std::forward<F>(f)); }
 
@@ -457,7 +457,7 @@ namespace SFW
 			forEachLeaf([&](const Node& n) { f(n.chunk.GetEntityManager()); });
 		}
 
-		// ƒfƒoƒbƒO—p
+		// ãƒ‡ãƒãƒƒã‚°ç”¨
 		uint32_t LeafCount() const noexcept { return m_leafCount; }
 		float MinLeafSize() const noexcept { return m_minLeaf; }
 
@@ -473,23 +473,23 @@ namespace SFW
 			uint16_t generation = 0;
 			uint8_t  depth = 0;
 			std::array<std::unique_ptr<Node>, 4> child{}; // NW, NE, SW, SE
-			SpatialChunk chunk; // —t‚Ì‚İÀ¿g—p
+			SpatialChunk chunk; // è‘‰ã®ã¿å®Ÿè³ªä½¿ç”¨
 
 			bool isLeaf() const noexcept {
 				return !child[0] && !child[1] && !child[2] && !child[3];
 			}
 		};
 
-		// ƒ†[ƒeƒBƒŠƒeƒBF—t‚ÌƒL[‚ª–¢”­s/–¢“o˜^‚È‚ç”­s‚µ‚Ä“o˜^
+		// ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ï¼šè‘‰ã®ã‚­ãƒ¼ãŒæœªç™ºè¡Œ/æœªç™»éŒ²ãªã‚‰ç™ºè¡Œã—ã¦ç™»éŒ²
 		inline void EnsureKeyRegisteredForLeaf(Node& leafNode,
 			SpatialChunkRegistry& reg,
 			LevelID level)
 		{
 			SpatialChunk& sc = leafNode.chunk;
 
-			// Šù‚É“o˜^Ï‚İ‚©‚ğŒy‚­”»’èFResolveOwner ‚ªæ‚ê‚é‚© / code==0 “™‚ÅŠÈˆÕƒ`ƒFƒbƒN
+			// æ—¢ã«ç™»éŒ²æ¸ˆã¿ã‹ã‚’è»½ãåˆ¤å®šï¼šResolveOwner ãŒå–ã‚Œã‚‹ã‹ / code==0 ç­‰ã§ç°¡æ˜“ãƒã‚§ãƒƒã‚¯
 			const SpatialChunkKey cur = sc.GetNodeKey();
-			if (reg.ResolveOwner(cur) != nullptr && cur.code != 0) return; // Šù“o˜^
+			if (reg.ResolveOwner(cur) != nullptr && cur.code != 0) return; // æ—¢ç™»éŒ²
 
 			const auto [ix, iy] = leafIndex(leafNode);
 			SpatialChunkKey key = MakeQuadKey(level, leafNode.depth, ix, iy, /*gen*/leafNode.generation);
@@ -519,9 +519,9 @@ namespace SFW
 			const float mz = 0.5f * (n.bounds.lb.y + n.bounds.ub.y);
 
 			const bool east = (x >= mx);
-			bool north = (z >= mz);               // ƒfƒtƒH‚Í North
+			bool north = (z >= mz);               // ãƒ‡ãƒ•ã‚©ã¯ North
 			if constexpr (kZPositive == ZPositive::South) north = !north;
-			// 0: NW, 1: NE, 2: SW, 3: SEiX?Z‚Å‚Ì•ûˆÊj
+			// 0: NW, 1: NE, 2: SW, 3: SEï¼ˆX?Zã§ã®æ–¹ä½ï¼‰
 			return (north ? 0 : 2) + (east ? 1 : 0);
 		}
 
@@ -542,7 +542,7 @@ namespace SFW
 				n.child[i]->depth = uint8_t(n.depth + 1);
 				n.child[i]->generation = 0;
 			}
-			m_leafCount += 3; // ‹Œ—t1 -> q4 ‚Å +3
+			m_leafCount += 3; // æ—§è‘‰1 -> å­4 ã§ +3
 		}
 
 		Node* descendToLeaf(Node& cur, float x, float z, bool createIfMissing) {
@@ -559,11 +559,11 @@ namespace SFW
 					if (!createIfMissing) break;
 
 					if (n->chunk.GetEntityManager().GetEntityCount() > 0) {
-						// q‰»‚É”º‚¤gÄ”z’u Splith‚ğæ‚ÉÀsiensureChildren‚Í“à•”‚Å‚â‚é”hj
-						subdivideAndReassign(*n, posFn);  // Entity ‚ğq—t‚Ö‘S‚ÄˆÚ‚·
+						// å­åŒ–ã«ä¼´ã†â€œå†é…ç½® Splitâ€ã‚’å…ˆã«å®Ÿè¡Œï¼ˆensureChildrenã¯å†…éƒ¨ã§ã‚„ã‚‹æ´¾ï¼‰
+						subdivideAndReassign(*n, posFn);  // Entity ã‚’å­è‘‰ã¸å…¨ã¦ç§»ã™
 					}
 					else {
-						ensureChildren(*n);               // ’†g‚ª‹ó‚È‚ç¶¬‚¾‚¯
+						ensureChildren(*n);               // ä¸­èº«ãŒç©ºãªã‚‰ç”Ÿæˆã ã‘
 					}
 				}
 				const int qi = quadrant(*n, x, z);
@@ -643,7 +643,7 @@ namespace SFW
 
 			float cyEff, eyEff;
 			if (!Math::Frustumf::ComputeYOverlapAtXZ(fr, cx, cz, ymin, ymax, cyEff, eyEff)) {
-				return false; // c‚Éd‚È‚ç‚È‚¢
+				return false; // ç¸¦ã«é‡ãªã‚‰ãªã„
 			}
 			const Math::Vec3f center{ cx,  cyEff, cz };
 			const Math::Vec3f extent{ ex,  eyEff, ez };
@@ -720,34 +720,34 @@ namespace SFW
 		{
 			if (!leaf.isLeaf() || !canSplit(leaf)) return;
 
-			// 1) q¶¬i—t¨“à•”j
+			// 1) å­ç”Ÿæˆï¼ˆè‘‰â†’å†…éƒ¨ï¼‰
 			ensureChildren(leaf);
 
 			ECS::EntityManager& src = leaf.chunk.GetEntityManager();
 
-			// 2) ƒ‹[ƒ^: id -> ˆÊ’u -> q‚Ì EM ‚ğ•Ô‚·
+			// 2) ãƒ«ãƒ¼ã‚¿: id -> ä½ç½® -> å­ã® EM ã‚’è¿”ã™
 			auto router = [&](ECS::EntityID id, const ECS::ComponentMask /*mask*/) -> ECS::EntityManager* {
-				const std::optional<Math::Vec3f> pos = posFn(id, src);          // ˆÊ’u‚Í "¡‚±‚±" ‚Ì EM ‚©‚çŒ©‚¦‚é
+				const std::optional<Math::Vec3f> pos = posFn(id, src);          // ä½ç½®ã¯ "ä»Šã“ã“" ã® EM ã‹ã‚‰è¦‹ãˆã‚‹
 				if (!pos) return nullptr;
-				const int qi = quadrant(leaf, pos->x, pos->z);      // xz ‚ÅqŒˆ’è
-				return &leaf.child[qi]->chunk.GetEntityManager();  // ˆ¶æ EM
+				const int qi = quadrant(leaf, pos->x, pos->z);      // xz ã§å­æ±ºå®š
+				return &leaf.child[qi]->chunk.GetEntityManager();  // å®›å…ˆ EM
 				};
 
-			// 3) ˆêŠ‡•ªŠ„ˆÚ‘—i”ñƒXƒp[ƒX¨ID‚²‚ÆAƒXƒp[ƒX¨ƒoƒPƒbƒgˆêŠ‡j
-			//    SplitByAll ‚Í dst.EM ‚Ö move + src ‘¤‚©‚çƒ[ƒJƒ‹œ‹‚Ü‚Å–Ê“|Œ©‚Ü‚·
-			(void)src.SplitByAll(router); // –ß‚è’l=ˆÚ‘—”i•K—v‚È‚çg—pj
-			//   - SplitByAll‚Ìd—l: ƒ‹[ƒ^‚ª•Ô‚· EM ‚²‚Æ‚É”ñƒXƒp[ƒX‚ğæsˆÚ‘—‚µAÅŒã‚ÉƒXƒp[ƒX‚ğ‚Ü‚Æ‚ß‚ÄˆÚ‘—iIDƒoƒPƒbƒgj
-			//     -> EntityManager.h / .cpp QÆ
-			//     i‚±‚ÌŒÄ‚Ño‚µ‚Åe—t‚Ìƒf[ƒ^‚Í "‹ó" ‚É‚È‚é‘z’èj
-			//     Ql: SplitByAll / MoveSparseIDsTo ‚Ì‘¶İ‚Æ–ğŠ„B:contentReference[oaicite:3]{index=3} :contentReference[oaicite:4]{index=4}
+			// 3) ä¸€æ‹¬åˆ†å‰²ç§»é€ï¼ˆéã‚¹ãƒ‘ãƒ¼ã‚¹â†’IDã”ã¨ã€ã‚¹ãƒ‘ãƒ¼ã‚¹â†’ãƒã‚±ãƒƒãƒˆä¸€æ‹¬ï¼‰
+			//    SplitByAll ã¯ dst.EM ã¸ move + src å´ã‹ã‚‰ãƒ­ãƒ¼ã‚«ãƒ«é™¤å»ã¾ã§é¢å€’è¦‹ã¾ã™
+			(void)src.SplitByAll(router); // æˆ»ã‚Šå€¤=ç§»é€æ•°ï¼ˆå¿…è¦ãªã‚‰ä½¿ç”¨ï¼‰
+			//   - SplitByAllã®ä»•æ§˜: ãƒ«ãƒ¼ã‚¿ãŒè¿”ã™ EM ã”ã¨ã«éã‚¹ãƒ‘ãƒ¼ã‚¹ã‚’å…ˆè¡Œç§»é€ã—ã€æœ€å¾Œã«ã‚¹ãƒ‘ãƒ¼ã‚¹ã‚’ã¾ã¨ã‚ã¦ç§»é€ï¼ˆIDãƒã‚±ãƒƒãƒˆï¼‰
+			//     -> EntityManager.h / .cpp å‚ç…§
+			//     ï¼ˆã“ã®å‘¼ã³å‡ºã—ã§è¦ªè‘‰ã®ãƒ‡ãƒ¼ã‚¿ã¯ "ç©º" ã«ãªã‚‹æƒ³å®šï¼‰
+			//     å‚è€ƒ: SplitByAll / MoveSparseIDsTo ã®å­˜åœ¨ã¨å½¹å‰²ã€‚:contentReference[oaicite:3]{index=3} :contentReference[oaicite:4]{index=4}
 
-			// 4) eƒm[ƒh¢‘ã‚ğXViRegisterAllChunks ‚ÉƒL[‚Ö”½‰fj
+			// 4) è¦ªãƒãƒ¼ãƒ‰ä¸–ä»£ã‚’æ›´æ–°ï¼ˆRegisterAllChunks æ™‚ã«ã‚­ãƒ¼ã¸åæ˜ ï¼‰
 			++leaf.generation;
 		}
 
 		/**
-		 * @brief “‡iq4—t->e—tj
-		 * @return ƒ}[ƒW‚µ‚½eƒm[ƒh‚Ì[“x
+		 * @brief çµ±åˆï¼ˆå­4è‘‰->è¦ªè‘‰ï¼‰
+		 * @return ãƒãƒ¼ã‚¸ã—ãŸè¦ªãƒãƒ¼ãƒ‰ã®æ·±åº¦
 		 */
 		size_t CoalesceUnderutilized()
 		{
@@ -761,26 +761,26 @@ namespace SFW
 			}
 			size_t mergedParents = 0;
 
-			// q¨e‚Ì‡‚Å•]‰¿iŒã’uj
+			// å­â†’è¦ªã®é †ã§è©•ä¾¡ï¼ˆå¾Œç½®ï¼‰
 			for (auto it = post.rbegin(); it != post.rend(); ++it) {
 				Node* n = *it;
-				// q‚ª4‚Â‘µ‚Á‚Ä‚¢‚Ä‘S‚Ä—tH
+				// å­ãŒ4ã¤æƒã£ã¦ã„ã¦å…¨ã¦è‘‰ï¼Ÿ
 				bool allLeaf = true;
 				for (int i = 0; i < 4; ++i) { if (!n->child[i] || !n->child[i]->isLeaf()) { allLeaf = false; break; } }
 				if (!allLeaf) continue;
 
-				// ‡ŒvŒ”
+				// åˆè¨ˆä»¶æ•°
 				size_t sum = 0;
 				for (int i = 0; i < 4; ++i) sum += n->child[i]->chunk.GetEntityManager().GetEntityCount();
 
 				if (sum <= m_minPerLeafCount) {
-					// 1) q¨e‚Ö“‡
+					// 1) å­â†’è¦ªã¸çµ±åˆ
 					auto& dst = n->chunk.GetEntityManager();
 					for (int i = 0; i < 4; ++i) {
 						auto& src = n->child[i]->chunk.GetEntityManager();
-						(void)dst.MergeFromAll(src); // ‘SˆÚ‘—i”ñƒXƒp[ƒX{ƒXƒp[ƒXj:contentReference[oaicite:5]{index=5} :contentReference[oaicite:6]{index=6}
+						(void)dst.MergeFromAll(src); // å…¨ç§»é€ï¼ˆéã‚¹ãƒ‘ãƒ¼ã‚¹ï¼‹ã‚¹ãƒ‘ãƒ¼ã‚¹ï¼‰:contentReference[oaicite:5]{index=5} :contentReference[oaicite:6]{index=6}
 					}
-					// 2) q‚ğ”jŠü‚µ‚Ä—t‚É–ß‚·
+					// 2) å­ã‚’ç ´æ£„ã—ã¦è‘‰ã«æˆ»ã™
 					n->child = {};
 					++n->generation;
 					m_leafCount -= 3; // 4->1
@@ -800,7 +800,7 @@ namespace SFW
 		ChunkSizeType m_worldH = 0;
 		float m_minLeaf = 1.0f;
 
-		uint32_t m_minPerLeafCount = 0; // “‡‚ÌƒgƒŠƒKiq4‡Œv‚ª‚±‚ê–¢–‚È‚çe‚É“‡j
+		uint32_t m_minPerLeafCount = 0; // çµ±åˆã®ãƒˆãƒªã‚¬ï¼ˆå­4åˆè¨ˆãŒã“ã‚Œæœªæº€ãªã‚‰è¦ªã«çµ±åˆï¼‰
 		uint32_t m_maxPerLeafCount = 1024;
 
 		uint32_t m_leafCount = 1;
@@ -808,7 +808,7 @@ namespace SFW
 		double m_coalesceTimer = 0.0;
 	};
 
-	// ==== Query “Áê‰» ====
+	// ==== Query ç‰¹æ®ŠåŒ– ====
 	namespace ECS {
 		template<>
 		inline std::vector<ArchetypeChunk*> Query::MatchingChunks(SFW::QuadTreePartition& ctx) const noexcept

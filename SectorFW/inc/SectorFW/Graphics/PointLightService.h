@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * \file   PointLightService.h
- * \brief “_ŒõŒ¹‚ğŠÇ—‚·‚éƒT[ƒrƒX‚Ì’è‹`
+ * \brief ç‚¹å…‰æºã‚’ç®¡ç†ã™ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®å®šç¾©
  * \author seigo
  * \date   December 2025
  *********************************************************************/
@@ -18,7 +18,7 @@
 
 namespace SFW::Graphics
 {
-	// ¢‘ã•t‚«ƒnƒ“ƒhƒ‹irefcount–³‚µj
+	// ä¸–ä»£ä»˜ããƒãƒ³ãƒ‰ãƒ«ï¼ˆrefcountç„¡ã—ï¼‰
 	struct PointLightHandle
 	{
 		uint32_t index = 0xFFFFFFFFu;
@@ -30,17 +30,17 @@ namespace SFW::Graphics
 		}
 	};
 
-	// ƒQ[ƒ€‘¤‚Ìƒ‰ƒCƒgƒpƒ‰ƒ[ƒ^
+	// ã‚²ãƒ¼ãƒ å´ã®ãƒ©ã‚¤ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 	struct PointLightDesc
 	{
 		Math::Vec3f offsetWS = { 0,0,0 };
 		Math::Vec3f color = { 1,1,1 };
-		float  intensity = 1.0f;   // –¾‚é‚³
-		float  range = 10.0f;  // ‰e‹¿‹——£
+		float  intensity = 1.0f;   // æ˜ã‚‹ã•
+		float  range = 10.0f;  // å½±éŸ¿è·é›¢
 		bool   castsShadow = false;
 	};
 
-	// GPU“]‘——pi—áFStructuredBufferŒü‚¯j
+	// GPUè»¢é€ç”¨ï¼ˆä¾‹ï¼šStructuredBufferå‘ã‘ï¼‰
 	struct GpuPointLight
 	{
 		GpuPointLight() = default;
@@ -63,7 +63,7 @@ namespace SFW::Graphics
 		Math::Vec3f color = {};      float intensity = {};
 		float invRange = {};
 		uint32_t flags = {};
-		// flags bit0: castsShadow ‚È‚Ç
+		// flags bit0: castsShadow ãªã©
 	};
 
 	class PointLightService : public ECS::IUpdateService
@@ -75,45 +75,45 @@ namespace SFW::Graphics
 
 		void PreUpdate(double deltaTime) override;
 
-		// —\–ñiƒI[ƒvƒ“ƒ[ƒ‹ƒh‚Í–‘Oreserve‚ªŒø‚­j
+		// äºˆç´„ï¼ˆã‚ªãƒ¼ãƒ—ãƒ³ãƒ¯ãƒ¼ãƒ«ãƒ‰ã¯äº‹å‰reserveãŒåŠ¹ãï¼‰
 		void Reserve(uint32_t capacity);
 
-		// ¶¬/”jŠü
+		// ç”Ÿæˆ/ç ´æ£„
 		PointLightHandle Create(const PointLightDesc& desc);
 		void Destroy(PointLightHandle h);
 
-		// ŒŸØ
+		// æ¤œè¨¼
 		bool IsValid(PointLightHandle h) const;
 
-		// XVidirty‚ğ—§‚Ä‚éj
+		// æ›´æ–°ï¼ˆdirtyã‚’ç«‹ã¦ã‚‹ï¼‰
 		void SetPosition(PointLightHandle h, const Math::Vec3f& posWS);
 		void SetParams(PointLightHandle h, const Math::Vec3f& color, float intensity, float range, bool castsShadow);
 
-		// æ“¾i“Ç‚İæ‚èj
+		// å–å¾—ï¼ˆèª­ã¿å–ã‚Šï¼‰
 		PointLightDesc Get(PointLightHandle h) const;
 
 		/**
-		 * @brief “Ç‚İæ‚è—pƒƒbƒN‚ğæ“¾‚·‚éŠÖ”
-		 * @return std::shared_lock<std::shared_mutex> æ“¾‚µ‚½“Ç‚İæ‚è—pƒƒbƒN
+		 * @brief èª­ã¿å–ã‚Šç”¨ãƒ­ãƒƒã‚¯ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return std::shared_lock<std::shared_mutex> å–å¾—ã—ãŸèª­ã¿å–ã‚Šç”¨ãƒ­ãƒƒã‚¯
 		 */
 		[[nodiscard]] std::shared_lock<std::shared_mutex> AcquireReadLock() const {
 			return std::shared_lock<std::shared_mutex>(m_mtx);
 		}
 		/**
-		 * @brief ‘‚«‚İ—pƒƒbƒN‚ğæ“¾‚·‚éŠÖ”
-		 * @return std::unique_lock<std::shared_mutex> æ“¾‚µ‚½‘‚«‚İ—pƒƒbƒN
+		 * @brief æ›¸ãè¾¼ã¿ç”¨ãƒ­ãƒƒã‚¯ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return std::unique_lock<std::shared_mutex> å–å¾—ã—ãŸæ›¸ãè¾¼ã¿ç”¨ãƒ­ãƒƒã‚¯
 		 */
 		[[nodiscard]] std::unique_lock<std::shared_mutex> AcquireWriteLock() {
 			return std::unique_lock<std::shared_mutex>(m_mtx);
 		}
 
-		// æ“¾i“Ç‚İæ‚èj
+		// å–å¾—ï¼ˆèª­ã¿å–ã‚Šï¼‰
 		PointLightDesc GetNoLock(PointLightHandle h) const;
 
 		/**
-		 * @brief w’è‚µ‚½“_ŒõŒ¹‚ğ•\¦ƒŠƒXƒg‚É’Ç‰Á‚·‚é
-		 * @param h@’Ç‰Á‚·‚é“_ŒõŒ¹ƒnƒ“ƒhƒ‹
-		 * @return@’Ç‰Á‚É¬Œ÷‚µ‚½‚ç trueA¸”s‚È‚ç false
+		 * @brief æŒ‡å®šã—ãŸç‚¹å…‰æºã‚’è¡¨ç¤ºãƒªã‚¹ãƒˆã«è¿½åŠ ã™ã‚‹
+		 * @param hã€€è¿½åŠ ã™ã‚‹ç‚¹å…‰æºãƒãƒ³ãƒ‰ãƒ«
+		 * @returnã€€è¿½åŠ ã«æˆåŠŸã—ãŸã‚‰ trueã€å¤±æ•—ãªã‚‰ false
 		 */
 		bool PushShowHandle(PointLightHandle h, Math::Vec3f pos);
 
@@ -135,16 +135,16 @@ namespace SFW::Graphics
 		};
 
 	private:
-		// “à•”ƒ†[ƒeƒBƒŠƒeƒBiƒƒbƒNÏ‚İ‘O’ñj
+		// å†…éƒ¨ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ï¼ˆãƒ­ãƒƒã‚¯æ¸ˆã¿å‰æï¼‰
 		bool isValidNoLock(PointLightHandle h) const;
 
 	private:
 		mutable std::shared_mutex m_mtx;
 
 		std::vector<Slot>     m_slots;
-		std::vector<uint32_t> m_generation; // index‚²‚Æ‚Ì¢‘ã
-		std::vector<uint32_t> m_freeList;   // ‹ó‚«ƒXƒƒbƒg
-		std::vector<uint8_t>  m_alive;      // aliveƒtƒ‰ƒOiSlot‚É‚à‚ ‚é‚ªŠÈˆÕQÆ—pj
+		std::vector<uint32_t> m_generation; // indexã”ã¨ã®ä¸–ä»£
+		std::vector<uint32_t> m_freeList;   // ç©ºãã‚¹ãƒ­ãƒƒãƒˆ
+		std::vector<uint8_t>  m_alive;      // aliveãƒ•ãƒ©ã‚°ï¼ˆSlotã«ã‚‚ã‚ã‚‹ãŒç°¡æ˜“å‚ç…§ç”¨ï¼‰
 
 		uint32_t m_aliveCount = 0;
 

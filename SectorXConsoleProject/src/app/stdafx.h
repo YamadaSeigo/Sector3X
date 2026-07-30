@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <SectorFW/sector11fw.h>
 #include <SectorFW/WindowHandler.h>

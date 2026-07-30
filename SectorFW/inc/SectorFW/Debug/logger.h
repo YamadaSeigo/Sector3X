@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   logger.hpp
- * @brief  ƒƒOo—Í‚Ì‚½‚ß‚Ìƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief  ãƒ­ã‚°å‡ºåŠ›ã®ãŸã‚ã®ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -22,14 +22,14 @@
 
 #endif //_DEBUG
 
- // ƒƒO‚Éƒtƒ@ƒCƒ‹–¼As”Ô†AŠÖ”–¼‚ğ•\¦‚·‚éê‡‚ÍˆÈ‰º‚Ì‚¢‚¸‚ê‚©‚ğ—LŒø‰»
+ // ãƒ­ã‚°ã«ãƒ•ã‚¡ã‚¤ãƒ«åã€è¡Œç•ªå·ã€é–¢æ•°åã‚’è¡¨ç¤ºã™ã‚‹å ´åˆã¯ä»¥ä¸‹ã®ã„ãšã‚Œã‹ã‚’æœ‰åŠ¹åŒ–
 //#define LOG_SHOW_TIME
 //#define LOG_SHOW_PEFIX
 //#define LOG_SHOW_FILE
 //#define LOG_SHOW_LINE
 //#define LOG_SHOW_FUNC
 
-// ƒƒO‚ÉÚ×‚Èƒ^ƒCƒ€ƒXƒ^ƒ“ƒviƒ~ƒŠ•b‚Ü‚Åj‚ğ•\¦‚·‚éê‡‚ÍˆÈ‰º‚ğ—LŒø‰»
+// ãƒ­ã‚°ã«è©³ç´°ãªã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ï¼ˆãƒŸãƒªç§’ã¾ã§ï¼‰ã‚’è¡¨ç¤ºã™ã‚‹å ´åˆã¯ä»¥ä¸‹ã‚’æœ‰åŠ¹åŒ–
 //#define LOG_SHOW_DETAIL_TIME
 
 namespace SFW {
@@ -40,8 +40,8 @@ namespace SFW {
 #include <windows.h>
 
 		/**
-		 * @brief ƒRƒ“ƒ\[ƒ‹‚ÌF‚ğİ’è‚·‚éŠÖ”
-		 * @param level ƒƒOƒŒƒxƒ‹i0: î•ñ, 1: Œx, 2: ƒGƒ‰[j
+		 * @brief ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã®è‰²ã‚’è¨­å®šã™ã‚‹é–¢æ•°
+		 * @param level ãƒ­ã‚°ãƒ¬ãƒ™ãƒ«ï¼ˆ0: æƒ…å ±, 1: è­¦å‘Š, 2: ã‚¨ãƒ©ãƒ¼ï¼‰
 		 */
 		inline void SetConsoleColor(int level) {
 			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -54,10 +54,10 @@ namespace SFW {
 			}
 			SetConsoleTextAttribute(hConsole, color);
 		}
-#else // Linux‚âMacOS‚È‚Ç‚Ì‘¼‚Ìƒvƒ‰ƒbƒgƒtƒH[ƒ€‚Å‚ÍANSIƒGƒXƒP[ƒvƒV[ƒPƒ“ƒX‚ğg—p
+#else // Linuxã‚„MacOSãªã©ã®ä»–ã®ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ ã§ã¯ANSIã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã‚’ä½¿ç”¨
 		/**
-		 * @brief ƒRƒ“ƒ\[ƒ‹‚ÌF‚ğİ’è‚·‚éŠÖ”
-		 * @param level ƒƒOƒŒƒxƒ‹i0: î•ñ, 1: Œx, 2: ƒGƒ‰[j
+		 * @brief ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã®è‰²ã‚’è¨­å®šã™ã‚‹é–¢æ•°
+		 * @param level ãƒ­ã‚°ãƒ¬ãƒ™ãƒ«ï¼ˆ0: æƒ…å ±, 1: è­¦å‘Š, 2: ã‚¨ãƒ©ãƒ¼ï¼‰
 		 */
 		inline void SetConsoleColor(int level) {
 			switch (level) {
@@ -69,9 +69,9 @@ namespace SFW {
 		}
 #endif // _WIN32
 		/**
-		 * @brief ˆÀ‘S‚Éƒ[ƒJƒ‹ŠÔ‚ğæ“¾‚·‚éŠÖ”
-		 * @param time ƒ^ƒCƒ€ƒXƒ^ƒ“ƒvistd::time_tŒ^j
-		 * @return std::tmŒ^‚Ìƒ[ƒJƒ‹ŠÔ\‘¢‘Ì
+		 * @brief å®‰å…¨ã«ãƒ­ãƒ¼ã‚«ãƒ«æ™‚é–“ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @param time ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ï¼ˆstd::time_tå‹ï¼‰
+		 * @return std::tmå‹ã®ãƒ­ãƒ¼ã‚«ãƒ«æ™‚é–“æ§‹é€ ä½“
 		 */
 		inline std::tm SafeLocalTime(std::time_t time) {
 			std::tm tm_result;
@@ -84,8 +84,8 @@ namespace SFW {
 		}
 
 		/**
-		 * @brief Œ»İ‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğæ“¾‚·‚éŠÖ”
-		 * @return Œ»İ‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv•¶š—ñi—á: "2023-10-01 12:34:56.789"j
+		 * @brief ç¾åœ¨ã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return ç¾åœ¨ã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—æ–‡å­—åˆ—ï¼ˆä¾‹: "2023-10-01 12:34:56.789"ï¼‰
 		 */
 		inline std::string GetCurrentTimestamp() {
 			auto now = std::chrono::system_clock::now();
@@ -107,24 +107,24 @@ namespace SFW {
 		}
 
 		/**
-		 * @brief ƒƒOo—Í—p‚Ìƒ~ƒ…[ƒeƒbƒNƒX‚ğæ“¾‚·‚éŠÖ”
-		 * @return ƒƒOo—Í—p‚Ìƒ~ƒ…[ƒeƒbƒNƒX
+		 * @brief ãƒ­ã‚°å‡ºåŠ›ç”¨ã®ãƒŸãƒ¥ãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return ãƒ­ã‚°å‡ºåŠ›ç”¨ã®ãƒŸãƒ¥ãƒ¼ãƒ†ãƒƒã‚¯ã‚¹
 		 */
 		inline std::mutex& GetLogMutex() {
 			static std::mutex mtx;
 			return mtx;
 		}
 		/**
-		 * @brief   ƒƒOo—ÍŠÖ”
-		 * @param level ƒƒOƒŒƒxƒ‹i0: î•ñ, 1: Œx, 2: ƒGƒ‰[j
-		 * @param prefix ƒƒO‚ÌƒvƒŒƒtƒBƒbƒNƒXi—á: "Info", "Warning", "Error"j
-		 * @param file ƒƒOo—ÍŒ³‚Ìƒtƒ@ƒCƒ‹–¼
-		 * @param line ƒƒOo—ÍŒ³‚Ìs”Ô†
-		 * @param function ƒƒOo—ÍŒ³‚ÌŠÖ”–¼
-		 * @param msg ƒƒOƒƒbƒZ[ƒW
+		 * @brief   ãƒ­ã‚°å‡ºåŠ›é–¢æ•°
+		 * @param level ãƒ­ã‚°ãƒ¬ãƒ™ãƒ«ï¼ˆ0: æƒ…å ±, 1: è­¦å‘Š, 2: ã‚¨ãƒ©ãƒ¼ï¼‰
+		 * @param prefix ãƒ­ã‚°ã®ãƒ—ãƒ¬ãƒ•ã‚£ãƒƒã‚¯ã‚¹ï¼ˆä¾‹: "Info", "Warning", "Error"ï¼‰
+		 * @param file ãƒ­ã‚°å‡ºåŠ›å…ƒã®ãƒ•ã‚¡ã‚¤ãƒ«å
+		 * @param line ãƒ­ã‚°å‡ºåŠ›å…ƒã®è¡Œç•ªå·
+		 * @param function ãƒ­ã‚°å‡ºåŠ›å…ƒã®é–¢æ•°å
+		 * @param msg ãƒ­ã‚°ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 		 */
 		inline void LogImpl(int level, const char* prefix, const char* file, int line, const char* function, const std::string& msg) {
-			std::lock_guard<std::mutex> lock(GetLogMutex()); // © ƒXƒŒƒbƒhƒZ[ƒtI
+			std::lock_guard<std::mutex> lock(GetLogMutex()); // â† ã‚¹ãƒ¬ãƒƒãƒ‰ã‚»ãƒ¼ãƒ•ï¼
 
 			SetConsoleColor(level);
 
@@ -152,16 +152,16 @@ namespace SFW {
 
 #if defined(_WIN32)
 			SetConsoleColor(0);
-#else // Linux‚âMacOS‚È‚Ç‚Ì‘¼‚Ìƒvƒ‰ƒbƒgƒtƒH[ƒ€‚Å‚ÍAƒfƒtƒHƒ‹ƒg‚ÌF‚É–ß‚·
+#else // Linuxã‚„MacOSãªã©ã®ä»–ã®ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ ã§ã¯ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è‰²ã«æˆ»ã™
 			std::cout << "\033[0m";
 #endif // _WIN32
 		}
 
 		/**
-		 * @brief ƒtƒH[ƒ}ƒbƒg‚³‚ê‚½•¶š—ñ‚ğ¶¬‚·‚éŠÖ”
-		 * @param fmt ƒtƒH[ƒ}ƒbƒg•¶š—ñiprintfƒXƒ^ƒCƒ‹j
-		 * @param ... ‰Â•Ï’·ˆø”iƒtƒH[ƒ}ƒbƒg‚Ég—p‚³‚ê‚é’lj
-		 * @return ƒtƒH[ƒ}ƒbƒg‚³‚ê‚½•¶š—ñ
+		 * @brief ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã•ã‚ŒãŸæ–‡å­—åˆ—ã‚’ç”Ÿæˆã™ã‚‹é–¢æ•°
+		 * @param fmt ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆæ–‡å­—åˆ—ï¼ˆprintfã‚¹ã‚¿ã‚¤ãƒ«ï¼‰
+		 * @param ... å¯å¤‰é•·å¼•æ•°ï¼ˆãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã«ä½¿ç”¨ã•ã‚Œã‚‹å€¤ï¼‰
+		 * @return ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã•ã‚ŒãŸæ–‡å­—åˆ—
 		 */
 		inline std::string FormatPrintf(const char* fmt, ...) {
 			va_list args1;
@@ -180,18 +180,18 @@ namespace SFW {
 #endif // _DEBUG
 	}
 
-	// ƒfƒoƒbƒOƒrƒ‹ƒh‚Ì‚İƒƒOo—Í
+	// ãƒ‡ãƒãƒƒã‚°ãƒ“ãƒ«ãƒ‰æ™‚ã®ã¿ãƒ­ã‚°å‡ºåŠ›
 #ifdef _DEBUG
-// ƒƒOo—Íƒ}ƒNƒ
+// ãƒ­ã‚°å‡ºåŠ›ãƒã‚¯ãƒ­
 #define LOG_INFO(fmt, ...)    SFW::Debug::LogImpl(0, "Info",    __FILE__, __LINE__, __FUNCTION__, SFW::Debug::FormatPrintf(fmt, ##__VA_ARGS__))
-// ŒxƒƒOo—Íƒ}ƒNƒ
+// è­¦å‘Šãƒ­ã‚°å‡ºåŠ›ãƒã‚¯ãƒ­
 #define LOG_WARNING(fmt, ...) SFW::Debug::LogImpl(1, "Warning", __FILE__, __LINE__, __FUNCTION__, SFW::Debug::FormatPrintf(fmt, ##__VA_ARGS__))
-// ƒGƒ‰[ƒƒOo—Íƒ}ƒNƒ
+// ã‚¨ãƒ©ãƒ¼ãƒ­ã‚°å‡ºåŠ›ãƒã‚¯ãƒ­
 #define LOG_ERROR(fmt, ...)   SFW::Debug::LogImpl(2, "Error",   __FILE__, __LINE__, __FUNCTION__, SFW::Debug::FormatPrintf(fmt, ##__VA_ARGS__))
 
 #else // DEBUG
 
-	// ƒŠƒŠ[ƒXƒrƒ‹ƒh‚Å‚Í‹óƒ}ƒNƒ
+	// ãƒªãƒªãƒ¼ã‚¹ãƒ“ãƒ«ãƒ‰ã§ã¯ç©ºãƒã‚¯ãƒ­
 #define LOG_INFO(fmt, ...)    ((void)0)
 #define LOG_WARNING(fmt, ...) ((void)0)
 #define LOG_ERROR(fmt, ...)   ((void)0)

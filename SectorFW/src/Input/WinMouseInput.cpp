@@ -1,4 +1,4 @@
-#include "Input/WinMouseInput.h"
+ï»¿#include "Input/WinMouseInput.h"
 
 #include "Graphics/IGraphicsDevice.hpp"
 
@@ -24,9 +24,9 @@ namespace SFW
 				rid.hwndTarget = nullptr;
 			}
 			else {
-				if (noLegacy) rid.dwFlags |= RIDEV_NOLEGACY;     // © •ß‘¨’†‚¾‚¯
-				if (capture)  rid.dwFlags |= RIDEV_CAPTUREMOUSE; // © •K—v‚É‰‚¶‚Ä
-				// rid.dwFlags |= RIDEV_INPUTSINK;  // ƒtƒH[ƒJƒXŠO‚Å RawInput ‚ª—~‚µ‚¢‚È‚ç
+				if (noLegacy) rid.dwFlags |= RIDEV_NOLEGACY;     // â† æ•æ‰ä¸­ã ã‘
+				if (capture)  rid.dwFlags |= RIDEV_CAPTUREMOUSE; // â† å¿…è¦ã«å¿œã˜ã¦
+				// rid.dwFlags |= RIDEV_INPUTSINK;  // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å¤–ã§ RawInput ãŒæ¬²ã—ã„ãªã‚‰
 			}
 			RegisterRawInputDevices(&rid, 1, sizeof(rid));
 		}
@@ -55,13 +55,13 @@ namespace SFW
 			if (m.usButtonFlags & RI_MOUSE_MIDDLE_BUTTON_DOWN) mDown = true;
 			if (m.usButtonFlags & RI_MOUSE_MIDDLE_BUTTON_UP)   mDown = false;
 
-			// ƒzƒC[ƒ‹
+			// ãƒ›ã‚¤ãƒ¼ãƒ«
 			if (m.usButtonFlags & RI_MOUSE_WHEEL) {
-				SHORT wheelDelta = (SHORT)m.usButtonData; // ‚’¼
-				wheelV += wheelDelta / WHEEL_DELTA;       // 120’PˆÊ ¨ ƒXƒeƒbƒv”
+				SHORT wheelDelta = (SHORT)m.usButtonData; // å‚ç›´
+				wheelV += wheelDelta / WHEEL_DELTA;       // 120å˜ä½ â†’ ã‚¹ãƒ†ãƒƒãƒ—æ•°
 			}
 			if (m.usButtonFlags & RI_MOUSE_HWHEEL) {
-				SHORT wheelDelta = (SHORT)m.usButtonData; // …•½
+				SHORT wheelDelta = (SHORT)m.usButtonData; // æ°´å¹³
 				wheelH += wheelDelta / WHEEL_DELTA;
 			}
 		}
@@ -73,7 +73,7 @@ namespace SFW
 		void WinMouseInput::OnFocusLost() {
 			if (captured) ToggleCapture(false);
 
-			// ƒŒƒKƒV[ŒnWM_*‚ğ•œŠˆ‚³‚¹‚é or RawInput‚ğ’Êíƒ‚[ƒh‚ÅÄ“o˜^
+			// ãƒ¬ã‚¬ã‚·ãƒ¼ç³»WM_*ã‚’å¾©æ´»ã•ã›ã‚‹ or RawInputã‚’é€šå¸¸ãƒ¢ãƒ¼ãƒ‰ã§å†ç™»éŒ²
 			RegisterRawInput(false, /*noLegacy=*/false, /*capture=*/false);
 
 			ClipCursor(nullptr);
@@ -81,7 +81,7 @@ namespace SFW
 			ReleaseCapture();
 
 #ifdef _ENABLE_IMGUI
-			// --- ImGui ‚Ìƒ}ƒEƒXó‘Ô‚ğƒŠƒZƒbƒg ---
+			// --- ImGui ã®ãƒã‚¦ã‚¹çŠ¶æ…‹ã‚’ãƒªã‚»ãƒƒãƒˆ ---
 			ImGuiIO& io = ImGui::GetIO();
 			io.AddMouseButtonEvent(0, false);
 			io.AddMouseButtonEvent(1, false);
@@ -98,7 +98,7 @@ namespace SFW
 
 #ifdef _ENABLE_IMGUI
 			ImGuiIO& io = ImGui::GetIO();
-			// ƒ}ƒ‹ƒ`ƒrƒ…[ƒ|[ƒg or UI‘€ì’†‚Íƒ}ƒEƒX‚ğƒNƒŠƒbƒv‚µ‚È‚¢
+			// ãƒãƒ«ãƒãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆ or UIæ“ä½œä¸­ã¯ãƒã‚¦ã‚¹ã‚’ã‚¯ãƒªãƒƒãƒ—ã—ãªã„
 			if ((io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) &&
 				(io.WantCaptureMouse || ImGui::IsMouseDragging(0)))
 			{
@@ -122,12 +122,12 @@ namespace SFW
 		}
 
 		void WinMouseInput::Cleanup() {
-			// ƒLƒƒƒvƒ`ƒƒ’†‚È‚ç‚Ü‚¸’ÊíŒo˜H‚Å–ß‚·
+			// ã‚­ãƒ£ãƒ—ãƒãƒ£ä¸­ãªã‚‰ã¾ãšé€šå¸¸çµŒè·¯ã§æˆ»ã™
 			ToggleCapture(false);
 
-			// RawInput ‚Ì“o˜^‚ğ–¾¦“I‚É‰ğœiRIDEV_REMOVEj
+			// RawInput ã®ç™»éŒ²ã‚’æ˜ç¤ºçš„ã«è§£é™¤ï¼ˆRIDEV_REMOVEï¼‰
 			RegisterRawInput(false, false, false);
-			// Š®‘S‚ÉˆÀ‘S‚ğŠú‚·‚È‚çg’Êíƒ‚[ƒhÄ“o˜^h‚Å‚à OK:
+			// å®Œå…¨ã«å®‰å…¨ã‚’æœŸã™ãªã‚‰â€œé€šå¸¸ãƒ¢ãƒ¼ãƒ‰å†ç™»éŒ²â€ã§ã‚‚ OK:
 			// RegisterRawInput(true, /*noLegacy=*/false, /*capture=*/false);
 
 			ClipCursor(nullptr);
@@ -142,26 +142,26 @@ namespace SFW
 			if (captured) {
 				while (ShowCursor(FALSE) >= 0) {}
 				Reclip();
-				RegisterRawInput(true, /*noLegacy=*/true,  /*capture=*/false); // ƒŒƒKƒV[’â~
+				RegisterRawInput(true, /*noLegacy=*/true,  /*capture=*/false); // ãƒ¬ã‚¬ã‚·ãƒ¼åœæ­¢
 				SetCapture(hwnd);
 				SetFocus(hwnd);
 			}
 			else {
-				// ---- ƒŒƒKƒV[•œŠˆiImGui ‚ª WM_* ‚ğÄ‚Ñó‚¯æ‚ê‚éj----
+				// ---- ãƒ¬ã‚¬ã‚·ãƒ¼å¾©æ´»ï¼ˆImGui ãŒ WM_* ã‚’å†ã³å—ã‘å–ã‚Œã‚‹ï¼‰----
 				RegisterRawInput(false, /*noLegacy=*/false, /*capture=*/false);
-				// ‚ ‚é‚¢‚Í RegisterRawInput(false); ‚Å‚à—Ç‚¢‚ªA–¾¦Ä“o˜^‚ª‚æ‚èŠmÀ
+				// ã‚ã‚‹ã„ã¯ RegisterRawInput(false); ã§ã‚‚è‰¯ã„ãŒã€æ˜ç¤ºå†ç™»éŒ²ãŒã‚ˆã‚Šç¢ºå®Ÿ
 
 				ClipCursor(nullptr);
 				while (ShowCursor(TRUE) < 0) {}
 				ReleaseCapture();
 
 #ifdef _ENABLE_IMGUI
-				// ---- ImGui ‚Ì‰Ÿ‰ºó‘Ô‚ªc‚Á‚Ä‚¢‚é‰Â”\«‚ğƒNƒŠƒA ----
+				// ---- ImGui ã®æŠ¼ä¸‹çŠ¶æ…‹ãŒæ®‹ã£ã¦ã„ã‚‹å¯èƒ½æ€§ã‚’ã‚¯ãƒªã‚¢ ----
 				ImGuiIO& io = ImGui::GetIO();
 				io.AddMouseButtonEvent(0, false);
 				io.AddMouseButtonEvent(1, false);
 				io.AddMouseButtonEvent(2, false);
-				io.AddMousePosEvent(-FLT_MAX, -FLT_MAX); // gƒ}ƒEƒX•sİh‚ğ’Ê’mi”CˆÓj
+				io.AddMousePosEvent(-FLT_MAX, -FLT_MAX); // â€œãƒã‚¦ã‚¹ä¸åœ¨â€ã‚’é€šçŸ¥ï¼ˆä»»æ„ï¼‰
 #endif // _ENABLE_IMGUI
 			}
 		}

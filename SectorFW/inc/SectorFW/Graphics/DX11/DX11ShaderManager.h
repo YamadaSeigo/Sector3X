@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   DX11ShaderManager.h
- * @brief DirectX 11‚ÌƒVƒF[ƒ_[ƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief DirectX 11ã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚¯ãƒ©ã‚¹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -21,11 +21,11 @@ namespace SFW
 	namespace Graphics::DX11
 	{
 		/**
-		 * @brief ƒVƒF[ƒ_[ƒnƒ“ƒhƒ‹‚ÌŒ^
+		 * @brief ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒãƒ³ãƒ‰ãƒ«ã®å‹
 		 */
 		enum class InputBindingMode : uint8_t { BINDMODE_AUTOSTREAMS, BINDMODE_OVERRIDEMAP, BINDMODE_LEGACYMANUAL, BINDMODE_MAX };
 		/**
-		 * @brief ƒZƒ}ƒ“ƒeƒBƒNƒL[‚ğ•\‚·\‘¢‘Ì
+		 * @brief ã‚»ãƒãƒ³ãƒ†ã‚£ã‚¯ã‚­ãƒ¼ã‚’è¡¨ã™æ§‹é€ ä½“
 		 */
 		struct SemanticKey {
 			std::string name;
@@ -33,7 +33,7 @@ namespace SFW
 			bool operator==(const SemanticKey& o) const { return name == o.name && index == o.index; }
 		};
 		/**
-		 * @brief ƒZƒ}ƒ“ƒeƒBƒNƒL[‚ÌƒnƒbƒVƒ…ŠÖ”
+		 * @brief ã‚»ãƒãƒ³ãƒ†ã‚£ã‚¯ã‚­ãƒ¼ã®ãƒãƒƒã‚·ãƒ¥é–¢æ•°
 		 */
 		struct SemanticKeyHash {
 			size_t operator()(SemanticKey const& k) const noexcept {
@@ -41,7 +41,7 @@ namespace SFW
 			}
 		};
 		/**
-		 * @brief ƒZƒ}ƒ“ƒeƒBƒNƒoƒCƒ“ƒfƒBƒ“ƒO‚ğ•\‚·\‘¢‘Ì
+		 * @brief ã‚»ãƒãƒ³ãƒ†ã‚£ã‚¯ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã‚’è¡¨ã™æ§‹é€ ä½“
 		 */
 		struct SemanticBinding {
 			UINT slot = 0;
@@ -51,17 +51,17 @@ namespace SFW
 			UINT stepRate = 0;
 		};
 		/**
-		 * @brief ƒVƒF[ƒ_[ƒXƒe[ƒW‚ğ•\‚·—ñ‹“Œ^
+		 * @brief ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’è¡¨ã™åˆ—æŒ™å‹
 		 */
 		struct ShaderResourceBinding {
 			std::string name;
 			UINT bindPoint;
-			D3D_SHADER_INPUT_TYPE type; // D3D_SIT_TEXTURE, D3D_SIT_CBUFFER‚È‚Ç
+			D3D_SHADER_INPUT_TYPE type; // D3D_SIT_TEXTURE, D3D_SIT_CBUFFERãªã©
 			D3D_SHADER_INPUT_FLAGS flags;
 			ShaderStage stage;
 		};
 		/**
-		 * @brief DirectX 11‚ÌƒVƒF[ƒ_[ì¬î•ñ‚ğ’è‹`‚·‚é\‘¢‘Ì
+		 * @brief DirectX 11ã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ä½œæˆæƒ…å ±ã‚’å®šç¾©ã™ã‚‹æ§‹é€ ä½“
 		 */
 		struct ShaderCreateDesc {
 			MaterialTemplateID templateID = MaterialTemplateID::PBR;
@@ -69,7 +69,7 @@ namespace SFW
 			std::wstring psPath;
 		};
 		/**
-		 * @brief DirectX 11‚ÌƒVƒF[ƒ_[ƒf[ƒ^‚ğ’è‹`‚·‚é\‘¢‘Ì
+		 * @brief DirectX 11ã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’å®šç¾©ã™ã‚‹æ§‹é€ ä½“
 		 */
 		struct ShaderData {
 			MaterialTemplateID templateID;
@@ -77,7 +77,7 @@ namespace SFW
 			Microsoft::WRL::ComPtr<ID3D11PixelShader> ps;
 			Microsoft::WRL::ComPtr<ID3DBlob> vsBlob;
 			std::vector<D3D11_INPUT_ELEMENT_DESC> inputLayoutDesc;
-			std::vector<std::string> inputLayoutSemanticNames; // ƒZƒ}ƒ“ƒeƒBƒbƒN–¼‚ÌƒŠƒXƒg
+			std::vector<std::string> inputLayoutSemanticNames; // ã‚»ãƒãƒ³ãƒ†ã‚£ãƒƒã‚¯åã®ãƒªã‚¹ãƒˆ
 			std::vector<ShaderResourceBinding> psBindings; // SRV / CBV info
 			std::vector<ShaderResourceBinding> vsBindings; // SRV / CBV info
 
@@ -85,36 +85,36 @@ namespace SFW
 			std::vector<SemanticKey> requiredInputs;
 		};
 		/**
-		 * @brief DirectX 11‚ÌƒVƒF[ƒ_[ƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX
+		 * @brief DirectX 11ã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚¯ãƒ©ã‚¹
 		 */
 		class ShaderManager : public ResourceManagerBase<ShaderManager, ShaderHandle, ShaderCreateDesc, ShaderData> {
 		public:
 			/**
-			 * @brief ƒCƒ“ƒXƒ^ƒ“ƒXƒZƒ}ƒ“ƒeƒBƒbƒN–¼
+			 * @brief ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚»ãƒãƒ³ãƒ†ã‚£ãƒƒã‚¯å
 			 */
 			static inline constexpr const char* INSTANCE_SEMANTIC_NAME = "INSTANCE_";
 			/**
-			 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-			 * @param device DirectX 11‚ÌƒfƒoƒCƒXƒCƒ“ƒ^[ƒtƒF[ƒX
+			 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+			 * @param device DirectX 11ã®ãƒ‡ãƒã‚¤ã‚¹ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 			 */
 			explicit ShaderManager(ID3D11Device* device) noexcept : device(device) {}
 			/**
-			 * @brief Šù‘¶‚ÌƒVƒF[ƒ_[‚ğŒŸõ‚·‚éŠÖ”
-			 * @param desc ƒVƒF[ƒ_[ì¬î•ñ
-			 * @return std::optional<ShaderHandle> Šù‘¶‚ÌƒVƒF[ƒ_[ƒnƒ“ƒhƒ‹A‘¶İ‚µ‚È‚¢ê‡‚Ístd::nullopt
+			 * @brief æ—¢å­˜ã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚’æ¤œç´¢ã™ã‚‹é–¢æ•°
+			 * @param desc ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ä½œæˆæƒ…å ±
+			 * @return std::optional<ShaderHandle> æ—¢å­˜ã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒãƒ³ãƒ‰ãƒ«ã€å­˜åœ¨ã—ãªã„å ´åˆã¯std::nullopt
 			 */
 			std::optional<ShaderHandle> FindExisting(const ShaderCreateDesc& desc) noexcept;
 			/**
-			 * @brief ƒVƒF[ƒ_[‚ÌƒL[‚Æƒnƒ“ƒhƒ‹‚ğ“o˜^‚·‚éŠÖ”
-			 * @param desc ƒVƒF[ƒ_[ì¬î•ñ
-			 * @param h “o˜^‚·‚éƒVƒF[ƒ_[ƒnƒ“ƒhƒ‹
+			 * @brief ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®ã‚­ãƒ¼ã¨ãƒãƒ³ãƒ‰ãƒ«ã‚’ç™»éŒ²ã™ã‚‹é–¢æ•°
+			 * @param desc ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ä½œæˆæƒ…å ±
+			 * @param h ç™»éŒ²ã™ã‚‹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒãƒ³ãƒ‰ãƒ«
 			 */
 			void RegisterKey(const ShaderCreateDesc& desc, ShaderHandle h);
 			/**
-			 * @brief ƒVƒF[ƒ_[ƒŠƒ\[ƒX‚ğì¬‚·‚éŠÖ”
-			 * @param desc ƒVƒF[ƒ_[ì¬î•ñ
-			 * @param h “o˜^‚·‚éƒVƒF[ƒ_[ƒnƒ“ƒhƒ‹
-			 * @return DX11ShaderData ì¬‚³‚ê‚½ƒVƒF[ƒ_[ƒf[ƒ^
+			 * @brief ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ã‚’ä½œæˆã™ã‚‹é–¢æ•°
+			 * @param desc ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ä½œæˆæƒ…å ±
+			 * @param h ç™»éŒ²ã™ã‚‹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒãƒ³ãƒ‰ãƒ«
+			 * @return DX11ShaderData ä½œæˆã•ã‚ŒãŸã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ‡ãƒ¼ã‚¿
 			 */
 			ShaderData CreateResource(const ShaderCreateDesc& desc, ShaderHandle h);
 		private:
@@ -123,14 +123,14 @@ namespace SFW
 				std::vector<std::string>& semanticNames,
 				ShaderData& currentShaderData);
 
-			// ƒZƒ}ƒ“ƒeƒBƒN–¼‚©‚ç InputSlot ‚ğŒˆ‚ß‚éŠÈˆÕƒ|ƒŠƒV[
+			// ã‚»ãƒãƒ³ãƒ†ã‚£ã‚¯åã‹ã‚‰ InputSlot ã‚’æ±ºã‚ã‚‹ç°¡æ˜“ãƒãƒªã‚·ãƒ¼
 			static unsigned int DecideInputSlotFromSemantic(std::string_view name, unsigned int semanticIndex) noexcept;
 
-			//=== ƒL[ŒvZ ===
+			//=== ã‚­ãƒ¼è¨ˆç®— ===
 			size_t MakeKey(const ShaderCreateDesc& desc) const;
 			static std::filesystem::path Canonicalize(const std::wstring& w);
 			static inline void HashCombine(size_t& seed, size_t v) {
-				// 64bit‘Î‰‚ÌŠÈˆÕƒRƒ“ƒoƒCƒ“
+				// 64bitå¯¾å¿œã®ç°¡æ˜“ã‚³ãƒ³ãƒã‚¤ãƒ³
 				seed ^= v + 0x9e3779b97f4a7c15ull + (seed << 6) + (seed >> 2);
 			}
 
@@ -143,10 +143,10 @@ namespace SFW
 			ID3D11Device* device;
 
 			std::mutex mapMutex;
-			// ƒL[ -> ƒnƒ“ƒhƒ‹ ‚ÌŒŸõ•\
+			// ã‚­ãƒ¼ -> ãƒãƒ³ãƒ‰ãƒ« ã®æ¤œç´¢è¡¨
 			std::unordered_map<size_t, ShaderHandle> keyToHandle;
 
-			// “à•”ƒe[ƒuƒ‹
+			// å†…éƒ¨ãƒ†ãƒ¼ãƒ–ãƒ«
 			std::unordered_map<SemanticKey, SemanticBinding, SemanticKeyHash> overrides_;
 		};
 	}

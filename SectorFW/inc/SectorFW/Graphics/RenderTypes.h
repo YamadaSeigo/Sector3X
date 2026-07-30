@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   RenderTypes.h
- * @brief ƒŒƒ“ƒ_[ŠÖ˜A‚ÌŠî–{“I‚ÈŒ^‚Æ’è”‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ãƒ¬ãƒ³ãƒ€ãƒ¼é–¢é€£ã®åŸºæœ¬çš„ãªå‹ã¨å®šæ•°ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -14,44 +14,44 @@ namespace SFW
 	namespace Graphics
 	{
 		/**
-		 * @brief ƒŒƒ“ƒ_ƒŠƒ“ƒOƒLƒ…[‚Ìƒoƒbƒtƒ@”iƒgƒŠƒvƒ‹ƒoƒbƒtƒ@ƒŠƒ“ƒO„§j
+		 * @brief ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚­ãƒ¥ãƒ¼ã®ãƒãƒƒãƒ•ã‚¡æ•°ï¼ˆãƒˆãƒªãƒ—ãƒ«ãƒãƒƒãƒ•ã‚¡ãƒªãƒ³ã‚°æ¨å¥¨ï¼‰
 		 */
 		static inline constexpr uint16_t RENDER_BUFFER_COUNT = 3;
 		/**
-		 * @brief ƒƒbƒVƒ…ƒnƒ“ƒhƒ‹\‘¢‘Ì
+		 * @brief ãƒ¡ãƒƒã‚·ãƒ¥ãƒãƒ³ãƒ‰ãƒ«æ§‹é€ ä½“
 		 */
 		struct MeshHandle { uint32_t index; uint32_t generation; };
 		/**
-		 * @brief ƒ}ƒeƒŠƒAƒ‹ƒnƒ“ƒhƒ‹\‘¢‘Ì
+		 * @brief ãƒãƒ†ãƒªã‚¢ãƒ«ãƒãƒ³ãƒ‰ãƒ«æ§‹é€ ä½“
 		 */
 		struct MaterialHandle { uint32_t index; uint32_t generation; };
 		/**
-		 * @brief ƒVƒF[ƒ_ƒnƒ“ƒhƒ‹\‘¢‘Ì
+		 * @brief ã‚·ã‚§ãƒ¼ãƒ€ãƒãƒ³ãƒ‰ãƒ«æ§‹é€ ä½“
 		 */
 		struct ShaderHandle { uint32_t index; uint32_t generation; };
 		/**
-		 * @brief ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒgƒIƒuƒWƒFƒNƒgƒnƒ“ƒhƒ‹\‘¢‘Ì
+		 * @brief ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒãƒ³ãƒ‰ãƒ«æ§‹é€ ä½“
 		 */
 		struct PSOHandle { uint32_t index; uint32_t generation; };
 		/**
-		 * @brief ƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹\‘¢‘Ì
+		 * @brief ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«æ§‹é€ ä½“
 		 */
 		struct TextureHandle { uint32_t index; uint32_t generation; };
 		/**
-		 * @brief ƒoƒbƒtƒ@ƒnƒ“ƒhƒ‹\‘¢‘Ì
+		 * @brief ãƒãƒƒãƒ•ã‚¡ãƒãƒ³ãƒ‰ãƒ«æ§‹é€ ä½“
 		 */
 		struct BufferHandle { uint32_t index; uint32_t generation; };
 		/**
-		 * @brief ƒTƒ“ƒvƒ‰[ƒnƒ“ƒhƒ‹\‘¢‘Ì
+		 * @brief ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ãƒãƒ³ãƒ‰ãƒ«æ§‹é€ ä½“
 		 */
 		struct SamplerHandle { uint32_t index; uint32_t generation; };
 		/**
-		 * @brief ƒ‚ƒfƒ‹ƒAƒZƒbƒgƒnƒ“ƒhƒ‹\‘¢‘Ì
+		 * @brief ãƒ¢ãƒ‡ãƒ«ã‚¢ã‚»ãƒƒãƒˆãƒãƒ³ãƒ‰ãƒ«æ§‹é€ ä½“
 		 */
 		struct ModelAssetHandle { uint32_t index; uint32_t generation; };
 		/**
-		 * @brief ƒCƒ“ƒXƒ^ƒ“ƒXƒf[ƒ^\‘¢‘Ì
-		 * @details m[3][3]‚ª0.0f‚È‚çƒCƒ“ƒXƒ^ƒ“ƒXƒf[ƒ^‚ğ•Û‚µ‚Ä‚¢‚È‚¢
+		 * @brief ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
+		 * @details m[3][3]ãŒ0.0fãªã‚‰ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ä¿æŒã—ã¦ã„ãªã„
 		 */
 		struct InstanceData
 		{
@@ -59,28 +59,28 @@ namespace SFW
 			Math::Vec4f color = Math::Vec4f(1.0f, 1.0f, 1.0f, 1.0f);
 
 			InstanceData() : worldMtx(Math::Matrix4x4f::Identity()) {
-				worldMtx[3][3] = 0.0f; // –³Œø‰»
+				worldMtx[3][3] = 0.0f; // ç„¡åŠ¹åŒ–
 			}
 			InstanceData(const Math::Matrix4x4f& mtx) : worldMtx(mtx) {
-				worldMtx[3][3] = 1.0f; // —LŒø‰»
+				worldMtx[3][3] = 1.0f; // æœ‰åŠ¹åŒ–
 			}
 
 			bool HasData() const noexcept { return worldMtx[3][3] != 0.0f; }
 			void SetData(const Math::Matrix4x4f& mtx) noexcept { worldMtx = mtx; worldMtx[3][3] = 1.0f; }
 		};
 		/**
-		 * @brief ƒCƒ“ƒXƒ^ƒ“ƒXƒf[ƒ^‚ÌƒCƒ“ƒfƒbƒNƒX\‘¢‘Ì
+		 * @brief ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒ‡ãƒ¼ã‚¿ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ§‹é€ ä½“
 		 */
 		struct InstanceIndex {
 			uint32_t index = 0;
 			InstanceIndex& operator=(const uint32_t& idx) { index = idx; return *this; }
 		};
 		/**
-		 * @brief ƒ\[ƒgƒL[‚ğ¶¬‚·‚éƒwƒ‹ƒpŠÖ”
-		 * @param psoIndex PSOƒCƒ“ƒfƒbƒNƒX
-		 * @param materialIndex ƒ}ƒeƒŠƒAƒ‹ƒCƒ“ƒfƒbƒNƒX
-		 * @param meshIndex ƒƒbƒVƒ…ƒCƒ“ƒfƒbƒNƒX
-		 * @return uint64_t ƒ\[ƒgƒL[
+		 * @brief ã‚½ãƒ¼ãƒˆã‚­ãƒ¼ã‚’ç”Ÿæˆã™ã‚‹ãƒ˜ãƒ«ãƒ‘é–¢æ•°
+		 * @param psoIndex PSOã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		 * @param materialIndex ãƒãƒ†ãƒªã‚¢ãƒ«ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		 * @param meshIndex ãƒ¡ãƒƒã‚·ãƒ¥ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		 * @return uint64_t ã‚½ãƒ¼ãƒˆã‚­ãƒ¼
 		 */
 		inline uint64_t MakeSortKey(uint32_t psoIndex, uint32_t materialIndex, uint32_t meshIndex) {
 			return (static_cast<uint64_t>(psoIndex) << 40) |
@@ -89,49 +89,49 @@ namespace SFW
 		}
 
 		/**
-		 * @brief •`‰æƒRƒ}ƒ“ƒh\‘¢‘Ì
-		 * @details DrawCommand ‚Í index ‚Ì‚İ‚ÅOKiŒy—ÊE32B‰»‚µ‚â‚·‚¢jB
-		 * @details ğŒFƒtƒŒ[ƒ€’Z–½ + Pin / Unpin + in - flight §Œä + “Š“ü‚Ì generation ŒŸØB
+		 * @brief æç”»ã‚³ãƒãƒ³ãƒ‰æ§‹é€ ä½“
+		 * @details DrawCommand ã¯ index ã®ã¿ã§OKï¼ˆè»½é‡ãƒ»32BåŒ–ã—ã‚„ã™ã„ï¼‰ã€‚
+		 * @details æ¡ä»¶ï¼šãƒ•ãƒ¬ãƒ¼ãƒ çŸ­å‘½ + Pin / Unpin + in - flight åˆ¶å¾¡ + æŠ•å…¥æ™‚ã® generation æ¤œè¨¼ã€‚
 		 */
 		struct DrawCommand {
-			uint64_t sortKey = 0;          // 0..63: ƒ\[ƒgƒL[iPSO/Ş¿/ƒƒbƒVƒ…/[“xƒoƒPƒc“™‚ğƒpƒbƒNj
+			uint64_t sortKey = 0;          // 0..63: ã‚½ãƒ¼ãƒˆã‚­ãƒ¼ï¼ˆPSO/æè³ª/ãƒ¡ãƒƒã‚·ãƒ¥/æ·±åº¦ãƒã‚±ãƒ„ç­‰ã‚’ãƒ‘ãƒƒã‚¯ï¼‰
 
-			uint32_t mesh = 0;             // 24B‚Ü‚ÅFƒnƒ“ƒhƒ‹/IDi32bit‘z’èj
+			uint32_t mesh = 0;             // 24Bã¾ã§ï¼šãƒãƒ³ãƒ‰ãƒ«/IDï¼ˆ32bitæƒ³å®šï¼‰
 			uint32_t material = 0;
 			uint32_t pso = 0;
-			InstanceIndex instanceIndex = { 0 };    // InstanceData ƒv[ƒ‹‚Ö‚ÌƒCƒ“ƒfƒbƒNƒX
+			InstanceIndex instanceIndex = { 0 };    // InstanceData ãƒ—ãƒ¼ãƒ«ã¸ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 
-			// ‚±‚±‚ªg‹ó”’‚ÌŠˆ—phƒp[ƒgi‡Œv 8Bj
-			uint32_t cbOffsetDiv256 = 0;   // “®“ICBƒŠƒ“ƒO‚Ì 256B ’PˆÊƒIƒtƒZƒbƒgiDX12/11.1 “™‚Åg‚¦‚éj
-			uint16_t viewMask = 0;         // —á: 16 ƒrƒ…[/ƒpƒXi—á: ‰eƒJƒXƒP[ƒh / ƒXƒeƒŒƒI / MRT ƒpƒX‚Ì‘I•Êj
-			uint8_t  flags = 0;            // ¬‚³‚Èƒtƒ‰ƒOŒQi‰º‚É’è‹`j
-			uint8_t  userTag = 0;          // ”CˆÓ‚Ìƒ‰ƒxƒ‹/ƒfƒoƒbƒO/‰Â‹‰»ƒ^ƒO
+			// ã“ã“ãŒâ€œç©ºç™½ã®æ´»ç”¨â€ãƒ‘ãƒ¼ãƒˆï¼ˆåˆè¨ˆ 8Bï¼‰
+			uint32_t cbOffsetDiv256 = 0;   // å‹•çš„CBãƒªãƒ³ã‚°ã® 256B å˜ä½ã‚ªãƒ•ã‚»ãƒƒãƒˆï¼ˆDX12/11.1 ç­‰ã§ä½¿ãˆã‚‹ï¼‰
+			uint16_t viewMask = 0;         // ä¾‹: 16 ãƒ“ãƒ¥ãƒ¼/ãƒ‘ã‚¹ï¼ˆä¾‹: å½±ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰ / ã‚¹ãƒ†ãƒ¬ã‚ª / MRT ãƒ‘ã‚¹ã®é¸åˆ¥ï¼‰
+			uint8_t  flags = 0;            // å°ã•ãªãƒ•ãƒ©ã‚°ç¾¤ï¼ˆä¸‹ã«å®šç¾©ï¼‰
+			uint8_t  userTag = 0;          // ä»»æ„ã®ãƒ©ãƒ™ãƒ«/ãƒ‡ãƒãƒƒã‚°/å¯è¦–åŒ–ã‚¿ã‚°
 
 			DrawCommand() noexcept = default;
 
-			// •Ö—˜ƒwƒ‹ƒp
+			// ä¾¿åˆ©ãƒ˜ãƒ«ãƒ‘
 			void setCBOffsetBytes(uint32_t byteOffset) noexcept { cbOffsetDiv256 = byteOffset >> 8; }
 			uint32_t getCBOffsetBytes() const noexcept { return cbOffsetDiv256 << 8; }
 		};
 		/**
-		 * @brief DrawCommand ‚Ìƒtƒ‰ƒOƒrƒbƒgƒtƒB[ƒ‹ƒh
+		 * @brief DrawCommand ã®ãƒ•ãƒ©ã‚°ãƒ“ãƒƒãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰
 		 */
 		enum class DrawFlags : uint8_t {
-			RebindPSONeeded = 1u << 0,   // PSOÄƒoƒCƒ“ƒh‚ª•K—v
-			// ... ‚ ‚Æ7ƒrƒbƒg•ª
+			RebindPSONeeded = 1u << 0,   // PSOå†ãƒã‚¤ãƒ³ãƒ‰ãŒå¿…è¦
+			// ... ã‚ã¨7ãƒ“ãƒƒãƒˆåˆ†
 		};
 		/**
-		 * @brief ƒ}ƒeƒŠƒAƒ‹ƒeƒ“ƒvƒŒ[ƒgID—ñ‹“Œ^
+		 * @brief ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆIDåˆ—æŒ™å‹
 		 */
 		enum class MaterialTemplateID : uint32_t {
 			PBR = 0,
 			Unlit,
 			Toon,
 			// ...
-			MAX_COUNT, // —LŒø‚Èƒeƒ“ƒvƒŒ[ƒg‚Ì”
+			MAX_COUNT, // æœ‰åŠ¹ãªãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®æ•°
 		};
 		/**
-		 * @brief ƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒW—ñ‹“Œ^
+		 * @brief ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ãƒˆãƒãƒ­ã‚¸åˆ—æŒ™å‹
 		 */
 		enum class PrimitiveTopology {
 			Undefined,
@@ -146,11 +146,11 @@ namespace SFW
 			TriangleStripAdj,
 			Patch1,
 			Patch2,
-			// ... Patch3`Patch32 ‚È‚Ç•K—v‚É‰‚¶‚Ä
-			MAX_COUNT, // ‚±‚±‚Ü‚Å‚ª—LŒø‚Èƒgƒ|ƒƒW
+			// ... Patch3ï½Patch32 ãªã©å¿…è¦ã«å¿œã˜ã¦
+			MAX_COUNT, // ã“ã“ã¾ã§ãŒæœ‰åŠ¹ãªãƒˆãƒãƒ­ã‚¸
 		};
 		/**
-		 * @brief ƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒgID—ñ‹“Œ^
+		 * @brief ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆIDåˆ—æŒ™å‹
 		 */
 		enum class RasterizerStateID {
 			SolidCullBack,
@@ -163,10 +163,10 @@ namespace SFW
 			ShadowBiasMedium,
 			ShadowBiasHigh,
 			// ...
-			MAX_COUNT, // —LŒø‚Èƒ‰ƒXƒ^ƒ‰ƒCƒU[ƒXƒe[ƒg‚Ì”
+			MAX_COUNT, // æœ‰åŠ¹ãªãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã®æ•°
 		};
 		/**
-		 * @brief ƒuƒŒƒ“ƒhƒXƒe[ƒgID—ñ‹“Œ^
+		 * @brief ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆIDåˆ—æŒ™å‹
 		 */
 		enum class BlendStateID {
 			Opaque,			// No blending
@@ -176,10 +176,10 @@ namespace SFW
 			Premultiplied,	// One / InvSrcAlpha
 			Subtract,		// One / Subtract
 			// ...
-			MAX_COUNT,		// —LŒø‚ÈƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ì”
+			MAX_COUNT,		// æœ‰åŠ¹ãªãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®æ•°
 		};
 		/**
-		 * @brief [“xƒXƒeƒ“ƒVƒ‹ƒXƒe[ƒgID—ñ‹“Œ^
+		 * @brief æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆIDåˆ—æŒ™å‹
 		 */
 		enum class DepthStencilStateID {
 			Default,							// DepthTest ON, ZWrite ON
@@ -191,17 +191,17 @@ namespace SFW
 			DepthReadOnly_Greater_Read_Stencil,		// DepthTest(Greater) ON, ZWrite OFF Stencil ON
 			NoDepth,							// DepthTest OFF, ZWrite OFF
 			// ...
-			MAX_COUNT,        // —LŒø‚È[“xƒXƒeƒ“ƒVƒ‹ƒXƒe[ƒg‚Ì”
+			MAX_COUNT,        // æœ‰åŠ¹ãªæ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆã®æ•°
 		};
 		/**
-		 * @brief PBRƒ}ƒeƒŠƒAƒ‹—p’è”ƒoƒbƒtƒ@\‘¢‘Ì
+		 * @brief PBRãƒãƒ†ãƒªã‚¢ãƒ«ç”¨å®šæ•°ãƒãƒƒãƒ•ã‚¡æ§‹é€ ä½“
 		 */
 		struct alignas(16) PBRMaterialCB {
 			float baseColorFactor[4] = { 1,1,1,1 };
 			float metallicFactor = 1.0f;
 			float roughnessFactor = 1.0f;
 			float occlusionFactor = 1.0f;
-			uint32_t hasFlags = 0; // ƒtƒ‰ƒOƒrƒbƒgƒtƒB[ƒ‹ƒh
+			uint32_t hasFlags = 0; // ãƒ•ãƒ©ã‚°ãƒ“ãƒƒãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰
 
 			enum HasFlagsBits : uint32_t {
 				HasBaseColorTex = 1u << 0,
@@ -215,16 +215,16 @@ namespace SFW
 		};
 
 		/**
-		 * @brief ƒVƒF[ƒ_ƒXƒe[ƒW—ñ‹“Œ^
+		 * @brief ã‚·ã‚§ãƒ¼ãƒ€ã‚¹ãƒ†ãƒ¼ã‚¸åˆ—æŒ™å‹
 		 */
-		enum class ShaderStage { VS, PS /* «—ˆ: GS, HS, DS, CS */ };
+		enum class ShaderStage { VS, PS /* å°†æ¥: GS, HS, DS, CS */ };
 		/**
-		 * @brief ƒVƒF[ƒ_ƒoƒŠƒAƒ“ƒgIDŒ^
+		 * @brief ã‚·ã‚§ãƒ¼ãƒ€ãƒãƒªã‚¢ãƒ³ãƒˆIDå‹
 		 */
 		using ShaderVariantID = uint32_t;
 
 		/**
-		 * @brief ƒoƒbƒtƒ@ƒoƒCƒ“ƒhƒXƒƒbƒg\‘¢‘Ì
+		 * @brief ãƒãƒƒãƒ•ã‚¡ãƒã‚¤ãƒ³ãƒ‰ã‚¹ãƒ­ãƒƒãƒˆæ§‹é€ ä½“
 		 */
 		struct BindSlotBuffer {
 			uint32_t slot = 0;
@@ -240,7 +240,7 @@ namespace SFW
 		};
 
 		/**
-		 * @brief ƒrƒ…[ƒ|[ƒg\‘¢‘Ì
+		 * @brief ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆæ§‹é€ ä½“
 		 */
 		struct Viewport {
 			float topLeftX = 0.0f;
@@ -252,7 +252,7 @@ namespace SFW
 		};
 
 		/**
-		 * @brief ƒfƒtƒHƒ‹ƒg‚Ìƒrƒ…[Eƒnƒ“ƒhƒ‹ŠÇ—\‘¢‘Ì
+		 * @brief ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒ“ãƒ¥ãƒ¼ãƒ»ãƒãƒ³ãƒ‰ãƒ«ç®¡ç†æ§‹é€ ä½“
 		 */
 		template<typename T>
 		struct DefaultViewHandle {

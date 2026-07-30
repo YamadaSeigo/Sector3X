@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   FrameTimer.h
- * @brief ƒtƒŒ[ƒ€ƒ^ƒCƒ}[‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¿ã‚¤ãƒãƒ¼ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -10,15 +10,15 @@
 #include <thread>
 
  /**
-  * @brief ƒtƒŒ[ƒ€ƒ^ƒCƒ}[‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+  * @brief ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¿ã‚¤ãƒãƒ¼ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
   */
 class FrameTimer {
 public:
 	using clock = std::chrono::steady_clock;
 	using time_point = std::chrono::time_point<clock>;
 	/**
-	 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	 * @details ƒ^ƒCƒ}[‚ğ‰Šú‰»‚µAŠJnŠÔ‚ğİ’è‚µ‚Ü‚·B
+	 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	 * @details ã‚¿ã‚¤ãƒãƒ¼ã‚’åˆæœŸåŒ–ã—ã€é–‹å§‹æ™‚é–“ã‚’è¨­å®šã—ã¾ã™ã€‚
 	 */
 	FrameTimer() noexcept
 		: startTime(clock::now()),
@@ -30,7 +30,7 @@ public:
 		maxFrameRate(0.0) {
 	}
 	/**
-	 * @brief ƒ^ƒCƒ}[‚ğƒŠƒZƒbƒg‚µ‚Ü‚·B
+	 * @brief ã‚¿ã‚¤ãƒãƒ¼ã‚’ãƒªã‚»ãƒƒãƒˆã—ã¾ã™ã€‚
 	 */
 	void Reset() noexcept {
 		startTime = clock::now();
@@ -41,7 +41,7 @@ public:
 		timeSinceLastFPSUpdate = 0.0;
 	}
 	/**
-	 * @brief ƒtƒŒ[ƒ€ƒ^ƒCƒ}[‚ğXV‚µ‚Ü‚·B
+	 * @brief ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¿ã‚¤ãƒãƒ¼ã‚’æ›´æ–°ã—ã¾ã™ã€‚
 	 */
 	void Tick() {
 		using namespace std::chrono;
@@ -53,105 +53,105 @@ public:
 		auto now = clock::now();
 
 		if (limit) {
-			// ‘O‰ñ tick ‚©‚ç‚Ì—‘z“I‚ÈŸƒtƒŒ[ƒ€‚ğŒˆ‚ß‚é
+			// å‰å› tick ã‹ã‚‰ã®ç†æƒ³çš„ãªæ¬¡ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚åˆ»ã‚’æ±ºã‚ã‚‹
 			const time_point nextTick = lastTime + duration_cast<clock::duration>(minFrameTime);
 
-			// —]—T‚ª‚ ‚é‚È‚ç until ‚ÅQ‚éiŠÛ‚ßƒƒX‚È‚µj
+			// ä½™è£•ãŒã‚ã‚‹ãªã‚‰ until ã§å¯ã‚‹ï¼ˆä¸¸ã‚ãƒ­ã‚¹ãªã—ï¼‰
 			if (now < nextTick) {
-				// ‘å”¼‚Í sleep_until ‚Å‘Ò‚¿AÅŒã‚Ì‚í‚¸‚©‚È·‚¾‚¯Œy‚­ƒXƒsƒ“
-				// iOS —±“x‚ª‘e‚¢ŠÂ‹«‚É”z—¶j
-				const auto spinThreshold = microseconds(200); // ’²®ƒ|ƒCƒ“ƒg
+				// å¤§åŠã¯ sleep_until ã§å¾…ã¡ã€æœ€å¾Œã®ã‚ãšã‹ãªå·®ã ã‘è»½ãã‚¹ãƒ”ãƒ³
+				// ï¼ˆOS ç²’åº¦ãŒç²—ã„ç’°å¢ƒã«é…æ…®ï¼‰
+				const auto spinThreshold = microseconds(200); // èª¿æ•´ãƒã‚¤ãƒ³ãƒˆ
 				const auto sleepUntilTime = nextTick - spinThreshold;
 				if (now < sleepUntilTime) {
 					std::this_thread::sleep_until(sleepUntilTime);
 				}
-				// ¬‚³‚­ƒXƒsƒ“ior yieldj
+				// å°ã•ãã‚¹ãƒ”ãƒ³ï¼ˆor yieldï¼‰
 				do {
 					std::this_thread::yield();
 					now = clock::now();
 				} while (now < nextTick);
 			}
 			else {
-				// ‚·‚Å‚É’x‚ê‚Ä‚¢‚éê‡‚Í‰½‚à‚µ‚È‚¢i’Ç‚¢‚Â‚­j
+				// ã™ã§ã«é…ã‚Œã¦ã„ã‚‹å ´åˆã¯ä½•ã‚‚ã—ãªã„ï¼ˆè¿½ã„ã¤ãï¼‰
 			}
 		}
 
-		// Œo‰ßŠÔ‚ğŒvZ
+		// çµŒéæ™‚é–“ã‚’è¨ˆç®—
 		const duration<double> frameDuration = now - lastTime;
 		double dt = frameDuration.count();
 
-		// ƒXƒpƒCƒN‘Îô‚ÌƒNƒ‰ƒ“ƒvi•K—v‚É‰‚¶‚Ä’²®j
+		// ã‚¹ãƒ‘ã‚¤ã‚¯å¯¾ç­–ã®ã‚¯ãƒ©ãƒ³ãƒ—ï¼ˆå¿…è¦ã«å¿œã˜ã¦èª¿æ•´ï¼‰
 		constexpr double MIN_DT = 0.0;
-		constexpr double MAX_DT = 1.0 / 15.0; // 15 FPS ˆÈ‰º‚Ì‹‘å dt ‚Í—}§
+		constexpr double MAX_DT = 1.0 / 15.0; // 15 FPS ä»¥ä¸‹ã®å·¨å¤§ dt ã¯æŠ‘åˆ¶
 		if (dt < MIN_DT) dt = MIN_DT;
 		if (dt > MAX_DT) dt = MAX_DT;
 
 		deltaTime = dt;
 		lastTime = now;
 
-		// FPS Œv‘ªiˆÚ“®•½‹Ï‚Ì—áj
+		// FPS è¨ˆæ¸¬ï¼ˆç§»å‹•å¹³å‡ã®ä¾‹ï¼‰
 		frameCount++;
 		timeSinceLastFPSUpdate += deltaTime;
 
-		// 0.25 •b‚²‚Æ‚ÉXV‚µAEMA ‚ÅŠŠ‚ç‚©‚É
+		// 0.25 ç§’ã”ã¨ã«æ›´æ–°ã—ã€EMA ã§æ»‘ã‚‰ã‹ã«
 		constexpr double UPDATE_INTERVAL = 0.25;
 		if (timeSinceLastFPSUpdate >= UPDATE_INTERVAL) {
 			const double instFPS = frameCount / timeSinceLastFPSUpdate;
-			// ŒW” 0.25i‚¨D‚İ‚Åj
+			// ä¿‚æ•° 0.25ï¼ˆãŠå¥½ã¿ã§ï¼‰
 			fps = (fps == 0.0) ? instFPS : (fps * 0.75 + instFPS * 0.25);
 			frameCount = 0;
 			timeSinceLastFPSUpdate = 0.0;
 		}
 	}
 	/**
-	 * @brief ƒfƒ‹ƒ^ƒ^ƒCƒ€‚ğæ“¾‚µ‚Ü‚·B
-	 * @return ƒfƒ‹ƒ^ƒ^ƒCƒ€i•b’PˆÊj
+	 * @brief ãƒ‡ãƒ«ã‚¿ã‚¿ã‚¤ãƒ ã‚’å–å¾—ã—ã¾ã™ã€‚
+	 * @return ãƒ‡ãƒ«ã‚¿ã‚¿ã‚¤ãƒ ï¼ˆç§’å˜ä½ï¼‰
 	 */
 	double GetDeltaTime() const noexcept { return deltaTime; }
 	/**
-	 * @brief ŠJnŠÔ‚©‚ç‚ÌŒo‰ßŠÔ‚ğæ“¾‚µ‚Ü‚·B
-	 * @return Œo‰ßŠÔi•b’PˆÊj
+	 * @brief é–‹å§‹æ™‚é–“ã‹ã‚‰ã®çµŒéæ™‚é–“ã‚’å–å¾—ã—ã¾ã™ã€‚
+	 * @return çµŒéæ™‚é–“ï¼ˆç§’å˜ä½ï¼‰
 	 */
 	double GetTotalTime() const noexcept {
 		return std::chrono::duration<double>(clock::now() - startTime).count();
 	}
 	/**
-	 * @brief Œ»İ‚ÌFPS‚ğæ“¾‚µ‚Ü‚·B
-	 * @return Œ»İ‚ÌFPS
+	 * @brief ç¾åœ¨ã®FPSã‚’å–å¾—ã—ã¾ã™ã€‚
+	 * @return ç¾åœ¨ã®FPS
 	 */
 	double GetFPS() const noexcept { return fps; }
 	/**
-	 * @brief Å‘åƒtƒŒ[ƒ€ƒŒ[ƒg‚ğİ’è‚µ‚Ü‚·B
-	 * @param fpsLimit Å‘åƒtƒŒ[ƒ€ƒŒ[ƒgiFPSj
+	 * @brief æœ€å¤§ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆã‚’è¨­å®šã—ã¾ã™ã€‚
+	 * @param fpsLimit æœ€å¤§ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆï¼ˆFPSï¼‰
 	 */
 	void SetMaxFrameRate(double fpsLimit) noexcept { maxFrameRate = fpsLimit; }
 private:
 	/**
-	 * @brief ‰‚ß‚ÌŠJnŠÔ
+	 * @brief åˆã‚ã®é–‹å§‹æ™‚é–“
 	 */
 	time_point startTime;
 	/**
-	 * @brief ÅŒã‚ÌXVŠÔ
+	 * @brief æœ€å¾Œã®æ›´æ–°æ™‚é–“
 	 */
 	time_point lastTime;
 	/**
-	 * @brief ƒfƒ‹ƒ^ƒ^ƒCƒ€i‘OƒtƒŒ[ƒ€‚©‚ç‚ÌŒo‰ßŠÔj
+	 * @brief ãƒ‡ãƒ«ã‚¿ã‚¿ã‚¤ãƒ ï¼ˆå‰ãƒ•ãƒ¬ãƒ¼ãƒ ã‹ã‚‰ã®çµŒéæ™‚é–“ï¼‰
 	 */
 	double deltaTime;
 	/**
-	 * @brief ƒtƒŒ[ƒ€ƒJƒEƒ“ƒgi1•b‚ ‚½‚è‚ÌƒtƒŒ[ƒ€”j
+	 * @brief ãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ãƒˆï¼ˆ1ç§’ã‚ãŸã‚Šã®ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ï¼‰
 	 */
 	int frameCount;
 	/**
-	 * @brief ÅŒã‚ÌFPSXV‚©‚ç‚ÌŒo‰ßŠÔ
+	 * @brief æœ€å¾Œã®FPSæ›´æ–°ã‹ã‚‰ã®çµŒéæ™‚é–“
 	 */
 	double timeSinceLastFPSUpdate;
 	/**
-	 * @brief Œ»İ‚ÌFPS
+	 * @brief ç¾åœ¨ã®FPS
 	 */
 	double fps;
 	/**
-	 * @brief Å‘åƒtƒŒ[ƒ€ƒŒ[ƒgiFPS§ŒÀj
+	 * @brief æœ€å¤§ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆï¼ˆFPSåˆ¶é™ï¼‰
 	 */
 	double maxFrameRate;
 };

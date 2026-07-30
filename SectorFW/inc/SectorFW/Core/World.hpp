@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   World.hpp
- * @brief ƒ[ƒ‹ƒhƒNƒ‰ƒX‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ãƒ¯ãƒ¼ãƒ«ãƒ‰ã‚¯ãƒ©ã‚¹ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -21,8 +21,8 @@ namespace SFW
 	};
 
 	/**
-	 * @brief ŠeƒŒƒxƒ‹‚ğŠÇ—‚µAXV‚·‚éƒNƒ‰ƒXBƒT[ƒrƒXƒƒP[ƒ^[‚ğ•Û‚·‚éB
-	 * @details ƒRƒs[•s‰Â
+	 * @brief å„ãƒ¬ãƒ™ãƒ«ã‚’ç®¡ç†ã—ã€æ›´æ–°ã™ã‚‹ã‚¯ãƒ©ã‚¹ã€‚ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã‚’ä¿æŒã™ã‚‹ã€‚
+	 * @details ã‚³ãƒ”ãƒ¼ä¸å¯
 	 */
 	template<typename... LevelTypes>
 	class World {
@@ -32,7 +32,7 @@ namespace SFW
 
 		struct Session;
 
-		// Š®—¹‚ÉŒÄ‚Ño‚·ƒJƒXƒ^ƒ€ŠÖ”‚ÌŒ^
+		// å®Œäº†æ™‚ã«å‘¼ã³å‡ºã™ã‚«ã‚¹ã‚¿ãƒ é–¢æ•°ã®å‹
 		using ExecutedCustomFunc = std::function<void(Session*)>; //void(*)(Session*);
 
 		template<typename T>
@@ -48,12 +48,12 @@ namespace SFW
 			Session(World<LevelTypes...>& _world) : world(_world) {}
 
 			/**
-			 * @brief ƒŒƒxƒ‹‚ğ’Ç‰Á‚·‚éŠÖ”
-			 * @param level ’Ç‰Á‚·‚éƒŒƒxƒ‹‚Ì‰E•Ó’lQÆ
+			 * @brief ãƒ¬ãƒ™ãƒ«ã‚’è¿½åŠ ã™ã‚‹é–¢æ•°
+			 * @param level è¿½åŠ ã™ã‚‹ãƒ¬ãƒ™ãƒ«ã®å³è¾ºå€¤å‚ç…§
 			 */
 			template<typename T>
 			void AddLevel(std::unique_ptr<Level<T>> level) {
-				static_assert(OneOf<T, LevelTypes...>, "w’è‚³‚ê‚Ä‚¢‚È‚¢ƒŒƒxƒ‹‚Ì•ªŠ„ƒNƒ‰ƒX‚Å‚·");
+				static_assert(OneOf<T, LevelTypes...>, "æŒ‡å®šã•ã‚Œã¦ã„ãªã„ãƒ¬ãƒ™ãƒ«ã®åˆ†å‰²ã‚¯ãƒ©ã‚¹ã§ã™");
 
 				auto& vec = std::get<std::vector<LevelHolder<T>>>(world.levelSets);
 
@@ -62,13 +62,13 @@ namespace SFW
 				});
 			}
 			/**
-			 * @brief ƒŒƒxƒ‹‚ğ’Ç‰Á‚·‚éŠÖ”
-			 * @param level ’Ç‰Á‚·‚éƒŒƒxƒ‹‚Ì‰E•Ó’lQÆ
-			 * @param customFunc ƒŒƒxƒ‹‚Ìƒ[ƒh‚âƒAƒ“ƒ[ƒh‚ÉŒÄ‚Ño‚³‚ê‚éŠÖ”
+			 * @brief ãƒ¬ãƒ™ãƒ«ã‚’è¿½åŠ ã™ã‚‹é–¢æ•°
+			 * @param level è¿½åŠ ã™ã‚‹ãƒ¬ãƒ™ãƒ«ã®å³è¾ºå€¤å‚ç…§
+			 * @param customFunc ãƒ¬ãƒ™ãƒ«ã®ãƒ­ãƒ¼ãƒ‰æ™‚ã‚„ã‚¢ãƒ³ãƒ­ãƒ¼ãƒ‰æ™‚ã«å‘¼ã³å‡ºã•ã‚Œã‚‹é–¢æ•°
 			 */
 			template<typename T, typename... Func>
 			void AddLevel(std::unique_ptr<Level<T>> level, Func&&... customFunc) {
-				static_assert(OneOf<T, LevelTypes...>, "w’è‚³‚ê‚Ä‚¢‚È‚¢ƒŒƒxƒ‹‚Ì•ªŠ„ƒNƒ‰ƒX‚Å‚·");
+				static_assert(OneOf<T, LevelTypes...>, "æŒ‡å®šã•ã‚Œã¦ã„ãªã„ãƒ¬ãƒ™ãƒ«ã®åˆ†å‰²ã‚¯ãƒ©ã‚¹ã§ã™");
 
 				auto& vec = std::get<std::vector<LevelHolder<T>>>(world.levelSets);
 				vec.emplace_back(LevelHolder<T>{
@@ -79,24 +79,24 @@ namespace SFW
 
 			template<typename T>
 			void AddLevel(LevelHolder<T>&& holder) {
-				static_assert(OneOf<T, LevelTypes...>, "w’è‚³‚ê‚Ä‚¢‚È‚¢ƒŒƒxƒ‹‚Ì•ªŠ„ƒNƒ‰ƒX‚Å‚·");
+				static_assert(OneOf<T, LevelTypes...>, "æŒ‡å®šã•ã‚Œã¦ã„ãªã„ãƒ¬ãƒ™ãƒ«ã®åˆ†å‰²ã‚¯ãƒ©ã‚¹ã§ã™");
 
 				auto& vec = std::get<std::vector<LevelHolder<T>>>(world.levelSets);
 				vec.push_back(std::move(holder));
 			}
 
 			/**
-			 * @brief w’è‚µ‚½ƒŒƒxƒ‹‚Ìƒ[ƒhŠÖ”‚ğŒÄ‚Ño‚·ŠÖ”
-			 * @param levelName ƒ[ƒh‚·‚éƒŒƒxƒ‹‚Ì–¼‘O
-			 * @param executor “n‚µ‚½ê‡,”ñ“¯Šú‚Åƒ[ƒh‚·‚é
-			 * @details ‘SƒŒƒxƒ‹‚Ì–¼‘O‚Æ”äŠr‚µ‚Äˆê’v‚·‚é‚à‚Ì‚ğ’T‚·
+			 * @brief æŒ‡å®šã—ãŸãƒ¬ãƒ™ãƒ«ã®ãƒ­ãƒ¼ãƒ‰é–¢æ•°ã‚’å‘¼ã³å‡ºã™é–¢æ•°
+			 * @param levelName ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ãƒ¬ãƒ™ãƒ«ã®åå‰
+			 * @param executor æ¸¡ã—ãŸå ´åˆ,éåŒæœŸã§ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
+			 * @details å…¨ãƒ¬ãƒ™ãƒ«ã®åå‰ã¨æ¯”è¼ƒã—ã¦ä¸€è‡´ã™ã‚‹ã‚‚ã®ã‚’æ¢ã™
 			 */
 			void LoadLevel(const std::string levelName, IThreadExecutor* executor = nullptr, bool active = true, ExecutedCustomFunc loadedCustom = nullptr)
 			{
 				LevelCustumFunc(levelName, [&](auto& holder) {
 					auto& level = holder.level;
 
-					// 1) ƒƒCƒ“‘¤‚Å‘½dƒ[ƒh–h~i•K{j
+					// 1) ãƒ¡ã‚¤ãƒ³å´ã§å¤šé‡ãƒ­ãƒ¼ãƒ‰é˜²æ­¢ï¼ˆå¿…é ˆï¼‰
 					if (!level->TryBeginLoading()) {
 						LOG_WARNING("Level {%s} is already loaded or loading.", levelName.c_str());
 
@@ -105,9 +105,9 @@ namespace SFW
 						return;
 					}
 
-					level->ChangeState(ELevelState::Loaded, false);// gƒ[ƒhŠ®—¹ƒtƒ‰ƒO‚ğ—‚Æ‚·
+					level->ChangeState(ELevelState::Loaded, false);// â€œãƒ­ãƒ¼ãƒ‰å®Œäº†ãƒ•ãƒ©ã‚°ã‚’è½ã¨ã™
 
-					// “¯Šúƒ[ƒh‚È‚ç]—ˆ’Ê‚è
+					// åŒæœŸãƒ­ãƒ¼ãƒ‰ãªã‚‰å¾“æ¥é€šã‚Š
 					if (!executor)
 					{
 						if (holder.loadingFunc) holder.loadingFunc(&world.GetServiceLocator(), level.get());
@@ -121,24 +121,24 @@ namespace SFW
 							clearBits = clearBits | ELevelState::Active;
 						}
 
-						// ƒ[ƒhŠ®—¹ŒãAó‘Ô‚ğXV
+						// ãƒ­ãƒ¼ãƒ‰å®Œäº†å¾Œã€çŠ¶æ…‹ã‚’æ›´æ–°
 						level->UpdateState(setBits, clearBits);
 
 						if (loadedCustom) loadedCustom(this);
 						return;
 					}
 
-					// 2) ”ñ“¯Šúƒ[ƒhFƒ[ƒJ[‚Éd‚¢ˆ—‚¾‚¯“Š‚°‚é
-					auto* levelPtr = level.get();                 // ƒŒƒxƒ‹‚ª”jŠü‚³‚ê‚È‚¢ŒÀ‚è—LŒø
-					auto loadingFunc = holder.loadingFunc;        // ƒRƒs[‚µ‚ÄˆÀ‘S‚ÉiholderQÆ‚ğ’Í‚Ü‚È‚¢j
-					auto* worldPtr = &world;                      // World‚ÍGameEngine‚ª’×‚·‚Ü‚Å¶‚«‚Ä‚é‘z’è
+					// 2) éåŒæœŸãƒ­ãƒ¼ãƒ‰ï¼šãƒ¯ãƒ¼ã‚«ãƒ¼ã«é‡ã„å‡¦ç†ã ã‘æŠ•ã’ã‚‹
+					auto* levelPtr = level.get();                 // ãƒ¬ãƒ™ãƒ«ãŒç ´æ£„ã•ã‚Œãªã„é™ã‚Šæœ‰åŠ¹
+					auto loadingFunc = holder.loadingFunc;        // ã‚³ãƒ”ãƒ¼ã—ã¦å®‰å…¨ã«ï¼ˆholderå‚ç…§ã‚’æ´ã¾ãªã„ï¼‰
+					auto* worldPtr = &world;                      // Worldã¯GameEngineãŒæ½°ã™ã¾ã§ç”Ÿãã¦ã‚‹æƒ³å®š
 
 					executor->Submit([worldPtr, levelPtr, loadingFunc, levelName, loadedCustom, active]()
 						{
-							// ‚±‚±‚Í g•À—ñOK‚Èˆ—‚¾‚¯h ‚ÉŒÀ’èiGPU/ƒŒƒ“ƒ_ƒXƒŒƒbƒhê—p/Worldó‘Ô•ÏX‚ÍNGj
+							// ã“ã“ã¯ â€œä¸¦åˆ—OKãªå‡¦ç†ã ã‘â€ ã«é™å®šï¼ˆGPU/ãƒ¬ãƒ³ãƒ€ã‚¹ãƒ¬ãƒƒãƒ‰å°‚ç”¨/WorldçŠ¶æ…‹å¤‰æ›´ã¯NGï¼‰
 							if (loadingFunc) loadingFunc(&worldPtr->GetServiceLocator(), levelPtr);
 
-							// 3) Š®—¹’Ê’m‚ğƒƒCƒ“‚É•Ô‚·iRequestƒLƒ…[‚Ímutex‚Åç‚ç‚ê‚Ä‚éj
+							// 3) å®Œäº†é€šçŸ¥ã‚’ãƒ¡ã‚¤ãƒ³ã«è¿”ã™ï¼ˆRequestã‚­ãƒ¥ãƒ¼ã¯mutexã§å®ˆã‚‰ã‚Œã¦ã‚‹ï¼‰
 							auto& rs = worldPtr->GetRequestServiceNoLock();
 							rs.PushCommand(rs.CreateLambdaCommand(
 								[levelPtr, loadedCustom, active](Session* s, IThreadExecutor* ex)
@@ -152,7 +152,7 @@ namespace SFW
 										clearBits = clearBits | ELevelState::Active;
 									}
 
-									// ƒƒCƒ“(=FlashAllCommandŒo—R)‚ÅŠm’è‚³‚¹‚é
+									// ãƒ¡ã‚¤ãƒ³(=FlashAllCommandçµŒç”±)ã§ç¢ºå®šã•ã›ã‚‹
 									levelPtr->UpdateState(setBits, clearBits);
 
 									if (loadedCustom) loadedCustom(s);
@@ -168,14 +168,14 @@ namespace SFW
 					auto& pLevel = holder.level;
 
 					auto state = pLevel->GetState();
-					// true‚Ìê‡Loadingƒrƒbƒg‚ğ—§‚Ä‚é
+					// trueã®å ´åˆLoadingãƒ“ãƒƒãƒˆã‚’ç«‹ã¦ã‚‹
 					if (!pLevel->TryBeginClean()) {
-						// –¢ƒ[ƒh‚Ü‚½‚Íƒ[ƒh’†‚Ìê‡‚ÍƒXƒLƒbƒv
+						// æœªãƒ­ãƒ¼ãƒ‰ã¾ãŸã¯ãƒ­ãƒ¼ãƒ‰ä¸­ã®å ´åˆã¯ã‚¹ã‚­ãƒƒãƒ—
 						LOG_WARNING("Level {%s} is unloaded or loading.", levelName.c_str());
 						return;
 					};
 
-					// ƒŒƒxƒ‹‚ğ–¢ƒ[ƒh | ”ñƒAƒNƒeƒBƒu‚É‚·‚é
+					// ãƒ¬ãƒ™ãƒ«ã‚’æœªãƒ­ãƒ¼ãƒ‰ | éã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã«ã™ã‚‹
 					ELevelState clearBits = ELevelState::Loaded | ELevelState::Active;
 					pLevel->ChangeState(clearBits, false);
 
@@ -184,7 +184,7 @@ namespace SFW
 						holder.cleanFunc(&world.GetServiceLocator(), pLevel.get());
 					}
 
-					// ƒNƒŠ[ƒ“Š®—¹ŒãALoadingƒrƒbƒg‚ğ—‚Æ‚·
+					// ã‚¯ãƒªãƒ¼ãƒ³å®Œäº†å¾Œã€Loadingãƒ“ãƒƒãƒˆã‚’è½ã¨ã™
 					pLevel->ChangeState(ELevelState::Loading, false);
 					});
 			}
@@ -242,7 +242,7 @@ namespace SFW
 				bool find = false;
 #endif
 
-				// w’è‚³‚ê‚½–¼‘O‚ÌƒŒƒxƒ‹‚ğ‚·‚×‚Äƒ[ƒh‚·‚é
+				// æŒ‡å®šã•ã‚ŒãŸåå‰ã®ãƒ¬ãƒ™ãƒ«ã‚’ã™ã¹ã¦ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
 				auto findLevelFunc = [&](auto& vecs)
 					{
 						for (auto& holder : vecs)
@@ -264,7 +264,7 @@ namespace SFW
 					}, world.levelSets);
 
 #ifdef _DEBUG
-				if (!find) LOG_WARNING("w’è‚³‚ê‚½ƒŒƒxƒ‹‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½ {%s}", levelName.c_str());
+				if (!find) LOG_WARNING("æŒ‡å®šã•ã‚ŒãŸãƒ¬ãƒ™ãƒ«ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ {%s}", levelName.c_str());
 #endif
 			}
 
@@ -273,7 +273,7 @@ namespace SFW
 		};
 
 		/*
-		* @brief World‚É‘Î‚·‚éƒŠƒNƒGƒXƒgƒRƒ}ƒ“ƒh‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX
+		* @brief Worldã«å¯¾ã™ã‚‹ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚³ãƒãƒ³ãƒ‰ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 		*/
 		class IRequestCommand
 		{
@@ -282,7 +282,7 @@ namespace SFW
 			virtual void Execute(Session* pWorldSession, IThreadExecutor* executor) = 0;
 		};
 		/*
-		* @brief World‚ÉƒŒƒxƒ‹‚ğ’Ç‰Á‚·‚éƒRƒ}ƒ“ƒh
+		* @brief Worldã«ãƒ¬ãƒ™ãƒ«ã‚’è¿½åŠ ã™ã‚‹ã‚³ãƒãƒ³ãƒ‰
 		*/
 		template<typename T>
 		class AddLevelCommand : public IRequestCommand
@@ -313,7 +313,7 @@ namespace SFW
 		};
 
 		/*
-		* @brief World‚ÉƒŒƒxƒ‹‚ğƒ[ƒh‚·‚éƒRƒ}ƒ“ƒh
+		* @brief Worldã«ãƒ¬ãƒ™ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã‚³ãƒãƒ³ãƒ‰
 		*/
 		class LoadLevelCommand : public IRequestCommand
 		{
@@ -332,7 +332,7 @@ namespace SFW
 			bool active;
 		};
 		/*
-		* @brief World‚ÉƒŒƒxƒ‹‚ğƒNƒŠ[ƒ“‚·‚éƒRƒ}ƒ“ƒh
+		* @brief Worldã«ãƒ¬ãƒ™ãƒ«ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã™ã‚‹ã‚³ãƒãƒ³ãƒ‰
 		*/
 		class CleanLevelCommand : public IRequestCommand
 		{
@@ -428,7 +428,7 @@ namespace SFW
 		};
 
 		/*
-		* @brief System‚È‚Ç‚Ì‰º‘w‚©‚çWorld‚É‘Î‚µ‚Ä‚ÌƒŠƒNƒGƒXƒg‚ğó‚¯•t‚¯‚é
+		* @brief Systemãªã©ã®ä¸‹å±¤ã‹ã‚‰Worldã«å¯¾ã—ã¦ã®ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’å—ã‘ä»˜ã‘ã‚‹
 		*/
 		class RequestService
 		{
@@ -450,7 +450,7 @@ namespace SFW
 			}
 
 			/*
-			* @brief ƒRƒ}ƒ“ƒh‚ğƒŠƒNƒGƒXƒg‚É’Ç‰Á‚·‚é
+			* @brief ã‚³ãƒãƒ³ãƒ‰ã‚’ãƒªã‚¯ã‚¨ã‚¹ãƒˆã«è¿½åŠ ã™ã‚‹
 			*/
 			void PushCommand(std::unique_ptr<IRequestCommand> cmd) {
 				std::lock_guard<std::mutex> lock(*requestMutex);
@@ -516,15 +516,15 @@ namespace SFW
 			}
 
 		private:
-			// ‚·‚×‚Ä‚ÌƒRƒ}ƒ“ƒh‚ğÀs‚·‚éŠÖ”
-			// World‚ÅLevel‚ğXV‚·‚é‘O‚ÉŒÄ‚Ño‚·
+			// ã™ã¹ã¦ã®ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè¡Œã™ã‚‹é–¢æ•°
+			// Worldã§Levelã‚’æ›´æ–°ã™ã‚‹å‰ã«å‘¼ã³å‡ºã™
 			void FlashAllCommand(World<LevelTypes...>* pWorld, IThreadExecutor* executor) {
 				decltype(requests) localRequests;
 				{
 					std::lock_guard<std::mutex> lock(*requestMutex);
 					std::swap(localRequests, requests);
 
-					//”O‚Ì‚½‚ßƒNƒŠƒA
+					//å¿µã®ãŸã‚ã‚¯ãƒªã‚¢
 					requests.clear();
 				}
 
@@ -537,7 +537,7 @@ namespace SFW
 				}
 			}
 		private:
-			//ƒ€[ƒu‰Â”\‚É‚·‚é‚½‚ßƒq[ƒv‚Å•Û
+			//ãƒ ãƒ¼ãƒ–å¯èƒ½ã«ã™ã‚‹ãŸã‚ãƒ’ãƒ¼ãƒ—ã§ä¿æŒ
 			std::shared_ptr<std::mutex> requestMutex;
 			std::vector<std::unique_ptr<IRequestCommand>> requests;
 		public:
@@ -546,16 +546,16 @@ namespace SFW
 
 	public:
 		/**
-		 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @param serviceLocator ƒT[ƒrƒXƒƒP[ƒ^[‰E•Ó’lQÆ
+		 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @param serviceLocator ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼å³è¾ºå€¤å‚ç…§
 		 */
 		explicit World(ECS::ServiceLocator&& serviceLocator) noexcept
 			: serviceLocator(std::move(serviceLocator)) {
 		}
 
 		/**
-		 * @brief ƒ€[ƒuƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @param other ƒ€[ƒuŒ³‚ÌWorldƒIƒuƒWƒFƒNƒg
+		 * @brief ãƒ ãƒ¼ãƒ–ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @param other ãƒ ãƒ¼ãƒ–å…ƒã®Worldã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		 */
 		World(World&& other) noexcept
 			: levelSets(std::move(other.levelSets)),
@@ -564,9 +564,9 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒ€[ƒu‘ã“ü‰‰Zq
-		 * @param other ƒ€[ƒuŒ³‚ÌWorldƒIƒuƒWƒFƒNƒg
-		 * @return World& ƒ€[ƒuŒã‚ÌWorldƒIƒuƒWƒFƒNƒg‚Ö‚ÌQÆ
+		 * @brief ãƒ ãƒ¼ãƒ–ä»£å…¥æ¼”ç®—å­
+		 * @param other ãƒ ãƒ¼ãƒ–å…ƒã®Worldã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+		 * @return World& ãƒ ãƒ¼ãƒ–å¾Œã®Worldã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®å‚ç…§
 		 */
 		World& operator=(World&& other) noexcept {
 			if (this != &other) {
@@ -578,17 +578,17 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒ[ƒ‹ƒhƒŠƒNƒGƒXƒgƒT[ƒrƒX‚ğƒT[ƒrƒXƒƒP[ƒ^[‚É“o˜^‚·‚éŠÖ”
-		 * @details GameEngine‚Ì‰Šú‰»‚ÉŒÄ‚Ño‚·
+		 * @brief ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚µãƒ¼ãƒ“ã‚¹ã‚’ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã«ç™»éŒ²ã™ã‚‹é–¢æ•°
+		 * @details GameEngineã®åˆæœŸåŒ–æ™‚ã«å‘¼ã³å‡ºã™
 		 */
 		void RegisterRequestService() {
-			// ƒ[ƒ‹ƒhƒŠƒNƒGƒXƒgƒT[ƒrƒX‚ğƒT[ƒrƒXƒƒP[ƒ^[‚É“o˜^
+			// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚µãƒ¼ãƒ“ã‚¹ã‚’ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã«ç™»éŒ²
 			ECS::ServiceLocator::WorldAccessor::AddStaticService(&this->serviceLocator, &requestService);
 		}
 
 		/**
-		 * @brief ‚·‚×‚Ä‚ÌƒŒƒxƒ‹‚ğXV‚·‚éŠÖ”B
-		 * @param deltaTime ƒfƒ‹ƒ^ƒ^ƒCƒ€i•bj
+		 * @brief ã™ã¹ã¦ã®ãƒ¬ãƒ™ãƒ«ã‚’æ›´æ–°ã™ã‚‹é–¢æ•°ã€‚
+		 * @param deltaTime ãƒ‡ãƒ«ã‚¿ã‚¿ã‚¤ãƒ ï¼ˆç§’ï¼‰
 		 */
 		void UpdateAllLevels(double deltaTime, IThreadExecutor* executor) {
 #ifdef _ENABLE_IMGUI
@@ -597,9 +597,9 @@ namespace SFW
 				auto& frame = g.data();
 				frame.items.clear();
 
-				// —á‚¦‚ÎƒvƒŠƒI[ƒ_{depth w’è‚Å•½’R‰»‚µ‚½ƒcƒŠ[‚ğ‹l‚ß‚é
+				// ä¾‹ãˆã°ãƒ—ãƒªã‚ªãƒ¼ãƒ€ï¼‹depth æŒ‡å®šã§å¹³å¦åŒ–ã—ãŸãƒ„ãƒªãƒ¼ã‚’è©°ã‚ã‚‹
 				frame.items.push_back({ /*id=*/frame.items.size(), /*depth=*/Debug::WorldTreeDepth::TREEDEPTH_WORLD, /*leaf=*/false, "World" });
-			} // guard ‚ÌƒfƒXƒgƒ‰ƒNƒg‚Å unlockBswap ‚Í UI ƒXƒŒƒbƒh‚ÅB
+			} // guard ã®ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆã§ unlockã€‚swap ã¯ UI ã‚¹ãƒ¬ãƒƒãƒ‰ã§ã€‚
 #endif
 
 			std::vector<std::function<void(ECS::ServiceLocator&, double, IThreadExecutor*)>> mainLevelFunc;
@@ -612,7 +612,7 @@ namespace SFW
 							auto& level = holder.level;
 							auto levelState = level->GetState();
 
-							// ”ñƒAƒNƒeƒBƒu | –¢ƒ[ƒh | ƒ[ƒfƒBƒ“ƒO’† ƒŒƒxƒ‹‚ÍƒXƒLƒbƒv
+							// éã‚¢ã‚¯ãƒ†ã‚£ãƒ– | æœªãƒ­ãƒ¼ãƒ‰ | ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ä¸­ ãƒ¬ãƒ™ãƒ«ã¯ã‚¹ã‚­ãƒƒãƒ—
 							if (!HasAll(levelState, ELevelState::Active | ELevelState::Loaded)
 								|| HasAny(levelState, ELevelState::Loading)) {
 #ifdef _ENABLE_IMGUI
@@ -623,7 +623,7 @@ namespace SFW
 
 							if (HasAny(levelState, ELevelState::Main)) {
 								mainFunc.push_back([&level](auto& locator, double delta, auto* te) {
-									//level‚ÌXVˆ—Binc/core/Level.hpp‚ÌLevelƒNƒ‰ƒX‚ÌUpdateŠÖ”‚ğŒÄ‚Ño‚·
+									//levelã®æ›´æ–°å‡¦ç†ã€‚inc/core/Level.hppã®Levelã‚¯ãƒ©ã‚¹ã®Updateé–¢æ•°ã‚’å‘¼ã³å‡ºã™
 									level->Update(locator, delta, te);
 									});
 							}
@@ -647,12 +647,12 @@ namespace SFW
 #endif
 
 			ThreadCountDownLatch latch((int)mainLevelFunc.size());
-			//ƒƒCƒ“‚ÌƒŒƒxƒ‹‚ÌXVˆ—‚ğ•Às‚ÅÀs
+			//ãƒ¡ã‚¤ãƒ³ã®ãƒ¬ãƒ™ãƒ«ã®æ›´æ–°å‡¦ç†ã‚’ä¸¦è¡Œã§å®Ÿè¡Œ
 			for (auto& f : mainLevelFunc)
 			{
 				executor->Submit(
 					[this,
-					task = std::move(f),        // uƒ‰ƒ€ƒ_‚Ö‚Ì move ƒLƒƒƒvƒ`ƒƒv
+					task = std::move(f),        // ã€Œãƒ©ãƒ ãƒ€ã¸ã® move ã‚­ãƒ£ãƒ—ãƒãƒ£ã€
 					deltaTime,
 					executor,
 					&latch]()
@@ -663,43 +663,43 @@ namespace SFW
 				);
 			}
 
-			//ƒOƒ[ƒoƒ‹ƒVƒXƒeƒ€‚ÌXVˆ—Às
+			//ã‚°ãƒ­ãƒ¼ãƒãƒ«ã‚·ã‚¹ãƒ†ãƒ ã®æ›´æ–°å‡¦ç†å®Ÿè¡Œ
 			globalSystem.UpdateGlobal(serviceLocator, executor);
 
-			//ƒTƒuƒŒƒxƒ‹‚ÌXVˆ—Às
+			//ã‚µãƒ–ãƒ¬ãƒ™ãƒ«ã®æ›´æ–°å‡¦ç†å®Ÿè¡Œ
 			for (auto& f : subLevelFunc) f(serviceLocator, deltaTime, executor);
 
 			latch.Wait();
 		}
 		/**
-		 * @brief ƒT[ƒrƒXƒƒP[ƒ^[‚ÌƒT[ƒrƒX‚ğXV‚·‚éŠÖ”
-		 * @param deltaTime ƒtƒŒ[ƒ€Œo‰ßŠÔi•bj
+		 * @brief ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã®ã‚µãƒ¼ãƒ“ã‚¹ã‚’æ›´æ–°ã™ã‚‹é–¢æ•°
+		 * @param deltaTime ãƒ•ãƒ¬ãƒ¼ãƒ çµŒéæ™‚é–“ï¼ˆç§’ï¼‰
 		 */
 		void UpdateServiceLocator(double deltaTime, IThreadExecutor* executor) {
-			//‰º‘w‚©‚çƒŠƒNƒGƒXƒg‚³‚ê‚½ƒRƒ}ƒ“ƒh‚ğÀs
+			//ä¸‹å±¤ã‹ã‚‰ãƒªã‚¯ã‚¨ã‚¹ãƒˆã•ã‚ŒãŸã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè¡Œ
 			requestService.FlashAllCommand(this, executor);
 
-			//“o˜^‚µ‚½ƒT[ƒrƒX‚ÌXVˆ—‚ğÀs
+			//ç™»éŒ²ã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã®æ›´æ–°å‡¦ç†ã‚’å®Ÿè¡Œ
 			serviceLocator.UpdateService(deltaTime, executor);
 		}
 
 		/**
-		 * @brief ƒT[ƒrƒXƒƒP[ƒ^[‚ÌƒT[ƒrƒX‚ÌƒRƒ~ƒbƒg‚ğs‚¤ŠÖ”
+		 * @brief ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã®ã‚µãƒ¼ãƒ“ã‚¹ã®ã‚³ãƒŸãƒƒãƒˆã‚’è¡Œã†é–¢æ•°
 		 */
 		void CommitServiceLocator(double deltaTime) {
 			serviceLocator.CommitService(deltaTime);
 		}
 
 		/**
-		 * @brief ƒT[ƒrƒXƒƒP[ƒ^[‚ğæ“¾‚·‚éŠÖ”
-		 * @return const ECS::ServiceLocator& ƒT[ƒrƒXƒƒP[ƒ^[‚Ö‚Ì’è”QÆ
+		 * @brief ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return const ECS::ServiceLocator& ã‚µãƒ¼ãƒ“ã‚¹ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã¸ã®å®šæ•°å‚ç…§
 		 */
 		const ECS::ServiceLocator& GetServiceLocator() const noexcept {
 			return serviceLocator;
 		}
 		/**
-		 * @brief ƒ[ƒ‹ƒh‚Ö‚Ì—v‹‚ğŠÇ—‚·‚éƒT[ƒrƒX‚Ìæ“¾
-		 * @return RequestService& ƒ[ƒ‹ƒh‚Ö‚Ì—v‹‚ğŠÇ—‚·‚éƒT[ƒrƒX‚Ö‚ÌQÆ
+		 * @brief ãƒ¯ãƒ¼ãƒ«ãƒ‰ã¸ã®è¦æ±‚ã‚’ç®¡ç†ã™ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®å–å¾—
+		 * @return RequestService& ãƒ¯ãƒ¼ãƒ«ãƒ‰ã¸ã®è¦æ±‚ã‚’ç®¡ç†ã™ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã¸ã®å‚ç…§
 		 */
 		[[nodiscard]] RequestService& GetRequestServiceNoLock() {
 			return requestService;
@@ -712,8 +712,8 @@ namespace SFW
 		}
 	private:
 		/*
-		* @brief World‚Ö‚ÌƒZƒbƒVƒ‡ƒ“(ƒŒƒxƒ‹‚Ì’Ç‰Á‚È‚Ç)‚ğæ“¾‚·‚éŠÖ”
-		* @return Session World‚ÌƒZƒbƒVƒ‡ƒ“ƒIƒuƒWƒFƒNƒg
+		* @brief Worldã¸ã®ã‚»ãƒƒã‚·ãƒ§ãƒ³(ãƒ¬ãƒ™ãƒ«ã®è¿½åŠ ãªã©)ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		* @return Session Worldã®ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		*/
 		[[nodiscard]] Session GetSession() {
 			return Session(*this);
@@ -726,7 +726,7 @@ namespace SFW
 		struct NonePartition {
 		};
 
-		//PartitionƒNƒ‰ƒX‚ğg—p‚µ‚È‚¢‚Ì‚Å“K“–‚ÈŒ^‚ğ“ü‚ê‚é
+		//Partitionã‚¯ãƒ©ã‚¹ã‚’ä½¿ç”¨ã—ãªã„ã®ã§é©å½“ãªå‹ã‚’å…¥ã‚Œã‚‹
 		ECS::SystemScheduler<NonePartition> globalSystem;
 	};
 }

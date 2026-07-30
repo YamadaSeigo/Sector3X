@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 
 #include <SectorFW/Core/ECS/ServiceContext.hpp>
 
 //==============================================================
-// ˆË‘¶ŠÖŒW“I‚É‚æ‚­‚È‚¢‚ªƒRƒ“ƒpƒNƒg‚É‚·‚é‚½‚ß‚ÉDX11BufferManager(ƒoƒbƒtƒ@XV)‚ÉˆË‘¶
+// ä¾å­˜é–¢ä¿‚çš„ã«ã‚ˆããªã„ãŒã‚³ãƒ³ãƒ‘ã‚¯ãƒˆã«ã™ã‚‹ãŸã‚ã«DX11BufferManager(ãƒãƒƒãƒ•ã‚¡æ›´æ–°)ã«ä¾å­˜
 //==============================================================
 class WindService : public SFW::ECS::IUpdateService
 {
@@ -12,12 +12,12 @@ public:
 
 	struct WindCB
 	{
-		float    Time = 0.0f;                       // Œo‰ßŠÔ
-		float    NoiseFreq = 0.05f;                 // ƒmƒCƒYü”g”
-		float    BigWaveWeight = 0.3f;              // ‚¨‚¨‚«‚È”g(‘S‘Ì)‚Ìd‚İ
-		float    WindSpeed = 1.0f;                  // •—‘¬
-		float    WindAmplitude = 1.6f;              // •—‚ÌU•
-		Math::Vec3f   WindDir = { 1.0f, 0.0f, 0.3f };   // •—Œü‚«(XZ•½–Ê)
+		float    Time = 0.0f;                       // çµŒéæ™‚é–“
+		float    NoiseFreq = 0.05f;                 // ãƒã‚¤ã‚ºå‘¨æ³¢æ•°
+		float    BigWaveWeight = 0.3f;              // ãŠãŠããªæ³¢(å…¨ä½“)ã®é‡ã¿
+		float    WindSpeed = 1.0f;                  // é¢¨é€Ÿ
+		float    WindAmplitude = 1.6f;              // é¢¨ã®æŒ¯å¹…
+		Math::Vec3f   WindDir = { 1.0f, 0.0f, 0.3f };   // é¢¨å‘ã(XZå¹³é¢)
 	};
 
 	WindService(BufferManager* bufferMgr) : bufferMgr(bufferMgr)
@@ -29,7 +29,7 @@ public:
 
 		bufferMgr->Add(cd, hBuffer);
 
-		// ƒfƒoƒbƒOUI“o˜^
+		// ãƒ‡ãƒãƒƒã‚°UIç™»éŒ²
 		BIND_DEBUG_SLIDER_FLOAT("Wind", "BigWaveWeight", &m_grassWindCB.BigWaveWeight, 0.0f, 1.0f, 0.01f);
 		BIND_DEBUG_SLIDER_FLOAT("Wind", "NoiseFreq", &m_grassWindCB.NoiseFreq, 0.0f, 1.0f, 0.001f);
 		BIND_DEBUG_SLIDER_FLOAT("Wind", "BaseSpeed", &m_baseWindSpeed, 0.0f, 20.0f, 0.1f);
@@ -46,20 +46,20 @@ public:
 
 	void PreUpdate(double deltaTime) noexcept override
 	{
-		// windSpeed‚ğ”½‰f‚³‚¹‚Ä•—‚ÌŠÔ•Ï‰»‚ği‚ß‚é
+		// windSpeedã‚’åæ˜ ã•ã›ã¦é¢¨ã®æ™‚é–“å¤‰åŒ–ã‚’é€²ã‚ã‚‹
 		float mul = powf(m_grassWindCB.WindSpeed * 0.25f, 2.0f) * m_windTimeSpeed;
 
 		m_grassWindCB.Time += static_cast<float>(deltaTime) * mul;
 
-		// ©“®•—‚ª—LŒø‚È‚çA•—Œü‚«/•—‘¬‚ğu‚»‚ê‚Á‚Û‚­vŠÔ•Ï‰»‚³‚¹‚é
+		// è‡ªå‹•é¢¨ãŒæœ‰åŠ¹ãªã‚‰ã€é¢¨å‘ã/é¢¨é€Ÿã‚’ã€Œãã‚Œã£ã½ãã€æ™‚é–“å¤‰åŒ–ã•ã›ã‚‹
 		UpdateWind(deltaTime);
 	}
 
-	// •—Œü‚«/•—‘¬‚ğu‚»‚ê‚Á‚Û‚­vŠÔ•Ï‰»‚³‚¹‚é
+	// é¢¨å‘ã/é¢¨é€Ÿã‚’ã€Œãã‚Œã£ã½ãã€æ™‚é–“å¤‰åŒ–ã•ã›ã‚‹
 	void UpdateWind(double deltaTime) noexcept
 	{
 		// -------------------------
-		// ¬‚³‚È 1D ˜A‘±ƒmƒCƒYivalue noise + fBmj
+		// å°ã•ãª 1D é€£ç¶šãƒã‚¤ã‚ºï¼ˆvalue noise + fBmï¼‰
 		// -------------------------
 		auto HashU32 = [](uint32_t x) -> uint32_t {
 			x ^= 61u; x ^= x >> 16;
@@ -113,25 +113,25 @@ public:
 		auto Saturate = [](float v) -> float { return std::clamp(v, 0.0f, 1.0f); };
 
 		// -------------------------
-		// ŠÔ
+		// æ™‚é–“
 		// -------------------------
 		m_windTimeSec += deltaTime;
 		const float T = static_cast<float>(m_windTimeSec);
 
 		// -------------------------
-		// g©‘R‚Á‚Û‚¢h•—‘¬F•’i‚Íã‚ß + ‚Æ‚«‚Ç‚«“Ë•—
+		// â€œè‡ªç„¶ã£ã½ã„â€é¢¨é€Ÿï¼šæ™®æ®µã¯å¼±ã‚ + ã¨ãã©ãçªé¢¨
 		// -------------------------
-		const float baseN = FBm1D01(T * m_speedTimeScale, 17u); // 0..1 (‚ä‚Á‚­‚è)
-		const float gustN = FBm1D01(T * m_gustTimeScale, 91u); // 0..1 (‘¬‚ß)
+		const float baseN = FBm1D01(T * m_speedTimeScale, 17u); // 0..1 (ã‚†ã£ãã‚Š)
+		const float gustN = FBm1D01(T * m_gustTimeScale, 91u); // 0..1 (é€Ÿã‚)
 
-		// “Ë•—‚Í³‘¤‚¾‚¯‹­’²i‚½‚Ü‚É—ˆ‚éŠ´‚¶j
+		// çªé¢¨ã¯æ­£å´ã ã‘å¼·èª¿ï¼ˆãŸã¾ã«æ¥ã‚‹æ„Ÿã˜ï¼‰
 		const float gust = (std::max)(0.0f, gustN - 0.5f) * 2.0f; // 0..1
 
 		float strength01 = 0.25f + baseN * 0.55f + gust * 0.85f;
 		strength01 = Saturate(strength01);
 
 		// -------------------------
-		// •—Œü‚«F‹­‚¢‚Ù‚Ç•ûŒü‚ªˆÀ’èiŒ»À‚Á‚Û‚¢j
+		// é¢¨å‘ãï¼šå¼·ã„ã»ã©æ–¹å‘ãŒå®‰å®šï¼ˆç¾å®Ÿã£ã½ã„ï¼‰
 		// -------------------------
 		const float dirTimeScale = m_dirTimeScaleBase * (1.35f - strength01);
 		const float dirN = FBm1D01(T * dirTimeScale, 123u); // 0..1
@@ -142,8 +142,8 @@ public:
 		Math::Vec3f autoDir = { std::cos(angle), 0.0f, std::sin(angle) };
 
 		// -------------------------
-		// Šù‘¶‚Ì UI ’lim_grassWindCB.WindDir / WindSpeedj‚ğgƒx[ƒXh‚Æ‚µ‚Ä‘¸d‚µ‚Â‚ÂA
-		// ©“®•—‚ğƒuƒŒƒ“ƒh‚µ‚Äãæ‚¹‚·‚é
+		// æ—¢å­˜ã® UI å€¤ï¼ˆm_grassWindCB.WindDir / WindSpeedï¼‰ã‚’â€œãƒ™ãƒ¼ã‚¹â€ã¨ã—ã¦å°Šé‡ã—ã¤ã¤ã€
+		// è‡ªå‹•é¢¨ã‚’ãƒ–ãƒ¬ãƒ³ãƒ‰ã—ã¦ä¸Šä¹—ã›ã™ã‚‹
 		// -------------------------
 		auto NormalizeXZ = [](Math::Vec3f v) -> Math::Vec3f {
 			v.y = 0.0f;
@@ -156,17 +156,17 @@ public:
 		Math::Vec3f baseDir = NormalizeXZ(m_grassWindCB.WindDir);
 		autoDir = NormalizeXZ(autoDir);
 
-		// ƒuƒŒƒ“ƒh—Êi0‚Åè“®A1‚Å©“®j
+		// ãƒ–ãƒ¬ãƒ³ãƒ‰é‡ï¼ˆ0ã§æ‰‹å‹•ã€1ã§è‡ªå‹•ï¼‰
 		const float a = Saturate(m_autoWindEnable);
 
-		// g‚¢‚«‚È‚è•ûŒü‚ª”ò‚Î‚È‚¢h‚æ‚¤‚ÉAŒ»İ•ûŒü‚ğƒXƒ€[ƒY‚É’Ç]‚³‚¹‚é
+		// â€œã„ããªã‚Šæ–¹å‘ãŒé£›ã°ãªã„â€ã‚ˆã†ã«ã€ç¾åœ¨æ–¹å‘ã‚’ã‚¹ãƒ ãƒ¼ã‚ºã«è¿½å¾“ã•ã›ã‚‹
 		Math::Vec3f targetDir = NormalizeXZ({
 			Lerp(baseDir.x, autoDir.x, a),
 			0.0f,
 			Lerp(baseDir.z, autoDir.z, a)
 			});
 
-		// Œ»İ‚ÌWindDir‚ğó‘Ô‚Æ‚µ‚Äg‚Á‚ÄŠŠ‚ç‚©‚É
+		// ç¾åœ¨ã®WindDirã‚’çŠ¶æ…‹ã¨ã—ã¦ä½¿ã£ã¦æ»‘ã‚‰ã‹ã«
 		Math::Vec3f curDir = NormalizeXZ(m_grassWindCB.WindDir);
 		const float follow = 1.0f - std::exp(-m_dirDriftSpeed * static_cast<float>(deltaTime));
 		Math::Vec3f newDir = NormalizeXZ({
@@ -175,18 +175,18 @@ public:
 			Lerp(curDir.z, targetDir.z, follow)
 			});
 
-		// •—‘¬‚Íuƒx[ƒX’l * ”{—¦v‚Å©‘R‚Éã‰º
+		// é¢¨é€Ÿã¯ã€Œãƒ™ãƒ¼ã‚¹å€¤ * å€ç‡ã€ã§è‡ªç„¶ã«ä¸Šä¸‹
 		const float speedMul = Lerp(m_baseSpeedMulMin, m_baseSpeedMulMax, strength01);
 		const float newSpeed = (std::max)(0.0f, m_baseWindSpeed) * Lerp(1.0f, speedMul, a);
 
-		// ”½‰f
+		// åæ˜ 
 		m_grassWindCB.WindDir = newDir;
 		m_grassWindCB.WindSpeed = newSpeed;
 	}
 
 	/**
-	* @brief ƒoƒbƒtƒ@‚ğGPU‚É‚¨‚­‚é
-	* @param slot Œ»İ‚ÌCPU‘¤‚ÌƒtƒŒ[ƒ€
+	* @brief ãƒãƒƒãƒ•ã‚¡ã‚’GPUã«ãŠãã‚‹
+	* @param slot ç¾åœ¨ã®CPUå´ã®ãƒ•ãƒ¬ãƒ¼ãƒ 
 	*/
 	void UpdateBufferToGPU(uint16_t slot) noexcept
 	{
@@ -221,8 +221,8 @@ public:
 		std::vector<float> weights;
 		weights.reserve(vertices.size());
 		for (const auto v : vertices) {
-			float t = (v.y - minY) / height; // 0..1 ‚‚­‚È‚é‚Ù‚Ç‘å‚«‚­
-			float w = std::pow(t, 2.0f); // ‚‚³‚É‰‚¶‚Ä“ñŸ‹Èü“I‚É‘‰Á.‚µ‚È‚â‚©‚ÉƒJ[ƒu
+			float t = (v.y - minY) / height; // 0..1 é«˜ããªã‚‹ã»ã©å¤§ãã
+			float w = std::pow(t, 2.0f); // é«˜ã•ã«å¿œã˜ã¦äºŒæ¬¡æ›²ç·šçš„ã«å¢—åŠ .ã—ãªã‚„ã‹ã«ã‚«ãƒ¼ãƒ–
 			weights.push_back(w);
 		}
 		return weights;
@@ -230,7 +230,7 @@ public:
 
 	static std::vector<float> ComputeTreeWeight(const std::vector<Math::Vec3f>& vertices)
 	{
-		// Å‘å‚ÆÅ¬‚ÌÀ•W
+		// æœ€å¤§ã¨æœ€å°ã®åº§æ¨™
 		float minY = +FLT_MAX;
 		float maxY = -FLT_MAX;
 		for (const auto v : vertices) {
@@ -239,14 +239,14 @@ public:
 		}
 		float height = (std::max)(0.0001f, maxY - minY);
 
-		// ŠÈˆÕ“I‚ÉuŠ²‚Ì² = ã•ûŒüv‚Æ‰¼’è
+		// ç°¡æ˜“çš„ã«ã€Œå¹¹ã®è»¸ = ä¸Šæ–¹å‘ã€ã¨ä»®å®š
 		Math::Vec3f trunkAxis = Math::Vec3f(0, 1, 0);
 
-		// Š²‚Ì’†Sü‚©‚ç‚ÌÅ‘å”¼Œa‚ğ‘ª‚é
+		// å¹¹ã®ä¸­å¿ƒç·šã‹ã‚‰ã®æœ€å¤§åŠå¾„ã‚’æ¸¬ã‚‹
 		float maxRadius = 0.0f;
 		for (auto v : vertices) {
-			float t = (v.y - minY) / height;    // ²•ûŒü‚Ì³‹K‰»ˆÊ’u
-			Math::Vec3f proj = Math::Vec3f(0, minY + t * height, 0); // ’´G‚È“Š‰ei0,y,0j
+			float t = (v.y - minY) / height;    // è»¸æ–¹å‘ã®æ­£è¦åŒ–ä½ç½®
+			Math::Vec3f proj = Math::Vec3f(0, minY + t * height, 0); // è¶…é›‘ãªæŠ•å½±ï¼ˆ0,y,0ï¼‰
 			float r = (v - proj).length();
 			maxRadius = (std::max)(maxRadius, r);
 		}
@@ -255,11 +255,11 @@ public:
 		std::vector<float> weights;
 		weights.reserve(vertices.size());
 		for (auto v : vertices) {
-			float t = (v.y - minY) / height; // 0..1 ‚‚­‚È‚é‚Ù‚Ç‘å‚«‚­
+			float t = (v.y - minY) / height; // 0..1 é«˜ããªã‚‹ã»ã©å¤§ãã
 			Math::Vec3f proj = Math::Vec3f(0, minY + t * height, 0);
-			float r = (v - proj).length() / maxRadius; // 0..1 Š²‚©‚ç‰“‚¢‚Ù‚Ç‘å‚«‚­
+			float r = (v - proj).length() / maxRadius; // 0..1 å¹¹ã‹ã‚‰é ã„ã»ã©å¤§ãã
 
-			// ‚‚³‚Æ”¼Œa‚ğƒ~ƒbƒNƒX
+			// é«˜ã•ã¨åŠå¾„ã‚’ãƒŸãƒƒã‚¯ã‚¹
 			float w = std::pow(t, 2.0f) * 0.1f + std::pow(r, 3.0f) * 1.25f;
 			w = std::clamp(w, 0.0f, 1.0f);
 			weights.push_back(w);
@@ -279,8 +279,8 @@ public:
 		std::vector<float> weights;
 		weights.reserve(vertices.size());
 		for (const auto v : vertices) {
-			float t = (v.y - minY) / height; // 1..0 ‚‚­‚È‚é‚Ù‚Ç¬‚³‚­
-			float w = std::pow(t, 2.0f); // ‚‚³‚É‰‚¶‚Ä“ñŸ‹Èü“I‚É‘‰Á.‚µ‚È‚â‚©‚ÉƒJ[ƒu
+			float t = (v.y - minY) / height; // 1..0 é«˜ããªã‚‹ã»ã©å°ã•ã
+			float w = std::pow(t, 2.0f); // é«˜ã•ã«å¿œã˜ã¦äºŒæ¬¡æ›²ç·šçš„ã«å¢—åŠ .ã—ãªã‚„ã‹ã«ã‚«ãƒ¼ãƒ–
 			weights.push_back(w);
 		}
 		return weights;
@@ -291,16 +291,16 @@ private:
 	// ---- Auto wind params/state ----
 	double m_windTimeSec = 0.0;
 
-	float m_baseWindSpeed = 1.0f;      // ƒx[ƒX‚Ì•—‘¬iUI‚Å’¼Ú‚¢‚¶‚é—pj
-	float m_windTimeSpeed = 2.0f;      // •—‚ÌŠÔ•Ï‰»‚Ì‘¬‚³i‘S‘Ì‚ÌŠÔƒXƒP[ƒ‹j
+	float m_baseWindSpeed = 1.0f;      // ãƒ™ãƒ¼ã‚¹ã®é¢¨é€Ÿï¼ˆUIã§ç›´æ¥ã„ã˜ã‚‹ç”¨ï¼‰
+	float m_windTimeSpeed = 2.0f;      // é¢¨ã®æ™‚é–“å¤‰åŒ–ã®é€Ÿã•ï¼ˆå…¨ä½“ã®æ™‚é–“ã‚¹ã‚±ãƒ¼ãƒ«ï¼‰
 
-	float m_autoWindEnable = 1.0f;     // 0..1i1‚Å©“®•—ƒtƒ‹j
-	float m_dirDriftSpeed = 0.35f;     // •ûŒü‚Ì’Ç]i‘å‚«‚¢‚Ù‚ÇƒXƒ€[ƒY‚É’Ç‚¤j
-	float m_baseSpeedMulMin = 0.60f;   // •—‘¬‚Ì‰ºŒÀ”{—¦iWindSpeed‚ÉŠ|‚¯‚éj
-	float m_baseSpeedMulMax = 3.00f;   // •—‘¬‚ÌãŒÀ”{—¦
-	float m_dirTimeScaleBase = 0.010f; // •ûŒü•Ï‰»‚Ì’x‚³i¬‚³‚¢‚Ù‚Ç‚ä‚Á‚­‚èj
-	float m_speedTimeScale = 0.020f;   // •—‘¬‚Ì‘åˆæ•Ï‰»
-	float m_gustTimeScale = 0.040f;   // “Ë•—‚Ì•Ï‰»
+	float m_autoWindEnable = 1.0f;     // 0..1ï¼ˆ1ã§è‡ªå‹•é¢¨ãƒ•ãƒ«ï¼‰
+	float m_dirDriftSpeed = 0.35f;     // æ–¹å‘ã®è¿½å¾“ï¼ˆå¤§ãã„ã»ã©ã‚¹ãƒ ãƒ¼ã‚ºã«è¿½ã†ï¼‰
+	float m_baseSpeedMulMin = 0.60f;   // é¢¨é€Ÿã®ä¸‹é™å€ç‡ï¼ˆWindSpeedã«æ›ã‘ã‚‹ï¼‰
+	float m_baseSpeedMulMax = 3.00f;   // é¢¨é€Ÿã®ä¸Šé™å€ç‡
+	float m_dirTimeScaleBase = 0.010f; // æ–¹å‘å¤‰åŒ–ã®é…ã•ï¼ˆå°ã•ã„ã»ã©ã‚†ã£ãã‚Šï¼‰
+	float m_speedTimeScale = 0.020f;   // é¢¨é€Ÿã®å¤§åŸŸå¤‰åŒ–
+	float m_gustTimeScale = 0.040f;   // çªé¢¨ã®å¤‰åŒ–
 
 	WindCB m_grassWindCB{};
 	Graphics::BufferHandle hBuffer;

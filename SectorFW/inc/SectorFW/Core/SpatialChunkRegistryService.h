@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   SpatialChunkRegistryService.h
- * @brief SpatialChunk‚ğ“o˜^Eæ“¾‚·‚éƒT[ƒrƒX
+ * @brief SpatialChunkã‚’ç™»éŒ²ãƒ»å–å¾—ã™ã‚‹ã‚µãƒ¼ãƒ“ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -14,7 +14,7 @@
 
 namespace SFW {
 	/**
-	 * @brief SpatialChunk‚ğƒL[‚Å“o˜^Eæ“¾‚·‚éƒT[ƒrƒX
+	 * @brief SpatialChunkã‚’ã‚­ãƒ¼ã§ç™»éŒ²ãƒ»å–å¾—ã™ã‚‹ã‚µãƒ¼ãƒ“ã‚¹
 	 */
 	class SpatialChunkRegistry {
 		struct SpatialKeyHash {
@@ -30,26 +30,26 @@ namespace SFW {
 
 	public:
 		/**
-		 * @brief “o˜^iƒŒƒxƒ‹ / ‹æ‰æƒ[ƒhj
-		 * @param key “o˜^‚·‚éƒL[
-		 * @param sp “o˜^‚·‚é SpatialChunk ‚Ö‚Ìƒ|ƒCƒ“ƒ^
+		 * @brief ç™»éŒ²ï¼ˆãƒ¬ãƒ™ãƒ« / åŒºç”»ãƒ­ãƒ¼ãƒ‰æ™‚ï¼‰
+		 * @param key ç™»éŒ²ã™ã‚‹ã‚­ãƒ¼
+		 * @param sp ç™»éŒ²ã™ã‚‹ SpatialChunk ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 		 */
 		void RegisterOwner(const SpatialChunkKey& key, SpatialChunk* sp) {
 			std::unique_lock lk(mu_);
 			owners_[key] = sp;
 		}
 		/**
-		 * @brief ‰ğœiƒŒƒxƒ‹ / ‹æ‰æƒAƒ“ƒ[ƒhj
-		 * @param key ‰ğœ‚·‚éƒL[
+		 * @brief è§£é™¤ï¼ˆãƒ¬ãƒ™ãƒ« / åŒºç”»ã‚¢ãƒ³ãƒ­ãƒ¼ãƒ‰æ™‚ï¼‰
+		 * @param key è§£é™¤ã™ã‚‹ã‚­ãƒ¼
 		 */
 		void UnregisterOwner(const SpatialChunkKey& key) {
 			std::unique_lock lk(mu_);
 			owners_.erase(key);
 		}
 		/**
-		 * @brief ƒL[‚©‚çƒ`ƒƒƒ“ƒN‚Ìæ“¾i¶‘¶‚µ‚Ä‚¢‚ê‚Î SpatialChunk* ‚ğ•Ô‚·j
-		 * @param key ‰ğŒˆ‚·‚éƒL[
-		 * @return SpatialChunk* ‰ğŒˆ‚µ‚½ SpatialChunk ‚Ö‚Ìƒ|ƒCƒ“ƒ^i‘¶İ‚µ‚È‚¢ê‡‚Í nullptrj
+		 * @brief ã‚­ãƒ¼ã‹ã‚‰ãƒãƒ£ãƒ³ã‚¯ã®å–å¾—ï¼ˆç”Ÿå­˜ã—ã¦ã„ã‚Œã° SpatialChunk* ã‚’è¿”ã™ï¼‰
+		 * @param key è§£æ±ºã™ã‚‹ã‚­ãƒ¼
+		 * @return SpatialChunk* è§£æ±ºã—ãŸ SpatialChunk ã¸ã®ãƒã‚¤ãƒ³ã‚¿ï¼ˆå­˜åœ¨ã—ãªã„å ´åˆã¯ nullptrï¼‰
 		 */
 		SpatialChunk* ResolveOwner(const SpatialChunkKey& key) const noexcept {
 			std::shared_lock lk(mu_);
@@ -57,9 +57,9 @@ namespace SFW {
 			return it == owners_.end() ? nullptr : it->second;
 		}
 		/**
-		 * @brief w’è‚µ‚½ƒL[‚Ìƒ`ƒƒƒ“ƒN‚ÌEM‚Ìæ“¾i¶‘¶‚µ‚Ä‚¢‚ê‚Î EM* ‚ğ•Ô‚·j
-		 * @param key æ“¾‚·‚éƒL[
-		 * @return ECS::EntityManager* ‰ğŒˆ‚µ‚½ EntityManager ‚Ö‚Ìƒ|ƒCƒ“ƒ^i‘¶İ‚µ‚È‚¢ê‡‚Í nullptrj
+		 * @brief æŒ‡å®šã—ãŸã‚­ãƒ¼ã®ãƒãƒ£ãƒ³ã‚¯ã®EMã®å–å¾—ï¼ˆç”Ÿå­˜ã—ã¦ã„ã‚Œã° EM* ã‚’è¿”ã™ï¼‰
+		 * @param key å–å¾—ã™ã‚‹ã‚­ãƒ¼
+		 * @return ECS::EntityManager* è§£æ±ºã—ãŸ EntityManager ã¸ã®ãƒã‚¤ãƒ³ã‚¿ï¼ˆå­˜åœ¨ã—ãªã„å ´åˆã¯ nullptrï¼‰
 		 */
 		ECS::EntityManager* ResolveOwnerEM(const SpatialChunkKey& key) const noexcept {
 			std::shared_lock lk(mu_);

@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   convert_directX.hpp
- * @brief DirectXMath‚ÆSectorFW‚Ì”Šwƒ‰ƒCƒuƒ‰ƒŠŠÔ‚Ì•ÏŠ·‚ğ’ñ‹Ÿ‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief DirectXMathã¨SectorFWã®æ•°å­¦ãƒ©ã‚¤ãƒ–ãƒ©ãƒªé–“ã®å¤‰æ›ã‚’æä¾›ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -16,18 +16,18 @@ namespace SFW
 	namespace Math
 	{
 		/**
-		 * @brief Vector2 ¨ XMFLOAT2
-		 * @param v •ÏŠ·‚·‚éVec2f
-		 * @return XMFLOAT2 •ÏŠ·Œã‚ÌXMFLOAT2
+		 * @brief Vector2 â†’ XMFLOAT2
+		 * @param v å¤‰æ›ã™ã‚‹Vec2f
+		 * @return XMFLOAT2 å¤‰æ›å¾Œã®XMFLOAT2
 		 */
 		template<>
 		inline DirectX::XMFLOAT2 Convert<DirectX::XMFLOAT2, Vec2f>(const Vec2f& v) {
 			return BitCast<DirectX::XMFLOAT2>(v);
 		}
 		/**
-		 * @brief XMFLOAT2 ¨ Vec2f
-		 * @param v •ÏŠ·‚·‚éXMFLOAT2
-		 * @return Vec2f •ÏŠ·Œã‚ÌVec2f
+		 * @brief XMFLOAT2 â†’ Vec2f
+		 * @param v å¤‰æ›ã™ã‚‹XMFLOAT2
+		 * @return Vec2f å¤‰æ›å¾Œã®Vec2f
 		 */
 		template<>
 		inline Vec2f Convert<Vec2f, DirectX::XMFLOAT2>(const DirectX::XMFLOAT2& v) {
@@ -35,18 +35,18 @@ namespace SFW
 		}
 
 		/**
-		 * @brief Vec3f ¨ XMVECTOR
-		 * @param v •ÏŠ·‚·‚éVec3f
-		 * @return XMVECTOR •ÏŠ·Œã‚ÌXMVECTOR
+		 * @brief Vec3f â†’ XMVECTOR
+		 * @param v å¤‰æ›ã™ã‚‹Vec3f
+		 * @return XMVECTOR å¤‰æ›å¾Œã®XMVECTOR
 		 */
 		template<>
 		inline DirectX::XMVECTOR Convert<DirectX::XMVECTOR, Vec3f>(const Vec3f& v) {
 			return DirectX::XMVectorSet(v.x, v.y, v.z, 0.0f);
 		}
 		/**
-		 * @brief XMVECTOR ¨ Vec3f
-		 * @param v •ÏŠ·‚·‚éXMVECTOR
-		 * @return Vec3f •ÏŠ·Œã‚ÌVec3f
+		 * @brief XMVECTOR â†’ Vec3f
+		 * @param v å¤‰æ›ã™ã‚‹XMVECTOR
+		 * @return Vec3f å¤‰æ›å¾Œã®Vec3f
 		 */
 		template<>
 		inline Vec3f Convert<Vec3f, DirectX::XMVECTOR>(const DirectX::XMVECTOR& v) {
@@ -56,9 +56,9 @@ namespace SFW
 		}
 
 		/**
-		 * @brief Quatf ¨ XMVECTOR
-		 * @param q •ÏŠ·‚·‚éQuatf
-		 * @return XMVECTOR •ÏŠ·Œã‚ÌXMVECTOR
+		 * @brief Quatf â†’ XMVECTOR
+		 * @param q å¤‰æ›ã™ã‚‹Quatf
+		 * @return XMVECTOR å¤‰æ›å¾Œã®XMVECTOR
 		 */
 		template<>
 		inline DirectX::XMVECTOR Convert<DirectX::XMVECTOR, Quatf>(const Quatf& q) {
@@ -72,9 +72,9 @@ namespace SFW
 			return Quatf{ temp.x, temp.y, temp.z, temp.w };
 		}
 		/**
-		 * @brief Matrix4x4f ¨ XMMATRIX
-		 * @param mat •ÏŠ·‚·‚éMatrix4x4f
-		 * @return XMMATRIX •ÏŠ·Œã‚ÌXMMATRIX
+		 * @brief Matrix4x4f â†’ XMMATRIX
+		 * @param mat å¤‰æ›ã™ã‚‹Matrix4x4f
+		 * @return XMMATRIX å¤‰æ›å¾Œã®XMMATRIX
 		 */
 		template<> inline DirectX::XMMATRIX
 			Convert<DirectX::XMMATRIX, Matrix4x4f>(const Matrix4x4f& m) {
@@ -87,9 +87,9 @@ namespace SFW
 			);
 		}
 		/**
-		 * @brief XMMATRIX ¨ Matrix4x4f
-		 * @param mat •ÏŠ·‚·‚éXMMATRIX
-		 * @return Matrix4x4f •ÏŠ·Œã‚ÌMatrix4x4f
+		 * @brief XMMATRIX â†’ Matrix4x4f
+		 * @param mat å¤‰æ›ã™ã‚‹XMMATRIX
+		 * @return Matrix4x4f å¤‰æ›å¾Œã®Matrix4x4f
 		 */
 		template<> inline Matrix4x4f
 			Convert<Matrix4x4f, DirectX::XMMATRIX>(const DirectX::XMMATRIX& mat) {

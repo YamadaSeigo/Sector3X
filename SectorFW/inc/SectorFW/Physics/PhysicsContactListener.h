@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   PhysicsContactListener.h
- * @brief •¨—ƒGƒ“ƒWƒ“‚ÌÚGƒCƒxƒ“ƒgƒŠƒXƒi[‚ÌÀ‘•
+ * @brief ç‰©ç†ã‚¨ãƒ³ã‚¸ãƒ³ã®æ¥è§¦ã‚¤ãƒ™ãƒ³ãƒˆãƒªã‚¹ãƒŠãƒ¼ã®å®Ÿè£…
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -14,16 +14,16 @@ namespace SFW
 {
 	namespace Physics
 	{
-		class PhysicsDevice; // ‘O•û
+		class PhysicsDevice; // å‰æ–¹
 
 		/**
-		 * @brief ÚGƒCƒxƒ“ƒg‚Ìí—Ş‚ğ•\‚·–¼‘O‹óŠÔ
+		 * @brief æ¥è§¦ã‚¤ãƒ™ãƒ³ãƒˆã®ç¨®é¡ã‚’è¡¨ã™åå‰ç©ºé–“
 		 */
 		class ContactListenerImpl final : public JPH::ContactListener {
 		public:
 			explicit ContactListenerImpl(PhysicsDevice* dev) : m_dev(dev) {}
 			virtual JPH::ValidateResult OnContactValidate(const JPH::Body& /*body1*/, const JPH::Body& /*body2*/, JPH::RVec3Arg /*baseOffset*/, const JPH::CollideShapeResult& /*result*/) override {
-				return JPH::ValidateResult::AcceptAllContactsForThisBodyPair; // ƒ}ƒXƒN§Œä‚ğ“ü‚ê‚é‚È‚ç‚±‚±‚ğŠg’£
+				return JPH::ValidateResult::AcceptAllContactsForThisBodyPair; // ãƒã‚¹ã‚¯åˆ¶å¾¡ã‚’å…¥ã‚Œã‚‹ãªã‚‰ã“ã“ã‚’æ‹¡å¼µ
 			}
 			virtual void OnContactAdded(const JPH::Body& body1, const JPH::Body& body2, const JPH::ContactManifold& manifold, JPH::ContactSettings& /*settings*/) override {
 				Push(body1, body2, manifold, ContactEvent::Begin);
@@ -32,7 +32,7 @@ namespace SFW
 				Push(body1, body2, manifold, ContactEvent::Persist);
 			}
 			virtual void OnContactRemoved(const JPH::SubShapeIDPair& pair) override {
-				// manifold–³‚µB‘ã•\“_‚Í‹ó‚ÅOK
+				// manifoldç„¡ã—ã€‚ä»£è¡¨ç‚¹ã¯ç©ºã§OK
 				PushRemoved(pair);
 			}
 		private:
@@ -41,22 +41,22 @@ namespace SFW
 			PhysicsDevice* m_dev;
 		};
 
-		// CharacterVirtual —p‚Ì ContactListener
+		// CharacterVirtual ç”¨ã® ContactListener
 		class CharacterContactListenerImpl final : public JPH::CharacterContactListener {
 		public:
 			explicit CharacterContactListenerImpl(PhysicsDevice* dev) : m_dev(dev) {}
 
-			// ==== Validate ƒtƒF[ƒY ====
-			// Body ‚Æ“–‚½‚é‘O‚ÌƒtƒBƒ‹ƒ^i‘S•”‹–‰Â‚·‚é‚È‚ç true ŒÅ’è‚ÅOKj
+			// ==== Validate ãƒ•ã‚§ãƒ¼ã‚º ====
+			// Body ã¨å½“ãŸã‚‹å‰ã®ãƒ•ã‚£ãƒ«ã‚¿ï¼ˆå…¨éƒ¨è¨±å¯ã™ã‚‹ãªã‚‰ true å›ºå®šã§OKï¼‰
 			bool OnContactValidate(const JPH::CharacterVirtual* inCharacter,
 				const JPH::BodyID& inBodyID2,
 				const JPH::SubShapeID& inSubShapeID2) override
 			{
-				// •K—v‚È‚ç BodyID ‚©‚çƒŒƒCƒ„‚ğŒ©‚ÄƒtƒBƒ‹ƒ^
+				// å¿…è¦ãªã‚‰ BodyID ã‹ã‚‰ãƒ¬ã‚¤ãƒ¤ã‚’è¦‹ã¦ãƒ•ã‚£ãƒ«ã‚¿
 				return true;
 			}
 
-			// Character vs Character ”Åi¡‰ñ‚Í‚Æ‚è‚ ‚¦‚¸‘S•”‹–‰Âj
+			// Character vs Character ç‰ˆï¼ˆä»Šå›ã¯ã¨ã‚Šã‚ãˆãšå…¨éƒ¨è¨±å¯ï¼‰
 			bool OnCharacterContactValidate(const JPH::CharacterVirtual* inCharacter,
 				const JPH::CharacterVirtual* inOtherCharacter,
 				const JPH::SubShapeID& inSubShapeID2) override
@@ -64,8 +64,8 @@ namespace SFW
 				return true;
 			}
 
-			// ====  V‹KÚG ====
-			// CharacterVirtual ‚ª Body ‚Éƒqƒbƒg‚µ‚½uŠÔ‚Ì‚İi1‰ñ‚¾‚¯jŒÄ‚Î‚ê‚é
+			// ====  æ–°è¦æ¥è§¦ ====
+			// CharacterVirtual ãŒ Body ã«ãƒ’ãƒƒãƒˆã—ãŸç¬é–“ã®ã¿ï¼ˆ1å›ã ã‘ï¼‰å‘¼ã°ã‚Œã‚‹
 			void OnContactAdded(const JPH::CharacterVirtual* inCharacter,
 				const JPH::BodyID& inBodyID2,
 				const JPH::SubShapeID& inSubShapeID2,
@@ -78,7 +78,7 @@ namespace SFW
 					inContactPosition, inContactNormal);
 			}
 
-			// Character vs Character ‚ÌV‹KÚG
+			// Character vs Character ã®æ–°è¦æ¥è§¦
 			void OnCharacterContactAdded(const JPH::CharacterVirtual* inCharacter,
 				const JPH::CharacterVirtual* inOtherCharacter,
 				const JPH::SubShapeID& inSubShapeID2,
@@ -86,12 +86,12 @@ namespace SFW
 				JPH::Vec3Arg                 inContactNormal,
 				JPH::CharacterContactSettings& ioSettings) override
 			{
-				// •K—v‚È‚ç ev.b ‚ğ Character ‘¤‚Ì Entity ‚É‚µ‚Ä PushContact ‚·‚é
-				// ¡‚ÍƒXƒLƒbƒv‚µ‚Ä‚àOK
+				// å¿…è¦ãªã‚‰ ev.b ã‚’ Character å´ã® Entity ã«ã—ã¦ PushContact ã™ã‚‹
+				// ä»Šã¯ã‚¹ã‚­ãƒƒãƒ—ã—ã¦ã‚‚OK
 			}
 
-			// ==== Solve ƒtƒF[ƒY ====
-			// –ˆƒXƒeƒbƒvÕ“Ë‰ğŒˆ‚Ég‚í‚ê‚éÚGBŠŠ‚è‹Ö~“™‚ğ‚â‚éê‡‚Í‚±‚±‚Å ioNewCharacterVelocity ‚ğ‘‚«Š·‚¦‚é
+			// ==== Solve ãƒ•ã‚§ãƒ¼ã‚º ====
+			// æ¯ã‚¹ãƒ†ãƒƒãƒ—è¡çªè§£æ±ºã«ä½¿ã‚ã‚Œã‚‹æ¥è§¦ã€‚æ»‘ã‚Šç¦æ­¢ç­‰ã‚’ã‚„ã‚‹å ´åˆã¯ã“ã“ã§ ioNewCharacterVelocity ã‚’æ›¸ãæ›ãˆã‚‹
 			void OnContactSolve(const JPH::CharacterVirtual* inCharacter,
 				const JPH::BodyID& inBodyID2,
 				const JPH::SubShapeID& inSubShapeID2,
@@ -102,7 +102,7 @@ namespace SFW
 				JPH::Vec3Arg                 inCharacterVelocity,
 				JPH::Vec3& ioNewCharacterVelocity) override
 			{
-				// ‰½‚à‚µ‚È‚¯‚ê‚ÎƒfƒtƒHƒ‹ƒg‚Ì‹““®
+				// ä½•ã‚‚ã—ãªã‘ã‚Œã°ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®æŒ™å‹•
 			}
 
 			void OnCharacterContactSolve(const JPH::CharacterVirtual* inCharacter,
@@ -115,16 +115,16 @@ namespace SFW
 				JPH::Vec3Arg                 inCharacterVelocity,
 				JPH::Vec3& ioNewCharacterVelocity) override
 			{
-				// ‚±‚±‚à“¯—l‚É•K—v‚È‚¯‚ê‚Î‹ó‚ÅOK
+				// ã“ã“ã‚‚åŒæ§˜ã«å¿…è¦ãªã‘ã‚Œã°ç©ºã§OK
 			}
 
-			// Body ‘¤‚ÌŒ©‚©‚¯‘¬“x‚ğ‚¢‚¶‚è‚½‚¢‚Æ‚«—piƒxƒ‹ƒgƒRƒ“ƒxƒA‚È‚Çj
+			// Body å´ã®è¦‹ã‹ã‘é€Ÿåº¦ã‚’ã„ã˜ã‚ŠãŸã„ã¨ãç”¨ï¼ˆãƒ™ãƒ«ãƒˆã‚³ãƒ³ãƒ™ã‚¢ãªã©ï¼‰
 			void OnAdjustBodyVelocity(const JPH::CharacterVirtual* inCharacter,
 				const JPH::Body& inBody2,
 				JPH::Vec3& ioLinearVelocity,
 				JPH::Vec3& ioAngularVelocity) override
 			{
-				// ‰½‚à‚µ‚È‚¢‚È‚ç‹ó‚ÅOK
+				// ä½•ã‚‚ã—ãªã„ãªã‚‰ç©ºã§OK
 			}
 
 		private:

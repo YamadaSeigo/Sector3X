@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   PerfHUD.h
- * @brief ƒpƒtƒH[ƒ}ƒ“ƒXHUD‚ğ•\¦‚·‚éƒNƒ‰ƒX
+ * @brief ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹HUDã‚’è¡¨ç¤ºã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   September 2025
  *********************************************************************/
@@ -17,33 +17,33 @@ namespace SFW
 	namespace Debug
 	{
 		/**
-		 * @brief ŒÅ’èƒTƒCƒY‚Ìƒ[ƒŠƒ“ƒOƒoƒbƒtƒ@
+		 * @brief å›ºå®šã‚µã‚¤ã‚ºã®ãƒ­ãƒ¼ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡
 		 */
 		struct RollingBuffer {
-			// ƒoƒbƒtƒ@–{‘Ì
+			// ãƒãƒƒãƒ•ã‚¡æœ¬ä½“
 			std::vector<float> data;
-			// Œ»İ‚Ì‘‚«‚İˆÊ’u
+			// ç¾åœ¨ã®æ›¸ãè¾¼ã¿ä½ç½®
 			size_t head = 0;
-			// ÅŒã‚ÉŒvZ‚µ‚½Å¬’l‚ÆÅ‘å’l
+			// æœ€å¾Œã«è¨ˆç®—ã—ãŸæœ€å°å€¤ã¨æœ€å¤§å€¤
 			float  lastMin = 0.f, lastMax = 1.f;
 			/**
-			 * @brief ƒoƒbƒtƒ@‚ğ‰Šú‰»‚·‚é
-			 * @param cap ƒoƒbƒtƒ@‚Ì—e—Ê
+			 * @brief ãƒãƒƒãƒ•ã‚¡ã‚’åˆæœŸåŒ–ã™ã‚‹
+			 * @param cap ãƒãƒƒãƒ•ã‚¡ã®å®¹é‡
 			 */
 			void init(size_t cap) { data.assign(cap, 0.f); head = 0; }
 			/**
-			 * @brief ƒoƒbƒtƒ@‚ÌƒTƒCƒY‚ğæ“¾‚·‚é
-			 * @return size_t ƒoƒbƒtƒ@‚ÌƒTƒCƒY
+			 * @brief ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚ºã‚’å–å¾—ã™ã‚‹
+			 * @return size_t ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
 			 */
 			size_t size()  const { return data.size(); }
 			/**
-			 * @brief ƒoƒbƒtƒ@‚ª‹ó‚©‚Ç‚¤‚©‚ğŠm”F‚·‚é
-			 * @return bool ‹ó‚Ìê‡‚ÍtrueA‚»‚¤‚Å‚È‚¢ê‡‚Ífalse
+			 * @brief ãƒãƒƒãƒ•ã‚¡ãŒç©ºã‹ã©ã†ã‹ã‚’ç¢ºèªã™ã‚‹
+			 * @return bool ç©ºã®å ´åˆã¯trueã€ãã†ã§ãªã„å ´åˆã¯false
 			 */
 			bool   empty() const { return data.empty(); }
 			/**
-			 * @brief ƒoƒbƒtƒ@‚É’l‚ğ’Ç‰Á‚·‚é
-			 * @param v ’Ç‰Á‚·‚é’l
+			 * @brief ãƒãƒƒãƒ•ã‚¡ã«å€¤ã‚’è¿½åŠ ã™ã‚‹
+			 * @param v è¿½åŠ ã™ã‚‹å€¤
 			 */
 			void push(float v) {
 				if (data.empty()) return;
@@ -51,8 +51,8 @@ namespace SFW
 				head = (head + 1) % data.size();
 			}
 			/**
-			 * @brief ƒoƒbƒtƒ@‚Ì“à—e‚ğüŒ`”z—ñ‚É•ÏŠ·‚·‚é
-			 * @param out o—Íæ‚Ì”z—ñ
+			 * @brief ãƒãƒƒãƒ•ã‚¡ã®å†…å®¹ã‚’ç·šå½¢é…åˆ—ã«å¤‰æ›ã™ã‚‹
+			 * @param out å‡ºåŠ›å…ˆã®é…åˆ—
 			 */
 			void toLinear(std::vector<float>& out) const {
 				out.resize(data.size());
@@ -63,7 +63,7 @@ namespace SFW
 				std::copy(data.begin(), data.begin() + tail, out.begin() + first);
 			}
 			/**
-			 * @brief ƒoƒbƒtƒ@‚Ì“à—e‚ğ©“®“I‚ÉƒXƒP[ƒŠƒ“ƒO‚·‚é
+			 * @brief ãƒãƒƒãƒ•ã‚¡ã®å†…å®¹ã‚’è‡ªå‹•çš„ã«ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã™ã‚‹
 			 */
 			void autoscale() {
 				if (data.empty()) return;
@@ -73,8 +73,8 @@ namespace SFW
 				lastMin = mn; lastMax = mx;
 			}
 			/**
-			 * @brief ƒoƒbƒtƒ@‚Ì•½‹Ï’l‚ğŒvZ‚·‚é
-			 * @return float •½‹Ï’l
+			 * @brief ãƒãƒƒãƒ•ã‚¡ã®å¹³å‡å€¤ã‚’è¨ˆç®—ã™ã‚‹
+			 * @return float å¹³å‡å€¤
 			 */
 			float average() const {
 				if (data.empty()) return 0.f;
@@ -84,24 +84,24 @@ namespace SFW
 			}
 		};
 		/**
-		 * @brief ƒpƒtƒH[ƒ}ƒ“ƒXHUD‚ğ•\¦‚·‚éƒNƒ‰ƒX
+		 * @brief ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹HUDã‚’è¡¨ç¤ºã™ã‚‹ã‚¯ãƒ©ã‚¹
 		 */
 		struct PerfHUD {
 			/**
-			 * @brief HUD‚ğ‰Šú‰»‚·‚é
-			 * @param historySamples —š—ğƒTƒ“ƒvƒ‹”
+			 * @brief HUDã‚’åˆæœŸåŒ–ã™ã‚‹
+			 * @param historySamples å±¥æ­´ã‚µãƒ³ãƒ—ãƒ«æ•°
 			 */
 			void Init(size_t historySamples = 600);
 			/**
-			 * @brief ImGui::NewFrame() Œã‚É–ˆƒtƒŒŒÄ‚Ô
-			 * @param frameBudgetSec ƒtƒŒ[ƒ€—\Z(•b)
-			 * @param overlayTopRight ‰Eã‚ÉƒI[ƒo[ƒŒƒC•\¦‚·‚éê‡true
+			 * @brief ImGui::NewFrame() å¾Œã«æ¯ãƒ•ãƒ¬å‘¼ã¶
+			 * @param frameBudgetSec ãƒ•ãƒ¬ãƒ¼ãƒ äºˆç®—(ç§’)
+			 * @param overlayTopRight å³ä¸Šã«ã‚ªãƒ¼ãƒãƒ¼ãƒ¬ã‚¤è¡¨ç¤ºã™ã‚‹å ´åˆtrue
 			 */
 			void TickAndDraw(float frameBudgetSec = 1.0f / 60.0f, bool overlayTopRight = true);
 		private:
 			RollingBuffer cpuBuf_, gpuBuf_, frameMsBuf_;
 			RollingBuffer logicMsBuf_, renderMsBuf_, gpuMsBuf_;
-			RollingBuffer criticalMsBuf_; // max(logic, render, gpu) ‚Ì—š—ğ
+			RollingBuffer criticalMsBuf_; // max(logic, render, gpu) ã®å±¥æ­´
 
 			float cpuEMA_ = 0.f, gpuEMA_ = 0.f;
 			bool  inited_ = false;

@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Vector.hpp
- * @brief ƒxƒNƒgƒ‹‚ğ’è‹`‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * @brief ãƒ™ã‚¯ãƒˆãƒ«ã‚’å®šç¾©ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * @author seigo_t03b63m
  * @date   July 2025
  *********************************************************************/
@@ -89,7 +89,7 @@ namespace SFW
 		struct alignas(GetAlignmentForVector<T, 3>()) Vec3 {
 			union {
 				struct { T x, y, z; };
-				// 2DƒxƒNƒgƒ‹‚Æ‚µ‚Ä‚àƒAƒNƒZƒX‰Â”\
+				// 2Dãƒ™ã‚¯ãƒˆãƒ«ã¨ã—ã¦ã‚‚ã‚¢ã‚¯ã‚»ã‚¹å¯èƒ½
 				struct { Vec2<T> xy; T z; };
 				T data[3];
 			};
@@ -163,11 +163,11 @@ namespace SFW
 			}
 		};
 
-		// ---------------- Vec3 ³‹K‰»‚ÌˆÀ‘S”Å ----------------
+		// ---------------- Vec3 æ­£è¦åŒ–ã®å®‰å…¨ç‰ˆ ----------------
 		template<typename T>
 		static Vec2<T> NormalizeSafe(const Vec2<T>& v, const Vec2<T>& fallback)
 		{
-			float lenSq = v.length(); // Vector.hpp ‚É‡‚í‚¹‚Ä
+			float lenSq = v.length(); // Vector.hpp ã«åˆã‚ã›ã¦
 			if (lenSq <= 1e-8f)
 				return fallback;
 			return v / std::sqrt(lenSq);
@@ -214,11 +214,11 @@ namespace SFW
 			return v / len;
 		}
 
-		// ---------------- Vec3 ³‹K‰»‚ÌˆÀ‘S”Å ----------------
+		// ---------------- Vec3 æ­£è¦åŒ–ã®å®‰å…¨ç‰ˆ ----------------
 		template<typename T>
 		static Vec3<T> NormalizeSafe(const Vec3<T>& v, const Vec3<T>& fallback)
 		{
-			float lenSq = v.length(); // Vector.hpp ‚É‡‚í‚¹‚Ä
+			float lenSq = v.length(); // Vector.hpp ã«åˆã‚ã›ã¦
 			if (lenSq <= 1e-8f)
 				return fallback;
 			return v / std::sqrt(lenSq);
@@ -227,20 +227,20 @@ namespace SFW
 		template<typename T>
 		static float AngleBetween(const Vec3<T>& a, const Vec3<T>& b) noexcept {
 			T dotProd = Dot(a.normalized(), b.normalized());
-			dotProd = std::clamp(dotProd, T(-1), T(1)); // ”’lŒë·–h~
-			return std::acos(dotProd); // ƒ‰ƒWƒAƒ“
+			dotProd = std::clamp(dotProd, T(-1), T(1)); // æ•°å€¤èª¤å·®é˜²æ­¢
+			return std::acos(dotProd); // ãƒ©ã‚¸ã‚¢ãƒ³
 		}
 
-		// ‹K–ñƒ^ƒO
-		struct RH_ZBackward {}; // —á: OpenGL•— (‰EèŒn, +Z‚ª‰œ ¨ forward = (0,0,-1))
-		struct LH_ZForward {}; // —á: DirectX LH•— (¶èŒn, +Z‚ª‘O ¨ forward = (0,0,+1))
+		// è¦ç´„ã‚¿ã‚°
+		struct RH_ZBackward {}; // ä¾‹: OpenGLé¢¨ (å³æ‰‹ç³», +ZãŒå¥¥ â†’ forward = (0,0,-1))
+		struct LH_ZForward {}; // ä¾‹: DirectX LHé¢¨ (å·¦æ‰‹ç³», +ZãŒå‰ â†’ forward = (0,0,+1))
 
 		template<typename T, typename Convention = RH_ZBackward>
 		struct Axes {
-			// Šî–{²i‹K–ñ‚Å•Ï‚í‚é‚Ì‚Í forward ‚Æ cross ‚Ì‡˜j
+			// åŸºæœ¬è»¸ï¼ˆè¦ç´„ã§å¤‰ã‚ã‚‹ã®ã¯ forward ã¨ cross ã®é †åºï¼‰
 			static constexpr Vec3<T> up()       noexcept { return { T(0), T(1), T(0) }; }
 			static constexpr Vec3<T> down()     noexcept { return { T(0), T(-1), T(0) }; }
-			static constexpr Vec3<T> right()    noexcept { return { T(1), T(0), T(0) }; } // ‰E•ûŒü‚Ì+X‚ÍŒÅ’è
+			static constexpr Vec3<T> right()    noexcept { return { T(1), T(0), T(0) }; } // å³æ–¹å‘ã®+Xã¯å›ºå®š
 			static constexpr Vec3<T> left()     noexcept { return { T(-1), T(0), T(0) }; }
 
 			static constexpr Vec3<T> forward()  noexcept {
@@ -249,38 +249,38 @@ namespace SFW
 			}
 			static constexpr Vec3<T> back()     noexcept { auto f = forward(); return Vec3<T>{-f.x, -f.y, -f.z}; }
 
-			// —^‚¦‚½ forward / up ‚©‚çu‰Ev(³‹K’¼ŒğŠî’ê) ‚ğì‚éFƒNƒƒXÏ‚Ì‡˜‚ª‹K–ñ‚Å•Ï‚í‚é
+			// ä¸ãˆãŸ forward / up ã‹ã‚‰ã€Œå³ã€(æ­£è¦ç›´äº¤åŸºåº•) ã‚’ä½œã‚‹ï¼šã‚¯ãƒ­ã‚¹ç©ã®é †åºãŒè¦ç´„ã§å¤‰ã‚ã‚‹
 			static Vec3<T> makeRight(const Vec3<T>& up, const Vec3<T>& forward) noexcept {
 				if constexpr (std::is_same_v<Convention, RH_ZBackward>) {
-					return up.cross(forward).normalized();     // ‰EèŒn: right = up ~ forward
+					return up.cross(forward).normalized();     // å³æ‰‹ç³»: right = up Ã— forward
 				}
 				else {
-					return forward.cross(up).normalized();     // ¶èŒn: right = forward ~ up
+					return forward.cross(up).normalized();     // å·¦æ‰‹ç³»: right = forward Ã— up
 				}
 			}
 
-			// —^‚¦‚½ up ‚Æ right ‚©‚ç forward ‚ğì‚éi”’lˆÀ’è‚Ì‚½‚ßÄ’¼Œğ‰»‚É‚àg‚¦‚éj
+			// ä¸ãˆãŸ up ã¨ right ã‹ã‚‰ forward ã‚’ä½œã‚‹ï¼ˆæ•°å€¤å®‰å®šã®ãŸã‚å†ç›´äº¤åŒ–ã«ã‚‚ä½¿ãˆã‚‹ï¼‰
 			static Vec3<T> makeForward(const Vec3<T>& up, const Vec3<T>& right) noexcept {
 				if constexpr (std::is_same_v<Convention, RH_ZBackward>) {
-					return right.cross(up).normalized();       // ‰EèŒn: forward = right ~ up
+					return right.cross(up).normalized();       // å³æ‰‹ç³»: forward = right Ã— up
 				}
 				else {
-					return up.cross(right).normalized();       // ¶èŒn: forward = up ~ right
+					return up.cross(right).normalized();       // å·¦æ‰‹ç³»: forward = up Ã— right
 				}
 			}
 		};
 
-		using RFAxes = Axes<float, RH_ZBackward>; // OpenGL•—i‰EèŒn, forward = -Zj
-		using LFAxes = Axes<float, LH_ZForward>; // OpenGL•—i¶èŒn, forward = +Zj
+		using RFAxes = Axes<float, RH_ZBackward>; // OpenGLé¢¨ï¼ˆå³æ‰‹ç³», forward = -Zï¼‰
+		using LFAxes = Axes<float, LH_ZForward>; // OpenGLé¢¨ï¼ˆå·¦æ‰‹ç³», forward = +Zï¼‰
 
 		template<typename T>
 		struct alignas(GetAlignmentForVector<T, 4>()) Vec4 {
 			union {
 				struct { T x, y, z, w; };
 				struct { T r, g, b, a; };
-				// 2—v‘fƒxƒNƒgƒ‹‚Æ‚µ‚Ä‚àƒAƒNƒZƒX‰Â”\
+				// 2è¦ç´ ãƒ™ã‚¯ãƒˆãƒ«ã¨ã—ã¦ã‚‚ã‚¢ã‚¯ã‚»ã‚¹å¯èƒ½
 				struct { Vec2<T> xy; Vec2<T> zw; };
-				// 3—v‘fƒxƒNƒgƒ‹‚Æ‚µ‚Ä‚àƒAƒNƒZƒX‰Â”\
+				// 3è¦ç´ ãƒ™ã‚¯ãƒˆãƒ«ã¨ã—ã¦ã‚‚ã‚¢ã‚¯ã‚»ã‚¹å¯èƒ½
 				struct { Vec3<T> xyz; T w; };
 				T data[4];
 			};
@@ -358,9 +358,9 @@ namespace SFW
 		inline Vec4f Vec4f::operator+(const Vec4f& rhs) const noexcept {
 			__m128 a = _mm_loadu_ps(this->data);
 			__m128 b = _mm_loadu_ps(rhs.data);
-			__m128 result = _mm_add_ps(a, b);       // SIMD‰ÁZ
+			__m128 result = _mm_add_ps(a, b);       // SIMDåŠ ç®—
 			Vec4f out;
-			_mm_storeu_ps(out.data, result);         // Œ‹‰Ê‚ğ•Û‘¶
+			_mm_storeu_ps(out.data, result);         // çµæœã‚’ä¿å­˜
 			return out;
 		}
 
@@ -369,11 +369,11 @@ namespace SFW
 			__m128 a = _mm_loadu_ps(this->data);
 			__m128 b = _mm_loadu_ps(rhs.data);
 			__m128 mul = _mm_mul_ps(a, b);
-			__m128 shuf = _mm_movehdup_ps(mul);      // ‚ˆÊ‚ğ•¡»
+			__m128 shuf = _mm_movehdup_ps(mul);      // é«˜ä½ã‚’è¤‡è£½
 			__m128 sums = _mm_add_ps(mul, shuf);
-			shuf = _mm_movehl_ps(shuf, sums);        // ãˆÊ‚É‹l‚ß‚é
+			shuf = _mm_movehl_ps(shuf, sums);        // ä¸Šä½ã«è©°ã‚ã‚‹
 			sums = _mm_add_ss(sums, shuf);
-			return _mm_cvtss_f32(sums);              // Œ‹‰Ê‚ğfloat‚É
+			return _mm_cvtss_f32(sums);              // çµæœã‚’floatã«
 		}
 	}
 }

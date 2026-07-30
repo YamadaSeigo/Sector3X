@@ -1,4 +1,4 @@
-#include "Core/ECS/ArchetypeManager.h"
+﻿#include "Core/ECS/ArchetypeManager.h"
 
 namespace SFW
 {

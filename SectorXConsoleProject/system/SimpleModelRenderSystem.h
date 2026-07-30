@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <SectorFW/Graphics/DX11/DX11ModelAssetManager.h>
 #include <SectorFW/Debug/UIBus.h>
@@ -12,14 +12,14 @@ template<typename Partition>
 class SimpleModelRenderSystem : public ITypeSystem<
 	SimpleModelRenderSystem,
 	Partition,
-	ComponentAccess<Read<TransformSoA>, Write<CModel>>,//ƒAƒNƒZƒX‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìw’è
-	ServiceContext<Graphics::RenderService, Graphics::I3DPerCameraService>>{//ó‚¯æ‚éƒT[ƒrƒX‚Ìw’è
+	ComponentAccess<Read<TransformSoA>, Write<CModel>>,//ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®æŒ‡å®š
+	ServiceContext<Graphics::RenderService, Graphics::I3DPerCameraService>>{//å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã®æŒ‡å®š
 	using Accessor = ComponentAccessor<Read<TransformSoA>, Write<CModel>>;
 public:
-	//w’è‚µ‚½ƒT[ƒrƒX‚ğŠÖ”‚Ìˆø”‚Æ‚µ‚Äó‚¯æ‚é
+	//æŒ‡å®šã—ãŸã‚µãƒ¼ãƒ“ã‚¹ã‚’é–¢æ•°ã®å¼•æ•°ã¨ã—ã¦å—ã‘å–ã‚‹
 	void UpdateImpl(Partition& partition, NoDeletePtr<Graphics::RenderService> renderService,
 		NoDeletePtr<Graphics::I3DPerCameraService> cameraService) {
-		//‹@”\‚ğ§ŒÀ‚µ‚½RenderQueue‚ğæ“¾
+		//æ©Ÿèƒ½ã‚’åˆ¶é™ã—ãŸRenderQueueã‚’å–å¾—
 		auto producerSession = renderService->GetProducerSession("3D");
 		auto modelManager = renderService->GetResourceManager<Graphics::DX11::ModelAssetManager>();
 		auto meshManager = renderService->GetResourceManager<Graphics::DX11::MeshManager>();
@@ -29,12 +29,12 @@ public:
 		auto fru = cameraService->MakeFrustum();
 		Math::Vec3f camPos = cameraService->GetEyePos();
 
-		//ƒAƒNƒZƒX‚ğéŒ¾‚µ‚½ƒRƒ“ƒ|[ƒlƒ“ƒg‚Éƒ}ƒbƒ`‚·‚éƒ`ƒƒƒ“ƒN‚Éw’è‚µ‚½ŠÖ”‚ğ“K‰‚·‚é
+		//ã‚¢ã‚¯ã‚»ã‚¹ã‚’å®£è¨€ã—ãŸã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã«ãƒãƒƒãƒã™ã‚‹ãƒãƒ£ãƒ³ã‚¯ã«æŒ‡å®šã—ãŸé–¢æ•°ã‚’é©å¿œã™ã‚‹
 		this->ForEachFrustumChunkWithAccessor([](Accessor& accessor, size_t entityCount,
 			Graphics::RenderService* renderService, auto modelMgr, auto meshMgr, auto materialMgr, auto psoMgr,
 			auto queue)
 			{
-				//“Ç‚İæ‚èê—p‚ÅTransformSoA‚ÌƒAƒNƒZƒT‚ğæ“¾
+				//èª­ã¿å–ã‚Šå°‚ç”¨ã§TransformSoAã®ã‚¢ã‚¯ã‚»ã‚µã‚’å–å¾—
 				auto transform = accessor.Get<Read<TransformSoA>>();
 				auto model = accessor.Get<Write<CModel>>();
 
@@ -45,7 +45,7 @@ public:
 				};
 
 				std::vector<Math::Matrix4x4f> worldMatrices(entityCount);
-				Math::BuildWorldMatrices_FromSoA(mtf, entityCount, worldMatrices.data(), false); // ƒNƒH[ƒ^ƒjƒIƒ“”ñ³‹K‰»
+				Math::BuildWorldMatrices_FromSoA(mtf, entityCount, worldMatrices.data(), false); // ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³éæ­£è¦åŒ–
 
 				for (size_t i = 0; i < entityCount; ++i) {
 					size_t& idx = i;
@@ -55,11 +55,11 @@ public:
 					//auto transMtx = Math::MakeTranslationMatrix(pos);
 					//auto rotMtx = Math::MakeRotationMatrix(rot);
 					//auto scaleMtx = Math::MakeScalingMatrix(scale);
-					////ƒ[ƒ‹ƒhs—ñ‚ğŒvZ
+					////ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’è¨ˆç®—
 					//auto worldMtx =  transMtx * rotMtx * scaleMtx;
 					const auto& worldMtx = worldMatrices[i];
 
-					//ƒ‚ƒfƒ‹ƒAƒZƒbƒg‚ğæ“¾
+					//ãƒ¢ãƒ‡ãƒ«ã‚¢ã‚»ãƒƒãƒˆã‚’å–å¾—
 					auto modelAsset = modelMgr->Get(model.value()[idx].handle);
 
 					Graphics::InstanceData instance = { worldMtx };

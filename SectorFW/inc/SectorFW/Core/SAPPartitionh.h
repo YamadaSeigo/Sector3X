@@ -1,9 +1,9 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   SAPPartition.h
- * @brief  Sweep And Prune (SAP) ƒuƒ[ƒhƒtƒF[ƒY—pƒp[ƒeƒBƒVƒ‡ƒ“iPartitionConcept €‹’j
- *         - 3²‚Ì“Š‰e‹æŠÔ(min/max)‚ğ•Û‚µA•K—v‚É‰‚¶‚ÄÄƒ\[ƒg‚µ‚Ä‚‘¬‚ÉLˆæ”»’è
- *         - FrustumƒJƒŠƒ“ƒO / ƒfƒoƒbƒOƒƒCƒ„•`‰æ / ECS::Query “‡
- *         - Grid/Octree/BVH ‚Æ•¹—p‚Å‚«‚é‚æ‚¤Œy—ÊİŒv
+ * @brief  Sweep And Prune (SAP) ãƒ–ãƒ­ãƒ¼ãƒ‰ãƒ•ã‚§ãƒ¼ã‚ºç”¨ãƒ‘ãƒ¼ãƒ†ã‚£ã‚·ãƒ§ãƒ³ï¼ˆPartitionConcept æº–æ‹ ï¼‰
+ *         - 3è»¸ã®æŠ•å½±åŒºé–“(min/max)ã‚’ä¿æŒã—ã€å¿…è¦ã«å¿œã˜ã¦å†ã‚½ãƒ¼ãƒˆã—ã¦é«˜é€Ÿã«åºƒåŸŸåˆ¤å®š
+ *         - Frustumã‚«ãƒªãƒ³ã‚° / ãƒ‡ãƒãƒƒã‚°ãƒ¯ã‚¤ãƒ¤æç”» / ECS::Query çµ±åˆ
+ *         - Grid/Octree/BVH ã¨ä½µç”¨ã§ãã‚‹ã‚ˆã†è»½é‡è¨­è¨ˆ
  *
  * @author seigo
  * @date   September 2025
@@ -32,15 +32,15 @@ namespace SectorFW
 
 		struct Body
 		{
-			AABB box{};                 // ƒ[ƒ‹ƒh‹óŠÔAABB
-			SpatialChunk chunk{};       // Š‘®EMi1ƒ{ƒfƒB=1ƒ`ƒƒƒ“ƒN‘z’èj
-			uint32_t id = 0;            // ˜A”ÔID
-			// “Š‰e‹æŠÔiÄ\’z‚ÉXVj
+			AABB box{};                 // ãƒ¯ãƒ¼ãƒ«ãƒ‰ç©ºé–“AABB
+			SpatialChunk chunk{};       // æ‰€å±EMï¼ˆ1ãƒœãƒ‡ã‚£=1ãƒãƒ£ãƒ³ã‚¯æƒ³å®šï¼‰
+			uint32_t id = 0;            // é€£ç•ªID
+			// æŠ•å½±åŒºé–“ï¼ˆå†æ§‹ç¯‰æ™‚ã«æ›´æ–°ï¼‰
 			float minProj[3]{};
 			float maxProj[3]{};
 		};
 
-		// ²w’è
+		// è»¸æŒ‡å®š
 		enum class Axis : uint8_t { X = 0, Y = 1, Z = 2 };
 
 	public:
@@ -49,7 +49,7 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief ƒ{ƒfƒBi=SpatialChunkj‚ğ’Ç‰Á
+		 * @brief ãƒœãƒ‡ã‚£ï¼ˆ=SpatialChunkï¼‰ã‚’è¿½åŠ 
 		 */
 		SpatialChunk* CreateBody(const AABB& box) noexcept
 		{
@@ -63,7 +63,7 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief AABBXViˆÚ“®‘Ì‚È‚Çj
+		 * @brief AABBæ›´æ–°ï¼ˆç§»å‹•ä½“ãªã©ï¼‰
 		 */
 		void UpdateBodyBounds(uint32_t bodyIndex, const AABB& newBox) noexcept
 		{
@@ -74,8 +74,8 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief ‚·‚×‚Ä‚Ì“Š‰e”z—ñ‚ğÄ\’ziˆÀ’èƒ\[ƒgj
-		 *        •p”ÉXV‚È‚çƒtƒŒ[ƒ€I’[‚ÅŒÄ‚Ô‘z’è
+		 * @brief ã™ã¹ã¦ã®æŠ•å½±é…åˆ—ã‚’å†æ§‹ç¯‰ï¼ˆå®‰å®šã‚½ãƒ¼ãƒˆï¼‰
+		 *        é »ç¹æ›´æ–°ãªã‚‰ãƒ•ãƒ¬ãƒ¼ãƒ çµ‚ç«¯ã§å‘¼ã¶æƒ³å®š
 		 */
 		void Rebuild() noexcept
 		{
@@ -86,7 +86,7 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief “_‚ªŠÜ‚Ü‚ê‚éƒ{ƒfƒB‚Ìƒ`ƒƒƒ“ƒN‚ğ•Ô‚·iÅ‰‚Ìˆê’v‚ğ•Ô‹pj
+		 * @brief ç‚¹ãŒå«ã¾ã‚Œã‚‹ãƒœãƒ‡ã‚£ã®ãƒãƒ£ãƒ³ã‚¯ã‚’è¿”ã™ï¼ˆæœ€åˆã®ä¸€è‡´ã‚’è¿”å´ï¼‰
 		 */
 		std::optional<SpatialChunk*> GetChunk(Math::Vec3f p,
 			EOutOfBoundsPolicy /*policy*/ = EOutOfBoundsPolicy::ClampToEdge) noexcept
@@ -99,10 +99,10 @@ namespace SectorFW
 			return std::nullopt;
 		}
 
-		/** @brief ƒOƒ[ƒoƒ‹EM */
+		/** @brief ã‚°ãƒ­ãƒ¼ãƒãƒ«EM */
 		ECS::EntityManager& GetGlobalEntityManager() noexcept { return globalEntityManager; }
 
-		/** @brief ‘SƒGƒ“ƒeƒBƒeƒB”iƒOƒ[ƒoƒ‹{Šeƒ{ƒfƒBj */
+		/** @brief å…¨ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£æ•°ï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ«ï¼‹å„ãƒœãƒ‡ã‚£ï¼‰ */
 		size_t GetEntityNum()
 		{
 			size_t num = globalEntityManager.GetEntityCount();
@@ -111,7 +111,7 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief Registry“o˜^iPartitionScheme::SAPj
+		 * @brief Registryç™»éŒ²ï¼ˆPartitionScheme::SAPï¼‰
 		 */
 		void RegisterAllChunks(EntityManagerRegistry& reg, LevelID level)
 		{
@@ -129,7 +129,7 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief FrustumƒJƒŠƒ“ƒOFŒğ·ƒ{ƒfƒB‚ğ—ñ‹“
+		 * @brief Frustumã‚«ãƒªãƒ³ã‚°ï¼šäº¤å·®ãƒœãƒ‡ã‚£ã‚’åˆ—æŒ™
 		 */
 		std::vector<SpatialChunk*> CullChunks(const Math::Frustumf& fr) const noexcept
 		{
@@ -151,7 +151,7 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief ƒfƒoƒbƒOFŠeƒ{ƒfƒBAABB‚ÌƒƒCƒ„i12ƒGƒbƒWj
+		 * @brief ãƒ‡ãƒãƒƒã‚°ï¼šå„ãƒœãƒ‡ã‚£AABBã®ãƒ¯ã‚¤ãƒ¤ï¼ˆ12ã‚¨ãƒƒã‚¸ï¼‰
 		 */
 		uint32_t CullChunkLine(const Math::Frustumf& fr,
 			Math::Vec3f cp,
@@ -173,7 +173,7 @@ namespace SectorFW
 			auto draw_box = [&](const AABB& box) {
 				const Math::Vec3f c = box.center();
 				const float len = (c - cp).length();
-				if (len > maxLen) return; // ‹——£§ŒÀ
+				if (len > maxLen) return; // è·é›¢åˆ¶é™
 				const uint32_t col = Math::LerpColor(0xFFFFFFFFu, 0x000000FFu, (std::min)(1.0f, len / maxLen));
 
 				const Math::Vec3f mn = box.lb, mx = box.ub;
@@ -201,16 +201,16 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief ‹ß–TŒó•âid‚È‚èjƒyƒA—ñ‹“iƒuƒ[ƒhƒtƒF[ƒYj
-		 * @details primary²‚Ìƒ\[ƒg‚ğg‚¢Amin<=curr.max ‚Ì”ÍˆÍ‚ÅƒXƒC[ƒvB
-		 *          2²/3²–Ú‚Í‘Šú”»’è—p‚ÌAABBƒ`ƒFƒbƒN‚Åi‚è‚İB
+		 * @brief è¿‘å‚å€™è£œï¼ˆé‡ãªã‚Šï¼‰ãƒšã‚¢åˆ—æŒ™ï¼ˆãƒ–ãƒ­ãƒ¼ãƒ‰ãƒ•ã‚§ãƒ¼ã‚ºï¼‰
+		 * @details primaryè»¸ã®ã‚½ãƒ¼ãƒˆã‚’ä½¿ã„ã€min<=curr.max ã®ç¯„å›²ã§ã‚¹ã‚¤ãƒ¼ãƒ—ã€‚
+		 *          2è»¸/3è»¸ç›®ã¯æ—©æœŸåˆ¤å®šç”¨ã®AABBãƒã‚§ãƒƒã‚¯ã§çµã‚Šè¾¼ã¿ã€‚
 		 */
 		template<class PairFn>
 		void EnumerateOverlapPairs(PairFn&& fn) noexcept
 		{
 			ensureRebuilt();
 			const auto& order = orderPrimary();
-			// ƒAƒNƒeƒBƒuƒŠƒXƒg•û®
+			// ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãƒªã‚¹ãƒˆæ–¹å¼
 			std::vector<uint32_t> active;
 			active.reserve(128);
 			for (uint32_t i = 0; i < order.size(); ++i) {
@@ -219,18 +219,18 @@ namespace SectorFW
 				const float aMin = A.minProj[(int)primary];
 				const float aMax = A.maxProj[(int)primary];
 
-				// active ‚©‚çAI’[‚ªA‚Ìn’[‚æ‚è‚à¬‚³‚¢‚à‚Ì‚ğœ‹
+				// active ã‹ã‚‰ã€çµ‚ç«¯ãŒAã®å§‹ç«¯ã‚ˆã‚Šã‚‚å°ã•ã„ã‚‚ã®ã‚’é™¤å»
 				auto it = active.begin();
 				while (it != active.end()) {
 					if (bodies[*it].maxProj[(int)primary] < aMin) it = active.erase(it);
 					else ++it;
 				}
 
-				// active ‚ÆŒğ·Œó•â
+				// active ã¨äº¤å·®å€™è£œ
 				for (uint32_t j : active) {
 					Body& B = bodies[j];
 					if (A.box.Overlaps(B.box)) {
-						fn(aIdx, j); // A ‚Æ B ‚Íd‚È‚èŒó•â
+						fn(aIdx, j); // A ã¨ B ã¯é‡ãªã‚Šå€™è£œ
 					}
 				}
 
@@ -239,7 +239,7 @@ namespace SectorFW
 		}
 
 		/**
-		 * @brief ƒ{ƒfƒBÄƒ[ƒh
+		 * @brief ãƒœãƒ‡ã‚£å†ãƒ­ãƒ¼ãƒ‰
 		 */
 		void ReloadBody(uint32_t bodyIndex, EntityManagerRegistry& reg)
 		{
@@ -288,7 +288,7 @@ namespace SectorFW
 		bool dirty = true;
 	};
 
-	// ===== ECS::Query “‡ =====
+	// ===== ECS::Query çµ±åˆ =====
 	namespace ECS
 	{
 		template<>
@@ -309,7 +309,7 @@ namespace SectorFW
 				};
 
 			collect_from(context.GetGlobalEntityManager());
-			// SAP“à‚ÌŒÂX‚Ìƒ{ƒfƒBEM‚ÍA•K—v‚É‰‚¶‚Ä•Ê“rƒJƒŠƒ“ƒOŒo—R‚Å—ñ‹“‚µ‚Ä‚­‚¾‚³‚¢B
+			// SAPå†…ã®å€‹ã€…ã®ãƒœãƒ‡ã‚£EMã¯ã€å¿…è¦ã«å¿œã˜ã¦åˆ¥é€”ã‚«ãƒªãƒ³ã‚°çµŒç”±ã§åˆ—æŒ™ã—ã¦ãã ã•ã„ã€‚
 			return result;
 		}
 	}

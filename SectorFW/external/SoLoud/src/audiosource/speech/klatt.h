@@ -1,4 +1,4 @@
-#ifndef KLATT_H
+﻿#ifndef KLATT_H
 #define KLATT_H
 
 #include "resonator.h"

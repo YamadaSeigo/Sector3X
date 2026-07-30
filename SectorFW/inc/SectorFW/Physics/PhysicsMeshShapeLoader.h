@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * \file   PhysicsMeshShapeLoader.h
- * \brief JMSH (.meshbin) Œ`®‚Ì•¨—ƒƒbƒVƒ…Œ`óƒf[ƒ^‚ğ“Ç‚İ‚ŞŠÖ”‚ğéŒ¾‚·‚éƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+ * \brief JMSH (.meshbin) å½¢å¼ã®ç‰©ç†ãƒ¡ãƒƒã‚·ãƒ¥å½¢çŠ¶ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€é–¢æ•°ã‚’å®£è¨€ã™ã‚‹ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
  * \author seigo
  * \date   December 2025
  *********************************************************************/
@@ -24,12 +24,12 @@ namespace SFW::Physics
 		std::vector<std::uint32_t> indices;
 	};
 
-	/// @brief JMSH (.meshbin) ‚ğ“Ç‚İ‚Ş
-	/// @param path             ƒtƒ@ƒCƒ‹ƒpƒX
-	/// @param outData          ’¸“_ / ƒCƒ“ƒfƒbƒNƒXo—Íæ
-	/// @param flipRightHanded  ‰EèŒn‚ÉƒtƒŠƒbƒv‚·‚éê‡ trueix ‚ğ”½“]j
-	/// @param expectedVersion  ƒoƒCƒiƒŠƒtƒH[ƒ}ƒbƒg‚Ìƒo[ƒWƒ‡ƒ“iƒfƒtƒHƒ‹ƒg 1j
-	/// @return ¬Œ÷‚µ‚½‚ç true
+	/// @brief JMSH (.meshbin) ã‚’èª­ã¿è¾¼ã‚€
+	/// @param path             ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+	/// @param outData          é ‚ç‚¹ / ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹å‡ºåŠ›å…ˆ
+	/// @param flipRightHanded  å³æ‰‹ç³»ã«ãƒ•ãƒªãƒƒãƒ—ã™ã‚‹å ´åˆ trueï¼ˆx ã‚’åè»¢ï¼‰
+	/// @param expectedVersion  ãƒã‚¤ãƒŠãƒªãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ 1ï¼‰
+	/// @return æˆåŠŸã—ãŸã‚‰ true
 	bool LoadMeshShapeBin(
 		const std::filesystem::path& path,
 		MeshShapeData& outData,
@@ -37,7 +37,7 @@ namespace SFW::Physics
 		std::uint32_t expectedVersion = 1
 	);
 
-	/// @brief ƒƒ‚ƒŠã‚Ìƒoƒbƒtƒ@‚©‚ç JMSH ‚ğ“Ç‚İ‚Ş”Åi•K—v‚È‚çj
+	/// @brief ãƒ¡ãƒ¢ãƒªä¸Šã®ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰ JMSH ã‚’èª­ã¿è¾¼ã‚€ç‰ˆï¼ˆå¿…è¦ãªã‚‰ï¼‰
 	bool LoadMeshShapeBinFromMemory(
 		const void* data,
 		std::size_t size,

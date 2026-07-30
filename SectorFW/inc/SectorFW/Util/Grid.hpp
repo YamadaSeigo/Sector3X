@@ -1,6 +1,6 @@
-/*****************************************************************//**
+ï»¿/*****************************************************************//**
  * @file   Grid.hpp
- * @brief ƒOƒŠƒbƒh‚ğ’è‹`‚·‚éƒNƒ‰ƒX
+ * @brief ã‚°ãƒªãƒƒãƒ‰ã‚’å®šç¾©ã™ã‚‹ã‚¯ãƒ©ã‚¹
  * @author seigo_t03b63m
  * @date   June 2025
  *********************************************************************/
@@ -12,28 +12,28 @@
 namespace SFW
 {
 	/**
-	 * @brief 2DƒOƒŠƒbƒh‚ğ•\‚·ƒNƒ‰ƒX
-	 * @tparam T ƒOƒŠƒbƒh‚Ì—v‘f‚ÌŒ^
-	 * @tparam Size ƒTƒCƒY‚ÌŒ^iƒfƒtƒHƒ‹ƒg‚Ísize_tj
+	 * @brief 2Dã‚°ãƒªãƒƒãƒ‰ã‚’è¡¨ã™ã‚¯ãƒ©ã‚¹
+	 * @tparam T ã‚°ãƒªãƒƒãƒ‰ã®è¦ç´ ã®å‹
+	 * @tparam Size ã‚µã‚¤ã‚ºã®å‹ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯size_tï¼‰
 	 */
 	template<typename T, typename Size = size_t>
 	class Grid2D {
 	public:
 		/**
-		 * @brief ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @param width ƒOƒŠƒbƒh‚Ì•
-		 * @param height ƒOƒŠƒbƒh‚Ì‚‚³
+		 * @brief ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @param width ã‚°ãƒªãƒƒãƒ‰ã®å¹…
+		 * @param height ã‚°ãƒªãƒƒãƒ‰ã®é«˜ã•
 		 */
 		explicit Grid2D(Size width, Size height) noexcept
 			: m_width(width), m_height(height), m_data(width* height) {
 		}
 
 		/**
-		 * @brief ˆø”•t‚«ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @tparam Args ‰Â•Ï’·ƒeƒ“ƒvƒŒ[ƒgˆø”
-		 * @param width ƒOƒŠƒbƒh‚Ì•
-		 * @param height ƒOƒŠƒbƒh‚Ì‚‚³
-		 * @param args —v‘f‚Ì‰Šú‰»‚Ég—p‚·‚éˆø”
+		 * @brief å¼•æ•°ä»˜ãã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @tparam Args å¯å¤‰é•·ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå¼•æ•°
+		 * @param width ã‚°ãƒªãƒƒãƒ‰ã®å¹…
+		 * @param height ã‚°ãƒªãƒƒãƒ‰ã®é«˜ã•
+		 * @param args è¦ç´ ã®åˆæœŸåŒ–ã«ä½¿ç”¨ã™ã‚‹å¼•æ•°
 		 */
 		template<typename... Args>
 		Grid2D(Size width, Size height, Args&&... args) noexcept
@@ -41,82 +41,82 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ƒOƒŠƒbƒh‚Ì—v‘f‚ÉƒAƒNƒZƒX‚·‚é‰‰ZqƒI[ƒo[ƒ[ƒh
-		 * @param x ƒOƒŠƒbƒh‚ÌxÀ•W
-		 * @param y ƒOƒŠƒbƒh‚ÌyÀ•W
-		 * @return —v‘f‚Ö‚ÌQÆ
+		 * @brief ã‚°ãƒªãƒƒãƒ‰ã®è¦ç´ ã«ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
+		 * @param x ã‚°ãƒªãƒƒãƒ‰ã®xåº§æ¨™
+		 * @param y ã‚°ãƒªãƒƒãƒ‰ã®yåº§æ¨™
+		 * @return è¦ç´ ã¸ã®å‚ç…§
 		 */
 		T& operator()(Size x, Size y) {
 			return m_data[y * m_width + x];
 		}
 		/**
-		 * @brief ƒOƒŠƒbƒh‚Ì—v‘f‚ÉƒAƒNƒZƒX‚·‚é‰‰ZqƒI[ƒo[ƒ[ƒhiconst”Åj
-		 * @param x ƒOƒŠƒbƒh‚ÌxÀ•W
-		 * @param y ƒOƒŠƒbƒh‚ÌyÀ•W
-		 * @return —v‘f‚Ö‚ÌQÆ
+		 * @brief ã‚°ãƒªãƒƒãƒ‰ã®è¦ç´ ã«ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ï¼ˆconstç‰ˆï¼‰
+		 * @param x ã‚°ãƒªãƒƒãƒ‰ã®xåº§æ¨™
+		 * @param y ã‚°ãƒªãƒƒãƒ‰ã®yåº§æ¨™
+		 * @return è¦ç´ ã¸ã®å‚ç…§
 		 */
 		const T& operator()(Size x, Size y) const {
 			return m_data[y * m_width + x];
 		}
 		/**
-		 * @brief ƒOƒŠƒbƒh‚Ì•‚ğæ“¾‚·‚éŠÖ”
-		 * @return ƒOƒŠƒbƒh‚Ì•
+		 * @brief ã‚°ãƒªãƒƒãƒ‰ã®å¹…ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return ã‚°ãƒªãƒƒãƒ‰ã®å¹…
 		 */
 		Size width() const noexcept { return m_width; }
 		/**
-		 * @brief ƒOƒŠƒbƒh‚Ì‚‚³‚ğæ“¾‚·‚éŠÖ”
-		 * @return ƒOƒŠƒbƒh‚Ì‚‚³
+		 * @brief ã‚°ãƒªãƒƒãƒ‰ã®é«˜ã•ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return ã‚°ãƒªãƒƒãƒ‰ã®é«˜ã•
 		 */
 		Size height() const noexcept { return m_height; }
 		/**
-		 * @brief ƒOƒŠƒbƒh‚Ì—v‘f‚ğƒCƒeƒŒ[ƒg‚·‚é‚½‚ß‚Ìbegin‚ÆendŠÖ”
-		 * @return ƒCƒeƒŒ[ƒ^‚Ìbegin‚Æend
+		 * @brief ã‚°ãƒªãƒƒãƒ‰ã®è¦ç´ ã‚’ã‚¤ãƒ†ãƒ¬ãƒ¼ãƒˆã™ã‚‹ãŸã‚ã®beginã¨endé–¢æ•°
+		 * @return ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã®beginã¨end
 		 */
 		auto begin() noexcept { return m_data.begin(); }
 		/**
-		 * @brief ƒOƒŠƒbƒh‚Ì—v‘f‚ğƒCƒeƒŒ[ƒg‚·‚é‚½‚ß‚ÌendŠÖ”
-		 * @return ƒCƒeƒŒ[ƒ^‚Ìend
+		 * @brief ã‚°ãƒªãƒƒãƒ‰ã®è¦ç´ ã‚’ã‚¤ãƒ†ãƒ¬ãƒ¼ãƒˆã™ã‚‹ãŸã‚ã®endé–¢æ•°
+		 * @return ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã®end
 		 */
 		auto end() noexcept { return m_data.end(); }
 		/**
-		 * @brief ƒOƒŠƒbƒh‚Ì—v‘f‚ğƒCƒeƒŒ[ƒg‚·‚é‚½‚ß‚Ìconst”Åbegin‚ÆendŠÖ”
-		 * @return ƒCƒeƒŒ[ƒ^‚Ìbegin‚Æend
+		 * @brief ã‚°ãƒªãƒƒãƒ‰ã®è¦ç´ ã‚’ã‚¤ãƒ†ãƒ¬ãƒ¼ãƒˆã™ã‚‹ãŸã‚ã®constç‰ˆbeginã¨endé–¢æ•°
+		 * @return ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã®beginã¨end
 		 */
 		auto begin() const noexcept { return m_data.begin(); }
 		/**
-		 * @brief ƒOƒŠƒbƒh‚Ì—v‘f‚ğƒCƒeƒŒ[ƒg‚·‚é‚½‚ß‚Ìconst”ÅendŠÖ”
-		 * @return ƒCƒeƒŒ[ƒ^‚Ìend
+		 * @brief ã‚°ãƒªãƒƒãƒ‰ã®è¦ç´ ã‚’ã‚¤ãƒ†ãƒ¬ãƒ¼ãƒˆã™ã‚‹ãŸã‚ã®constç‰ˆendé–¢æ•°
+		 * @return ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã®end
 		 */
 		auto end() const noexcept { return m_data.end(); }
 		/**
-		 * @brief ƒOƒŠƒbƒh‚ÌƒTƒCƒY‚ğæ“¾‚·‚éŠÖ”
-		 * @return ƒOƒŠƒbƒh‚ÌƒTƒCƒYi• * ‚‚³j
+		 * @brief ã‚°ãƒªãƒƒãƒ‰ã®ã‚µã‚¤ã‚ºã‚’å–å¾—ã™ã‚‹é–¢æ•°
+		 * @return ã‚°ãƒªãƒƒãƒ‰ã®ã‚µã‚¤ã‚ºï¼ˆå¹… * é«˜ã•ï¼‰
 		 */
 		Size size() const noexcept { return m_width * m_height; }
 	private:
 		/**
-		 * @brief ƒOƒŠƒbƒh‚Ì•‚Æ‚‚³
+		 * @brief ã‚°ãƒªãƒƒãƒ‰ã®å¹…ã¨é«˜ã•
 		 */
 		Size m_width, m_height;
 		/**
-		 * @brief ƒOƒŠƒbƒh‚Ì—v‘f‚ğŠi”[‚·‚éƒxƒNƒ^[
+		 * @brief ã‚°ãƒªãƒƒãƒ‰ã®è¦ç´ ã‚’æ ¼ç´ã™ã‚‹ãƒ™ã‚¯ã‚¿ãƒ¼
 		 */
 		std::vector<T> m_data;
 	};
 
 	/**
-	* @brief 3DƒOƒŠƒbƒh‚ğ•\‚·ƒNƒ‰ƒX
-	* @tparam T   ƒOƒŠƒbƒh‚Ì—v‘f‚ÌŒ^
-	* @tparam Size ƒTƒCƒY‚ÌŒ^iƒfƒtƒHƒ‹ƒg‚Ísize_tj
+	* @brief 3Dã‚°ãƒªãƒƒãƒ‰ã‚’è¡¨ã™ã‚¯ãƒ©ã‚¹
+	* @tparam T   ã‚°ãƒªãƒƒãƒ‰ã®è¦ç´ ã®å‹
+	* @tparam Size ã‚µã‚¤ã‚ºã®å‹ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯size_tï¼‰
 	*/
 	template<typename T, typename Size = size_t>
 	class Grid3D {
 	public:
 		/**
-		 * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @param width  ƒOƒŠƒbƒh‚Ì• (x)
-		 * @param height ƒOƒŠƒbƒh‚Ì‚‚³ (y)
-		 * @param depth  ƒOƒŠƒbƒh‚Ì‰œs (z)
+		 * @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @param width  ã‚°ãƒªãƒƒãƒ‰ã®å¹… (x)
+		 * @param height ã‚°ãƒªãƒƒãƒ‰ã®é«˜ã• (y)
+		 * @param depth  ã‚°ãƒªãƒƒãƒ‰ã®å¥¥è¡Œ (z)
 		 */
 		explicit Grid3D(Size width, Size height, Size depth) noexcept
 			: m_width(width), m_height(height), m_depth(depth),
@@ -124,12 +124,12 @@ namespace SFW
 		}
 
 		/**
-		 * @brief ˆø”•t‚«ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		 * @tparam Args ‰Â•Ï’·ƒeƒ“ƒvƒŒ[ƒgˆø”
-		 * @param width  ƒOƒŠƒbƒh‚Ì• (x)
-		 * @param height ƒOƒŠƒbƒh‚Ì‚‚³ (y)
-		 * @param depth  ƒOƒŠƒbƒh‚Ì‰œs (z)
-		 * @param args   —v‘f‚Ì‰Šú‰»‚Ég—p‚·‚éˆø”
+		 * @brief å¼•æ•°ä»˜ãã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		 * @tparam Args å¯å¤‰é•·ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå¼•æ•°
+		 * @param width  ã‚°ãƒªãƒƒãƒ‰ã®å¹… (x)
+		 * @param height ã‚°ãƒªãƒƒãƒ‰ã®é«˜ã• (y)
+		 * @param depth  ã‚°ãƒªãƒƒãƒ‰ã®å¥¥è¡Œ (z)
+		 * @param args   è¦ç´ ã®åˆæœŸåŒ–ã«ä½¿ç”¨ã™ã‚‹å¼•æ•°
 		 */
 		template<typename... Args>
 		Grid3D(Size width, Size height, Size depth, Args&&... args) noexcept
@@ -138,51 +138,51 @@ namespace SFW
 		}
 
 		/**
-		 * @brief —v‘fƒAƒNƒZƒXi”ñconstj
-		 * @param x xÀ•W
-		 * @param y yÀ•W
-		 * @param z zÀ•W
-		 * @return —v‘f‚Ö‚ÌQÆ
+		 * @brief è¦ç´ ã‚¢ã‚¯ã‚»ã‚¹ï¼ˆéconstï¼‰
+		 * @param x xåº§æ¨™
+		 * @param y yåº§æ¨™
+		 * @param z zåº§æ¨™
+		 * @return è¦ç´ ã¸ã®å‚ç…§
 		 */
 		T& operator()(Size x, Size y, Size z) {
 			return m_data[indexOf(x, y, z)];
 		}
 
 		/**
-		 * @brief —v‘fƒAƒNƒZƒXiconstj
-		 * @param x xÀ•W
-		 * @param y yÀ•W
-		 * @param z zÀ•W
-		 * @return —v‘f‚Ö‚ÌQÆ
+		 * @brief è¦ç´ ã‚¢ã‚¯ã‚»ã‚¹ï¼ˆconstï¼‰
+		 * @param x xåº§æ¨™
+		 * @param y yåº§æ¨™
+		 * @param z zåº§æ¨™
+		 * @return è¦ç´ ã¸ã®å‚ç…§
 		 */
 		const T& operator()(Size x, Size y, Size z) const {
 			return m_data[indexOf(x, y, z)];
 		}
 
-		/// • (x)
+		/// å¹… (x)
 		Size width()  const noexcept { return m_width; }
-		/// ‚‚³ (y)
+		/// é«˜ã• (y)
 		Size height() const noexcept { return m_height; }
-		/// ‰œs (z)
+		/// å¥¥è¡Œ (z)
 		Size depth()  const noexcept { return m_depth; }
 
-		/// ‘—v‘f” = width * height * depth
+		/// ç·è¦ç´ æ•° = width * height * depth
 		Size size() const noexcept { return m_width * m_height * m_depth; }
 
-		/// ƒCƒeƒŒ[ƒ^i”ñconstj
+		/// ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ï¼ˆéconstï¼‰
 		auto begin() noexcept { return m_data.begin(); }
 		auto end()   noexcept { return m_data.end(); }
 
-		/// ƒCƒeƒŒ[ƒ^iconstj
+		/// ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ï¼ˆconstï¼‰
 		auto begin() const noexcept { return m_data.begin(); }
 		auto end()   const noexcept { return m_data.end(); }
 
-		/// ƒf[ƒ^æ“ªƒ|ƒCƒ“ƒ^i•K—v‚È‚çj
+		/// ãƒ‡ãƒ¼ã‚¿å…ˆé ­ãƒã‚¤ãƒ³ã‚¿ï¼ˆå¿…è¦ãªã‚‰ï¼‰
 		T* data() noexcept { return m_data.data(); }
 		const T* data() const noexcept { return m_data.data(); }
 
 	private:
-		// ˆêŸŒ³ƒCƒ“ƒfƒbƒNƒXŒvZFz*(w*h) + y*w + x
+		// ä¸€æ¬¡å…ƒã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹è¨ˆç®—ï¼šz*(w*h) + y*w + x
 		size_t indexOf(Size x, Size y, Size z) const noexcept {
 			return static_cast<size_t>(z) * static_cast<size_t>(m_width) * static_cast<size_t>(m_height)
 				+ static_cast<size_t>(y) * static_cast<size_t>(m_width)

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <cstdint>
 
 #define WINDOW_NAME "SectorX Console Project"

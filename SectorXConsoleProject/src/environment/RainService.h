@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "RainParticlePool.h"
 
@@ -31,14 +31,14 @@ public:
 		Math::Vec3f gCamPos = {};
 		float gTime = 0.0f;
 
-		uint32_t gMaxSpawnPerFrame = RainParticlePool::MaxSpawnPerFrame; // —áF32
-		uint32_t gMaxParticles = RainParticlePool::MaxParticles; // FreeListŒÍŠ‰‘Îôig‚í‚È‚­‚Ä‚àOKj
-		float gHeightOffset = 50.0f; // ƒJƒƒ‰‚©‚ç‚Ì‚‚³ƒIƒtƒZƒbƒg
+		uint32_t gMaxSpawnPerFrame = RainParticlePool::MaxSpawnPerFrame; // ä¾‹ï¼š32
+		uint32_t gMaxParticles = RainParticlePool::MaxParticles; // FreeListæ¯æ¸‡å¯¾ç­–ï¼ˆä½¿ã‚ãªãã¦ã‚‚OKï¼‰
+		float gHeightOffset = 50.0f; // ã‚«ãƒ¡ãƒ©ã‹ã‚‰ã®é«˜ã•ã‚ªãƒ•ã‚»ãƒƒãƒˆ
 		float gAddSize = 0.02f;
 
-		float gSpawnRadius = 80.0f; // ƒXƒ|[ƒ“ˆÊ’u‚Ì”¼Œa
-		float gLife = 5.0f; // —á: 5•b
-		float _pad0, _pad1; // 16B ‹«ŠE‘µ‚¦
+		float gSpawnRadius = 80.0f; // ã‚¹ãƒãƒ¼ãƒ³ä½ç½®ã®åŠå¾„
+		float gLife = 5.0f; // ä¾‹: 5ç§’
+		float _pad0, _pad1; // 16B å¢ƒç•Œæƒãˆ
 	};
 
 	struct UpdateCB
@@ -71,35 +71,35 @@ public:
 		Math::Vec3f gCamPosWS = {};
 		float _pad0 = {};
 
-		float gBaseWidth = 0.025f; // —á: 0.01`0.03 (m)
-		float gBaseLength = 0.01f; // —á: 0.10`0.40 (m)
-		float gSpeedToLength = 0.02f; // —á: 0.01`0.03 (length += |v| * k)
-		float gMinSpeedForDir = 0.1f; // —á: 0.1
+		float gBaseWidth = 0.025f; // ä¾‹: 0.01ï½0.03 (m)
+		float gBaseLength = 0.01f; // ä¾‹: 0.10ï½0.40 (m)
+		float gSpeedToLength = 0.02f; // ä¾‹: 0.01ï½0.03 (length += |v| * k)
+		float gMinSpeedForDir = 0.1f; // ä¾‹: 0.1
 
-		float gAlpha = 0.5f; // ‘S‘Ìalpha
-		float gLifeFade = 0.4f; // —á: 1.0 (õ–½‚Å”–‚­‚·‚é‹­‚³)
+		float gAlpha = 0.5f; // å…¨ä½“alpha
+		float gLifeFade = 0.4f; // ä¾‹: 1.0 (å¯¿å‘½ã§è–„ãã™ã‚‹å¼·ã•)
 		float _pad3[2] = {};
 	};
 
 	struct WetnessCB
 	{
-		Math::Vec2f gWetOriginXZ_Snap = {}; // ‚±‚ÌWetnessRT‚ªƒJƒo[‚·‚éƒXƒiƒbƒv‚³‚ê‚½ƒ[ƒ‹ƒhŒ´“_(XZ),
-		float gWetInvWorldSize = 0.0f; // 1 / ƒJƒo[‚·‚éƒ[ƒ‹ƒh•i—á: 1/256mj
-		float gWetStrength = 1.0f; // ‘S‘Ì‹­“x
+		Math::Vec2f gWetOriginXZ_Snap = {}; // ã“ã®WetnessRTãŒã‚«ãƒãƒ¼ã™ã‚‹ã‚¹ãƒŠãƒƒãƒ—ã•ã‚ŒãŸãƒ¯ãƒ¼ãƒ«ãƒ‰åŸç‚¹(XZ),
+		float gWetInvWorldSize = 0.0f; // 1 / ã‚«ãƒãƒ¼ã™ã‚‹ãƒ¯ãƒ¼ãƒ«ãƒ‰å¹…ï¼ˆä¾‹: 1/256mï¼‰
+		float gWetStrength = 1.0f; // å…¨ä½“å¼·åº¦
 
-		float gWetDarken = 0.7f; // ”G‚ê‚ÅˆÃ‚­‚·‚é—Ê(—á: 0.35)
-		float gWetSpecBoost = 0.1f; // ‹^—ƒXƒyƒLƒ…ƒ‰‹­“x(—á: 1.0)
-		float gWetFlatten = 0.6f; // –@üƒRƒ“ƒgƒ‰ƒXƒg—}§(—á: 0.6)
-		float gWetMinNdotUp = 0.2f; // ã–Ê‚Ì‚İ”G‚ç‚·è‡’l(—á: 0.2)
+		float gWetDarken = 0.7f; // æ¿¡ã‚Œã§æš—ãã™ã‚‹é‡(ä¾‹: 0.35)
+		float gWetSpecBoost = 0.1f; // ç–‘ä¼¼ã‚¹ãƒšã‚­ãƒ¥ãƒ©å¼·åº¦(ä¾‹: 1.0)
+		float gWetFlatten = 0.6f; // æ³•ç·šã‚³ãƒ³ãƒˆãƒ©ã‚¹ãƒˆæŠ‘åˆ¶(ä¾‹: 0.6)
+		float gWetMinNdotUp = 0.2f; // ä¸Šé¢ã®ã¿æ¿¡ã‚‰ã™é–¾å€¤(ä¾‹: 0.2)
 
 		Math::Vec2f gInvScreen = {}; // 1/width, 1/height
-		Math::Vec2f gProjAB = {}; // Linearize—p
-		float gEdgeThreshold = 2.0f; // ƒGƒbƒW”»’è‚µ‚«‚¢’liüŒ`[“x‚Ì·j
-		float gEdgeSharpness = 0.2f; // ƒ}ƒXƒN‚Ì‰s‚³
-		Math::Vec2f gRainDirSS = { 0.0f, -1.0f }; // ƒXƒNƒŠ[ƒ“‹óŠÔ‚Ì‰J•ûŒüi³‹K‰»j
+		Math::Vec2f gProjAB = {}; // Linearizeç”¨
+		float gEdgeThreshold = 2.0f; // ã‚¨ãƒƒã‚¸åˆ¤å®šã—ãã„å€¤ï¼ˆç·šå½¢æ·±åº¦ã®å·®ï¼‰
+		float gEdgeSharpness = 0.2f; // ãƒã‚¹ã‚¯ã®é‹­ã•
+		Math::Vec2f gRainDirSS = { 0.0f, -1.0f }; // ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ç©ºé–“ã®é›¨æ–¹å‘ï¼ˆæ­£è¦åŒ–ï¼‰
 		float gTime = 0.0f;
-		float gDensity = 0.9f; // —±–§“x
-		float gStrength = 1.0f; // ‡¬‹­“x
+		float gDensity = 0.9f; // ç²’å¯†åº¦
+		float gStrength = 1.0f; // åˆæˆå¼·åº¦
 		float gDotSizeScale = 3.0f;
 
 		float gNearThickZ = 30.0f;
@@ -135,16 +135,16 @@ public:
 		uint32_t texSize[2];
 		float    pad[2];
 
-		// --- ƒ[ƒ‹ƒh‘Î‰iƒNƒŠƒbƒvƒ}ƒbƒv—pj ---
-		Math::Vec2f gWetOriginXZ; // ‚±‚ÌWetnessRT‚Ì¶‰º(‚Ü‚½‚ÍŠî€)‚Ìworld XZ
-		float gWetWorldSize; // 1–‡‚ªƒJƒo[‚·‚éƒ[ƒ‹ƒh•i³•ûŒ`, metersj
-		float gTimeSec; // •biŒp‘±“I‚É‘‚¦‚éj
+		// --- ãƒ¯ãƒ¼ãƒ«ãƒ‰å¯¾å¿œï¼ˆã‚¯ãƒªãƒƒãƒ—ãƒãƒƒãƒ—ç”¨ï¼‰ ---
+		Math::Vec2f gWetOriginXZ; // ã“ã®WetnessRTã®å·¦ä¸‹(ã¾ãŸã¯åŸºæº–)ã®world XZ
+		float gWetWorldSize; // 1æšãŒã‚«ãƒãƒ¼ã™ã‚‹ãƒ¯ãƒ¼ãƒ«ãƒ‰å¹…ï¼ˆæ­£æ–¹å½¢, metersï¼‰
+		float gTimeSec; // ç§’ï¼ˆç¶™ç¶šçš„ã«å¢—ãˆã‚‹ï¼‰
 
-		// --- ”Á“_i‰J—±‚Á‚Û‚¢ƒ€ƒ‰jƒpƒ‰ƒ[ƒ^ ---
-		float gSpeckleCellSize = 0.01f; // —á: 0.25 (m) ”Á“_‚ÌgƒZƒ‹hƒTƒCƒY
-		float gSpeckleDensity = 5.0f; // —á: 2.0  (‘å‚«‚¢‚Ù‚Ç“–‚½‚è‚â‚·‚¢)
-		float gSpeckleAmount = 0.15f; // —á: 0.15 (1‰ñ‚Ì“–‚½‚è‚Å‘«‚·”G‚ê—Ê)
-		float gSpeckleTimeHz = 20.0f; // —á: 10.0 (1•b‚É‰½‰ñƒpƒ^[ƒ“XV‚·‚é‚©)
+		// --- æ–‘ç‚¹ï¼ˆé›¨ç²’ã£ã½ã„ãƒ ãƒ©ï¼‰ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ ---
+		float gSpeckleCellSize = 0.01f; // ä¾‹: 0.25 (m) æ–‘ç‚¹ã®â€œã‚»ãƒ«â€ã‚µã‚¤ã‚º
+		float gSpeckleDensity = 5.0f; // ä¾‹: 2.0  (å¤§ãã„ã»ã©å½“ãŸã‚Šã‚„ã™ã„)
+		float gSpeckleAmount = 0.15f; // ä¾‹: 0.15 (1å›ã®å½“ãŸã‚Šã§è¶³ã™æ¿¡ã‚Œé‡)
+		float gSpeckleTimeHz = 20.0f; // ä¾‹: 10.0 (1ç§’ã«ä½•å›ãƒ‘ã‚¿ãƒ¼ãƒ³æ›´æ–°ã™ã‚‹ã‹)
 	};
 
 	static constexpr uint32_t MaxVolumes = 32;
@@ -251,7 +251,7 @@ private:
 
 	bool CreateWetnessResources(ID3D11Device* dev, uint32_t w, uint32_t h);
 private:
-	// ---- GPUƒŠƒ\[ƒX ----
+	// ---- GPUãƒªã‚½ãƒ¼ã‚¹ ----
 	ComPtr<ID3D11Buffer> m_spawnCB;
 	ComPtr<ID3D11Buffer> m_updateCB;
 	ComPtr<ID3D11Buffer> m_matrixCB;
@@ -301,7 +301,7 @@ private:
 	uint32_t m_spawnPerFrame = 0;//32 << 2;
 	float m_windPower = 2.0f;
 
-	// ”G‚êƒeƒNƒXƒ`ƒƒŠÖ˜A
+	// æ¿¡ã‚Œãƒ†ã‚¯ã‚¹ãƒãƒ£é–¢é€£
 	// Wetness resources
 	ComPtr<ID3D11Texture2D> m_WetPrevTex;
 	ComPtr<ID3D11Texture2D> m_WetNewTex;
@@ -318,7 +318,7 @@ private:
 	int32_t mWetOriginTexelX = 0;
 	int32_t mWetOriginTexelY = 0;
 
-	float m_initWetnessForNewArea = 0.0f; //ƒXƒNƒ[ƒ‹‚Ì‰Šú‰»’l
+	float m_initWetnessForNewArea = 0.0f; //ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã®åˆæœŸåŒ–å€¤
 	float m_dryRate = 0.1f;
 	float m_rainRate = 0.45f;
 	float m_globalWet = 0.0f;
