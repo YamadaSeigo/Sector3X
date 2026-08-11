@@ -1074,26 +1074,26 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 				auto playerDims = ps->GetShapeDims(playerShape);
 #endif
 
-				CModel modelComp{ playerModelHandle };
-				modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
-				auto id = levelSession.AddGlobalEntity(
-					CTransform{ playerStartPos ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
-					modelComp,
-					CColor{ {1.0f,1.0f,1.0f,1.0f} },
-					PlayerComponent{}
-#ifdef _ENABLE_IMGUI
-					, playerDims.value()
-#endif
-				);
-				if (id) {
-					Physics::CreateCharacterCmd c(id.value());
-					c.shape = playerShape;
-					c.worldTM.pos = playerStartPos;
-					c.objectLayer = Physics::Layers::MOVING;
-
-					ps->CreateCharacter(c);
-					//ps->EnqueueCreateIntent(id.value(), playerShape, key);
-				}
+//				CModel modelComp{ playerModelHandle };
+//				modelComp.flags |= (uint16_t)EModelFlag::CastShadow;
+//				auto id = levelSession.AddGlobalEntity(
+//					CTransform{ playerStartPos ,{0.0f,0.0f,0.0f,1.0f},{1.0f,1.0f,1.0f } },
+//					modelComp,
+//					CColor{ {1.0f,1.0f,1.0f,1.0f} },
+//					PlayerComponent{}
+//#ifdef _ENABLE_IMGUI
+//					, playerDims.value()
+//#endif
+//				);
+//				if (id) {
+//					Physics::CreateCharacterCmd c(id.value());
+//					c.shape = playerShape;
+//					c.worldTM.pos = playerStartPos;
+//					c.objectLayer = Physics::Layers::MOVING;
+//
+//					ps->CreateCharacter(c);
+//					//ps->EnqueueCreateIntent(id.value(), playerShape, key);
+//				}
 			}
 
 			//プレイヤーに追従するライト生成
@@ -1424,7 +1424,6 @@ void Levels::EnqueueOpenFieldLevel(WorldType& world, App::Context& ctx, const Op
 			scheduler.AddSystem<PhysicsSystem>(*serviceLocator);
 			scheduler.AddSystem<BuildBodiesFromIntentsSystem>(*serviceLocator);
 			scheduler.AddSystem<BodyIDWriteBackFromEventsSystem>(*serviceLocator);
-			scheduler.AddSystem<PlayerSystem>(*serviceLocator);
 			scheduler.AddSystem<PointLightSystem>(*serviceLocator);
 			scheduler.AddSystem<FireflySystem>(*serviceLocator);
 			scheduler.AddSystem<LeafSystem>(*serviceLocator);

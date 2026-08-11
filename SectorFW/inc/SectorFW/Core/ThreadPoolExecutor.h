@@ -14,6 +14,8 @@
 #include <functional>
 #include <atomic>
 
+#include "../Debug/logger.h"
+
 namespace SFW
 {
 	struct IThreadExecutor {

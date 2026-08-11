@@ -388,10 +388,13 @@ namespace SFW
 			}
 
 			// スケジューラですべてのシステムを更新
-			scheduler.UpdateAll(partition, levelCtx, serviceLocator, executor);
+			scheduler.UpdateAllSystem(partition, levelCtx, serviceLocator, executor);
 
 			//各スレッドでチャンクを跨いだ移動を実行
 			BudgetMover::Accessor::MoverFlush(levelCtx.mover, *serviceLocator.Get<SpatialChunkRegistry>(), 2000);
+
+			//　読み込まれているすべてのオブジェクトを更新する
+			objectManager.UpdateAllObjects(serviceLocator);
 		}
 		/**
 		 * @brief 終了処理
@@ -407,7 +410,7 @@ namespace SFW
 		}
 
 		/**
-		 * @brief 限定的な更新処理
+		 * @brief 限定的な更新処理（SystemOnly）
 		 */
 		void UpdateLimited(const ECS::ServiceLocator& serviceLocator, double deltaTime, IThreadExecutor* executor) {
 #ifdef _ENABLE_IMGUI
@@ -618,5 +621,9 @@ namespace SFW
 		std::shared_mutex updateEntityMutex;
 		//EntityManagerRegistryの参照
 		SpatialChunkRegistry& entityManagerReg;
+
+		//オブジェクト指向の方はECSと違って数が少ないのが前提で、
+		//ロード時になるべくオブジェクトを限定する思想なのでグローバルに管理する
+		ObjectManager objectManager;
 	};
 }

@@ -300,9 +300,6 @@
     <ClInclude Include="inc\SectorFW\Core\ECS\ServiceLocator.h">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\Core\ECS\SparseComponentStore.hpp">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SectorFW\Core\ECS\SystemScheduler.hpp">
       <Filter>Inc\Core\ECS</Filter>
     </ClInclude>
@@ -438,9 +435,6 @@
     <ClInclude Include="inc\SectorFW\Core\ChunkCrossingMove.hpp">
       <Filter>Inc\Core</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SectorFW\Core\ECS\SparseMarge.hpp">
-      <Filter>Inc\Core\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="inc\SectorFW\Graphics\DX11\DX11ShaderManager.h">
       <Filter>Inc\Graphics\DX11</Filter>
     </ClInclude>
@@ -533,6 +527,18 @@
     </ClInclude>
     <ClInclude Include="inc\SectorFW\Core\build_order.h">
       <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\Behaviour.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\Object.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Core\ObjectManager.h">
+      <Filter>Inc\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SectorFW\Util\Name.h">
+      <Filter>Inc\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

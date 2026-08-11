@@ -47,27 +47,7 @@ namespace SFW
 			size_t offset;
 			size_t stride;
 		};
-		/**
-		 * @brief まばらなコンポーネントを識別するタグ
-		 */
-		struct SparseComponentTag {};
-		/**
-		 * @brief まばらなコンポーネントを識別するためのトレイト
-		 */
-		template<typename, typename = void>
-		struct is_sparse_component : std::false_type {};
-		/**
-		 * @brief　まばらなコンポーネントを識別するためのトレイトの特殊化
-		 */
-		template<typename T>
-		struct is_sparse_component<T, std::void_t<typename T::sparse_tag>>
-			: std::is_same<typename T::sparse_tag, SparseComponentTag> {
-		};
-		/**
-		 * @brief まばらなコンポーネントを識別するためのトレイトの値
-		 */
-		template<typename T>
-		constexpr bool is_sparse_component_v = is_sparse_component<T>::value;
+
 		/**
 		 * @brief SoAコンポーネントを識別するためのトレイト
 		 */
@@ -83,11 +63,7 @@ namespace SFW
 		 */
 		template<typename T>
 		constexpr bool is_soa_component_v = is_soa_component<T>::value;
-		/**
-		 * @brief まばらなコンポーネントを識別するためのコンセプト
-		 */
-		template <typename T>
-		concept SparseComponent = is_sparse_component_v<T>;
+
 		/**
 		 * @brief SoAコンポーネントを識別するためのコンセプト
 		 */

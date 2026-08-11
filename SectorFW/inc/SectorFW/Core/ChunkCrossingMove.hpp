@@ -37,7 +37,7 @@ namespace SFW
 	template<> struct PartitionTraits<OctreePartition> { static constexpr bool stable_ptr = false; };
 
 	/**
-	 * @brief 低レベル：EM間 移送（非スパース→スパース）
+	 * @brief 低レベル：EM間 移送
 	 * @param id 移送するエンティティID
 	 * @param src 移送元のEM
 	 * @param dst　移送先のEM
@@ -47,8 +47,7 @@ namespace SFW
 	{
 		if (&src == &dst) return false;
 		if (!src.InsertWithID_ForManagerMove(id, src, dst)) return false;
-		std::vector<ECS::EntityID> one{ id };
-		src.MoveSparseIDsTo(dst, one);
+
 		return true;
 	}
 	/**
@@ -352,7 +351,6 @@ namespace SFW
 					bool ok = ECS::EntityManager::InsertWithID_ForManagerMove(id, src, dst);
 					if (ok) ++moved;
 				}
-				src.MoveSparseIDsTo(dst, ids);
 			}
 			temp_.clear();
 			return moved;

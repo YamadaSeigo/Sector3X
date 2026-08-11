@@ -87,7 +87,7 @@ namespace SFW
 			 * @param executor スレッドエグゼキューター
 			 * @details 保留された追加・削除・一時停止・再開の処理を適用した後、スケジュールが変更された場合はバッチを再構築し、各バッチごとに並列実行と直列実行を行う。例外は各システム内で握り潰さず、ここで個別捕捉することも可能。
 			 */
-			void UpdateAll(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
+			void UpdateAllSystem(Partition& partition, LevelContext<Partition>& levelCtx, const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
 				//新しいシステムの取り込み
 				ApplyPendingAdditions(serviceLocator);
 				//削除するシステムの適用
@@ -156,7 +156,7 @@ namespace SFW
 			 * @details 保留された追加・削除・一時停止・再開の処理を適用した後、スケジュールが変更された場合はバッチを再構築し、各バッチごとに並列実行と直列実行を行う。例外は各システム内で握り潰さず、ここで個別捕捉することも可能。
 			　* @note Partition や LevelContext を必要としないシステムの更新に使用する。これらのシステムは UpdateGlobal をオーバーライドしている必要がある。
 			 */
-			void UpdateGlobal(const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
+			void UpdateGlobalSystem(const ServiceLocator& serviceLocator, IThreadExecutor* executor) {
 				//新しいシステムの取り込み
 				ApplyPendingAdditions(serviceLocator);
 				//削除するシステムの適用
@@ -318,6 +318,7 @@ namespace SFW
 						// そのバッチ内と競合しないか確認（早期break）
 						for (size_t j : group.serial) {
 							const auto& aj = accessList[j];
+							//念のため二重チェック
 							if (Conflicts(ai, aj) || Conflicts(aj, ai)) {
 								ok = false; break;
 							}

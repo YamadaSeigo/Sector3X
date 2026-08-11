@@ -664,7 +664,7 @@ namespace SFW
 			}
 
 			//グローバルシステムの更新処理実行
-			globalSystem.UpdateGlobal(serviceLocator, executor);
+			globalSystem.UpdateGlobalSystem(serviceLocator, executor);
 
 			//サブレベルの更新処理実行
 			for (auto& f : subLevelFunc) f(serviceLocator, deltaTime, executor);

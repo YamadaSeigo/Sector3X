@@ -12,7 +12,6 @@
 #include <functional>
 
 #include "ArchetypeManager.h"
-#include "SparseComponentStore.hpp"
 #include "Accessor.hpp"
 
 #include "../../Util/TypeChecker.hpp"
@@ -26,6 +25,8 @@
 
 namespace SFW
 {
+	class ObjectManager;
+
 	namespace ECS
 	{
 		/**
@@ -56,7 +57,7 @@ namespace SFW
 
 				size_t index = chunk->AddEntity(id);
 
-				(..., StoreComponent(chunk, id, index, components));
+				(..., MemorySetChunk(chunk, id, index, components));
 
 				{
 					std::unique_lock lock(locationsMutex);
@@ -81,7 +82,7 @@ namespace SFW
 
 				size_t index = chunk->AddEntity(id);
 
-				(..., StoreComponent(chunk, id, index, components));
+				(..., MemorySetChunk(chunk, index, components));
 
 				{
 					std::unique_lock lock(locationsMutex);
@@ -114,10 +115,7 @@ namespace SFW
 						return mask.test(typeID);
 					}
 				}
-				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
-					return GetSparseStore<T>().Has(id);
-				}
-
+	
 				return false;
 			}
 			/**
@@ -129,13 +127,7 @@ namespace SFW
 			 */
 			template<typename T>
 			std::optional<T> ReadComponent(EntityID id) noexcept {
-				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
-					if (auto* ptr = GetSparseStore<T>().Get(id)) {
-						return *ptr;
-					}
-					return std::nullopt;
-				}
-
+				
 				std::shared_lock lock(locationsMutex);
 
 				auto it = locations.find(id);
@@ -172,13 +164,6 @@ namespace SFW
 			template<typename T>
 			void WriteComponent(EntityID id, const T& value) noexcept
 			{
-				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
-					if (auto* ptr = GetSparseStore<T>().Get(id)) {
-						*ptr = value;
-					}
-					return;
-				}
-
 				std::shared_lock lock(locationsMutex);
 
 				auto it = locations.find(id);
@@ -193,51 +178,40 @@ namespace SFW
 			template<typename T>
 			void ReadWriteComponent(EntityID id, std::function<T(T)>&& f)
 			{
-				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
-					auto* ptr = GetSparseStore<T>().Get(id);
-					if (ptr == nullptr) {
-						LOG_ERROR("EntityManager::ReadWriteComponent: Sparse component not found");
+				T readValue = {};
+
+				std::shared_lock lock(locationsMutex);
+
+				auto it = locations.find(id);
+				if (it == locations.end()) [[unlikely]] {
+					LOG_ERROR("EntityManager::ReadWriteComponent: Entity not found");
+					return;
+				}
+
+				const auto loc = it->second;
+
+				// SoA コンポーネント
+				if constexpr (IsSoAComponent<T>) {
+					ComponentAccessor<Read<T>> accessor(loc.chunk);
+					auto soaPtrOpt = accessor.Get<Read<T>>();
+					if (!soaPtrOpt) [[unlikely]] {
+						LOG_ERROR("EntityManager::ReadWriteComponent: SoA component not found");
 						return;
 					}
-
-					*ptr = f(*ptr);
+					readValue = ComponentAccessorBase::ConvertSoAToAoSComponent<T>(*soaPtrOpt, loc.index);
 				}
+				// 通常 AoS
 				else {
-					T readValue = {};
-
-					std::shared_lock lock(locationsMutex);
-
-					auto it = locations.find(id);
-					if (it == locations.end()) [[unlikely]] {
-						LOG_ERROR("EntityManager::ReadWriteComponent: Entity not found");
+					auto col = loc.chunk->GetColumn<T>();
+					if (!col) [[unlikely]] {
+						LOG_ERROR("EntityManager::ReadWriteComponent: AoS component not found");
 						return;
 					}
-
-					const auto loc = it->second;
-
-					// SoA コンポーネント
-					if constexpr (IsSoAComponent<T>) {
-						ComponentAccessor<Read<T>> accessor(loc.chunk);
-						auto soaPtrOpt = accessor.Get<Read<T>>();
-						if (!soaPtrOpt) [[unlikely]] {
-							LOG_ERROR("EntityManager::ReadWriteComponent: SoA component not found");
-							return;
-						}
-						readValue = ComponentAccessorBase::ConvertSoAToAoSComponent<T>(*soaPtrOpt, loc.index);
-					}
-					// 通常 AoS
-					else {
-						auto col = loc.chunk->GetColumn<T>();
-						if (!col) [[unlikely]] {
-							LOG_ERROR("EntityManager::ReadWriteComponent: AoS component not found");
-							return;
-						}
-						readValue = col.value()[loc.index];
-					}
-
-					auto writeValue = f(std::move(readValue));
-					MemorySetChunk<T>(loc.chunk, loc.index, writeValue);
+					readValue = col.value()[loc.index];
 				}
+
+				auto writeValue = f(std::move(readValue));
+				MemorySetChunk<T>(loc.chunk, loc.index, writeValue);
 			}
 
 			/**
@@ -248,11 +222,7 @@ namespace SFW
 			 */
 			template<typename T>
 			void AddComponent(EntityID id, const T& value) {
-				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
-					GetSparseStore<T>().Add(id, value);
-					return;
-				}
-
+				
 				ComponentTypeID typeID = ComponentTypeRegistry::GetID<T>();
 				ComponentMask currentMask = GetMask(id);
 				currentMask.set(typeID);
@@ -331,11 +301,6 @@ namespace SFW
 				ComponentMask newMask = oldMask;
 				newMask.reset(typeID);
 
-				if (ComponentTypeRegistry::IsSparseMask(ComponentMask().set(typeID))) {
-					GetSparseStore<T>().Remove(id);
-					return;
-				}
-
 				// 旧ロケーションは共有ロックで取得
 				EntityLocation oldLoc;
 				{
@@ -384,25 +349,14 @@ namespace SFW
 					locations[id] = { newChunk, newIndex };
 				}
 			}
-			/**
-			 * @brief すべての Sparse を this->dst に一括 move（型消去で処理）
-			 */
-			void MoveAllSparseTo(EntityManager& dst);
-			/**
-			 * @brief 指定 ID 群の Sparse を this->dst に一括 move（型消去で処理）
-			 */
-			void MoveSparseIDsTo(EntityManager& dst, const std::vector<EntityID>& ids);
 
 			// src の全エンティティを this へ統合。戻り値: 移送件数
-			// 手順: 1) Sparse 全型を一括 move  2) 非スパースをチャンク列 memcpy で移送  3) src をローカル除去
 			size_t MergeFromAll(EntityManager& src);
 
 			// ルータ: router(EntityID id, const ComponentMask& mask) -> EntityManager&
 			// 返された宛先ごとに分割。戻り値: 移送件数
 			template<typename Router>
 			size_t SplitByAll(Router&& router) {
-				// 1) 宛先ごとに ID をバケットしつつ、非スパースだけ先に移送
-				std::unordered_map<EntityManager*, std::vector<EntityID>> buckets;
 				const auto ids = GetAllEntityIDs(); // スナップショット
 				size_t moved = 0;
 				for (EntityID id : ids) {
@@ -415,26 +369,14 @@ namespace SFW
 						continue;
 					}
 					if (dst == this) continue;
-					if (InsertWithID_ForManagerMove(id, *this, *dst)) { buckets[dst].push_back(id); ++moved; }
+					if (InsertWithID_ForManagerMove(id, *this, *dst)) { ++moved; }
 				}
-				// 2) Sparse は宛先ごとに + ID バケットを使って一括 move
-				for (auto& [dst, idvec] : buckets) { MoveSparseIDsTo(*dst, idvec); }
 				return moved;
 			}
 
 			// すべてのエンティティIDを列挙（locations  全チャンクを補完）
 			std::vector<EntityID> GetAllEntityIDs() const;
 
-			/**
-			 * @brief まばらなコンポーネントを取得する関数
-			 * @return ReadWriteView<std::unordered_map<EntityID, T>> まばらなコンポーネントのビュー
-			 */
-			template<typename T>
-				requires SparseComponent<T>
-			ReadWriteView<std::unordered_map<EntityID, T>> GetSparseComponents() {
-				ReadWriteView<std::unordered_map<EntityID, T>> components(GetSparseStore<T>().GetComponents());
-				return components;
-			}
 			/**
 			 * @brief エンティティのコンポーネントマスクを取得する関数
 			 * @param id エンティティID
@@ -588,30 +530,13 @@ namespace SFW
 						}, v);
 				}
 			}
-			/**
-			 * @brief コンポーネントをチャンクに格納する関数
-			 * @param chunk アーキタイプチャンクへのポインタ
-			 * @param id エンティティID
-			 * @param index チャンク内のインデックス
-			 * @param value 格納するコンポーネントの値
-			 * @details まばらなコンポーネントかどうかで処理を分ける
-			 */
-			template<typename T>
-			void StoreComponent(ArchetypeChunk* chunk, EntityID id, size_t index, const T& value) {
-				if constexpr (ComponentTypeRegistry::IsSparse<T>()) {
-					GetSparseStore<T>().Add(id, value);
-				}
-				else {
-					MemorySetChunk<T>(chunk, index, value);
-				}
-			}
-
+			
 			/**
 			 * @brief スパースを触らずにローカルから除去（ID破棄しない）
 			 * @param id 除去するエンティティのID
 			 * @return bool 除去に成功した場合はtrue、失敗した場合はfalse
 			 */
-			bool EraseEntityLocalNoSparse(EntityID id);
+			bool EraseEntityLocal(EntityID id);
 			/**
 			 * @brief 非スパース列（チャンク列）を src->dst にコピー
 			 */
@@ -628,75 +553,14 @@ namespace SFW
 			std::unordered_map<EntityID, EntityLocation> locations;
 			//locations の並行アクセスを守るロック（読取多数・書込少数を想定）
 			mutable std::shared_mutex locationsMutex;
-			/**
-			 * @brief まばらなコンポーネントストアを取得するためのインターフェース
-			 */
-			struct ISparseWrapper {
-				virtual void Remove(EntityID id) = 0;
-				virtual void MoveAllTo(EntityManager& dst) = 0;
-				virtual void MoveManyTo(EntityManager& dst, const EntityID* ids, size_t n) = 0;
-				virtual ~ISparseWrapper() = default;
+
+		public:
+			class EntityIDAllocatorAccessor {
+				static EntityID Create() { return entityAllocator.Create(); }
+				static void Destroy(EntityID id) { entityAllocator.Destroy(id); }
+
+				friend class SFW::ObjectManager;
 			};
-			/**
-			 * @brief まばらなコンポーネントストアを格納するマップ
-			 */
-			std::unordered_map<ComponentTypeID, std::shared_ptr<struct ISparseWrapper>> sparseStores;
-			/**
-			 * @brief まばらなコンポーネントストアのラッパークラス
-			 */
-			template<typename T>
-			struct SparseWrapper : ISparseWrapper {
-				SparseComponentStore<T> store;
-				/**
-				 * @brief コンポーネントを削除する関数
-				 * @param id 削除するエンティティのID
-				 */
-				void Remove(EntityID id) override { store.Remove(id); }
-				/**
-				 * @brief すべてのコンポーネントを別のエンティティマネージャーに移動する関数
-				 * @param dst 移動先のエンティティマネージャー
-				 */
-				void MoveAllTo(EntityManager& dst) override {
-					auto& srcMap = store.GetComponents();
-					auto& dstMap = dst.GetSparseStore<T>().GetComponents();
-					dstMap.reserve(dstMap.size() + srcMap.size());
-					for (auto it = srcMap.begin(); it != srcMap.end(); ++it) {
-						dstMap.insert_or_assign(it->first, std::move(it->second));
-					}
-					srcMap.clear();
-				}
-				/**
-				 * @brief 指定されたIDのコンポーネントを別のエンティティマネージャーに移動する関数
-				 * @param dst 移動先のエンティティマネージャー
-				 * @param ids 移動するエンティティのIDの配列
-				 * @param n 配列の要素数
-				 */
-				void MoveManyTo(EntityManager& dst, const EntityID* ids, size_t n) override {
-					auto& srcMap = store.GetComponents();
-					auto& dstMap = dst.GetSparseStore<T>().GetComponents();
-					dstMap.reserve(dstMap.size() + n);
-					for (size_t i = 0; i < n; ++i) {
-						auto it = srcMap.find(ids[i]);
-						if (it != srcMap.end()) {
-							dstMap.insert_or_assign(it->first, std::move(it->second));
-							srcMap.erase(it);
-						}
-					}
-				}
-			};
-			/**
-			 * @brief まばらなコンポーネントストアを取得する関数
-			 * @return SparseComponentStore<T>& まばらなコンポーネントストアへの参照
-			 */
-			template<typename T>
-			SparseComponentStore<T>& GetSparseStore() noexcept {
-				ComponentTypeID id = ComponentTypeRegistry::GetID<T>();
-				if (!sparseStores.contains(id)) {
-					auto wrapper = std::make_shared<SparseWrapper<T>>();
-					sparseStores[id] = wrapper;
-				}
-				return static_cast<SparseWrapper<T>*>(sparseStores[id].get())->store;
-			}
 		};
 	}
 

@@ -30,26 +30,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Utility</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Utility</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -140,30 +140,22 @@
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
-  
   <!-- DDS変換処理 -->
   <Target Name="ConvertTextures" BeforeTargets="Build">
     <Exec Command="python &quot;$(ProjectDir)convert_textures.py&quot; --solution &quot;$(SolutionDir.TrimEnd('\'))&quot; --config $(Configuration)" />
   </Target>
-  
   <Target Name="ConvertAudio" BeforeTargets="Build">
-	<Exec Command="python &quot;$(ProjectDir)convert_audio.py&quot; --solution &quot;$(SolutionDir.TrimEnd('\'))&quot; --config $(Configuration) --ffmpeg &quot;$(ProjectDir)Tools/ffmpeg.exe&quot;"/>
+    <Exec Command="python &quot;$(ProjectDir)convert_audio.py&quot; --solution &quot;$(SolutionDir.TrimEnd('\'))&quot; --config $(Configuration) --ffmpeg &quot;$(ProjectDir)Tools/ffmpeg.exe&quot;" />
   </Target>
-  
   <!-- Convex生成処理 -->
-  <Target Name="RunGenerateConvex"
-          BeforeTargets="Build">
+  <Target Name="RunGenerateConvex" BeforeTargets="Build">
     <!-- 特定のプロジェクトだけで実行したいときは Condition を追加 -->
     <!-- Condition="'$(MSBuildProjectName)' == 'YourMainGameProjectName'" -->
-
     <Message Text="Running generate_convex.py for $(Configuration)..." Importance="high" />
-
-	<Exec Command="py -3.9 &quot;$(ProjectDir)generate_convex.py&quot; --solution &quot;$(SolutionDir.TrimEnd('\'))&quot; --config $(Configuration)" />
+    <Exec Command="py -3.9 &quot;$(ProjectDir)generate_convex.py&quot; --solution &quot;$(SolutionDir.TrimEnd('\'))&quot; --config $(Configuration)" />
   </Target>
-  
-   <!-- meshshape生成処理 -->
+  <!-- meshshape生成処理 -->
   <Target Name="RunGenerateMeshShape" BeforeTargets="Build">
-	<Exec Command="py -3.9 &quot;$(ProjectDir)generate_meshshape.py&quot; --solution &quot;$(SolutionDir.TrimEnd('\'))&quot; --config $(Configuration)" />
+    <Exec Command="py -3.9 &quot;$(ProjectDir)generate_meshshape.py&quot; --solution &quot;$(SolutionDir.TrimEnd('\'))&quot; --config $(Configuration)" />
   </Target>
-  
 </Project>

@@ -344,7 +344,7 @@ public:
 							{
 								if (mesh.instance.HasData()) [[unlikely]] {
 									LOG_INFO("model has instance matrix!");
-									Graphics::SharedInstanceArena::InstancePool instance = { Math::Mul3x4x4x4_To3x4_SSE(worldMtxSoA.AoS(i), mesh.instance.worldMtx) };
+									Graphics::SharedInstanceArena::InstancePoolData instance = { Math::Mul3x4x4x4_To3x4_SSE(worldMtxSoA.AoS(i), mesh.instance.worldMtx) };
 									instanceIdx = producer.AllocInstance(instance);
 									ndc = Math::ProjectAABBToNdc_Fast(WVP * mesh.instance.worldMtx, mesh.aabb);
 									areaFrec = (std::min)(Graphics::ComputeNDCAreaFrec(ndc.xmin, ndc.ymin, ndc.xmax, ndc.ymax), 1.0f);

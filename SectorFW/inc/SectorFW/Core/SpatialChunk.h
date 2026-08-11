@@ -8,6 +8,7 @@
 #pragma once
 
 #include "ECS/EntityManager.h"
+#include "ObjectManager.h"
 #include "RegistryTypes.h"
 
 namespace SFW

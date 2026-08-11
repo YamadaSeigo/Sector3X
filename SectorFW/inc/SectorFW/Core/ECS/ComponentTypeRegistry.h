@@ -10,6 +10,7 @@
 #include <type_traits>
 
 #include "component.hpp"
+#include "../Behaviour.h"
 #include "../../Util/OneOrMore.hpp"
 #include "../../Debug/assert_config.h"
 
@@ -39,7 +40,6 @@ namespace SFW
 			};
 			OneOrMore<Structure> structure;
 
-			bool isSparse = false;
 			bool isSoA = false;
 		};
 		/**
@@ -131,7 +131,7 @@ namespace SFW
 					SetMetaStructure<T>(meta_structures);
 				}
 
-				meta[id] = { meta_structures ,is_sparse_component_v<T> ,is_soa_component_v<T> };
+				meta[id] = { meta_structures ,is_soa_component_v<T> };
 			}
 
 			/**
@@ -167,12 +167,12 @@ namespace SFW
 				TupleTrivialAssertImpl<Tuple>(std::make_index_sequence<N>{});
 			}
 			/**
-			 * @brief コンポーネントがまばらなコンポーネントかどうかを判定します。
-			 * @return true まばらなコンポーネントである場合
+			 * @brief コンポーネントが動作コンポーネントかどうかを判定します。
+			 * @return true 動作コンポーネントである場合
 			 */
 			template<typename T>
-			static constexpr bool IsSparse() noexcept {
-				return is_sparse_component_v<T>;
+			static constexpr bool IsBehaviour() noexcept {
+				return is_behaviour_v<T>;
 			}
 			/**
 			 * @brief コンポーネントのメタ情報を取得します。
@@ -192,7 +192,7 @@ namespace SFW
 		 */
 		template<typename T>
 		void SetMask(ComponentMask& mask) noexcept {
-			if constexpr (!ComponentTypeRegistry::IsSparse<T>()) {
+			if constexpr (!ComponentTypeRegistry::IsBehaviour<T>()) {
 				mask.set(ComponentTypeRegistry::GetID<T>());
 			}
 		}

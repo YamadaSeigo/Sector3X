@@ -108,7 +108,7 @@ namespace SFW
 			 * @param framePool インスタンスデータの配列
 			 * @param instCount インスタンスデータの数
 			 */
-			void BeginFrameUpload(const SharedInstanceArena::InstancePool* framePool, uint32_t instCount) {
+			void BeginFrameUpload(const SharedInstanceArena::InstancePoolData* framePool, uint32_t instCount) {
 				static_cast<Derived*>(this)->BeginFrameUploadImpl(framePool, instCount);
 			}
 			/**

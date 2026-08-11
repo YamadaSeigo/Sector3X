@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="inc\SectorFW\Audio\AudioService.h" />
     <ClInclude Include="inc\SectorFW\Audio\AudioType.h" />
+    <ClInclude Include="inc\SectorFW\Core\Behaviour.h" />
     <ClInclude Include="inc\SectorFW\Core\build_order.h" />
     <ClInclude Include="inc\SectorFW\Core\ChunkCrossingMove.hpp" />
     <ClInclude Include="inc\SectorFW\Core\ECS\AccessInfo.h" />
@@ -39,9 +40,9 @@
     <ClInclude Include="inc\SectorFW\Core\ECS\Query.h" />
     <ClInclude Include="inc\SectorFW\Core\ECS\ServiceContext.hpp" />
     <ClInclude Include="inc\SectorFW\Core\ECS\ServiceLocator.h" />
-    <ClInclude Include="inc\SectorFW\Core\ECS\SparseComponentStore.hpp" />
-    <ClInclude Include="inc\SectorFW\Core\ECS\SparseMarge.hpp" />
     <ClInclude Include="inc\SectorFW\Core\ECS\SystemScheduler.hpp" />
+    <ClInclude Include="inc\SectorFW\Core\Object.h" />
+    <ClInclude Include="inc\SectorFW\Core\ObjectManager.h" />
     <ClInclude Include="inc\SectorFW\Core\SpatialChunkRegistryService.h" />
     <ClInclude Include="inc\SectorFW\Core\GameEngine.h" />
     <ClInclude Include="inc\SectorFW\Core\Grid2DPartition.h" />
@@ -146,6 +147,7 @@
     <ClInclude Include="inc\SectorFW\Util\function_trait.h" />
     <ClInclude Include="inc\SectorFW\Util\Grid.hpp" />
     <ClInclude Include="inc\SectorFW\Util\Morton.h" />
+    <ClInclude Include="inc\SectorFW\Util\Name.h" />
     <ClInclude Include="inc\SectorFW\Util\NonCopyable.h" />
     <ClInclude Include="inc\SectorFW\Util\OneOrMore.hpp" />
     <ClInclude Include="inc\SectorFW\Util\PathView.hpp" />

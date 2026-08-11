@@ -9,6 +9,7 @@
 
 #include "Vector.hpp"
 #include "Quaternion.hpp"
+#include "Matrix.hpp"
 
 #include "../Util/Flatten.hpp"
 
@@ -33,6 +34,43 @@ namespace SFW
 			float qx, float qy, float qz, float qw,
 			float sx, float sy, float sz) noexcept
 			: location(px, py, pz), rotation(qx, qy, qz, qw), scale(sx, sy, sz) {
+		}
+
+		Math::Matrix4x4f ToMatrix() const noexcept {
+			
+			//行列の規約は右かけで行優先、なので平行成分は[0][3],[1][3],[2][3]に入れる
+
+			Math::Matrix4x4f mat = Math::Matrix4x4f::Identity();
+
+			// クォータニオンを回転行列に変換
+			const float xx = rotation.x * rotation.x;
+			const float yy = rotation.y * rotation.y;
+			const float zz = rotation.z * rotation.z;
+
+			// 回転行列とスケーリングを組み合わせる
+			mat[0][0] = (1.0f - 2.0f * (yy + zz)) * scale.x;
+			mat[0][1] = (2.0f * (rotation.x * rotation.y + rotation.z * rotation.w)) * scale.x;
+			mat[0][2] = (2.0f * (rotation.x * rotation.z - rotation.y * rotation.w)) * scale.x;
+
+			mat[1][0] = (2.0f * (rotation.x * rotation.y - rotation.z * rotation.w)) * scale.y;
+			mat[1][1] = (1.0f - 2.0f * (xx + zz)) * scale.y;
+			mat[1][2] = (2.0f * (rotation.y * rotation.z + rotation.x * rotation.w)) * scale.y;
+
+			mat[2][0] = (2.0f * (rotation.x * rotation.z + rotation.y * rotation.w)) * scale.z;
+			mat[2][1] = (2.0f * (rotation.y * rotation.z - rotation.x * rotation.w)) * scale.z;
+			mat[2][2] = (1.0f - 2.0f * (xx + yy)) * scale.z;
+
+			// 平行移動を設定
+			mat[0][3] = location.x;
+			mat[1][3] = location.y;
+			mat[2][3] = location.z;
+
+			mat[3][0] = 0.0f;
+			mat[3][1] = 0.0f;
+			mat[3][2] = 0.0f;
+			mat[3][3] = 1.0f;
+
+			return mat;
 		}
 	};
 

@@ -900,6 +900,7 @@ namespace App
 		tiledLightData.fireflyLightSRV =
 			m_fireflyService->GetPointLightSRV();
 
+		//雨は透明で深度がないのでZカリングはなしのライトリストを使う
 		auto tileLightList =
 			m_deferredRenderingService->GetTileLightList(false);
 

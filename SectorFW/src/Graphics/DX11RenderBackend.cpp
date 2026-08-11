@@ -342,7 +342,7 @@ namespace SFW
 				};
 
 			// 例：最大 65k インスタンス／フレーム、最大 1M インデックス／パス
-			hr = createStructuredSRV(sizeof(SharedInstanceArena::InstancePool), MAX_INSTANCES_PER_FRAME, &m_instanceSB, &m_instanceSRV);
+			hr = createStructuredSRV(sizeof(SharedInstanceArena::InstancePoolData), MAX_INSTANCES_PER_FRAME, &m_instanceSB, &m_instanceSRV);
 			if (FAILED(hr)) {
 				LOG_ERROR("Failed to create structured SRV for instance data: %d", hr);
 				return hr;

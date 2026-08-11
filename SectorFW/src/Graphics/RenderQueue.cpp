@@ -43,7 +43,7 @@ namespace SFW
 			rq->sharedInstanceArena->Data(slot)[idx] = std::move(inst);
 			return InstanceIndex{ idx };
 		}
-		[[nodiscard]] InstanceIndex RenderQueue::ProducerSessionExternal::AllocInstance(const InstancePool& inst)
+		[[nodiscard]] InstanceIndex RenderQueue::ProducerSessionExternal::AllocInstance(const SharedInstanceData& inst)
 		{
 			RebindIfNeeded();
 			// 現在のフレームスロット
@@ -60,7 +60,7 @@ namespace SFW
 			rq->sharedInstanceArena->Data(slot)[idx] = inst;
 			return InstanceIndex{ idx };
 		}
-		[[nodiscard]] InstanceIndex RenderQueue::ProducerSessionExternal::AllocInstance(InstancePool&& inst)
+		[[nodiscard]] InstanceIndex RenderQueue::ProducerSessionExternal::AllocInstance(SharedInstanceData&& inst)
 		{
 			RebindIfNeeded();
 			// 現在のフレームスロット
@@ -93,7 +93,7 @@ namespace SFW
 			}
 			return InstanceIndex{ idx };
 		}
-		void RenderQueue::ProducerSessionExternal::MemsetInstancePool(InstanceIndex index, const InstancePool& inst) noexcept
+		void RenderQueue::ProducerSessionExternal::MemsetInstancePool(InstanceIndex index, const SharedInstanceData& inst) noexcept
 		{
 			if (index.index < 0 || index.index >= rq->maxInstancesPerFrame) [[unlikely]] {
 				LOG_ERROR("instance indexが正常な範囲ではありません (max {%d})", rq->maxInstancesPerFrame);

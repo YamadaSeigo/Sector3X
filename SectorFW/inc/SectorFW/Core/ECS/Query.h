@@ -19,7 +19,7 @@ namespace SFW
 		 * @brief まばらなコンポーネントを識別するトレイト
 		 */
 		template <typename... Args>
-		concept AllDense = (!is_sparse_component_v<Args> && ...);
+		concept AllComponent = (!is_behaviour_v<Args> && ...);
 		/**
 		 * @brief 参照のみの型を識別するトレイト
 		 */
@@ -41,7 +41,7 @@ namespace SFW
 			 * @return Query& クエリ自身の参照
 			 */
 			template<typename... Ts>
-				requires AllDense<Ts...>
+				requires AllComponent<Ts...>
 			Query& With() noexcept {
 				(required.set(ComponentTypeRegistry::GetID<Ts>()), ...);
 				return *this;
@@ -51,7 +51,7 @@ namespace SFW
 			 * @return Query& クエリ自身の参照
 			 */
 			template<typename... Ts>
-				requires AllDense<Ts...>
+				requires AllComponent<Ts...>
 			Query& Without() noexcept {
 				(excluded.set(ComponentTypeRegistry::GetID<Ts>()), ...);
 				return *this;

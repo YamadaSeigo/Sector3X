@@ -57,9 +57,6 @@ public:
 					//ローディングレベルをクリーンアップ
 					pSession->CleanLevel(App::LOADING_LEVEL_NAME);
 
-					//メインレベルのプレイヤーシステムを一時停止
-					pSession->PauseResumeSystemInLevel<PlayerSystem>(App::MAIN_LEVEL_NAME, true);
-
 					loadedMainLevel.store(true, std::memory_order_relaxed);
 					};
 
@@ -164,10 +161,6 @@ public:
 				//タイトルレベルをクリーンアップ
 				auto cleanCmd = worldRequestService->CreateCleanLevelCommand("Title");
 				worldRequestService->PushCommand(std::move(cleanCmd));
-
-				//メインレベルのプレイヤーシステムを再開
-				auto addSystemCmd = worldRequestService->CreatePauseResumeSystemCommand<PlayerSystem>(App::MAIN_LEVEL_NAME, false);
-				worldRequestService->PushCommand(std::move(addSystemCmd));
 			}
 
 			return;

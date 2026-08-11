@@ -150,7 +150,7 @@ namespace SFW
 			 * @param framePool インスタンスデータの配列
 			 * @param instCount インスタンスデータの数
 			 */
-			void BeginFrameUploadImpl(const SharedInstanceArena::InstancePool* framePool, uint32_t instCount) const
+			void BeginFrameUploadImpl(const SharedInstanceArena::InstancePoolData* framePool, uint32_t instCount) const
 			{
 				D3D11_MAPPED_SUBRESOURCE m{};
 				context->Map(m_instanceSB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &m);

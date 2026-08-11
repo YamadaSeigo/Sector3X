@@ -65,17 +65,17 @@ namespace SFW
 
 		// RenderQueue とは独立した“フレーム共有”アリーナ
 		struct SharedInstanceArena {
-			struct alignas(16) InstancePool {
+			struct alignas(16) InstancePoolData {
 				SFW::Math::Matrix<3, 4, float> world = {};
 				Math::Vec4f color = {};
 
-				InstancePool& operator=(const InstanceData& data) noexcept {
+				InstancePoolData& operator=(const InstanceData& data) noexcept {
 					// 4x4 行列を 3x4 にコピー
 					memcpy(&world, &data, sizeof(decltype(world)));
 					color = data.color;
 					return *this;
 				}
-				InstancePool& operator=(InstanceData&& data) noexcept {
+				InstancePoolData& operator=(InstanceData&& data) noexcept {
 					// 4x4 行列を 3x4 にコピー
 					memcpy(&world, &data, sizeof(decltype(world)));
 					color = data.color;
@@ -85,17 +85,17 @@ namespace SFW
 
 			SharedInstanceArena() : capacity(MAX_INSTANCES_PER_FRAME) {
 				for (uint16_t i = 0; i < RENDER_BUFFER_COUNT; ++i) {
-					pools[i] = std::make_unique<InstancePool[]>(capacity);
+					pools[i] = std::make_unique<InstancePoolData[]>(capacity);
 					head[i].store(0, std::memory_order_relaxed);
 				}
 			}
 
 			uint32_t capacity; // MAX_INSTANCES_PER_FRAME 相当
-			std::unique_ptr<InstancePool[]> pools[RENDER_BUFFER_COUNT];
+			std::unique_ptr<InstancePoolData[]> pools[RENDER_BUFFER_COUNT];
 			std::atomic<uint32_t> head[RENDER_BUFFER_COUNT];
 
 			void ResetSlot(int slot) noexcept { head[slot].store(0, std::memory_order_release); }
-			InstancePool* Data(int slot) noexcept { return pools[slot].get(); }
+			InstancePoolData* Data(int slot) noexcept { return pools[slot].get(); }
 			uint32_t      Size(int slot) const noexcept { return head[slot].load(std::memory_order_acquire); }
 		};
 
@@ -103,7 +103,7 @@ namespace SFW
 		 * @brief 描画コマンドの発行。管理、ソート、バッチングを行うクラス
 		 */
 		class RenderQueue {
-			using InstancePool = SharedInstanceArena::InstancePool;
+			using SharedInstanceData = SharedInstanceArena::InstancePoolData;
 
 			/**
 			 * @brief 描画コマンドのソートコンテキスト
@@ -466,11 +466,11 @@ namespace SFW
 				/**
 				 * @brief インスタンスを 1 件プールへ書き込み、Index を返す
 				 */
-				[[nodiscard]] InstanceIndex AllocInstance(const InstancePool& inst);
+				[[nodiscard]] InstanceIndex AllocInstance(const SharedInstanceData& inst);
 				/**
 				 * @brief インスタンスを 1 件プールへ書き込み、Index を返す（ムーブ版）
 				 */
-				[[nodiscard]] InstanceIndex AllocInstance(InstancePool&& inst);
+				[[nodiscard]] InstanceIndex AllocInstance(SharedInstanceData&& inst);
 
 				/**
 				* @brief WorldSoA からまとめて Instance を確保・書き込み
@@ -494,7 +494,7 @@ namespace SFW
 				 * @param index 対象のインスタンスインデックス
 				 * @param inst 埋めるデータ
 				 */
-				void MemsetInstancePool(InstanceIndex index, const InstancePool& inst) noexcept;
+				void MemsetInstancePool(InstanceIndex index, const SharedInstanceData& inst) noexcept;
 
 				/**
 				 * @brief 全バッファをキューへフラッシュ
@@ -654,7 +654,7 @@ namespace SFW
 			 * @brief 現在フレーム側の Instance プールアクセス
 			 * @return (InstanceData*, 書き込み位置へのポインタ)
 			 */
-			inline std::pair<InstancePool*, std::atomic<uint32_t>*>
+			inline std::pair<SharedInstanceData*, std::atomic<uint32_t>*>
 				GetCurrentInstancePoolAccess() noexcept {
 				const int cur = current.load(std::memory_order_acquire);
 				return { sharedInstanceArena->Data(cur), &sharedInstanceArena->head[cur] };

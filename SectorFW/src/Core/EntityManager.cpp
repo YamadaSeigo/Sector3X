@@ -31,10 +31,7 @@ namespace SFW
 					locations.erase(it);
 				}
 			}
-			for (auto& [_, store] : sparseStores) {
-				store->Remove(id);
-			}
-
+		
 			entityAllocator.Destroy(id);
 		}
 
@@ -48,28 +45,12 @@ namespace SFW
 				locations.clear();
 			}
 			entityAllocator.DestroyBulk(allIDs.data(), allIDs.size());
-
-			sparseStores.clear();
 		}
 
-		void EntityManager::MoveAllSparseTo(EntityManager& dst)
-		{
-			for (auto& [_, w] : sparseStores) w->MoveAllTo(dst);
-		}
-
-		void EntityManager::MoveSparseIDsTo(EntityManager& dst, const std::vector<EntityID>& ids)
-		{
-			if (ids.empty()) return;
-			const EntityID* p = ids.data();
-			const size_t    n = ids.size();
-			for (auto& [_, w] : sparseStores) w->MoveManyTo(dst, p, n);
-		}
 
 		size_t EntityManager::MergeFromAll(EntityManager& src)
 		{
-			// 1) Sparse を丸ごと this へ移送
-			src.MoveAllSparseTo(*this);
-			// 2) 非スパースをチャンク列 memcpy で移送
+			// 2) チャンク列 memcpy で移送
 			const auto ids = src.GetAllEntityIDs();
 			size_t moved = 0;
 			for (EntityID id : ids) {
@@ -143,7 +124,7 @@ namespace SFW
 			// 非スパース列をコピー
 			CopyEntityColumns(srcChunk, srcIndex, dstChunk, dstIndex);
 			// src からローカル除去（スパースは後で一括移送するため触らない）
-			src.EraseEntityLocalNoSparse(id);
+			src.EraseEntityLocal(id);
 			// 宛先の locations を登録
 			{
 				std::unique_lock<std::shared_mutex> wlock(dst.locationsMutex);
@@ -151,7 +132,7 @@ namespace SFW
 			}
 			return true;
 		}
-		bool EntityManager::EraseEntityLocalNoSparse(EntityID id)
+		bool EntityManager::EraseEntityLocal(EntityID id)
 		{
 			std::unique_lock<std::shared_mutex> wlock(locationsMutex);
 			auto it = locations.find(id);

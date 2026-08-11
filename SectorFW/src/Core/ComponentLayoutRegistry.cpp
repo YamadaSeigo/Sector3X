@@ -41,7 +41,6 @@ namespace SFW
 				working.reset(index);
 				const ComponentMeta* meta = ComponentTypeRegistry::GetMeta(index);
 				if (meta == nullptr) break;
-				if (meta->isSparse) continue;
 
 				if (meta->isSoA) {
 					hasSoA = true;
